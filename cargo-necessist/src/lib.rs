@@ -35,7 +35,7 @@ use syn::{
 };
 
 const LEVEL_SKIPPED: u32 = 1;
-const LEVEL_FAILED: u32 = 2;
+const LEVEL_NONBUILDABLE: u32 = 2;
 const LEVEL_BUILT_NONLOCAL: u32 = 3;
 const LEVEL_BUILT_LOCAL: u32 = 4;
 const LEVEL_MAX: u32 = u32::MAX;
@@ -43,7 +43,7 @@ const LEVEL_MAX: u32 = u32::MAX;
 enum Message {
     Inconclusive,
     Skipped,
-    Failed,
+    Nonbuildable,
     Built,
     Passed,
 }
@@ -56,7 +56,7 @@ impl Display for Message {
             match self {
                 Message::Inconclusive => "inconclusive",
                 Message::Skipped => "skipped",
-                Message::Failed => "failed",
+                Message::Nonbuildable => "nonbuildable",
                 Message::Built => "built",
                 Message::Passed => "passed",
             }
@@ -68,7 +68,7 @@ fn level(stmt: &Stmt, msg: &Message) -> u32 {
     match msg {
         Message::Inconclusive => LEVEL_MAX,
         Message::Skipped => LEVEL_SKIPPED,
-        Message::Failed => LEVEL_FAILED,
+        Message::Nonbuildable => LEVEL_NONBUILDABLE,
         Message::Built => {
             if is_local(stmt) {
                 LEVEL_BUILT_LOCAL
@@ -84,7 +84,7 @@ fn style(msg: &Message) -> Style {
     match msg {
         Message::Inconclusive => Red.normal(),
         Message::Skipped => Yellow.normal(),
-        Message::Failed => Style::default(),
+        Message::Nonbuildable => Style::default(),
         Message::Built => Cyan.normal(),
         Message::Passed => Green.normal(),
     }
@@ -292,7 +292,7 @@ impl<'ast, 'a> Visit<'ast> for StmtVisitor<'a> {
             return;
         }
 
-        self.emit(&span, stmt, Message::Failed);
+        self.emit(&span, stmt, Message::Nonbuildable);
     }
 }
 
