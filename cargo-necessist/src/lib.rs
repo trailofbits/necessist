@@ -20,7 +20,7 @@ use regex::Regex;
 use std::{
     cell::Cell,
     ffi::OsStr,
-    fmt::{Debug, Display, Formatter},
+    fmt::Debug,
     fs::File,
     io::Read,
     io::{BufRead, BufReader},
@@ -49,53 +49,55 @@ const MACRO_WHITELIST: &[&str] = &[
     "unreachable",
 ];
 
-enum Message {
-    Inconclusive,
-    Skipped,
-    Nonbuildable,
-    Failed,
-    Passed,
-}
+mod removal {
+    pub enum Result {
+        Inconclusive,
+        Skipped,
+        Nonbuildable,
+        Failed,
+        Passed,
+    }
 
-impl Display for Message {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(
-            f,
-            "{}",
-            match self {
-                Message::Inconclusive => "inconclusive",
-                Message::Skipped => "skipped",
-                Message::Nonbuildable => "nonbuildable",
-                Message::Failed => "failed",
-                Message::Passed => "passed",
-            }
-        )
+    impl std::fmt::Display for Result {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            write!(
+                f,
+                "{}",
+                match self {
+                    Result::Inconclusive => "inconclusive",
+                    Result::Skipped => "skipped",
+                    Result::Nonbuildable => "nonbuildable",
+                    Result::Failed => "failed",
+                    Result::Passed => "passed",
+                }
+            )
+        }
     }
 }
 
-fn level(stmt: &Stmt, msg: &Message) -> u32 {
-    match msg {
-        Message::Inconclusive => LEVEL_MAX,
-        Message::Skipped => LEVEL_SKIPPED,
-        Message::Nonbuildable => LEVEL_NONBUILDABLE,
-        Message::Failed => {
+fn level(stmt: &Stmt, result: &removal::Result) -> u32 {
+    match result {
+        removal::Result::Inconclusive => LEVEL_MAX,
+        removal::Result::Skipped => LEVEL_SKIPPED,
+        removal::Result::Nonbuildable => LEVEL_NONBUILDABLE,
+        removal::Result::Failed => {
             if is_local(stmt) {
                 LEVEL_FAILED_LOCAL
             } else {
                 LEVEL_FAILED_NONLOCAL
             }
         }
-        Message::Passed => LEVEL_MAX,
+        removal::Result::Passed => LEVEL_MAX,
     }
 }
 
-fn style(msg: &Message) -> Style {
-    match msg {
-        Message::Inconclusive => Red.normal(),
-        Message::Skipped => Yellow.normal(),
-        Message::Nonbuildable => Style::default(),
-        Message::Failed => Cyan.normal(),
-        Message::Passed => Green.normal(),
+fn style(result: &removal::Result) -> Style {
+    match result {
+        removal::Result::Inconclusive => Red.normal(),
+        removal::Result::Skipped => Yellow.normal(),
+        removal::Result::Nonbuildable => Style::default(),
+        removal::Result::Failed => Cyan.normal(),
+        removal::Result::Passed => Green.normal(),
     }
 }
 
@@ -269,13 +271,13 @@ impl<'ast, 'a> Visit<'ast> for StmtVisitor<'a> {
                 .skip_calls_re
                 .map_or(false, |re| is_skipped_call(re, stmt))
         {
-            self.emit(&span, stmt, Message::Skipped);
+            self.emit(&span, stmt, removal::Result::Skipped);
             return;
         }
 
         if let Ok(removed) = test(&self.opts, &self.pkg, Some((&self.ident, &span)), false) {
             if !removed {
-                self.emit(&span, stmt, Message::Inconclusive);
+                self.emit(&span, stmt, removal::Result::Inconclusive);
                 return;
             }
 
@@ -284,26 +286,26 @@ impl<'ast, 'a> Visit<'ast> for StmtVisitor<'a> {
                 // not when it is run.
                 assert!(!removed);
 
-                self.emit(&span, stmt, Message::Passed);
+                self.emit(&span, stmt, removal::Result::Passed);
                 return;
             }
 
-            self.emit(&span, stmt, Message::Failed);
+            self.emit(&span, stmt, removal::Result::Failed);
             return;
         }
 
-        self.emit(&span, stmt, Message::Nonbuildable);
+        self.emit(&span, stmt, removal::Result::Nonbuildable);
     }
 }
 
 impl<'a> StmtVisitor<'a> {
-    fn emit(&self, span: &necessist::Span, stmt: &Stmt, msg: Message) {
-        if self.opts.quiet < level(stmt, &msg) {
+    fn emit(&self, span: &necessist::Span, stmt: &Stmt, result: removal::Result) {
+        if self.opts.quiet < level(stmt, &result) {
             println!(
                 "{}: `{}` {}",
                 strip_span(self.ws.root(), &span).unwrap(),
                 stmt.to_token_stream(),
-                style(&msg).bold().paint(msg.to_string())
+                style(&result).bold().paint(result.to_string())
             )
         }
     }
