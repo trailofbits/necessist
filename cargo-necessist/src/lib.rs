@@ -81,7 +81,7 @@ fn level(stmt: &Stmt, result: &removal::Result) -> u32 {
         removal::Result::Skipped => LEVEL_SKIPPED,
         removal::Result::Nonbuildable => LEVEL_NONBUILDABLE,
         removal::Result::Failed => {
-            if is_local(stmt) {
+            if matches!(stmt, Stmt::Local(_)) {
                 LEVEL_FAILED_LOCAL
             } else {
                 LEVEL_FAILED_NONLOCAL
@@ -266,7 +266,7 @@ impl<'ast, 'a> Visit<'ast> for StmtVisitor<'a> {
         );
 
         if is_whitelisted_macro(stmt)
-            || (self.opts.skip_locals && is_local(stmt))
+            || (self.opts.skip_locals && matches!(stmt, Stmt::Local(_)))
             || self
                 .skip_calls_re
                 .map_or(false, |re| is_skipped_call(re, stmt))
@@ -391,13 +391,6 @@ fn is_instrumented(item: &ItemFn) -> bool {
             .iter()
             .all(|PathSegment { ident, arguments }| ident == "necessist" && arguments.is_empty())
     })
-}
-
-fn is_local(stmt: &Stmt) -> bool {
-    match stmt {
-        Stmt::Local(_) => true,
-        _ => false,
-    }
 }
 
 fn is_whitelisted_macro(stmt: &Stmt) -> bool {
