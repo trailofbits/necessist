@@ -4,10 +4,10 @@
 #![warn(clippy::panic)]
 
 use ansi_term::{
-    Color::{Cyan, Green, Red, Yellow},
+    Color::{Blue, Cyan, Green, Red, Yellow},
     Style,
 };
-use anyhow::{ensure, Result};
+use anyhow::Result;
 use cargo::{
     core::{package::Package, Workspace},
     sources::PathSource,
@@ -22,11 +22,11 @@ use std::{
     ffi::OsStr,
     fmt::Debug,
     fs::File,
-    io::Read,
-    io::{BufRead, BufReader},
+    io::{self, ErrorKind, Read},
     path::{Path, PathBuf},
+    time::Duration,
 };
-use subprocess::{Exec, NullFile, Redirection};
+use subprocess::{Exec, NullFile, PopenError, Redirection};
 use syn::{
     export::ToTokens,
     spanned::Spanned,
@@ -34,10 +34,14 @@ use syn::{
     Expr, ExprCall, ExprMacro, ExprMethodCall, ExprPath, ItemFn, Macro, PathSegment, Stmt,
 };
 
+const DEFAULT_TIMEOUT: Duration = Duration::from_secs(60);
+
 const LEVEL_SKIPPED: u32 = 1;
 const LEVEL_NONBUILDABLE: u32 = 2;
 const LEVEL_FAILED_NONLOCAL: u32 = 3;
+const LEVEL_TIMEDOUT_NONLOCAL: u32 = 3;
 const LEVEL_FAILED_LOCAL: u32 = 4;
+const LEVEL_TIMEDOUT_LOCAL: u32 = 4;
 const LEVEL_MAX: u32 = u32::MAX;
 
 const MACRO_WHITELIST: &[&str] = &[
@@ -55,6 +59,7 @@ mod removal {
         Skipped,
         Nonbuildable,
         Failed,
+        TimedOut,
         Passed,
     }
 
@@ -68,6 +73,7 @@ mod removal {
                     Result::Skipped => "skipped",
                     Result::Nonbuildable => "nonbuildable",
                     Result::Failed => "failed",
+                    Result::TimedOut => "timed-out",
                     Result::Passed => "passed",
                 }
             )
@@ -87,6 +93,13 @@ fn level(stmt: &Stmt, result: &removal::Result) -> u32 {
                 LEVEL_FAILED_NONLOCAL
             }
         }
+        removal::Result::TimedOut => {
+            if matches!(stmt, Stmt::Local(_)) {
+                LEVEL_TIMEDOUT_LOCAL
+            } else {
+                LEVEL_TIMEDOUT_NONLOCAL
+            }
+        }
         removal::Result::Passed => LEVEL_MAX,
     }
 }
@@ -96,7 +109,8 @@ fn style(result: &removal::Result) -> Style {
         removal::Result::Inconclusive => Red.normal(),
         removal::Result::Skipped => Yellow.normal(),
         removal::Result::Nonbuildable => Style::default(),
-        removal::Result::Failed => Cyan.normal(),
+        removal::Result::Failed => Blue.normal(),
+        removal::Result::TimedOut => Cyan.normal(),
         removal::Result::Passed => Green.normal(),
     }
 }
@@ -135,6 +149,11 @@ struct Necessist {
         alias = "skip-lets"
     )]
     skip_locals: bool,
+    #[clap(
+        long,
+        about = "Maximum number of seconds to run any test; 60 is the default, 0 means no timeout"
+    )]
+    timeout: Option<u64>,
 }
 
 pub fn cargo_necessist<T: AsRef<OsStr>>(args: &[T]) -> Result<()> {
@@ -157,13 +176,8 @@ pub fn cargo_necessist<T: AsRef<OsStr>>(args: &[T]) -> Result<()> {
     }
 
     for pkg in ws.members() {
-        if test(&opts, &pkg, None, false).is_err() {
+        if test(&opts, &pkg, None, None, false).is_err() {
             warn(&format!("{}: tests did not build; skipping", pkg.name()));
-            continue;
-        }
-
-        if test(&opts, &pkg, None, true).is_err() {
-            warn(&format!("{}: tests failed; skipping", pkg.name()));
             continue;
         }
 
@@ -224,6 +238,29 @@ struct ItemFnVisitor<'a> {
 impl<'ast, 'a> Visit<'ast> for ItemFnVisitor<'a> {
     fn visit_item_fn(&mut self, item: &'ast ItemFn) {
         if is_instrumented(item) {
+            // smoelius: The tests must be run individually because they could timeout.
+            match test(
+                self.context.opts,
+                self.context.pkg,
+                Some(&item.sig.ident.to_string()),
+                None,
+                true,
+            ) {
+                Ok(_) => {}
+                Err(err) => {
+                    warn(&format!(
+                        "test `{}` {}; skipping",
+                        item.sig.ident,
+                        if is_timeout(err) {
+                            "timed-out"
+                        } else {
+                            "failed"
+                        }
+                    ));
+                    return;
+                }
+            }
+
             StmtVisitor {
                 context: self.context,
                 path: self.path.clone(),
@@ -277,36 +314,51 @@ impl<'ast, 'a> Visit<'ast> for StmtVisitor<'a> {
             return;
         }
 
-        if let Ok(removed) = test(
+        match test(
             &self.context.opts,
             &self.context.pkg,
-            Some((&self.ident, &span)),
+            Some(&self.ident),
+            Some(&span),
             false,
         ) {
-            if !removed {
-                self.emit(&span, stmt, removal::Result::Inconclusive);
-                return;
+            Ok(removed) => {
+                if !removed {
+                    self.emit(&span, stmt, removal::Result::Inconclusive);
+                    return;
+                }
+
+                match test(
+                    &self.context.opts,
+                    &self.context.pkg,
+                    Some(&self.ident),
+                    Some(&span),
+                    true,
+                ) {
+                    Ok(removed) => {
+                        // smoelius: A "removed" message should be generated when the target is built,
+                        // but not when it is run.
+                        assert!(!removed);
+
+                        self.emit(&span, stmt, removal::Result::Passed)
+                    }
+                    Err(err) => {
+                        self.emit(
+                            &span,
+                            stmt,
+                            if is_timeout(err) {
+                                removal::Result::TimedOut
+                            } else {
+                                removal::Result::Failed
+                            },
+                        );
+                    }
+                }
             }
-
-            if let Ok(removed) = test(
-                &self.context.opts,
-                &self.context.pkg,
-                Some((&self.ident, &span)),
-                true,
-            ) {
-                // smoelius: A "removed" message should be generated when the target is built, but
-                // not when it is run.
-                assert!(!removed);
-
-                self.emit(&span, stmt, removal::Result::Passed);
-                return;
+            Err(err) => {
+                assert!(!is_timeout(err));
+                self.emit(&span, stmt, removal::Result::Nonbuildable);
             }
-
-            self.emit(&span, stmt, removal::Result::Failed);
-            return;
         }
-
-        self.emit(&span, stmt, removal::Result::Nonbuildable);
     }
 }
 
@@ -332,10 +384,11 @@ fn strip_span(path: &Path, span: &necessist::Span) -> Result<necessist::Span> {
 fn test(
     opts: &Necessist,
     pkg: &Package,
-    ident_span: Option<(&str, &necessist::Span)>,
+    ident: Option<&str>,
+    span: Option<&necessist::Span>,
     run: bool,
-) -> Result<bool> {
-    let env = ident_span.map_or(vec![], |(_, span)| {
+) -> subprocess::Result<bool> {
+    let env = span.map_or(vec![], |span| {
         let mut env = vec![("NECESSIST".to_owned(), "1".to_owned())];
         env.extend(span.to_vec());
         if opts.show_build {
@@ -353,7 +406,7 @@ fn test(
         // smoelius: This could run more tests than just the one that interests us. However, there
         // does not seem to be an easy way to match a test to the file in which it appears. So, for
         // now, this seems to be as good an approach as any.
-        if let Some((ident, _)) = ident_span {
+        if let Some(ident) = ident {
             args.extend(&["--", "--test", ident]);
         }
     }
@@ -369,21 +422,52 @@ fn test(
 
     debug!("{:?}", exec);
 
-    let mut popen = exec.clone().popen()?;
-    let stream = popen.stdout.take().unwrap();
+    let mut popen = exec.popen()?;
+    // smoelius: Ensure the process is killed, e.g., if a timeout occurs. Otherwise, we will wait on
+    // it.
+    let result = || -> std::result::Result<_, PopenError> {
+        let mut communicator = popen.communicate_start(None);
+        if run {
+            if let Some(time) = timeout(opts) {
+                communicator = communicator.limit_time(time);
+            }
+        }
+        let (stdout, _) = communicator.read_string()?;
 
-    let mut removed = false;
-    let removed_msg = ident_span.map(|(_, span)| removed_message(span));
-    for line in BufReader::new(stream).lines() {
-        let line = line?;
-        debug! {"{}", line};
-        removed |= removed_msg.as_ref().map_or(false, |msg| &line == msg);
+        let mut removed = false;
+        let removed_msg = span.map(|span| removed_message(span));
+        for line in stdout.expect("stdout was not piped").lines() {
+            debug! {"{}", line};
+            removed |= removed_msg.as_ref().map_or(false, |msg| line == msg);
+        }
+
+        let status = popen.wait_timeout(Duration::new(0, 0))?;
+        status.map_or(
+            Err(PopenError::IoError(io::Error::new(
+                io::ErrorKind::TimedOut,
+                "timeout",
+            ))),
+            |status| {
+                if status.success() {
+                    Ok(removed)
+                } else {
+                    Err(PopenError::LogicError("failed"))
+                }
+            },
+        )
+    }();
+
+    popen.kill().unwrap_or_default();
+
+    result
+}
+
+fn timeout(opts: &Necessist) -> Option<Duration> {
+    match opts.timeout {
+        None => Some(DEFAULT_TIMEOUT),
+        Some(0) => None,
+        Some(secs) => Some(Duration::from_secs(secs)),
     }
-
-    let status = popen.wait()?;
-    ensure!(status.success(), "command failed: {:?}", exec);
-
-    Ok(removed)
 }
 
 fn warnings_are_denied(ws: &Workspace) -> Result<bool> {
@@ -441,6 +525,13 @@ fn is_skipped_call(re: &Regex, stmt: &Stmt) -> bool {
         _ => None,
     })
     .map_or(false, |ident| re.is_match(&ident.to_string().as_str()))
+}
+
+fn is_timeout(err: PopenError) -> bool {
+    match err {
+        PopenError::IoError(err) => err.kind() == ErrorKind::TimedOut,
+        _ => false,
+    }
 }
 
 fn warn(msg: &str) {
