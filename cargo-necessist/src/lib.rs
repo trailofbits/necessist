@@ -185,10 +185,12 @@ pub fn cargo_necessist<T: AsRef<OsStr>>(args: &[T]) -> Result<()> {
             match syn::parse_file(&content) {
                 Ok(file) => {
                     ItemFnVisitor {
-                        opts: &opts,
-                        skip_calls_re: skip_calls_re.as_ref(),
-                        ws: &ws,
-                        pkg: &pkg,
+                        context: &Context {
+                            opts: &opts,
+                            skip_calls_re: skip_calls_re.as_ref(),
+                            ws: &ws,
+                            pkg: &pkg,
+                        },
                         path,
                     }
                     .visit_file(&file);
@@ -207,11 +209,15 @@ pub fn cargo_necessist<T: AsRef<OsStr>>(args: &[T]) -> Result<()> {
     Ok(())
 }
 
-struct ItemFnVisitor<'a> {
+struct Context<'a> {
     opts: &'a Necessist,
     skip_calls_re: Option<&'a Regex>,
     ws: &'a Workspace<'a>,
     pkg: &'a Package,
+}
+
+struct ItemFnVisitor<'a> {
+    context: &'a Context<'a>,
     path: PathBuf,
 }
 
@@ -219,10 +225,7 @@ impl<'ast, 'a> Visit<'ast> for ItemFnVisitor<'a> {
     fn visit_item_fn(&mut self, item: &'ast ItemFn) {
         if is_instrumented(item) {
             StmtVisitor {
-                opts: self.opts,
-                skip_calls_re: self.skip_calls_re,
-                ws: self.ws,
-                pkg: self.pkg,
+                context: self.context,
                 path: self.path.clone(),
                 ident: item.sig.ident.to_string(),
                 leaves_visited: Cell::new(0),
@@ -233,10 +236,7 @@ impl<'ast, 'a> Visit<'ast> for ItemFnVisitor<'a> {
 }
 
 struct StmtVisitor<'a> {
-    opts: &'a Necessist,
-    skip_calls_re: Option<&'a Regex>,
-    ws: &'a Workspace<'a>,
-    pkg: &'a Package,
+    context: &'a Context<'a>,
     path: PathBuf,
     ident: String,
     leaves_visited: Cell<usize>,
@@ -256,6 +256,7 @@ impl<'ast, 'a> Visit<'ast> for StmtVisitor<'a> {
 
         let span = necessist::Span::from_span(
             &self
+                .context
                 .pkg
                 .root()
                 .parent()
@@ -266,8 +267,9 @@ impl<'ast, 'a> Visit<'ast> for StmtVisitor<'a> {
         );
 
         if is_whitelisted_macro(stmt)
-            || (self.opts.skip_locals && matches!(stmt, Stmt::Local(_)))
+            || (self.context.opts.skip_locals && matches!(stmt, Stmt::Local(_)))
             || self
+                .context
                 .skip_calls_re
                 .map_or(false, |re| is_skipped_call(re, stmt))
         {
@@ -275,13 +277,23 @@ impl<'ast, 'a> Visit<'ast> for StmtVisitor<'a> {
             return;
         }
 
-        if let Ok(removed) = test(&self.opts, &self.pkg, Some((&self.ident, &span)), false) {
+        if let Ok(removed) = test(
+            &self.context.opts,
+            &self.context.pkg,
+            Some((&self.ident, &span)),
+            false,
+        ) {
             if !removed {
                 self.emit(&span, stmt, removal::Result::Inconclusive);
                 return;
             }
 
-            if let Ok(removed) = test(&self.opts, &self.pkg, Some((&self.ident, &span)), true) {
+            if let Ok(removed) = test(
+                &self.context.opts,
+                &self.context.pkg,
+                Some((&self.ident, &span)),
+                true,
+            ) {
                 // smoelius: A "removed" message should be generated when the target is built, but
                 // not when it is run.
                 assert!(!removed);
@@ -300,10 +312,10 @@ impl<'ast, 'a> Visit<'ast> for StmtVisitor<'a> {
 
 impl<'a> StmtVisitor<'a> {
     fn emit(&self, span: &necessist::Span, stmt: &Stmt, result: removal::Result) {
-        if self.opts.quiet < level(stmt, &result) {
+        if self.context.opts.quiet < level(stmt, &result) {
             println!(
                 "{}: `{}` {}",
-                strip_span(self.ws.root(), &span).unwrap(),
+                strip_span(self.context.ws.root(), &span).unwrap(),
                 stmt.to_token_stream(),
                 style(&result).bold().paint(result.to_string())
             )
