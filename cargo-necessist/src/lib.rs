@@ -40,6 +40,15 @@ const LEVEL_FAILED_NONLOCAL: u32 = 3;
 const LEVEL_FAILED_LOCAL: u32 = 4;
 const LEVEL_MAX: u32 = u32::MAX;
 
+const MACRO_WHITELIST: &[&str] = &[
+    "assert",
+    "assert_eq",
+    "assert_ne",
+    "panic",
+    "unimplemented",
+    "unreachable",
+];
+
 enum Message {
     Inconclusive,
     Skipped,
@@ -89,15 +98,6 @@ fn style(msg: &Message) -> Style {
         Message::Passed => Green.normal(),
     }
 }
-
-const MACRO_WHITELIST: &[&str] = &[
-    "assert",
-    "assert_eq",
-    "assert_ne",
-    "panic",
-    "unimplemented",
-    "unreachable",
-];
 
 #[derive(Clap, Debug)]
 struct Opts {
