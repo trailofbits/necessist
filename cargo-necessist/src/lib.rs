@@ -575,8 +575,7 @@ fn warnings_are_denied(ws: &Workspace) -> Result<bool> {
     Ok(config.rustflags.as_ref().map_or(false, |list| {
         list.as_slice()
             .windows(2)
-            .position(|pair| pair == &["-D", "warnings"])
-            .is_some()
+            .any(|pair| pair == ["-D", "warnings"])
     }))
 }
 
