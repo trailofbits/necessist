@@ -61,7 +61,7 @@ update_rust_sources() {
     find "$1" -name '*.rs' |
     while read X; do
         if grep -- '^[[:space:]]*#\[necessist::necessist\]$' "$X" > /dev/null; then
-            echo "$0: $X already uses necessist; skipping" >&2
+            # echo "$0: $X already uses necessist; skipping" >&2
             continue
         fi
         sed -i 's/^\([[:space:]]*\)#\[test\]/\1#[necessist::necessist]\n&/' "$X"
