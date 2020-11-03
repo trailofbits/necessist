@@ -1,4 +1,4 @@
-# necessist
+# Necessist
 
 Runs tests with statements removed to help identify unnecessary statements
 
@@ -6,7 +6,7 @@ Runs tests with statements removed to help identify unnecessary statements
 
 ```sh
 cd necessist
-cargo build
+cargo build --workspace
 source env.sh
 ```
 
@@ -17,26 +17,29 @@ source env.sh
 1. `necessist_instrument.sh`
 1. `cargo necessist`
 
+By default, necessist outputs to the console. Passing `--sqlite` causes necessist to instead output to a sqlite database. A tool like [sqlitebrowser](https://sqlitebrowser.org/) can then be used to filter/sort the results.
+
 ## Output
 
-| Message  | Meaning (With the statement removed...) | Silenced with|
+| Result  | Meaning (With the statement removed...) | Silenced with|
 |-|-|-|
 | <span style="color:green">passed</span> | The tests built and passed. | n/a |
-| <span style="color:cyan">built</span> | The tests built but did not pass. | See below. |
-| failed | The tests did not build. | `-qq` |
+| <span style="color:cyan">timed-out</span> | The tests built but timed-out. | See below. |
+| <span style="color:blue">failed</span> | The tests built but failed. | See below. |
+| nonbuildable | The tests did not build. | `-qq` |
 | <span style="color:yellow">skipped</span> | See below.  | `-q` |
-| <span style="color:red">inconclusive</span> | An internal error (e.g., [rust-lang/rust#75734](https://github.com/rust-lang/rust/issues/75734)) prevented `necessist` from removing the statement. | n/a |
+| <span style="color:red">inconclusive</span> | An internal error (e.g., [rust-lang/rust#75734](https://github.com/rust-lang/rust/issues/75734)) prevented necessist from removing the statement. | n/a |
 
-### Silencing <span style="color:cyan">built</span> messages
+### Silencing <span style="color:cyan">timed-out</span> and <span style="color:blue">failed</span> results
 
-* Passing `-qqq` silences <span style="color:cyan">built</span> messages for all statements *except* local (let) bindings.
-* Passing `-qqqq` silences <span style="color:cyan">built</span> messages entirely.
+* Passing `-qqq` silences <span style="color:cyan">timed-out</span> and <span style="color:blue">failed</span> results for all statements *except* local (let) bindings.
+* Passing `-qqqq` silences <span style="color:cyan">timed-out</span> and <span style="color:blue">failed</span> results entirely.
 
 ### Skipped statements
 
 Necessist will not attempt to remove a statement if any of the following conditions apply.
 
-* The statement is an invocation of [whitelisted macro](#whitelisted-macros).
+* The statement is an invocation of a [whitelisted macro](#whitelisted-macros).
 * `--skip-locals` is passed and the statement is a local (let) binding.
 * `--skip-calls regex` is passed and the statment is a function call, macro invocation, or method call matching `regex`.
 
