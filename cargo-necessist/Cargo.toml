@@ -27,3 +27,7 @@ subprocess = "0.2.6"
 syn = { version = "1.0.48", features = ["extra-traits", "full", "visit"] }
 
 necessist-common = { path = "../common" }
+
+[dev-dependencies]
+assert_cmd = "1.0.1"
+predicates = "1.0.5"

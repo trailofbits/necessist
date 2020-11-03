@@ -641,3 +641,22 @@ fn warn(pkg: Option<&Package>, msg: &str) {
         msg
     );
 }
+
+#[cfg(test)]
+mod test {
+    use assert_cmd::prelude::*;
+    use predicates::prelude::*;
+    use std::process::Command;
+
+    const TEST_DIR: &str = "../examples";
+
+    #[test]
+    fn cargo_necessist() {
+        Command::new("cargo")
+            .current_dir(TEST_DIR)
+            .args(&["necessist", "--timeout", "2"])
+            .assert()
+            .success()
+            .stdout(predicate::path::eq_file("cargo_necessist.stdout"));
+    }
+}
