@@ -351,7 +351,7 @@ impl<'ast, 'a> Visit<'ast> for StmtVisitor<'a> {
                 .pkg
                 .root()
                 .parent()
-                .unwrap()
+                .expect("Could not determine workspace path")
                 .to_path_buf()
                 .join(&self.path),
             stmt.span(),
