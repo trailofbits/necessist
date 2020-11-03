@@ -611,7 +611,7 @@ fn is_skipped_call(re: &Regex, stmt: &Stmt) -> bool {
         Stmt::Semi(expr, ..) => Some(expr),
         _ => None,
     }
-    .map_or(None, |expr| match expr {
+    .and_then(|expr| match expr {
         Expr::Call(ExprCall {
             func: box Expr::Path(ExprPath { path, .. }),
             ..
