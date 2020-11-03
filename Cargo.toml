@@ -14,7 +14,8 @@ necessist-macro = { path = "./macro", version = "0.1.0-alpha" }
 
 [workspace]
 members = [
-    ".",
     "cargo-necessist",
+    "common",
+    "examples",
     "macro",
 ]
