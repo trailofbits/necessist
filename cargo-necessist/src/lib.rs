@@ -14,14 +14,17 @@ use cargo::{
     util::config::Config,
 };
 use clap::Clap;
+use git2::{Oid, Repository};
 use log::debug;
 use necessist_common::{self as necessist, removed_message};
 use regex::Regex;
+use rustorm::*;
 use std::{
-    cell::Cell,
+    cell::{Cell, RefCell},
     ffi::OsStr,
     fmt::Debug,
     fs::File,
+    include_str,
     io::{self, ErrorKind, Read},
     path::{Path, PathBuf},
     time::Duration,
@@ -115,6 +118,16 @@ fn style(result: &removal::Result) -> Style {
     }
 }
 
+#[derive(Debug, FromDao, ToDao, ToColumnNames, ToTableName)]
+pub struct Removal {
+    pub pkg: String,
+    pub test: String,
+    pub span: String,
+    pub stmt: String,
+    pub result: String,
+    pub url: String,
+}
+
 #[derive(Clap, Debug)]
 struct Opts {
     #[clap(subcommand)]
@@ -149,6 +162,8 @@ struct Necessist {
         alias = "skip-lets"
     )]
     skip_locals: bool,
+    #[clap(long, about = "Output to a sqlite database instead of to the console")]
+    sqlite: bool,
     #[clap(
         long,
         about = "Maximum number of seconds to run any test; 60 is the default, 0 means no timeout"
@@ -164,6 +179,32 @@ pub fn cargo_necessist<T: AsRef<OsStr>>(args: &[T]) -> Result<()> {
         .as_ref()
         .map(|re| Regex::new(&re))
         .transpose()?;
+
+    let sqlite = if opts.sqlite {
+        let mut pool = Pool::new();
+        let mut em = pool.em("sqlite://necessist.db")?;
+        let sql = include_str!("create_table_removal.sql");
+        if let Err(err) = em.execute_sql_with_return::<Removal>(sql, &[]) {
+            warn(&err.to_string());
+        }
+        let em = Some(RefCell::new(em));
+
+        let repository = Repository::open(".")?;
+        let origin = repository.find_remote("origin");
+        let remote = origin
+            .ok()
+            .and_then(|origin| origin.url().map(str::to_owned))
+            .and_then(|url| {
+                repository
+                    .refname_to_id("HEAD")
+                    .ok()
+                    .map(|head| (url, head))
+            });
+
+        (em, remote)
+    } else {
+        (None, None)
+    };
 
     let default_config = Config::default()?;
 
@@ -202,10 +243,13 @@ pub fn cargo_necessist<T: AsRef<OsStr>>(args: &[T]) -> Result<()> {
                         context: &Context {
                             opts: &opts,
                             skip_calls_re: skip_calls_re.as_ref(),
+                            em: sqlite.0.as_ref(),
+                            remote: sqlite.1.as_ref(),
                             ws: &ws,
                             pkg: &pkg,
                         },
                         path,
+                        instrumented_item_count: Cell::new(0),
                     }
                     .visit_file(&file);
                 }
@@ -226,6 +270,8 @@ pub fn cargo_necessist<T: AsRef<OsStr>>(args: &[T]) -> Result<()> {
 struct Context<'a> {
     opts: &'a Necessist,
     skip_calls_re: Option<&'a Regex>,
+    em: Option<&'a RefCell<EntityManager>>,
+    remote: Option<&'a (String, Oid)>,
     ws: &'a Workspace<'a>,
     pkg: &'a Package,
 }
@@ -233,11 +279,15 @@ struct Context<'a> {
 struct ItemFnVisitor<'a> {
     context: &'a Context<'a>,
     path: PathBuf,
+    instrumented_item_count: Cell<usize>,
 }
 
 impl<'ast, 'a> Visit<'ast> for ItemFnVisitor<'a> {
     fn visit_item_fn(&mut self, item: &'ast ItemFn) {
         if is_instrumented(item) {
+            self.instrumented_item_count
+                .set(self.instrumented_item_count.get() + 1);
+
             // smoelius: The tests must be run individually because they could timeout.
             match test(
                 self.context.opts,
@@ -264,6 +314,7 @@ impl<'ast, 'a> Visit<'ast> for ItemFnVisitor<'a> {
             StmtVisitor {
                 context: self.context,
                 path: self.path.clone(),
+                instrumented_item_count: self.instrumented_item_count.get(),
                 ident: item.sig.ident.to_string(),
                 leaves_visited: Cell::new(0),
             }
@@ -275,6 +326,7 @@ impl<'ast, 'a> Visit<'ast> for ItemFnVisitor<'a> {
 struct StmtVisitor<'a> {
     context: &'a Context<'a>,
     path: PathBuf,
+    instrumented_item_count: usize,
     ident: String,
     leaves_visited: Cell<usize>,
 }
@@ -364,10 +416,35 @@ impl<'ast, 'a> Visit<'ast> for StmtVisitor<'a> {
 
 impl<'a> StmtVisitor<'a> {
     fn emit(&self, span: &necessist::Span, stmt: &Stmt, result: removal::Result) {
-        if self.context.opts.quiet < level(stmt, &result) {
+        let stripped_span =
+            strip_span(self.context.ws.root(), &span).expect("Unexpected span source file");
+        if let Some(em) = self.context.em {
+            let removal = Removal {
+                pkg: self.context.pkg.name().to_string(),
+                test: self.ident.to_string(),
+                span: stripped_span.to_string(),
+                stmt: stmt.to_token_stream().to_string(),
+                result: result.to_string(),
+                url: self
+                    .context
+                    .remote
+                    .map(|(base_url, oid)| {
+                        url_from_stripped_span(
+                            base_url,
+                            oid,
+                            self.instrumented_item_count,
+                            &stripped_span,
+                        )
+                    })
+                    .unwrap_or_default(),
+            };
+            em.borrow_mut()
+                .single_insert(&removal)
+                .expect("Could not insert into table `removal`");
+        } else if self.context.opts.quiet < level(stmt, &result) {
             println!(
                 "{}: `{}` {}",
-                strip_span(self.context.ws.root(), &span).unwrap(),
+                stripped_span,
                 stmt.to_token_stream(),
                 style(&result).bold().paint(result.to_string())
             )
@@ -379,6 +456,27 @@ fn strip_span(path: &Path, span: &necessist::Span) -> Result<necessist::Span> {
     let mut span = span.clone();
     span.source_file = span.source_file.strip_prefix(path)?.to_path_buf();
     Ok(span)
+}
+
+// smoelius: The `adjustment` parameter accounts for the `#[necessist::necessist]` inserted by
+// `necessist_instrument.sh`. Without this parameter, the generated line numbers would be too high.
+// Changes to `necessist_instrument.sh` might warrant changes to this function as well.
+fn url_from_stripped_span(
+    base_url: &str,
+    oid: &Oid,
+    adjustment: usize,
+    span: &necessist::Span,
+) -> String {
+    let base_url = base_url.strip_suffix(".git").unwrap_or(base_url).to_owned();
+    base_url
+        + "/blob/"
+        + &oid.to_string()
+        + "/"
+        + &span.source_file.to_string_lossy()
+        + "#L"
+        + &(span.start.line - adjustment).to_string()
+        + "-L"
+        + &(span.end.line - adjustment).to_string()
 }
 
 fn test(
