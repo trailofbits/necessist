@@ -185,7 +185,7 @@ pub fn cargo_necessist<T: AsRef<OsStr>>(args: &[T]) -> Result<()> {
         let mut em = pool.em("sqlite://necessist.db")?;
         let sql = include_str!("create_table_removal.sql");
         if let Err(err) = em.execute_sql_with_return::<Removal>(sql, &[]) {
-            warn(&err.to_string());
+            warn(None, &err.to_string());
         }
         let em = Some(RefCell::new(em));
 
@@ -213,12 +213,12 @@ pub fn cargo_necessist<T: AsRef<OsStr>>(args: &[T]) -> Result<()> {
     let ws = Workspace::new(&path, &default_config)?;
 
     if warnings_are_denied(&ws)? {
-        warn("rust appears to be configured to deny warnings; allowing warnings is strongly recommended");
+        warn(None, "rust appears to be configured to deny warnings; allowing warnings is strongly recommended");
     }
 
     for pkg in ws.members() {
         if test(&opts, &pkg, None, None, false).is_err() {
-            warn(&format!("{}: tests did not build; skipping", pkg.name()));
+            warn(Some(pkg), "tests did not build; skipping");
             continue;
         }
 
@@ -254,11 +254,10 @@ pub fn cargo_necessist<T: AsRef<OsStr>>(args: &[T]) -> Result<()> {
                     .visit_file(&file);
                 }
                 Err(err) => {
-                    warn(&format!(
-                        "Could not parse {}: {}",
-                        path.to_string_lossy(),
-                        err
-                    ));
+                    warn(
+                        Some(pkg),
+                        &format!("could not parse {}: {}", path.to_string_lossy(), err),
+                    );
                 }
             }
         }
@@ -298,15 +297,18 @@ impl<'ast, 'a> Visit<'ast> for ItemFnVisitor<'a> {
             ) {
                 Ok(_) => {}
                 Err(err) => {
-                    warn(&format!(
-                        "test `{}` {}; skipping",
-                        item.sig.ident,
-                        if is_timeout(err) {
-                            "timed-out"
-                        } else {
-                            "failed"
-                        }
-                    ));
+                    warn(
+                        Some(self.context.pkg),
+                        &format!(
+                            "test `{}` {}; skipping",
+                            item.sig.ident,
+                            if is_timeout(err) {
+                                "timed-out"
+                            } else {
+                                "failed"
+                            }
+                        ),
+                    );
                     return;
                 }
             }
@@ -632,6 +634,11 @@ fn is_timeout(err: PopenError) -> bool {
     }
 }
 
-fn warn(msg: &str) {
-    println!("{}: {}", Yellow.bold().paint("warning"), msg);
+fn warn(pkg: Option<&Package>, msg: &str) {
+    println!(
+        "{}: {}{}",
+        Yellow.bold().paint("warning"),
+        &pkg.map_or("".to_owned(), |pkg| format!("{}: ", pkg.name())),
+        msg
+    );
 }
