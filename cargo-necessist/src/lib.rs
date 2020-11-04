@@ -217,8 +217,11 @@ pub fn cargo_necessist<T: AsRef<OsStr>>(args: &[T]) -> Result<()> {
     }
 
     for pkg in ws.members() {
-        if test(&opts, &pkg, None, None, false).is_err() {
-            warn(Some(pkg), "tests did not build; skipping");
+        if let Err(err) = test(&opts, &pkg, None, None, false) {
+            warn(
+                Some(pkg),
+                &format!("skipping because tests did not build: {}", err),
+            );
             continue;
         }
 
@@ -300,7 +303,7 @@ impl<'ast, 'a> Visit<'ast> for ItemFnVisitor<'a> {
                     warn(
                         Some(self.context.pkg),
                         &format!(
-                            "test `{}` {}; skipping",
+                            "skipping test `{}` because it {}",
                             item.sig.ident,
                             if is_timeout(err) {
                                 "timed-out"
