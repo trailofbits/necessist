@@ -10,7 +10,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Build
-      run: cargo build
+      run: cargo build --workspace
 
     - name: Test
       run: PATH="$PWD/target/debug:$PATH" cargo test --workspace
