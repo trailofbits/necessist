@@ -544,7 +544,11 @@ fn test(
             removed |= removed_msg.as_ref().map_or(false, |msg| line == msg);
         }
 
-        let status = popen.wait_timeout(Duration::new(0, 0))?;
+        let status = if run {
+            popen.wait_timeout(Duration::default())?
+        } else {
+            Some(popen.wait()?)
+        };
         status.map_or(
             Err(PopenError::IoError(io::Error::new(
                 io::ErrorKind::TimedOut,
