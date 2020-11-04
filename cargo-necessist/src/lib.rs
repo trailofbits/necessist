@@ -656,12 +656,22 @@ mod test {
     use std::process::Command;
 
     const TEST_DIR: &str = "../examples";
+    const TOOLCHAIN: &str = "nightly-2020-10-14";
 
     #[test]
     fn cargo_necessist() {
+        Command::new("rustup")
+            .current_dir(TEST_DIR)
+            .env("RUSTUP_TOOLCHAIN", TOOLCHAIN)
+            .args(&["show", "active-toolchain"])
+            .assert()
+            .success()
+            .stdout(predicate::str::starts_with(TOOLCHAIN));
+
         Command::new("cargo")
             .current_dir(TEST_DIR)
-            .args(&["necessist", "--timeout", "2"])
+            .env("RUSTUP_TOOLCHAIN", TOOLCHAIN)
+            .args(&["necessist", "--timeout", "5"])
             .assert()
             .success()
             .stdout(predicate::path::eq_file("cargo_necessist.stdout"));
