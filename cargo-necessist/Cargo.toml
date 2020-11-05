@@ -1,0 +1,33 @@
+[package]
+name = "cargo-necessist"
+version = "0.1.0-alpha.0"
+edition = "2018"
+
+description = "cargo-necessist"
+
+authors = ["Samuel E. Moelius III <sam@moeli.us>"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/smoelius/necessist"
+
+[[bin]]
+name = "cargo-necessist"
+path = "src/bin/cargo_necessist.rs"
+
+[dependencies]
+ansi_term = "0.12.1"
+anyhow = "1.0.33"
+cargo = "0.48.0"
+clap = "3.0.0-beta.1"
+env_logger = "0.8.1"
+git2 = "0.13.12"
+log = "0.4.11"
+regex = "1.4.1"
+rustorm = { version = "0.17.0", features = ["with-sqlite"] }
+subprocess = "0.2.6"
+syn = { version = "1.0.48", features = ["extra-traits", "full", "visit"] }
+
+necessist-common = { path = "../common" }
+
+[dev-dependencies]
+assert_cmd = "1.0.1"
+predicates = "1.0.5"

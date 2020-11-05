@@ -1,0 +1,21 @@
+[package]
+name = "necessist"
+version = "0.1.0-alpha.0"
+edition = "2018"
+
+description = "necessist"
+
+authors = ["Samuel E. Moelius III <sam@moeli.us>"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/smoelius/necessist"
+
+[dependencies]
+necessist-macro = { path = "./macro", version = "0.1.0-alpha" }
+
+[workspace]
+members = [
+    "cargo-necessist",
+    "common",
+    "examples",
+    "macro",
+]
