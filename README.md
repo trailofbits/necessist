@@ -50,3 +50,7 @@ Necessist will not attempt to remove a statement if any of the following conditi
 * `panic`
 * `unimplemented`
 * `unreachable`
+
+## References
+
+* Groce, A., Ahmed, I., Jensen, C., McKenney, P.E., Holmes, J.: How verified (or tested) is my code? Falsification-driven verification and testing. Autom. Softw. Eng. **25**, 917–960 (2018). A preprint is available [here](https://agroce.github.io/asej18.pdf). See Section 2.3.
