@@ -724,7 +724,7 @@ mod test {
 
         Command::new("sqlite3")
             .current_dir(TEST_DIR)
-            .args(&["necessist.db", "-readonly", "select * from removal"])
+            .args(&["necessist.db", "select * from removal"])
             .assert()
             .success()
             .stdout(predicate::path::eq_file("sqlite.stdout"));
