@@ -189,17 +189,18 @@ pub fn cargo_necessist<T: AsRef<OsStr>>(args: &[T]) -> Result<()> {
         }
         let em = Some(RefCell::new(em));
 
-        let repository = Repository::open(".")?;
-        let origin = repository.find_remote("origin");
-        let remote = origin
-            .ok()
-            .and_then(|origin| origin.url().map(str::to_owned))
-            .and_then(|url| {
-                repository
-                    .refname_to_id("HEAD")
-                    .ok()
-                    .map(|head| (url, head))
-            });
+        let remote = Repository::open(".").ok().and_then(|repository| {
+            repository
+                .find_remote("origin")
+                .ok()
+                .and_then(|origin| origin.url().map(str::to_owned))
+                .and_then(|url| {
+                    repository
+                        .refname_to_id("HEAD")
+                        .ok()
+                        .map(|head| (url, head))
+                })
+        });
 
         (em, remote)
     } else {
