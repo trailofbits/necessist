@@ -653,14 +653,26 @@ fn warn(pkg: Option<&Package>, msg: &str) {
 #[cfg(test)]
 mod test {
     use assert_cmd::prelude::*;
+    use lazy_static::lazy_static;
     use predicates::prelude::*;
-    use std::process::Command;
+    use std::{
+        path::{Path, PathBuf},
+        process::Command,
+        sync::Mutex,
+    };
 
     const TEST_DIR: &str = "../examples";
     const TOOLCHAIN: &str = "nightly-2020-10-14";
+    const TIMEOUT: &str = "10";
+
+    lazy_static! {
+        static ref MUTEX: Mutex<()> = Mutex::new(());
+    }
 
     #[test]
-    fn cargo_necessist() {
+    fn toolchain_sanity() {
+        let _mutex_guard = MUTEX.lock().unwrap();
+
         Command::new("rustup")
             .current_dir(TEST_DIR)
             .env("RUSTUP_TOOLCHAIN", TOOLCHAIN)
@@ -668,13 +680,53 @@ mod test {
             .assert()
             .success()
             .stdout(predicate::str::starts_with(TOOLCHAIN));
+    }
+
+    #[test]
+    fn console() {
+        let _mutex_guard = MUTEX.lock().unwrap();
 
         Command::new("cargo")
             .current_dir(TEST_DIR)
             .env("RUSTUP_TOOLCHAIN", TOOLCHAIN)
-            .args(&["necessist", "--timeout", "5"])
+            .args(&["necessist", "--timeout", TIMEOUT])
             .assert()
             .success()
-            .stdout(predicate::path::eq_file("cargo_necessist.stdout"));
+            .stdout(predicate::path::eq_file("console.stdout"));
+    }
+
+    struct RemoveFile(PathBuf);
+
+    impl Drop for RemoveFile {
+        fn drop(&mut self) {
+            std::fs::remove_file(self.0.as_path())
+                .map_err(|err| eprintln!("{}", err))
+                .unwrap_or_default();
+        }
+    }
+
+    #[test]
+    fn sqlite() {
+        let _mutex_guard = MUTEX.lock().unwrap();
+
+        let path = Path::new(TEST_DIR).join("necessist.db");
+
+        assert!(!path.exists());
+
+        let _remove_file = RemoveFile(path);
+
+        Command::new("cargo")
+            .current_dir(TEST_DIR)
+            .env("RUSTUP_TOOLCHAIN", TOOLCHAIN)
+            .args(&["necessist", "--timeout", TIMEOUT, "--sqlite"])
+            .assert()
+            .success();
+
+        Command::new("sqlite3")
+            .current_dir(TEST_DIR)
+            .args(&["necessist.db", "-readonly", "select * from removal"])
+            .assert()
+            .success()
+            .stdout(predicate::path::eq_file("sqlite.stdout"));
     }
 }

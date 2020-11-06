@@ -30,4 +30,5 @@ necessist-common = { path = "../common" }
 
 [dev-dependencies]
 assert_cmd = "1.0.1"
+lazy_static = "1.4.0"
 predicates = "1.0.5"
