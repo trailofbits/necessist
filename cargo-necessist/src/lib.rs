@@ -1,4 +1,5 @@
 #![feature(box_patterns)]
+#![feature(is_sorted)]
 #![warn(clippy::expect_used)]
 #![warn(clippy::unwrap_used)]
 #![warn(clippy::panic)]
@@ -26,7 +27,7 @@ use std::{
     fs::File,
     include_str,
     io::{self, ErrorKind, Read},
-    path::{Path, PathBuf},
+    path::Path,
     time::Duration,
 };
 use subprocess::{Exec, NullFile, PopenError, Redirection};
@@ -237,9 +238,18 @@ pub fn cargo_necessist<T: AsRef<OsStr>>(args: &[T]) -> Result<()> {
             }
 
             let mut file = File::open(&path)?;
-
             let mut content = String::new();
             file.read_to_string(&mut content)?;
+
+            let instrumentation: Vec<_> = {
+                let re = Regex::new(r"^[[:space:]]*#\[necessist::necessist\]$").unwrap();
+                content
+                    .lines()
+                    .enumerate()
+                    .filter_map(|(i, line)| if re.is_match(line) { Some(1 + i) } else { None })
+                    .collect()
+            };
+            assert!(instrumentation.is_sorted());
 
             match syn::parse_file(&content) {
                 Ok(file) => {
@@ -252,8 +262,8 @@ pub fn cargo_necessist<T: AsRef<OsStr>>(args: &[T]) -> Result<()> {
                             ws: &ws,
                             pkg: &pkg,
                         },
-                        path,
-                        instrumented_item_count: Cell::new(0),
+                        path: &path,
+                        instrumentation: &instrumentation,
                     }
                     .visit_file(&file);
                 }
@@ -281,16 +291,13 @@ struct Context<'a> {
 
 struct ItemFnVisitor<'a> {
     context: &'a Context<'a>,
-    path: PathBuf,
-    instrumented_item_count: Cell<usize>,
+    path: &'a Path,
+    instrumentation: &'a [usize],
 }
 
 impl<'ast, 'a> Visit<'ast> for ItemFnVisitor<'a> {
     fn visit_item_fn(&mut self, item: &'ast ItemFn) {
         if is_instrumented(item) {
-            self.instrumented_item_count
-                .set(self.instrumented_item_count.get() + 1);
-
             // smoelius: The tests must be run individually because they could timeout.
             match test(
                 self.context.opts,
@@ -319,8 +326,8 @@ impl<'ast, 'a> Visit<'ast> for ItemFnVisitor<'a> {
 
             StmtVisitor {
                 context: self.context,
-                path: self.path.clone(),
-                instrumented_item_count: self.instrumented_item_count.get(),
+                path: self.path,
+                instrumentation: self.instrumentation,
                 ident: item.sig.ident.to_string(),
                 leaves_visited: Cell::new(0),
             }
@@ -331,8 +338,8 @@ impl<'ast, 'a> Visit<'ast> for ItemFnVisitor<'a> {
 
 struct StmtVisitor<'a> {
     context: &'a Context<'a>,
-    path: PathBuf,
-    instrumented_item_count: usize,
+    path: &'a Path,
+    instrumentation: &'a [usize],
     ident: String,
     leaves_visited: Cell<usize>,
 }
@@ -438,7 +445,9 @@ impl<'a> StmtVisitor<'a> {
                         url_from_stripped_span(
                             base_url,
                             oid,
-                            self.instrumented_item_count,
+                            self.instrumentation
+                                .binary_search(&span.start.line)
+                                .unwrap_or_else(|i| i),
                             &stripped_span,
                         )
                     })
