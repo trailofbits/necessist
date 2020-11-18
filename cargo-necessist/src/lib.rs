@@ -157,9 +157,11 @@ struct Necessist {
         value_name = "regex"
     )]
     skip_calls: Option<String>,
+    #[clap(long, about = "Skip `break` and `continue` statements")]
+    skip_controls: bool,
     #[clap(
         long,
-        about = "Skip local (let) bindings (alias: --skip-lets)",
+        about = "Skip local (`let`) bindings (alias: --skip-lets)",
         alias = "skip-lets"
     )]
     skip_locals: bool,
@@ -370,6 +372,7 @@ impl<'ast, 'a> Visit<'ast> for StmtVisitor<'a> {
 
         if is_whitelisted_macro(stmt)
             || (self.context.opts.skip_locals && matches!(stmt, Stmt::Local(_)))
+            || (self.context.opts.skip_controls && is_control(stmt))
             || self
                 .context
                 .skip_calls_re
@@ -641,6 +644,19 @@ fn is_skipped_call(re: &Regex, stmt: &Stmt) -> bool {
         _ => None,
     })
     .map_or(false, |ident| re.is_match(&ident.to_string().as_str()))
+}
+
+fn is_control(stmt: &Stmt) -> bool {
+    match stmt {
+        Stmt::Expr(expr) => Some(expr),
+        Stmt::Semi(expr, ..) => Some(expr),
+        _ => None,
+    }
+    .map_or(false, |expr| match expr {
+        Expr::Break(_) => true,
+        Expr::Continue(_) => true,
+        _ => false,
+    })
 }
 
 fn is_timeout(err: PopenError) -> bool {
