@@ -7,9 +7,7 @@ set -eu
 
 pushd .. && source env.sh && popd
 
-rm -rf tmp
-mkdir tmp
-cd tmp
+cd "$(mktemp -d -p .)"
 
 git clone https://github.com/AltSysrq/proptest.git
 cd proptest
