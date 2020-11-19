@@ -40,8 +40,8 @@ By default, necessist outputs to the console. Passing `--sqlite` causes necessis
 Necessist will not attempt to remove a statement if any of the following conditions apply.
 
 * The statement is an invocation of a [whitelisted macro](#whitelisted-macros).
-* `--skip-calls regex` is passed and the statment is a function call, macro invocation, or method call matching `regex`.
-* `--skip-controls` is passed and the statment is a `break` or `continue`.
+* `--skip-calls regex` is passed and the statement is a function call, macro invocation, or method call matching `regex`.
+* `--skip-controls` is passed and the statement is a `break` or `continue`.
 * `--skip-locals` is passed and the statement is a local (`let`) binding.
 
 #### Whitelisted macros
