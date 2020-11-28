@@ -13,4 +13,4 @@ jobs:
       run: cargo build --workspace
 
     - name: Test
-      run: PATH="$PWD/target/debug:$PATH" cargo test --lib --workspace
+      run: PATH="$PWD/target/debug:$PATH" cargo test --workspace
