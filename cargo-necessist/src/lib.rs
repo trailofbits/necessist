@@ -486,6 +486,15 @@ fn url_from_stripped_span(
     span: &necessist::Span,
 ) -> String {
     let base_url = base_url.strip_suffix(".git").unwrap_or(base_url).to_owned();
+
+    let ssh_re = Regex::new(r"^[^@]*@([^:]*):(.*)$").unwrap();
+    let base_url = if let Some(captures) = ssh_re.captures(&base_url) {
+        assert!(captures.len() == 3);
+        format!("https://{}/{}", &captures[1], &captures[2])
+    } else {
+        base_url
+    };
+
     base_url
         + "/blob/"
         + &oid.to_string()
