@@ -32,7 +32,7 @@ use std::{
 };
 use subprocess::{Exec, NullFile, PopenError, Redirection};
 use syn::{
-    export::ToTokens,
+    __private::ToTokens,
     spanned::Spanned,
     visit::{visit_stmt, Visit},
     Expr, ExprCall, ExprMacro, ExprMethodCall, ExprPath, ItemFn, Macro, PathSegment, Stmt,
