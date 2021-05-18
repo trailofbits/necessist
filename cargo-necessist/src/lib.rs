@@ -18,6 +18,7 @@ use clap::Clap;
 use git2::{Oid, Repository};
 use log::debug;
 use necessist_common::{self as necessist, removed_message};
+pub use quote::ToTokens;
 use regex::Regex;
 use rustorm::*;
 use std::{
@@ -32,7 +33,6 @@ use std::{
 };
 use subprocess::{Exec, NullFile, PopenError, Redirection};
 use syn::{
-    __private::ToTokens,
     spanned::Spanned,
     visit::{visit_stmt, Visit},
     Expr, ExprCall, ExprMacro, ExprMethodCall, ExprPath, ItemFn, Macro, PathSegment, Stmt,

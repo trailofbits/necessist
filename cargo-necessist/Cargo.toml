@@ -21,6 +21,7 @@ clap = "3.0.0-beta.1"
 env_logger = "0.8.1"
 git2 = "0.13.12"
 log = "0.4.11"
+quote = "1.0.9"
 regex = "1.4.1"
 rustorm = { version = "0.17.0", features = ["with-sqlite"] }
 subprocess = "0.2.6"
