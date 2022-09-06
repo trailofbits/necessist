@@ -1,4 +1,3 @@
-#[necessist::necessist]
 #[test]
 pub fn passed() {
     #[allow(unused_variables, unused_assignments)]
@@ -7,7 +6,6 @@ pub fn passed() {
     })(0);
 }
 
-#[necessist::necessist]
 #[test]
 pub fn timed_out() {
     (|mut n: u32| {
@@ -17,7 +15,6 @@ pub fn timed_out() {
     })(0);
 }
 
-#[necessist::necessist]
 #[test]
 pub fn failed() {
     (|mut n: u32| {
@@ -26,7 +23,6 @@ pub fn failed() {
     })(0);
 }
 
-#[necessist::necessist]
 #[test]
 pub fn nonbuildable() {
     let _ = || -> u32 {
@@ -34,13 +30,11 @@ pub fn nonbuildable() {
     };
 }
 
-#[necessist::necessist]
 #[test]
 pub fn skipped() {
     assert!(true);
 }
 
-#[necessist::necessist]
 #[test]
 pub fn inconclusive() {
     &|| ();
