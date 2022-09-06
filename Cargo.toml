@@ -1,20 +1,57 @@
 [package]
 name = "necessist"
-version = "0.1.0-alpha.0"
-edition = "2018"
+version = "0.1.0-beta.0"
+edition = "2021"
 
 description = "necessist"
 
-authors = ["Samuel E. Moelius III <sam@moeli.us>"]
+authors = ["Samuel Moelius <sam@moeli.us>"]
 license = "MIT OR Apache-2.0"
-repository = "https://github.com/smoelius/necessist"
+repository = "https://github.com/trailofbits/necessist"
+
+[[bin]]
+name = "necessist"
+path = "src/bin/necessist.rs"
 
 [dependencies]
-necessist-macro = { path = "./macro", version = "0.1.0-alpha" }
+ansi_term = "0.12.1"
+anyhow = "1.0.64"
+atty = "0.2.14"
+clap = { version = "3.2.20", features = ["cargo", "derive"] }
+ctrlc = "3.2.3"
+diesel = { version = "2.0.0", features = ["sqlite"] }
+env_logger = "0.9.0"
+git2 = "0.15.0"
+heck = "0.4.0"
+indicatif = "0.17.0"
+lazy_static = "1.4.0"
+log = "0.4.17"
+proc-macro2 = { version = "1.0.43", features = ["span-locations"] }
+regex = "1.6.0"
+remain = "0.2.4"
+strum = "0.24.1"
+strum_macros = "0.24.3"
+subprocess = "0.2.9"
+tempfile = "3.3.0"
+walkdir = "2.3.2"
 
-[workspace]
-members = [
-    "cargo-necessist",
-    "common",
-    "macro",
+# Rust
+cargo_metadata = "0.15.0"
+syn = { version = "1.0.99", features = ["extra-traits", "full", "visit"] }
+
+# Hardhat TS
+swc_ecma_parser = "0.118.5"
+
+[dev-dependencies]
+assert_cmd = "2.0.4"
+predicates = "2.1.1"
+
+[workspace.metadata.dylint]
+libraries = [
+    { git = "https://github.com/trailofbits/dylint", pattern = "examples/general/*" },
+    { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/inconsistent_qualification" },
+    # { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/question_mark_in_expression" },
+    { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/suboptimal_pattern" },
+    # { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/try_io_result" },
+    { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/unnecessary_conversion_for_trait" },
 ]

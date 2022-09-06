@@ -1,57 +1,69 @@
 # Necessist
 
-Runs tests with statements removed to help identify unnecessary statements
+Runs tests with statements and method calls removed to help identify broken tests
 
-## Setup
-
-```sh
-cd necessist
-cargo build --workspace
-source env.sh
+```
+cargo install necessist
 ```
 
 ## Usage
 
-1. Checkout a *clean* copy of your target repository. *This is important!*
-1. `cd target-repo`
-1. `necessist_instrument.sh`
-1. `cargo necessist`
+By default, Necessist outputs to the console. Passing `--sqlite` causes Necessist to instead output to a sqlite database. A tool like [sqlitebrowser](https://sqlitebrowser.org/) can then be used to filter/sort the results.
 
-By default, necessist outputs to the console. Passing `--sqlite` causes necessist to instead output to a sqlite database. A tool like [sqlitebrowser](https://sqlitebrowser.org/) can then be used to filter/sort the results.
+Generally speaking, Necessist will not attempt to remove a statement if it is one the following:
+
+- A local declaration (e.g., `let` binding)
+- A `break` or `continue`
+
+Also, for some frameworks, certain statements and methods are whitelisted (see [below](#supported-framework-specifics)).
 
 ## Output
 
-| Result  | Meaning (With the statement removed...) | Silenced with|
-|-|-|-|
-| <span style="color:green">passed</span> | The tests built and passed. | n/a |
-| <span style="color:cyan">timed-out</span> | The tests built but timed-out. | See below. |
-| <span style="color:blue">failed</span> | The tests built but failed. | See below. |
-| nonbuildable | The tests did not build. | `-qq` |
-| <span style="color:yellow">skipped</span> | See below.  | `-q` |
-| <span style="color:red">inconclusive</span> | An internal error (e.g., [rust-lang/rust#75734](https://github.com/rust-lang/rust/issues/75734)) prevented necessist from removing the statement. | n/a |
+By default, Necessist outputs only when tests pass. Passing `--verbose` causes Necessist to instead output all of the removal outcomes below.
 
-### Silencing <span style="color:cyan">timed-out</span> and <span style="color:blue">failed</span> results
+| Outcome                                      | Meaning (With the statement removed...) |
+| -------------------------------------------- | --------------------------------------- |
+| <span style="color:red">passed</span>        | The test(s) built and passed.           |
+| <span style="color:yellow">timed-out</span>  | The test(s) built but timed-out.        |
+| <span style="color:green">failed</span>      | The test(s) built but failed.           |
+| <span style="color:blue">nonbuildable</span> | The test(s) did not build.              |
 
-* Passing `-qqq` silences <span style="color:cyan">timed-out</span> and <span style="color:blue">failed</span> results for all statements *except* local (let) bindings.
-* Passing `-qqqq` silences <span style="color:cyan">timed-out</span> and <span style="color:blue">failed</span> results entirely.
+## Supported frameworks
 
-### Skipped statements
+- [Hardhat TS](#hardhat-ts)
+- [Rust](#rust)
 
-Necessist will not attempt to remove a statement if any of the following conditions apply.
+## Supported framework specifics
 
-* The statement is an invocation of a [whitelisted macro](#whitelisted-macros).
-* `--skip-calls regex` is passed and the statement is a function call, macro invocation, or method call matching `regex`.
-* `--skip-controls` is passed and the statement is a `break` or `continue`.
-* `--skip-locals` is passed and the statement is a local (`let`) binding.
+### Hardhat TS
+
+TBD
+
+### Rust
 
 #### Whitelisted macros
-* `assert`
-* `assert_eq`
-* `assert_ne`
-* `panic`
-* `unimplemented`
-* `unreachable`
+
+- `assert`
+- `assert_eq`
+- `assert_ne`
+- `eprint`
+- `eprintln`
+- `panic`
+- `print`
+- `println`
+- `unimplemented`
+- `unreachable`
+
+#### Whitelisted methods
+
+- `success` (e.g. [`assert_cmd::assert::Assert::success`](https://docs.rs/assert_cmd/latest/assert_cmd/assert/struct.Assert.html#method.success))
+- `unwrap`
+- `unwrap_err`
+
+## Goals
+
+- If a project uses a [supported framework](#supported-frameworks), then `cd`ing into its directory and typing `necessist` (with no arguments) ought to produce meaningful output.
 
 ## References
 
-* Groce, A., Ahmed, I., Jensen, C., McKenney, P.E., Holmes, J.: How verified (or tested) is my code? Falsification-driven verification and testing. Autom. Softw. Eng. **25**, 917–960 (2018). A preprint is available [here](https://agroce.github.io/asej18.pdf). See Section 2.3.
+- Groce, A., Ahmed, I., Jensen, C., McKenney, P.E., Holmes, J.: How verified (or tested) is my code? Falsification-driven verification and testing. Autom. Softw. Eng. **25**, 917–960 (2018). A preprint is available [here](https://agroce.github.io/asej18.pdf). See Section 2.3.
