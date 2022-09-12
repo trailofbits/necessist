@@ -56,7 +56,37 @@ TBD
 
 #### Whitelisted methods
 
+- `as_bytes`
+- `as_bytes_mut`
+- `as_mut`
+- `as_mut_ptr`
+- `as_os_str`
+- `as_path`
+- `as_ptr`
+- `as_ref`
+- `as_slice`
+- `as_str`
+- `borrow`
+- `borrow_mut`
+- `clone`
+- `cloned`
+- `copied`
+- `deref`
+- `into`
+- `into_os_string`
+- `into_owned`
+- `into_path_buf`
+- `into_string`
+- `into_vec`
 - `success` (e.g. [`assert_cmd::assert::Assert::success`](https://docs.rs/assert_cmd/latest/assert_cmd/assert/struct.Assert.html#method.success))
+- `to_os_string`
+- `to_owned`
+- `to_path_buf`
+- `to_str`
+- `to_string`
+- `to_string_lossy`
+- `to_vec`
+- `try_into`
 - `unwrap`
 - `unwrap_err`
 
