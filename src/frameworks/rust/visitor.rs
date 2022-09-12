@@ -5,7 +5,7 @@ use syn::{
     punctuated::Punctuated,
     spanned::Spanned,
     visit::{visit_item_fn, visit_item_mod, visit_stmt, Visit},
-    Expr, ExprMacro, ExprMethodCall, Ident, ItemFn, ItemMod, Macro, PathSegment, Stmt,
+    Expr, ExprMacro, ExprMethodCall, Ident, ItemFn, ItemMod, Macro, PathSegment, Stmt, Token,
 };
 
 pub(super) struct Visitor<'ast, 'framework, 'parsing> {
@@ -118,7 +118,7 @@ where
         }
 
         if let Some(ident) = self.test_ident {
-            if !is_whitelisted_method(method) {
+            if !is_whitelisted_method(method, args) {
                 let mut span = method_call.span().to_internal_span(&self.source_file);
                 span.start = dot_token.span().start();
                 assert!(span.start <= span.end);
@@ -229,10 +229,44 @@ fn is_whitelisted_macro(stmt: &Stmt) -> bool {
     })
 }
 
-const METHOD_WHITELIST: &[&str] = &["success", "unwrap", "unwrap_err"];
+const METHOD_WHITELIST: &[&str] = &[
+    "as_bytes",
+    "as_bytes_mut",
+    "as_mut",
+    "as_mut_ptr",
+    "as_os_str",
+    "as_path",
+    "as_ptr",
+    "as_ref",
+    "as_slice",
+    "as_str",
+    "borrow",
+    "borrow_mut",
+    "clone",
+    "cloned",
+    "copied",
+    "deref",
+    "into",
+    "into_os_string",
+    "into_owned",
+    "into_path_buf",
+    "into_string",
+    "into_vec",
+    "success",
+    "to_os_string",
+    "to_owned",
+    "to_path_buf",
+    "to_str",
+    "to_string",
+    "to_string_lossy",
+    "to_vec",
+    "try_into",
+    "unwrap",
+    "unwrap_err",
+];
 
-fn is_whitelisted_method(method: &Ident) -> bool {
-    METHOD_WHITELIST.contains(&method.to_string().as_ref())
+fn is_whitelisted_method(method: &Ident, args: &Punctuated<Expr, Token![,]>) -> bool {
+    METHOD_WHITELIST.contains(&method.to_string().as_ref()) && args.is_empty()
 }
 
 impl ToInternalSpan for proc_macro2::Span {
@@ -242,5 +276,48 @@ impl ToInternalSpan for proc_macro2::Span {
             start: self.start(),
             end: self.end(),
         }
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use super::{MACRO_WHITELIST, METHOD_WHITELIST};
+    use std::fs::read_to_string;
+
+    #[test]
+    fn readme_contains_whitelisted_macros() {
+        assert!(readme_contains_code_unordered_list(MACRO_WHITELIST));
+    }
+
+    #[test]
+    fn whitelisted_macros_are_sorted() {
+        assert_eq!(sort(MACRO_WHITELIST), MACRO_WHITELIST);
+    }
+
+    #[test]
+    fn readme_contains_whitelisted_methods() {
+        assert!(readme_contains_code_unordered_list(METHOD_WHITELIST));
+    }
+
+    #[test]
+    fn whitelisted_methods_are_sorted() {
+        assert_eq!(sort(METHOD_WHITELIST), METHOD_WHITELIST);
+    }
+
+    fn readme_contains_code_unordered_list(items: &[&str]) -> bool {
+        let n = items.len();
+        let readme = read_to_string("README.md").unwrap();
+        readme.lines().collect::<Vec<_>>().windows(n).any(|window| {
+            window
+                .iter()
+                .zip(items)
+                .all(|(line, item)| line.starts_with(&format!("- `{}`", item)))
+        })
+    }
+
+    fn sort<'a>(items: &'a [&str]) -> Vec<&'a str> {
+        let mut items = items.to_vec();
+        items.sort_unstable();
+        items
     }
 }
