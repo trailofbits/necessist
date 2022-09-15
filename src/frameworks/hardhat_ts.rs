@@ -9,7 +9,7 @@ pub(super) struct HardhatTs;
 
 impl Interface for HardhatTs {
     fn applicable(&self, context: &LightContext) -> Result<bool> {
-        Ok(context.root.join("tsconfig.json").exists())
+        Ok(context.root.join("hardhat.config.ts").exists())
     }
 
     fn parse(&mut self, _context: &LightContext, _test_files: &[&Path]) -> Result<Vec<Span>> {
