@@ -4,9 +4,10 @@
 #![allow(dead_code)]
 
 use std::{
-    fs::{copy, rename},
+    fs::copy,
     io::Result,
     path::{Path, PathBuf},
+    time::SystemTime,
 };
 use tempfile::NamedTempFile;
 
@@ -36,9 +37,27 @@ impl Backup {
 impl Drop for Backup {
     fn drop(&mut self) {
         if let Some(tempfile) = self.tempfile.take() {
-            rename(&tempfile, &self.path).unwrap_or_default();
+            // smoelius: Ensure the file's mtime is updated, e.g., for build systems that rely on
+            // this information. A useful relevant article: https://apenwarr.ca/log/20181113
+            let before = mtime(&self.path).ok();
+            loop {
+                if copy(&tempfile, &self.path).is_err() {
+                    break;
+                }
+                let after = mtime(&self.path).ok();
+                if before
+                    .zip(after)
+                    .map_or(true, |(before, after)| before < after)
+                {
+                    break;
+                }
+            }
         }
     }
+}
+
+fn mtime(path: &Path) -> Result<SystemTime> {
+    path.metadata().and_then(|metadata| metadata.modified())
 }
 
 #[allow(clippy::expect_used)]
@@ -48,4 +67,40 @@ fn sibling_tempfile(path: &Path) -> Result<NamedTempFile> {
         .parent()
         .expect("should not fail for a canonical path");
     NamedTempFile::new_in(parent)
+}
+
+#[test]
+fn mtime_is_updated() {
+    let tempfile = NamedTempFile::new().unwrap();
+
+    let backup = Backup::new(tempfile.path());
+
+    let before = mtime(tempfile.path()).unwrap();
+
+    drop(backup);
+
+    let after = mtime(tempfile.path()).unwrap();
+
+    assert!(before < after, "{:?} not less than {:?}", before, after);
+}
+
+#[cfg(test)]
+mod test {
+    use super::*;
+    use std::fs::{read_to_string, write};
+
+    #[test]
+    fn sanity() {
+        let tempfile = NamedTempFile::new().unwrap();
+
+        let backup = Backup::new(tempfile.path()).unwrap();
+
+        write(tempfile.path(), "x").unwrap();
+
+        assert_eq!(read_to_string(tempfile.path()).unwrap(), "x");
+
+        drop(backup);
+
+        assert!(read_to_string(tempfile.path()).unwrap().is_empty());
+    }
 }
