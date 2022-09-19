@@ -8,6 +8,32 @@ cargo install necessist
 
 ## Usage
 
+```
+necessist 0.1.0-beta.0
+
+USAGE:
+    necessist [OPTIONS] [TEST_FILES]...
+
+ARGS:
+    <TEST_FILES>...    Test files to mutilate (optional)
+
+OPTIONS:
+        --dump                     Dump the contents of the sqlite database to the console
+        --framework <FRAMEWORK>    Assume testing framework is <FRAMEWORK> [possible values: auto,
+                                   hardhat-ts, rust]
+    -h, --help                     Print help information
+        --keep-going               Continue when a dry run fails or a test cannot be run
+        --no-dry-run               Do not perform dry runs
+        --quiet                    Do not output to the console
+        --resume                   Resume from the sqlite database; implies --sqlite
+        --root <ROOT>              Root directory of the project under test
+        --sqlite                   Output to a sqlite database in addition to the console
+        --timeout <TIMEOUT>        Maximum number of seconds to run any test; 60 is the default, 0
+                                   means no timeout
+    -V, --version                  Print version information
+        --verbose                  Show test outcomes besides `passed`
+```
+
 By default, Necessist outputs to the console. Passing `--sqlite` causes Necessist to instead output to a sqlite database. A tool like [sqlitebrowser](https://sqlitebrowser.org/) can then be used to filter/sort the results.
 
 Generally speaking, Necessist will not attempt to remove a statement if it is one the following:
@@ -21,12 +47,12 @@ Also, for some frameworks, certain statements and methods are ignored (see [belo
 
 By default, Necessist outputs only when tests pass. Passing `--verbose` causes Necessist to instead output all of the removal outcomes below.
 
-| Outcome                                      | Meaning (With the statement removed...) |
-| -------------------------------------------- | --------------------------------------- |
-| <span style="color:red">passed</span>        | The test(s) built and passed.           |
-| <span style="color:yellow">timed-out</span>  | The test(s) built but timed-out.        |
-| <span style="color:green">failed</span>      | The test(s) built but failed.           |
-| <span style="color:blue">nonbuildable</span> | The test(s) did not build.              |
+| Outcome                                      | Meaning (With the statement/method call removed...) |
+| -------------------------------------------- | --------------------------------------------------- |
+| <span style="color:red">passed</span>        | The test(s) built and passed.                       |
+| <span style="color:yellow">timed-out</span>  | The test(s) built but timed-out.                    |
+| <span style="color:green">failed</span>      | The test(s) built but failed.                       |
+| <span style="color:blue">nonbuildable</span> | The test(s) did not build.                          |
 
 ## Supported frameworks
 
