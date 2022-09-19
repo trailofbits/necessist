@@ -1,0 +1,11 @@
+args = ["--root", "examples/failure", "--no-dry-run"]
+stderr = ""
+
+[bin]
+name = "necessist"
+
+[status]
+code = 0
+
+[env.add]
+TRYCMD="1"
