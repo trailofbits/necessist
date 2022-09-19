@@ -2,10 +2,10 @@ use crate::{util, Outcome, Span};
 use anyhow::{bail, ensure, Error, Result};
 use diesel::prelude::*;
 use diesel::{insert_into, sql_query, sqlite::SqliteConnection};
-use git2::{Oid, Repository};
+use git2::{Oid, Repository, RepositoryOpenFlags};
 use lazy_static::lazy_static;
 use regex::Regex;
-use std::{fmt::Debug, include_str, path::Path};
+use std::{ffi::OsStr, fmt::Debug, include_str, iter::empty, path::Path};
 
 pub(crate) struct Sqlite {
     connection: SqliteConnection,
@@ -87,18 +87,20 @@ pub(crate) fn init(root: &Path, create: bool) -> Result<(Sqlite, Vec<crate::Remo
             .collect::<Result<Vec<_>>>()?
     };
 
-    let remote = Repository::open(root).ok().and_then(|repository| {
-        let url_oid = repository
-            .find_remote("origin")
-            .ok()
-            .and_then(|origin| origin.url().map(str::to_owned))
-            .and_then(|url| repository.refname_to_id("HEAD").ok().map(|oid| (url, oid)));
-        url_oid.map(|(url, oid)| Remote {
-            repository,
-            url,
-            oid,
-        })
-    });
+    let remote = Repository::open_ext(root, RepositoryOpenFlags::empty(), empty::<&OsStr>())
+        .ok()
+        .and_then(|repository| {
+            let url_oid = repository
+                .find_remote("origin")
+                .ok()
+                .and_then(|origin| origin.url().map(str::to_owned))
+                .and_then(|url| repository.refname_to_id("HEAD").ok().map(|oid| (url, oid)));
+            url_oid.map(|(url, oid)| Remote {
+                repository,
+                url,
+                oid,
+            })
+        });
 
     Ok((Sqlite { connection, remote }, removals))
 }
