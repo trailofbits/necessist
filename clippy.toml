@@ -1,3 +1,4 @@
+allow-unwrap-in-tests = true
 disallowed-methods = [
     { path = "std::path::Path::strip_prefix" }
 ]
