@@ -1,4 +1,4 @@
-use crate::TryInsert;
+use crate::{util, TryInsert};
 use anyhow::{anyhow, Result};
 use cargo_metadata::{MetadataCommand, Package};
 use std::{
@@ -29,13 +29,14 @@ pub(super) fn cached_test_file_fs_module_path<'a>(
                 .ok_or_else(|| anyhow!("Could not get parent directory"))?;
 
             let src_dir = manifest_dir.join("src");
-            let (test_file_relative_path, is_integration_test) = test_file
-                .strip_prefix(src_dir)
-                .map(|path| (path, false))
-                .or_else(|_| {
-                    let test_dir = manifest_dir.join("tests");
-                    test_file.strip_prefix(test_dir).map(|path| (path, true))
-                })?;
+            let (test_file_relative_path, is_integration_test) =
+                util::strip_prefix(test_file, src_dir.as_std_path())
+                    .map(|path| (path, false))
+                    .or_else(|_| {
+                        let test_dir = manifest_dir.join("tests");
+                        util::strip_prefix(test_file, test_dir.as_std_path())
+                            .map(|path| (path, true))
+                    })?;
 
             if (test_file_relative_path == Path::new("lib.rs")
                 || test_file_relative_path == Path::new("main.rs"))
