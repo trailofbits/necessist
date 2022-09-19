@@ -60,3 +60,6 @@ libraries = [
     { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/suboptimal_pattern" },
     { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/unnecessary_conversion_for_trait" },
 ]
+
+[package.metadata.cargo-udeps.ignore]
+normal = ["swc_ecma_parser"]
