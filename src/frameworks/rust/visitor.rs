@@ -73,7 +73,10 @@ where
         }
 
         if let Some(ident) = self.test_ident {
-            if !matches!(stmt, Stmt::Local(_)) && !is_control(stmt) && !is_whitelisted_macro(stmt) {
+            if !matches!(stmt, Stmt::Item(_) | Stmt::Local(_))
+                && !is_control(stmt)
+                && !is_whitelisted_macro(stmt)
+            {
                 let span = stmt.span().to_internal_span(&self.source_file);
                 self.elevate_span(span, ident, false);
             }

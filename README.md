@@ -12,7 +12,7 @@ By default, Necessist outputs to the console. Passing `--sqlite` causes Necessis
 
 Generally speaking, Necessist will not attempt to remove a statement if it is one the following:
 
-- A local declaration (e.g., `let` binding)
+- A declaration (e.g., a local or `let` binding)
 - A `break` or `continue`
 
 Also, for some frameworks, certain statements and methods are whitelisted (see [below](#supported-framework-specifics)).
