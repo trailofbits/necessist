@@ -15,7 +15,7 @@ Generally speaking, Necessist will not attempt to remove a statement if it is on
 - A declaration (e.g., a local or `let` binding)
 - A `break` or `continue`
 
-Also, for some frameworks, certain statements and methods are whitelisted (see [below](#supported-framework-specifics)).
+Also, for some frameworks, certain statements and methods are ignored (see [below](#supported-framework-specifics)).
 
 ## Output
 
@@ -41,7 +41,7 @@ TBD
 
 ### Rust
 
-#### Whitelisted macros
+#### Ignored macros
 
 - `assert`
 - `assert_eq`
@@ -54,7 +54,7 @@ TBD
 - `unimplemented`
 - `unreachable`
 
-#### Whitelisted methods
+#### Ignored methods
 
 - `as_bytes`
 - `as_bytes_mut`

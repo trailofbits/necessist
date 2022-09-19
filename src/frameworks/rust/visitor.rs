@@ -75,7 +75,7 @@ where
         if let Some(ident) = self.test_ident {
             if !matches!(stmt, Stmt::Item(_) | Stmt::Local(_))
                 && !is_control(stmt)
-                && !is_whitelisted_macro(stmt)
+                && !is_ignored_macro(stmt)
             {
                 let span = stmt.span().to_internal_span(&self.source_file);
                 self.elevate_span(span, ident, false);
@@ -123,7 +123,7 @@ where
         }
 
         if let Some(ident) = self.test_ident {
-            if !is_whitelisted_method(method, args) {
+            if !is_ignored_method(method, args) {
                 let mut span = method_call.span().to_internal_span(&self.source_file);
                 span.start = dot_token.span().start();
                 assert!(span.start <= span.end);
@@ -242,7 +242,7 @@ fn is_control(stmt: &Stmt) -> bool {
     })
 }
 
-const MACRO_WHITELIST: &[&str] = &[
+const IGNORED_MACROS: &[&str] = &[
     "assert",
     "assert_eq",
     "assert_ne",
@@ -255,7 +255,7 @@ const MACRO_WHITELIST: &[&str] = &[
     "unreachable",
 ];
 
-fn is_whitelisted_macro(stmt: &Stmt) -> bool {
+fn is_ignored_macro(stmt: &Stmt) -> bool {
     match stmt {
         Stmt::Expr(expr) | Stmt::Semi(expr, ..) => Some(expr),
         _ => None,
@@ -265,13 +265,13 @@ fn is_whitelisted_macro(stmt: &Stmt) -> bool {
             mac: Macro { path, .. },
             ..
         }) => path.get_ident().map_or(false, |ident| {
-            MACRO_WHITELIST.contains(&ident.to_string().as_str())
+            IGNORED_MACROS.contains(&ident.to_string().as_str())
         }),
         _ => false,
     })
 }
 
-const METHOD_WHITELIST: &[&str] = &[
+const IGNORED_METHODS: &[&str] = &[
     "as_bytes",
     "as_bytes_mut",
     "as_mut",
@@ -307,8 +307,8 @@ const METHOD_WHITELIST: &[&str] = &[
     "unwrap_err",
 ];
 
-fn is_whitelisted_method(method: &Ident, args: &Punctuated<Expr, Token![,]>) -> bool {
-    METHOD_WHITELIST.contains(&method.to_string().as_ref()) && args.is_empty()
+fn is_ignored_method(method: &Ident, args: &Punctuated<Expr, Token![,]>) -> bool {
+    IGNORED_METHODS.contains(&method.to_string().as_ref()) && args.is_empty()
 }
 
 impl ToInternalSpan for proc_macro2::Span {
@@ -323,27 +323,27 @@ impl ToInternalSpan for proc_macro2::Span {
 
 #[cfg(test)]
 mod test {
-    use super::{MACRO_WHITELIST, METHOD_WHITELIST};
+    use super::{IGNORED_MACROS, IGNORED_METHODS};
     use std::fs::read_to_string;
 
     #[test]
-    fn readme_contains_whitelisted_macros() {
-        assert!(readme_contains_code_unordered_list(MACRO_WHITELIST));
+    fn readme_contains_ignored_macros() {
+        assert!(readme_contains_code_unordered_list(IGNORED_MACROS));
     }
 
     #[test]
-    fn whitelisted_macros_are_sorted() {
-        assert_eq!(sort(MACRO_WHITELIST), MACRO_WHITELIST);
+    fn readme_contains_ignored_methods() {
+        assert!(readme_contains_code_unordered_list(IGNORED_METHODS));
     }
 
     #[test]
-    fn readme_contains_whitelisted_methods() {
-        assert!(readme_contains_code_unordered_list(METHOD_WHITELIST));
+    fn ignored_macros_are_sorted() {
+        assert_eq!(sort(IGNORED_MACROS), IGNORED_MACROS);
     }
 
     #[test]
-    fn whitelisted_methods_are_sorted() {
-        assert_eq!(sort(METHOD_WHITELIST), METHOD_WHITELIST);
+    fn ignored_methods_are_sorted() {
+        assert_eq!(sort(IGNORED_METHODS), IGNORED_METHODS);
     }
 
     fn readme_contains_code_unordered_list(items: &[&str]) -> bool {
