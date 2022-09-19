@@ -1,5 +1,5 @@
 use super::{Interface, Postprocess};
-use crate::{warn, LightContext, Span, TryInsert};
+use crate::{util, warn, LightContext, Span, TryInsert};
 use anyhow::{anyhow, ensure, Context, Result};
 use cargo_metadata::Package;
 use log::debug;
@@ -57,7 +57,7 @@ impl Interface for Rust {
             let file = parse_file(&content).with_context(|| {
                 format!(
                     "Could not parse {:?}",
-                    test_file.strip_prefix(context.root).unwrap()
+                    util::strip_prefix(test_file, context.root).unwrap()
                 )
             })?;
             let mut visitor = Visitor::new(self, &mut parsing, test_file);

@@ -1,4 +1,4 @@
-use crate::{Outcome, Span};
+use crate::{util, Outcome, Span};
 use anyhow::{bail, ensure, Error, Result};
 use diesel::prelude::*;
 use diesel::{insert_into, sql_query, sqlite::SqliteConnection};
@@ -150,7 +150,7 @@ fn url_from_span(remote: &Remote, span: &Span) -> String {
     let path = remote
         .repository
         .workdir()
-        .and_then(|path| span.source_file.strip_prefix(path).ok())
+        .and_then(|path| util::strip_prefix(&span.source_file, path).ok())
         .unwrap();
 
     base_url
