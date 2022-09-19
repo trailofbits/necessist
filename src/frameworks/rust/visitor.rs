@@ -1,6 +1,7 @@
 use super::{cached_test_file_fs_module_path, Parsing, Rust};
 use crate::{SourceFile, Span, ToInternalSpan};
 use anyhow::{Error, Result};
+use std::path::Path;
 use syn::{
     punctuated::Punctuated,
     spanned::Spanned,
@@ -9,13 +10,14 @@ use syn::{
 };
 
 pub(super) struct Visitor<'ast, 'framework, 'parsing> {
-    pub owner: &'framework mut Rust,
-    pub parsing: &'parsing mut Parsing,
-    pub source_file: SourceFile,
-    pub module_path: Vec<&'ast Ident>,
-    pub test_ident: Option<&'ast Ident>,
-    pub spans: Vec<Span>,
-    pub error: Option<Error>,
+    owner: &'framework mut Rust,
+    parsing: &'parsing mut Parsing,
+    source_file: SourceFile,
+    module_path: Vec<&'ast Ident>,
+    test_ident: Option<&'ast Ident>,
+    spans: Vec<Span>,
+    n_method_call_spans: usize,
+    error: Option<Error>,
 }
 
 impl<'ast, 'framework, 'parsing> Visit<'ast> for Visitor<'ast, 'framework, 'parsing>
@@ -60,20 +62,20 @@ where
             return;
         }
 
-        let before = self.spans.len();
+        let n_before = self.n_stmt_spans();
         visit_stmt(self, stmt);
-        let after = self.spans.len();
+        let n_after = self.n_stmt_spans();
 
         // smoelius: Consider this a "leaf" if-and-only-if no "leaves" were added during the
         // recursive call.
-        if before != after {
+        if n_before != n_after {
             return;
         }
 
         if let Some(ident) = self.test_ident {
             if !matches!(stmt, Stmt::Local(_)) && !is_control(stmt) && !is_whitelisted_macro(stmt) {
                 let span = stmt.span().to_internal_span(&self.source_file);
-                self.elevate_span(span, ident);
+                self.elevate_span(span, ident, false);
             }
         }
     }
@@ -99,7 +101,7 @@ where
         self.visit_expr(receiver);
 
         // smoelius: Start tracking leaves added after `receiver` has been traversed.
-        let before = self.spans.len();
+        let n_before = self.n_method_call_spans();
 
         self.visit_ident(method);
         if let Some(it) = turbofish {
@@ -110,7 +112,7 @@ where
             self.visit_expr(it);
         }
 
-        let after = self.spans.len();
+        let n_after = self.n_method_call_spans();
 
         // smoelius: See the comment in `visit_stmt` above regarding "leaves."
         if n_before != n_after {
@@ -122,7 +124,7 @@ where
                 let mut span = method_call.span().to_internal_span(&self.source_file);
                 span.start = dot_token.span().start();
                 assert!(span.start <= span.end);
-                self.elevate_span(span, ident);
+                self.elevate_span(span, ident, true);
             }
         }
     }
@@ -133,7 +135,32 @@ where
     'ast: 'parsing,
     'framework: 'parsing,
 {
-    fn elevate_span(&mut self, span: Span, ident: &Ident) {
+    pub fn new(
+        owner: &'framework mut Rust,
+        parsing: &'parsing mut Parsing,
+        test_file: &Path,
+    ) -> Self {
+        Self {
+            owner,
+            parsing,
+            source_file: SourceFile::new(test_file),
+            module_path: Vec::new(),
+            test_ident: None,
+            spans: Vec::new(),
+            n_method_call_spans: 0,
+            error: None,
+        }
+    }
+
+    pub fn spans(self) -> Result<Vec<Span>> {
+        if let Some(error) = self.error {
+            Err(error)
+        } else {
+            Ok(self.spans)
+        }
+    }
+
+    fn elevate_span(&mut self, span: Span, ident: &Ident, is_method_call: bool) {
         let result = (|| {
             let _ = self.owner.cached_test_file_flags(
                 &mut self.parsing.test_file_package_cache,
@@ -142,11 +169,23 @@ where
             let test_path = self.test_path(&span, ident)?;
             self.owner.set_span_test_path(&span, test_path);
             self.spans.push(span);
+            if is_method_call {
+                self.n_method_call_spans += 1;
+            }
             Ok(())
         })();
         if let Err(error) = result {
             self.error = self.error.take().or(Some(error));
         }
+    }
+
+    fn n_stmt_spans(&self) -> usize {
+        assert!(self.spans.len() >= self.n_method_call_spans);
+        self.spans.len() - self.n_method_call_spans
+    }
+
+    fn n_method_call_spans(&self) -> usize {
+        self.n_method_call_spans
     }
 
     fn test_path(&mut self, span: &Span, ident: &Ident) -> Result<Vec<String>> {
@@ -190,6 +229,16 @@ fn is_test(item: &ItemFn) -> Option<&Ident> {
     }
 }
 
+fn is_control(stmt: &Stmt) -> bool {
+    match stmt {
+        Stmt::Expr(expr) | Stmt::Semi(expr, ..) => Some(expr),
+        _ => None,
+    }
+    .map_or(false, |expr| {
+        matches!(expr, Expr::Break(_) | Expr::Continue(_))
+    })
+}
+
 const MACRO_WHITELIST: &[&str] = &[
     "assert",
     "assert_eq",
@@ -202,16 +251,6 @@ const MACRO_WHITELIST: &[&str] = &[
     "unimplemented",
     "unreachable",
 ];
-
-fn is_control(stmt: &Stmt) -> bool {
-    match stmt {
-        Stmt::Expr(expr) | Stmt::Semi(expr, ..) => Some(expr),
-        _ => None,
-    }
-    .map_or(false, |expr| {
-        matches!(expr, Expr::Break(_) | Expr::Continue(_))
-    })
-}
 
 fn is_whitelisted_macro(stmt: &Stmt) -> bool {
     match stmt {

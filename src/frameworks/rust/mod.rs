@@ -1,5 +1,5 @@
 use super::{Interface, Postprocess};
-use crate::{warn, LightContext, SourceFile, Span, TryInsert};
+use crate::{warn, LightContext, Span, TryInsert};
 use anyhow::{anyhow, ensure, Context, Result};
 use cargo_metadata::Package;
 use log::debug;
@@ -60,20 +60,10 @@ impl Interface for Rust {
                     test_file.strip_prefix(context.root).unwrap()
                 )
             })?;
-            let mut visitor = Visitor {
-                owner: self,
-                parsing: &mut parsing,
-                source_file: SourceFile::new(test_file),
-                module_path: Vec::new(),
-                test_ident: None,
-                spans: Vec::new(),
-                error: None,
-            };
+            let mut visitor = Visitor::new(self, &mut parsing, test_file);
             visitor.visit_file(&file);
-            if let Some(error) = visitor.error {
-                return Err(error);
-            }
-            spans.extend(visitor.spans);
+            let visitor_spans = visitor.spans()?;
+            spans.extend(visitor_spans);
             Ok(())
         };
 
