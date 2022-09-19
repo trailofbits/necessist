@@ -165,27 +165,25 @@ impl Interface for Rust {
 }
 
 impl Rust {
-    fn build_test_command(&self, context: &LightContext, test_file: &Path) -> Command {
+    fn build_test_command(&self, _context: &LightContext, test_file: &Path) -> Command {
         #[allow(clippy::expect_used)]
         let flags = self
             .test_file_flags_cache
             .get(test_file)
             .expect("Flags not cached");
         let mut command = Command::new("cargo");
-        command.current_dir(context.root);
         command.arg("test");
         command.args(flags);
         command
     }
 
-    fn build_test_exec(&self, context: &LightContext, test_file: &Path) -> Exec {
+    fn build_test_exec(&self, _context: &LightContext, test_file: &Path) -> Exec {
         #[allow(clippy::expect_used)]
         let flags = self
             .test_file_flags_cache
             .get(test_file)
             .expect("Flags not cached");
         let mut exec = Exec::cmd("cargo");
-        exec = exec.cwd(context.root);
         exec = exec.arg("test");
         exec = exec.args(flags);
         exec
@@ -201,7 +199,10 @@ impl Rust {
             .or_try_insert_with(|| {
                 let package = cached_test_file_package(test_file_package_map, test_file)?;
 
-                let mut flags = vec!["-p".to_owned(), package.name.clone()];
+                let mut flags = vec![
+                    "--manifest-path".to_owned(),
+                    package.manifest_path.as_str().to_owned(),
+                ];
 
                 if let Some(name) = test_file_test(package, test_file) {
                     flags.extend(["--test".to_owned(), name.clone()]);
