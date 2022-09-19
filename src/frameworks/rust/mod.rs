@@ -49,6 +49,10 @@ impl Interface for Rust {
         let mut parsing = Parsing::default();
         let mut spans = Vec::new();
 
+        #[cfg_attr(
+            dylint_lib = "non_local_effect_before_error_return",
+            allow(non_local_effect_before_error_return)
+        )]
         let mut visit_test_file = |test_file: &Path| -> Result<()> {
             assert!(test_file.is_absolute());
             assert!(test_file.starts_with(context.root));

@@ -69,11 +69,15 @@ fn sibling_tempfile(path: &Path) -> Result<NamedTempFile> {
     NamedTempFile::new_in(parent)
 }
 
+#[cfg_attr(
+    dylint_lib = "non_thread_safe_call_in_test",
+    allow(non_thread_safe_call_in_test)
+)]
 #[test]
 fn mtime_is_updated() {
     let tempfile = NamedTempFile::new().unwrap();
 
-    let backup = Backup::new(tempfile.path());
+    let backup = Backup::new(&tempfile);
 
     let before = mtime(tempfile.path()).unwrap();
 
@@ -89,18 +93,22 @@ mod test {
     use super::*;
     use std::fs::{read_to_string, write};
 
+    #[cfg_attr(
+        dylint_lib = "non_thread_safe_call_in_test",
+        allow(non_thread_safe_call_in_test)
+    )]
     #[test]
     fn sanity() {
         let tempfile = NamedTempFile::new().unwrap();
 
-        let backup = Backup::new(tempfile.path()).unwrap();
+        let backup = Backup::new(&tempfile).unwrap();
 
-        write(tempfile.path(), "x").unwrap();
+        write(&tempfile, "x").unwrap();
 
-        assert_eq!(read_to_string(tempfile.path()).unwrap(), "x");
+        assert_eq!(read_to_string(&tempfile).unwrap(), "x");
 
         drop(backup);
 
-        assert!(read_to_string(tempfile.path()).unwrap().is_empty());
+        assert!(read_to_string(&tempfile).unwrap().is_empty());
     }
 }
