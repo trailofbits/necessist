@@ -42,9 +42,16 @@ syn = { version = "1.0.99", features = ["extra-traits", "full", "visit"] }
 # Hardhat TS
 swc_ecma_parser = "0.118.5"
 
+[target.'cfg(unix)'.dependencies]
+libc = "0.2.132"
+
 [dev-dependencies]
 assert_cmd = "2.0.4"
 predicates = "2.1.1"
+trycmd = "0.13.6"
+
+[features]
+ci = []
 
 [workspace.metadata.dylint]
 libraries = [

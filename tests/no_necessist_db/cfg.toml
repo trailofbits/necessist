@@ -1,0 +1,10 @@
+args = ["--root", "examples/cfg"]
+
+[bin]
+name = "necessist"
+
+[status]
+code = 1
+
+[env.add]
+TRYCMD="1"

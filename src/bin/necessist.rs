@@ -1,7 +1,13 @@
 use anyhow::Result;
 use clap::{crate_version, ArgEnum, Parser};
-use necessist::{necessist, Necessist};
-use std::{env::args, path::PathBuf};
+#[cfg(unix)]
+use std::os::unix::io::AsRawFd;
+use std::{
+    env::{args, var},
+    fs::{File, OpenOptions},
+    io::Error,
+    path::{Path, PathBuf},
+};
 
 #[derive(ArgEnum, Clone, Copy, Debug)]
 #[remain::sorted]
@@ -59,7 +65,7 @@ struct Opts {
     ztest_files: Vec<String>,
 }
 
-impl From<Opts> for Necessist {
+impl From<Opts> for necessist::Necessist {
     fn from(opts: Opts) -> Self {
         let Opts {
             dump,
@@ -96,5 +102,47 @@ impl From<Opts> for Necessist {
 fn main() -> Result<()> {
     env_logger::init();
 
-    necessist(&Opts::parse_from(args()).into())
+    let opts: necessist::Necessist = Opts::parse_from(args()).into();
+
+    // smoelius: Prevent `trycmd` tests from running concurrently.
+    #[cfg(unix)]
+    let _file = if enabled("TRYCMD") {
+        if let Some(root) = &opts.root {
+            let file = lock_path(root)?;
+            Some(file)
+        } else {
+            None
+        }
+    } else {
+        None
+    };
+
+    necessist::necessist(&opts)
+}
+
+#[must_use]
+pub fn enabled(key: &str) -> bool {
+    var(key).map_or(false, |value| value != "0")
+}
+
+fn lock_path(path: &Path) -> Result<File> {
+    let file = OpenOptions::new().read(true).open(path)?;
+    lock_exclusive(&file)?;
+    Ok(file)
+}
+
+// smoelius: `lock_exclusive` and `flock` were copied from:
+// https://github.com/rust-lang/cargo/blob/b0c9586f4cbf426914df47c65de38ea323772c74/src/cargo/util/flock.rs
+
+fn lock_exclusive(file: &File) -> Result<()> {
+    flock(file, libc::LOCK_EX)
+}
+
+fn flock(file: &File, flag: libc::c_int) -> Result<()> {
+    let ret = unsafe { libc::flock(file.as_raw_fd(), flag) };
+    if ret < 0 {
+        Err(Error::last_os_error().into())
+    } else {
+        Ok(())
+    }
 }

@@ -1,0 +1,11 @@
+args = ["--root", "examples/basic", "--resume"]
+stderr = ""
+
+[bin]
+name = "necessist"
+
+[status]
+code = 0
+
+[env.add]
+TRYCMD="1"

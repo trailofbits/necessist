@@ -1,16 +1,39 @@
 name: CI
 
-on: [push, pull_request]
+on: [pull_request, push, workflow_dispatch]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Build
-      run: cargo build --workspace
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            ~/.dylint_drivers/
+            ~/.rustup/toolchains/
+            target/dylint/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
-    - name: Test
-      run: PATH="$PWD/target/debug:$PATH" cargo test --workspace
+      - name: Install dependencies
+        run: |
+          rustup install nightly
+          rustup component add clippy
+          rustup component add rustfmt
+          cargo install cargo-dylint dylint-link || true
+          cargo install cargo-license            || true
+          cargo install cargo-sort               || true
+          cargo install cargo-udeps              || true
+
+      - name: Test
+        run: cargo test --features=ci
