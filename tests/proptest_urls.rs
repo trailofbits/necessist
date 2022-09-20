@@ -58,7 +58,7 @@ fn test(repository: &str) {
             &format!(
                 "https://github.com/nzeh/proptest/blob/{}/{}#L{}-L{}",
                 COMMIT,
-                util::strip_prefix(&span.source_file, tempdir.path())
+                util::strip_prefix(&span.source_file, &tempdir.path().canonicalize().unwrap())
                     .unwrap()
                     .to_string_lossy(),
                 span.start.line,
