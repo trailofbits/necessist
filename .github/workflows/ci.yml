@@ -8,7 +8,11 @@ concurrency:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        environment: [ubuntu-latest, macos-latest]
+
+    runs-on: ${{ matrix.environment }}
 
     steps:
       - uses: actions/checkout@v2
