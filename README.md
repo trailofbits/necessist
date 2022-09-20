@@ -15,7 +15,7 @@ The following hypothetical test verifies that a login mechanism works. Suppose t
 fn login_works() {
     let session = Session::new(URL);
     session.send_username(USERNAME).unwrap();
-    session.send_password(PASSWORD).unwrap(); // <-- Test passes when removed
+    session.send_password(PASSWORD).unwrap(); // <-- Test passes without this
     assert!(session.read().unwrap().contains(WELCOME));
 }
 ```
