@@ -6,6 +6,22 @@ Runs tests with statements and method calls removed to help identify broken test
 cargo install necessist
 ```
 
+## Illustrative example
+
+The following hypothetical test verifies that a login mechanism works. Suppose the test would pass if `session.send_password(...)` were removed. This could indicate that the wrong condition is checked thereafter. Or worse, it could indicate a bug in the login mechanism.
+
+```rust
+#[test]
+fn login_works() {
+    let session = Session::new(URL);
+    session.send_username(USERNAME).unwrap();
+    session.send_password(PASSWORD).unwrap(); // <-- Test passes when removed
+    assert!(session.read().unwrap().contains(WELCOME));
+}
+```
+
+Necessist iteratively removes statements and method calls from tests and then runs them help identify such cases.
+
 ## Usage
 
 ```
@@ -56,7 +72,7 @@ By default, Necessist outputs only when tests pass. Passing `--verbose` causes N
 
 ## Supported frameworks
 
-- [Hardhat TS](#hardhat-ts)
+- [Hardhat TS](#hardhat-ts) (coming soon)
 - [Rust](#rust)
 
 ## Supported framework specifics
@@ -118,7 +134,7 @@ TBD
 
 ## Goals
 
-- If a project uses a [supported framework](#supported-frameworks), then `cd`ing into its directory and typing `necessist` (with no arguments) ought to produce meaningful output.
+- If a project uses a [supported framework](#supported-frameworks), then `cd`ing into its directory and typing `necessist` (with no arguments) produces meaningful output.
 
 ## References
 
