@@ -4,7 +4,6 @@
 #![allow(dead_code)]
 
 use std::{
-    fs::copy,
     io::Result,
     path::{Path, PathBuf},
     time::SystemTime,
@@ -22,7 +21,7 @@ impl Backup {
         P: AsRef<Path>,
     {
         let tempfile = sibling_tempfile(path.as_ref())?;
-        copy(&path, &tempfile)?;
+        std::fs::copy(&path, &tempfile)?;
         Ok(Self {
             path: path.as_ref().to_path_buf(),
             tempfile: Some(tempfile),
@@ -41,7 +40,11 @@ impl Drop for Backup {
             // this information. A useful relevant article: https://apenwarr.ca/log/20181113
             let before = mtime(&self.path).ok();
             loop {
-                if copy(&tempfile, &self.path).is_err() {
+                #[cfg(not(target_os = "macos"))]
+                let result = std::fs::copy(&tempfile, &self.path);
+                #[cfg(target_os = "macos")]
+                let result = manual_copy(tempfile.path(), &self.path);
+                if result.is_err() {
                     break;
                 }
                 let after = mtime(&self.path).ok();
@@ -58,6 +61,12 @@ impl Drop for Backup {
 
 fn mtime(path: &Path) -> Result<SystemTime> {
     path.metadata().and_then(|metadata| metadata.modified())
+}
+
+#[cfg(target_os = "macos")]
+fn manual_copy(from: &Path, to: &Path) -> Result<()> {
+    let contents = std::fs::read(from)?;
+    std::fs::write(to, contents)
 }
 
 #[allow(clippy::expect_used)]
