@@ -1,6 +1,6 @@
 # Necessist
 
-Runs tests with statements and method calls removed to help identify broken tests
+Run tests with statements and method calls removed to help identify broken tests
 
 ```
 cargo install necessist
@@ -20,7 +20,7 @@ fn login_works() {
 }
 ```
 
-Necessist iteratively removes statements and method calls from tests and then runs them help identify such cases.
+Necessist iteratively removes statements and method calls from tests and then runs them to help identify such cases.
 
 ## Usage
 
