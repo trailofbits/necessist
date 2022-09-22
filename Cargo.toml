@@ -23,6 +23,7 @@ diesel = { version = "2.0.0", features = ["sqlite"] }
 env_logger = "0.9.0"
 git2 = "0.15.0"
 heck = "0.4.0"
+if_chain = "1.0.2"
 indicatif = "0.17.0"
 lazy_static = "1.4.0"
 log = "0.4.17"
@@ -40,7 +41,10 @@ cargo_metadata = "0.15.0"
 syn = { version = "1.0.99", features = ["extra-traits", "full", "visit"] }
 
 # Hardhat TS
-swc_ecma_parser = "0.118.5"
+swc_common = "0.28.8"
+swc_ecma_ast = "0.92.0"
+swc_ecma_parser = "0.120.0"
+swc_ecma_visit = "0.78.1"
 
 [target.'cfg(unix)'.dependencies]
 libc = "0.2.132"
@@ -61,6 +65,3 @@ libraries = [
     { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/suboptimal_pattern" },
     { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/unnecessary_conversion_for_trait" },
 ]
-
-[package.metadata.cargo-udeps.ignore]
-normal = ["swc_ecma_parser"]
