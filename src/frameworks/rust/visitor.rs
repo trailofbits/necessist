@@ -5,18 +5,37 @@ use std::path::Path;
 use syn::{
     punctuated::Punctuated,
     spanned::Spanned,
-    visit::{visit_item_fn, visit_item_mod, visit_stmt, Visit},
-    Expr, ExprMacro, ExprMethodCall, Ident, ItemFn, ItemMod, Macro, PathSegment, Stmt, Token,
+    visit::{visit_expr_method_call, visit_item_fn, visit_item_mod, visit_stmt, Visit},
+    Expr, ExprMacro, ExprMethodCall, File, Ident, ItemFn, ItemMod, Macro, PathSegment, Stmt, Token,
 };
 
-pub(super) struct Visitor<'ast, 'framework, 'parsing> {
-    owner: &'framework mut Rust,
+#[cfg_attr(
+    dylint_lib = "non_local_effect_before_error_return",
+    allow(non_local_effect_before_error_return)
+)]
+pub(super) fn visit<'framework, 'parsing>(
+    framework: &'framework mut Rust,
+    parsing: &'parsing mut Parsing,
+    test_file: &Path,
+    file: &File,
+) -> Result<Vec<Span>> {
+    let mut visitor = Visitor::new(framework, parsing, test_file);
+    visitor.visit_file(file);
+    if let Some(error) = visitor.error {
+        Err(error)
+    } else {
+        Ok(visitor.spans)
+    }
+}
+
+struct Visitor<'ast, 'framework, 'parsing> {
+    framework: &'framework mut Rust,
     parsing: &'parsing mut Parsing,
     source_file: SourceFile,
     module_path: Vec<&'ast Ident>,
     test_ident: Option<&'ast Ident>,
     spans: Vec<Span>,
-    n_method_call_spans: usize,
+    n_stmt_spans: usize,
     error: Option<Error>,
 }
 
@@ -78,7 +97,7 @@ where
                 && !is_ignored_macro(stmt)
             {
                 let span = stmt.span().to_internal_span(&self.source_file);
-                self.elevate_span(span, ident, false);
+                self.elevate_span(span, ident, true);
             }
         }
     }
@@ -88,46 +107,21 @@ where
             return;
         }
 
+        visit_expr_method_call(self, method_call);
+
         let ExprMethodCall {
-            attrs,
-            receiver,
             dot_token,
             method,
-            turbofish,
-            paren_token: _,
             args,
+            ..
         } = method_call;
-
-        for it in attrs {
-            self.visit_attribute(it);
-        }
-        self.visit_expr(receiver);
-
-        // smoelius: Start tracking leaves added after `receiver` has been traversed.
-        let n_before = self.n_method_call_spans();
-
-        self.visit_ident(method);
-        if let Some(it) = turbofish {
-            self.visit_method_turbofish(it);
-        }
-        for el in Punctuated::pairs(args) {
-            let (it, _) = el.into_tuple();
-            self.visit_expr(it);
-        }
-
-        let n_after = self.n_method_call_spans();
-
-        // smoelius: See the comment in `visit_stmt` above regarding "leaves."
-        if n_before != n_after {
-            return;
-        }
 
         if let Some(ident) = self.test_ident {
             if !is_ignored_method(method, args) {
                 let mut span = method_call.span().to_internal_span(&self.source_file);
                 span.start = dot_token.span().start();
                 assert!(span.start <= span.end);
-                self.elevate_span(span, ident, true);
+                self.elevate_span(span, ident, false);
             }
         }
     }
@@ -139,41 +133,33 @@ where
     'framework: 'parsing,
 {
     pub fn new(
-        owner: &'framework mut Rust,
+        framework: &'framework mut Rust,
         parsing: &'parsing mut Parsing,
         test_file: &Path,
     ) -> Self {
         Self {
-            owner,
+            framework,
             parsing,
             source_file: SourceFile::new(test_file),
             module_path: Vec::new(),
             test_ident: None,
             spans: Vec::new(),
-            n_method_call_spans: 0,
+            n_stmt_spans: 0,
             error: None,
         }
     }
 
-    pub fn spans(self) -> Result<Vec<Span>> {
-        if let Some(error) = self.error {
-            Err(error)
-        } else {
-            Ok(self.spans)
-        }
-    }
-
-    fn elevate_span(&mut self, span: Span, ident: &Ident, is_method_call: bool) {
+    fn elevate_span(&mut self, span: Span, ident: &Ident, is_stmt: bool) {
         let result = (|| {
-            let _ = self.owner.cached_test_file_flags(
+            let _ = self.framework.cached_test_file_flags(
                 &mut self.parsing.test_file_package_cache,
                 &span.source_file,
             )?;
             let test_path = self.test_path(&span, ident)?;
-            self.owner.set_span_test_path(&span, test_path);
+            self.framework.set_span_test_path(&span, test_path);
             self.spans.push(span);
-            if is_method_call {
-                self.n_method_call_spans += 1;
+            if is_stmt {
+                self.n_stmt_spans += 1;
             }
             Ok(())
         })();
@@ -183,12 +169,8 @@ where
     }
 
     fn n_stmt_spans(&self) -> usize {
-        assert!(self.spans.len() >= self.n_method_call_spans);
-        self.spans.len() - self.n_method_call_spans
-    }
-
-    fn n_method_call_spans(&self) -> usize {
-        self.n_method_call_spans
+        assert!(self.spans.len() >= self.n_stmt_spans);
+        self.n_stmt_spans
     }
 
     fn test_path(&mut self, span: &Span, ident: &Ident) -> Result<Vec<String>> {
