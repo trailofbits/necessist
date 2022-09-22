@@ -72,14 +72,20 @@ By default, Necessist outputs only when tests pass. Passing `--verbose` causes N
 
 ## Supported frameworks
 
-- [Hardhat TS](#hardhat-ts) (coming soon)
+- [Hardhat TS](#hardhat-ts)
 - [Rust](#rust)
 
 ## Supported framework specifics
 
 ### Hardhat TS
 
-TBD
+#### Ignored functions
+
+- `expect`
+
+#### Ignored methods
+
+- Anything beginning with `to` (e.g., `to.equal`)
 
 ### Rust
 

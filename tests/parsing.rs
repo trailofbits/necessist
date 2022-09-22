@@ -1,5 +1,4 @@
 use assert_cmd::prelude::*;
-use lazy_static::lazy_static;
 use regex::Regex;
 use std::{
     io::{stderr, BufRead, BufReader, Write},
@@ -13,18 +12,13 @@ const URLS: &[&str] = &[
     "https://github.com/diem/diem",
     // https://users.rust-lang.org/t/largest-rust-codebases/17027/7
     "https://github.com/rusoto/rusoto",
+    "https://github.com/Uniswap/v3-core",
 ];
-
-lazy_static! {
-    static ref LINE_RE: Regex = {
-        #[allow(clippy::unwrap_used)]
-        let re = Regex::new(r"^\d+ candidates in \d+ test files$").unwrap();
-        re
-    };
-}
 
 #[test]
 fn parsing() {
+    let re = Regex::new(r"^\d+ candidates in \d+ test files$").unwrap();
+
     for url in URLS {
         #[allow(clippy::explicit_write)]
         writeln!(stderr(), "{}", url).unwrap();
@@ -53,6 +47,6 @@ fn parsing() {
         #[allow(clippy::explicit_write)]
         writeln!(stderr(), "{}", line).unwrap();
 
-        assert!(LINE_RE.is_match(&line));
+        assert!(re.is_match(&line));
     }
 }
