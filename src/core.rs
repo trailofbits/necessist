@@ -97,10 +97,11 @@ pub fn necessist(opts: &Necessist) -> Result<()> {
         .as_ref()
         .map_or_else(current_dir, |root| root.canonicalize())?;
 
-    let (sqlite, previous_removals) = if opts.dump || opts.sqlite {
+    let (sqlite, completed) = if opts.dump || opts.sqlite {
         let create = !opts.dump && !opts.resume;
-        let (sqlite, previous) = sqlite::init(&root, create)?;
-        (Some(sqlite), previous)
+        let (sqlite, mut completed) = sqlite::init(&root, create)?;
+        completed.sort_by(|left, right| left.span.cmp(&right.span));
+        (Some(sqlite), completed)
     } else {
         (None, Vec::new())
     };
@@ -120,7 +121,7 @@ pub fn necessist(opts: &Necessist) -> Result<()> {
     }
 
     if opts.dump {
-        dump(&context, &previous_removals);
+        dump(&context, &completed);
         return Ok(());
     }
 
@@ -128,30 +129,22 @@ pub fn necessist(opts: &Necessist) -> Result<()> {
 
     let paths = canonicalize_test_files(&context)?;
 
-    let mut current_spans = framework.parse(
+    let mut spans = framework.parse(
         &context,
         &paths.iter().map(AsRef::as_ref).collect::<Vec<_>>(),
     )?;
 
-    let n_before = current_spans.len();
+    let n_spans = spans.len();
 
-    skip_previous(&mut current_spans, previous_removals);
+    spans.sort();
 
-    let n_after = current_spans.len();
+    let test_file_span_map = build_test_file_span_map(spans);
 
-    let test_file_span_map = build_test_file_span_map(current_spans);
-
-    // smoelius: If resumed, the file count will not be correct. So adjust the message.
     (context.println)({
         let n_test_files = test_file_span_map.keys().len();
         &format!(
-            "{} candidates{} in {} test file{}",
-            n_before,
-            if opts.resume {
-                format!(", {} remaining", n_after)
-            } else {
-                String::new()
-            },
+            "{} candidates in {} test file{}",
+            n_spans,
             n_test_files,
             if n_test_files == 1 { "" } else { "s" }
         )
@@ -174,9 +167,7 @@ pub fn necessist(opts: &Necessist) -> Result<()> {
 
     let progress =
         if var("RUST_LOG").is_err() && !context.opts.quiet && atty::is(atty::Stream::Stdout) {
-            let progress = ProgressBar::new(n_before as u64);
-            progress.inc((n_before - n_after) as u64);
-            Some(progress)
+            Some(ProgressBar::new(n_spans as u64))
         } else {
             None
         };
@@ -192,7 +183,20 @@ pub fn necessist(opts: &Necessist) -> Result<()> {
 
     ctrlc::set_handler(|| CTRLC.store(true, Ordering::SeqCst))?;
 
+    let mut completed_iter = completed.into_iter();
+
     for (test_file, spans) in &test_file_span_map {
+        let mut spans = &spans[..];
+        let n = skip_completed(&mut spans, &mut completed_iter);
+
+        if let Some(bar) = progress.as_ref() {
+            bar.inc(n as u64);
+        }
+
+        if spans.is_empty() {
+            continue;
+        }
+
         if !context.opts.no_dry_run {
             (context.println)(&format!(
                 "{}: dry running",
@@ -343,17 +347,20 @@ fn canonicalize_test_files(context: &LightContext) -> Result<Vec<PathBuf>> {
         .collect::<Result<Vec<_>>>()
 }
 
-fn skip_previous(spans: &mut Vec<Span>, mut removals: Vec<Removal>) {
-    spans.sort();
-    removals.sort_by(|left, right| left.span.cmp(&right.span));
-
+fn skip_completed(spans: &mut &[Span], iter: &mut impl Iterator<Item = Removal>) -> usize {
     let mut i = 0;
-    for removal in removals {
-        assert_eq!(removal.span, spans[i], "File contents have changed");
-        i += 1;
+    while i < spans.len() {
+        if let Some(removal) = iter.next() {
+            assert_eq!(removal.span, spans[i], "File contents have changed");
+            i += 1;
+        } else {
+            break;
+        }
     }
 
-    spans.drain(..i);
+    *spans = &spans[i..];
+
+    i
 }
 
 fn build_test_file_span_map(spans: Vec<Span>) -> BTreeMap<SourceFile, Vec<Span>> {
