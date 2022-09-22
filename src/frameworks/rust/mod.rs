@@ -13,14 +13,14 @@ use std::{
     sync::atomic::{AtomicBool, Ordering},
 };
 use subprocess::{Exec, NullFile, Redirection};
-use syn::{parse_file, visit::Visit};
+use syn::parse_file;
 use walkdir::WalkDir;
 
 mod parsing;
 use parsing::{cached_test_file_fs_module_path, cached_test_file_package, Parsing};
 
 mod visitor;
-use visitor::Visitor;
+use visitor::visit;
 
 const BUG_MSG: &str = "
 
@@ -64,10 +64,8 @@ impl Interface for Rust {
                     util::strip_prefix(test_file, context.root).unwrap()
                 )
             })?;
-            let mut visitor = Visitor::new(self, &mut parsing, test_file);
-            visitor.visit_file(&file);
-            let visitor_spans = visitor.spans()?;
-            spans.extend(visitor_spans);
+            let spans_visited = visit(self, &mut parsing, test_file, &file)?;
+            spans.extend(spans_visited);
             Ok(())
         };
 
