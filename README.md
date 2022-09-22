@@ -134,7 +134,7 @@ TBD
 
 ## Goals
 
-- If a project uses a [supported framework](#supported-frameworks), then `cd`ing into its directory and typing `necessist` (with no arguments) produces meaningful output.
+- If a project uses a [supported framework](#supported-frameworks), then `cd`ing into the project's directory and typing `necessist` (with no arguments) should produce meaningful output.
 
 ## References
 
