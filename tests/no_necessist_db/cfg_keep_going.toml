@@ -1,4 +1,4 @@
-args = ["--root", "examples/cfg", "--keep-going"]
+args = ["--no-sqlite", "--root", "examples/cfg", "--keep-going"]
 stderr = ""
 
 [bin]

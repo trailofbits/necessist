@@ -35,7 +35,7 @@ fn test(repository: &str) {
     Command::cargo_bin(env!("CARGO_PKG_NAME"))
         .unwrap()
         .current_dir(&proptest)
-        .args(["--sqlite", "src/num.rs"])
+        .args(["src/num.rs"])
         .assert()
         .success();
 

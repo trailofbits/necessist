@@ -1,4 +1,4 @@
-args = ["--root", "examples/failure", "examples/failure/tests/b.rs"]
+args = ["--no-sqlite", "--root", "examples/failure", "examples/failure/tests/b.rs"]
 stderr = ""
 
 [bin]

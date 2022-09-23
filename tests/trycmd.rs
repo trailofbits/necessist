@@ -5,7 +5,7 @@ use std::{path::PathBuf, process::Command};
 use trycmd::TestCases;
 
 const ROOT: &str = "examples/basic";
-const TIMEOUT: &str = "10";
+const TIMEOUT: &str = "5";
 
 struct RemoveFile(PathBuf);
 
@@ -23,7 +23,7 @@ fn trycmd() {
 
     Command::cargo_bin(env!("CARGO_PKG_NAME"))
         .unwrap()
-        .args(&["--root", ROOT, "--sqlite", "--timeout", TIMEOUT])
+        .args(&["--root", ROOT, "--timeout", TIMEOUT])
         .assert()
         .success();
 
