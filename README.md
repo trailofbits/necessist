@@ -58,7 +58,7 @@ OPTIONS:
         --verbose                  Show test outcomes besides `passed`
 ```
 
-By default, Necessist outputs to both the console and to an sqlite database. For the latter, a tool like [sqlitebrowser](https://sqlitebrowser.org/) can then be used to filter/sort the results.
+By default, Necessist outputs to both the console and to an sqlite database. For the latter, a tool like [sqlitebrowser](https://sqlitebrowser.org/) can be used to filter/sort the results.
 
 ## Output
 
