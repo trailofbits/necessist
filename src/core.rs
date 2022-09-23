@@ -56,10 +56,11 @@ pub struct Necessist {
     pub framework: Framework,
     pub keep_going: bool,
     pub no_dry_run: bool,
+    pub no_sqlite: bool,
     pub quiet: bool,
+    pub reset: bool,
     pub resume: bool,
     pub root: Option<PathBuf>,
-    pub sqlite: bool,
     pub timeout: Option<u64>,
     pub verbose: bool,
     pub test_files: Vec<PathBuf>,
@@ -97,9 +98,9 @@ pub fn necessist(opts: &Necessist) -> Result<()> {
         .as_ref()
         .map_or_else(current_dir, |root| root.canonicalize())?;
 
-    let (sqlite, completed) = if opts.dump || opts.sqlite {
-        let create = !opts.dump && !opts.resume;
-        let (sqlite, mut completed) = sqlite::init(&root, create)?;
+    let (sqlite, completed) = if !opts.no_sqlite {
+        let (sqlite, mut completed) =
+            sqlite::init(&root, !opts.dump && !opts.reset && !opts.resume, opts.reset)?;
         completed.sort_by(|left, right| left.span.cmp(&right.span));
         (Some(sqlite), completed)
     } else {
@@ -251,28 +252,27 @@ pub fn necessist(opts: &Necessist) -> Result<()> {
     Ok(())
 }
 
+macro_rules! incompatible {
+    ($opts:ident, $x:ident, $y:ident) => {
+        ensure!(
+            !($opts.$x && $opts.$y),
+            "--{} and --{} are incompatible",
+            stringify!($x).to_kebab_case(),
+            stringify!($y).to_kebab_case()
+        );
+    };
+}
+
 fn process_options(opts: &mut Necessist) -> Result<()> {
     // smoelius: This list of incompatibilities is not exhaustive.
-    ensure!(
-        !(opts.dump && opts.quiet),
-        "--dump and --quiet are incompatible"
-    );
-    ensure!(
-        !(opts.dump && opts.resume),
-        "--dump and --resume are incompatible"
-    );
-    ensure!(
-        !(opts.keep_going && opts.no_dry_run),
-        "--keep-going and --no-dry-run are incompatible"
-    );
-    ensure!(
-        !(opts.quiet && opts.verbose),
-        "--quiet and --verbose are incompatible"
-    );
-
-    if opts.resume {
-        opts.sqlite = true;
-    }
+    incompatible!(opts, dump, quiet);
+    incompatible!(opts, dump, reset);
+    incompatible!(opts, dump, resume);
+    incompatible!(opts, dump, no_sqlite);
+    incompatible!(opts, keep_going, no_dry_run);
+    incompatible!(opts, quiet, verbose);
+    incompatible!(opts, reset, no_sqlite);
+    incompatible!(opts, resume, no_sqlite);
 
     Ok(())
 }

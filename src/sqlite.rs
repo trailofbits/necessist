@@ -1,5 +1,5 @@
 use crate::{util, Outcome, Span};
-use anyhow::{bail, ensure, Error, Result};
+use anyhow::{bail, Context, Error, Result};
 use diesel::prelude::*;
 use diesel::{insert_into, sql_query, sqlite::SqliteConnection};
 use git2::{Oid, Repository, RepositoryOpenFlags};
@@ -55,29 +55,37 @@ impl TryFrom<Removal> for crate::Removal {
     }
 }
 
-pub(crate) fn init(root: &Path, create: bool) -> Result<(Sqlite, Vec<crate::Removal>)> {
+pub(crate) fn init(
+    root: &Path,
+    must_not_exist: bool,
+    reset: bool,
+) -> Result<(Sqlite, Vec<crate::Removal>)> {
     let path = root.join("necessist.db");
 
     let exists = path.exists();
-    ensure!(
-        (create && !exists) || (!create && exists),
-        "An sqlite database {} at `{}`",
-        if exists {
-            "already exists"
-        } else {
-            "does not exists"
-        },
-        path.to_string_lossy()
-    );
+
+    if must_not_exist && exists {
+        bail!(
+            "Found an sqlite database at {:?}; please pass either --reset or --resume",
+            path
+        );
+    }
 
     let database_url = format!("sqlite://{}", path.to_string_lossy());
     let mut connection = SqliteConnection::establish(&database_url)?;
 
-    let removals = if create {
+    if reset && exists {
+        let sql = include_str!("drop_table_removal.sql");
+        sql_query(sql)
+            .execute(&mut connection)
+            .with_context(|| "Could not drop sqlite database")?;
+    }
+
+    let removals = if reset || !exists {
         let sql = include_str!("create_table_removal.sql");
-        if let Err(err) = sql_query(sql).execute(&mut connection) {
-            bail!("Could not create sqlite database: {}", &err.to_string());
-        }
+        sql_query(sql)
+            .execute(&mut connection)
+            .with_context(|| "Could not create sqlite database")?;
         Vec::new()
     } else {
         let removals = removal::table.load::<Removal>(&mut connection)?;
