@@ -6,7 +6,7 @@ Run tests with statements and method calls removed to help identify broken tests
 cargo install necessist
 ```
 
-## Illustrative example
+## Overview
 
 The following hypothetical test verifies that a login mechanism works. Suppose the test would pass if `session.send_password(...)` were removed. This could indicate that the wrong condition is checked thereafter. Or worse, it could indicate a bug in the login mechanism.
 
@@ -22,6 +22,13 @@ fn login_works() {
 
 Necessist iteratively removes statements and method calls from tests and then runs them to help identify such cases.
 
+Generally speaking, Necessist will not attempt to remove a statement if it is one the following:
+
+- A declaration (e.g., a local or `let` binding)
+- A `break` or `continue`
+
+Also, for some frameworks, certain statements and methods are ignored (see [below](#supported-framework-specifics)).
+
 ## Usage
 
 ```
@@ -34,30 +41,24 @@ ARGS:
     <TEST_FILES>...    Test files to mutilate (optional)
 
 OPTIONS:
-        --dump                     Dump the contents of the sqlite database to the console
+        --dump                     Dump sqlite database contents to the console
         --framework <FRAMEWORK>    Assume testing framework is <FRAMEWORK> [possible values: auto,
                                    hardhat-ts, rust]
     -h, --help                     Print help information
         --keep-going               Continue when a dry run fails or a test cannot be run
         --no-dry-run               Do not perform dry runs
+        --no-sqlite                Do not resume from or output to sqlite database
         --quiet                    Do not output to the console
-        --resume                   Resume from the sqlite database; implies --sqlite
+        --reset                    Discard sqlite database contents
+        --resume                   Resume from sqlite database
         --root <ROOT>              Root directory of the project under test
-        --sqlite                   Output to a sqlite database in addition to the console
         --timeout <TIMEOUT>        Maximum number of seconds to run any test; 60 is the default, 0
                                    means no timeout
     -V, --version                  Print version information
         --verbose                  Show test outcomes besides `passed`
 ```
 
-By default, Necessist outputs to the console. Passing `--sqlite` causes Necessist to instead output to a sqlite database. A tool like [sqlitebrowser](https://sqlitebrowser.org/) can then be used to filter/sort the results.
-
-Generally speaking, Necessist will not attempt to remove a statement if it is one the following:
-
-- A declaration (e.g., a local or `let` binding)
-- A `break` or `continue`
-
-Also, for some frameworks, certain statements and methods are ignored (see [below](#supported-framework-specifics)).
+By default, Necessist outputs to both the console and to an sqlite database. For the latter, a tool like [sqlitebrowser](https://sqlitebrowser.org/) can then be used to filter/sort the results.
 
 ## Output
 

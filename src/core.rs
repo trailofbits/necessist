@@ -98,13 +98,13 @@ pub fn necessist(opts: &Necessist) -> Result<()> {
         .as_ref()
         .map_or_else(current_dir, |root| root.canonicalize())?;
 
-    let (sqlite, completed) = if !opts.no_sqlite {
+    let (sqlite, completed) = if opts.no_sqlite {
+        (None, Vec::new())
+    } else {
         let (sqlite, mut completed) =
             sqlite::init(&root, !opts.dump && !opts.reset && !opts.resume, opts.reset)?;
         completed.sort_by(|left, right| left.span.cmp(&right.span));
         (Some(sqlite), completed)
-    } else {
-        (None, Vec::new())
     };
 
     let mut context = LightContext {
