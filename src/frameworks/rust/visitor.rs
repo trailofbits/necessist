@@ -291,6 +291,7 @@ const IGNORED_METHODS: &[&str] = &[
     "try_into",
     "unwrap",
     "unwrap_err",
+    "unwrap_or_default",
 ];
 
 fn is_ignored_method(method: &Ident, args: &Punctuated<Expr, Token![,]>) -> bool {
