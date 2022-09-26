@@ -26,7 +26,7 @@ Generally speaking, Necessist will not attempt to remove a statement if it is on
 
 - A statement containing other statements (e.g., a `for` loop)
 - A declaration (e.g., a local or `let` binding)
-- A `break` or `continue`
+- A `break`, `continue`, or `return`
 
 Also, for some frameworks, certain statements and methods are ignored (see [below](#supported-framework-specifics)).
 
