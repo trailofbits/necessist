@@ -1,5 +1,5 @@
-use crate::{frameworks, sqlite, util, Backup, Outcome, Rewriter, SourceFile, Span};
-use ansi_term::{Color::Yellow, Style};
+use crate::{frameworks, sqlite, util, warn, Backup, Outcome, Rewriter, SourceFile, Span};
+use ansi_term::Style;
 use anyhow::{anyhow, bail, ensure, Context as _, Result};
 use heck::ToKebabCase;
 use indicatif::ProgressBar;
@@ -285,11 +285,7 @@ fn dump(context: &LightContext, removals: &[Removal]) {
     }
 
     if !context.opts.verbose && other_than_passed {
-        warn(
-            context,
-            None,
-            "More output would be produced with --verbose",
-        );
+        warn(context, "More output would be produced with --verbose");
     }
 }
 
@@ -506,23 +502,4 @@ fn recursive_kill(pid: u32) -> Result<()> {
     // ensure!(status.success());
 
     Ok(())
-}
-
-pub(crate) fn warn(context: &LightContext, span: Option<&Span>, msg: &str) {
-    if !context.opts.quiet {
-        (context.println)(&format!(
-            "{}: {}{}",
-            if atty::is(atty::Stream::Stdout) {
-                Yellow.bold()
-            } else {
-                Style::default()
-            }
-            .paint("Warning"),
-            span.map_or(String::new(), |span| format!(
-                "{}: ",
-                span.to_console_string()
-            )),
-            msg
-        ));
-    }
 }
