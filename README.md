@@ -50,10 +50,10 @@ OPTIONS:
     -h, --help                     Print help information
         --keep-going               Continue when a dry run fails or a test cannot be run
         --no-dry-run               Do not perform dry runs
-        --no-sqlite                Do not resume from or output to sqlite database
+        --no-sqlite                Do not output to an sqlite database
         --quiet                    Do not output to the console
         --reset                    Discard sqlite database contents
-        --resume                   Resume from sqlite database
+        --resume                   Resume from the sqlite database
         --root <ROOT>              Root directory of the project under test
         --timeout <TIMEOUT>        Maximum number of seconds to run any test; 60 is the default, 0
                                    means no timeout

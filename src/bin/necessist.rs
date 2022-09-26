@@ -51,13 +51,13 @@ struct Opts {
     keep_going: bool,
     #[clap(long, help = "Do not perform dry runs")]
     no_dry_run: bool,
-    #[clap(long, help = "Do not resume from or output to sqlite database")]
+    #[clap(long, help = "Do not output to an sqlite database")]
     no_sqlite: bool,
     #[clap(long, help = "Do not output to the console")]
     quiet: bool,
     #[clap(long, help = "Discard sqlite database contents")]
     reset: bool,
-    #[clap(long, help = "Resume from sqlite database")]
+    #[clap(long, help = "Resume from the sqlite database")]
     resume: bool,
     #[clap(long, help = "Root directory of the project under test")]
     root: Option<String>,
