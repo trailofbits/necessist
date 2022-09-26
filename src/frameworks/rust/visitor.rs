@@ -1,7 +1,10 @@
 use super::{cached_test_file_fs_module_path, Parsing, Rust};
 use crate::{SourceFile, Span, ToInternalSpan};
 use anyhow::{Error, Result};
-use std::path::Path;
+use std::{
+    path::{Path, PathBuf},
+    rc::Rc,
+};
 use syn::{
     punctuated::Punctuated,
     spanned::Spanned,
@@ -16,10 +19,11 @@ use syn::{
 pub(super) fn visit<'framework, 'parsing>(
     framework: &'framework mut Rust,
     parsing: &'parsing mut Parsing,
+    root: Rc<PathBuf>,
     test_file: &Path,
     file: &File,
 ) -> Result<Vec<Span>> {
-    let mut visitor = Visitor::new(framework, parsing, test_file);
+    let mut visitor = Visitor::new(framework, parsing, root, test_file);
     visitor.visit_file(file);
     if let Some(error) = visitor.error {
         Err(error)
@@ -136,12 +140,13 @@ where
     pub fn new(
         framework: &'framework mut Rust,
         parsing: &'parsing mut Parsing,
+        root: Rc<PathBuf>,
         test_file: &Path,
     ) -> Self {
         Self {
             framework,
             parsing,
-            source_file: SourceFile::new(test_file),
+            source_file: SourceFile::new(root, Rc::new(test_file.to_path_buf())),
             module_path: Vec::new(),
             test_ident: None,
             n_stmt_leaves_visited: 0,

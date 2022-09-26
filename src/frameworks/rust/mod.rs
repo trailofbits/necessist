@@ -10,6 +10,7 @@ use std::{
     io::BufRead,
     path::{Path, PathBuf},
     process::{Command, Stdio},
+    rc::Rc,
     sync::atomic::{AtomicBool, Ordering},
 };
 use subprocess::{Exec, NullFile, Redirection};
@@ -35,6 +36,7 @@ static BUG_MSG_SHOWN: AtomicBool = AtomicBool::new(false);
 
 #[derive(Debug, Default)]
 pub(super) struct Rust {
+    root: Option<Rc<PathBuf>>,
     test_file_flags_cache: BTreeMap<PathBuf, Vec<String>>,
     span_test_path_map: BTreeMap<Span, Vec<String>>,
 }
@@ -45,7 +47,15 @@ impl Interface for Rust {
     }
 
     #[allow(clippy::similar_names)]
+    #[cfg_attr(
+        dylint_lib = "non_local_effect_before_error_return",
+        allow(non_local_effect_before_error_return)
+    )]
     fn parse(&mut self, context: &LightContext, test_files: &[&Path]) -> Result<Vec<Span>> {
+        if self.root.is_none() {
+            self.root = Some(Rc::new(context.root.to_path_buf()));
+        }
+
         let mut parsing = Parsing::default();
         let mut spans = Vec::new();
 
@@ -64,7 +74,14 @@ impl Interface for Rust {
                     util::strip_prefix(test_file, context.root).unwrap()
                 )
             })?;
-            let spans_visited = visit(self, &mut parsing, test_file, &file)?;
+            #[allow(clippy::expect_used)]
+            let spans_visited = visit(
+                self,
+                &mut parsing,
+                self.root.as_ref().expect("`root` is unset").clone(),
+                test_file,
+                &file,
+            )?;
             spans.extend(spans_visited);
             Ok(())
         };
@@ -111,7 +128,7 @@ impl Interface for Rust {
         let test_path = self
             .span_test_path_map
             .get(span)
-            .expect("Test path not set");
+            .expect("Test path is not set");
         let test = test_path.join("::");
 
         {
@@ -172,7 +189,7 @@ impl Rust {
         let flags = self
             .test_file_flags_cache
             .get(test_file)
-            .expect("Flags not cached");
+            .expect("Flags are not cached");
         let mut command = Command::new("cargo");
         command.arg("test");
         command.args(flags);
@@ -184,7 +201,7 @@ impl Rust {
         let flags = self
             .test_file_flags_cache
             .get(test_file)
-            .expect("Flags not cached");
+            .expect("Flags are not cached");
         let mut exec = Exec::cmd("cargo");
         exec = exec.arg("test");
         exec = exec.args(flags);

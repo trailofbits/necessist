@@ -4,7 +4,7 @@ use anyhow::{anyhow, ensure, Context, Result};
 use log::debug;
 use std::{
     ffi::OsStr,
-    path::Path,
+    path::{Path, PathBuf},
     process::{Command, Stdio},
     rc::Rc,
 };
@@ -18,14 +18,24 @@ mod visitor;
 use visitor::visit;
 
 #[derive(Debug, Default)]
-pub(super) struct HardhatTs;
+pub(super) struct HardhatTs {
+    root: Option<Rc<PathBuf>>,
+}
 
 impl Interface for HardhatTs {
     fn applicable(&self, context: &LightContext) -> Result<bool> {
         Ok(context.root.join("hardhat.config.ts").exists())
     }
 
+    #[cfg_attr(
+        dylint_lib = "non_local_effect_before_error_return",
+        allow(non_local_effect_before_error_return)
+    )]
     fn parse(&mut self, context: &LightContext, test_files: &[&Path]) -> Result<Vec<Span>> {
+        if self.root.is_none() {
+            self.root = Some(Rc::new(context.root.to_path_buf()));
+        }
+
         let mut spans = Vec::new();
 
         let mut visit_test_file = |test_file: &Path| -> Result<()> {
@@ -50,7 +60,13 @@ impl Interface for HardhatTs {
                         util::strip_prefix(test_file, context.root).unwrap()
                     )
                 })?;
-            let visited_spans = visit(source_map, test_file, &module);
+            #[allow(clippy::expect_used)]
+            let visited_spans = visit(
+                source_map,
+                self.root.as_ref().expect("`root` is unset").clone(),
+                test_file,
+                &module,
+            );
             spans.extend(visited_spans);
             Ok(())
         };
