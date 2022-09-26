@@ -39,4 +39,4 @@ use try_insert::TryInsert;
 pub mod util;
 
 mod warn;
-use warn::{span_warn, warn};
+use warn::{span_warn, warn, warn_once, Key as WarnKey};

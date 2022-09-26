@@ -1,4 +1,6 @@
-use crate::{frameworks, sqlite, util, warn, Backup, Outcome, Rewriter, SourceFile, Span};
+use crate::{
+    frameworks, sqlite, util, warn, warn_once, Backup, Outcome, Rewriter, SourceFile, Span, WarnKey,
+};
 use ansi_term::Style;
 use anyhow::{anyhow, bail, ensure, Context as _, Result};
 use heck::ToKebabCase;
@@ -9,6 +11,7 @@ use std::{
     env::{current_dir, var},
     fs::{read_to_string, OpenOptions},
     io::Write,
+    iter::Peekable,
     path::{Path, PathBuf},
     process::{Command, Stdio},
     sync::atomic::{AtomicBool, Ordering},
@@ -26,11 +29,12 @@ pub(crate) struct Removal {
 }
 
 struct Context<'a> {
-    sqlite: Option<sqlite::Sqlite>,
     opts: Necessist,
     root: PathBuf,
     println: &'a dyn Fn(&dyn AsRef<str>),
+    sqlite: Option<sqlite::Sqlite>,
     framework: Box<dyn frameworks::Interface>,
+    progress: Option<&'a ProgressBar>,
 }
 
 impl<'a> Context<'a> {
@@ -98,15 +102,6 @@ pub fn necessist(opts: &Necessist) -> Result<()> {
         .as_ref()
         .map_or_else(current_dir, |root| root.canonicalize())?;
 
-    let (sqlite, completed) = if opts.no_sqlite {
-        (None, Vec::new())
-    } else {
-        let (sqlite, mut completed) =
-            sqlite::init(&root, !opts.dump && !opts.reset && !opts.resume, opts.reset)?;
-        completed.sort_by(|left, right| left.span.cmp(&right.span));
-        (Some(sqlite), completed)
-    };
-
     let mut context = LightContext {
         opts: &opts,
         root: &root,
@@ -121,38 +116,12 @@ pub fn necessist(opts: &Necessist) -> Result<()> {
         context.println = &println;
     }
 
-    if opts.dump {
-        dump(&context, &completed);
-        return Ok(());
-    }
-
-    let mut framework = find_framework(&context)?;
-
-    let paths = canonicalize_test_files(&context)?;
-
-    let mut spans = framework.parse(
-        &context,
-        &paths.iter().map(AsRef::as_ref).collect::<Vec<_>>(),
-    )?;
-
-    let n_spans = spans.len();
-
-    spans.sort();
-
-    let test_file_span_map = build_test_file_span_map(spans);
-
-    (context.println)({
-        let n_test_files = test_file_span_map.keys().len();
-        &format!(
-            "{} candidates in {} test file{}",
-            n_spans,
-            n_test_files,
-            if n_test_files == 1 { "" } else { "s" }
-        )
-    });
-
-    #[allow(clippy::drop_non_drop)]
-    drop(context);
+    let (sqlite, framework, n_spans, test_file_span_map, past_removals) =
+        if let Some(elements) = prepare(&context)? {
+            elements
+        } else {
+            return Ok(());
+        };
 
     let mut context = Context {
         sqlite,
@@ -160,6 +129,7 @@ pub fn necessist(opts: &Necessist) -> Result<()> {
         root,
         println: &|_| {},
         framework,
+        progress: None,
     };
 
     if !context.opts.quiet {
@@ -180,38 +150,104 @@ pub fn necessist(opts: &Necessist) -> Result<()> {
 
     if progress.is_some() {
         context.println = &progress_println;
+        context.progress = progress.as_ref();
     }
 
+    run(context, test_file_span_map, past_removals)
+}
+
+#[allow(clippy::type_complexity)]
+fn prepare(
+    context: &LightContext,
+) -> Result<
+    Option<(
+        Option<sqlite::Sqlite>,
+        Box<dyn frameworks::Interface>,
+        usize,
+        BTreeMap<SourceFile, Vec<Span>>,
+        Vec<Removal>,
+    )>,
+> {
+    let (sqlite, past_removals) = if context.opts.no_sqlite {
+        (None, Vec::new())
+    } else {
+        let (sqlite, mut past_removals) = sqlite::init(
+            context.root,
+            !context.opts.dump && !context.opts.reset && !context.opts.resume,
+            context.opts.reset,
+        )?;
+        past_removals.sort_by(|left, right| left.span.cmp(&right.span));
+        (Some(sqlite), past_removals)
+    };
+
+    if context.opts.dump {
+        dump(context, &past_removals);
+        return Ok(None);
+    }
+
+    let mut framework = find_framework(context)?;
+
+    let paths = canonicalize_test_files(context)?;
+
+    let spans = framework.parse(
+        context,
+        &paths.iter().map(AsRef::as_ref).collect::<Vec<_>>(),
+    )?;
+
+    let n_spans = spans.len();
+
+    let test_file_span_map = build_test_file_span_map(spans);
+
+    (context.println)({
+        let n_test_files = test_file_span_map.keys().len();
+        &format!(
+            "{} candidates in {} test file{}",
+            n_spans,
+            n_test_files,
+            if n_test_files == 1 { "" } else { "s" }
+        )
+    });
+
+    Ok(Some((
+        sqlite,
+        framework,
+        n_spans,
+        test_file_span_map,
+        past_removals,
+    )))
+}
+
+fn run(
+    mut context: Context,
+    test_file_span_map: BTreeMap<SourceFile, Vec<Span>>,
+    past_removals: Vec<Removal>,
+) -> Result<()> {
     ctrlc::set_handler(|| CTRLC.store(true, Ordering::SeqCst))?;
 
-    let mut completed_iter = completed.into_iter();
+    let mut past_removal_iter = past_removals.into_iter().peekable();
 
-    for (test_file, spans) in &test_file_span_map {
-        let mut spans = &spans[..];
-        let n = skip_completed(&mut spans, &mut completed_iter);
+    for (test_file, spans) in test_file_span_map {
+        let mut span_iter = spans.iter().peekable();
 
-        if let Some(bar) = progress.as_ref() {
-            bar.inc(n as u64);
-        }
+        let (mismatch, n) = skip_past_removals(&mut span_iter, &mut past_removal_iter);
 
-        if spans.is_empty() {
+        update_progress(&context, mismatch, n);
+
+        if span_iter.peek().is_none() {
             continue;
         }
 
         if !context.opts.no_dry_run {
             (context.println)(&format!(
                 "{}: dry running",
-                util::strip_current_dir(test_file).to_string_lossy()
+                util::strip_current_dir(&test_file).to_string_lossy()
             ));
 
-            if let Err(error) = context
-                .framework
-                .dry_run(&context.light(), test_file.as_ref())
-            {
+            if let Err(error) = context.framework.dry_run(&context.light(), &test_file) {
                 if context.opts.keep_going {
                     (context.println)(&format!(
                         "{}: dry run failed: {}",
-                        util::strip_current_dir(test_file).to_string_lossy(),
+                        util::strip_current_dir(&test_file).to_string_lossy(),
                         error
                     ));
                     continue;
@@ -227,10 +263,20 @@ pub fn necessist(opts: &Necessist) -> Result<()> {
 
         (context.println)(&format!(
             "{}: mutilating",
-            util::strip_current_dir(test_file).to_string_lossy()
+            util::strip_current_dir(&test_file).to_string_lossy()
         ));
 
-        for span in spans {
+        loop {
+            let (mismatch, n) = skip_past_removals(&mut span_iter, &mut past_removal_iter);
+
+            update_progress(&context, mismatch, n);
+
+            let span = if let Some(span) = span_iter.next() {
+                span
+            } else {
+                break;
+            };
+
             let (text, outcome) = attempt_removal(&context, span)?;
 
             if CTRLC.load(Ordering::SeqCst) {
@@ -241,13 +287,11 @@ pub fn necessist(opts: &Necessist) -> Result<()> {
                 emit(&mut context, span, &text, outcome)?;
             }
 
-            if let Some(bar) = progress.as_ref() {
-                bar.inc(1);
-            }
+            update_progress(&context, false, 1);
         }
     }
 
-    progress.as_ref().map(ProgressBar::finish);
+    context.progress.map(ProgressBar::finish);
 
     Ok(())
 }
@@ -343,24 +387,61 @@ fn canonicalize_test_files(context: &LightContext) -> Result<Vec<PathBuf>> {
         .collect::<Result<Vec<_>>>()
 }
 
-fn skip_completed(spans: &mut &[Span], iter: &mut impl Iterator<Item = Removal>) -> usize {
-    let mut i = 0;
-    while i < spans.len() {
-        if let Some(removal) = iter.next() {
-            assert_eq!(removal.span, spans[i], "File contents have changed");
-            i += 1;
+#[must_use]
+fn skip_past_removals<'a, I, J>(
+    span_iter: &mut Peekable<I>,
+    removal_iter: &mut Peekable<J>,
+) -> (bool, usize)
+where
+    I: Iterator<Item = &'a Span>,
+    J: Iterator<Item = Removal>,
+{
+    let mut mismatch = false;
+    let mut n = 0;
+    while let Some(&span) = span_iter.peek() {
+        let removal = if let Some(removal) = removal_iter.peek() {
+            removal
         } else {
             break;
+        };
+        match span.cmp(&removal.span) {
+            std::cmp::Ordering::Less => {
+                mismatch = true;
+                break;
+            }
+            std::cmp::Ordering::Equal => {
+                let _ = span_iter.next();
+                let _removal = removal_iter.next();
+                n += 1;
+            }
+            std::cmp::Ordering::Greater => {
+                mismatch = true;
+                let _removal = removal_iter.next();
+            }
         }
     }
 
-    *spans = &spans[i..];
-
-    i
+    (mismatch, n)
 }
 
-fn build_test_file_span_map(spans: Vec<Span>) -> BTreeMap<SourceFile, Vec<Span>> {
+fn update_progress(context: &Context, mismatch: bool, n: usize) {
+    if mismatch {
+        warn_once(
+            &context.light(),
+            "Test files have changed since necessist.db was created",
+            WarnKey::ConfigurationOrTestFilesHaveChanged,
+        );
+    }
+
+    if let Some(bar) = context.progress {
+        bar.inc(n as u64);
+    }
+}
+
+fn build_test_file_span_map(mut spans: Vec<Span>) -> BTreeMap<SourceFile, Vec<Span>> {
     let mut test_file_span_map = BTreeMap::new();
+
+    spans.sort();
 
     for span in spans {
         let test_file_spans = test_file_span_map
@@ -373,16 +454,16 @@ fn build_test_file_span_map(spans: Vec<Span>) -> BTreeMap<SourceFile, Vec<Span>>
 }
 
 fn attempt_removal(context: &Context, span: &Span) -> Result<(String, Option<Outcome>)> {
-    let _backup = Backup::new(span.source_file.as_ref())?;
+    let _backup = Backup::new(&*span.source_file)?;
 
-    let contents = read_to_string(span.source_file.as_ref())?;
+    let contents = read_to_string(&*span.source_file)?;
     let mut rewriter = Rewriter::new(&contents);
     let text = rewriter.rewrite(span, "");
 
     let mut file = OpenOptions::new()
         .truncate(true)
         .write(true)
-        .open(span.source_file.as_ref())?;
+        .open(&*span.source_file)?;
     file.write_all(rewriter.contents().as_bytes())?;
 
     let exec = context.framework.exec(&context.light(), span)?;
