@@ -130,7 +130,7 @@ By default, Necessist outputs only when tests pass. Passing `--verbose` causes N
 - `into_path_buf`
 - `into_string`
 - `into_vec`
-- `success` (e.g. [`assert_cmd::assert::Assert::success`](https://docs.rs/assert_cmd/latest/assert_cmd/assert/struct.Assert.html#method.success))
+- `success` (e.g. [`assert_cmd::assert::Assert::success`])
 - `to_os_string`
 - `to_owned`
 - `to_path_buf`
@@ -163,6 +163,8 @@ A configuration file allows one to tailor Necessist's behavior with respect to a
 
 ## References
 
-- Groce, A., Ahmed, I., Jensen, C., McKenney, P.E., Holmes, J.: How verified (or tested) is my code? Falsification-driven verification and testing. Autom. Softw. Eng. **25**, 917–960 (2018). A preprint is available [here](https://agroce.github.io/asej18.pdf). See Section 2.3.
+- Groce, A., Ahmed, I., Jensen, C., McKenney, P.E., Holmes, J.: How verified (or tested) is my code? Falsification-driven verification and testing. Autom. Softw. Eng. **25**, 917–960 (2018). A [preprint] is available. See Section 2.3.
 
+[`assert_cmd::assert::assert::success`]: https://docs.rs/assert_cmd/latest/assert_cmd/assert/struct.Assert.html#method.success
+[preprint]: https://agroce.github.io/asej18.pdf
 [toml]: https://toml.io/en/
