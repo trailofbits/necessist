@@ -220,7 +220,7 @@ fn is_control(stmt: &Stmt) -> bool {
         _ => None,
     }
     .map_or(false, |expr| {
-        matches!(expr, Expr::Break(_) | Expr::Continue(_))
+        matches!(expr, Expr::Break(_) | Expr::Continue(_) | Expr::Return(_))
     })
 }
 

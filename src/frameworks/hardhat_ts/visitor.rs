@@ -75,7 +75,10 @@ impl Visit for Visitor {
         }
 
         if self.in_it_call_expr
-            && !matches!(stmt, Stmt::Break(_) | Stmt::Continue(_) | Stmt::Decl(_))
+            && !matches!(
+                stmt,
+                Stmt::Break(_) | Stmt::Continue(_) | Stmt::Decl(_) | Stmt::Return(_)
+            )
             && !is_ignored_call_expr(stmt)
         {
             let span = stmt
