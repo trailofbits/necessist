@@ -25,7 +25,7 @@ fn failed() {
 #[cfg(feature = "nonbuildable")]
 #[test]
 fn nonbuildable() {
-    let _ = || -> u32 {
-        return 0;
+    let _ = |xs: &[&str]| -> String {
+        return xs.join("");
     };
 }

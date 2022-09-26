@@ -18,8 +18,8 @@ pub struct Visitor {
     source_map: Rc<SourceMap>,
     source_file: SourceFile,
     in_it_call_expr: bool,
+    n_stmt_leaves_visited: usize,
     spans: Vec<Span>,
-    n_stmt_spans: usize,
 }
 
 #[allow(dead_code)]
@@ -55,24 +55,22 @@ impl Visit for Visitor {
                 let mut span = *span;
                 span.lo = obj.span().hi;
                 assert!(span.lo <= span.hi);
-                self.elevate_span(
-                    span.to_internal_span(&self.source_map, &self.source_file),
-                    false,
-                );
+                self.elevate_span(span.to_internal_span(&self.source_map, &self.source_file));
             }
         }
     }
 
     fn visit_stmt(&mut self, stmt: &Stmt) {
-        let n_before = self.n_stmt_spans();
+        let n_before = self.n_stmt_leaves_visited;
         visit_stmt(self, stmt);
-        let n_after = self.n_stmt_spans();
+        let n_after = self.n_stmt_leaves_visited;
 
         // smoelius: Consider this a "leaf" if-and-only-if no "leaves" were added during the
         // recursive call.
         if n_before != n_after {
             return;
         }
+        self.n_stmt_leaves_visited += 1;
 
         if self.in_it_call_expr
             && !matches!(
@@ -84,7 +82,7 @@ impl Visit for Visitor {
             let span = stmt
                 .span()
                 .to_internal_span(&self.source_map, &self.source_file);
-            self.elevate_span(span, true);
+            self.elevate_span(span);
         }
     }
 }
@@ -95,21 +93,13 @@ impl Visitor {
             source_map,
             source_file: SourceFile::new(test_file),
             in_it_call_expr: false,
+            n_stmt_leaves_visited: 0,
             spans: Vec::new(),
-            n_stmt_spans: 0,
         }
     }
 
-    fn elevate_span(&mut self, span: Span, is_stmt: bool) {
+    fn elevate_span(&mut self, span: Span) {
         self.spans.push(span);
-        if is_stmt {
-            self.n_stmt_spans += 1;
-        }
-    }
-
-    fn n_stmt_spans(&self) -> usize {
-        assert!(self.spans.len() >= self.n_stmt_spans);
-        self.n_stmt_spans
     }
 }
 

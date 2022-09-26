@@ -34,8 +34,8 @@ struct Visitor<'ast, 'framework, 'parsing> {
     source_file: SourceFile,
     module_path: Vec<&'ast Ident>,
     test_ident: Option<&'ast Ident>,
+    n_stmt_leaves_visited: usize,
     spans: Vec<Span>,
-    n_stmt_spans: usize,
     error: Option<Error>,
 }
 
@@ -81,15 +81,16 @@ where
             return;
         }
 
-        let n_before = self.n_stmt_spans();
+        let n_before = self.n_stmt_leaves_visited;
         visit_stmt(self, stmt);
-        let n_after = self.n_stmt_spans();
+        let n_after = self.n_stmt_leaves_visited;
 
         // smoelius: Consider this a "leaf" if-and-only-if no "leaves" were added during the
         // recursive call.
         if n_before != n_after {
             return;
         }
+        self.n_stmt_leaves_visited += 1;
 
         if let Some(ident) = self.test_ident {
             if !matches!(stmt, Stmt::Item(_) | Stmt::Local(_))
@@ -97,7 +98,7 @@ where
                 && !is_ignored_macro(stmt)
             {
                 let span = stmt.span().to_internal_span(&self.source_file);
-                self.elevate_span(span, ident, true);
+                self.elevate_span(span, ident);
             }
         }
     }
@@ -121,7 +122,7 @@ where
                 let mut span = method_call.span().to_internal_span(&self.source_file);
                 span.start = dot_token.span().start();
                 assert!(span.start <= span.end);
-                self.elevate_span(span, ident, false);
+                self.elevate_span(span, ident);
             }
         }
     }
@@ -143,13 +144,13 @@ where
             source_file: SourceFile::new(test_file),
             module_path: Vec::new(),
             test_ident: None,
+            n_stmt_leaves_visited: 0,
             spans: Vec::new(),
-            n_stmt_spans: 0,
             error: None,
         }
     }
 
-    fn elevate_span(&mut self, span: Span, ident: &Ident, is_stmt: bool) {
+    fn elevate_span(&mut self, span: Span, ident: &Ident) {
         let result = (|| {
             let _ = self.framework.cached_test_file_flags(
                 &mut self.parsing.test_file_package_cache,
@@ -158,19 +159,11 @@ where
             let test_path = self.test_path(&span, ident)?;
             self.framework.set_span_test_path(&span, test_path);
             self.spans.push(span);
-            if is_stmt {
-                self.n_stmt_spans += 1;
-            }
             Ok(())
         })();
         if let Err(error) = result {
             self.error = self.error.take().or(Some(error));
         }
-    }
-
-    fn n_stmt_spans(&self) -> usize {
-        assert!(self.spans.len() >= self.n_stmt_spans);
-        self.n_stmt_spans
     }
 
     fn test_path(&mut self, span: &Span, ident: &Ident) -> Result<Vec<String>> {

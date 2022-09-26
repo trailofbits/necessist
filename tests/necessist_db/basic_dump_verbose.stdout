@@ -1,4 +1,4 @@
 examples/basic/src/lib.rs:4:5-4:12: `n += 1;` passed
 examples/basic/src/lib.rs:11:9-11:16: `n += 1;` timed-out
 examples/basic/src/lib.rs:18:5-18:12: `n += 1;` failed
-examples/basic/src/lib.rs:25:9-25:18: `return 0;` nonbuildable
+examples/basic/src/lib.rs:25:18-25:27: `.join("")` nonbuildable

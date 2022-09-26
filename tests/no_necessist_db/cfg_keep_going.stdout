@@ -7,4 +7,4 @@ This may indicate a bug in Necessist. Consider opening an issue at: https://gith
 
 examples/cfg/src/lib.rs:13:9-13:16: Warning: Could not run test `timed_out`
 examples/cfg/src/lib.rs:21:5-21:12: Warning: Could not run test `failed`
-examples/cfg/src/lib.rs:29:9-29:18: Warning: Could not run test `nonbuildable`
+examples/cfg/src/lib.rs:29:18-29:27: Warning: Could not run test `nonbuildable`
