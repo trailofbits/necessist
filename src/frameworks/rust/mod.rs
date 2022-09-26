@@ -1,5 +1,5 @@
 use super::{Interface, Postprocess};
-use crate::{util, warn, LightContext, Span, TryInsert};
+use crate::{span_warn, util, LightContext, Span, TryInsert};
 use anyhow::{anyhow, ensure, Context, Result};
 use cargo_metadata::Package;
 use log::debug;
@@ -156,7 +156,7 @@ impl Interface for Rust {
                     BUG_MSG_SHOWN.store(true, Ordering::SeqCst);
                 }
                 if context.opts.keep_going {
-                    warn(context, Some(&span), &msg);
+                    span_warn(context, &span, &msg);
                     return Ok(false);
                 }
                 msg += KEEP_GOING_MSG;

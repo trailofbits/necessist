@@ -9,7 +9,7 @@ use backup::Backup;
 
 mod core;
 pub use crate::core::{necessist, Framework, Necessist};
-use crate::core::{warn, LightContext, Removal};
+use crate::core::{LightContext, Removal};
 
 mod frameworks;
 use frameworks::frameworks;
@@ -37,3 +37,6 @@ mod try_insert;
 use try_insert::TryInsert;
 
 pub mod util;
+
+mod warn;
+use warn::{span_warn, warn};
