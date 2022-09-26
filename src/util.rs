@@ -1,7 +1,20 @@
 // smoelius: Items within this module are semver exempt and could change at any time.
 
 use anyhow::{Context, Result};
-use std::{env::current_dir, path::Path};
+use std::{
+    env::current_dir,
+    path::{Path, PathBuf},
+};
+
+pub struct RemoveFile(pub PathBuf);
+
+impl Drop for RemoveFile {
+    fn drop(&mut self) {
+        std::fs::remove_file(&self.0)
+            .map_err(|err| eprintln!("{}", err))
+            .unwrap_or_default();
+    }
+}
 
 #[must_use]
 pub fn strip_current_dir(path: &Path) -> &Path {

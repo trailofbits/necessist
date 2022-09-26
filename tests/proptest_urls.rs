@@ -1,6 +1,6 @@
 use assert_cmd::prelude::*;
 use necessist::{util, Span};
-use std::process::Command;
+use std::{process::Command, rc::Rc};
 use tempfile::tempdir;
 
 const COMMIT: &str = "7866f6d67afd9790ec6d7ee085db510cefe1a181";
@@ -51,14 +51,15 @@ fn test(repository: &str) {
     assert!(output.status.success());
     let stdout = String::from_utf8(output.stdout).unwrap();
 
+    let root = Rc::new(proptest);
     for line in stdout.lines() {
         let (s, url) = line.split_once('|').unwrap();
-        let span = s.parse::<Span>().unwrap();
+        let span = Span::parse(&root, s).unwrap();
         assert_eq!(
             &format!(
                 "https://github.com/nzeh/proptest/blob/{}/{}#L{}-L{}",
                 COMMIT,
-                util::strip_prefix(&span.source_file, &tempdir.path().canonicalize().unwrap())
+                util::strip_prefix(&span.source_file, tempdir.path())
                     .unwrap()
                     .to_string_lossy(),
                 span.start.line,

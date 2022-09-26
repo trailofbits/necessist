@@ -1,6 +1,9 @@
 use crate::{LineColumn, SourceFile, Span};
 use if_chain::if_chain;
-use std::{path::Path, rc::Rc};
+use std::{
+    path::{Path, PathBuf},
+    rc::Rc,
+};
 use swc_common::{BytePos, Loc, SourceMap, Span as SwcSpan, Spanned};
 use swc_ecma_ast::{
     CallExpr, Callee, Expr, ExprOrSpread, ExprStmt, MemberExpr, MemberProp, Module, Stmt,
@@ -8,8 +11,13 @@ use swc_ecma_ast::{
 };
 use swc_ecma_visit::{visit_call_expr, visit_stmt, Visit};
 
-pub(super) fn visit(source_map: Rc<SourceMap>, test_file: &Path, module: &Module) -> Vec<Span> {
-    let mut visitor = Visitor::new(source_map, test_file);
+pub(super) fn visit(
+    source_map: Rc<SourceMap>,
+    root: Rc<PathBuf>,
+    test_file: &Path,
+    module: &Module,
+) -> Vec<Span> {
+    let mut visitor = Visitor::new(source_map, root, test_file);
     visitor.visit_module(module);
     visitor.spans
 }
@@ -88,10 +96,10 @@ impl Visit for Visitor {
 }
 
 impl Visitor {
-    pub fn new(source_map: Rc<SourceMap>, test_file: &Path) -> Self {
+    fn new(source_map: Rc<SourceMap>, root: Rc<PathBuf>, test_file: &Path) -> Self {
         Self {
             source_map,
-            source_file: SourceFile::new(test_file),
+            source_file: SourceFile::new(root, Rc::new(test_file.to_path_buf())),
             in_it_call_expr: false,
             n_stmt_leaves_visited: 0,
             spans: Vec::new(),

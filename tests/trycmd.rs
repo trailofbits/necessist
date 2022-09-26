@@ -1,21 +1,12 @@
 #![cfg(unix)]
 
 use assert_cmd::prelude::*;
+use necessist::util;
 use std::{path::PathBuf, process::Command};
 use trycmd::TestCases;
 
 const ROOT: &str = "examples/basic";
 const TIMEOUT: &str = "5";
-
-struct RemoveFile(PathBuf);
-
-impl Drop for RemoveFile {
-    fn drop(&mut self) {
-        std::fs::remove_file(&self.0)
-            .map_err(|err| eprintln!("{}", err))
-            .unwrap_or_default();
-    }
-}
 
 #[test]
 fn trycmd() {
@@ -27,7 +18,7 @@ fn trycmd() {
         .assert()
         .success();
 
-    let _remove_file = RemoveFile(PathBuf::from(ROOT).join("necessist.db"));
+    let _remove_file = util::RemoveFile(PathBuf::from(ROOT).join("necessist.db"));
 
     TestCases::new().case("tests/necessist_db/*.toml");
 }

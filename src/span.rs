@@ -1,9 +1,12 @@
 use crate::{util, SourceFile};
-use anyhow::{anyhow, Error};
+use anyhow::{anyhow, Result};
 use lazy_static::lazy_static;
 use proc_macro2::LineColumn;
 use regex::Regex;
-use std::{path::Path, str::FromStr};
+use std::{
+    path::{Path, PathBuf},
+    rc::Rc,
+};
 
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct Span {
@@ -14,7 +17,12 @@ pub struct Span {
 
 impl std::fmt::Display for Span {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", self.to_string_with_path(self.source_file.as_ref()))
+        // smoelius: `source_file.to_string()` gives the path relative to the project root.
+        write!(
+            f,
+            "{}",
+            self.to_string_with_path(&self.source_file.to_string())
+        )
     }
 }
 
@@ -26,9 +34,8 @@ lazy_static! {
     };
 }
 
-impl FromStr for Span {
-    type Err = Error;
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
+impl Span {
+    pub fn parse(root: &Rc<PathBuf>, s: &str) -> Result<Self> {
         let (source_file, start_line, start_column, end_line, end_column) = SPAN_RE
             .captures(s)
             .map(|captures| {
@@ -47,7 +54,7 @@ impl FromStr for Span {
         let end_line = end_line.parse::<usize>()?;
         let end_column = end_column.parse::<usize>()?;
         Ok(Self {
-            source_file: SourceFile::new(source_file),
+            source_file: SourceFile::new(root.clone(), Rc::new(root.join(source_file))),
             start: LineColumn {
                 line: start_line,
                 column: start_column - 1,
@@ -58,9 +65,7 @@ impl FromStr for Span {
             },
         })
     }
-}
 
-impl Span {
     #[must_use]
     pub fn start(&self) -> LineColumn {
         self.start
@@ -76,10 +81,10 @@ impl Span {
         self.to_string_with_path(util::strip_current_dir(&self.source_file))
     }
 
-    fn to_string_with_path(&self, path: &Path) -> String {
+    fn to_string_with_path(&self, path: impl AsRef<Path>) -> String {
         format!(
             "{}:{}:{}-{}:{}",
-            path.to_string_lossy(),
+            path.as_ref().to_string_lossy(),
             self.start.line,
             self.start.column + 1,
             self.end.line,

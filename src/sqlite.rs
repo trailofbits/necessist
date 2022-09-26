@@ -1,11 +1,18 @@
 use crate::{util, Outcome, Span};
-use anyhow::{bail, Context, Error, Result};
+use anyhow::{bail, Context, Result};
 use diesel::prelude::*;
 use diesel::{insert_into, sql_query, sqlite::SqliteConnection};
 use git2::{Oid, Repository, RepositoryOpenFlags};
 use lazy_static::lazy_static;
 use regex::Regex;
-use std::{ffi::OsStr, fmt::Debug, include_str, iter::empty, path::Path};
+use std::{
+    ffi::OsStr,
+    fmt::Debug,
+    include_str,
+    iter::empty,
+    path::{Path, PathBuf},
+    rc::Rc,
+};
 
 pub(crate) struct Sqlite {
     connection: SqliteConnection,
@@ -36,18 +43,17 @@ struct Removal {
     pub url: String,
 }
 
-impl TryFrom<Removal> for crate::Removal {
-    type Error = Error;
-    fn try_from(removal: Removal) -> Result<Self> {
+impl Removal {
+    fn into_internal_removal(self, root: &Rc<PathBuf>) -> Result<crate::Removal> {
         let Removal {
             span,
             text,
             outcome,
             url: _,
-        } = removal;
-        let span = span.parse::<Span>()?;
+        } = self;
+        let span = Span::parse(root, &span)?;
         let outcome = outcome.parse::<Outcome>()?;
-        Ok(Self {
+        Ok(crate::Removal {
             span,
             text,
             outcome,
@@ -60,6 +66,7 @@ pub(crate) fn init(
     must_not_exist: bool,
     reset: bool,
 ) -> Result<(Sqlite, Vec<crate::Removal>)> {
+    let root = Rc::new(root.to_path_buf());
     let path = root.join("necessist.db");
 
     let exists = path.exists();
@@ -91,11 +98,11 @@ pub(crate) fn init(
         let removals = removal::table.load::<Removal>(&mut connection)?;
         removals
             .into_iter()
-            .map(TryInto::try_into)
+            .map(|removal| removal.into_internal_removal(&root))
             .collect::<Result<Vec<_>>>()?
     };
 
-    let remote = Repository::open_ext(root, RepositoryOpenFlags::empty(), empty::<&OsStr>())
+    let remote = Repository::open_ext(&*root, RepositoryOpenFlags::empty(), empty::<&OsStr>())
         .ok()
         .and_then(|repository| {
             let url_oid = repository
