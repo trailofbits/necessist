@@ -9,7 +9,7 @@ use backup::Backup;
 
 mod core;
 pub use crate::core::{necessist, Framework, Necessist};
-use crate::core::{LightContext, Removal};
+use crate::core::{Config, LightContext, Removal};
 
 mod frameworks;
 use frameworks::frameworks;

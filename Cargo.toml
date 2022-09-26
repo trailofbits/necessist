@@ -30,10 +30,12 @@ log = "0.4.17"
 proc-macro2 = { version = "1.0.43", features = ["span-locations"] }
 regex = "1.6.0"
 remain = "0.2.4"
+serde = "1.0.145"
 strum = "0.24.1"
 strum_macros = "0.24.3"
 subprocess = "0.2.9"
 tempfile = "3.3.0"
+toml = "0.5.9"
 walkdir = "2.3.2"
 
 # Rust

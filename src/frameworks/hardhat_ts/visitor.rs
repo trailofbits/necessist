@@ -1,4 +1,4 @@
-use crate::{LineColumn, SourceFile, Span};
+use crate::{Config, LineColumn, SourceFile, Span};
 use if_chain::if_chain;
 use std::{
     path::{Path, PathBuf},
@@ -12,17 +12,19 @@ use swc_ecma_ast::{
 use swc_ecma_visit::{visit_call_expr, visit_stmt, Visit};
 
 pub(super) fn visit(
+    config: &Config,
     source_map: Rc<SourceMap>,
     root: Rc<PathBuf>,
     test_file: &Path,
     module: &Module,
 ) -> Vec<Span> {
-    let mut visitor = Visitor::new(source_map, root, test_file);
+    let mut visitor = Visitor::new(config, source_map, root, test_file);
     visitor.visit_module(module);
     visitor.spans
 }
 
-pub struct Visitor {
+pub struct Visitor<'config> {
+    config: &'config Config,
     source_map: Rc<SourceMap>,
     source_file: SourceFile,
     in_it_call_expr: bool,
@@ -39,7 +41,7 @@ struct MethodCall<'a> {
     pub type_args: &'a Option<Box<TsTypeParamInstantiation>>,
 }
 
-impl Visit for Visitor {
+impl<'config> Visit for Visitor<'config> {
     fn visit_call_expr(&mut self, call_expr: &CallExpr) {
         if is_it_call_expr(call_expr) {
             assert!(!self.in_it_call_expr);
@@ -85,7 +87,7 @@ impl Visit for Visitor {
                 stmt,
                 Stmt::Break(_) | Stmt::Continue(_) | Stmt::Decl(_) | Stmt::Return(_)
             )
-            && !is_ignored_call_expr(stmt)
+            && !is_ignored_call_expr(self.config, stmt)
         {
             let span = stmt
                 .span()
@@ -95,9 +97,15 @@ impl Visit for Visitor {
     }
 }
 
-impl Visitor {
-    fn new(source_map: Rc<SourceMap>, root: Rc<PathBuf>, test_file: &Path) -> Self {
+impl<'config> Visitor<'config> {
+    fn new(
+        config: &'config Config,
+        source_map: Rc<SourceMap>,
+        root: Rc<PathBuf>,
+        test_file: &Path,
+    ) -> Self {
         Self {
+            config,
             source_map,
             source_file: SourceFile::new(root, Rc::new(test_file.to_path_buf())),
             in_it_call_expr: false,
@@ -168,7 +176,7 @@ fn is_ignored_method(path: &[&MemberProp]) -> bool {
     }
 }
 
-fn is_ignored_call_expr(stmt: &Stmt) -> bool {
+fn is_ignored_call_expr(config: &Config, stmt: &Stmt) -> bool {
     if let Stmt::Expr(ExprStmt { ref expr, .. }) = stmt {
         let mut expr = expr;
         loop {
@@ -185,7 +193,8 @@ fn is_ignored_call_expr(stmt: &Stmt) -> bool {
                 }) => {
                     if_chain! {
                         if let Expr::Ident(ident) = &**callee;
-                        if ident.as_ref() == "expect";
+                        if ident.as_ref() == "expect"
+                            || config.ignored_functions.iter().any(|s| s == ident.as_ref());
                         then {
                             return true;
                         } else {

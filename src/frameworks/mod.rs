@@ -1,4 +1,4 @@
-use crate::{LightContext, Span};
+use crate::{Config, LightContext, Span};
 use anyhow::Result;
 use heck::ToKebabCase;
 use std::{any::type_name, path::Path};
@@ -16,7 +16,12 @@ pub(crate) trait Interface: std::fmt::Debug {
         type_name.to_kebab_case()
     }
     fn applicable(&self, context: &LightContext) -> Result<bool>;
-    fn parse(&mut self, context: &LightContext, test_files: &[&Path]) -> Result<Vec<Span>>;
+    fn parse(
+        &mut self,
+        context: &LightContext,
+        config: &Config,
+        test_files: &[&Path],
+    ) -> Result<Vec<Span>>;
     fn dry_run(&self, context: &LightContext, test_file: &Path) -> Result<()>;
     fn exec(
         &self,

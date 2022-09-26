@@ -38,6 +38,11 @@ impl From<Framework> for necessist::Framework {
 #[clap(version = crate_version!())]
 #[remain::sorted]
 struct Opts {
+    #[clap(
+        long,
+        help = "Create a default necessist.toml file in the project's root directory (experimental)"
+    )]
+    default_config: bool,
     #[clap(long, help = "Dump sqlite database contents to the console")]
     dump: bool,
     #[clap(long, arg_enum, help = "Assume testing framework is <FRAMEWORK>")]
@@ -70,6 +75,7 @@ struct Opts {
 impl From<Opts> for necessist::Necessist {
     fn from(opts: Opts) -> Self {
         let Opts {
+            default_config,
             dump,
             framework,
             keep_going,
@@ -87,6 +93,7 @@ impl From<Opts> for necessist::Necessist {
         let root = root.map(PathBuf::from);
         let test_files = ztest_files.iter().map(PathBuf::from).collect::<Vec<_>>();
         Self {
+            default_config,
             dump,
             framework,
             keep_going,
