@@ -42,6 +42,8 @@ ARGS:
     <TEST_FILES>...    Test files to mutilate (optional)
 
 OPTIONS:
+        --default-config           Create a default necessist.toml file in the project's root
+                                   directory (experimental)
         --dump                     Dump sqlite database contents to the console
         --framework <FRAMEWORK>    Assume testing framework is <FRAMEWORK> [possible values: auto,
                                    hardhat-ts, rust]
@@ -140,6 +142,20 @@ By default, Necessist outputs only when tests pass. Passing `--verbose` causes N
 - `unwrap`
 - `unwrap_err`
 
+## Configuration files (experimental)
+
+**Configuration files are experimental and their behavior could change at any time.**
+
+A configuration file allows one to tailor Necessist's behavior with respect to a project. The file must be named `necessist.toml`, appear in the project's root directory, and be [toml] encoded. The file may contain one more of the options listed below.
+
+### Hardhat TS configuration options
+
+- `ignored_functions`: A list of strings. Functions whose names appear in the list are ignored.
+
+### Rust configuration options
+
+- `ignored_macros`: A list of strings. Macros whose names appear in the list are ignored.
+
 ## Goals
 
 - If a project uses a [supported framework](#supported-frameworks), then `cd`ing into the project's directory and typing `necessist` (with no arguments) should produce meaningful output.
@@ -147,3 +163,5 @@ By default, Necessist outputs only when tests pass. Passing `--verbose` causes N
 ## References
 
 - Groce, A., Ahmed, I., Jensen, C., McKenney, P.E., Holmes, J.: How verified (or tested) is my code? Falsification-driven verification and testing. Autom. Softw. Eng. **25**, 917–960 (2018). A preprint is available [here](https://agroce.github.io/asej18.pdf). See Section 2.3.
+
+[toml]: https://toml.io/en/

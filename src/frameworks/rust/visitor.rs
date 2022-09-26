@@ -1,5 +1,5 @@
 use super::{cached_test_file_fs_module_path, Parsing, Rust};
-use crate::{SourceFile, Span, ToInternalSpan};
+use crate::{Config, SourceFile, Span, ToInternalSpan};
 use anyhow::{Error, Result};
 use std::{
     path::{Path, PathBuf},
@@ -17,13 +17,14 @@ use syn::{
     allow(non_local_effect_before_error_return)
 )]
 pub(super) fn visit<'framework, 'parsing>(
+    config: &Config,
     framework: &'framework mut Rust,
     parsing: &'parsing mut Parsing,
     root: Rc<PathBuf>,
     test_file: &Path,
     file: &File,
 ) -> Result<Vec<Span>> {
-    let mut visitor = Visitor::new(framework, parsing, root, test_file);
+    let mut visitor = Visitor::new(config, framework, parsing, root, test_file);
     visitor.visit_file(file);
     if let Some(error) = visitor.error {
         Err(error)
@@ -32,7 +33,8 @@ pub(super) fn visit<'framework, 'parsing>(
     }
 }
 
-struct Visitor<'ast, 'framework, 'parsing> {
+struct Visitor<'ast, 'config, 'framework, 'parsing> {
+    config: &'config Config,
     framework: &'framework mut Rust,
     parsing: &'parsing mut Parsing,
     source_file: SourceFile,
@@ -43,7 +45,8 @@ struct Visitor<'ast, 'framework, 'parsing> {
     error: Option<Error>,
 }
 
-impl<'ast, 'framework, 'parsing> Visit<'ast> for Visitor<'ast, 'framework, 'parsing>
+impl<'ast, 'config, 'framework, 'parsing> Visit<'ast>
+    for Visitor<'ast, 'config, 'framework, 'parsing>
 where
     'ast: 'parsing,
     'framework: 'parsing,
@@ -99,7 +102,7 @@ where
         if let Some(ident) = self.test_ident {
             if !matches!(stmt, Stmt::Item(_) | Stmt::Local(_))
                 && !is_control(stmt)
-                && !is_ignored_macro(stmt)
+                && !is_ignored_macro(self.config, stmt)
             {
                 let span = stmt.span().to_internal_span(&self.source_file);
                 self.elevate_span(span, ident);
@@ -132,18 +135,20 @@ where
     }
 }
 
-impl<'ast, 'framework, 'parsing> Visitor<'ast, 'framework, 'parsing>
+impl<'ast, 'config, 'framework, 'parsing> Visitor<'ast, 'config, 'framework, 'parsing>
 where
     'ast: 'parsing,
     'framework: 'parsing,
 {
-    pub fn new(
+    fn new(
+        config: &'config Config,
         framework: &'framework mut Rust,
         parsing: &'parsing mut Parsing,
         root: Rc<PathBuf>,
         test_file: &Path,
     ) -> Self {
         Self {
+            config,
             framework,
             parsing,
             source_file: SourceFile::new(root, Rc::new(test_file.to_path_buf())),
@@ -235,7 +240,7 @@ const IGNORED_MACROS: &[&str] = &[
     "unreachable",
 ];
 
-fn is_ignored_macro(stmt: &Stmt) -> bool {
+fn is_ignored_macro(config: &Config, stmt: &Stmt) -> bool {
     match stmt {
         Stmt::Expr(expr) | Stmt::Semi(expr, ..) => Some(expr),
         _ => None,
@@ -245,7 +250,8 @@ fn is_ignored_macro(stmt: &Stmt) -> bool {
             mac: Macro { path, .. },
             ..
         }) => path.get_ident().map_or(false, |ident| {
-            IGNORED_MACROS.contains(&ident.to_string().as_str())
+            let s = ident.to_string();
+            IGNORED_MACROS.binary_search(&s.as_str()).is_ok() || config.ignored_macros.contains(&s)
         }),
         _ => false,
     })
@@ -288,7 +294,10 @@ const IGNORED_METHODS: &[&str] = &[
 ];
 
 fn is_ignored_method(method: &Ident, args: &Punctuated<Expr, Token![,]>) -> bool {
-    IGNORED_METHODS.contains(&method.to_string().as_ref()) && args.is_empty()
+    IGNORED_METHODS
+        .binary_search(&method.to_string().as_ref())
+        .is_ok()
+        && args.is_empty()
 }
 
 impl ToInternalSpan for proc_macro2::Span {

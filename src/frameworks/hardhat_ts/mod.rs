@@ -1,5 +1,5 @@
 use super::{Interface, Postprocess};
-use crate::{util, LightContext, Span};
+use crate::{util, warn_once, Config, LightContext, Span, WarnKey};
 use anyhow::{anyhow, ensure, Context, Result};
 use log::debug;
 use std::{
@@ -31,10 +31,17 @@ impl Interface for HardhatTs {
         dylint_lib = "non_local_effect_before_error_return",
         allow(non_local_effect_before_error_return)
     )]
-    fn parse(&mut self, context: &LightContext, test_files: &[&Path]) -> Result<Vec<Span>> {
+    fn parse(
+        &mut self,
+        context: &LightContext,
+        config: &Config,
+        test_files: &[&Path],
+    ) -> Result<Vec<Span>> {
         if self.root.is_none() {
             self.root = Some(Rc::new(context.root.to_path_buf()));
         }
+
+        check_config(context, config);
 
         let mut spans = Vec::new();
 
@@ -62,6 +69,7 @@ impl Interface for HardhatTs {
                 })?;
             #[allow(clippy::expect_used)]
             let visited_spans = visit(
+                config,
                 source_map,
                 self.root.as_ref().expect("`root` is unset").clone(),
                 test_file,
@@ -129,5 +137,15 @@ impl Interface for HardhatTs {
         debug!("{:?}", exec);
 
         Ok(Some((exec, None)))
+    }
+}
+
+fn check_config(context: &LightContext, config: &Config) {
+    if !config.ignored_macros.is_empty() {
+        warn_once(
+            context,
+            "The hardhat-ts framework does not support the `ignored_macros` configuration",
+            WarnKey::HardhatTsIgnoredMacros,
+        );
     }
 }

@@ -1,5 +1,5 @@
 use super::{Interface, Postprocess};
-use crate::{span_warn, util, LightContext, Span, TryInsert};
+use crate::{span_warn, util, warn_once, Config, LightContext, Span, TryInsert, WarnKey};
 use anyhow::{anyhow, ensure, Context, Result};
 use cargo_metadata::Package;
 use log::debug;
@@ -51,10 +51,17 @@ impl Interface for Rust {
         dylint_lib = "non_local_effect_before_error_return",
         allow(non_local_effect_before_error_return)
     )]
-    fn parse(&mut self, context: &LightContext, test_files: &[&Path]) -> Result<Vec<Span>> {
+    fn parse(
+        &mut self,
+        context: &LightContext,
+        config: &Config,
+        test_files: &[&Path],
+    ) -> Result<Vec<Span>> {
         if self.root.is_none() {
             self.root = Some(Rc::new(context.root.to_path_buf()));
         }
+
+        check_config(context, config);
 
         let mut parsing = Parsing::default();
         let mut spans = Vec::new();
@@ -76,6 +83,7 @@ impl Interface for Rust {
             })?;
             #[allow(clippy::expect_used)]
             let spans_visited = visit(
+                config,
                 self,
                 &mut parsing,
                 self.root.as_ref().expect("`root` is unset").clone(),
@@ -180,6 +188,16 @@ impl Interface for Rust {
                 Err(anyhow!(msg))
             })),
         )))
+    }
+}
+
+fn check_config(context: &LightContext, config: &Config) {
+    if !config.ignored_functions.is_empty() {
+        warn_once(
+            context,
+            "The rust framework does not currently support the `ignored_functions` configuration",
+            WarnKey::RustIgnoredFunctions,
+        );
     }
 }
 

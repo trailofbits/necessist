@@ -6,10 +6,11 @@ use anyhow::{anyhow, bail, ensure, Context as _, Result};
 use heck::ToKebabCase;
 use indicatif::ProgressBar;
 use log::debug;
+use serde::{Deserialize, Serialize};
 use std::{
     collections::BTreeMap,
     env::{current_dir, var},
-    fs::{read_to_string, OpenOptions},
+    fs::{read_to_string, write, OpenOptions},
     io::Write,
     iter::Peekable,
     path::{Path, PathBuf},
@@ -56,6 +57,7 @@ pub(crate) struct LightContext<'a> {
 #[allow(clippy::struct_excessive_bools)]
 #[derive(Clone, Default)]
 pub struct Necessist {
+    pub default_config: bool,
     pub dump: bool,
     pub framework: Framework,
     pub keep_going: bool,
@@ -91,7 +93,14 @@ impl std::fmt::Display for Framework {
     }
 }
 
-#[allow(clippy::too_many_lines)]
+#[derive(Default, Deserialize, Serialize)]
+pub(crate) struct Config {
+    #[serde(default)]
+    pub ignored_functions: Vec<String>,
+    #[serde(default)]
+    pub ignored_macros: Vec<String>,
+}
+
 pub fn necessist(opts: &Necessist) -> Result<()> {
     let mut opts = opts.clone();
 
@@ -168,6 +177,13 @@ fn prepare(
         Vec<Removal>,
     )>,
 > {
+    if context.opts.default_config {
+        default_config(context, context.root)?;
+        return Ok(None);
+    }
+
+    let config = read_config(context, context.root)?;
+
     let (sqlite, past_removals) = if context.opts.no_sqlite {
         (None, Vec::new())
     } else {
@@ -191,6 +207,7 @@ fn prepare(
 
     let spans = framework.parse(
         context,
+        &config,
         &paths.iter().map(AsRef::as_ref).collect::<Vec<_>>(),
     )?;
 
@@ -321,6 +338,34 @@ fn process_options(opts: &mut Necessist) -> Result<()> {
     Ok(())
 }
 
+fn default_config(context: &LightContext, root: &Path) -> Result<()> {
+    let path = root.join("necessist.toml");
+
+    if path.exists() {
+        bail!("A configuration file already exists at {:?}", path);
+    }
+
+    warn(context, "Configuration files are experimental");
+
+    let toml = toml::to_string(&Config::default())?;
+
+    write(path, toml).map_err(Into::into)
+}
+
+fn read_config(context: &LightContext, root: &Path) -> Result<Config> {
+    let path = root.join("necessist.toml");
+
+    if !path.exists() {
+        return Ok(Config::default());
+    }
+
+    warn(context, "Configuration files are experimental");
+
+    let contents = read_to_string(path)?;
+
+    toml::from_str(&contents).map_err(Into::into)
+}
+
 fn dump(context: &LightContext, removals: &[Removal]) {
     let mut other_than_passed = false;
     for removal in removals {
@@ -428,7 +473,7 @@ fn update_progress(context: &Context, mismatch: bool, n: usize) {
     if mismatch {
         warn_once(
             &context.light(),
-            "Test files have changed since necessist.db was created",
+            "Configuration or test files have changed since necessist.db was created",
             WarnKey::ConfigurationOrTestFilesHaveChanged,
         );
     }
