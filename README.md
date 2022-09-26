@@ -141,6 +141,7 @@ By default, Necessist outputs only when tests pass. Passing `--verbose` causes N
 - `try_into`
 - `unwrap`
 - `unwrap_err`
+- `unwrap_or_default`
 
 ## Configuration files (experimental)
 
