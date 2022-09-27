@@ -40,7 +40,7 @@ walkdir = "2.3.2"
 
 # Rust
 cargo_metadata = "0.15.0"
-syn = { version = "1.0.99", features = ["extra-traits", "full", "visit"] }
+syn = { version = "1.0.101", features = ["extra-traits", "full", "visit"] }
 
 # Hardhat TS
 swc_common = "0.28.8"
