@@ -1,26 +1,48 @@
 use assert_cmd::prelude::*;
 use necessist::{util, Span};
-use std::{process::Command, rc::Rc};
+use std::{
+    io::{stderr, Write},
+    process::Command,
+    rc::Rc,
+};
 use tempfile::tempdir;
 
+const URL_HTTPS: &str = "https://github.com/nzeh/proptest";
+const URL_SSH: &str = "git@github.com:nzeh/proptest";
 const COMMIT: &str = "7866f6d67afd9790ec6d7ee085db510cefe1a181";
+const SUBDIR: &str = "proptest";
+const TEST_FILE: &str = "src/sample.rs";
 
 #[test]
-fn proptest_urls_https() {
-    test("https://github.com/nzeh/proptest.git");
+fn https() {
+    run_test(URL_HTTPS);
 }
 
 #[test]
-#[ignore]
-fn proptest_urls_ssh() {
-    test("git@github.com:nzeh/proptest.git");
+fn ssh() {
+    if !Command::new("ssh-add")
+        .arg("-l")
+        .status()
+        .unwrap()
+        .success()
+    {
+        #[allow(clippy::explicit_write)]
+        writeln!(
+            stderr(),
+            "Skipping as ssh-agent is not running or has no identities"
+        )
+        .unwrap();
+        return;
+    }
+
+    run_test(URL_SSH);
 }
 
-fn test(repository: &str) {
+fn run_test(url: &str) {
     let tempdir = tempdir().unwrap();
 
     Command::new("git")
-        .args(["clone", repository, &tempdir.path().to_string_lossy()])
+        .args(["clone", url, &tempdir.path().to_string_lossy()])
         .assert()
         .success();
 
@@ -30,16 +52,16 @@ fn test(repository: &str) {
         .assert()
         .success();
 
-    let proptest = tempdir.path().join("proptest");
+    let root = Rc::new(tempdir.path().join(SUBDIR));
 
     Command::cargo_bin(env!("CARGO_PKG_NAME"))
         .unwrap()
-        .current_dir(&proptest)
-        .args(["src/num.rs"])
+        .current_dir(&*root)
+        .args([TEST_FILE])
         .assert()
         .success();
 
-    let necessist_db = proptest.join("necessist.db");
+    let necessist_db = root.join("necessist.db");
 
     let output = Command::new("sqlite3")
         .args([
@@ -51,13 +73,13 @@ fn test(repository: &str) {
     assert!(output.status.success());
     let stdout = String::from_utf8(output.stdout).unwrap();
 
-    let root = Rc::new(proptest);
     for line in stdout.lines() {
         let (s, url) = line.split_once('|').unwrap();
         let span = Span::parse(&root, s).unwrap();
         assert_eq!(
             &format!(
-                "https://github.com/nzeh/proptest/blob/{}/{}#L{}-L{}",
+                "{}/blob/{}/{}#L{}-L{}",
+                URL_HTTPS,
                 COMMIT,
                 util::strip_prefix(&span.source_file, tempdir.path())
                     .unwrap()
