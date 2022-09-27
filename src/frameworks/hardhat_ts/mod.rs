@@ -9,9 +9,13 @@ use std::{
     rc::Rc,
 };
 use subprocess::{Exec, NullFile};
-use swc_common::SourceMap;
-use swc_ecma_ast::EsVersion;
-use swc_ecma_parser::{lexer::Lexer, Parser, StringInput, Syntax, TsConfig};
+use swc_core::{
+    common::SourceMap,
+    ecma::{
+        ast::EsVersion,
+        parser::{lexer::Lexer, Parser, StringInput, Syntax, TsConfig},
+    },
+};
 use walkdir::WalkDir;
 
 mod visitor;
