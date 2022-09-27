@@ -4,12 +4,16 @@ use std::{
     path::{Path, PathBuf},
     rc::Rc,
 };
-use swc_common::{BytePos, Loc, SourceMap, Span as SwcSpan, Spanned};
-use swc_ecma_ast::{
-    CallExpr, Callee, Expr, ExprOrSpread, ExprStmt, MemberExpr, MemberProp, Module, Stmt,
-    TsTypeParamInstantiation,
+use swc_core::{
+    common::{BytePos, Loc, SourceMap, Span as SwcSpan, Spanned},
+    ecma::{
+        ast::{
+            CallExpr, Callee, Expr, ExprOrSpread, ExprStmt, MemberExpr, MemberProp, Module, Stmt,
+            TsTypeParamInstantiation,
+        },
+        visit::{visit_call_expr, visit_stmt, Visit},
+    },
 };
-use swc_ecma_visit::{visit_call_expr, visit_stmt, Visit};
 
 pub(super) fn visit(
     config: &Config,
