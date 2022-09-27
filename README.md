@@ -33,7 +33,7 @@ Also, for some frameworks, certain statements and methods are ignored (see [belo
 ## Usage
 
 ```
-necessist 0.1.0-beta.0
+necessist 0.1.0-beta.1
 
 USAGE:
     necessist [OPTIONS] [TEST_FILES]...
