@@ -14,48 +14,48 @@ name = "necessist"
 path = "src/bin/necessist.rs"
 
 [dependencies]
-ansi_term = "0.12.1"
-anyhow = "1.0.64"
-atty = "0.2.14"
-clap = { version = "3.2.20", features = ["cargo", "derive"] }
-ctrlc = "3.2.3"
-diesel = { version = "2.0.0", features = ["sqlite"] }
-env_logger = "0.9.0"
-git2 = "0.15.0"
-heck = "0.4.0"
-if_chain = "1.0.2"
-indicatif = "0.17.0"
-lazy_static = "1.4.0"
-log = "0.4.17"
-proc-macro2 = { version = "1.0.44", features = ["span-locations"] }
-regex = "1.6.0"
-remain = "0.2.4"
-serde = "1.0.145"
-strum = "0.24.1"
-strum_macros = "0.24.3"
-subprocess = "0.2.9"
-tempfile = "3.3.0"
-toml = "0.5.9"
-walkdir = "2.3.2"
+ansi_term = "0.12"
+anyhow = "1.0"
+atty = "0.2"
+clap = { version = "3.2", features = ["cargo", "derive"] }
+ctrlc = "3.2"
+diesel = { version = "2.0", features = ["sqlite"] }
+env_logger = "0.9"
+git2 = "0.15"
+heck = "0.4"
+if_chain = "1.0"
+indicatif = "0.17"
+lazy_static = "1.4"
+log = "0.4"
+proc-macro2 = { version = "1.0", features = ["span-locations"] }
+regex = "1.6"
+remain = "0.2"
+serde = "1.0"
+strum = "0.24"
+strum_macros = "0.24"
+subprocess = "0.2"
+tempfile = "3.3"
+toml = "0.5"
+walkdir = "2.3"
 
 # Rust
-cargo_metadata = "0.15.0"
-syn = { version = "1.0.101", features = ["extra-traits", "full", "visit"] }
+cargo_metadata = "0.15"
+syn = { version = "1.0", features = ["extra-traits", "full", "visit"] }
 
 # Hardhat TS
-swc_common = "0.28.8"
-swc_ecma_ast = "0.92.0"
-swc_ecma_parser = "0.120.0"
-swc_ecma_visit = "0.78.1"
+swc_common = "0.28"
+swc_ecma_ast = "0.92"
+swc_ecma_parser = "0.120"
+swc_ecma_visit = "0.78"
 
 [target.'cfg(unix)'.dependencies]
-libc = "0.2.132"
+libc = "0.2"
 
 [dev-dependencies]
-assert_cmd = "2.0.4"
-fs_extra = "1.2.0"
-predicates = "2.1.1"
-trycmd = "0.13.6"
+assert_cmd = "2.0"
+fs_extra = "1.2"
+predicates = "2.1"
+trycmd = "0.13"
 
 [features]
 ci = []
