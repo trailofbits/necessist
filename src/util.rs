@@ -26,6 +26,13 @@ pub fn strip_current_dir(path: &Path) -> &Path {
 
 #[allow(clippy::disallowed_methods)]
 pub fn strip_prefix<'a>(path: &'a Path, base: &Path) -> Result<&'a Path> {
-    path.strip_prefix(base)
-        .with_context(|| format!("{:?} is not a prefix of {:?}", base, path))
+    path.strip_prefix(base).with_context(|| {
+        format!(
+            "\
+`base` is not a prefix of `path`
+base: {:?}
+path: {:?}",
+            base, path
+        )
+    })
 }
