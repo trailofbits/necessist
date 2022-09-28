@@ -1,5 +1,5 @@
 use anyhow::Result;
-use clap::{crate_version, ArgEnum, Parser};
+use clap::{crate_version, Parser};
 #[cfg(unix)]
 use std::os::unix::io::AsRawFd;
 use std::{
@@ -8,30 +8,6 @@ use std::{
     io::Error,
     path::{Path, PathBuf},
 };
-
-#[derive(ArgEnum, Clone, Copy, Debug)]
-#[remain::sorted]
-enum Framework {
-    Auto,
-    HardhatTs,
-    Rust,
-}
-
-impl Default for Framework {
-    fn default() -> Self {
-        Framework::Auto
-    }
-}
-
-impl From<Framework> for necessist::Framework {
-    fn from(framework: Framework) -> Self {
-        match framework {
-            Framework::Auto => Self::Auto,
-            Framework::Rust => Self::Rust,
-            Framework::HardhatTs => Self::HardhatTs,
-        }
-    }
-}
 
 #[allow(clippy::struct_excessive_bools)]
 #[derive(Debug, Parser)]
@@ -46,7 +22,7 @@ struct Opts {
     #[clap(long, help = "Dump sqlite database contents to the console")]
     dump: bool,
     #[clap(long, arg_enum, help = "Assume testing framework is <FRAMEWORK>")]
-    framework: Option<Framework>,
+    framework: Option<necessist::Framework>,
     #[clap(long, help = "Continue when a dry run fails or a test cannot be run")]
     keep_going: bool,
     #[clap(long, help = "Do not perform dry runs")]
@@ -89,7 +65,7 @@ impl From<Opts> for necessist::Necessist {
             verbose,
             ztest_files,
         } = opts;
-        let framework = framework.unwrap_or_default().into();
+        let framework = framework.unwrap_or_default();
         let root = root.map(PathBuf::from);
         let test_files = ztest_files.iter().map(PathBuf::from).collect::<Vec<_>>();
         Self {
