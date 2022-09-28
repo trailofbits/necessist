@@ -383,7 +383,7 @@ fn find_framework(context: &LightContext) -> Result<Box<dyn frameworks::Interfac
         return frameworks()
             .into_iter()
             .find(|framework| framework.name() == context.opts.framework.to_string())
-            .ok_or_else(|| anyhow!("Could not find framework `{}`", context.opts.framework));
+            .ok_or_else(|| anyhow!("Failed to find framework `{}`", context.opts.framework));
     }
 
     let unflattened_frameworks = frameworks()
@@ -535,7 +535,7 @@ fn attempt_removal(context: &Context, span: &Span) -> Result<(String, Option<Out
             }
         }
     } else {
-        let pid = popen.pid().ok_or_else(|| anyhow!("Could not get pid"))?;
+        let pid = popen.pid().ok_or_else(|| anyhow!("Failed to get pid"))?;
         recursive_kill(pid)?;
         let _ = popen.wait()?;
     }
