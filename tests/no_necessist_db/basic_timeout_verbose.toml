@@ -1,4 +1,4 @@
-args = ["--no-sqlite", "--root", "examples/basic", "--timeout=5", "--verbose"]
+args = ["--no-sqlite", "--root=examples/basic", "--timeout=5", "--verbose"]
 stderr = ""
 
 [bin]

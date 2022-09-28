@@ -1,4 +1,4 @@
-args = ["--no-sqlite", "--root", "examples/cfg"]
+args = ["--no-sqlite", "--root=examples/cfg"]
 
 [bin]
 name = "necessist"
