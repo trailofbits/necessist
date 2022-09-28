@@ -30,7 +30,7 @@ pub(super) fn cached_test_file_fs_module_path<'a>(
             let manifest_dir = package
                 .manifest_path
                 .parent()
-                .ok_or_else(|| anyhow!("Could not get parent directory"))?;
+                .ok_or_else(|| anyhow!("Failed to get parent directory"))?;
 
             let src_dir = manifest_dir.join("src");
             let (test_file_relative_path, is_integration_test) =
@@ -51,10 +51,10 @@ pub(super) fn cached_test_file_fs_module_path<'a>(
 
             let test_file_relative_path_parent = test_file_relative_path
                 .parent()
-                .ok_or_else(|| anyhow!("Could not get parent directory"))?;
+                .ok_or_else(|| anyhow!("Failed to get parent directory"))?;
             let test_file_relative_path_stem = test_file_relative_path
                 .file_stem()
-                .ok_or_else(|| anyhow!("Could not get file stem"))?;
+                .ok_or_else(|| anyhow!("Failed to get file stem"))?;
 
             let mut fs_module_path = test_file_relative_path_parent
                 .components()
@@ -78,7 +78,7 @@ pub(super) fn cached_test_file_package<'a>(
         .or_try_insert_with(|| {
             let parent = test_file
                 .parent()
-                .ok_or_else(|| anyhow!("Could not get parent directory"))?;
+                .ok_or_else(|| anyhow!("Failed to get parent directory"))?;
 
             let metadata = MetadataCommand::new()
                 .current_dir(parent)
@@ -91,7 +91,7 @@ pub(super) fn cached_test_file_package<'a>(
                 let manifest_dir = package_curr
                     .manifest_path
                     .parent()
-                    .ok_or_else(|| anyhow!("Could not get parent directory"))?;
+                    .ok_or_else(|| anyhow!("Failed to get parent directory"))?;
                 if !test_file.starts_with(manifest_dir) {
                     continue;
                 }
@@ -106,7 +106,7 @@ pub(super) fn cached_test_file_package<'a>(
                 }
             }
 
-            package_near.ok_or_else(|| anyhow!("Could not determine package"))
+            package_near.ok_or_else(|| anyhow!("Failed to determine package"))
         })
         .map(|value| value as &_)
 }

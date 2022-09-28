@@ -67,7 +67,7 @@ impl Interface for HardhatTs {
                 .map_err(|error| anyhow!(format!("{:?}", error)))
                 .with_context(|| {
                     format!(
-                        "Could not parse {:?}",
+                        "Failed to parse {:?}",
                         util::strip_prefix(test_file, context.root).unwrap()
                     )
                 })?;

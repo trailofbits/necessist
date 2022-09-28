@@ -85,14 +85,14 @@ pub(crate) fn init(
         let sql = include_str!("drop_table_removal.sql");
         sql_query(sql)
             .execute(&mut connection)
-            .with_context(|| "Could not drop sqlite database")?;
+            .with_context(|| "Failed to drop sqlite database")?;
     }
 
     let removals = if reset || !exists {
         let sql = include_str!("create_table_removal.sql");
         sql_query(sql)
             .execute(&mut connection)
-            .with_context(|| "Could not create sqlite database")?;
+            .with_context(|| "Failed to create sqlite database")?;
         Vec::new()
     } else {
         let removals = removal::table.load::<Removal>(&mut connection)?;

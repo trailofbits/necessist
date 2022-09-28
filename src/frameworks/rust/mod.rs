@@ -77,7 +77,7 @@ impl Interface for Rust {
             #[allow(clippy::unwrap_used)]
             let file = parse_file(&content).with_context(|| {
                 format!(
-                    "Could not parse {:?}",
+                    "Failed to parse {:?}",
                     util::strip_prefix(test_file, context.root).unwrap()
                 )
             })?;
@@ -166,7 +166,7 @@ impl Interface for Rust {
                 let stdout = popen
                     .stdout
                     .as_ref()
-                    .ok_or_else(|| anyhow!("Could not get stdout"))?;
+                    .ok_or_else(|| anyhow!("Failed to get stdout"))?;
                 let reader = std::io::BufReader::new(stdout);
                 let running_1_test = reader.lines().try_fold(false, |prev, line| {
                     let line = line?;
@@ -175,7 +175,7 @@ impl Interface for Rust {
                 if running_1_test {
                     return Ok(true);
                 }
-                let mut msg = format!("Could not run test `{}`", test);
+                let mut msg = format!("Failed to run test `{}`", test);
                 if !BUG_MSG_SHOWN.load(Ordering::SeqCst) {
                     msg += BUG_MSG;
                     BUG_MSG_SHOWN.store(true, Ordering::SeqCst);
@@ -244,7 +244,7 @@ impl Rust {
                 if let Some(name) = test_file_test(package, test_file) {
                     flags.extend(["--test".to_owned(), name.clone()]);
                 } else {
-                    // smoelius: Could not find a test target with this file name. Assume it is a unit test.
+                    // smoelius: Failed to find a test target with this file name. Assume it is a unit test.
                     for kind in package.targets.iter().flat_map(|target| &target.kind) {
                         match kind.as_ref() {
                             "bin" => flags.push("--bins".to_owned()),
