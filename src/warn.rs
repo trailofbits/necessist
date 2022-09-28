@@ -1,4 +1,4 @@
-use crate::{LightContext, Span};
+use crate::{LightContext, Span, ToConsoleString};
 use ansi_term::{Color::Yellow, Style};
 use lazy_static::lazy_static;
 use std::{collections::BTreeSet, sync::Mutex};
