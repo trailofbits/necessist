@@ -1,4 +1,4 @@
-// smoelius: Items within this module are semver exempt and could change at any time.
+//! This module is semver exempt and its contents could change at any time.
 
 use anyhow::{Context, Result};
 use std::{
