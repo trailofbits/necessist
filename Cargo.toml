@@ -12,15 +12,16 @@ repository = "https://github.com/trailofbits/necessist"
 [[bin]]
 name = "necessist"
 path = "src/bin/necessist.rs"
+required-features = ["bin"]
 
 [dependencies]
 ansi_term = "0.12"
 anyhow = "1.0"
 atty = "0.2"
-clap = { version = "3.2", features = ["cargo", "derive"] }
+clap = { version = "3.2", features = ["cargo", "derive"], optional = true }
 ctrlc = "3.2"
 diesel = { version = "2.0", features = ["sqlite"] }
-env_logger = "0.9"
+env_logger = { version = "0.9", optional = true }
 git2 = "0.15"
 heck = "0.4"
 if_chain = "1.0"
@@ -55,6 +56,8 @@ predicates = "2.1"
 trycmd = "0.13"
 
 [features]
+default = ["bin"]
+bin = ["clap", "env_logger"]
 ci = []
 
 [workspace.metadata.dylint]

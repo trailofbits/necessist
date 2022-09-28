@@ -72,6 +72,7 @@ pub struct Necessist {
     pub test_files: Vec<PathBuf>,
 }
 
+#[cfg_attr(feature = "clap", derive(clap::ArgEnum))]
 #[derive(Debug, Clone, Copy, Eq, PartialEq)]
 #[non_exhaustive]
 #[remain::sorted]
