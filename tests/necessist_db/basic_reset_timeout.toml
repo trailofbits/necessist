@@ -1,4 +1,4 @@
-args = ["--root", "examples/basic", "--reset", "--timeout=5"]
+args = ["--root=examples/basic", "--reset", "--timeout=5"]
 stderr = ""
 
 [bin]
