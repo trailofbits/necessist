@@ -103,7 +103,9 @@ impl Interface for HardhatTs {
         Ok(spans)
     }
 
-    fn dry_run(&self, _context: &LightContext, test_file: &Path) -> Result<()> {
+    fn dry_run(&self, context: &LightContext, test_file: &Path) -> Result<()> {
+        compile(context)?;
+
         let mut command = Command::new("npx");
         command.args(["hardhat", "test", &test_file.to_string_lossy()]);
 
@@ -116,21 +118,11 @@ impl Interface for HardhatTs {
 
     fn exec(
         &self,
-        _context: &LightContext,
+        context: &LightContext,
         span: &Span,
     ) -> Result<Option<(Exec, Option<Box<Postprocess>>)>> {
-        {
-            let mut command = Command::new("npx");
-            command.args(["hardhat", "compile"]);
-            command.stdout(Stdio::null());
-            command.stderr(Stdio::null());
-
-            debug!("{:?}", command);
-
-            let status = command.status()?;
-            if !status.success() {
-                return Ok(None);
-            }
+        if compile(context).is_err() {
+            return Ok(None);
         }
 
         let mut exec = Exec::cmd("npx");
@@ -152,4 +144,18 @@ fn check_config(context: &LightContext, config: &Config) {
             WarnKey::HardhatTsIgnoredMacros,
         );
     }
+}
+
+fn compile(context: &LightContext) -> Result<()> {
+    let mut command = Command::new("npx");
+    command.current_dir(context.root);
+    command.args(["hardhat", "compile"]);
+    command.stdout(Stdio::null());
+    command.stderr(Stdio::null());
+
+    debug!("{:?}", command);
+
+    let output = command.output()?;
+    ensure!(output.status.success(), "{:#?}", output);
+    Ok(())
 }
