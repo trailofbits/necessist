@@ -1,2 +1,2 @@
 examples/basic/src/lib.rs:4:5-4:12: `n += 1;` passed
-Warning: More output would be produced with --verbose
+Note: More output would be produced with --verbose

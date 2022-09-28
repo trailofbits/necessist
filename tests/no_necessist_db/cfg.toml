@@ -1,10 +1,11 @@
 args = ["--no-sqlite", "--root=examples/cfg"]
+stderr = ""
 
 [bin]
 name = "necessist"
 
 [status]
-code = 1
+code = 0
 
 [env.add]
 TRYCMD="1"

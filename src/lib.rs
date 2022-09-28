@@ -42,4 +42,5 @@ use try_insert::TryInsert;
 pub mod util;
 
 mod warn;
-use warn::{span_warn, warn, warn_once, Key as WarnKey};
+pub use warn::Warning;
+use warn::{note, source_warn, warn, warn_once};

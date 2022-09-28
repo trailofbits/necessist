@@ -1,9 +1,9 @@
 use crate::{
-    frameworks, sqlite, util, warn, warn_once, Backup, Outcome, Rewriter, SourceFile, Span,
-    ToConsoleString, WarnKey,
+    frameworks, note, source_warn, sqlite, util, warn, warn_once, Backup, Outcome, Rewriter,
+    SourceFile, Span, ToConsoleString, Warning,
 };
 use ansi_term::Style;
-use anyhow::{anyhow, bail, ensure, Context as _, Result};
+use anyhow::{anyhow, bail, ensure, Result};
 use heck::ToKebabCase;
 use indicatif::ProgressBar;
 use log::debug;
@@ -58,10 +58,11 @@ pub(crate) struct LightContext<'a> {
 #[allow(clippy::struct_excessive_bools)]
 #[derive(Clone, Default)]
 pub struct Necessist {
+    pub allow: Vec<Warning>,
     pub default_config: bool,
+    pub deny: Vec<Warning>,
     pub dump: bool,
     pub framework: Framework,
-    pub keep_going: bool,
     pub no_dry_run: bool,
     pub no_sqlite: bool,
     pub quiet: bool,
@@ -250,7 +251,7 @@ fn run(
 
         let (mismatch, n) = skip_past_removals(&mut span_iter, &mut past_removal_iter);
 
-        update_progress(&context, mismatch, n);
+        update_progress(&context, mismatch, n)?;
 
         if span_iter.peek().is_none() {
             continue;
@@ -263,16 +264,12 @@ fn run(
             ));
 
             if let Err(error) = context.framework.dry_run(&context.light(), &test_file) {
-                if context.opts.keep_going {
-                    (context.println)(&format!(
-                        "{}: dry run failed: {}",
-                        util::strip_current_dir(&test_file).to_string_lossy(),
-                        error
-                    ));
-                    continue;
-                }
-
-                return Err(error).with_context(|| "dry run failed");
+                source_warn(
+                    &context.light(),
+                    Warning::DryRunFailed,
+                    &test_file,
+                    &format!("dry run failed: {}", error),
+                )?;
             }
 
             if CTRLC.load(Ordering::SeqCst) {
@@ -288,7 +285,7 @@ fn run(
         loop {
             let (mismatch, n) = skip_past_removals(&mut span_iter, &mut past_removal_iter);
 
-            update_progress(&context, mismatch, n);
+            update_progress(&context, mismatch, n)?;
 
             let span = if let Some(span) = span_iter.next() {
                 span
@@ -306,7 +303,7 @@ fn run(
                 emit(&mut context, span, &text, outcome)?;
             }
 
-            update_progress(&context, false, 1);
+            update_progress(&context, false, 1)?;
         }
     }
 
@@ -332,7 +329,6 @@ fn process_options(opts: &mut Necessist) -> Result<()> {
     incompatible!(opts, dump, reset);
     incompatible!(opts, dump, resume);
     incompatible!(opts, dump, no_sqlite);
-    incompatible!(opts, keep_going, no_dry_run);
     incompatible!(opts, quiet, verbose);
     incompatible!(opts, reset, no_sqlite);
     incompatible!(opts, resume, no_sqlite);
@@ -347,7 +343,11 @@ fn default_config(context: &LightContext, root: &Path) -> Result<()> {
         bail!("A configuration file already exists at {:?}", path);
     }
 
-    warn(context, "Configuration files are experimental");
+    warn(
+        context,
+        Warning::ConfigFilesExperimental,
+        "Configuration files are experimental",
+    )?;
 
     let toml = toml::to_string(&Config::default())?;
 
@@ -361,7 +361,11 @@ fn read_config(context: &LightContext, root: &Path) -> Result<Config> {
         return Ok(Config::default());
     }
 
-    warn(context, "Configuration files are experimental");
+    warn(
+        context,
+        Warning::ConfigFilesExperimental,
+        "Configuration files are experimental",
+    )?;
 
     let contents = read_to_string(path)?;
 
@@ -376,7 +380,7 @@ fn dump(context: &LightContext, removals: &[Removal]) {
     }
 
     if !context.opts.verbose && other_than_passed {
-        warn(context, "More output would be produced with --verbose");
+        note(context, "More output would be produced with --verbose");
     }
 }
 
@@ -471,18 +475,20 @@ where
     (mismatch, n)
 }
 
-fn update_progress(context: &Context, mismatch: bool, n: usize) {
+fn update_progress(context: &Context, mismatch: bool, n: usize) -> Result<()> {
     if mismatch {
         warn_once(
             &context.light(),
+            Warning::FilesChanged,
             "Configuration or test files have changed since necessist.db was created",
-            WarnKey::ConfigurationOrTestFilesHaveChanged,
-        );
+        )?;
     }
 
     if let Some(bar) = context.progress {
         bar.inc(n as u64);
     }
+
+    Ok(())
 }
 
 fn build_test_file_span_map(mut spans: Vec<Span>) -> BTreeMap<SourceFile, Vec<Span>> {

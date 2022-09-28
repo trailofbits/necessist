@@ -1,51 +1,105 @@
-use crate::{LightContext, Span, ToConsoleString};
-use ansi_term::{Color::Yellow, Style};
+use crate::{LightContext, ToConsoleString};
+use ansi_term::{
+    Color::{Green, Yellow},
+    Style,
+};
+use anyhow::{bail, Result};
+use heck::ToKebabCase;
 use lazy_static::lazy_static;
 use std::{collections::BTreeSet, sync::Mutex};
 
-#[derive(Eq, Ord, PartialEq, PartialOrd)]
+#[cfg_attr(feature = "clap", derive(clap::ArgEnum))]
+#[derive(Clone, Copy, Debug, Eq, Ord, PartialEq, PartialOrd)]
+#[non_exhaustive]
 #[remain::sorted]
-pub(crate) enum Key {
-    ConfigurationOrTestFilesHaveChanged,
-    HardhatTsIgnoredMacros,
-    RustIgnoredFunctions,
+pub enum Warning {
+    All,
+    ConfigFilesExperimental,
+    DryRunFailed,
+    FilesChanged,
+    IgnoredFunctionsUnsupported,
+    IgnoredMacrosUnsupported,
+    ModulePathUnknown,
+    RunTestFailed,
 }
 
-pub(crate) fn span_warn(context: &LightContext, span: &Span, msg: &str) {
-    warn_internal(context, Some(span), msg, None);
+impl std::fmt::Display for Warning {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", format!("{:?}", self).to_kebab_case())
+    }
 }
 
-pub(crate) fn warn(context: &LightContext, msg: &str) {
-    warn_internal(context, None, msg, None);
+pub(crate) fn source_warn(
+    context: &LightContext,
+    warning: Warning,
+    source: &dyn ToConsoleString,
+    msg: &str,
+) -> Result<()> {
+    warn_internal(context, warning, Some(source), msg, false)
 }
 
-pub(crate) fn warn_once(context: &LightContext, msg: &str, key: Key) {
-    warn_internal(context, None, msg, Some(key));
+pub(crate) fn warn(context: &LightContext, warning: Warning, msg: &str) -> Result<()> {
+    warn_internal(context, warning, None, msg, false)
+}
+
+pub(crate) fn warn_once(context: &LightContext, warning: Warning, msg: &str) -> Result<()> {
+    warn_internal(context, warning, None, msg, true)
 }
 
 lazy_static! {
-    static ref KEYS_USED: Mutex<BTreeSet<Key>> = Mutex::new(BTreeSet::new());
+    static ref WARNINGS_SHOWN: Mutex<BTreeSet<Warning>> = Mutex::new(BTreeSet::new());
+    static ref ALLOW_MSG_SHOWN: Mutex<BTreeSet<Warning>> = Mutex::new(BTreeSet::new());
 }
 
-fn warn_internal(context: &LightContext, span: Option<&Span>, msg: &str, key: Option<Key>) {
-    if context.opts.quiet {
-        return;
+fn warn_internal(
+    context: &LightContext,
+    warning: Warning,
+    source: Option<&dyn ToConsoleString>,
+    msg: &str,
+    once: bool,
+) -> Result<()> {
+    assert_ne!(warning, Warning::All);
+
+    if context.opts.deny.contains(&Warning::All) || context.opts.deny.contains(&warning) {
+        bail!(msg.to_owned());
     }
 
-    if let Some(key) = key {
-        #[allow(clippy::unwrap_used)]
-        let mut keys_used = KEYS_USED.lock().unwrap();
-        if keys_used.contains(&key) {
-            return;
-        }
-        keys_used.insert(key);
+    if context.opts.quiet
+        || context.opts.allow.contains(&Warning::All)
+        || context.opts.allow.contains(&warning)
+    {
+        return Ok(());
     }
+
+    if once {
+        #[allow(clippy::unwrap_used)]
+        let mut warnings_shown = WARNINGS_SHOWN.lock().unwrap();
+        if warnings_shown.contains(&warning) {
+            return Ok(());
+        }
+        warnings_shown.insert(warning);
+    }
+
+    let allow_msg = {
+        #[allow(clippy::unwrap_used)]
+        let mut allow_msg_shown = ALLOW_MSG_SHOWN.lock().unwrap();
+        if allow_msg_shown.contains(&warning) {
+            String::new()
+        } else {
+            allow_msg_shown.insert(warning);
+            format!(
+                "
+Silence this warning with: --allow {}",
+                warning
+            )
+        }
+    };
 
     (context.println)(&format!(
-        "{}{}: {}",
-        span.map_or(String::new(), |span| format!(
+        "{}{}: {}{}",
+        source.map_or(String::new(), |source| format!(
             "{}: ",
-            span.to_console_string()
+            source.to_console_string()
         )),
         if atty::is(atty::Stream::Stdout) {
             Yellow.bold()
@@ -53,6 +107,26 @@ fn warn_internal(context: &LightContext, span: Option<&Span>, msg: &str, key: Op
             Style::default()
         }
         .paint("Warning"),
+        msg,
+        allow_msg
+    ));
+
+    Ok(())
+}
+
+pub(crate) fn note(context: &LightContext, msg: &str) {
+    if context.opts.quiet {
+        return;
+    }
+
+    (context.println)(&format!(
+        "{}: {}",
+        if atty::is(atty::Stream::Stdout) {
+            Green.bold()
+        } else {
+            Style::default()
+        }
+        .paint("Note"),
         msg
     ));
 }

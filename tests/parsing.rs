@@ -98,10 +98,10 @@ fn run_test(url: &str, toml: Option<&str>) {
                 .lines()
                 .find_map(|line| {
                     let line = line.unwrap();
-                    if line == "Warning: Configuration files are experimental" {
-                        None
-                    } else {
-                        Some(line)
+                    match line.as_ref() {
+                        "Warning: Configuration files are experimental"
+                        | "Silence this warning with: --allow config-files-experimental" => None,
+                        _ => Some(line),
                     }
                 })
                 .unwrap();
