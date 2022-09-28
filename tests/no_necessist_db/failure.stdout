@@ -1,6 +1,6 @@
 2 candidates in 2 test files
 examples/failure/tests/a.rs: dry running
-examples/failure/tests/a.rs: dry run failed: Output {
+examples/failure/tests/a.rs: Warning: dry run failed: Output {
     status: ExitStatus(
         unix_wait_status(
             25856,
@@ -9,6 +9,8 @@ examples/failure/tests/a.rs: dry run failed: Output {
     stdout: "\nrunning 1 test\ntest dry_run_failed ... FAILED\n\nfailures:\n\n---- dry_run_failed stdout ----\nthread 'dry_run_failed' panicked at 'assertion failed: n >= 2', tests/a.rs:5:5\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n\n\nfailures:\n    dry_run_failed\n\ntest result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in [..]s\n\n",
     stderr: "[..]    Finished test [unoptimized + debuginfo] target(s) in [..]s/n     Running tests/a.rs (examples/failure/target/debug/deps/a-[..])/nerror: test failed, to rerun pass '--test a'/n",
 }
+Silence this warning with: --allow dry-run-failed
+examples/failure/tests/a.rs: mutilating
 examples/failure/tests/b.rs: dry running
 examples/failure/tests/b.rs: mutilating
 examples/failure/tests/b.rs:4:5-4:12: `n += 1;` passed

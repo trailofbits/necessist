@@ -1,5 +1,5 @@
 use super::{Interface, Postprocess};
-use crate::{span_warn, util, warn_once, Config, LightContext, Span, TryInsert, WarnKey};
+use crate::{source_warn, util, warn_once, Config, LightContext, Span, TryInsert, Warning};
 use anyhow::{anyhow, ensure, Context, Result};
 use cargo_metadata::Package;
 use log::debug;
@@ -28,9 +28,6 @@ const BUG_MSG: &str = "
 This may indicate a bug in Necessist. Consider opening an issue at: \
 https://github.com/trailofbits/necessist/issues
 ";
-
-const KEEP_GOING_MSG: &str = "
-Pass --keep-going to continue after receiving this error.";
 
 static BUG_MSG_SHOWN: AtomicBool = AtomicBool::new(false);
 
@@ -61,7 +58,7 @@ impl Interface for Rust {
             self.root = Some(Rc::new(context.root.to_path_buf()));
         }
 
-        check_config(context, config);
+        check_config(context, config)?;
 
         let mut parsing = Parsing::default();
         let mut spans = Vec::new();
@@ -83,6 +80,7 @@ impl Interface for Rust {
             })?;
             #[allow(clippy::expect_used)]
             let spans_visited = visit(
+                context,
                 config,
                 self,
                 &mut parsing,
@@ -177,28 +175,26 @@ impl Interface for Rust {
                 }
                 let mut msg = format!("Failed to run test `{}`", test);
                 if !BUG_MSG_SHOWN.load(Ordering::SeqCst) {
-                    msg += BUG_MSG;
                     BUG_MSG_SHOWN.store(true, Ordering::SeqCst);
+                    msg += BUG_MSG;
                 }
-                if context.opts.keep_going {
-                    span_warn(context, &span, &msg);
-                    return Ok(false);
-                }
-                msg += KEEP_GOING_MSG;
-                Err(anyhow!(msg))
+                source_warn(context, Warning::RunTestFailed, &span, &msg)?;
+                Ok(false)
             })),
         )))
     }
 }
 
-fn check_config(context: &LightContext, config: &Config) {
+fn check_config(context: &LightContext, config: &Config) -> Result<()> {
     if !config.ignored_functions.is_empty() {
         warn_once(
             context,
+            Warning::IgnoredFunctionsUnsupported,
             "The rust framework does not currently support the `ignored_functions` configuration",
-            WarnKey::RustIgnoredFunctions,
-        );
+        )?;
     }
+
+    Ok(())
 }
 
 impl Rust {

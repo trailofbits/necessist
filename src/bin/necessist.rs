@@ -1,5 +1,5 @@
 use anyhow::Result;
-use clap::{crate_version, Parser};
+use clap::{crate_version, ArgAction, Parser};
 #[cfg(unix)]
 use std::os::unix::io::AsRawFd;
 use std::{
@@ -16,15 +16,29 @@ use std::{
 struct Opts {
     #[clap(
         long,
+        action = ArgAction::Append,
+        hide_possible_values = true,
+        value_name = "WARNING",
+        help = "Silence <WARNING>; `--allow all` silences all warnings"
+    )]
+    allow: Vec<necessist::Warning>,
+    #[clap(
+        long,
         help = "Create a default necessist.toml file in the project's root directory (experimental)"
     )]
     default_config: bool,
+    #[clap(
+        long,
+        action = ArgAction::Append,
+        hide_possible_values = true,
+        value_name = "WARNING",
+        help = "Treat <WARNING> as an error; `--deny all` treats all warnings as errors"
+    )]
+    deny: Vec<necessist::Warning>,
     #[clap(long, help = "Dump sqlite database contents to the console")]
     dump: bool,
     #[clap(long, arg_enum, help = "Assume testing framework is <FRAMEWORK>")]
     framework: Option<necessist::Framework>,
-    #[clap(long, help = "Continue when a dry run fails or a test cannot be run")]
-    keep_going: bool,
     #[clap(long, help = "Do not perform dry runs")]
     no_dry_run: bool,
     #[clap(long, help = "Do not output to an sqlite database")]
@@ -51,10 +65,11 @@ struct Opts {
 impl From<Opts> for necessist::Necessist {
     fn from(opts: Opts) -> Self {
         let Opts {
+            allow,
             default_config,
+            deny,
             dump,
             framework,
-            keep_going,
             no_dry_run,
             no_sqlite,
             quiet,
@@ -69,10 +84,11 @@ impl From<Opts> for necessist::Necessist {
         let root = root.map(PathBuf::from);
         let test_files = ztest_files.iter().map(PathBuf::from).collect::<Vec<_>>();
         Self {
+            allow,
             default_config,
+            deny,
             dump,
             framework,
-            keep_going,
             no_dry_run,
             no_sqlite,
             quiet,

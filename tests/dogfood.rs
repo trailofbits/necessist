@@ -19,7 +19,7 @@ fn dogfood() {
 
     Command::cargo_bin(env!("CARGO_PKG_NAME"))
         .unwrap()
-        .args(&["--keep-going", "--timeout", TIMEOUT, "--verbose"])
+        .args(&["--timeout", TIMEOUT, "--verbose"])
         .assert()
         .success();
 }

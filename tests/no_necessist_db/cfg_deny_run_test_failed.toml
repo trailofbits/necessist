@@ -1,0 +1,10 @@
+args = ["--no-sqlite", "--root=examples/cfg", "--deny=run-test-failed"]
+
+[bin]
+name = "necessist"
+
+[status]
+code = 1
+
+[env.add]
+TRYCMD="1"

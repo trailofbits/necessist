@@ -42,13 +42,15 @@ ARGS:
     <TEST_FILES>...    Test files to mutilate (optional)
 
 OPTIONS:
+        --allow <WARNING>          Silence <WARNING>; `--allow all` silences all warnings
         --default-config           Create a default necessist.toml file in the project's root
                                    directory (experimental)
+        --deny <WARNING>           Treat <WARNING> as an error; `--deny all` treats all warnings as
+                                   errors
         --dump                     Dump sqlite database contents to the console
         --framework <FRAMEWORK>    Assume testing framework is <FRAMEWORK> [possible values: auto,
                                    hardhat-ts, rust]
     -h, --help                     Print help information
-        --keep-going               Continue when a dry run fails or a test cannot be run
         --no-dry-run               Do not perform dry runs
         --no-sqlite                Do not output to an sqlite database
         --quiet                    Do not output to the console

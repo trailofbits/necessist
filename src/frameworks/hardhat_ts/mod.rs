@@ -1,5 +1,5 @@
 use super::{Interface, Postprocess};
-use crate::{util, warn_once, Config, LightContext, Span, WarnKey};
+use crate::{util, warn_once, Config, LightContext, Span, Warning};
 use anyhow::{anyhow, ensure, Context, Result};
 use log::debug;
 use std::{
@@ -45,7 +45,7 @@ impl Interface for HardhatTs {
             self.root = Some(Rc::new(context.root.to_path_buf()));
         }
 
-        check_config(context, config);
+        check_config(context, config)?;
 
         let mut spans = Vec::new();
 
@@ -138,14 +138,16 @@ impl Interface for HardhatTs {
     }
 }
 
-fn check_config(context: &LightContext, config: &Config) {
+fn check_config(context: &LightContext, config: &Config) -> Result<()> {
     if !config.ignored_macros.is_empty() {
         warn_once(
             context,
+            Warning::IgnoredMacrosUnsupported,
             "The hardhat-ts framework does not support the `ignored_macros` configuration",
-            WarnKey::HardhatTsIgnoredMacros,
-        );
+        )?;
     }
+
+    Ok(())
 }
 
 fn compile(context: &LightContext) -> Result<()> {

@@ -1,9 +1,10 @@
 use super::{cached_test_file_fs_module_path, Parsing, Rust};
-use crate::{Config, SourceFile, Span, ToInternalSpan};
+use crate::{warn, Config, LightContext, SourceFile, Span, ToInternalSpan, Warning};
 use anyhow::{Error, Result};
 use std::{
-    path::{Path, PathBuf},
+    path::{Path, PathBuf, StripPrefixError},
     rc::Rc,
+    sync::atomic::{AtomicBool, Ordering},
 };
 use syn::{
     punctuated::Punctuated,
@@ -12,11 +13,14 @@ use syn::{
     Expr, ExprMacro, ExprMethodCall, File, Ident, ItemFn, ItemMod, Macro, PathSegment, Stmt, Token,
 };
 
+static BUG_MSG_SHOWN: AtomicBool = AtomicBool::new(false);
+
 #[cfg_attr(
     dylint_lib = "non_local_effect_before_error_return",
     allow(non_local_effect_before_error_return)
 )]
 pub(super) fn visit<'framework, 'parsing>(
+    context: &LightContext,
     config: &Config,
     framework: &'framework mut Rust,
     parsing: &'parsing mut Parsing,
@@ -24,7 +28,7 @@ pub(super) fn visit<'framework, 'parsing>(
     test_file: &Path,
     file: &File,
 ) -> Result<Vec<Span>> {
-    let mut visitor = Visitor::new(config, framework, parsing, root, test_file);
+    let mut visitor = Visitor::new(context, config, framework, parsing, root, test_file);
     visitor.visit_file(file);
     if let Some(error) = visitor.error {
         Err(error)
@@ -33,7 +37,8 @@ pub(super) fn visit<'framework, 'parsing>(
     }
 }
 
-struct Visitor<'ast, 'config, 'framework, 'parsing> {
+struct Visitor<'ast, 'context, 'config, 'framework, 'parsing> {
+    context: &'context LightContext<'context>,
     config: &'config Config,
     framework: &'framework mut Rust,
     parsing: &'parsing mut Parsing,
@@ -45,8 +50,8 @@ struct Visitor<'ast, 'config, 'framework, 'parsing> {
     error: Option<Error>,
 }
 
-impl<'ast, 'config, 'framework, 'parsing> Visit<'ast>
-    for Visitor<'ast, 'config, 'framework, 'parsing>
+impl<'ast, 'context, 'config, 'framework, 'parsing> Visit<'ast>
+    for Visitor<'ast, 'context, 'config, 'framework, 'parsing>
 where
     'ast: 'parsing,
     'framework: 'parsing,
@@ -135,12 +140,14 @@ where
     }
 }
 
-impl<'ast, 'config, 'framework, 'parsing> Visitor<'ast, 'config, 'framework, 'parsing>
+impl<'ast, 'context, 'config, 'framework, 'parsing>
+    Visitor<'ast, 'context, 'config, 'framework, 'parsing>
 where
     'ast: 'parsing,
     'framework: 'parsing,
 {
     fn new(
+        context: &'context LightContext,
         config: &'config Config,
         framework: &'framework mut Rust,
         parsing: &'parsing mut Parsing,
@@ -148,6 +155,7 @@ where
         test_file: &Path,
     ) -> Self {
         Self {
+            context,
             config,
             framework,
             parsing,
@@ -160,13 +168,30 @@ where
         }
     }
 
+    #[cfg_attr(
+        dylint_lib = "non_local_effect_before_error_return",
+        allow(non_local_effect_before_error_return)
+    )]
     fn elevate_span(&mut self, span: Span, ident: &Ident) {
         let result = (|| {
             let _ = self.framework.cached_test_file_flags(
                 &mut self.parsing.test_file_package_cache,
                 &span.source_file,
             )?;
-            let test_path = self.test_path(&span, ident)?;
+            let test_path = match self.test_path(&span, ident) {
+                Ok(test_path) => test_path,
+                Err(error) => {
+                    if error.downcast_ref::<StripPrefixError>().is_some() {
+                        let mut msg = format!("Failed to determine module path: {}", error);
+                        if !BUG_MSG_SHOWN.load(Ordering::SeqCst) {
+                            BUG_MSG_SHOWN.store(true, Ordering::SeqCst);
+                            msg += super::BUG_MSG;
+                        }
+                        warn(self.context, Warning::ModulePathUnknown, &msg)?;
+                    }
+                    return Ok(());
+                }
+            };
             self.framework.set_span_test_path(&span, test_path);
             self.spans.push(span);
             Ok(())
