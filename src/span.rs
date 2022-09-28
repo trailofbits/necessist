@@ -1,12 +1,9 @@
-use crate::{util, SourceFile};
+use crate::{SourceFile, ToConsoleString};
 use anyhow::{anyhow, Result};
 use lazy_static::lazy_static;
 use proc_macro2::LineColumn;
 use regex::Regex;
-use std::{
-    path::{Path, PathBuf},
-    rc::Rc,
-};
+use std::{path::PathBuf, rc::Rc};
 
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct Span {
@@ -23,6 +20,12 @@ impl std::fmt::Display for Span {
             "{}",
             self.to_string_with_path(&self.source_file.to_string())
         )
+    }
+}
+
+impl ToConsoleString for Span {
+    fn to_console_string(&self) -> String {
+        self.to_string_with_path(&self.source_file.to_console_string())
     }
 }
 
@@ -76,15 +79,10 @@ impl Span {
         self.end
     }
 
-    #[must_use]
-    pub fn to_console_string(&self) -> String {
-        self.to_string_with_path(util::strip_current_dir(&self.source_file))
-    }
-
-    fn to_string_with_path(&self, path: impl AsRef<Path>) -> String {
+    fn to_string_with_path(&self, path: &str) -> String {
         format!(
             "{}:{}:{}-{}:{}",
-            path.as_ref().to_string_lossy(),
+            path,
             self.start.line,
             self.start.column + 1,
             self.end.line,

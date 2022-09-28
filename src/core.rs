@@ -1,5 +1,6 @@
 use crate::{
-    frameworks, sqlite, util, warn, warn_once, Backup, Outcome, Rewriter, SourceFile, Span, WarnKey,
+    frameworks, sqlite, util, warn, warn_once, Backup, Outcome, Rewriter, SourceFile, Span,
+    ToConsoleString, WarnKey,
 };
 use ansi_term::Style;
 use anyhow::{anyhow, bail, ensure, Context as _, Result};

@@ -33,6 +33,9 @@ use span::ToInternalSpan;
 
 mod sqlite;
 
+mod to_console_string;
+use to_console_string::ToConsoleString;
+
 mod try_insert;
 use try_insert::TryInsert;
 

@@ -1,4 +1,4 @@
-use crate::util;
+use crate::{to_console_string::ToConsoleString, util};
 use std::{
     ops::Deref,
     path::{Path, PathBuf},
@@ -28,6 +28,12 @@ impl SourceFile {
 impl std::fmt::Display for SourceFile {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}", self.relative_path().to_string_lossy())
+    }
+}
+
+impl ToConsoleString for SourceFile {
+    fn to_console_string(&self) -> String {
+        util::strip_current_dir(self).to_string_lossy().to_string()
     }
 }
 
