@@ -276,7 +276,7 @@ fn is_ignored_macro(config: &Config, stmt: &Stmt) -> bool {
             ..
         }) => path.get_ident().map_or(false, |ident| {
             let s = ident.to_string();
-            IGNORED_MACROS.binary_search(&s.as_str()).is_ok() || config.ignored_macros.contains(&s)
+            IGNORED_MACROS.binary_search(&s.as_ref()).is_ok() || config.ignored_macros.contains(&s)
         }),
         _ => false,
     })
