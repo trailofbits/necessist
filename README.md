@@ -33,34 +33,27 @@ Also, for some frameworks, certain statements and methods are ignored (see [belo
 ## Usage
 
 ```
-necessist 0.1.0-beta.1
+Usage: necessist [OPTIONS] [TEST_FILES]...
 
-USAGE:
-    necessist [OPTIONS] [TEST_FILES]...
+Arguments:
+  [TEST_FILES]...  Test files to mutilate (optional)
 
-ARGS:
-    <TEST_FILES>...    Test files to mutilate (optional)
-
-OPTIONS:
-        --allow <WARNING>          Silence <WARNING>; `--allow all` silences all warnings
-        --default-config           Create a default necessist.toml file in the project's root
-                                   directory (experimental)
-        --deny <WARNING>           Treat <WARNING> as an error; `--deny all` treats all warnings as
-                                   errors
-        --dump                     Dump sqlite database contents to the console
-        --framework <FRAMEWORK>    Assume testing framework is <FRAMEWORK> [possible values: auto,
-                                   hardhat-ts, rust]
-    -h, --help                     Print help information
-        --no-dry-run               Do not perform dry runs
-        --no-sqlite                Do not output to an sqlite database
-        --quiet                    Do not output to the console
-        --reset                    Discard sqlite database contents
-        --resume                   Resume from the sqlite database
-        --root <ROOT>              Root directory of the project under test
-        --timeout <TIMEOUT>        Maximum number of seconds to run any test; 60 is the default, 0
-                                   means no timeout
-    -V, --version                  Print version information
-        --verbose                  Show test outcomes besides `passed`
+Options:
+      --allow <WARNING>        Silence <WARNING>; `--allow all` silences all warnings
+      --default-config         Create a default necessist.toml file in the project's root directory (experimental)
+      --deny <WARNING>         Treat <WARNING> as an error; `--deny all` treats all warnings as errors
+      --dump                   Dump sqlite database contents to the console
+      --framework <FRAMEWORK>  Assume testing framework is <FRAMEWORK> [possible values: auto, hardhat-ts, rust]
+      --no-dry-run             Do not perform dry runs
+      --no-sqlite              Do not output to an sqlite database
+      --quiet                  Do not output to the console
+      --reset                  Discard sqlite database contents
+      --resume                 Resume from the sqlite database
+      --root <ROOT>            Root directory of the project under test
+      --timeout <TIMEOUT>      Maximum number of seconds to run any test; 60 is the default, 0 means no timeout
+      --verbose                Show test outcomes besides `passed`
+  -h, --help                   Print help information
+  -V, --version                Print version information
 ```
 
 By default, Necessist outputs to both the console and to an sqlite database. For the latter, a tool like [sqlitebrowser](https://sqlitebrowser.org/) can be used to filter/sort the results.
