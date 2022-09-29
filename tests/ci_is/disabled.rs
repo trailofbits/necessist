@@ -1,5 +1,3 @@
-#![cfg(not(feature = "ci"))]
-
 use std::io::{stderr, Write};
 
 #[test]
