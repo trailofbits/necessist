@@ -37,7 +37,7 @@ struct Opts {
     deny: Vec<necessist::Warning>,
     #[clap(long, help = "Dump sqlite database contents to the console")]
     dump: bool,
-    #[clap(long, arg_enum, help = "Assume testing framework is <FRAMEWORK>")]
+    #[clap(long, help = "Assume testing framework is <FRAMEWORK>")]
     framework: Option<necessist::Framework>,
     #[clap(long, help = "Do not perform dry runs")]
     no_dry_run: bool,
