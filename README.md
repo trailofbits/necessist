@@ -3,7 +3,7 @@
 Run tests with statements and method calls removed to help identify broken tests
 
 ```
-cargo install necessist
+cargo install necessist --version=^0.1.0-beta
 ```
 
 ## Overview
