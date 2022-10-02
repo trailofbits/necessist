@@ -87,11 +87,15 @@ By default, Necessist outputs only when tests pass. Passing `--verbose` causes N
 
 #### Ignored functions
 
+- Anything beginning with `assert` (e.g., `assert.equal`)
 - `expect`
 
 #### Ignored methods
 
+- Anything beginning with `should` (e.g., `should.equal`)
 - Anything beginning with `to` (e.g., `to.equal`)
+- `toNumber`
+- `toString`
 
 ### Rust
 

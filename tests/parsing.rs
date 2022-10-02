@@ -9,17 +9,28 @@ use std::{
 use subprocess::{Exec, NullFile, Redirection};
 use tempfile::tempdir;
 
-const TESTS: &[(bool, &str, Option<&str>)] = &[
+const TESTS: &[(bool, &str, Option<&str>, Option<&str>)] = &[
     // https://www.reddit.com/r/rust/comments/s6olun/comment/ht5l2kj
-    (false, "https://github.com/diem/diem", None),
+    (false, "https://github.com/diem/diem", None, None),
     // https://users.rust-lang.org/t/largest-rust-codebases/17027/7
-    (true, "https://github.com/rusoto/rusoto", None),
+    (true, "https://github.com/rusoto/rusoto", None, None),
+    (
+        false,
+        "https://github.com/smartcontractkit/chainlink",
+        Some("contracts"),
+        Some(CHAINLINK_CONFIG),
+    ),
     (
         false,
         "https://github.com/Uniswap/v3-core",
+        None,
         Some(UNISWAP_CONFIG),
     ),
 ];
+
+const CHAINLINK_CONFIG: &str = "\
+ignored_functions = [\"bigNumEquals\", \"evmRevert\"]
+";
 
 const UNISWAP_CONFIG: &str = "\
 ignored_functions = [\"checkObservationEquals\", \"snapshotGasCost\"]
@@ -35,11 +46,11 @@ lazy_static! {
 )]
 #[test]
 fn cheap_tests() {
-    for &(expensive, url, toml) in TESTS.iter() {
+    for &(expensive, url, subdir, toml) in TESTS.iter() {
         if expensive {
             continue;
         }
-        run_test(url, toml);
+        run_test(url, subdir, toml);
     }
 }
 
@@ -50,12 +61,12 @@ fn cheap_tests() {
 #[test]
 #[ignore]
 fn all_tests() {
-    for &(_, url, toml) in TESTS.iter() {
-        run_test(url, toml);
+    for &(_, url, subdir, toml) in TESTS.iter() {
+        run_test(url, subdir, toml);
     }
 }
 
-fn run_test(url: &str, toml: Option<&str>) {
+fn run_test(url: &str, subdir: Option<&str>, toml: Option<&str>) {
     let tempdir = tempdir().unwrap();
 
     Command::new("git")
@@ -81,13 +92,18 @@ fn run_test(url: &str, toml: Option<&str>) {
         )
         .unwrap();
 
+        let root = subdir.map_or_else(
+            || tempdir.path().to_path_buf(),
+            |subdir| tempdir.path().join(subdir),
+        );
+
         if let Some(toml) = toml {
-            write(tempdir.path().join("necessist.toml"), toml).unwrap();
+            write(root.join("necessist.toml"), toml).unwrap();
         }
 
         let line = {
             let mut exec = Exec::cmd("target/debug/necessist");
-            exec = exec.args(&["--no-sqlite", "--root", &tempdir.path().to_string_lossy()]);
+            exec = exec.args(&["--no-sqlite", "--root", &root.to_string_lossy()]);
             exec = exec.stdout(Redirection::Pipe);
             exec = exec.stderr(NullFile);
 

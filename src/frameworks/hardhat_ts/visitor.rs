@@ -8,10 +8,10 @@ use swc_core::{
     common::{BytePos, Loc, SourceMap, Span as SwcSpan, Spanned},
     ecma::{
         ast::{
-            CallExpr, Callee, Expr, ExprOrSpread, ExprStmt, MemberExpr, MemberProp, Module, Stmt,
-            TsTypeParamInstantiation,
+            CallExpr, Callee, Expr, ExprOrSpread, ExprStmt, Ident, MemberExpr, MemberProp, Module,
+            Stmt, TsTypeParamInstantiation,
         },
-        visit::{visit_call_expr, visit_stmt, Visit},
+        visit::{visit_expr, visit_stmt, Visit},
     },
 };
 
@@ -40,18 +40,26 @@ pub struct Visitor<'config> {
 struct MethodCall<'a> {
     pub span: &'a SwcSpan,
     pub obj: &'a Expr,
-    pub path: Vec<&'a MemberProp>,
+    pub path: Vec<&'a Ident>,
+    pub args: &'a Vec<ExprOrSpread>,
+    pub type_args: &'a Option<Box<TsTypeParamInstantiation>>,
+}
+
+#[allow(dead_code)]
+struct FunctionCall<'a> {
+    pub span: &'a SwcSpan,
+    pub path: Vec<&'a Ident>,
     pub args: &'a Vec<ExprOrSpread>,
     pub type_args: &'a Option<Box<TsTypeParamInstantiation>>,
 }
 
 impl<'config> Visit for Visitor<'config> {
-    fn visit_call_expr(&mut self, call_expr: &CallExpr) {
-        if is_it_call_expr(call_expr) {
+    fn visit_expr(&mut self, expr: &Expr) {
+        if is_it_call_expr(expr) {
             assert!(!self.in_it_call_expr);
             self.in_it_call_expr = true;
 
-            visit_call_expr(self, call_expr);
+            visit_expr(self, expr);
 
             assert!(self.in_it_call_expr);
             self.in_it_call_expr = false;
@@ -59,13 +67,15 @@ impl<'config> Visit for Visitor<'config> {
             return;
         }
 
-        visit_call_expr(self, call_expr);
+        visit_expr(self, expr);
 
-        if let Some(MethodCall {
-            span, obj, path, ..
-        }) = is_method_call(call_expr)
-        {
-            if self.in_it_call_expr && !is_ignored_method(&path) {
+        if_chain! {
+            if self.in_it_call_expr;
+            if let Some(MethodCall {
+                span, obj, path, args, ..
+            }) = is_method_call(expr);
+            if !is_ignored_method(&path, args);
+            then {
                 let mut span = *span;
                 span.lo = obj.span().hi;
                 assert!(span.lo <= span.hi);
@@ -75,28 +85,42 @@ impl<'config> Visit for Visitor<'config> {
     }
 
     fn visit_stmt(&mut self, stmt: &Stmt) {
-        let n_before = self.n_stmt_leaves_visited;
-        visit_stmt(self, stmt);
-        let n_after = self.n_stmt_leaves_visited;
-
-        // smoelius: Consider this a "leaf" if-and-only-if no "leaves" were added during the
-        // recursive call.
-        if n_before != n_after {
-            return;
-        }
-        self.n_stmt_leaves_visited += 1;
-
-        if self.in_it_call_expr
-            && !matches!(
-                stmt,
-                Stmt::Break(_) | Stmt::Continue(_) | Stmt::Decl(_) | Stmt::Return(_)
-            )
-            && !is_ignored_call_expr(self.config, stmt)
+        // smoelius: If the statement is an ignored function call, do not visit its `Member`
+        // subexpressions. E.g., in a call of the form `assert.equal(...)`, do not remove
+        // `.equal(...)`.
+        if let Some(FunctionCall {
+            args, type_args, ..
+        }) = is_ignored_function_call(self.config, stmt)
         {
-            let span = stmt
-                .span()
-                .to_internal_span(&self.source_map, &self.source_file);
-            self.elevate_span(span);
+            for arg in args {
+                self.visit_expr_or_spread(arg);
+            }
+            for type_arg in type_args {
+                self.visit_ts_type_param_instantiation(type_arg);
+            }
+        } else {
+            let n_before = self.n_stmt_leaves_visited;
+            visit_stmt(self, stmt);
+            let n_after = self.n_stmt_leaves_visited;
+
+            // smoelius: Consider this a "leaf" if-and-only-if no "leaves" were added during the
+            // recursive call.
+            if n_before != n_after {
+                return;
+            }
+            self.n_stmt_leaves_visited += 1;
+
+            if self.in_it_call_expr
+                && !matches!(
+                    stmt,
+                    Stmt::Break(_) | Stmt::Continue(_) | Stmt::Decl(_) | Stmt::Return(_)
+                )
+            {
+                let span = stmt
+                    .span()
+                    .to_internal_span(&self.source_map, &self.source_file);
+                self.elevate_span(span);
+            }
         }
     }
 }
@@ -123,12 +147,12 @@ impl<'config> Visitor<'config> {
     }
 }
 
-fn is_it_call_expr(call_expr: &CallExpr) -> bool {
+fn is_it_call_expr(expr: &Expr) -> bool {
     if_chain! {
-        if let CallExpr {
+        if let Expr::Call(CallExpr {
             callee: Callee::Expr(callee),
             ..
-        } = call_expr;
+        }) = expr;
         if let Expr::Ident(ident) = &**callee;
         if ident.as_ref() == "it";
         then {
@@ -139,19 +163,24 @@ fn is_it_call_expr(call_expr: &CallExpr) -> bool {
     }
 }
 
-fn is_method_call(call_expr: &CallExpr) -> Option<MethodCall> {
-    if let CallExpr {
+fn is_method_call(mut expr: &Expr) -> Option<MethodCall> {
+    if let Expr::Call(CallExpr {
         span,
-        callee: Callee::Expr(ref expr),
+        callee: Callee::Expr(ref callee),
         args,
         type_args,
-    } = call_expr
+    }) = expr
     {
-        let mut expr = expr;
+        expr = callee;
         let mut path_reversed = Vec::new();
-        while let Expr::Member(MemberExpr { span: _, obj, prop }) = &**expr {
+        while let Expr::Member(MemberExpr {
+            span: _,
+            obj,
+            prop: MemberProp::Ident(ident),
+        }) = expr
+        {
             expr = obj;
-            path_reversed.push(prop);
+            path_reversed.push(ident);
         }
         if path_reversed.is_empty() {
             None
@@ -172,48 +201,102 @@ fn is_method_call(call_expr: &CallExpr) -> Option<MethodCall> {
     }
 }
 
-fn is_ignored_method(path: &[&MemberProp]) -> bool {
-    if let Some(MemberProp::Ident(ident)) = path.first() {
-        ident.as_ref() == "to"
+fn is_ignored_method(path: &[&Ident], args: &[ExprOrSpread]) -> bool {
+    if let &[ident, ..] = path {
+        ident.as_ref() == "should"
+            || ident.as_ref() == "to"
+            || ((ident.as_ref() == "toNumber" || ident.as_ref() == "toString")
+                && path.len() == 1
+                && args.is_empty())
     } else {
         false
     }
 }
 
-fn is_ignored_call_expr(config: &Config, stmt: &Stmt) -> bool {
+fn is_ignored_function_call<'a>(config: &Config, stmt: &'a Stmt) -> Option<FunctionCall<'a>> {
     if let Stmt::Expr(ExprStmt { ref expr, .. }) = stmt {
-        let mut expr = expr;
+        let mut expr = trim_expr(expr);
         loop {
-            match &**expr {
-                Expr::Await(await_expr) => {
-                    expr = &await_expr.arg;
-                }
-                Expr::Member(member_expr) => {
-                    expr = &member_expr.obj;
-                }
-                Expr::Call(CallExpr {
-                    callee: Callee::Expr(callee),
-                    ..
-                }) => {
-                    if_chain! {
-                        if let Expr::Ident(ident) = &**callee;
-                        if ident.as_ref() == "expect"
-                            || config.ignored_functions.iter().any(|s| s == ident.as_ref());
-                        then {
-                            return true;
-                        } else {
-                            expr = callee;
-                        }
-                    }
-                }
-                _ => {
-                    return false;
-                }
+            if let Some(function_call) = is_function_call(expr) {
+                return if is_ignored_function(config, &function_call.path) {
+                    Some(function_call)
+                } else {
+                    None
+                };
+            } else if let Some(method_call) = is_method_call(expr) {
+                expr = method_call.obj;
+                continue;
+            }
+            break;
+        }
+    }
+    None
+}
+
+fn trim_expr(mut expr: &Expr) -> &Expr {
+    loop {
+        match expr {
+            Expr::Await(await_expr) => {
+                expr = &await_expr.arg;
+            }
+            Expr::Member(member_expr) => {
+                expr = &member_expr.obj;
+            }
+            _ => {
+                break;
             }
         }
-    } else {
-        false
     }
+    expr
+}
+
+fn is_function_call(mut expr: &Expr) -> Option<FunctionCall> {
+    if let Expr::Call(CallExpr {
+        span,
+        callee: Callee::Expr(ref callee),
+        args,
+        type_args,
+    }) = expr
+    {
+        expr = callee;
+        let mut path_reversed = Vec::new();
+        while let Expr::Member(MemberExpr {
+            span: _,
+            obj,
+            prop: MemberProp::Ident(ident),
+        }) = expr
+        {
+            expr = obj;
+            path_reversed.push(ident);
+        }
+        if let Expr::Ident(ident) = expr {
+            path_reversed.push(ident);
+            Some(FunctionCall {
+                span,
+                path: {
+                    path_reversed.reverse();
+                    path_reversed
+                },
+                args,
+                type_args,
+            })
+        } else {
+            None
+        }
+    } else {
+        None
+    }
+}
+
+fn is_ignored_function(config: &Config, path: &[&Ident]) -> bool {
+    if let &[ident, ..] = path {
+        if ident.as_ref() == "assert" || (ident.as_ref() == "expect" && path.len() == 1) {
+            return true;
+        }
+    }
+
+    let path = path.iter().map(AsRef::as_ref).collect::<Vec<_>>().join(".");
+    config.ignored_functions.iter().any(|s| s == &path)
 }
 
 trait ToInternalSpan {
