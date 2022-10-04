@@ -270,6 +270,7 @@ fn run(
                     &test_file,
                     &format!("dry run failed: {}", error),
                 )?;
+                continue;
             }
 
             if CTRLC.load(Ordering::SeqCst) {
