@@ -263,18 +263,23 @@ fn run(
                 util::strip_current_dir(&test_file).to_string_lossy()
             ));
 
-            if let Err(error) = context.framework.dry_run(&context.light(), &test_file) {
+            let result = context.framework.dry_run(&context.light(), &test_file);
+
+            if let Err(error) = &result {
                 source_warn(
                     &context.light(),
                     Warning::DryRunFailed,
                     &test_file,
                     &format!("dry run failed: {}", error),
                 )?;
-                continue;
             }
 
             if CTRLC.load(Ordering::SeqCst) {
                 bail!("Ctrl-C detected");
+            }
+
+            if result.is_err() {
+                continue;
             }
         }
 
