@@ -44,7 +44,7 @@ cargo_metadata = "0.15"
 syn = { version = "1.0", features = ["extra-traits", "full", "visit"] }
 
 # Hardhat TS
-swc_core = { version = "0.29", features = ["common", "ecma_ast", "ecma_parser", "ecma_visit"] }
+swc_core = { version = "0.30", features = ["common", "ecma_ast", "ecma_parser", "ecma_visit"] }
 
 [target.'cfg(unix)'.dependencies]
 libc = "0.2"
