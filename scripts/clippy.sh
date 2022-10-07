@@ -8,9 +8,9 @@ if [[ $# -ne 0 ]]; then
     exit 1
 fi
 
-# cargo clean
+# smoelius: The next command should match the `clippy` test in tests/ci_is/enabled.rs.
 
-cargo clippy --all-targets -- \
+cargo clippy --all-features --all-targets -- \
     -D warnings \
     -W clippy::pedantic \
     -A clippy::missing-errors-doc \

@@ -59,6 +59,7 @@ trycmd = "0.14"
 default = ["bin"]
 bin = ["clap", "env_logger"]
 ci = []
+ci_nightly = []
 
 [workspace.metadata.dylint]
 libraries = [
