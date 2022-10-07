@@ -53,7 +53,7 @@ libc = "0.2"
 assert_cmd = "2.0"
 fs_extra = "1.2"
 predicates = "2.1"
-trycmd = "0.13"
+trycmd = "0.14"
 
 [features]
 default = ["bin"]
