@@ -1,6 +1,11 @@
 name: CI
 
-on: [pull_request, push, workflow_dispatch]
+on:
+  pull_request:
+  push:
+  schedule:
+    - cron: "0 3 * * 3"
+  workflow_dispatch:
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -31,9 +36,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          rustup install nightly
-          rustup component add clippy
-          rustup component add rustfmt
           cargo install cargo-dylint dylint-link || true
           cargo install cargo-license            || true
           cargo install cargo-sort               || true
@@ -41,3 +43,12 @@ jobs:
 
       - name: Test
         run: cargo test --features=ci
+
+      - name: Install nightly toolchain
+        if: ${{ github.event_name == 'schedule' }}
+        run: |
+          rustup install nightly
+
+      - name: Test (nightly)
+        if: ${{ github.event_name == 'schedule' }}
+        run: cargo test --features=ci_nightly --test ci_nightly

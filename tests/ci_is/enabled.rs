@@ -13,6 +13,7 @@ fn clippy() {
     Command::new("cargo")
         .args(&[
             "clippy",
+            "--all-features",
             "--all-targets",
             "--",
             "--deny=warnings",
@@ -121,24 +122,6 @@ fn readme_contains_usage() {
 fn sort() {
     Command::new("cargo")
         .args(&["sort", "--check", "--grouped"])
-        .assert()
-        .success();
-}
-
-#[test]
-fn udeps() {
-    Command::new("cargo")
-        .args(&["+nightly", "udeps", "--all-targets"])
-        .assert()
-        .success();
-
-    Command::new("cargo")
-        .args(&[
-            "+nightly",
-            "udeps",
-            "--all-targets",
-            "--no-default-features",
-        ])
         .assert()
         .success();
 }
