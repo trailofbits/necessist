@@ -1,10 +1,8 @@
-use assert_cmd::prelude::*;
 use lazy_static::lazy_static;
 use regex::Regex;
 use std::{
     fs::write,
     io::{stderr, BufRead, BufReader, Write},
-    process::Command,
 };
 use subprocess::{Exec, NullFile, Redirection};
 use tempfile::tempdir;
@@ -69,10 +67,13 @@ fn all_tests() {
 fn run_test(url: &str, subdir: Option<&str>, toml: Option<&str>) {
     let tempdir = tempdir().unwrap();
 
-    Command::new("git")
-        .args(["clone", url, &tempdir.path().to_string_lossy()])
-        .assert()
-        .success();
+    assert!(Exec::cmd("git")
+        .args(&["clone", url, &tempdir.path().to_string_lossy()])
+        .stdout(Redirection::Merge)
+        .stderr(Redirection::Merge)
+        .join()
+        .unwrap()
+        .success());
 
     let tomls = toml.map_or(vec![None], |toml| vec![None, Some(toml)]);
 
