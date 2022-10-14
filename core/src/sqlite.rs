@@ -69,7 +69,7 @@ pub(crate) fn init(
     let root = Rc::new(root.to_path_buf());
     let path = root.join("necessist.db");
 
-    let exists = path.exists();
+    let exists = path.try_exists()?;
 
     if must_not_exist && exists {
         bail!(

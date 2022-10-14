@@ -1,6 +1,7 @@
 use crate::{
-    frameworks, note, source_warn, sqlite, util, warn, warn_once, Backup, Outcome, Rewriter,
-    SourceFile, Span, ToConsoleString, Warning,
+    framework::{self, ToImplementation},
+    note, source_warn, sqlite, util, warn, warn_once, Backup, Outcome, Rewriter, SourceFile, Span,
+    ToConsoleString, Warning,
 };
 use ansi_term::Style;
 use anyhow::{anyhow, bail, ensure, Result};
@@ -19,6 +20,7 @@ use std::{
     sync::atomic::{AtomicBool, Ordering},
     time::Duration,
 };
+use strum::IntoEnumIterator;
 
 const DEFAULT_TIMEOUT: Duration = Duration::from_secs(60);
 
@@ -35,7 +37,7 @@ struct Context<'a> {
     root: PathBuf,
     println: &'a dyn Fn(&dyn AsRef<str>),
     sqlite: Option<sqlite::Sqlite>,
-    framework: Box<dyn frameworks::Interface>,
+    framework: Box<dyn framework::Interface>,
     progress: Option<&'a ProgressBar>,
 }
 
@@ -49,7 +51,7 @@ impl<'a> Context<'a> {
     }
 }
 
-pub(crate) struct LightContext<'a> {
+pub struct LightContext<'a> {
     pub opts: &'a Necessist,
     pub root: &'a Path,
     pub println: &'a dyn Fn(&dyn AsRef<str>),
@@ -62,7 +64,6 @@ pub struct Necessist {
     pub default_config: bool,
     pub deny: Vec<Warning>,
     pub dump: bool,
-    pub framework: Framework,
     pub no_dry_run: bool,
     pub no_sqlite: bool,
     pub quiet: bool,
@@ -74,37 +75,20 @@ pub struct Necessist {
     pub test_files: Vec<PathBuf>,
 }
 
-#[cfg_attr(feature = "clap", derive(clap::ValueEnum))]
-#[derive(Debug, Clone, Copy, Eq, PartialEq)]
-#[non_exhaustive]
-#[remain::sorted]
-pub enum Framework {
-    Auto,
-    HardhatTs,
-    Rust,
-}
-
-impl Default for Framework {
-    fn default() -> Self {
-        Framework::Auto
-    }
-}
-
-impl std::fmt::Display for Framework {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", format!("{:?}", self).to_kebab_case())
-    }
-}
-
 #[derive(Default, Deserialize, Serialize)]
-pub(crate) struct Config {
+pub struct Config {
     #[serde(default)]
     pub ignored_functions: Vec<String>,
     #[serde(default)]
     pub ignored_macros: Vec<String>,
 }
 
-pub fn necessist(opts: &Necessist) -> Result<()> {
+// smoelius: The reason `framework` is not included as a field in `Necessist` is to avoid having
+// to parameterize every function that takes a `Necessist` as an argument.
+pub fn necessist<AdditionalIdentifier: IntoEnumIterator + ToImplementation>(
+    opts: &Necessist,
+    framework: framework::AutoUnion<framework::Identifier, AdditionalIdentifier>,
+) -> Result<()> {
     let mut opts = opts.clone();
 
     process_options(&mut opts)?;
@@ -129,7 +113,7 @@ pub fn necessist(opts: &Necessist) -> Result<()> {
     }
 
     let (sqlite, framework, n_spans, test_file_span_map, past_removals) =
-        if let Some(elements) = prepare(&context)? {
+        if let Some(elements) = prepare(&context, framework)? {
             elements
         } else {
             return Ok(());
@@ -169,12 +153,13 @@ pub fn necessist(opts: &Necessist) -> Result<()> {
 }
 
 #[allow(clippy::type_complexity)]
-fn prepare(
+fn prepare<AdditionalIdentifier: IntoEnumIterator + ToImplementation>(
     context: &LightContext,
+    framework: framework::AutoUnion<framework::Identifier, AdditionalIdentifier>,
 ) -> Result<
     Option<(
         Option<sqlite::Sqlite>,
-        Box<dyn frameworks::Interface>,
+        Box<dyn framework::Interface>,
         usize,
         BTreeMap<SourceFile, Vec<Span>>,
         Vec<Removal>,
@@ -204,7 +189,7 @@ fn prepare(
         return Ok(None);
     }
 
-    let mut framework = find_framework(context)?;
+    let mut framework = find_framework(context, framework)?;
 
     let paths = canonicalize_test_files(context)?;
 
@@ -345,7 +330,7 @@ fn process_options(opts: &mut Necessist) -> Result<()> {
 fn default_config(context: &LightContext, root: &Path) -> Result<()> {
     let path = root.join("necessist.toml");
 
-    if path.exists() {
+    if path.try_exists()? {
         bail!("A configuration file already exists at {:?}", path);
     }
 
@@ -363,7 +348,7 @@ fn default_config(context: &LightContext, root: &Path) -> Result<()> {
 fn read_config(context: &LightContext, root: &Path) -> Result<Config> {
     let path = root.join("necessist.toml");
 
-    if !path.exists() {
+    if !path.try_exists()? {
         return Ok(Config::default());
     }
 
@@ -390,40 +375,15 @@ fn dump(context: &LightContext, removals: &[Removal]) {
     }
 }
 
-fn find_framework(context: &LightContext) -> Result<Box<dyn frameworks::Interface>> {
-    if context.opts.framework != Framework::Auto {
-        return frameworks()
-            .into_iter()
-            .find(|framework| framework.name() == context.opts.framework.to_string())
-            .ok_or_else(|| anyhow!("Failed to find framework `{}`", context.opts.framework));
-    }
+fn find_framework<AdditionalIdentifier: IntoEnumIterator + ToImplementation>(
+    context: &LightContext,
+    identifier: framework::AutoUnion<framework::Identifier, AdditionalIdentifier>,
+) -> Result<Box<dyn framework::Interface>> {
+    let implementation = identifier.to_implementation(context)?;
 
-    let unflattened_frameworks = frameworks()
-        .into_iter()
-        .map(|framework| {
-            if framework.applicable(context)? {
-                Ok(Some(framework))
-            } else {
-                Ok(None)
-            }
-        })
-        .collect::<Result<Vec<_>>>()?;
+    drop(identifier);
 
-    let applicable_frameworks = unflattened_frameworks
-        .into_iter()
-        .flatten()
-        .collect::<Vec<_>>();
-
-    ensure!(
-        applicable_frameworks.len() <= 1,
-        "Found multiple applicable frameworks: {:#?}",
-        applicable_frameworks
-    );
-
-    applicable_frameworks
-        .into_iter()
-        .next()
-        .ok_or_else(|| anyhow!("Found no applicable frameworks"))
+    implementation.ok_or_else(|| anyhow!("Found no applicable frameworks"))
 }
 
 fn canonicalize_test_files(context: &LightContext) -> Result<Vec<PathBuf>> {

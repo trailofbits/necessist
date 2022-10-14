@@ -1,0 +1,28 @@
+[package]
+name = "necessist"
+version = "0.1.0-beta.4"
+edition = "2021"
+
+description = "necessist"
+
+authors = ["Samuel Moelius <sam@moeli.us>"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/trailofbits/necessist"
+
+[dependencies]
+necessist-core = { version = "0.1.0-beta", path = "../core", features = ["clap"] }
+
+anyhow = "1.0"
+clap = { version = "4.0", features = ["cargo", "derive"] }
+env_logger = "0.9"
+heck = "0.4"
+log = "0.4"
+remain = "0.2"
+strum = "0.24"
+subprocess = "0.2"
+
+# Foundry
+forge-fmt = { version = "0.2", git = "https://github.com/foundry-rs/foundry" }
+
+[target.'cfg(unix)'.dependencies]
+libc = "0.2"

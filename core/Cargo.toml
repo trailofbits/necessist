@@ -1,18 +1,13 @@
 [package]
-name = "necessist"
+name = "necessist-core"
 version = "0.1.0-beta.4"
 edition = "2021"
 
-description = "necessist"
+description = "necessist-core"
 
 authors = ["Samuel Moelius <sam@moeli.us>"]
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/trailofbits/necessist"
-
-[[bin]]
-name = "necessist"
-path = "src/bin/necessist.rs"
-required-features = ["bin"]
 
 [dependencies]
 ansi_term = "0.12"
@@ -21,7 +16,6 @@ atty = "0.2"
 clap = { version = "4.0", features = ["cargo", "derive"], optional = true }
 ctrlc = "3.2"
 diesel = { version = "2.0", features = ["sqlite"] }
-env_logger = { version = "0.9", optional = true }
 git2 = "0.15"
 heck = "0.4"
 if_chain = "1.0"
@@ -39,15 +33,12 @@ tempfile = "3.3"
 toml = "0.5"
 walkdir = "2.3"
 
-# Rust
-cargo_metadata = "0.15"
-syn = { version = "1.0", features = ["extra-traits", "full", "visit"] }
-
 # Hardhat TS
 swc_core = { version = "0.40", features = ["common", "ecma_ast", "ecma_parser", "ecma_visit"] }
 
-[target.'cfg(unix)'.dependencies]
-libc = "0.2"
+# Rust
+cargo_metadata = "0.15"
+syn = { version = "1.0", features = ["extra-traits", "full", "visit"] }
 
 [dev-dependencies]
 assert_cmd = "2.0"
@@ -56,16 +47,6 @@ predicates = "2.1"
 trycmd = "0.14"
 
 [features]
-default = ["bin"]
-bin = ["clap", "env_logger"]
+default = []
 ci = []
 ci_nightly = []
-
-[workspace.metadata.dylint]
-libraries = [
-    { git = "https://github.com/trailofbits/dylint", pattern = "examples/general/*" },
-    { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/inconsistent_qualification" },
-    { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/question_mark_in_expression" },
-    { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/suboptimal_pattern" },
-    { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/unnecessary_conversion_for_trait" },
-]

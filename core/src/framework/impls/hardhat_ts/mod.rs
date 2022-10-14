@@ -1,4 +1,4 @@
-use super::{Interface, Postprocess};
+use super::super::{Interface, Postprocess};
 use crate::{util, warn_once, Config, LightContext, Span, Warning};
 use anyhow::{anyhow, ensure, Context, Result};
 use log::debug;
@@ -21,16 +21,28 @@ use walkdir::WalkDir;
 mod visitor;
 use visitor::visit;
 
-#[derive(Debug, Default)]
-pub(super) struct HardhatTs {
-    root: Option<Rc<PathBuf>>,
+#[derive(Debug)]
+pub struct HardhatTs {
+    root: Rc<PathBuf>,
+}
+
+impl HardhatTs {
+    pub fn applicable(context: &LightContext) -> Result<Option<Self>> {
+        if context.root.join("hardhat.config.ts").try_exists()? {
+            Ok(Some(Self::new(context)))
+        } else {
+            Ok(None)
+        }
+    }
+
+    fn new(context: &LightContext) -> Self {
+        Self {
+            root: Rc::new(context.root.to_path_buf()),
+        }
+    }
 }
 
 impl Interface for HardhatTs {
-    fn applicable(&self, context: &LightContext) -> Result<bool> {
-        Ok(context.root.join("hardhat.config.ts").exists())
-    }
-
     #[cfg_attr(
         dylint_lib = "non_local_effect_before_error_return",
         allow(non_local_effect_before_error_return)
@@ -41,10 +53,6 @@ impl Interface for HardhatTs {
         config: &Config,
         test_files: &[&Path],
     ) -> Result<Vec<Span>> {
-        if self.root.is_none() {
-            self.root = Some(Rc::new(context.root.to_path_buf()));
-        }
-
         check_config(context, config)?;
 
         let mut spans = Vec::new();
@@ -71,15 +79,8 @@ impl Interface for HardhatTs {
                         util::strip_prefix(test_file, context.root).unwrap()
                     )
                 })?;
-            #[allow(clippy::expect_used)]
-            let visited_spans = visit(
-                config,
-                source_map,
-                self.root.as_ref().expect("`root` is unset").clone(),
-                test_file,
-                &module,
-            );
-            spans.extend(visited_spans);
+            let spans_visited = visit(config, source_map, self.root.clone(), test_file, &module);
+            spans.extend(spans_visited);
             Ok(())
         };
 

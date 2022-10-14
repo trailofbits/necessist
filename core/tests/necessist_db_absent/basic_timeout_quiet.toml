@@ -1,8 +1,11 @@
-args = ["--no-sqlite", "--root=examples/basic", "--quiet", "--timeout=5"]
+args = ["--no-sqlite", "--root=examples/basic", "--timeout=5", "--quiet"]
 stderr = ""
 
 [bin]
 name = "necessist"
+
+[fs]
+cwd = "../../.."
 
 [status]
 code = 0

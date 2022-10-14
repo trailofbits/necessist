@@ -7,12 +7,18 @@ pub use proc_macro2::LineColumn;
 mod backup;
 use backup::Backup;
 
-mod core;
-pub use crate::core::{necessist, Framework, Necessist};
-use crate::core::{Config, LightContext, Removal};
+#[cfg(feature = "clap")]
+pub mod cli;
 
-mod frameworks;
-use frameworks::frameworks;
+mod core;
+use crate::core::Removal;
+pub use crate::core::{necessist, Config, LightContext, Necessist};
+
+mod framework;
+pub use framework::{
+    implementation_as_interface, AutoUnion, Empty, Identifier, Interface, Postprocess,
+    ToImplementation,
+};
 
 mod offset_based_rewriter;
 

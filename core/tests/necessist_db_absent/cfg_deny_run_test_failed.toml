@@ -3,6 +3,9 @@ args = ["--no-sqlite", "--root=examples/cfg", "--deny=run-test-failed"]
 [bin]
 name = "necessist"
 
+[fs]
+cwd = "../../.."
+
 [status]
 code = 1
 

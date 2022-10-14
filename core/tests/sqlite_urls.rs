@@ -1,5 +1,5 @@
 use assert_cmd::prelude::*;
-use necessist::{util, Span};
+use necessist_core::{util, Span};
 use std::{
     io::{stderr, Write},
     process::Command,
@@ -54,7 +54,7 @@ fn run_test(url: &str) {
 
     let root = Rc::new(tempdir.path().join(SUBDIR));
 
-    Command::cargo_bin(env!("CARGO_PKG_NAME"))
+    Command::cargo_bin("necessist")
         .unwrap()
         .current_dir(&*root)
         .args([TEST_FILE])

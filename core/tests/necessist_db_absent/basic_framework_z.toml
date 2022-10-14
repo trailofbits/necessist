@@ -1,5 +1,4 @@
-args = ["--root=examples/basic", "--dump"]
-stderr = ""
+args = ["--no-sqlite", "--root=examples/basic", "--framework=z"]
 
 [bin]
 name = "necessist"
@@ -8,7 +7,7 @@ name = "necessist"
 cwd = "../../.."
 
 [status]
-code = 0
+code = 2
 
 [env.add]
 TRYCMD="1"

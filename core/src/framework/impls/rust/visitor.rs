@@ -364,7 +364,7 @@ mod test {
     #[allow(clippy::unwrap_used)]
     fn readme_contains_code_unordered_list(items: &[&str]) -> bool {
         let n = items.len();
-        let readme = read_to_string("README.md").unwrap();
+        let readme = read_to_string("../README.md").unwrap();
         readme.lines().collect::<Vec<_>>().windows(n).any(|window| {
             window
                 .iter()

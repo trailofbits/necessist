@@ -17,7 +17,7 @@ fn dogfood() {
         return;
     }
 
-    Command::cargo_bin(env!("CARGO_PKG_NAME"))
+    Command::cargo_bin("necessist")
         .unwrap()
         .args(&["--timeout", TIMEOUT, "--verbose"])
         .assert()
