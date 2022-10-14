@@ -4,6 +4,9 @@ stderr = ""
 [bin]
 name = "necessist"
 
+[fs]
+cwd = "../../.."
+
 [status]
 code = 0
 

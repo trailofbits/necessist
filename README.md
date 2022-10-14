@@ -2,8 +2,16 @@
 
 Run tests with statements and method calls removed to help identify broken tests
 
+Install from [`crates.io`]:
+
 ```
 cargo install necessist --version=^0.1.0-beta
+```
+
+If you require [Foundry] support, install from [github.com]:
+
+```
+cargo install --git https://github.com/trailofbits/necessist --branch release
 ```
 
 ## Overview
@@ -43,7 +51,7 @@ Options:
       --default-config         Create a default necessist.toml file in the project's root directory (experimental)
       --deny <WARNING>         Treat <WARNING> as an error; `--deny all` treats all warnings as errors
       --dump                   Dump sqlite database contents to the console
-      --framework <FRAMEWORK>  Assume testing framework is <FRAMEWORK> [possible values: auto, hardhat-ts, rust]
+      --framework <FRAMEWORK>  Assume testing framework is <FRAMEWORK> [possible values: auto, foundry, hardhat-ts, rust]
       --no-dry-run             Do not perform dry runs
       --no-sqlite              Do not output to an sqlite database
       --quiet                  Do not output to the console
@@ -165,5 +173,8 @@ A configuration file allows one to tailor Necessist's behavior with respect to a
 - Groce, A., Ahmed, I., Jensen, C., McKenney, P.E., Holmes, J.: How verified (or tested) is my code? Falsification-driven verification and testing. Autom. Softw. Eng. **25**, 917–960 (2018). A [preprint] is available. See Section 2.3.
 
 [`assert_cmd::assert::assert::success`]: https://docs.rs/assert_cmd/latest/assert_cmd/assert/struct.Assert.html#method.success
+[`crates.io`]: https://crates.io/crates/necessist
+[foundry]: https://github.com/foundry-rs/foundry
+[github.com]: https://github.com/trailofbits/necessist
 [preprint]: https://agroce.github.io/asej18.pdf
 [toml]: https://toml.io/en/

@@ -1,4 +1,4 @@
-use super::{Interface, Postprocess};
+use super::super::{Interface, Postprocess};
 use crate::{source_warn, util, warn_once, Config, LightContext, Span, TryInsert, Warning};
 use anyhow::{anyhow, ensure, Context, Result};
 use cargo_metadata::Package;
@@ -31,18 +31,32 @@ https://github.com/trailofbits/necessist/issues
 
 static BUG_MSG_SHOWN: AtomicBool = AtomicBool::new(false);
 
-#[derive(Debug, Default)]
-pub(super) struct Rust {
-    root: Option<Rc<PathBuf>>,
+#[derive(Debug)]
+pub struct Rust {
+    root: Rc<PathBuf>,
     test_file_flags_cache: BTreeMap<PathBuf, Vec<String>>,
     span_test_path_map: BTreeMap<Span, Vec<String>>,
 }
 
-impl Interface for Rust {
-    fn applicable(&self, context: &LightContext) -> Result<bool> {
-        Ok(context.root.join("Cargo.toml").exists())
+impl Rust {
+    pub fn applicable(context: &LightContext) -> Result<Option<Self>> {
+        if context.root.join("Cargo.toml").try_exists()? {
+            Ok(Some(Self::new(context)))
+        } else {
+            Ok(None)
+        }
     }
 
+    fn new(context: &LightContext) -> Self {
+        Self {
+            root: Rc::new(context.root.to_path_buf()),
+            test_file_flags_cache: BTreeMap::new(),
+            span_test_path_map: BTreeMap::new(),
+        }
+    }
+}
+
+impl Interface for Rust {
     #[allow(clippy::similar_names)]
     #[cfg_attr(
         dylint_lib = "non_local_effect_before_error_return",
@@ -54,10 +68,6 @@ impl Interface for Rust {
         config: &Config,
         test_files: &[&Path],
     ) -> Result<Vec<Span>> {
-        if self.root.is_none() {
-            self.root = Some(Rc::new(context.root.to_path_buf()));
-        }
-
         check_config(context, config)?;
 
         let mut parsing = Parsing::default();
@@ -78,13 +88,12 @@ impl Interface for Rust {
                     util::strip_prefix(test_file, context.root).unwrap()
                 )
             })?;
-            #[allow(clippy::expect_used)]
             let spans_visited = visit(
                 context,
                 config,
                 self,
                 &mut parsing,
-                self.root.as_ref().expect("`root` is unset").clone(),
+                self.root.clone(),
                 test_file,
                 &file,
             )?;

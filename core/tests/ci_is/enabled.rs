@@ -69,10 +69,22 @@ fn markdown_link_check() {
         .assert()
         .success();
 
-    let readme_md = Path::new(env!("CARGO_MANIFEST_DIR")).join("README.md");
+    // smoelius: https://github.com/rust-lang/crates.io/issues/788
+    let config = Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("tests")
+        .join("markdown_link_check.json");
+
+    let readme_md = Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("..")
+        .join("README.md");
 
     Command::new("npx")
-        .args(&["markdown-link-check", &readme_md.to_string_lossy()])
+        .args(&[
+            "markdown-link-check",
+            "--config",
+            &config.to_string_lossy(),
+            &readme_md.to_string_lossy(),
+        ])
         .current_dir(tempdir.path())
         .assert()
         .success();
@@ -92,9 +104,11 @@ fn prettier() {
         .args(&[
             "prettier",
             "--check",
-            &format!("{}/**/*.md", env!("CARGO_MANIFEST_DIR")),
-            &format!("{}/**/*.yml", env!("CARGO_MANIFEST_DIR")),
-            &format!("!{}/target/**", env!("CARGO_MANIFEST_DIR")),
+            &format!("{}/../**/*.json", env!("CARGO_MANIFEST_DIR")),
+            &format!("{}/../**/*.md", env!("CARGO_MANIFEST_DIR")),
+            &format!("{}/../**/*.yml", env!("CARGO_MANIFEST_DIR")),
+            &format!("!{}/../examples/**", env!("CARGO_MANIFEST_DIR")),
+            &format!("!{}/../target/**", env!("CARGO_MANIFEST_DIR")),
         ])
         .current_dir(tempdir.path())
         .assert()
@@ -103,9 +117,15 @@ fn prettier() {
 
 #[test]
 fn readme_contains_usage() {
-    let readme = read_to_string("README.md").unwrap();
+    let readme = read_to_string("../README.md").unwrap();
 
-    let stdout = Command::cargo_bin(env!("CARGO_PKG_NAME"))
+    // smoelius: Ensure `necessist` binary is up to date.
+    Command::new("cargo")
+        .args(&["build", "--workspace"])
+        .assert()
+        .success();
+
+    let stdout = Command::cargo_bin("necessist")
         .unwrap()
         .arg("--help")
         .assert()

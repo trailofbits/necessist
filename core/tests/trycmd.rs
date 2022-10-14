@@ -1,7 +1,7 @@
 #![cfg(unix)]
 
 use assert_cmd::prelude::*;
-use necessist::util;
+use necessist_core::util;
 use regex::Regex;
 use std::{
     ffi::OsStr,
@@ -11,14 +11,20 @@ use std::{
 };
 use trycmd::TestCases;
 
-const ROOT: &str = "examples/basic";
+const ROOT: &str = "../examples/basic";
 const TIMEOUT: &str = "5";
 
 #[test]
 fn trycmd() {
+    // smoelius: Ensure `necessist` binary is up to date.
+    Command::new("cargo")
+        .args(&["build", "--workspace"])
+        .assert()
+        .success();
+
     TestCases::new().case("tests/necessist_db_absent/*.toml");
 
-    Command::cargo_bin(env!("CARGO_PKG_NAME"))
+    Command::cargo_bin("necessist")
         .unwrap()
         .args(&["--root", ROOT, "--timeout", TIMEOUT])
         .assert()
@@ -84,6 +90,9 @@ fn check_toml() {
         let example = file_stem.split_once('_').map_or(file_stem, |(s, _)| s);
         assert!(args.contains(&format!("--root=examples/{}", example).as_str()));
 
+        let stderr = document.as_table().and_then(|table| table.get("stderr"));
+        assert!(stderr.is_some() || path.with_extension("stderr").try_exists().unwrap());
+
         let bin_name = document
             .as_table()
             .and_then(|table| table.get("bin"))
@@ -91,7 +100,7 @@ fn check_toml() {
             .and_then(|table| table.get("name"))
             .and_then(toml::Value::as_str)
             .unwrap();
-        assert_eq!(env!("CARGO_PKG_NAME"), bin_name);
+        assert_eq!("necessist", bin_name);
 
         let env_add_trycmd = document
             .as_table()

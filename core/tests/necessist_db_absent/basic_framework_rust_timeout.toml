@@ -1,4 +1,4 @@
-args = ["--root=examples/basic", "--dump"]
+args = ["--no-sqlite", "--root=examples/basic", "--framework=rust", "--timeout=5"]
 stderr = ""
 
 [bin]

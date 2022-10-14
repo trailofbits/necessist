@@ -1,0 +1,4 @@
+error: 'z' isn't a valid value for '--framework <FRAMEWORK>'
+  [possible values: auto, foundry, hardhat-ts, rust]
+
+For more information try '--help'

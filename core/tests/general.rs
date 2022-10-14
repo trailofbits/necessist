@@ -1,16 +1,16 @@
 use assert_cmd::prelude::*;
 use fs_extra::dir::{copy, CopyOptions};
-use necessist::util;
+use necessist_core::util;
 use predicates::prelude::*;
 use std::{path::PathBuf, process::Command};
 use tempfile::tempdir;
 
-const ROOT: &str = "examples/basic";
+const ROOT: &str = "../examples/basic";
 const TIMEOUT: &str = "5";
 
 #[test]
 fn necessist_db_can_be_moved() {
-    Command::cargo_bin(env!("CARGO_PKG_NAME"))
+    Command::cargo_bin("necessist")
         .unwrap()
         .args(&["--root", ROOT, "--timeout", TIMEOUT])
         .assert()
@@ -32,7 +32,7 @@ fn necessist_db_can_be_moved() {
     )
     .unwrap();
 
-    Command::cargo_bin(env!("CARGO_PKG_NAME"))
+    Command::cargo_bin("necessist")
         .unwrap()
         .args(&["--root", &tempdir.path().to_string_lossy(), "--resume"])
         .assert()

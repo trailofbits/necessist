@@ -8,8 +8,8 @@ use heck::ToKebabCase;
 use lazy_static::lazy_static;
 use std::{collections::BTreeSet, sync::Mutex};
 
-#[cfg_attr(feature = "clap", derive(clap::ValueEnum))]
 #[derive(Clone, Copy, Debug, Eq, Ord, PartialEq, PartialOrd)]
+#[cfg_attr(feature = "clap", derive(clap::ValueEnum))]
 #[non_exhaustive]
 #[remain::sorted]
 pub enum Warning {
