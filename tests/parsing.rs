@@ -4,7 +4,7 @@ use std::{
     fs::write,
     io::{stderr, BufRead, BufReader, Write},
 };
-use subprocess::{Exec, NullFile, Redirection};
+use subprocess::{Exec, Redirection};
 use tempfile::tempdir;
 
 const TESTS: &[(bool, &str, Option<&str>, Option<&str>)] = &[
@@ -106,7 +106,7 @@ fn run_test(url: &str, subdir: Option<&str>, toml: Option<&str>) {
             let mut exec = Exec::cmd("target/debug/necessist");
             exec = exec.args(&["--no-sqlite", "--root", &root.to_string_lossy()]);
             exec = exec.stdout(Redirection::Pipe);
-            exec = exec.stderr(NullFile);
+            exec = exec.stderr(Redirection::Merge);
 
             let mut popen = exec.popen().unwrap();
             let stdout = popen.stdout.as_ref().unwrap();
