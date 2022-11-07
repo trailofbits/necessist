@@ -220,9 +220,9 @@ dependencies = [
 
 [[package]]
 name = "concolor"
-version = "0.0.8"
+version = "0.0.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "015267563b1df20adccdd00cb05257b1dfbea70a04928e9cf88ffb850c1a40af"
+checksum = "b90f9dcd9490a97db91a85ccd79e38a87e14323f0bb824659ee3274e9143ba37"
 dependencies = [
  "atty",
  "bitflags",
@@ -231,9 +231,9 @@ dependencies = [
 
 [[package]]
 name = "concolor-query"
-version = "0.0.5"
+version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d6417fe6fc03a8b533fd2177742eeb39a90c7233eedec7bac96d4d6b69a09449"
+checksum = "82a90734b3d5dcf656e7624cca6bce9c3a90ee11f900e80141a7427ccfb3d317"
 
 [[package]]
 name = "console"
@@ -1400,14 +1400,15 @@ checksum = "a507befe795404456341dfab10cef66ead4c041f62b8b11bbb92bffe5d0953e0"
 
 [[package]]
 name = "snapbox"
-version = "0.4.0"
+version = "0.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f98a96656eecd1621c5830831b48eb6903a9f86aaeb61b9f358a9bd462414ddd"
+checksum = "827c00e91b15e2674d8a5270bae91f898693cbf9561cbb58d8eaa31974597293"
 dependencies = [
  "concolor",
  "content_inspector",
  "dunce",
  "filetime",
+ "libc",
  "normalize-line-endings",
  "os_pipe",
  "similar",
@@ -1415,6 +1416,7 @@ dependencies = [
  "tempfile",
  "wait-timeout",
  "walkdir",
+ "winapi",
  "yansi",
 ]
 
@@ -1874,9 +1876,9 @@ dependencies = [
 
 [[package]]
 name = "trycmd"
-version = "0.14.1"
+version = "0.14.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7ea164949c690a45580a50ebb8b4d5e3f907b134d26009dbe45878225ebb0374"
+checksum = "3b3e659433fd96381bbbd80a5d2a664e930444e222ea28e434fd4f6810525101"
 dependencies = [
  "glob",
  "humantime",
