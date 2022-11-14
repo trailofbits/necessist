@@ -115,6 +115,10 @@ fn run_test(url: &str, subdir: Option<&str>, toml: Option<&str>) {
                 .lines()
                 .find_map(|line| {
                     let line = line.unwrap();
+
+                    #[allow(clippy::explicit_write)]
+                    writeln!(stderr(), "{}", line).unwrap();
+
                     match line.as_ref() {
                         "Warning: Configuration files are experimental"
                         | "Silence this warning with: --allow config-files-experimental" => None,
@@ -125,9 +129,6 @@ fn run_test(url: &str, subdir: Option<&str>, toml: Option<&str>) {
             popen.kill().unwrap_or_default();
             line
         };
-
-        #[allow(clippy::explicit_write)]
-        writeln!(stderr(), "{}", line).unwrap();
 
         let captures = LINE_RE.captures(&line).unwrap();
         assert!(captures.len() == 3);
