@@ -12,7 +12,7 @@ const TIMEOUT: &str = "5";
 fn necessist_db_can_be_moved() {
     Command::cargo_bin("necessist")
         .unwrap()
-        .args(&["--root", ROOT, "--timeout", TIMEOUT])
+        .args(["--root", ROOT, "--timeout", TIMEOUT])
         .assert()
         .success();
 
@@ -34,7 +34,7 @@ fn necessist_db_can_be_moved() {
 
     Command::cargo_bin("necessist")
         .unwrap()
-        .args(&["--root", &tempdir.path().to_string_lossy(), "--resume"])
+        .args(["--root", &tempdir.path().to_string_lossy(), "--resume"])
         .assert()
         .success()
         .stdout(predicate::eq("4 candidates in 1 test file\n"));

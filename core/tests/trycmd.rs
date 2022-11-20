@@ -18,7 +18,7 @@ const TIMEOUT: &str = "5";
 fn trycmd() {
     // smoelius: Ensure `necessist` binary is up to date.
     Command::new("cargo")
-        .args(&["build", "--workspace"])
+        .args(["build", "--workspace"])
         .assert()
         .success();
 
@@ -26,7 +26,7 @@ fn trycmd() {
 
     Command::cargo_bin("necessist")
         .unwrap()
-        .args(&["--root", ROOT, "--timeout", TIMEOUT])
+        .args(["--root", ROOT, "--timeout", TIMEOUT])
         .assert()
         .success();
 

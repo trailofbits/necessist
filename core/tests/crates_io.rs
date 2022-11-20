@@ -5,13 +5,13 @@ use predicates::prelude::*;
 fn crates_io() {
     Command::new("cargo")
         .current_dir("../crates_io")
-        .args(&["build"])
+        .args(["build"])
         .assert()
         .success();
 
     Command::new("cargo")
         .current_dir("../crates_io")
-        .args(&["run", "--", "--help"])
+        .args(["run", "--", "--help"])
         .assert()
         .success()
         .stdout(predicate::str::contains(

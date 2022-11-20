@@ -7,7 +7,7 @@ const TIMEOUT: &str = "5";
 #[ignore]
 fn dogfood() {
     if Command::new("git")
-        .args(&["diff", "--exit-code"])
+        .args(["diff", "--exit-code"])
         .assert()
         .try_success()
         .is_err()
@@ -19,7 +19,7 @@ fn dogfood() {
 
     Command::cargo_bin("necessist")
         .unwrap()
-        .args(&["--timeout", TIMEOUT, "--verbose"])
+        .args(["--timeout", TIMEOUT, "--verbose"])
         .assert()
         .success();
 }
