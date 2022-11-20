@@ -113,15 +113,14 @@ By default, Necessist outputs only when tests pass. Passing `--verbose` causes N
 - `unimplemented`
 - `unreachable`
 
-#### Ignored methods
+#### Ignored methods\*
 
 - `as_bytes`
-- `as_bytes_mut`
 - `as_mut`
-- `as_mut_ptr`
+- `as_mut_slice`
+- `as_mut_str`
 - `as_os_str`
 - `as_path`
-- `as_ptr`
 - `as_ref`
 - `as_slice`
 - `as_str`
@@ -131,24 +130,38 @@ By default, Necessist outputs only when tests pass. Passing `--verbose` causes N
 - `cloned`
 - `copied`
 - `deref`
-- `into`
+- `deref_mut`
+- `into_boxed_bytes`
+- `into_boxed_os_str`
+- `into_boxed_path`
+- `into_boxed_slice`
+- `into_boxed_str`
+- `into_bytes`
 - `into_os_string`
 - `into_owned`
 - `into_path_buf`
 - `into_string`
 - `into_vec`
-- `success` (e.g. [`assert_cmd::assert::Assert::success`])
+- `iter`
+- `iter_mut`
+- `success`
 - `to_os_string`
 - `to_owned`
 - `to_path_buf`
-- `to_str`
 - `to_string`
-- `to_string_lossy`
 - `to_vec`
-- `try_into`
 - `unwrap`
 - `unwrap_err`
-- `unwrap_or_default`
+
+\* This list is essentially the watched trait and inherent methods of Dylint's [`unnecessary_conversion_for_trait`] lint, with the following additions:
+
+- `clone` (e.g. [`std::clone::Clone::clone`])
+- `cloned` (e.g. [`std::iter::Iterator::cloned`])
+- `copied` (e.g. [`std::iter::Iterator::copied`])
+- `into_owned` (e.g. [`std::borrow::Cow::into_owned`])
+- `success` (e.g. [`assert_cmd::assert::Assert::success`])
+- `unwrap` (e.g. [`std::option::Option::unwrap`])
+- `unwrap_err` (e.g. [`std::result::Result::unwrap_err`])
 
 ## Configuration files (experimental)
 
@@ -177,4 +190,11 @@ A configuration file allows one to tailor Necessist's behavior with respect to a
 [foundry]: https://github.com/foundry-rs/foundry
 [github.com]: https://github.com/trailofbits/necessist
 [preprint]: https://agroce.github.io/asej18.pdf
+[`std::borrow::cow::into_owned`]: https://doc.rust-lang.org/std/borrow/enum.Cow.html#method.into_owned
+[`std::clone::clone::clone`]: https://doc.rust-lang.org/std/clone/trait.Clone.html#tymethod.clone
+[`std::iter::iterator::cloned`]: https://doc.rust-lang.org/std/iter/trait.Iterator.html#tymethod.cloned
+[`std::iter::iterator::copied`]: https://doc.rust-lang.org/std/iter/trait.Iterator.html#tymethod.copied
+[`std::option::option::unwrap`]: https://doc.rust-lang.org/std/option/enum.Option.html#method.unwrap
+[`std::result::result::unwrap_err`]: https://doc.rust-lang.org/std/result/enum.Result.html#method.unwrap_err
 [toml]: https://toml.io/en/
+[`unnecessary_conversion_for_trait`]: https://github.com/trailofbits/dylint/tree/master/examples/restriction/unnecessary_conversion_for_trait

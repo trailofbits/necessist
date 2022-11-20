@@ -284,12 +284,11 @@ fn is_ignored_macro(config: &Config, stmt: &Stmt) -> bool {
 
 const IGNORED_METHODS: &[&str] = &[
     "as_bytes",
-    "as_bytes_mut",
     "as_mut",
-    "as_mut_ptr",
+    "as_mut_slice",
+    "as_mut_str",
     "as_os_str",
     "as_path",
-    "as_ptr",
     "as_ref",
     "as_slice",
     "as_str",
@@ -299,24 +298,28 @@ const IGNORED_METHODS: &[&str] = &[
     "cloned",
     "copied",
     "deref",
-    "into",
+    "deref_mut",
+    "into_boxed_bytes",
+    "into_boxed_os_str",
+    "into_boxed_path",
+    "into_boxed_slice",
+    "into_boxed_str",
+    "into_bytes",
     "into_os_string",
     "into_owned",
     "into_path_buf",
     "into_string",
     "into_vec",
+    "iter",
+    "iter_mut",
     "success",
     "to_os_string",
     "to_owned",
     "to_path_buf",
-    "to_str",
     "to_string",
-    "to_string_lossy",
     "to_vec",
-    "try_into",
     "unwrap",
     "unwrap_err",
-    "unwrap_or_default",
 ];
 
 fn is_ignored_method(method: &Ident, args: &Punctuated<Expr, Token![,]>) -> bool {
@@ -338,17 +341,41 @@ impl ToInternalSpan for proc_macro2::Span {
 
 #[cfg(test)]
 mod test {
+    #![allow(clippy::panic)]
+
     use super::{IGNORED_MACROS, IGNORED_METHODS};
+    use curl::easy::Easy;
+    use if_chain::if_chain;
     use std::fs::read_to_string;
+    use syn::{parse_file, Expr, ExprArray, ExprLit, ExprReference, Item, ItemConst, Lit};
+
+    const UNNECESSARY_CONVERSION_FOR_TRAIT_URL: &str = "https://raw.githubusercontent.com/trailofbits/dylint/master/examples/restriction/unnecessary_conversion_for_trait/src/lib.rs";
+
+    const REMOVED_METHODS: &[&str] = &["path", "new"];
+
+    const ADDED_METHODS: &[&str] = &[
+        "clone",
+        "cloned",
+        "copied",
+        "into_owned",
+        "success",
+        "unwrap",
+        "unwrap_err",
+    ];
 
     #[test]
     fn readme_contains_ignored_macros() {
-        assert!(readme_contains_code_unordered_list(IGNORED_MACROS));
+        assert!(readme_contains_code_bulleted_list(IGNORED_MACROS));
     }
 
     #[test]
     fn readme_contains_ignored_methods() {
-        assert!(readme_contains_code_unordered_list(IGNORED_METHODS));
+        assert!(readme_contains_code_bulleted_list(IGNORED_METHODS));
+    }
+
+    #[test]
+    fn readme_contains_ignored_method_additions() {
+        assert!(readme_contains_code_bulleted_list(ADDED_METHODS));
     }
 
     #[test]
@@ -361,8 +388,73 @@ mod test {
         assert_eq!(sort(IGNORED_METHODS), IGNORED_METHODS);
     }
 
+    #[test]
+    fn added_methods_are_sorted() {
+        assert_eq!(sort(ADDED_METHODS), ADDED_METHODS);
+    }
+
+    #[test]
+    fn ignored_methods_match_unnecessary_conversion_for_trait_watched_methods() {
+        let mut data = Vec::new();
+        let mut handle = Easy::new();
+        handle.url(UNNECESSARY_CONVERSION_FOR_TRAIT_URL).unwrap();
+        {
+            let mut transfer = handle.transfer();
+            transfer
+                .write_function(|new_data| {
+                    data.extend_from_slice(new_data);
+                    Ok(new_data.len())
+                })
+                .unwrap();
+            transfer.perform().unwrap();
+        }
+        let contents = std::str::from_utf8(&data).unwrap();
+        let file =
+            parse_file(contents).unwrap_or_else(|_| panic!("Failed to parse: {:?}", contents));
+        let mut watched_methods = file
+            .items
+            .into_iter()
+            .flat_map(|item| {
+                let elems = if_chain! {
+                    if let Item::Const(ItemConst { ident, expr, .. }) = item;
+                    if ["WATCHED_TRAITS", "WATCHED_INHERENTS"]
+                        .contains(&ident.to_string().as_str());
+                    if let Expr::Reference(ExprReference { expr, .. }) = *expr;
+                    if let Expr::Array(ExprArray { elems, .. }) = *expr;
+                    then {
+                        elems.iter().cloned().collect::<Vec<_>>()
+                    } else {
+                        Vec::new()
+                    }
+                };
+                elems
+                    .into_iter()
+                    .filter_map(|expr| {
+                        if_chain! {
+                            if let Expr::Reference(ExprReference { expr, .. }) = expr;
+                            if let Expr::Array(ExprArray { elems, .. }) = *expr;
+                            if let Some(Expr::Lit(ExprLit { lit, .. })) = elems.last();
+                            if let Lit::Str(lit_str) = lit;
+                            let s = lit_str.value();
+                            if !REMOVED_METHODS.contains(&s.as_str());
+                            then {
+                                Some(s)
+                            } else {
+                                None
+                            }
+                        }
+                    })
+                    .collect::<Vec<_>>()
+            })
+            .chain(ADDED_METHODS.iter().map(ToString::to_string))
+            .collect::<Vec<_>>();
+        watched_methods.sort_unstable();
+        watched_methods.dedup();
+        assert_eq!(sort(IGNORED_METHODS), watched_methods);
+    }
+
     #[allow(clippy::unwrap_used)]
-    fn readme_contains_code_unordered_list(items: &[&str]) -> bool {
+    fn readme_contains_code_bulleted_list(items: &[&str]) -> bool {
         let n = items.len();
         let readme = read_to_string("../README.md").unwrap();
         readme.lines().collect::<Vec<_>>().windows(n).any(|window| {
