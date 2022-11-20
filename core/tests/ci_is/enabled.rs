@@ -11,7 +11,7 @@ use tempfile::tempdir;
 #[test]
 fn clippy() {
     Command::new("cargo")
-        .args(&[
+        .args([
             "clippy",
             "--all-features",
             "--all-targets",
@@ -28,7 +28,7 @@ fn clippy() {
 #[test]
 fn dylint() {
     Command::new("cargo")
-        .args(&["dylint", "--all", "--", "--tests"])
+        .args(["dylint", "--all", "--", "--tests"])
         .env("DYLINT_RUSTFLAGS", "--deny warnings")
         .assert()
         .success();
@@ -64,7 +64,7 @@ fn markdown_link_check() {
     let tempdir = tempdir().unwrap();
 
     Command::new("npm")
-        .args(&["install", "markdown-link-check"])
+        .args(["install", "markdown-link-check"])
         .current_dir(tempdir.path())
         .assert()
         .success();
@@ -79,7 +79,7 @@ fn markdown_link_check() {
         .join("README.md");
 
     Command::new("npx")
-        .args(&[
+        .args([
             "markdown-link-check",
             "--config",
             &config.to_string_lossy(),
@@ -95,13 +95,13 @@ fn prettier() {
     let tempdir = tempdir().unwrap();
 
     Command::new("npm")
-        .args(&["install", "prettier"])
+        .args(["install", "prettier"])
         .current_dir(tempdir.path())
         .assert()
         .success();
 
     Command::new("npx")
-        .args(&[
+        .args([
             "prettier",
             "--check",
             &format!("{}/../**/*.json", env!("CARGO_MANIFEST_DIR")),
@@ -121,7 +121,7 @@ fn readme_contains_usage() {
 
     // smoelius: Ensure `necessist` binary is up to date.
     Command::new("cargo")
-        .args(&["build", "--workspace"])
+        .args(["build", "--workspace"])
         .assert()
         .success();
 
@@ -141,7 +141,7 @@ fn readme_contains_usage() {
 #[test]
 fn sort() {
     Command::new("cargo")
-        .args(&["sort", "--check", "--grouped"])
+        .args(["sort", "--check", "--grouped"])
         .assert()
         .success();
 }
@@ -170,7 +170,7 @@ fn preserves_cleanliness(f: impl FnOnce()) {
 
 fn dirty() -> bool {
     Command::new("git")
-        .args(&["diff", "--exit-code"])
+        .args(["diff", "--exit-code"])
         .assert()
         .try_success()
         .is_err()
