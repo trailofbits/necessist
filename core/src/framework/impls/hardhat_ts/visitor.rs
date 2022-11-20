@@ -72,7 +72,11 @@ impl<'config> Visit for Visitor<'config> {
         if_chain! {
             if self.in_it_call_expr;
             if let Some(MethodCall {
-                span, obj, path, args, ..
+                span,
+                obj,
+                path,
+                args,
+                ..
             }) = is_method_call(expr);
             if !is_ignored_method(&path, args);
             then {
