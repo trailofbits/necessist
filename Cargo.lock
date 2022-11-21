@@ -384,9 +384,9 @@ dependencies = [
 
 [[package]]
 name = "clap"
-version = "4.0.23"
+version = "4.0.26"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0eb41c13df48950b20eb4cd0eefa618819469df1bffc49d11e8487c4ba0037e5"
+checksum = "2148adefda54e14492fb9bddcc600b4344c5d1a3123bd666dcb939c6f0e0e57e"
 dependencies = [
  "atty",
  "bitflags",
@@ -1902,7 +1902,7 @@ name = "necessist"
 version = "0.1.0-beta.4"
 dependencies = [
  "anyhow",
- "clap 4.0.23",
+ "clap 4.0.26",
  "env_logger",
  "forge-fmt",
  "heck",
@@ -1923,7 +1923,7 @@ dependencies = [
  "assert_cmd",
  "atty",
  "cargo_metadata",
- "clap 4.0.23",
+ "clap 4.0.26",
  "ctrlc",
  "diesel",
  "fs_extra",
