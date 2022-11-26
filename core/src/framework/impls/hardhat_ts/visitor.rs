@@ -27,7 +27,7 @@ pub(super) fn visit(
     visitor.spans
 }
 
-pub struct Visitor<'config> {
+struct Visitor<'config> {
     config: &'config Config,
     source_map: Rc<SourceMap>,
     source_file: SourceFile,
