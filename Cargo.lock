@@ -1994,12 +1994,15 @@ dependencies = [
  "env_logger",
  "forge-fmt",
  "heck",
+ "lazy_static",
  "libc",
  "log",
  "necessist-core",
+ "regex",
  "remain",
  "strum",
  "subprocess",
+ "tempfile",
 ]
 
 [[package]]
