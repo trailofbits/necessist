@@ -139,8 +139,9 @@ pub(crate) fn insert(sqlite: &mut Sqlite, removal: &crate::Removal) -> Result<()
     };
 
     insert_into(removal::table)
-        .values(removal)
-        .execute(&mut sqlite.connection)?;
+        .values(&removal)
+        .execute(&mut sqlite.connection)
+        .with_context(|| format!("Failed to insert {:?}", removal))?;
 
     Ok(())
 }
