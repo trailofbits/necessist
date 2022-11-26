@@ -24,5 +24,10 @@ subprocess = "0.2"
 # Foundry
 forge-fmt = { version = "0.2", git = "https://github.com/foundry-rs/foundry" }
 
+[dev-dependencies]
+lazy_static = "1.4"
+regex = "1.7"
+tempfile = "3.3"
+
 [target.'cfg(unix)'.dependencies]
 libc = "0.2"
