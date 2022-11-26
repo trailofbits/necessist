@@ -345,7 +345,6 @@ mod test {
     #![allow(clippy::panic)]
 
     use super::{IGNORED_MACROS, IGNORED_METHODS};
-    use curl::easy::Easy;
     use if_chain::if_chain;
     use std::fs::read_to_string;
     use syn::{parse_file, Expr, ExprArray, ExprLit, ExprReference, Item, ItemConst, Lit};
@@ -396,19 +395,7 @@ mod test {
 
     #[test]
     fn ignored_methods_match_unnecessary_conversion_for_trait_watched_methods() {
-        let mut data = Vec::new();
-        let mut handle = Easy::new();
-        handle.url(UNNECESSARY_CONVERSION_FOR_TRAIT_URL).unwrap();
-        {
-            let mut transfer = handle.transfer();
-            transfer
-                .write_function(|new_data| {
-                    data.extend_from_slice(new_data);
-                    Ok(new_data.len())
-                })
-                .unwrap();
-            transfer.perform().unwrap();
-        }
+        let data = get(UNNECESSARY_CONVERSION_FOR_TRAIT_URL).unwrap();
         let contents = std::str::from_utf8(&data).unwrap();
         let file =
             parse_file(contents).unwrap_or_else(|_| panic!("Failed to parse: {:?}", contents));
@@ -470,5 +457,20 @@ mod test {
         let mut items = items.to_vec();
         items.sort_unstable();
         items
+    }
+
+    fn get(url: &str) -> Result<Vec<u8>, curl::Error> {
+        let mut data = Vec::new();
+        let mut handle = curl::easy::Easy::new();
+        handle.url(url)?;
+        {
+            let mut transfer = handle.transfer();
+            transfer.write_function(|new_data| {
+                data.extend_from_slice(new_data);
+                Ok(new_data.len())
+            })?;
+            transfer.perform()?;
+        }
+        Ok(data)
     }
 }
