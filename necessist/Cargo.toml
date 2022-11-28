@@ -14,7 +14,7 @@ necessist-core = { version = "0.1.0-beta", path = "../core", features = ["clap"]
 
 anyhow = "1.0"
 clap = { version = "4.0", features = ["cargo", "derive"] }
-env_logger = "0.9"
+env_logger = "0.10"
 heck = "0.4"
 log = "0.4"
 remain = "0.2"
