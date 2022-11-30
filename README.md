@@ -144,6 +144,7 @@ By default, Necessist outputs only when tests pass. Passing `--verbose` causes N
 - `into_vec`
 - `iter`
 - `iter_mut`
+- `leak`
 - `success`
 - `to_os_string`
 - `to_owned`
