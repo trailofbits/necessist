@@ -31,7 +31,7 @@ mod rewriter;
 use rewriter::Rewriter;
 
 mod source_file;
-use source_file::SourceFile;
+pub use source_file::SourceFile;
 
 mod span;
 pub use span::Span;

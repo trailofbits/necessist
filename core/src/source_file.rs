@@ -12,6 +12,7 @@ pub struct SourceFile {
 }
 
 impl SourceFile {
+    #[must_use]
     pub fn new(root: Rc<PathBuf>, path: Rc<PathBuf>) -> Self {
         assert!(root.is_absolute());
         assert!(path.starts_with(&*root));
