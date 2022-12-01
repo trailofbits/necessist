@@ -79,10 +79,30 @@ By default, Necessist outputs only when tests pass. Passing `--verbose` causes N
 
 ## Supported frameworks
 
+- [Foundry](#foundry)
 - [Hardhat TS](#hardhat-ts)
 - [Rust](#rust)
 
 ## Supported framework specifics
+
+### Foundry
+
+In addition to the below, the Foundry framework ignores:
+
+- the last statement in a function body
+- a statement immediately following a use of `vm.prank` or any form of `vm.expect` (e.g., `vm.expectRevert`)
+
+#### Ignored functions
+
+- Anything beginning with `assert` (e.g., `assertEq`)
+
+#### Ignored methods
+
+- `expectEmit`
+- `expectRevert`
+- `prank`
+- `startPrank`
+- `stopPrank`
 
 ### Hardhat TS
 
