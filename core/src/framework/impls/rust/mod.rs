@@ -1,5 +1,5 @@
 use super::super::{Interface, Postprocess};
-use crate::{source_warn, util, warn_once, Config, LightContext, Span, TryInsert, Warning};
+use crate::{source_warn, util, warn, Config, LightContext, Span, TryInsert, WarnFlags, Warning};
 use anyhow::{anyhow, ensure, Context, Result};
 use cargo_metadata::Package;
 use log::debug;
@@ -11,7 +11,6 @@ use std::{
     path::{Path, PathBuf},
     process::{Command, Stdio},
     rc::Rc,
-    sync::atomic::{AtomicBool, Ordering},
 };
 use subprocess::{Exec, NullFile, Redirection};
 use syn::parse_file;
@@ -22,14 +21,6 @@ use parsing::{cached_test_file_fs_module_path, cached_test_file_package, Parsing
 
 mod visitor;
 use visitor::visit;
-
-const BUG_MSG: &str = "
-
-This may indicate a bug in Necessist. Consider opening an issue at: \
-https://github.com/trailofbits/necessist/issues
-";
-
-static BUG_MSG_SHOWN: AtomicBool = AtomicBool::new(false);
 
 #[derive(Debug)]
 pub struct Rust {
@@ -182,12 +173,13 @@ impl Interface for Rust {
                 if running_1_test {
                     return Ok(true);
                 }
-                let mut msg = format!("Failed to run test `{}`", test);
-                if !BUG_MSG_SHOWN.load(Ordering::SeqCst) {
-                    BUG_MSG_SHOWN.store(true, Ordering::SeqCst);
-                    msg += BUG_MSG;
-                }
-                source_warn(context, Warning::RunTestFailed, &span, &msg)?;
+                source_warn(
+                    context,
+                    Warning::RunTestFailed,
+                    &span,
+                    &format!("Failed to run test `{}`", test),
+                    WarnFlags::empty(),
+                )?;
                 Ok(false)
             })),
         )))
@@ -196,10 +188,11 @@ impl Interface for Rust {
 
 fn check_config(context: &LightContext, config: &Config) -> Result<()> {
     if !config.ignored_functions.is_empty() {
-        warn_once(
+        warn(
             context,
             Warning::IgnoredFunctionsUnsupported,
             "The rust framework does not currently support the `ignored_functions` configuration",
+            WarnFlags::ONCE,
         )?;
     }
 

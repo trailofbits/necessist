@@ -2013,6 +2013,7 @@ dependencies = [
  "anyhow",
  "assert_cmd",
  "atty",
+ "bitflags",
  "cargo_metadata",
  "clap 4.0.27",
  "ctrlc",

@@ -1,10 +1,9 @@
 use super::{cached_test_file_fs_module_path, Parsing, Rust};
-use crate::{warn, Config, LightContext, SourceFile, Span, ToInternalSpan, Warning};
+use crate::{warn, Config, LightContext, SourceFile, Span, ToInternalSpan, WarnFlags, Warning};
 use anyhow::{Error, Result};
 use std::{
     path::{Path, PathBuf, StripPrefixError},
     rc::Rc,
-    sync::atomic::{AtomicBool, Ordering},
 };
 use syn::{
     punctuated::Punctuated,
@@ -12,8 +11,6 @@ use syn::{
     visit::{visit_expr_method_call, visit_item_fn, visit_item_mod, visit_stmt, Visit},
     Expr, ExprMacro, ExprMethodCall, File, Ident, ItemFn, ItemMod, Macro, PathSegment, Stmt, Token,
 };
-
-static BUG_MSG_SHOWN: AtomicBool = AtomicBool::new(false);
 
 #[cfg_attr(
     dylint_lib = "non_local_effect_before_error_return",
@@ -182,12 +179,12 @@ where
                 Ok(test_path) => test_path,
                 Err(error) => {
                     if error.downcast_ref::<StripPrefixError>().is_some() {
-                        let mut msg = format!("Failed to determine module path: {}", error);
-                        if !BUG_MSG_SHOWN.load(Ordering::SeqCst) {
-                            BUG_MSG_SHOWN.store(true, Ordering::SeqCst);
-                            msg += super::BUG_MSG;
-                        }
-                        warn(self.context, Warning::ModulePathUnknown, &msg)?;
+                        warn(
+                            self.context,
+                            Warning::ModulePathUnknown,
+                            &format!("Failed to determine module path: {}", error),
+                            WarnFlags::empty(),
+                        )?;
                     }
                     return Ok(());
                 }

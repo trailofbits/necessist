@@ -4,9 +4,10 @@ use ansi_term::{
     Style,
 };
 use anyhow::{bail, Result};
+use bitflags::bitflags;
 use heck::ToKebabCase;
 use lazy_static::lazy_static;
-use std::{collections::BTreeSet, sync::Mutex};
+use std::{collections::BTreeMap, sync::Mutex};
 
 #[derive(Clone, Copy, Debug, Eq, Ord, PartialEq, PartialOrd)]
 #[cfg_attr(feature = "clap", derive(clap::ValueEnum))]
@@ -29,26 +30,43 @@ impl std::fmt::Display for Warning {
     }
 }
 
-pub(crate) fn source_warn(
+bitflags! {
+    pub struct Flags: u8 {
+        const ONCE = 1 << 0;
+    }
+}
+
+#[allow(clippy::module_name_repetitions)]
+pub fn source_warn(
     context: &LightContext,
     warning: Warning,
     source: &dyn ToConsoleString,
     msg: &str,
+    flags: Flags,
 ) -> Result<()> {
-    warn_internal(context, warning, Some(source), msg, false)
+    warn_internal(context, warning, Some(source), msg, flags)
 }
 
-pub(crate) fn warn(context: &LightContext, warning: Warning, msg: &str) -> Result<()> {
-    warn_internal(context, warning, None, msg, false)
+pub fn warn(context: &LightContext, warning: Warning, msg: &str, flags: Flags) -> Result<()> {
+    warn_internal(context, warning, None, msg, flags)
 }
 
-pub(crate) fn warn_once(context: &LightContext, warning: Warning, msg: &str) -> Result<()> {
-    warn_internal(context, warning, None, msg, true)
+const BUG_MSG: &str = "
+
+This may indicate a bug in Necessist. Consider opening an issue at: \
+https://github.com/trailofbits/necessist/issues
+";
+
+bitflags! {
+    struct State: u8 {
+        const ALLOW_MSG_EMITTED = 1 << 0;
+        const BUG_MSG_EMITTED = 1 << 1;
+        const WARNING_EMITTED = 1 << 2;
+    }
 }
 
 lazy_static! {
-    static ref WARNINGS_SHOWN: Mutex<BTreeSet<Warning>> = Mutex::new(BTreeSet::new());
-    static ref ALLOW_MSG_SHOWN: Mutex<BTreeSet<Warning>> = Mutex::new(BTreeSet::new());
+    static ref WARNING_STATE_MAP: Mutex<BTreeMap<Warning, State>> = Mutex::new(BTreeMap::new());
 }
 
 fn warn_internal(
@@ -56,12 +74,28 @@ fn warn_internal(
     warning: Warning,
     source: Option<&dyn ToConsoleString>,
     msg: &str,
-    once: bool,
+    flags: Flags,
 ) -> Result<()> {
     assert_ne!(warning, Warning::All);
 
+    #[allow(clippy::unwrap_used)]
+    let mut warning_state_map = WARNING_STATE_MAP.lock().unwrap();
+
+    let state = warning_state_map
+        .entry(warning)
+        .or_insert_with(State::empty);
+
+    // smoelius: Append `BUG_MSG` to `msg` in case we have to `bail!`.
+    let msg = msg.to_owned()
+        + if may_be_bug(warning) && !state.contains(State::BUG_MSG_EMITTED) {
+            state.insert(State::BUG_MSG_EMITTED);
+            BUG_MSG
+        } else {
+            ""
+        };
+
     if context.opts.deny.contains(&Warning::All) || context.opts.deny.contains(&warning) {
-        bail!(msg.to_owned());
+        bail!(msg);
     }
 
     if context.opts.quiet
@@ -71,28 +105,19 @@ fn warn_internal(
         return Ok(());
     }
 
-    if once {
-        #[allow(clippy::unwrap_used)]
-        let mut warnings_shown = WARNINGS_SHOWN.lock().unwrap();
-        if warnings_shown.contains(&warning) {
-            return Ok(());
-        }
-        warnings_shown.insert(warning);
+    if flags.contains(Flags::ONCE) && state.contains(State::WARNING_EMITTED) {
+        return Ok(());
     }
 
-    let allow_msg = {
-        #[allow(clippy::unwrap_used)]
-        let mut allow_msg_shown = ALLOW_MSG_SHOWN.lock().unwrap();
-        if allow_msg_shown.contains(&warning) {
-            String::new()
-        } else {
-            allow_msg_shown.insert(warning);
-            format!(
-                "
+    let allow_msg = if state.contains(State::ALLOW_MSG_EMITTED) {
+        String::new()
+    } else {
+        state.insert(State::ALLOW_MSG_EMITTED);
+        format!(
+            "
 Silence this warning with: --allow {}",
-                warning
-            )
-        }
+            warning
+        )
     };
 
     (context.println)(&format!(
@@ -129,4 +154,16 @@ pub(crate) fn note(context: &LightContext, msg: &str) {
         .paint("Note"),
         msg
     ));
+}
+
+fn may_be_bug(warning: Warning) -> bool {
+    match warning {
+        Warning::All => unreachable!(),
+        Warning::ConfigFilesExperimental
+        | Warning::DryRunFailed
+        | Warning::FilesChanged
+        | Warning::IgnoredFunctionsUnsupported
+        | Warning::IgnoredMacrosUnsupported => false,
+        Warning::ModulePathUnknown | Warning::RunTestFailed => true,
+    }
 }
