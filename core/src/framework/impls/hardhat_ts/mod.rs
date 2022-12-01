@@ -1,5 +1,5 @@
 use super::super::{Interface, Postprocess};
-use crate::{util, warn_once, Config, LightContext, Span, Warning};
+use crate::{util, warn, Config, LightContext, Span, WarnFlags, Warning};
 use anyhow::{anyhow, ensure, Context, Result};
 use log::debug;
 use std::{
@@ -141,10 +141,11 @@ impl Interface for HardhatTs {
 
 fn check_config(context: &LightContext, config: &Config) -> Result<()> {
     if !config.ignored_macros.is_empty() {
-        warn_once(
+        warn(
             context,
             Warning::IgnoredMacrosUnsupported,
             "The hardhat-ts framework does not support the `ignored_macros` configuration",
+            WarnFlags::ONCE,
         )?;
     }
 

@@ -48,5 +48,5 @@ use try_insert::TryInsert;
 pub mod util;
 
 mod warn;
-pub use warn::Warning;
-use warn::{note, source_warn, warn, warn_once};
+use warn::note;
+pub use warn::{source_warn, warn, Flags as WarnFlags, Warning};

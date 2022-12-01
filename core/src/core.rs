@@ -1,7 +1,7 @@
 use crate::{
     framework::{self, ToImplementation},
-    note, source_warn, sqlite, util, warn, warn_once, Backup, Outcome, Rewriter, SourceFile, Span,
-    ToConsoleString, Warning,
+    note, source_warn, sqlite, util, warn, Backup, Outcome, Rewriter, SourceFile, Span,
+    ToConsoleString, WarnFlags, Warning,
 };
 use ansi_term::Style;
 use anyhow::{anyhow, bail, ensure, Result};
@@ -256,6 +256,7 @@ fn run(
                     Warning::DryRunFailed,
                     &test_file,
                     &format!("dry run failed: {}", error),
+                    WarnFlags::empty(),
                 )?;
             }
 
@@ -338,6 +339,7 @@ fn default_config(context: &LightContext, root: &Path) -> Result<()> {
         context,
         Warning::ConfigFilesExperimental,
         "Configuration files are experimental",
+        WarnFlags::empty(),
     )?;
 
     let toml = toml::to_string(&Config::default())?;
@@ -356,6 +358,7 @@ fn read_config(context: &LightContext, root: &Path) -> Result<Config> {
         context,
         Warning::ConfigFilesExperimental,
         "Configuration files are experimental",
+        WarnFlags::empty(),
     )?;
 
     let contents = read_to_string(path)?;
@@ -443,10 +446,11 @@ where
 
 fn update_progress(context: &Context, mismatch: bool, n: usize) -> Result<()> {
     if mismatch {
-        warn_once(
+        warn(
             &context.light(),
             Warning::FilesChanged,
             "Configuration or test files have changed since necessist.db was created",
+            WarnFlags::ONCE,
         )?;
     }
 
