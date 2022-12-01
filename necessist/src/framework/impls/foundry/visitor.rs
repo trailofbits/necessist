@@ -230,28 +230,8 @@ fn is_ignored_function_call_statement(stmt: &Statement) -> bool {
     }
 }
 
-const IGNORED_FUNCTIONS: &[&str] = &[
-    "assertEq",
-    "assertEq0",
-    "assertEq32",
-    "assertEq8",
-    "assertEqDecimal",
-    "assertFalse",
-    "assertGe",
-    "assertGeDecimal",
-    "assertGt",
-    "assertGtDecimal",
-    "assertLe",
-    "assertLeDecimal",
-    "assertLt",
-    "assertLtDecimal",
-    "assertTrue",
-];
-
 fn is_ignored_function(ident: &Identifier) -> bool {
-    IGNORED_FUNCTIONS
-        .binary_search(&ident.to_string().as_ref())
-        .is_ok()
+    ident.to_string().starts_with("assert")
 }
 
 fn is_method_call_statement(stmt: &Statement) -> bool {
@@ -393,12 +373,7 @@ pub fn offset_to_line_column(contents: &str, loc: usize) -> (usize, usize) {
 
 #[cfg(test)]
 mod test {
-    use super::{IGNORED_FUNCTIONS, IGNORED_METHODS};
-
-    #[test]
-    fn ignored_functions_are_sorted() {
-        assert_eq!(sort(IGNORED_FUNCTIONS), IGNORED_FUNCTIONS);
-    }
+    use super::IGNORED_METHODS;
 
     #[test]
     fn ignored_methods_are_sorted() {
