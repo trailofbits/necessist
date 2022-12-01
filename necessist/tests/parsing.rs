@@ -24,6 +24,12 @@ const TESTS: &[Test] = &[
     },
     Test {
         expensive: false,
+        url: "https://github.com/ProjectOpenSea/operator-filter-registry",
+        subdir: None,
+        framework_and_tomls: &[],
+    },
+    Test {
+        expensive: false,
         url: "https://github.com/ProjectOpenSea/seaport",
         subdir: None,
         framework_and_tomls: &[(Some("hardhat-ts"), Some(SEAPORT_CONFIG))],
@@ -39,7 +45,10 @@ const TESTS: &[Test] = &[
         expensive: false,
         url: "https://github.com/smartcontractkit/chainlink",
         subdir: Some("contracts"),
-        framework_and_tomls: &[(Some("hardhat-ts"), Some(CHAINLINK_CONFIG))],
+        framework_and_tomls: &[
+            (Some("foundry"), None),
+            (Some("hardhat-ts"), Some(CHAINLINK_CONFIG)),
+        ],
     },
     Test {
         expensive: false,

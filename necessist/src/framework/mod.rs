@@ -2,7 +2,7 @@ use anyhow::Result;
 use clap::ValueEnum;
 use heck::ToKebabCase;
 use necessist_core::{implementation_as_interface, Interface, LightContext, ToImplementation};
-use strum::EnumIter;
+use strum_macros::EnumIter;
 
 mod impls;
 

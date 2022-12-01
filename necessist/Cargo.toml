@@ -16,18 +16,28 @@ anyhow = "1.0"
 clap = { version = "4.0", features = ["cargo", "derive"] }
 env_logger = "0.10"
 heck = "0.4"
+if_chain = "1.0"
 log = "0.4"
 remain = "0.2"
 strum = "0.24"
+strum_macros = "0.24"
 subprocess = "0.2"
+thiserror = "1.0"
+walkdir = "2.3"
 
 # Foundry
-forge-fmt = { version = "0.2", git = "https://github.com/foundry-rs/foundry" }
+solang-parser = "0.1"
 
 [dev-dependencies]
 lazy_static = "1.4"
 regex = "1.7"
 tempfile = "3.3"
+
+[build-dependencies]
+cargo_metadata = "0.15"
+curl = "0.4"
+heck = "0.4"
+syn = "1.0"
 
 [target.'cfg(unix)'.dependencies]
 libc = "0.2"
