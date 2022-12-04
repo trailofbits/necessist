@@ -1,0 +1,36 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      # - name: Check CHANGELOG.md
+      #   run: ./scripts/check_CHANGELOG.sh "${{ github.ref }}"
+
+      - name: Login
+        run: echo ${{ secrets.CRATES_IO_TOKEN }} | cargo login
+
+      - name: Publish
+        run: ./scripts/publish.sh
+
+      # - name: Create release notes
+      #   run: git log -p -1 CHANGELOG.md | grep '^+\($\|[^+]\)' | cut -c 2- | tee body.md
+
+      - name: Create release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref }}
+          name: Release ${{ github.ref }}
+          # body_path: body.md
+          draft: false
+          prerelease: ${{ contains(github.ref, 'pre') || contains(github.ref, 'rc') }}
+          token: ${{ secrets.RELEASE_GITHUB_TOKEN }}
