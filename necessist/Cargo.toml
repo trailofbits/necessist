@@ -26,7 +26,7 @@ thiserror = "1.0"
 walkdir = "2.3"
 
 # Foundry
-solang-parser = "0.1"
+solang-parser = "0.2"
 
 [dev-dependencies]
 lazy_static = "1.4"
