@@ -1041,7 +1041,7 @@ dependencies = [
 
 [[package]]
 name = "necessist"
-version = "0.1.0-beta.5"
+version = "0.1.0-beta.6"
 dependencies = [
  "anyhow",
  "cargo_metadata",
@@ -1068,7 +1068,7 @@ dependencies = [
 
 [[package]]
 name = "necessist-core"
-version = "0.1.0-beta.5"
+version = "0.1.0-beta.6"
 dependencies = [
  "ansi_term",
  "anyhow",
