@@ -101,11 +101,8 @@ fn warn_internal(
     if context.opts.quiet
         || context.opts.allow.contains(&Warning::All)
         || context.opts.allow.contains(&warning)
+        || (flags.contains(Flags::ONCE) && state.contains(State::WARNING_EMITTED))
     {
-        return Ok(());
-    }
-
-    if flags.contains(Flags::ONCE) && state.contains(State::WARNING_EMITTED) {
         return Ok(());
     }
 
@@ -135,6 +132,8 @@ Silence this warning with: --allow {}",
         msg,
         allow_msg
     ));
+
+    state.insert(State::WARNING_EMITTED);
 
     Ok(())
 }
