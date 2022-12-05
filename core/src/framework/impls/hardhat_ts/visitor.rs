@@ -1,3 +1,4 @@
+use super::HardhatTs;
 use crate::{Config, LineColumn, SourceFile, Span};
 use if_chain::if_chain;
 use std::{
@@ -8,8 +9,8 @@ use swc_core::{
     common::{BytePos, Loc, SourceMap, Span as SwcSpan, Spanned},
     ecma::{
         ast::{
-            CallExpr, Callee, Expr, ExprOrSpread, ExprStmt, Ident, MemberExpr, MemberProp, Module,
-            Stmt, TsTypeParamInstantiation,
+            CallExpr, Callee, Expr, ExprOrSpread, ExprStmt, Ident, Lit, MemberExpr, MemberProp,
+            Module, Stmt, Str, TsTypeParamInstantiation,
         },
         visit::{visit_expr, visit_stmt, Visit},
     },
@@ -17,21 +18,23 @@ use swc_core::{
 
 pub(super) fn visit(
     config: &Config,
+    framework: &mut HardhatTs,
     source_map: Rc<SourceMap>,
     root: Rc<PathBuf>,
     test_file: &Path,
     module: &Module,
 ) -> Vec<Span> {
-    let mut visitor = Visitor::new(config, source_map, root, test_file);
+    let mut visitor = Visitor::new(config, framework, source_map, root, test_file);
     visitor.visit_module(module);
     visitor.spans
 }
 
-struct Visitor<'config> {
+struct Visitor<'config, 'framework> {
     config: &'config Config,
+    framework: &'framework mut HardhatTs,
     source_map: Rc<SourceMap>,
     source_file: SourceFile,
-    in_it_call_expr: bool,
+    it_message: Option<String>,
     n_stmt_leaves_visited: usize,
     spans: Vec<Span>,
 }
@@ -53,16 +56,16 @@ struct FunctionCall<'a> {
     pub type_args: &'a Option<Box<TsTypeParamInstantiation>>,
 }
 
-impl<'config> Visit for Visitor<'config> {
+impl<'config, 'framework> Visit for Visitor<'config, 'framework> {
     fn visit_expr(&mut self, expr: &Expr) {
-        if is_it_call_expr(expr) {
-            assert!(!self.in_it_call_expr);
-            self.in_it_call_expr = true;
+        if let Some(it_message) = is_it_call_expr(expr) {
+            assert!(self.it_message.is_none());
+            self.it_message = Some(it_message.clone());
 
             visit_expr(self, expr);
 
-            assert!(self.in_it_call_expr);
-            self.in_it_call_expr = false;
+            assert_eq!(self.it_message, Some(it_message));
+            self.it_message = None;
 
             return;
         }
@@ -70,7 +73,7 @@ impl<'config> Visit for Visitor<'config> {
         visit_expr(self, expr);
 
         if_chain! {
-            if self.in_it_call_expr;
+            if let Some(it_message) = &self.it_message;
             if let Some(MethodCall {
                 span,
                 obj,
@@ -83,7 +86,7 @@ impl<'config> Visit for Visitor<'config> {
                 let mut span = *span;
                 span.lo = obj.span().hi;
                 assert!(span.lo <= span.hi);
-                self.elevate_span(span.to_internal_span(&self.source_map, &self.source_file));
+                self.elevate_span(span.to_internal_span(&self.source_map, &self.source_file), it_message.clone());
             }
         }
     }
@@ -114,55 +117,63 @@ impl<'config> Visit for Visitor<'config> {
             }
             self.n_stmt_leaves_visited += 1;
 
-            if self.in_it_call_expr
-                && !matches!(
-                    stmt,
-                    Stmt::Break(_) | Stmt::Continue(_) | Stmt::Decl(_) | Stmt::Return(_)
-                )
-            {
-                let span = stmt
-                    .span()
-                    .to_internal_span(&self.source_map, &self.source_file);
-                self.elevate_span(span);
+            if_chain! {
+                if let Some(it_message) = &self.it_message;
+                if !matches!(
+                        stmt,
+                        Stmt::Break(_) | Stmt::Continue(_) | Stmt::Decl(_) | Stmt::Return(_)
+                    );
+                then {
+                    let span = stmt
+                        .span()
+                        .to_internal_span(&self.source_map, &self.source_file);
+                    self.elevate_span(span, it_message.clone());
+                }
             }
         }
     }
 }
 
-impl<'config> Visitor<'config> {
+impl<'config, 'framework> Visitor<'config, 'framework> {
     fn new(
         config: &'config Config,
+        framework: &'framework mut HardhatTs,
         source_map: Rc<SourceMap>,
         root: Rc<PathBuf>,
         test_file: &Path,
     ) -> Self {
         Self {
             config,
+            framework,
             source_map,
             source_file: SourceFile::new(root, Rc::new(test_file.to_path_buf())),
-            in_it_call_expr: false,
+            it_message: None,
             n_stmt_leaves_visited: 0,
             spans: Vec::new(),
         }
     }
 
-    fn elevate_span(&mut self, span: Span) {
+    fn elevate_span(&mut self, span: Span, it_message: String) {
+        self.framework.set_span_it_message(&span, it_message);
         self.spans.push(span);
     }
 }
 
-fn is_it_call_expr(expr: &Expr) -> bool {
+fn is_it_call_expr(expr: &Expr) -> Option<String> {
     if_chain! {
         if let Expr::Call(CallExpr {
             callee: Callee::Expr(callee),
+            args,
             ..
         }) = expr;
         if let Expr::Ident(ident) = &**callee;
         if ident.as_ref() == "it";
+        if let [arg, ..] = args.as_slice();
+        if let Expr::Lit(Lit::Str(Str{value, ..})) = &*arg.expr;
         then {
-            true
+            Some(value.to_string())
         } else {
-            false
+            None
         }
     }
 }
