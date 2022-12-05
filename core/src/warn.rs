@@ -20,6 +20,7 @@ pub enum Warning {
     FilesChanged,
     IgnoredFunctionsUnsupported,
     IgnoredMacrosUnsupported,
+    ItMessageNotFound,
     ModulePathUnknown,
     RunTestFailed,
 }
@@ -162,7 +163,8 @@ fn may_be_bug(warning: Warning) -> bool {
         | Warning::DryRunFailed
         | Warning::FilesChanged
         | Warning::IgnoredFunctionsUnsupported
-        | Warning::IgnoredMacrosUnsupported => false,
+        | Warning::IgnoredMacrosUnsupported
+        | Warning::ItMessageNotFound => false,
         Warning::ModulePathUnknown | Warning::RunTestFailed => true,
     }
 }

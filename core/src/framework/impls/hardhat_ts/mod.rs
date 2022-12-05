@@ -1,8 +1,12 @@
 use super::super::{Interface, Postprocess};
-use crate::{util, warn, Config, LightContext, Span, WarnFlags, Warning};
+use crate::{source_warn, util, warn, Config, LightContext, Span, WarnFlags, Warning};
 use anyhow::{anyhow, ensure, Context, Result};
+use lazy_static::lazy_static;
 use log::debug;
+use regex::Regex;
 use std::{
+    cell::RefCell,
+    collections::BTreeMap,
     ffi::OsStr,
     path::{Path, PathBuf},
     process::{Command, Stdio},
@@ -21,9 +25,24 @@ use walkdir::WalkDir;
 mod visitor;
 use visitor::visit;
 
+#[derive(Debug, Eq, PartialEq)]
+enum ItMessageState {
+    NotFound,
+    Found,
+    WarningEmitted,
+}
+
+impl Default for ItMessageState {
+    fn default() -> Self {
+        Self::NotFound
+    }
+}
+
 #[derive(Debug)]
 pub struct HardhatTs {
     root: Rc<PathBuf>,
+    span_it_message_map: BTreeMap<Span, String>,
+    test_file_it_message_state_map: RefCell<BTreeMap<PathBuf, BTreeMap<String, ItMessageState>>>,
 }
 
 impl HardhatTs {
@@ -38,8 +57,17 @@ impl HardhatTs {
     fn new(context: &LightContext) -> Self {
         Self {
             root: Rc::new(context.root.to_path_buf()),
+            span_it_message_map: BTreeMap::new(),
+            test_file_it_message_state_map: RefCell::new(BTreeMap::new()),
         }
     }
+}
+
+lazy_static! {
+    static ref RE: Regex = {
+        #[allow(clippy::unwrap_used)]
+        Regex::new(r"^\s*✔ (.*) \(.*\)$").unwrap()
+    };
 }
 
 impl Interface for HardhatTs {
@@ -79,7 +107,14 @@ impl Interface for HardhatTs {
                         util::strip_prefix(test_file, context.root).unwrap()
                     )
                 })?;
-            let spans_visited = visit(config, source_map, self.root.clone(), test_file, &module);
+            let spans_visited = visit(
+                config,
+                self,
+                source_map,
+                self.root.clone(),
+                test_file,
+                &module,
+            );
             spans.extend(spans_visited);
             Ok(())
         };
@@ -115,6 +150,20 @@ impl Interface for HardhatTs {
 
         let output = command.output()?;
         ensure!(output.status.success(), "{:#?}", output);
+
+        let mut test_file_it_message_state_map = self.test_file_it_message_state_map.borrow_mut();
+        let it_message_state_map = test_file_it_message_state_map
+            .entry(test_file.to_path_buf())
+            .or_insert_with(Default::default);
+
+        let stdout = std::str::from_utf8(&output.stdout)?;
+        for line in stdout.lines() {
+            if let Some(captures) = RE.captures(line) {
+                assert!(captures.len() == 2);
+                it_message_state_map.insert(captures[1].to_string(), ItMessageState::Found);
+            }
+        }
+
         Ok(())
     }
 
@@ -127,6 +176,41 @@ impl Interface for HardhatTs {
             return Ok(None);
         }
 
+        #[allow(clippy::expect_used)]
+        let it_message = self
+            .span_it_message_map
+            .get(span)
+            .expect("`it` message is not set");
+
+        let mut test_file_it_message_state_map = self.test_file_it_message_state_map.borrow_mut();
+        #[allow(clippy::expect_used)]
+        let it_message_state_map = test_file_it_message_state_map
+            .get_mut(span.source_file.as_ref())
+            .expect("Source file is not in map");
+
+        let state = it_message_state_map
+            .entry(it_message.clone())
+            .or_insert_with(Default::default);
+        if *state != ItMessageState::Found {
+            if *state == ItMessageState::NotFound {
+                source_warn(
+                    context,
+                    Warning::ItMessageNotFound,
+                    span,
+                    &format!(
+                        "`it` messages {:?} was not found during dry run",
+                        it_message
+                    ),
+                    WarnFlags::empty(),
+                )?;
+                *state = ItMessageState::WarningEmitted;
+            }
+            // smoelius: Returning `None` here causes Necessist to associate `Outcome::Nonbuildable`
+            // with this span. This is not ideal, but there is no ideal choice for this situation
+            // currently.
+            return Ok(None);
+        }
+
         let mut exec = Exec::cmd("npx");
         exec = exec.cwd(context.root);
         exec = exec.args(&["hardhat", "test", &span.source_file.to_string_lossy()]);
@@ -136,6 +220,12 @@ impl Interface for HardhatTs {
         debug!("{:?}", exec);
 
         Ok(Some((exec, None)))
+    }
+}
+
+impl HardhatTs {
+    fn set_span_it_message(&mut self, span: &Span, it_message: String) {
+        self.span_it_message_map.insert(span.clone(), it_message);
     }
 }
 
