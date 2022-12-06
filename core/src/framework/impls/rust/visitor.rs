@@ -252,6 +252,7 @@ fn is_control(stmt: &Stmt) -> bool {
 const IGNORED_MACROS: &[&str] = &[
     "assert",
     "assert_eq",
+    "assert_matches",
     "assert_ne",
     "eprint",
     "eprintln",

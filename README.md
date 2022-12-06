@@ -124,6 +124,7 @@ In addition to the below, the Foundry framework ignores:
 
 - `assert`
 - `assert_eq`
+- `assert_matches`
 - `assert_ne`
 - `eprint`
 - `eprintln`
