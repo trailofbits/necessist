@@ -1,3 +1,7 @@
+#![warn(clippy::expect_used)]
+#![warn(clippy::unwrap_used)]
+#![warn(clippy::panic)]
+
 use anyhow::Result;
 use clap::Parser;
 use log::debug;
