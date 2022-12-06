@@ -4,6 +4,10 @@
     clippy::too_many_lines,
     clippy::unnecessary_wraps
 )]
+#![cfg_attr(
+    dylint_lib = "non_local_effect_before_error_return",
+    allow(non_local_effect_before_error_return)
+)]
 
 #[allow(clippy::wildcard_imports)]
 use solang_parser::pt::*;

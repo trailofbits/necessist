@@ -13,6 +13,10 @@ use std::{
 };
 use thiserror::Error;
 
+#[cfg_attr(
+    dylint_lib = "inconsistent_qualification",
+    allow(inconsistent_qualification)
+)]
 #[derive(Error, Debug)]
 #[error(transparent)]
 struct Error(anyhow::Error);
@@ -51,6 +55,10 @@ impl<'ast, 'contents, 'framework> visit_fns::Visitor<'ast>
 {
     type Error = Error;
 
+    #[cfg_attr(
+        dylint_lib = "non_local_effect_before_error_return",
+        allow(non_local_effect_before_error_return)
+    )]
     fn visit_function_definition(
         &mut self,
         func: &'ast FunctionDefinition,
@@ -360,7 +368,7 @@ pub fn offset_to_line_column(contents: &str, loc: usize) -> (usize, usize) {
         }
     }
 
-    let line_no = line_starts.partition_point(|line_start| loc >= *line_start);
+    let line_no = line_starts.partition_point(|&line_start| loc >= line_start);
 
     let col_no = if line_no > 0 {
         loc - line_starts[line_no - 1]
