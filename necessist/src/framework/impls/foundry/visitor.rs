@@ -21,6 +21,7 @@ use thiserror::Error;
 #[error(transparent)]
 struct Error(anyhow::Error);
 
+#[allow(clippy::unwrap_used)]
 pub(super) fn visit<'framework>(
     framework: &'framework mut Foundry,
     root: Rc<PathBuf>,

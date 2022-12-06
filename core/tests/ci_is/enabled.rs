@@ -21,6 +21,7 @@ fn clippy() {
             "--allow=clippy::missing-errors-doc",
             "--allow=clippy::missing-panics-doc",
         ])
+        .current_dir("..")
         .assert()
         .success();
 }
@@ -30,6 +31,7 @@ fn dylint() {
     Command::new("cargo")
         .args(["dylint", "--all", "--", "--all-features", "--all-targets"])
         .env("DYLINT_RUSTFLAGS", "--deny warnings")
+        .current_dir("..")
         .assert()
         .success();
 }
@@ -37,7 +39,11 @@ fn dylint() {
 #[test]
 fn format() {
     preserves_cleanliness(|| {
-        Command::new("cargo").arg("fmt").assert().success();
+        Command::new("cargo")
+            .arg("fmt")
+            .current_dir("..")
+            .assert()
+            .success();
     });
 }
 
@@ -48,6 +54,7 @@ fn license() {
     for line in std::str::from_utf8(
         &Command::new("cargo")
             .arg("license")
+            .current_dir("..")
             .assert()
             .get_output()
             .stdout,
@@ -121,7 +128,8 @@ fn readme_contains_usage() {
 
     // smoelius: Ensure `necessist` binary is up to date.
     Command::new("cargo")
-        .args(["build", "--workspace"])
+        .args(["build", "--bin", "necessist"])
+        .current_dir("..")
         .assert()
         .success();
 
@@ -142,6 +150,7 @@ fn readme_contains_usage() {
 fn sort() {
     Command::new("cargo")
         .args(["sort", "--check", "--grouped"])
+        .current_dir("..")
         .assert()
         .success();
 }
@@ -151,6 +160,7 @@ fn update() {
     preserves_cleanliness(|| {
         Command::new("cargo")
             .args(["update", "--workspace"])
+            .current_dir("..")
             .assert()
             .success();
     });
@@ -171,6 +181,7 @@ fn preserves_cleanliness(f: impl FnOnce()) {
 fn dirty() -> bool {
     Command::new("git")
         .args(["diff", "--exit-code"])
+        .current_dir("..")
         .assert()
         .try_success()
         .is_err()
