@@ -53,6 +53,7 @@ impl Interface for Foundry {
 
         let mut spans = Vec::new();
 
+        #[allow(clippy::unwrap_used)]
         let mut visit_test_file = |test_file: &Path| -> Result<()> {
             assert!(test_file.is_absolute());
             assert!(test_file.starts_with(context.root));
@@ -109,6 +110,7 @@ impl Interface for Foundry {
         Ok(())
     }
 
+    #[allow(clippy::unwrap_used)]
     fn exec(
         &self,
         context: &LightContext,

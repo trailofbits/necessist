@@ -4,6 +4,7 @@ use assert_cmd::Command;
 fn udeps() {
     Command::new("cargo")
         .args(["+nightly", "udeps", "--all-targets"])
+        .current_dir("..")
         .assert()
         .success();
 
@@ -14,6 +15,7 @@ fn udeps() {
             "--all-targets",
             "--no-default-features",
         ])
+        .current_dir("..")
         .assert()
         .success();
 }
