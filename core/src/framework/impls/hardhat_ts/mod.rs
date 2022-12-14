@@ -64,7 +64,7 @@ impl HardhatTs {
 }
 
 lazy_static! {
-    static ref RE: Regex = {
+    static ref LINE_RE: Regex = {
         #[allow(clippy::unwrap_used)]
         Regex::new(r"^\s*✔ (.*) \(.*\)$").unwrap()
     };
@@ -158,7 +158,7 @@ impl Interface for HardhatTs {
 
         let stdout = std::str::from_utf8(&output.stdout)?;
         for line in stdout.lines() {
-            if let Some(captures) = RE.captures(line) {
+            if let Some(captures) = LINE_RE.captures(line) {
                 assert!(captures.len() == 2);
                 it_message_state_map.insert(captures[1].to_string(), ItMessageState::Found);
             }

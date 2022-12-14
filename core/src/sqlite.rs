@@ -149,8 +149,7 @@ pub(crate) fn insert(sqlite: &mut Sqlite, removal: &crate::Removal) -> Result<()
 lazy_static! {
     static ref SSH_RE: Regex = {
         #[allow(clippy::unwrap_used)]
-        let re = Regex::new(r"^[^@]*@([^:]*):(.*)$").unwrap();
-        re
+        Regex::new(r"^[^@]*@([^:]*):(.*)$").unwrap()
     };
 }
 
