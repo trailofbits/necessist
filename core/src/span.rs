@@ -32,8 +32,7 @@ impl ToConsoleString for Span {
 lazy_static! {
     static ref SPAN_RE: Regex = {
         #[allow(clippy::unwrap_used)]
-        let re = Regex::new(r"^([^:]*):([^:]*):([^-]*)-([^:]*):(.*)$").unwrap();
-        re
+        Regex::new(r"^([^:]*):([^:]*):([^-]*)-([^:]*):(.*)$").unwrap()
     };
 }
 

@@ -60,9 +60,7 @@ impl Interface for EagerRewriter {
         self.rewritten
     }
 
-    #[allow(clippy::cast_possible_wrap)]
-    #[allow(clippy::expect_used)]
-    #[allow(clippy::unwrap_used)]
+    #[allow(clippy::cast_possible_wrap, clippy::expect_used, clippy::unwrap_used)]
     fn rewrite(&mut self, start: usize, end: usize, replacement: &str) -> String {
         let start = usize::try_from(start as isize + self.delta).unwrap();
         let end = usize::try_from(end as isize + self.delta).unwrap();
