@@ -100,11 +100,11 @@ impl<'ast, 'contents, 'framework> visit_fns::Visitor<'ast>
         self.n_stmt_leaves_visited += 1;
 
         if let Some(ident) = self.test_name {
-            if !is_variable_definition(stmt)
+            if !is_method_call_statement(stmt)
+                && !is_variable_definition(stmt)
                 && !is_control(stmt)
                 && !matches!(stmt, Statement::Emit(..))
                 && !is_ignored_function_call_statement(stmt)
-                && !is_method_call_statement(stmt)
             {
                 let span = stmt
                     .loc()
@@ -191,6 +191,18 @@ fn is_test_function(func: &FunctionDefinition) -> Option<&str> {
     }
 }
 
+fn is_method_call_statement(stmt: &Statement) -> bool {
+    if_chain! {
+        if let Statement::Expression(_, expr) = stmt;
+        if is_method_call(expr).is_some();
+        then {
+            true
+        } else {
+            false
+        }
+    }
+}
+
 fn is_variable_definition(stmt: &Statement) -> bool {
     if matches!(stmt, Statement::VariableDefinition(..)) {
         return true;
@@ -240,18 +252,6 @@ fn is_ignored_function_call_statement(stmt: &Statement) -> bool {
 
 fn is_ignored_function(ident: &Identifier) -> bool {
     ident.to_string().starts_with("assert")
-}
-
-fn is_method_call_statement(stmt: &Statement) -> bool {
-    if_chain! {
-        if let Statement::Expression(_, expr) = stmt;
-        if is_method_call(expr).is_some();
-        then {
-            true
-        } else {
-            false
-        }
-    }
 }
 
 fn is_method_call(expr: &Expression) -> Option<MethodCall> {
