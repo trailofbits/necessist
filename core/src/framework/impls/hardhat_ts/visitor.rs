@@ -119,6 +119,7 @@ impl<'config, 'framework> Visit for Visitor<'config, 'framework> {
 
             if_chain! {
                 if let Some(it_message) = &self.it_message;
+                if !is_method_call_statement(stmt);
                 if !matches!(
                         stmt,
                         Stmt::Break(_) | Stmt::Continue(_) | Stmt::Decl(_) | Stmt::Return(_)
@@ -312,6 +313,18 @@ fn is_ignored_function(config: &Config, path: &[&Ident]) -> bool {
 
     let path = path.iter().map(AsRef::as_ref).collect::<Vec<_>>().join(".");
     config.ignored_functions.iter().any(|s| s == &path)
+}
+
+fn is_method_call_statement(stmt: &Stmt) -> bool {
+    if_chain! {
+        if let Stmt::Expr(ExprStmt { ref expr, .. }) = stmt;
+        if is_method_call(expr).is_some();
+        then {
+            true
+        } else {
+            false
+        }
+    }
 }
 
 trait ToInternalSpan {

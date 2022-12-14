@@ -102,7 +102,8 @@ where
         self.n_stmt_leaves_visited += 1;
 
         if let Some(ident) = self.test_ident {
-            if !matches!(stmt, Stmt::Item(_) | Stmt::Local(_))
+            if !is_method_call_statement(stmt)
+                && !matches!(stmt, Stmt::Item(_) | Stmt::Local(_))
                 && !is_control(stmt)
                 && !is_ignored_macro(self.config, stmt)
             {
@@ -237,6 +238,14 @@ fn is_test(item: &ItemFn) -> Option<&Ident> {
     } else {
         None
     }
+}
+
+fn is_method_call_statement(stmt: &Stmt) -> bool {
+    match stmt {
+        Stmt::Expr(expr) | Stmt::Semi(expr, ..) => Some(expr),
+        _ => None,
+    }
+    .map_or(false, |expr| matches!(expr, Expr::MethodCall(..)))
 }
 
 fn is_control(stmt: &Stmt) -> bool {

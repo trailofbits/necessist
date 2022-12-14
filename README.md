@@ -33,6 +33,7 @@ Necessist iteratively removes statements and method calls from tests and then ru
 Generally speaking, Necessist will not attempt to remove a statement if it is one the following:
 
 - A statement containing other statements (e.g., a `for` loop)
+- A statement consisting of a single method call
 - A declaration (e.g., a local or `let` binding)
 - A `break`, `continue`, or `return`
 
