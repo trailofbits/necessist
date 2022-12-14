@@ -91,6 +91,7 @@ In addition to the below, the Foundry framework ignores:
 
 - the last statement in a function body
 - a statement immediately following a use of `vm.prank` or any form of `vm.expect` (e.g., `vm.expectRevert`)
+- an `emit` statement
 
 #### Ignored functions
 
