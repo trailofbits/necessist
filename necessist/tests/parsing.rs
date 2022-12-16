@@ -148,7 +148,7 @@ fn run_test(url: &str, subdir: Option<&str>, framework_and_tomls: &[(Option<&str
 {}{}{}",
                 url,
                 if let Some(framework) = framework {
-                    format!(" (with framework `{})", framework)
+                    format!(" (with framework `{framework})")
                 } else {
                     String::new()
                 },
@@ -192,7 +192,7 @@ fn run_test(url: &str, subdir: Option<&str>, framework_and_tomls: &[(Option<&str
                 let line = reader.lines().next().unwrap().unwrap();
 
                 #[allow(clippy::explicit_write)]
-                writeln!(stderr(), "{}", line).unwrap();
+                writeln!(stderr(), "{line}").unwrap();
 
                 popen.kill().unwrap_or_default();
                 line
