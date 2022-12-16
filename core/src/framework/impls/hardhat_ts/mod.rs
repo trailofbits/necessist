@@ -100,7 +100,7 @@ impl Interface for HardhatTs {
             #[allow(clippy::unwrap_used)]
             let module = parser
                 .parse_typescript_module()
-                .map_err(|error| anyhow!(format!("{:?}", error)))
+                .map_err(|error| anyhow!(format!("{error:?}")))
                 .with_context(|| {
                     format!(
                         "Failed to parse {:?}",

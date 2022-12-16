@@ -94,7 +94,7 @@ fn mtime_is_updated() {
 
     let after = mtime(tempfile.path()).unwrap();
 
-    assert!(before < after, "{:?} not less than {:?}", before, after);
+    assert!(before < after, "{before:?} not less than {after:?}");
 }
 
 #[cfg(test)]

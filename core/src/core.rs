@@ -255,7 +255,7 @@ fn run(
                     &context.light(),
                     Warning::DryRunFailed,
                     &test_file,
-                    &format!("dry run failed: {}", error),
+                    &format!("dry run failed: {error}"),
                     WarnFlags::empty(),
                 )?;
             }

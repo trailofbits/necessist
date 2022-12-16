@@ -18,7 +18,7 @@ pub(crate) enum Outcome {
 
 impl std::fmt::Display for Outcome {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", format!("{:?}", self).to_kebab_case())
+        write!(f, "{}", format!("{self:?}").to_kebab_case())
     }
 }
 

@@ -126,7 +126,7 @@ where
             .or_else(|left| {
                 R::from_str(input, ignore_case)
                     .map(Self::Right)
-                    .map_err(|right| format!("{}, {}", left, right))
+                    .map_err(|right| format!("{left}, {right}"))
             })
     }
 }

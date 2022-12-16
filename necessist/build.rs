@@ -23,7 +23,7 @@ fn main() {
     let pt_rs = solang_dir.join(PT_RS);
     let contents = read_to_string(pt_rs).unwrap();
     let syn_file =
-        parse_file(&contents).unwrap_or_else(|_| panic!("Failed to parse: {:?}", contents));
+        parse_file(&contents).unwrap_or_else(|_| panic!("Failed to parse: {contents:?}"));
 
     let mut file = OpenOptions::new()
         .create(true)
@@ -152,7 +152,7 @@ where
         ..
     } in variants
     {
-        write!(file, "        {}::{}", enum_ident, variant_ident)?;
+        write!(file, "        {enum_ident}::{variant_ident}")?;
         match fields {
             Fields::Named(fields) => {
                 write!(file, "{{ ")?;
@@ -170,7 +170,7 @@ where
                     if i != 0 {
                         write!(file, ", ")?;
                     }
-                    write!(file, "unnamed_{}", i)?;
+                    write!(file, "unnamed_{i}")?;
                 }
                 write!(file, ")")?;
             }
@@ -189,7 +189,7 @@ where
             }
             Fields::Unnamed(fields) => {
                 for (i, _) in fields.unnamed.iter().enumerate() {
-                    writeln!(file, "            unnamed_{}.visit(visitor)?;", i)?;
+                    writeln!(file, "            unnamed_{i}.visit(visitor)?;")?;
                 }
             }
             Fields::Unit => {}
@@ -289,7 +289,7 @@ fn download_package(out_dir: &Path, package: &Package) -> Result<PathBuf, Error>
         child_stdin.write_all(&download)?;
     }
     let output = child.wait_with_output()?;
-    assert!(output.status.success(), "{:#?}", output);
+    assert!(output.status.success(), "{output:#?}");
 
     Ok(out_dir.join(format!("{}-{}", package.name, package.version)))
 }

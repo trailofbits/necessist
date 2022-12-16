@@ -177,7 +177,7 @@ impl Interface for Rust {
                     context,
                     Warning::RunTestFailed,
                     &span,
-                    &format!("Failed to run test `{}`", test),
+                    &format!("Failed to run test `{test}`"),
                     WarnFlags::empty(),
                 )?;
                 Ok(false)

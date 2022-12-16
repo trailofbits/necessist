@@ -11,7 +11,7 @@ pub struct RemoveFile(pub PathBuf);
 impl Drop for RemoveFile {
     fn drop(&mut self) {
         std::fs::remove_file(&self.0)
-            .map_err(|err| eprintln!("{}", err))
+            .map_err(|err| eprintln!("{err}"))
             .unwrap_or_default();
     }
 }

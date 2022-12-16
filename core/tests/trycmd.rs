@@ -52,7 +52,7 @@ fn check_stdout() {
 
         let contents = read_to_string(&path).unwrap();
 
-        assert!(!re.is_match(&contents), "{:?} matches", path);
+        assert!(!re.is_match(&contents), "{path:?} matches");
     }
 }
 
@@ -89,7 +89,7 @@ fn check_toml() {
 
         let file_stem = &*path.file_stem().unwrap().to_string_lossy();
         let example = file_stem.split_once('_').map_or(file_stem, |(s, _)| s);
-        assert!(args.contains(&format!("--root=examples/{}", example).as_str()));
+        assert!(args.contains(&format!("--root=examples/{example}").as_str()));
 
         let stderr = document.as_table().and_then(|table| table.get("stderr"));
         assert!(stderr.is_some() || path.with_extension("stderr").try_exists().unwrap());

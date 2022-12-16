@@ -62,7 +62,7 @@ fn license() {
     .unwrap()
     .lines()
     {
-        assert!(re.is_match(line), "{:?} does not match", line);
+        assert!(re.is_match(line), "{line:?} does not match");
     }
 }
 

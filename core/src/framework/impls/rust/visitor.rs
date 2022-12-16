@@ -183,7 +183,7 @@ where
                         warn(
                             self.context,
                             Warning::ModulePathUnknown,
-                            &format!("Failed to determine module path: {}", error),
+                            &format!("Failed to determine module path: {error}"),
                             WarnFlags::empty(),
                         )?;
                     }
@@ -404,8 +404,7 @@ mod test {
     fn ignored_methods_match_unnecessary_conversion_for_trait_watched_methods() {
         let data = get(UNNECESSARY_CONVERSION_FOR_TRAIT_URL).unwrap();
         let contents = std::str::from_utf8(&data).unwrap();
-        let file =
-            parse_file(contents).unwrap_or_else(|_| panic!("Failed to parse: {:?}", contents));
+        let file = parse_file(contents).unwrap_or_else(|_| panic!("Failed to parse: {contents:?}"));
         let mut watched_methods = file
             .items
             .into_iter()
@@ -456,7 +455,7 @@ mod test {
             window
                 .iter()
                 .zip(items)
-                .all(|(line, item)| line.starts_with(&format!("- `{}`", item)))
+                .all(|(line, item)| line.starts_with(&format!("- `{item}`")))
         })
     }
 

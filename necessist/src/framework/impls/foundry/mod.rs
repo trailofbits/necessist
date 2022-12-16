@@ -59,7 +59,7 @@ impl Interface for Foundry {
             assert!(test_file.starts_with(context.root));
             let contents = read_to_string(test_file)?;
             let (mut source_unit, _comments) = solang_parser::parse(&contents, 0)
-                .map_err(|error| anyhow!(format!("{:?}", error)))
+                .map_err(|error| anyhow!(format!("{error:?}")))
                 .with_context(|| {
                     format!(
                         "Failed to parse {:?}",
@@ -174,7 +174,7 @@ impl Interface for Foundry {
                         context,
                         Warning::RunTestFailed,
                         &span,
-                        &format!("Failed to run test `{}`", test_name),
+                        &format!("Failed to run test `{test_name}`"),
                         WarnFlags::empty(),
                     )?;
                     Ok(false)
