@@ -209,6 +209,10 @@ A configuration file allows one to tailor Necessist's behavior with respect to a
 
 - Groce, A., Ahmed, I., Jensen, C., McKenney, P.E., Holmes, J.: How verified (or tested) is my code? Falsification-driven verification and testing. Autom. Softw. Eng. **25**, 917–960 (2018). A [preprint] is available. See Section 2.3.
 
+## License
+
+Necessist is licensed and distributed under the AGPLv3 license. [Contact us](mailto:opensource@trailofbits.com) if you're looking for an exception to the terms.
+
 [`assert_cmd::assert::assert::success`]: https://docs.rs/assert_cmd/latest/assert_cmd/assert/struct.Assert.html#method.success
 [`crates.io`]: https://crates.io/crates/necessist
 [foundry]: https://github.com/foundry-rs/foundry
