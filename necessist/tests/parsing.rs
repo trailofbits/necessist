@@ -194,7 +194,7 @@ fn run_test(url: &str, subdir: Option<&str>, framework_and_tomls: &[(Option<&str
                 #[allow(clippy::explicit_write)]
                 writeln!(stderr(), "{line}").unwrap();
 
-                popen.kill().unwrap_or_default();
+                popen.kill().unwrap();
                 line
             };
 
