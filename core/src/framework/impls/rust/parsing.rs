@@ -69,6 +69,10 @@ pub(super) fn cached_test_file_fs_module_path<'a>(
         .map(|value| value as &_)
 }
 
+#[cfg_attr(
+    dylint_lib = "non_local_effect_before_error_return",
+    allow(non_local_effect_before_error_return)
+)]
 pub(super) fn cached_test_file_package<'a>(
     test_file_package_map: &'a mut BTreeMap<PathBuf, Package>,
     test_file: &Path,
