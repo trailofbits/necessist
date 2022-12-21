@@ -224,6 +224,10 @@ impl Rust {
         exec
     }
 
+    #[cfg_attr(
+        dylint_lib = "non_local_effect_before_error_return",
+        allow(non_local_effect_before_error_return)
+    )]
     fn cached_test_file_flags(
         &mut self,
         test_file_package_map: &mut BTreeMap<PathBuf, Package>,
