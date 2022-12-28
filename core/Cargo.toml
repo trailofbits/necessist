@@ -51,4 +51,3 @@ trycmd = "0.14"
 [features]
 default = []
 ci = []
-ci_nightly = []
