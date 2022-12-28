@@ -44,12 +44,3 @@ jobs:
 
       - name: Test
         run: cargo test --features=ci
-
-      - name: Install nightly toolchain
-        if: ${{ github.event_name == 'schedule' }}
-        run: |
-          rustup install nightly
-
-      - name: Test (nightly)
-        if: ${{ github.event_name == 'schedule' }}
-        run: cargo test --features=ci_nightly --test ci_nightly
