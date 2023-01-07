@@ -140,6 +140,8 @@ In addition to the below, the Foundry framework ignores:
 
 - `as_bytes`
 - `as_mut`
+- `as_mut_os_str`
+- `as_mut_os_string`
 - `as_mut_slice`
 - `as_mut_str`
 - `as_os_str`
