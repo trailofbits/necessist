@@ -23,7 +23,10 @@ fn trycmd() {
         .assert()
         .success();
 
-    TestCases::new().case("tests/necessist_db_absent/*.toml");
+    TestCases::new()
+        .env("CARGO_TERM_COLOR", "never")
+        .env("TRYCMD", "1")
+        .case("tests/necessist_db_absent/*.toml");
 
     Command::cargo_bin("necessist")
         .unwrap()
@@ -33,7 +36,10 @@ fn trycmd() {
 
     let _remove_file = util::RemoveFile(PathBuf::from(ROOT).join("necessist.db"));
 
-    TestCases::new().case("tests/necessist_db_present/*.toml");
+    TestCases::new()
+        .env("CARGO_TERM_COLOR", "never")
+        .env("TRYCMD", "1")
+        .case("tests/necessist_db_present/*.toml");
 }
 
 #[test]
@@ -103,15 +109,13 @@ fn check_toml() {
             .unwrap();
         assert_eq!("necessist", bin_name);
 
-        let env_add_trycmd = document
+        let fs_cwd = document
             .as_table()
-            .and_then(|table| table.get("env"))
+            .and_then(|table| table.get("fs"))
             .and_then(toml::Value::as_table)
-            .and_then(|table| table.get("add"))
-            .and_then(toml::Value::as_table)
-            .and_then(|table| table.get("TRYCMD"))
+            .and_then(|table| table.get("cwd"))
             .and_then(toml::Value::as_str)
             .unwrap();
-        assert_eq!("1", env_add_trycmd);
+        assert_eq!("../../..", fs_cwd);
     }
 }

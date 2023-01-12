@@ -8,6 +8,3 @@ cwd = "../../.."
 
 [status]
 code = 1
-
-[env.add]
-TRYCMD="1"
