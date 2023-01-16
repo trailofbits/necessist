@@ -13,7 +13,7 @@ repository = "https://github.com/trailofbits/necessist"
 necessist-core = { version = "=0.1.0-beta.6", path = "../core", features = ["clap"] }
 
 anyhow = "1.0"
-clap = { version = "4.0", features = ["cargo", "derive"] }
+clap = { version = "4.1", features = ["cargo", "derive"] }
 env_logger = "0.10"
 heck = "0.4"
 if_chain = "1.0"
