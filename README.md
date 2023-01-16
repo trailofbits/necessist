@@ -61,8 +61,8 @@ Options:
       --root <ROOT>            Root directory of the project under test
       --timeout <TIMEOUT>      Maximum number of seconds to run any test; 60 is the default, 0 means no timeout
       --verbose                Show test outcomes besides `passed`
-  -h, --help                   Print help information
-  -V, --version                Print version information
+  -h, --help                   Print help
+  -V, --version                Print version
 ```
 
 By default, Necessist outputs to both the console and to an sqlite database. For the latter, a tool like [sqlitebrowser](https://sqlitebrowser.org/) can be used to filter/sort the results.
