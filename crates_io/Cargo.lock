@@ -304,12 +304,12 @@ dependencies = [
 
 [[package]]
 name = "env_logger"
-version = "0.9.1"
+version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c90bf5f19754d10198ccb95b70664fc925bd1fc090a0fd9a6ebc54acc8cd6272"
+checksum = "85cdab6a89accf66733ad5a1693a4dcced6aeff64602b634530dd73c1f3ee9f0"
 dependencies = [
- "atty",
  "humantime",
+ "is-terminal",
  "log",
  "regex",
  "termcolor",
@@ -1334,9 +1334,9 @@ dependencies = [
 
 [[package]]
 name = "swc_core"
-version = "0.56.2"
+version = "0.57.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9fdc9aef031700ae57d771739875984f205d5c98a74df19334cb5c214472a024"
+checksum = "59f9b7ca8242c710b1708a37997753a8d02b926b43437be58232e6f505cb0ed1"
 dependencies = [
  "swc_atoms",
  "swc_common",
@@ -1385,9 +1385,9 @@ dependencies = [
 
 [[package]]
 name = "swc_ecma_transforms_base"
-version = "0.114.1"
+version = "0.115.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9719f15c36d94a3d93268becf6b723119fe7a7f563c16a60d7ec7525a5789681"
+checksum = "3249785eee5b42c63af2534c8638e8668336fa46f1898bb1518def8b086a2677"
 dependencies = [
  "better_scoped_tls",
  "bitflags",
