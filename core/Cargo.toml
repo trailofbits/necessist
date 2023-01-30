@@ -35,7 +35,7 @@ toml = "0.5"
 walkdir = "2.3"
 
 # Hardhat TS
-swc_core = { version = "0.58", features = ["common", "ecma_ast", "ecma_parser", "ecma_visit"] }
+swc_core = { version = "0.59", features = ["common", "ecma_ast", "ecma_parser", "ecma_visit"] }
 
 # Rust
 cargo_metadata = "0.15"
