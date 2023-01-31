@@ -2,13 +2,13 @@
 
 Run tests with statements and method calls removed to help identify broken tests
 
-Install from [`crates.io`]:
+Install from [crates.io]:
 
 ```
 cargo install necessist --version=^0.1.0-beta
 ```
 
-If you require [Foundry] support, install from [github.com]:
+Install from [github.com]:
 
 ```
 cargo install --git https://github.com/trailofbits/necessist --branch release
@@ -215,7 +215,7 @@ A configuration file allows one to tailor Necessist's behavior with respect to a
 Necessist is licensed and distributed under the AGPLv3 license. [Contact us](mailto:opensource@trailofbits.com) if you're looking for an exception to the terms.
 
 [`assert_cmd::assert::assert::success`]: https://docs.rs/assert_cmd/latest/assert_cmd/assert/struct.Assert.html#method.success
-[`crates.io`]: https://crates.io/crates/necessist
+[crates.io]: https://crates.io/crates/necessist
 [foundry]: https://github.com/foundry-rs/foundry
 [github.com]: https://github.com/trailofbits/necessist
 [preprint]: https://agroce.github.io/asej18.pdf
