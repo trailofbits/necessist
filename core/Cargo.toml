@@ -31,7 +31,7 @@ strum = "0.24"
 strum_macros = "0.24"
 subprocess = "0.2"
 tempfile = "3.3"
-toml = "0.5"
+toml = "0.7"
 walkdir = "2.3"
 
 # Hardhat TS
