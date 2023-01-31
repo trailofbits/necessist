@@ -112,12 +112,9 @@ pub fn necessist<AdditionalIdentifier: IntoEnumIterator + ToImplementation>(
         context.println = &println;
     }
 
-    let (sqlite, framework, n_spans, test_file_span_map, past_removals) =
-        if let Some(elements) = prepare(&context, framework)? {
-            elements
-        } else {
-            return Ok(());
-        };
+    let Some((sqlite, framework, n_spans, test_file_span_map, past_removals)) = prepare(&context, framework)? else {
+        return Ok(());
+    };
 
     let mut context = Context {
         sqlite,
@@ -279,9 +276,7 @@ fn run(
 
             update_progress(&context, mismatch, n)?;
 
-            let span = if let Some(span) = span_iter.next() {
-                span
-            } else {
+            let Some(span) = span_iter.next() else {
                 break;
             };
 
@@ -419,9 +414,7 @@ where
     let mut mismatch = false;
     let mut n = 0;
     while let Some(&span) = span_iter.peek() {
-        let removal = if let Some(removal) = removal_iter.peek() {
-            removal
-        } else {
+        let Some(removal) = removal_iter.peek() else {
             break;
         };
         match span.cmp(&removal.span) {
@@ -491,9 +484,7 @@ fn attempt_removal(context: &Context, span: &Span) -> Result<(String, Option<Out
 
     let exec = context.framework.exec(&context.light(), span)?;
 
-    let (exec, postprocess) = if let Some((exec, postprocess)) = exec {
-        (exec, postprocess)
-    } else {
+    let Some((exec, postprocess)) = exec else {
         return Ok((text, Some(Outcome::Nonbuildable)));
     };
 
@@ -518,9 +509,7 @@ fn attempt_removal(context: &Context, span: &Span) -> Result<(String, Option<Out
         let _ = popen.wait()?;
     }
 
-    let status = if let Some(status) = status {
-        status
-    } else {
+    let Some(status) = status else {
         return Ok((text, Some(Outcome::TimedOut)));
     };
 
