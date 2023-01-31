@@ -117,8 +117,7 @@ fn warn_internal(
         state.insert(State::ALLOW_MSG_EMITTED);
         format!(
             "
-Silence this warning with: --allow {}",
-            warning
+Silence this warning with: --allow {warning}"
         )
     };
 

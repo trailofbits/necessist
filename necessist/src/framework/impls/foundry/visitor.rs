@@ -22,8 +22,8 @@ use thiserror::Error;
 struct Error(anyhow::Error);
 
 #[allow(clippy::unwrap_used)]
-pub(super) fn visit<'framework>(
-    framework: &'framework mut Foundry,
+pub(super) fn visit(
+    framework: &mut Foundry,
     root: Rc<PathBuf>,
     test_file: &Path,
     contents: &str,

@@ -197,10 +197,7 @@ impl Interface for HardhatTs {
                     context,
                     Warning::ItMessageNotFound,
                     span,
-                    &format!(
-                        "`it` messages {:?} was not found during dry run",
-                        it_message
-                    ),
+                    &format!("`it` messages {it_message:?} was not found during dry run"),
                     WarnFlags::empty(),
                 )?;
                 *state = ItMessageState::WarningEmitted;

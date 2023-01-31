@@ -16,11 +16,11 @@ use syn::{
     dylint_lib = "non_local_effect_before_error_return",
     allow(non_local_effect_before_error_return)
 )]
-pub(super) fn visit<'framework, 'parsing>(
+pub(super) fn visit(
     context: &LightContext,
     config: &Config,
-    framework: &'framework mut Rust,
-    parsing: &'parsing mut Parsing,
+    framework: &mut Rust,
+    parsing: &mut Parsing,
     root: Rc<PathBuf>,
     test_file: &Path,
     file: &File,
