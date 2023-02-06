@@ -2168,17 +2168,8 @@ checksum = "772c1426ab886e7362aedf4abc9c0d1348a979517efedfc25862944d10137af0"
 dependencies = [
  "serde",
  "serde_spanned",
- "toml_datetime 0.6.1",
- "toml_edit 0.19.1",
-]
-
-[[package]]
-name = "toml_datetime"
-version = "0.5.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "808b51e57d0ef8f71115d8f3a01e7d3750d01c79cac4b3eda910f4389fdf92fd"
-dependencies = [
- "serde",
+ "toml_datetime",
+ "toml_edit",
 ]
 
 [[package]]
@@ -2192,19 +2183,6 @@ dependencies = [
 
 [[package]]
 name = "toml_edit"
-version = "0.17.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a34cc558345efd7e88b9eda9626df2138b80bb46a7606f695e751c892bc7dac6"
-dependencies = [
- "indexmap",
- "itertools",
- "nom8",
- "serde",
- "toml_datetime 0.5.0",
-]
-
-[[package]]
-name = "toml_edit"
 version = "0.19.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "90a238ee2e6ede22fb95350acc78e21dc40da00bb66c0334bde83de4ed89424e"
@@ -2213,7 +2191,7 @@ dependencies = [
  "nom8",
  "serde",
  "serde_spanned",
- "toml_datetime 0.6.1",
+ "toml_datetime",
 ]
 
 [[package]]
@@ -2260,9 +2238,9 @@ dependencies = [
 
 [[package]]
 name = "trycmd"
-version = "0.14.10"
+version = "0.14.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "01662d21325d18cd4acae7e1dc9f29a2a88b7fbb7f9bc427c4a692aaec5773ac"
+checksum = "522dcafb4bf113bcf83e4f47a0499ea1f6798877439e6a0e96cf087a2abe97dc"
 dependencies = [
  "glob",
  "humantime",
@@ -2271,7 +2249,7 @@ dependencies = [
  "serde",
  "shlex",
  "snapbox",
- "toml_edit 0.17.1",
+ "toml_edit",
 ]
 
 [[package]]
