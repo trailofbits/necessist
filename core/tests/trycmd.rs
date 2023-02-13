@@ -4,6 +4,7 @@ use assert_cmd::prelude::*;
 use necessist_core::util;
 use regex::Regex;
 use std::{
+    env::remove_var,
     ffi::OsStr,
     fs::{read_dir, read_to_string},
     path::PathBuf,
@@ -13,6 +14,11 @@ use trycmd::TestCases;
 
 const ROOT: &str = "../examples/basic";
 const TIMEOUT: &str = "5";
+
+#[ctor::ctor]
+fn initialize() {
+    remove_var("CARGO_TERM_COLOR");
+}
 
 #[test]
 fn trycmd() {
@@ -24,7 +30,6 @@ fn trycmd() {
         .success();
 
     TestCases::new()
-        .env("CARGO_TERM_COLOR", "never")
         .env("TRYCMD", "1")
         .case("tests/necessist_db_absent/*.toml");
 
@@ -37,7 +42,6 @@ fn trycmd() {
     let _remove_file = util::RemoveFile(PathBuf::from(ROOT).join("necessist.db"));
 
     TestCases::new()
-        .env("CARGO_TERM_COLOR", "never")
         .env("TRYCMD", "1")
         .case("tests/necessist_db_present/*.toml");
 }
