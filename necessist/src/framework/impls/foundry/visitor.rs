@@ -21,7 +21,6 @@ use thiserror::Error;
 #[error(transparent)]
 struct Error(anyhow::Error);
 
-#[allow(clippy::unwrap_used)]
 pub(super) fn visit(
     framework: &mut Foundry,
     root: Rc<PathBuf>,
@@ -30,6 +29,7 @@ pub(super) fn visit(
     source_unit: &mut SourceUnit,
 ) -> Vec<Span> {
     let mut visitor = Visitor::new(framework, root, test_file, contents);
+    #[allow(clippy::unwrap_used)]
     visitor.visit_source_unit(source_unit).unwrap();
     visitor.spans
 }
