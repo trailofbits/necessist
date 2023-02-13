@@ -350,8 +350,6 @@ impl ToInternalSpan for proc_macro2::Span {
 
 #[cfg(test)]
 mod test {
-    #![allow(clippy::panic)]
-
     use super::{IGNORED_MACROS, IGNORED_METHODS};
     use if_chain::if_chain;
     use std::fs::read_to_string;
@@ -405,6 +403,7 @@ mod test {
     fn ignored_methods_match_unnecessary_conversion_for_trait_watched_methods() {
         let data = get(UNNECESSARY_CONVERSION_FOR_TRAIT_URL).unwrap();
         let contents = std::str::from_utf8(&data).unwrap();
+        #[allow(clippy::panic)]
         let file = parse_file(contents).unwrap_or_else(|_| panic!("Failed to parse: {contents:?}"));
         let mut watched_methods = file
             .items

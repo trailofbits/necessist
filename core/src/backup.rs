@@ -5,6 +5,7 @@
 // smoelius: Allow `unwrap_used` until the following issue is resolved:
 // https://github.com/rust-lang/rust-clippy/issues/10264
 #![allow(clippy::unwrap_used)]
+#![cfg_attr(dylint_lib = "overscoped_allow", allow(overscoped_allow))]
 
 use std::{
     io::Result,
@@ -72,9 +73,9 @@ fn manual_copy(from: &Path, to: &Path) -> Result<()> {
     std::fs::write(to, contents)
 }
 
-#[allow(clippy::expect_used)]
 fn sibling_tempfile(path: &Path) -> Result<NamedTempFile> {
     let canonical_path = path.canonicalize()?;
+    #[allow(clippy::expect_used)]
     let parent = canonical_path
         .parent()
         .expect("should not fail for a canonical path");

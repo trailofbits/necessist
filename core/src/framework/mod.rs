@@ -21,8 +21,8 @@ pub type AutoUnion<T, U> = Auto<Union<T, U>>;
 pub type Postprocess = dyn Fn(&LightContext, Popen) -> Result<bool>;
 
 pub trait Interface: std::fmt::Debug {
-    #[allow(clippy::unwrap_used)]
     fn name(&self) -> String {
+        #[allow(clippy::unwrap_used)]
         let (_, type_name) = type_name::<Self>().rsplit_once("::").unwrap();
         type_name.to_kebab_case()
     }

@@ -53,11 +53,11 @@ impl Interface for Foundry {
 
         let mut spans = Vec::new();
 
-        #[allow(clippy::unwrap_used)]
         let mut visit_test_file = |test_file: &Path| -> Result<()> {
             assert!(test_file.is_absolute());
             assert!(test_file.starts_with(context.root));
             let contents = read_to_string(test_file)?;
+            #[allow(clippy::unwrap_used)]
             let (mut source_unit, _comments) = solang_parser::parse(&contents, 0)
                 .map_err(|error| anyhow!(format!("{error:?}")))
                 .with_context(|| {
