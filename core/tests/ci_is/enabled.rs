@@ -1,10 +1,12 @@
-use assert_cmd::Command;
+use assert_cmd::assert::OutputAssertExt;
 use regex::Regex;
 use std::{
     env::{remove_var, set_current_dir},
     fs::read_to_string,
+    fs::OpenOptions,
     io::{stderr, Write},
     path::Path,
+    process::Command,
     str::from_utf8,
 };
 use tempfile::tempdir;
@@ -17,28 +19,12 @@ fn initialize() {
 
 #[test]
 fn clippy() {
-    Command::new("cargo")
-        .args([
-            "clippy",
-            "--all-features",
-            "--all-targets",
-            "--",
-            "--deny=warnings",
-            "--warn=clippy::pedantic",
-            "--allow=clippy::missing-errors-doc",
-            "--allow=clippy::missing-panics-doc",
-        ])
-        .assert()
-        .success();
+    clippy_command(&[], &["--deny=warnings"]).assert().success();
 }
 
 #[test]
 fn dylint() {
-    Command::new("cargo")
-        .args(["dylint", "--all", "--", "--all-features", "--all-targets"])
-        .env("DYLINT_RUSTFLAGS", "--deny warnings")
-        .assert()
-        .success();
+    dylint_command(&["--all"]).assert().success();
 }
 
 #[test]
@@ -98,6 +84,34 @@ fn markdown_link_check() {
 }
 
 #[test]
+fn overscoped_allow() {
+    let file = OpenOptions::new()
+        .create(true)
+        .write(true)
+        .truncate(true)
+        .open("warnings.json")
+        .unwrap();
+
+    clippy_command(
+        &["--message-format=json"],
+        &[
+            "--force-warn=clippy::all",
+            "--force-warn=clippy::pedantic",
+            "--force-warn=clippy::expect_used",
+            "--force-warn=clippy::unwrap_used",
+            "--force-warn=clippy::panic",
+        ],
+    )
+    .stdout(file)
+    .assert()
+    .success();
+
+    dylint_command(&["--lib=overscoped_allow"])
+        .assert()
+        .success();
+}
+
+#[test]
 fn prettier() {
     let tempdir = tempdir().unwrap();
 
@@ -116,6 +130,7 @@ fn prettier() {
             &format!("{}/../**/*.yml", env!("CARGO_MANIFEST_DIR")),
             &format!("!{}/../examples/**", env!("CARGO_MANIFEST_DIR")),
             &format!("!{}/../target/**", env!("CARGO_MANIFEST_DIR")),
+            &format!("!{}/../warnings.json", env!("CARGO_MANIFEST_DIR")),
         ])
         .current_dir(&tempdir)
         .assert()
@@ -132,7 +147,7 @@ fn readme_contains_usage() {
         .assert()
         .success();
 
-    let stdout = Command::cargo_bin("necessist")
+    let stdout = assert_cmd::Command::cargo_bin("necessist")
         .unwrap()
         .arg("--help")
         .assert()
@@ -161,6 +176,30 @@ fn update() {
             .assert()
             .success();
     });
+}
+
+fn clippy_command(cargo_args: &[&str], rustc_args: &[&str]) -> Command {
+    let mut command = Command::new("cargo");
+    command
+        .args(["clippy", "--all-features", "--all-targets"])
+        .args(cargo_args)
+        .args(["--"])
+        .args(rustc_args)
+        .args([
+            "--allow=clippy::missing-errors-doc",
+            "--allow=clippy::missing-panics-doc",
+        ]);
+    command
+}
+
+fn dylint_command(dylint_args: &[&str]) -> Command {
+    let mut command = Command::new("cargo");
+    command
+        .arg("dylint")
+        .args(dylint_args)
+        .args(["--", "--all-features", "--all-targets"])
+        .env("DYLINT_RUSTFLAGS", "--deny=warnings");
+    command
 }
 
 fn preserves_cleanliness(f: impl FnOnce()) {

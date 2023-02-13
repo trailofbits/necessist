@@ -9,6 +9,7 @@ libraries = [
     { git = "https://github.com/trailofbits/dylint", pattern = "examples/general/*" },
     { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/collapsible_unwrap" },
     { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/inconsistent_qualification" },
+    { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/overscoped_allow" },
     { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/question_mark_in_expression" },
     { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/suboptimal_pattern" },
     { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/unnecessary_conversion_for_trait" },
