@@ -24,8 +24,8 @@ pub fn strip_current_dir(path: &Path) -> &Path {
         .unwrap_or(path)
 }
 
-#[allow(clippy::disallowed_methods)]
 pub fn strip_prefix<'a>(path: &'a Path, base: &Path) -> Result<&'a Path> {
+    #[allow(clippy::disallowed_methods)]
     path.strip_prefix(base).with_context(|| {
         format!(
             "\

@@ -447,9 +447,9 @@ mod test {
         assert_eq!(sort(IGNORED_METHODS), watched_methods);
     }
 
-    #[allow(clippy::unwrap_used)]
     fn readme_contains_code_bulleted_list(items: &[&str]) -> bool {
         let n = items.len();
+        #[allow(clippy::unwrap_used)]
         let readme = read_to_string("../README.md").unwrap();
         readme.lines().collect::<Vec<_>>().windows(n).any(|window| {
             window
