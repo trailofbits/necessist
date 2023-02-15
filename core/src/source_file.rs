@@ -19,8 +19,8 @@ impl SourceFile {
         Self { root, path }
     }
 
-    #[allow(clippy::unwrap_used)]
     fn relative_path(&self) -> &Path {
+        #[allow(clippy::unwrap_used)]
         util::strip_prefix(&self.path, &self.root).unwrap()
     }
 }
@@ -61,8 +61,8 @@ where
 
 impl Deref for SourceFile {
     type Target = Path;
-    #[allow(clippy::explicit_deref_methods)]
     fn deref(&self) -> &Self::Target {
+        #[allow(clippy::explicit_deref_methods)]
         self.path.deref()
     }
 }
