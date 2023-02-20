@@ -24,7 +24,33 @@ fn clippy() {
 
 #[test]
 fn dylint() {
-    dylint_command(&["--all"]).assert().success();
+    // smoelius: Generate `warnings.json` and run Clippy for `overscoped_allow`.
+    let file = OpenOptions::new()
+        .create(true)
+        .write(true)
+        .truncate(true)
+        .open("warnings.json")
+        .unwrap();
+
+    clippy_command(
+        &["--message-format=json"],
+        &[
+            "--force-warn=clippy::all",
+            "--force-warn=clippy::pedantic",
+            "--force-warn=clippy::expect_used",
+            "--force-warn=clippy::unwrap_used",
+            "--force-warn=clippy::panic",
+        ],
+    )
+    .stdout(file)
+    .assert()
+    .success();
+
+    Command::new("cargo")
+        .args(["dylint", "--all", "--", "--all-features", "--all-targets"])
+        .env("DYLINT_RUSTFLAGS", "--deny warnings")
+        .assert()
+        .success();
 }
 
 #[test]
@@ -63,13 +89,9 @@ fn markdown_link_check() {
         .success();
 
     // smoelius: https://github.com/rust-lang/crates.io/issues/788
-    let config = Path::new(env!("CARGO_MANIFEST_DIR"))
-        .join("tests")
-        .join("markdown_link_check.json");
+    let config = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/markdown_link_check.json");
 
-    let readme_md = Path::new(env!("CARGO_MANIFEST_DIR"))
-        .join("..")
-        .join("README.md");
+    let readme_md = Path::new(env!("CARGO_MANIFEST_DIR")).join("../README.md");
 
     Command::new("npx")
         .args([
@@ -79,34 +101,6 @@ fn markdown_link_check() {
             &readme_md.to_string_lossy(),
         ])
         .current_dir(&tempdir)
-        .assert()
-        .success();
-}
-
-#[test]
-fn overscoped_allow() {
-    let file = OpenOptions::new()
-        .create(true)
-        .write(true)
-        .truncate(true)
-        .open("warnings.json")
-        .unwrap();
-
-    clippy_command(
-        &["--message-format=json"],
-        &[
-            "--force-warn=clippy::all",
-            "--force-warn=clippy::pedantic",
-            "--force-warn=clippy::expect_used",
-            "--force-warn=clippy::unwrap_used",
-            "--force-warn=clippy::panic",
-        ],
-    )
-    .stdout(file)
-    .assert()
-    .success();
-
-    dylint_command(&["--lib=overscoped_allow"])
         .assert()
         .success();
 }
@@ -189,16 +183,6 @@ fn clippy_command(cargo_args: &[&str], rustc_args: &[&str]) -> Command {
             "--allow=clippy::missing-errors-doc",
             "--allow=clippy::missing-panics-doc",
         ]);
-    command
-}
-
-fn dylint_command(dylint_args: &[&str]) -> Command {
-    let mut command = Command::new("cargo");
-    command
-        .arg("dylint")
-        .args(dylint_args)
-        .args(["--", "--all-features", "--all-targets"])
-        .env("DYLINT_RUSTFLAGS", "--deny=warnings");
     command
 }
 
