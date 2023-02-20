@@ -355,7 +355,7 @@ mod test {
     use std::fs::read_to_string;
     use syn::{parse_file, Expr, ExprArray, ExprLit, ExprReference, Item, ItemConst, Lit};
 
-    const UNNECESSARY_CONVERSION_FOR_TRAIT_URL: &str = "https://raw.githubusercontent.com/trailofbits/dylint/master/examples/restriction/unnecessary_conversion_for_trait/src/lib.rs";
+    const UNNECESSARY_CONVERSION_FOR_TRAIT_URL: &str = "https://raw.githubusercontent.com/trailofbits/dylint/master/examples/supplementary/unnecessary_conversion_for_trait/src/lib.rs";
 
     const REMOVED_METHODS: &[&str] = &["path", "new"];
 

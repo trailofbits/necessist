@@ -226,4 +226,4 @@ Necessist is licensed and distributed under the AGPLv3 license. [Contact us](mai
 [`std::option::option::unwrap`]: https://doc.rust-lang.org/std/option/enum.Option.html#method.unwrap
 [`std::result::result::unwrap_err`]: https://doc.rust-lang.org/std/result/enum.Result.html#method.unwrap_err
 [toml]: https://toml.io/en/
-[`unnecessary_conversion_for_trait`]: https://github.com/trailofbits/dylint/tree/master/examples/restriction/unnecessary_conversion_for_trait
+[`unnecessary_conversion_for_trait`]: https://github.com/trailofbits/dylint/tree/master/examples/supplementary/unnecessary_conversion_for_trait
