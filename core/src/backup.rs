@@ -90,7 +90,7 @@ fn sibling_tempfile(path: &Path) -> Result<NamedTempFile> {
 fn mtime_is_updated() {
     let tempfile = NamedTempFile::new().unwrap();
 
-    let backup = Backup::new(&tempfile);
+    let backup = Backup::new(&tempfile).unwrap();
 
     let before = mtime(tempfile.path()).unwrap();
 

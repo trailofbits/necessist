@@ -81,6 +81,10 @@ impl<'original> Interface for CachingOffsetCalculator<'original> {
 }
 
 impl<'original> Interface for StatelessOffsetCalculator<'original> {
+    #[cfg_attr(
+        dylint_lib = "misleading_variable_name",
+        allow(misleading_variable_name)
+    )]
     fn offset_from_line_column(&mut self, line_column: LineColumn) -> (usize, bool) {
         let mut lines = self.original.split('\n');
         let mut offset = 0;

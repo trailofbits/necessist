@@ -67,18 +67,18 @@ pub(crate) fn init(
     reset: bool,
 ) -> Result<(Sqlite, Vec<crate::Removal>)> {
     let root = Rc::new(root.to_path_buf());
-    let path = root.join("necessist.db");
+    let path_buf = root.join("necessist.db");
 
-    let exists = path.try_exists()?;
+    let exists = path_buf.try_exists()?;
 
     if must_not_exist && exists {
         bail!(
             "Found an sqlite database at {:?}; please pass either --reset or --resume",
-            path
+            path_buf
         );
     }
 
-    let database_url = format!("sqlite://{}", path.to_string_lossy());
+    let database_url = format!("sqlite://{}", path_buf.to_string_lossy());
     let mut connection = SqliteConnection::establish(&database_url)?;
 
     if reset && exists {
