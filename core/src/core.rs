@@ -324,10 +324,10 @@ fn process_options(opts: &mut Necessist) -> Result<()> {
 }
 
 fn default_config(context: &LightContext, root: &Path) -> Result<()> {
-    let path = root.join("necessist.toml");
+    let path_buf = root.join("necessist.toml");
 
-    if path.try_exists()? {
-        bail!("A configuration file already exists at {:?}", path);
+    if path_buf.try_exists()? {
+        bail!("A configuration file already exists at {:?}", path_buf);
     }
 
     warn(
@@ -339,13 +339,13 @@ fn default_config(context: &LightContext, root: &Path) -> Result<()> {
 
     let toml = toml::to_string(&Config::default())?;
 
-    write(path, toml).map_err(Into::into)
+    write(path_buf, toml).map_err(Into::into)
 }
 
 fn read_config(context: &LightContext, root: &Path) -> Result<Config> {
-    let path = root.join("necessist.toml");
+    let path_buf = root.join("necessist.toml");
 
-    if !path.try_exists()? {
+    if !path_buf.try_exists()? {
         return Ok(Config::default());
     }
 
@@ -356,7 +356,7 @@ fn read_config(context: &LightContext, root: &Path) -> Result<Config> {
         WarnFlags::empty(),
     )?;
 
-    let contents = read_to_string(path)?;
+    let contents = read_to_string(path_buf)?;
 
     toml::from_str(&contents).map_err(Into::into)
 }
@@ -390,14 +390,14 @@ fn canonicalize_test_files(context: &LightContext) -> Result<Vec<PathBuf>> {
         .test_files
         .iter()
         .map(|path| {
-            let path = path.canonicalize()?;
+            let path_buf = path.canonicalize()?;
             ensure!(
-                path.starts_with(context.root),
+                path_buf.starts_with(context.root),
                 "{:?} is not in {:?}",
-                path,
+                path_buf,
                 context.root
             );
-            Ok(path)
+            Ok(path_buf)
         })
         .collect::<Result<Vec<_>>>()
 }
