@@ -175,7 +175,7 @@ fn update() {
 fn clippy_command(cargo_args: &[&str], rustc_args: &[&str]) -> Command {
     let mut command = Command::new("cargo");
     command
-        .args(["clippy", "--all-features", "--all-targets"])
+        .args(["+nightly", "clippy", "--all-features", "--all-targets"])
         .args(cargo_args)
         .args(["--"])
         .args(rustc_args)
