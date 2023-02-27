@@ -31,7 +31,7 @@ solang-parser = "0.2"
 [dev-dependencies]
 lazy_static = "1.4"
 regex = "1.7"
-tempfile = "3.3"
+tempfile = "3.4"
 
 [build-dependencies]
 cargo_metadata = "0.15"
