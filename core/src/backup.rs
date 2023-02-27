@@ -2,10 +2,6 @@
 // https://github.com/smoelius/rustfmt_if_chain/blob/557c32c54b0e0f48da2d029a3a8f70db4c8dbf9b/src/backup.rs
 
 #![allow(dead_code)]
-// smoelius: Allow `unwrap_used` until the following issue is resolved:
-// https://github.com/rust-lang/rust-clippy/issues/10264
-#![allow(clippy::unwrap_used)]
-#![cfg_attr(dylint_lib = "overscoped_allow", allow(overscoped_allow))]
 
 use std::{
     io::Result,
