@@ -83,6 +83,7 @@ pub struct Config {
     pub ignored_macros: Vec<String>,
 }
 
+/// Necessist's main entrypoint.
 // smoelius: The reason `framework` is not included as a field in `Necessist` is to avoid having
 // to parameterize every function that takes a `Necessist` as an argument.
 pub fn necessist<AdditionalIdentifier: IntoEnumIterator + ToImplementation>(
