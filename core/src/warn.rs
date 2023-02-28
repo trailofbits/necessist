@@ -37,6 +37,7 @@ bitflags! {
     }
 }
 
+/// Like [`warn`], but prints the warning prefixed with its source.
 #[allow(clippy::module_name_repetitions)]
 pub fn source_warn(
     context: &LightContext,
@@ -48,6 +49,18 @@ pub fn source_warn(
     warn_internal(context, warning, Some(source), msg, flags)
 }
 
+/// Prints a warning message to the console.
+///
+/// # Arguments
+///
+/// * `context` - The context to use for printing the warning.
+/// * `warning` - The type of the warning.
+/// * `msg` - The message to print.
+/// * `flags` - The flags to use for printing the warning.
+///
+/// # Errors
+///
+/// Returns an error if the message could not be printed.
 pub fn warn(context: &LightContext, warning: Warning, msg: &str, flags: Flags) -> Result<()> {
     warn_internal(context, warning, None, msg, flags)
 }

@@ -44,8 +44,7 @@ fn main() -> Result<()> {
     necessist(&opts, framework)
 }
 
-#[must_use]
-pub fn enabled(key: &str) -> bool {
+fn enabled(key: &str) -> bool {
     var(key).map_or(false, |value| value != "0")
 }
 
