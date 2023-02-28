@@ -16,6 +16,23 @@ impl Drop for RemoveFile {
     }
 }
 
+/// Strips the current directory from the given path.
+///
+/// If the given path is not a child of the current directory, the path is
+/// returned unchanged.
+///
+/// # Examples
+///
+/// ```
+/// use necessist_core::util::strip_current_dir;
+/// use std::path::Path;
+/// use std::env::current_dir;
+///
+/// let path = current_dir().unwrap().join("foo.txt");
+/// let stripped = strip_current_dir(&path);
+///
+/// assert_eq!(stripped, Path::new("foo.txt"));
+/// ```
 #[must_use]
 pub fn strip_current_dir(path: &Path) -> &Path {
     current_dir()
@@ -24,6 +41,23 @@ pub fn strip_current_dir(path: &Path) -> &Path {
         .unwrap_or(path)
 }
 
+/// Strip the prefix `base` from `path`.
+///
+/// # Errors
+///
+/// If `base` is not a prefix of `path`, an error is returned.
+///
+/// # Examples
+///
+/// ```
+/// use necessist_core::util::strip_prefix;
+/// use std::path::Path;
+///
+/// let path = Path::new("/a/b/c");
+/// let base = Path::new("/a");
+/// let stripped = strip_prefix(path, base).unwrap();
+/// assert_eq!(stripped, Path::new("b/c"));
+/// ```
 pub fn strip_prefix<'a>(path: &'a Path, base: &Path) -> Result<&'a Path> {
     #[allow(clippy::disallowed_methods)]
     path.strip_prefix(base).with_context(|| {
