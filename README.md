@@ -202,6 +202,12 @@ A configuration file allows one to tailor Necessist's behavior with respect to a
 
 - `ignored_macros`: A list of strings. Macros whose names appear in the list are ignored.
 
+## Limitations
+
+- **Slow.** Modifying tests requires them to be rebuilt. Running Necessist on even moderately sized codebases can take several hours.
+
+- **Diagnosis requires intimate knowledge of the source code.** Generally speaking, Necessist does not produce "obvious" bugs. In our experience, deciding whether a test statement should be necessary requires intimate knowledge of the code under test. Necessist is best run on codebases for which one has (or intends to have) such knowledge.
+
 ## Goals
 
 - If a project uses a [supported framework](#supported-frameworks), then `cd`ing into the project's directory and typing `necessist` (with no arguments) should produce meaningful output.
