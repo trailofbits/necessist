@@ -42,10 +42,11 @@ Also, for some frameworks, certain statements and methods are ignored (see [belo
 ## Usage
 
 ```
-Usage: necessist [OPTIONS] [TEST_FILES]...
+Usage: necessist [OPTIONS] [TEST_FILES]... [-- <ARGS>...]
 
 Arguments:
   [TEST_FILES]...  Test files to mutilate (optional)
+  [ARGS]...        Additional arguments to pass to each test command
 
 Options:
       --allow <WARNING>        Silence <WARNING>; `--allow all` silences all warnings

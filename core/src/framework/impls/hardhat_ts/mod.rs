@@ -145,6 +145,7 @@ impl Interface for HardhatTs {
         let mut command = Command::new("npx");
         command.current_dir(context.root);
         command.args(["hardhat", "test", &test_file.to_string_lossy()]);
+        command.args(&context.opts.args);
 
         debug!("{:?}", command);
 
@@ -211,6 +212,7 @@ impl Interface for HardhatTs {
         let mut exec = Exec::cmd("npx");
         exec = exec.cwd(context.root);
         exec = exec.args(&["hardhat", "test", &span.source_file.to_string_lossy()]);
+        exec = exec.args(&context.opts.args);
         exec = exec.stdout(NullFile);
         exec = exec.stderr(NullFile);
 
@@ -243,6 +245,7 @@ fn compile(context: &LightContext) -> Result<()> {
     let mut command = Command::new("npx");
     command.current_dir(context.root);
     command.args(["hardhat", "compile"]);
+    command.args(&context.opts.args);
     command.stdout(Stdio::null());
     command.stderr(Stdio::null());
 

@@ -102,6 +102,7 @@ impl Interface for Foundry {
         command.current_dir(context.root);
         command.env("FOUNDRY_FUZZ_RUNS", "1");
         command.args(["test", "--match-path", &test_file.to_string_lossy()]);
+        command.args(&context.opts.args);
 
         debug!("{:?}", command);
 
@@ -127,6 +128,7 @@ impl Interface for Foundry {
             let mut command = Command::new("forge");
             command.current_dir(context.root);
             command.arg("build");
+            command.args(&context.opts.args);
             command.stdout(Stdio::null());
             command.stderr(Stdio::null());
 
@@ -150,6 +152,7 @@ impl Interface for Foundry {
             "--match-test",
             &test_name,
         ]);
+        exec = exec.args(&context.opts.args);
         exec = exec.stdout(Redirection::Pipe);
         exec = exec.stderr(NullFile);
 
