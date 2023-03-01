@@ -263,6 +263,7 @@ fn run(
             }
 
             if result.is_err() {
+                update_progress(&context, false, span_iter.count())?;
                 continue;
             }
         }
