@@ -29,6 +29,10 @@ walkdir = "2.3"
 # Foundry
 solang-parser = "0.2"
 
+# Golang
+tree-sitter = "0.20"
+tree-sitter-go = "0.19"
+
 # Hardhat TS
 swc_core = { version = "0.59", features = ["common", "ecma_ast", "ecma_parser", "ecma_visit"] }
 

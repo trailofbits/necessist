@@ -10,6 +10,9 @@ use strum_macros::EnumIter;
 mod foundry;
 use foundry::Foundry;
 
+mod golang;
+use golang::Golang;
+
 mod hardhat_ts;
 use hardhat_ts::HardhatTs;
 
@@ -22,6 +25,7 @@ use rust::Rust;
 #[remain::sorted]
 pub enum Identifier {
     Foundry,
+    Golang,
     HardhatTs,
     Rust,
 }
@@ -30,6 +34,7 @@ impl ToImplementation for Identifier {
     fn to_implementation(&self, context: &LightContext) -> Result<Option<Box<dyn Interface>>> {
         match *self {
             Self::Foundry => Foundry::applicable(context).map(implementation_as_interface),
+            Self::Golang => Golang::applicable(context).map(implementation_as_interface),
             Self::HardhatTs => HardhatTs::applicable(context).map(implementation_as_interface),
             Self::Rust => Rust::applicable(context).map(implementation_as_interface),
         }

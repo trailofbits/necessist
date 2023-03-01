@@ -53,7 +53,7 @@ Options:
       --default-config         Create a default necessist.toml file in the project's root directory (experimental)
       --deny <WARNING>         Treat <WARNING> as an error; `--deny all` treats all warnings as errors
       --dump                   Dump sqlite database contents to the console
-      --framework <FRAMEWORK>  Assume testing framework is <FRAMEWORK> [possible values: auto, foundry, hardhat-ts, rust]
+      --framework <FRAMEWORK>  Assume testing framework is <FRAMEWORK> [possible values: auto, foundry, golang, hardhat-ts, rust]
       --no-dry-run             Do not perform dry runs
       --no-sqlite              Do not output to an sqlite database
       --quiet                  Do not output to the console
@@ -82,6 +82,7 @@ By default, Necessist outputs only when tests pass. Passing `--verbose` causes N
 ## Supported frameworks
 
 - [Foundry](#foundry)
+- [golang](#golang)
 - [Hardhat TS](#hardhat-ts)
 - [Rust](#rust)
 
@@ -106,6 +107,29 @@ In addition to the below, the Foundry framework ignores:
 - `prank`
 - `startPrank`
 - `stopPrank`
+
+### Golang
+
+In addition to the below, the Golang framework ignores:
+
+- Any method call whose receiver is `assert` (e.g., `assert.Equal`)
+- Any method call whose receiver is `require` (e.g., `require.Equal`)
+- `defer` statements
+
+#### Ignored methods\*
+
+- `Close`
+- `Error`
+- `Errorf`
+- `Fail`
+- `FailNow`
+- `Fatal`
+- `Fatalf`
+- `Log`
+- `Logf`
+- `Parallel`
+
+\* This list is based primarily on [`testing.T`]'s methods. However, some methods with commonplace names are omitted to avoid colliding with other types' methods.
 
 ### Hardhat TS
 
@@ -222,15 +246,16 @@ A configuration file allows one to tailor Necessist's behavior with respect to a
 Necessist is licensed and distributed under the AGPLv3 license. [Contact us](mailto:opensource@trailofbits.com) if you're looking for an exception to the terms.
 
 [`assert_cmd::assert::assert::success`]: https://docs.rs/assert_cmd/latest/assert_cmd/assert/struct.Assert.html#method.success
-[crates.io]: https://crates.io/crates/necessist
-[foundry]: https://github.com/foundry-rs/foundry
-[github.com]: https://github.com/trailofbits/necessist
-[preprint]: https://agroce.github.io/asej18.pdf
 [`std::borrow::cow::into_owned`]: https://doc.rust-lang.org/std/borrow/enum.Cow.html#method.into_owned
 [`std::clone::clone::clone`]: https://doc.rust-lang.org/std/clone/trait.Clone.html#tymethod.clone
 [`std::iter::iterator::cloned`]: https://doc.rust-lang.org/std/iter/trait.Iterator.html#tymethod.cloned
 [`std::iter::iterator::copied`]: https://doc.rust-lang.org/std/iter/trait.Iterator.html#tymethod.copied
 [`std::option::option::unwrap`]: https://doc.rust-lang.org/std/option/enum.Option.html#method.unwrap
 [`std::result::result::unwrap_err`]: https://doc.rust-lang.org/std/result/enum.Result.html#method.unwrap_err
-[toml]: https://toml.io/en/
+[`testing.t`]: https://pkg.go.dev/testing#T
 [`unnecessary_conversion_for_trait`]: https://github.com/trailofbits/dylint/tree/master/examples/supplementary/unnecessary_conversion_for_trait
+[crates.io]: https://crates.io/crates/necessist
+[foundry]: https://github.com/foundry-rs/foundry
+[github.com]: https://github.com/trailofbits/necessist
+[preprint]: https://agroce.github.io/asej18.pdf
+[toml]: https://toml.io/en/
