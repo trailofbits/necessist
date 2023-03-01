@@ -71,7 +71,7 @@ ignored_functions = [\"checkObservationEquals\", \"snapshotGasCost\"]
 ";
 
 lazy_static! {
-    static ref LINE_RE: Regex = Regex::new(r"^(\d+) candidates in (\d+) test files$").unwrap();
+    static ref LINE_RE: Regex = Regex::new(r"^(\d+) candidates in (\d+) test file(s)?$").unwrap();
 }
 
 #[cfg_attr(
@@ -198,8 +198,13 @@ fn run_test(url: &str, subdir: Option<&str>, framework_and_tomls: &[(Option<&str
                 line
             };
 
-            let captures = LINE_RE.captures(&line).unwrap();
-            assert!(captures.len() == 3);
+            let captures = LINE_RE.captures(&line).unwrap_or_else(|| {
+                panic!(
+                    "Failed to find matching line: {:#?}",
+                    (url, subdir, framework, toml)
+                )
+            });
+            assert_eq!(4, captures.len());
             let candidates_curr = captures[1].parse::<usize>().unwrap();
             if let Some(candidates_prev) = candidates_prev {
                 assert!(candidates_prev > candidates_curr);
