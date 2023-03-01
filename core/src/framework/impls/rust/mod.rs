@@ -116,6 +116,7 @@ impl Interface for Rust {
 
     fn dry_run(&self, context: &LightContext, test_file: &Path) -> Result<()> {
         let mut command = self.build_test_command(context, test_file);
+        command.args(&context.opts.args);
 
         debug!("{:?}", command);
 
@@ -139,6 +140,7 @@ impl Interface for Rust {
         {
             let mut command = self.build_test_command(context, &span.source_file);
             command.arg("--no-run");
+            command.args(&context.opts.args);
             command.stdout(Stdio::null());
             command.stderr(Stdio::null());
 
@@ -151,6 +153,7 @@ impl Interface for Rust {
         }
 
         let mut exec = self.build_test_exec(context, &span.source_file);
+        exec = exec.args(&context.opts.args);
         exec = exec.args(&["--", "--exact", &test]);
         exec = exec.stdout(Redirection::Pipe);
         exec = exec.stderr(NullFile);

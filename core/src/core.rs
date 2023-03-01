@@ -73,6 +73,7 @@ pub struct Necessist {
     pub timeout: Option<u64>,
     pub verbose: bool,
     pub test_files: Vec<PathBuf>,
+    pub args: Vec<String>,
 }
 
 #[derive(Default, Deserialize, Serialize)]
