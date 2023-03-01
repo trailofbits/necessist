@@ -22,6 +22,13 @@ const TESTS: &[Test] = &[
         subdir: None,
         framework_and_tomls: &[],
     },
+    // https://blog.kowalczyk.info/article/9afe3485f2204f1bb43217d70f7b87d4/big-projects-written-in-go.html
+    Test {
+        expensive: false,
+        url: "https://github.com/minio/minio",
+        subdir: None,
+        framework_and_tomls: &[],
+    },
     Test {
         expensive: false,
         url: "https://github.com/ProjectOpenSea/operator-filter-registry",

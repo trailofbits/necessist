@@ -2,4 +2,5 @@ allow-unwrap-in-tests = true
 disallowed-methods = [
     { path = "std::path::Path::exists", reason = "use `try_exists`" },
     { path = "std::path::Path::strip_prefix" },
+    { path = "tree_sitter::Node::kind", reason = "use `kind_id`" },
 ]
