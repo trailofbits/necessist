@@ -15,10 +15,7 @@ use crate::core::Removal;
 pub use crate::core::{necessist, Config, LightContext, Necessist};
 
 mod framework;
-pub use framework::{
-    implementation_as_interface, AutoUnion, Empty, Identifier, Interface, Postprocess,
-    ToImplementation,
-};
+pub use framework::{AutoUnion, Empty, Identifier, Interface, Postprocess, ToImplementation};
 
 mod offset_based_rewriter;
 

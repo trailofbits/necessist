@@ -2,8 +2,8 @@ use super::{
     visit::{self as visit_fns, Visitor as _},
     Foundry,
 };
+use crate::{LineColumn, SourceFile, Span};
 use if_chain::if_chain;
-use necessist_core::{LineColumn, SourceFile, Span};
 use solang_parser::pt::{
     CodeLocation, Expression, FunctionDefinition, Identifier, Loc, SourceUnit, Statement,
 };

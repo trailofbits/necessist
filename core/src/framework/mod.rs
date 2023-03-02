@@ -40,13 +40,6 @@ pub trait Interface: std::fmt::Debug {
     ) -> Result<Option<(Exec, Option<Box<Postprocess>>)>>;
 }
 
-/// Utility function
-pub fn implementation_as_interface(
-    implementation: Option<impl Interface + 'static>,
-) -> Option<Box<dyn Interface>> {
-    implementation.map(|implementation| Box::new(implementation) as Box<dyn Interface>)
-}
-
 pub trait ToImplementation {
     fn to_implementation(&self, context: &LightContext) -> Result<Option<Box<dyn Interface>>>;
 }
@@ -56,13 +49,15 @@ pub trait ToImplementation {
 #[non_exhaustive]
 #[remain::sorted]
 pub enum Identifier {
+    Foundry,
     HardhatTs,
     Rust,
 }
 
 impl ToImplementation for Identifier {
     fn to_implementation(&self, context: &LightContext) -> Result<Option<Box<dyn Interface>>> {
-        match self {
+        match *self {
+            Self::Foundry => impls::Foundry::applicable(context).map(implementation_as_interface),
             Self::HardhatTs => {
                 impls::HardhatTs::applicable(context).map(implementation_as_interface)
             }
@@ -75,4 +70,11 @@ impl std::fmt::Display for Identifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}", format!("{self:?}").to_kebab_case())
     }
+}
+
+/// Utility function
+fn implementation_as_interface(
+    implementation: Option<impl Interface + 'static>,
+) -> Option<Box<dyn Interface>> {
+    implementation.map(|implementation| Box::new(implementation) as Box<dyn Interface>)
 }
