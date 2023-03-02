@@ -1,22 +1,16 @@
 use anyhow::Result;
 use clap::ValueEnum;
 use heck::ToKebabCase;
-use necessist_core::{implementation_as_interface, Interface, LightContext, ToImplementation};
+use necessist_core::{Interface, LightContext, ToImplementation};
 use strum_macros::EnumIter;
-
-mod impls;
 
 #[derive(Debug, Clone, Copy, EnumIter, Eq, PartialEq, ValueEnum)]
 #[remain::sorted]
-pub(crate) enum Identifier {
-    Foundry,
-}
+pub(crate) enum Identifier {}
 
 impl ToImplementation for Identifier {
-    fn to_implementation(&self, context: &LightContext) -> Result<Option<Box<dyn Interface>>> {
-        match self {
-            Self::Foundry => impls::Foundry::applicable(context).map(implementation_as_interface),
-        }
+    fn to_implementation(&self, _context: &LightContext) -> Result<Option<Box<dyn Interface>>> {
+        match *self {}
     }
 }
 

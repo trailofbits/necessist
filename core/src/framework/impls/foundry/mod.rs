@@ -1,8 +1,8 @@
-use anyhow::{anyhow, ensure, Context, Result};
-use log::debug;
-use necessist_core::{
+use crate::{
     source_warn, util, warn, Config, Interface, LightContext, Postprocess, Span, WarnFlags, Warning,
 };
+use anyhow::{anyhow, ensure, Context, Result};
+use log::debug;
 use std::{
     collections::BTreeMap,
     fs::read_to_string,
