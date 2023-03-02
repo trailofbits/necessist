@@ -87,9 +87,9 @@ pub struct Config {
 /// Necessist's main entrypoint.
 // smoelius: The reason `framework` is not included as a field in `Necessist` is to avoid having
 // to parameterize every function that takes a `Necessist` as an argument.
-pub fn necessist<AdditionalIdentifier: IntoEnumIterator + ToImplementation>(
+pub fn necessist<Identifier: IntoEnumIterator + ToImplementation>(
     opts: &Necessist,
-    framework: framework::AutoUnion<framework::Identifier, AdditionalIdentifier>,
+    framework: framework::Auto<Identifier>,
 ) -> Result<()> {
     let mut opts = opts.clone();
 
@@ -152,9 +152,9 @@ pub fn necessist<AdditionalIdentifier: IntoEnumIterator + ToImplementation>(
 }
 
 #[allow(clippy::type_complexity)]
-fn prepare<AdditionalIdentifier: IntoEnumIterator + ToImplementation>(
+fn prepare<Identifier: IntoEnumIterator + ToImplementation>(
     context: &LightContext,
-    framework: framework::AutoUnion<framework::Identifier, AdditionalIdentifier>,
+    framework: framework::Auto<Identifier>,
 ) -> Result<
     Option<(
         Option<sqlite::Sqlite>,
@@ -376,9 +376,9 @@ fn dump(context: &LightContext, removals: &[Removal]) {
     }
 }
 
-fn find_framework<AdditionalIdentifier: IntoEnumIterator + ToImplementation>(
+fn find_framework<Identifier: IntoEnumIterator + ToImplementation>(
     context: &LightContext,
-    identifier: framework::AutoUnion<framework::Identifier, AdditionalIdentifier>,
+    identifier: framework::Auto<Identifier>,
 ) -> Result<Box<dyn framework::Interface>> {
     let implementation = identifier.to_implementation(context)?;
 

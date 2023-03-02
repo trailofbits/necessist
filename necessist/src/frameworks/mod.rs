@@ -1,7 +1,10 @@
 use anyhow::Result;
 use clap::ValueEnum;
 use heck::ToKebabCase;
-use necessist_core::{Interface, LightContext, ToImplementation};
+use necessist_core::{
+    framework::{Interface, ToImplementation},
+    LightContext,
+};
 use strum_macros::EnumIter;
 
 #[derive(Debug, Clone, Copy, EnumIter, Eq, PartialEq, ValueEnum)]

@@ -6,7 +6,7 @@ use std::path::PathBuf;
 #[derive(Debug, Parser)]
 #[clap(version = crate_version!())]
 #[remain::sorted]
-pub struct Opts<AdditionalIdentifier: Clone + Send + Sync + ValueEnum + 'static> {
+pub struct Opts<Identifier: Clone + Send + Sync + ValueEnum + 'static> {
     #[clap(
         long,
         action = ArgAction::Append,
@@ -31,7 +31,7 @@ pub struct Opts<AdditionalIdentifier: Clone + Send + Sync + ValueEnum + 'static>
     #[clap(long, help = "Dump sqlite database contents to the console")]
     dump: bool,
     #[clap(long, help = "Assume testing framework is <FRAMEWORK>")]
-    framework: Option<framework::AutoUnion<framework::Identifier, AdditionalIdentifier>>,
+    framework: Option<framework::Auto<Identifier>>,
     #[clap(long, help = "Do not perform dry runs")]
     no_dry_run: bool,
     #[clap(long, help = "Do not output to an sqlite database")]
@@ -61,13 +61,10 @@ pub struct Opts<AdditionalIdentifier: Clone + Send + Sync + ValueEnum + 'static>
     zzargs: Vec<String>,
 }
 
-impl<AdditionalIdentifier: Clone + Send + Sync + ValueEnum> From<Opts<AdditionalIdentifier>>
-    for (
-        Necessist,
-        framework::AutoUnion<framework::Identifier, AdditionalIdentifier>,
-    )
+impl<Identifier: Clone + Send + Sync + ValueEnum> From<Opts<Identifier>>
+    for (Necessist, framework::Auto<Identifier>)
 {
-    fn from(opts: Opts<AdditionalIdentifier>) -> Self {
+    fn from(opts: Opts<Identifier>) -> Self {
         let Opts {
             allow,
             default_config,

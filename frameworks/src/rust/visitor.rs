@@ -1,6 +1,8 @@
 use super::{cached_test_file_fs_module_path, Parsing, Rust};
-use crate::{warn, Config, LightContext, SourceFile, Span, ToInternalSpan, WarnFlags, Warning};
 use anyhow::{Error, Result};
+use necessist_core::{
+    warn, Config, LightContext, SourceFile, Span, ToInternalSpan, WarnFlags, Warning,
+};
 use std::{
     path::{Path, PathBuf, StripPrefixError},
     rc::Rc,
@@ -336,16 +338,6 @@ fn is_ignored_method(method: &Ident, args: &Punctuated<Expr, Token![,]>) -> bool
         .binary_search(&method.to_string().as_ref())
         .is_ok()
         && args.is_empty()
-}
-
-impl ToInternalSpan for proc_macro2::Span {
-    fn to_internal_span(&self, source_file: &SourceFile) -> Span {
-        Span {
-            source_file: source_file.clone(),
-            start: self.start(),
-            end: self.end(),
-        }
-    }
 }
 
 #[cfg(test)]

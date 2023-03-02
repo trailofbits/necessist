@@ -14,8 +14,7 @@ mod core;
 use crate::core::Removal;
 pub use crate::core::{necessist, Config, LightContext, Necessist};
 
-mod framework;
-pub use framework::{AutoUnion, Empty, Identifier, Interface, Postprocess, ToImplementation};
+pub mod framework;
 
 mod offset_based_rewriter;
 
@@ -31,16 +30,12 @@ mod source_file;
 pub use source_file::SourceFile;
 
 mod span;
-pub use span::Span;
-use span::ToInternalSpan;
+pub use span::{Span, ToInternalSpan};
 
 mod sqlite;
 
 mod to_console_string;
 use to_console_string::ToConsoleString;
-
-mod try_insert;
-use try_insert::TryInsert;
 
 pub mod util;
 

@@ -5,7 +5,8 @@
 use anyhow::Result;
 use clap::Parser;
 use log::debug;
-use necessist_core::{cli, necessist, AutoUnion, Identifier, Necessist};
+use necessist_core::{cli, framework::Auto, necessist, Necessist};
+use necessist_frameworks::Identifier;
 use std::{
     env::{args, var},
     fs::{File, OpenOptions},
@@ -16,13 +17,12 @@ use std::{
 #[cfg(unix)]
 use std::os::unix::io::AsRawFd;
 
-mod framework;
+mod frameworks;
 
 fn main() -> Result<()> {
     env_logger::init();
 
-    let (opts, framework): (Necessist, AutoUnion<Identifier, framework::Identifier>) =
-        cli::Opts::parse_from(args()).into();
+    let (opts, framework): (Necessist, Auto<Identifier>) = cli::Opts::parse_from(args()).into();
 
     // smoelius: Prevent `trycmd` tests from running concurrently.
     #[cfg(unix)]
