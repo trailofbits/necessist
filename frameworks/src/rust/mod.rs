@@ -1,8 +1,10 @@
-use super::super::{Interface, Postprocess};
-use crate::{source_warn, util, warn, Config, LightContext, Span, TryInsert, WarnFlags, Warning};
 use anyhow::{anyhow, ensure, Context, Result};
 use cargo_metadata::Package;
 use log::debug;
+use necessist_core::{
+    framework::{Interface, Postprocess},
+    source_warn, util, warn, Config, LightContext, Span, WarnFlags, Warning,
+};
 use std::{
     collections::BTreeMap,
     ffi::OsStr,
@@ -18,6 +20,9 @@ use walkdir::WalkDir;
 
 mod parsing;
 use parsing::{cached_test_file_fs_module_path, cached_test_file_package, Parsing};
+
+mod try_insert;
+use try_insert::TryInsert;
 
 mod visitor;
 use visitor::visit;

@@ -1044,6 +1044,7 @@ dependencies = [
  "libc",
  "log",
  "necessist-core",
+ "necessist-frameworks",
  "regex",
  "remain",
  "strum",
@@ -1070,7 +1071,6 @@ dependencies = [
  "fs_extra",
  "git2",
  "heck",
- "if_chain",
  "indicatif",
  "lazy_static",
  "log",
@@ -1079,16 +1079,37 @@ dependencies = [
  "regex",
  "remain",
  "serde",
+ "strum",
+ "strum_macros",
+ "subprocess",
+ "syn",
+ "tempfile",
+ "toml",
+ "trycmd",
+]
+
+[[package]]
+name = "necessist-frameworks"
+version = "0.1.0-beta.6"
+dependencies = [
+ "anyhow",
+ "cargo_metadata",
+ "clap",
+ "curl",
+ "heck",
+ "if_chain",
+ "lazy_static",
+ "log",
+ "necessist-core",
+ "regex",
+ "remain",
  "solang-parser",
  "strum",
  "strum_macros",
  "subprocess",
  "swc_core",
  "syn",
- "tempfile",
  "thiserror",
- "toml",
- "trycmd",
  "walkdir",
 ]
 

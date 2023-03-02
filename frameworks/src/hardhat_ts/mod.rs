@@ -1,8 +1,10 @@
-use super::super::{Interface, Postprocess};
-use crate::{source_warn, util, warn, Config, LightContext, Span, WarnFlags, Warning};
 use anyhow::{anyhow, ensure, Context, Result};
 use lazy_static::lazy_static;
 use log::debug;
+use necessist_core::{
+    framework::{Interface, Postprocess},
+    source_warn, util, warn, Config, LightContext, Span, WarnFlags, Warning,
+};
 use regex::Regex;
 use std::{
     cell::RefCell,

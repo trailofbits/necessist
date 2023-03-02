@@ -2,7 +2,6 @@ use crate::{Config, LightContext, Span};
 use anyhow::Result;
 use heck::ToKebabCase;
 use std::{any::type_name, path::Path};
-use strum_macros::EnumIter;
 use subprocess::{Exec, Popen};
 
 mod auto;
@@ -11,12 +10,11 @@ pub use auto::Auto;
 mod empty;
 pub use empty::Empty;
 
-mod impls;
-
 mod union;
 pub use union::Union;
 
-pub type AutoUnion<T, U> = Auto<Union<T, U>>;
+#[allow(dead_code)]
+type AutoUnion<T, U> = Auto<Union<T, U>>;
 
 pub type Postprocess = dyn Fn(&LightContext, Popen) -> Result<bool>;
 
@@ -42,39 +40,4 @@ pub trait Interface: std::fmt::Debug {
 
 pub trait ToImplementation {
     fn to_implementation(&self, context: &LightContext) -> Result<Option<Box<dyn Interface>>>;
-}
-
-#[derive(Debug, Clone, Copy, EnumIter, Eq, Ord, PartialEq, PartialOrd)]
-#[cfg_attr(feature = "clap", derive(clap::ValueEnum))]
-#[non_exhaustive]
-#[remain::sorted]
-pub enum Identifier {
-    Foundry,
-    HardhatTs,
-    Rust,
-}
-
-impl ToImplementation for Identifier {
-    fn to_implementation(&self, context: &LightContext) -> Result<Option<Box<dyn Interface>>> {
-        match *self {
-            Self::Foundry => impls::Foundry::applicable(context).map(implementation_as_interface),
-            Self::HardhatTs => {
-                impls::HardhatTs::applicable(context).map(implementation_as_interface)
-            }
-            Self::Rust => impls::Rust::applicable(context).map(implementation_as_interface),
-        }
-    }
-}
-
-impl std::fmt::Display for Identifier {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", format!("{self:?}").to_kebab_case())
-    }
-}
-
-/// Utility function
-fn implementation_as_interface(
-    implementation: Option<impl Interface + 'static>,
-) -> Option<Box<dyn Interface>> {
-    implementation.map(|implementation| Box::new(implementation) as Box<dyn Interface>)
 }

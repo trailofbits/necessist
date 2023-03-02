@@ -1,6 +1,6 @@
 use super::HardhatTs;
-use crate::{Config, LineColumn, SourceFile, Span};
 use if_chain::if_chain;
+use necessist_core::{Config, LineColumn, SourceFile, Span};
 use std::{
     path::{Path, PathBuf},
     rc::Rc,

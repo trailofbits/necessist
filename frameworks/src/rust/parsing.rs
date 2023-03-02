@@ -1,6 +1,7 @@
-use crate::{util, TryInsert};
+use super::TryInsert;
 use anyhow::{anyhow, Result};
 use cargo_metadata::{MetadataCommand, Package};
+use necessist_core::util;
 use std::{
     collections::BTreeMap,
     path::{Path, PathBuf},

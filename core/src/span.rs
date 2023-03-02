@@ -1,15 +1,14 @@
 use crate::{SourceFile, ToConsoleString};
 use anyhow::{anyhow, Result};
 use lazy_static::lazy_static;
-use proc_macro2::LineColumn;
 use regex::Regex;
 use std::{path::PathBuf, rc::Rc};
 
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct Span {
     pub source_file: SourceFile,
-    pub start: LineColumn,
-    pub end: LineColumn,
+    pub start: proc_macro2::LineColumn,
+    pub end: proc_macro2::LineColumn,
 }
 
 impl std::fmt::Display for Span {
@@ -57,11 +56,11 @@ impl Span {
         let end_column = end_column.parse::<usize>()?;
         Ok(Self {
             source_file: SourceFile::new(root.clone(), Rc::new(root.join(source_file))),
-            start: LineColumn {
+            start: proc_macro2::LineColumn {
                 line: start_line,
                 column: start_column - 1,
             },
-            end: LineColumn {
+            end: proc_macro2::LineColumn {
                 line: end_line,
                 column: end_column - 1,
             },
@@ -69,12 +68,12 @@ impl Span {
     }
 
     #[must_use]
-    pub fn start(&self) -> LineColumn {
+    pub fn start(&self) -> proc_macro2::LineColumn {
         self.start
     }
 
     #[must_use]
-    pub fn end(&self) -> LineColumn {
+    pub fn end(&self) -> proc_macro2::LineColumn {
         self.end
     }
 
@@ -90,6 +89,17 @@ impl Span {
     }
 }
 
-pub(crate) trait ToInternalSpan {
+#[allow(clippy::module_name_repetitions)]
+pub trait ToInternalSpan {
     fn to_internal_span(&self, source_file: &SourceFile) -> Span;
+}
+
+impl ToInternalSpan for proc_macro2::Span {
+    fn to_internal_span(&self, source_file: &SourceFile) -> Span {
+        Span {
+            source_file: source_file.clone(),
+            start: self.start(),
+            end: self.end(),
+        }
+    }
 }
