@@ -8,10 +8,11 @@ if [[ $# -ne 0 ]]; then
     exit 1
 fi
 
-# smoelius: The next command should match the `clippy` test in tests/ci_is/enabled.rs.
+# smoelius: The next command should match the `clippy` test in core/tests/ci_is/enabled.rs.
 
-cargo clippy --all-features --all-targets -- \
+cargo +nightly clippy --all-features --all-targets -- \
     -D warnings \
     -W clippy::pedantic \
+    -A clippy::let-underscore-untyped \
     -A clippy::missing-errors-doc \
     -A clippy::missing-panics-doc
