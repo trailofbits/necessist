@@ -48,10 +48,12 @@ impl Rust {
 }
 
 impl Interface for Rust {
+    #[allow(clippy::similar_names)]
     #[cfg_attr(
         dylint_lib = "non_local_effect_before_error_return",
         allow(non_local_effect_before_error_return)
     )]
+    #[cfg_attr(dylint_lib = "overscoped_allow", allow(overscoped_allow))]
     fn parse(
         &mut self,
         context: &LightContext,
@@ -71,7 +73,7 @@ impl Interface for Rust {
             assert!(test_file.is_absolute());
             assert!(test_file.starts_with(context.root));
             let content = read_to_string(test_file)?;
-            #[allow(clippy::similar_names, clippy::unwrap_used)]
+            #[allow(clippy::unwrap_used)]
             let file = parse_file(&content).with_context(|| {
                 format!(
                     "Failed to parse {:?}",
