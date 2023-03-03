@@ -6,7 +6,7 @@ edition = "2021"
 description = "necessist"
 
 authors = ["Samuel Moelius <sam@moeli.us>"]
-license = "MIT OR Apache-2.0"
+license = "AGPL"
 repository = "https://github.com/trailofbits/necessist"
 
 [dependencies]
