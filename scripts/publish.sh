@@ -52,7 +52,16 @@ for DIR in $DIRS; do
         continue
     fi
 
-    cargo publish
+    # smoelius: Temporary workaround for the following:
+    #
+    #   error: failed to verify package tarball
+    #
+    #   Caused by:
+    #     Source directory was modified by build.rs during cargo publish. Build scripts should not modify anything outside of OUT_DIR.
+    #     Added: /home/runner/work/necessist/necessist/target/package/necessist-frameworks-0.1.0-beta.X/Cargo.lock
+    #
+    #     To proceed despite this, pass the `--no-verify` flag.
+    cargo publish --no-verify
 
     # smoelius: The following should no longer be necessary, given:
     # https://github.com/rust-lang/cargo/pull/11062
