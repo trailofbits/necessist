@@ -1,6 +1,6 @@
 [package]
 name = "necessist"
-version = "0.1.0-beta.6"
+version = "0.1.0-beta.7"
 edition = "2021"
 
 description = "necessist"
@@ -10,8 +10,8 @@ license = "AGPL"
 repository = "https://github.com/trailofbits/necessist"
 
 [dependencies]
-necessist-core = { version = "=0.1.0-beta.6", path = "../core", features = ["clap"] }
-necessist-frameworks = { version = "=0.1.0-beta.6", path = "../frameworks" }
+necessist-core = { version = "=0.1.0-beta.7", path = "../core", features = ["clap"] }
+necessist-frameworks = { version = "=0.1.0-beta.7", path = "../frameworks" }
 
 anyhow = "1.0"
 clap = { version = "4.1" }
