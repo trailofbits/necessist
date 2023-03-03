@@ -39,7 +39,7 @@ published() {
 }
 
 # smoelius: Publishing in this order ensures that all dependencies are met.
-DIRS="core crates_io"
+DIRS="core frameworks crates_io"
 
 for DIR in $DIRS; do
     pushd "$DIR"
@@ -54,9 +54,12 @@ for DIR in $DIRS; do
 
     cargo publish
 
-    while ! published "$NAME" "$VERSION"; do
-        sleep 10s
-    done
+    # smoelius: The following should no longer be necessary, given:
+    # https://github.com/rust-lang/cargo/pull/11062
+
+    # while ! published "$NAME" "$VERSION"; do
+    #     sleep 10s
+    # done
 
     popd
 done
