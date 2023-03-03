@@ -76,7 +76,7 @@ fn license() {
     .unwrap()
     .lines()
     {
-        if line == "AGPL (3): necessist, necessist-core, necessist-frameworks" {
+        if line == "AGPL-3.0 (3): necessist, necessist-core, necessist-frameworks" {
             continue;
         }
         assert!(re.is_match(line), "{line:?} does not match");

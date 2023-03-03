@@ -6,7 +6,7 @@ edition = "2021"
 description = "necessist-core"
 
 authors = ["Samuel Moelius <sam@moeli.us>"]
-license = "AGPL"
+license = "AGPL-3.0"
 repository = "https://github.com/trailofbits/necessist"
 
 [dependencies]
