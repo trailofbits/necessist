@@ -37,7 +37,7 @@ Generally speaking, Necessist will not attempt to remove a statement if it is on
 - A declaration (e.g., a local or `let` binding)
 - A `break`, `continue`, or `return`
 
-Also, for some frameworks, certain statements and methods are ignored (see [below](#supported-framework-specifics)).
+Also, for some frameworks, certain statements and methods are ignored (see [below](#supported-frameworks)).
 
 ## Usage
 
@@ -81,14 +81,10 @@ By default, Necessist outputs only when tests pass. Passing `--verbose` causes N
 
 ## Supported frameworks
 
-- [Foundry](#foundry)
-- [golang](#golang)
-- [Hardhat TS](#hardhat-ts)
-- [Rust](#rust)
+Click on a framework to see its specifics.
 
-## Supported framework specifics
-
-### Foundry
+<details>
+<summary>Foundry</summary>
 
 In addition to the below, the Foundry framework ignores:
 
@@ -108,7 +104,10 @@ In addition to the below, the Foundry framework ignores:
 - `startPrank`
 - `stopPrank`
 
-### Golang
+</details>
+
+<details>
+<summary>Golang</summary>
 
 In addition to the below, the Golang framework ignores:
 
@@ -131,7 +130,10 @@ In addition to the below, the Golang framework ignores:
 
 \* This list is based primarily on [`testing.T`]'s methods. However, some methods with commonplace names are omitted to avoid colliding with other types' methods.
 
-### Hardhat TS
+</details>
+
+<details>
+<summary>Hardhat TS</summary>
 
 #### Ignored functions
 
@@ -145,7 +147,10 @@ In addition to the below, the Golang framework ignores:
 - `toNumber`
 - `toString`
 
-### Rust
+</details>
+
+<details>
+<summary>Rust</summary>
 
 #### Ignored macros
 
@@ -212,6 +217,10 @@ In addition to the below, the Golang framework ignores:
 - `success` (e.g. [`assert_cmd::assert::Assert::success`])
 - `unwrap` (e.g. [`std::option::Option::unwrap`])
 - `unwrap_err` (e.g. [`std::result::Result::unwrap_err`])
+
+</details>
+
+<p></p>
 
 ## Configuration files (experimental)
 
