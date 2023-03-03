@@ -44,7 +44,6 @@ jobs:
           cargo install cargo-dylint dylint-link || true
           cargo install cargo-license            || true
           cargo install cargo-sort               || true
-          cargo install cargo-udeps              || true
 
       - name: Test
         run: cargo test --features=ci
