@@ -1,10 +1,9 @@
-use super::ts_utils::install_node_modules;
+use super::{ts_utils::install_node_modules, High};
 use anyhow::{anyhow, ensure, Context, Result};
 use lazy_static::lazy_static;
 use log::debug;
 use necessist_core::{
-    framework::{Interface, Postprocess},
-    source_warn, util, warn, Config, LightContext, Span, WarnFlags, Warning,
+    framework::Postprocess, source_warn, util, warn, Config, LightContext, Span, WarnFlags, Warning,
 };
 use regex::Regex;
 use std::{
@@ -78,7 +77,7 @@ lazy_static! {
     };
 }
 
-impl Interface for HardhatTs {
+impl High for HardhatTs {
     #[cfg_attr(
         dylint_lib = "non_local_effect_before_error_return",
         allow(non_local_effect_before_error_return)
