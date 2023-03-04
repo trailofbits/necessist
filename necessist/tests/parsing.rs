@@ -10,8 +10,11 @@ use tempfile::tempdir;
 struct Test {
     expensive: bool,
     url: &'static str,
-    subdir: Option<&'static str>,
-    framework_and_tomls: &'static [(Option<&'static str>, Option<&'static str>)],
+    subdir_framework_toml_triples: &'static [(
+        Option<&'static str>,
+        Option<&'static str>,
+        Option<&'static str>,
+    )],
 }
 
 const TESTS: &[Test] = &[
@@ -19,49 +22,47 @@ const TESTS: &[Test] = &[
     Test {
         expensive: false,
         url: "https://github.com/diem/diem",
-        subdir: None,
-        framework_and_tomls: &[],
+        subdir_framework_toml_triples: &[],
     },
     // https://blog.kowalczyk.info/article/9afe3485f2204f1bb43217d70f7b87d4/big-projects-written-in-go.html
     Test {
         expensive: false,
         url: "https://github.com/minio/minio",
-        subdir: None,
-        framework_and_tomls: &[],
+        subdir_framework_toml_triples: &[],
     },
     Test {
         expensive: false,
         url: "https://github.com/ProjectOpenSea/operator-filter-registry",
-        subdir: None,
-        framework_and_tomls: &[],
+        subdir_framework_toml_triples: &[],
     },
     Test {
         expensive: false,
         url: "https://github.com/ProjectOpenSea/seaport",
-        subdir: None,
-        framework_and_tomls: &[(Some("hardhat-ts"), Some(SEAPORT_CONFIG))],
+        subdir_framework_toml_triples: &[(None, Some("hardhat-ts"), Some(SEAPORT_CONFIG))],
     },
     // https://users.rust-lang.org/t/largest-rust-codebases/17027/7
     Test {
         expensive: true,
         url: "https://github.com/rusoto/rusoto",
-        subdir: None,
-        framework_and_tomls: &[],
+        subdir_framework_toml_triples: &[],
     },
     Test {
         expensive: false,
         url: "https://github.com/smartcontractkit/chainlink",
-        subdir: Some("contracts"),
-        framework_and_tomls: &[
-            (Some("foundry"), None),
-            (Some("hardhat-ts"), Some(CHAINLINK_CONFIG)),
+        subdir_framework_toml_triples: &[
+            (None, None, None),
+            (Some("contracts"), Some("foundry"), None),
+            (
+                Some("contracts"),
+                Some("hardhat-ts"),
+                Some(CHAINLINK_CONFIG),
+            ),
         ],
     },
     Test {
         expensive: false,
         url: "https://github.com/Uniswap/v3-core",
-        subdir: None,
-        framework_and_tomls: &[(None, Some(UNISWAP_CONFIG))],
+        subdir_framework_toml_triples: &[(None, None, Some(UNISWAP_CONFIG))],
     },
 ];
 
@@ -90,14 +91,13 @@ fn cheap_tests() {
     for &Test {
         expensive,
         url,
-        subdir,
-        framework_and_tomls,
+        subdir_framework_toml_triples,
     } in TESTS.iter()
     {
         if expensive {
             continue;
         }
-        run_test(url, subdir, framework_and_tomls);
+        run_test(url, subdir_framework_toml_triples);
     }
 }
 
@@ -111,15 +111,17 @@ fn all_tests() {
     for &Test {
         expensive: _,
         url,
-        subdir,
-        framework_and_tomls,
+        subdir_framework_toml_triples,
     } in TESTS.iter()
     {
-        run_test(url, subdir, framework_and_tomls);
+        run_test(url, subdir_framework_toml_triples);
     }
 }
 
-fn run_test(url: &str, subdir: Option<&str>, framework_and_tomls: &[(Option<&str>, Option<&str>)]) {
+fn run_test(
+    url: &str,
+    subdir_framework_toml_triples: &[(Option<&str>, Option<&str>, Option<&str>)],
+) {
     let tempdir = tempdir().unwrap();
 
     #[allow(clippy::explicit_write)]
@@ -133,16 +135,13 @@ fn run_test(url: &str, subdir: Option<&str>, framework_and_tomls: &[(Option<&str
         .unwrap()
         .success());
 
-    let framework_and_tomls = if framework_and_tomls.is_empty() {
-        &[(None, None)]
+    let subdir_framework_toml_triples = if subdir_framework_toml_triples.is_empty() {
+        &[(None, None, None)]
     } else {
-        assert!(framework_and_tomls
-            .iter()
-            .all(|(framework, toml)| framework.is_some() || toml.is_some()));
-        framework_and_tomls
+        subdir_framework_toml_triples
     };
 
-    for (framework, toml) in framework_and_tomls {
+    for (subdir, framework, toml) in subdir_framework_toml_triples {
         let tomls = toml.map_or(vec![None], |toml| vec![None, Some(toml)]);
 
         let mut candidates_prev = None;
@@ -152,8 +151,13 @@ fn run_test(url: &str, subdir: Option<&str>, framework_and_tomls: &[(Option<&str
             writeln!(
                 stderr(),
                 "
-{}{}{}",
+{}{}{}{}",
                 url,
+                if let Some(subdir) = subdir {
+                    format!(" (in `{subdir}`)")
+                } else {
+                    String::new()
+                },
                 if let Some(framework) = framework {
                     format!(" (with framework `{framework})")
                 } else {
