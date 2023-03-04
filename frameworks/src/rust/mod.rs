@@ -1,20 +1,18 @@
-use anyhow::{anyhow, ensure, Context, Error, Result};
+use super::Low;
+use anyhow::{anyhow, Context, Error, Result};
 use bstr::{io::BufReadExt, BStr};
 use cargo_metadata::Package;
-use log::debug;
 use necessist_core::{
-    framework::{Interface, Postprocess},
-    source_warn, util, warn, Config, LightContext, Span, WarnFlags, Warning,
+    framework::Postprocess, source_warn, util, warn, Config, LightContext, Span, WarnFlags, Warning,
 };
 use std::{
     collections::BTreeMap,
     ffi::OsStr,
     fs::read_to_string,
     path::{Path, PathBuf},
-    process::{Command, Stdio},
+    process::Command,
     rc::Rc,
 };
-use subprocess::{Exec, NullFile, Redirection};
 use syn::parse_file;
 use walkdir::WalkDir;
 
@@ -52,7 +50,7 @@ impl Rust {
     }
 }
 
-impl Interface for Rust {
+impl Low for Rust {
     #[allow(clippy::similar_names)]
     #[cfg_attr(
         dylint_lib = "non_local_effect_before_error_return",
@@ -121,22 +119,21 @@ impl Interface for Rust {
         Ok(spans)
     }
 
-    fn dry_run(&self, context: &LightContext, test_file: &Path) -> Result<()> {
-        let mut command = self.build_test_command(context, test_file);
-        command.args(&context.opts.args);
-
-        debug!("{:?}", command);
-
-        let output = command.output()?;
-        ensure!(output.status.success(), "{:#?}", output);
-        Ok(())
+    fn command_to_run_test_file(&self, context: &LightContext, test_file: &Path) -> Command {
+        self.test_command(context, test_file)
     }
 
-    fn exec(
+    fn command_to_build_test(&self, context: &LightContext, span: &Span) -> Command {
+        let mut command = self.test_command(context, &span.source_file);
+        command.arg("--no-run");
+        command
+    }
+
+    fn command_to_run_test(
         &self,
         context: &LightContext,
         span: &Span,
-    ) -> Result<Option<(Exec, Option<Box<Postprocess>>)>> {
+    ) -> (Command, Vec<String>, Option<Box<Postprocess>>) {
         #[allow(clippy::expect_used)]
         let test_path = self
             .span_test_path_map
@@ -144,31 +141,11 @@ impl Interface for Rust {
             .expect("Test path is not set");
         let test = test_path.join("::");
 
-        {
-            let mut command = self.build_test_command(context, &span.source_file);
-            command.arg("--no-run");
-            command.args(&context.opts.args);
-            command.stdout(Stdio::null());
-            command.stderr(Stdio::null());
-
-            debug!("{:?}", command);
-
-            let status = command.status()?;
-            if !status.success() {
-                return Ok(None);
-            }
-        }
-
-        let mut exec = self.build_test_exec(context, &span.source_file);
-        exec = exec.args(&context.opts.args);
-        exec = exec.args(&["--", "--exact", &test]);
-        exec = exec.stdout(Redirection::Pipe);
-        exec = exec.stderr(NullFile);
-
         let span = span.clone();
 
-        Ok(Some((
-            exec,
+        (
+            self.test_command(context, &span.source_file),
+            vec!["--".to_owned(), "--exact".to_owned(), test.clone()],
             Some(Box::new(move |context: &LightContext, popen| {
                 let stdout = popen
                     .stdout
@@ -204,7 +181,7 @@ impl Interface for Rust {
                 )?;
                 Ok(false)
             })),
-        )))
+        )
     }
 }
 
@@ -222,7 +199,7 @@ fn check_config(context: &LightContext, config: &Config) -> Result<()> {
 }
 
 impl Rust {
-    fn build_test_command(&self, _context: &LightContext, test_file: &Path) -> Command {
+    fn test_command(&self, _context: &LightContext, test_file: &Path) -> Command {
         #[allow(clippy::expect_used)]
         let flags = self
             .test_file_flags_cache
@@ -232,18 +209,6 @@ impl Rust {
         command.arg("test");
         command.args(flags);
         command
-    }
-
-    fn build_test_exec(&self, _context: &LightContext, test_file: &Path) -> Exec {
-        #[allow(clippy::expect_used)]
-        let flags = self
-            .test_file_flags_cache
-            .get(test_file)
-            .expect("Flags are not cached");
-        let mut exec = Exec::cmd("cargo");
-        exec = exec.arg("test");
-        exec = exec.args(flags);
-        exec
     }
 
     #[cfg_attr(

@@ -1,11 +1,17 @@
-use anyhow::Result;
+use anyhow::{ensure, Result};
 use clap::ValueEnum;
 use heck::ToKebabCase;
+use log::debug;
 use necessist_core::{
-    framework::{Applicable, Interface, ToImplementation},
-    LightContext,
+    framework::{Applicable, Interface as High, Postprocess, ToImplementation},
+    Config, LightContext, Span,
+};
+use std::{
+    path::Path,
+    process::{Command, Stdio},
 };
 use strum_macros::EnumIter;
+use subprocess::{Exec, NullFile, Redirection};
 
 mod foundry;
 use foundry::Foundry;
@@ -44,12 +50,18 @@ impl Applicable for Identifier {
 }
 
 impl ToImplementation for Identifier {
-    fn to_implementation(&self, context: &LightContext) -> Result<Option<Box<dyn Interface>>> {
+    fn to_implementation(&self, context: &LightContext) -> Result<Option<Box<dyn High>>> {
         Ok(Some(match *self {
-            Self::Foundry => implementation_as_interface(Foundry::new(context)),
-            Self::Golang => implementation_as_interface(Golang::new(context)),
-            Self::HardhatTs => implementation_as_interface(HardhatTs::new(context)),
-            Self::Rust => implementation_as_interface(Rust::new(context)),
+            Self::Foundry => implementation_as_interface(Adapter)(Foundry::new(context)),
+
+            Self::Golang => implementation_as_interface(Adapter)(Golang::new(context)),
+
+            // smoelius: `HardhatTs` implements the high-level interface directly.
+            Self::HardhatTs => {
+                implementation_as_interface(std::convert::identity)(HardhatTs::new(context))
+            }
+
+            Self::Rust => implementation_as_interface(Adapter)(Rust::new(context)),
         }))
     }
 }
@@ -61,6 +73,106 @@ impl std::fmt::Display for Identifier {
 }
 
 /// Utility function
-fn implementation_as_interface(implementation: impl Interface + 'static) -> Box<dyn Interface> {
-    Box::new(implementation) as Box<dyn Interface>
+fn implementation_as_interface<T, U: High + 'static>(
+    adapter: impl Fn(T) -> U,
+) -> impl Fn(T) -> Box<dyn High> {
+    move |implementation| Box::new(adapter(implementation)) as Box<dyn High>
+}
+
+#[derive(Debug)]
+struct Adapter<T>(T);
+
+impl<T: Low> High for Adapter<T> {
+    fn parse(
+        &mut self,
+        context: &LightContext,
+        config: &Config,
+        test_files: &[&Path],
+    ) -> Result<Vec<Span>> {
+        self.0.parse(context, config, test_files)
+    }
+
+    fn dry_run(&self, context: &LightContext, test_file: &Path) -> Result<()> {
+        // smoelius: `REQUIRES_NODE_MODULES` is a hack. But at present, I don't know how it should
+        // be generalized.
+        if T::REQUIRES_NODE_MODULES {
+            ts_utils::install_node_modules(context)?;
+        }
+
+        let mut command = self.0.command_to_run_test_file(context, test_file);
+        command.args(&context.opts.args);
+
+        debug!("{:?}", command);
+
+        let output = command.output()?;
+        ensure!(output.status.success(), "{:#?}", output);
+        Ok(())
+    }
+
+    fn exec(
+        &self,
+        context: &LightContext,
+        span: &Span,
+    ) -> Result<Option<(Exec, Option<Box<Postprocess>>)>> {
+        {
+            let mut command = self.0.command_to_build_test(context, span);
+            command.args(&context.opts.args);
+            command.stdout(Stdio::null());
+            command.stderr(Stdio::null());
+
+            debug!("{:?}", command);
+
+            let status = command.status()?;
+            if !status.success() {
+                return Ok(None);
+            }
+        }
+
+        let (mut command, final_args, postprocess) = self.0.command_to_run_test(context, span);
+        command.args(&context.opts.args);
+        command.args(final_args);
+
+        let mut exec = exec_from_command(&command);
+        if postprocess.is_some() {
+            exec = exec.stdout(Redirection::Pipe);
+        } else {
+            exec = exec.stdout(NullFile);
+        }
+        exec = exec.stderr(NullFile);
+
+        Ok(Some((exec, postprocess)))
+    }
+}
+
+trait Low: std::fmt::Debug {
+    fn parse(
+        &mut self,
+        context: &LightContext,
+        config: &Config,
+        test_files: &[&Path],
+    ) -> Result<Vec<Span>>;
+
+    const REQUIRES_NODE_MODULES: bool = false;
+    fn command_to_run_test_file(&self, context: &LightContext, test_file: &Path) -> Command;
+    fn command_to_build_test(&self, context: &LightContext, span: &Span) -> Command;
+    fn command_to_run_test(
+        &self,
+        context: &LightContext,
+        span: &Span,
+    ) -> (Command, Vec<String>, Option<Box<Postprocess>>);
+}
+
+fn exec_from_command(command: &Command) -> Exec {
+    let mut exec = Exec::cmd(command.get_program()).args(&command.get_args().collect::<Vec<_>>());
+    for (key, val) in command.get_envs() {
+        if let Some(val) = val {
+            exec = exec.env(key, val);
+        } else {
+            exec = exec.env_remove(key);
+        }
+    }
+    if let Some(path) = command.get_current_dir() {
+        exec = exec.cwd(path);
+    }
+    exec
 }

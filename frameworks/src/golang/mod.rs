@@ -1,18 +1,16 @@
-use anyhow::{anyhow, ensure, Context, Error, Result};
+use super::Low;
+use anyhow::{anyhow, Context, Error, Result};
 use bstr::{io::BufReadExt, BStr};
-use log::debug;
 use necessist_core::{
-    framework::{Interface, Postprocess},
-    source_warn, util, warn, Config, LightContext, Span, WarnFlags, Warning,
+    framework::Postprocess, source_warn, util, warn, Config, LightContext, Span, WarnFlags, Warning,
 };
 use std::{
     collections::BTreeMap,
     fs::read_to_string,
     path::{Path, PathBuf},
-    process::{Command, Stdio},
+    process::Command,
     rc::Rc,
 };
-use subprocess::{Exec, NullFile, Redirection};
 use tree_sitter::Parser;
 use walkdir::WalkDir;
 
@@ -38,7 +36,7 @@ impl Golang {
     }
 }
 
-impl Interface for Golang {
+impl Low for Golang {
     #[cfg_attr(
         dylint_lib = "non_local_effect_before_error_return",
         allow(non_local_effect_before_error_return)
@@ -93,54 +91,36 @@ impl Interface for Golang {
         Ok(spans)
     }
 
-    fn dry_run(&self, context: &LightContext, test_file: &Path) -> Result<()> {
-        let mut command = Self::build_test_command(context, test_file);
-        command.args(&context.opts.args);
-
-        debug!("{:?}", command);
-
-        let output = command.output()?;
-        ensure!(output.status.success(), "{:#?}", output);
-        Ok(())
+    fn command_to_run_test_file(&self, context: &LightContext, test_file: &Path) -> Command {
+        Self::test_command(context, test_file)
     }
 
-    fn exec(
+    fn command_to_build_test(&self, context: &LightContext, span: &Span) -> Command {
+        let mut command = Self::test_command(context, &span.source_file);
+        command.arg("-run=^$");
+        command
+    }
+
+    fn command_to_run_test(
         &self,
         context: &LightContext,
         span: &Span,
-    ) -> Result<Option<(Exec, Option<Box<Postprocess>>)>> {
+    ) -> (Command, Vec<String>, Option<Box<Postprocess>>) {
         #[allow(clippy::expect_used)]
         let test_name = self
             .span_test_name_map
             .get(span)
             .expect("Test name is not set");
 
-        {
-            let mut command = Self::build_test_command(context, &span.source_file);
-            command.arg("-run=^$");
-            command.args(&context.opts.args);
-            command.stdout(Stdio::null());
-            command.stderr(Stdio::null());
-
-            debug!("{:?}", command);
-
-            let status = command.status()?;
-            if !status.success() {
-                return Ok(None);
-            }
-        }
-
-        let mut exec = Self::build_test_exec(context, &span.source_file);
-        exec = exec.args(&[format!("-run=^{test_name}$").as_ref(), "-v"]);
-        exec = exec.args(&context.opts.args);
-        exec = exec.stdout(Redirection::Pipe);
-        exec = exec.stderr(NullFile);
+        let mut command = Self::test_command(context, &span.source_file);
+        command.args([format!("-run=^{test_name}$").as_ref(), "-v"]);
 
         let test_name = test_name.clone();
         let span = span.clone();
 
-        Ok(Some((
-            exec,
+        (
+            command,
+            Vec::new(),
             Some(Box::new(move |context: &LightContext, popen| {
                 let stdout = popen
                     .stdout
@@ -176,12 +156,12 @@ impl Interface for Golang {
                 )?;
                 Ok(false)
             })),
-        )))
+        )
     }
 }
 
 impl Golang {
-    fn build_test_command(context: &LightContext, test_file: &Path) -> Command {
+    fn test_command(context: &LightContext, test_file: &Path) -> Command {
         #[allow(clippy::expect_used)]
         let package_path = test_file_package_path(context, test_file)
             .expect("Failed to get test file package path");
@@ -190,17 +170,6 @@ impl Golang {
         command.arg("test");
         command.arg(package_path);
         command
-    }
-
-    fn build_test_exec(context: &LightContext, test_file: &Path) -> Exec {
-        #[allow(clippy::expect_used)]
-        let package_path = test_file_package_path(context, test_file)
-            .expect("Failed to get test file package path");
-        let mut exec = Exec::cmd("go");
-        exec = exec.cwd(context.root);
-        exec = exec.arg("test");
-        exec = exec.arg(package_path);
-        exec
     }
 }
 

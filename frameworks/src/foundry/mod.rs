@@ -1,19 +1,16 @@
-use super::ts_utils::install_node_modules;
-use anyhow::{anyhow, ensure, Context, Result};
-use log::debug;
+use super::Low;
+use anyhow::{anyhow, Context, Result};
 use necessist_core::{
-    framework::{Interface, Postprocess},
-    source_warn, util, warn, Config, LightContext, Span, WarnFlags, Warning,
+    framework::Postprocess, source_warn, util, warn, Config, LightContext, Span, WarnFlags, Warning,
 };
 use std::{
     collections::BTreeMap,
     fs::read_to_string,
     io::BufRead,
     path::{Path, PathBuf},
-    process::{Command, Stdio},
+    process::Command,
     rc::Rc,
 };
-use subprocess::{Exec, NullFile, Redirection};
 use walkdir::WalkDir;
 
 mod visit;
@@ -44,7 +41,7 @@ impl Foundry {
     }
 }
 
-impl Interface for Foundry {
+impl Low for Foundry {
     fn parse(
         &mut self,
         context: &LightContext,
@@ -99,34 +96,24 @@ impl Interface for Foundry {
         Ok(spans)
     }
 
-    fn dry_run(&self, context: &LightContext, test_file: &Path) -> Result<()> {
-        install_node_modules(context)?;
+    const REQUIRES_NODE_MODULES: bool = true;
 
-        let mut command = Command::new("forge");
-        command.current_dir(context.root);
-        command.env("FOUNDRY_FUZZ_RUNS", "1");
-        command.args([
-            "test",
-            "--match-path",
-            &util::strip_prefix(test_file, context.root)
-                .unwrap()
-                .to_string_lossy(),
-        ]);
-        command.args(&context.opts.args);
-
-        debug!("{:?}", command);
-
-        let output = command.output()?;
-        ensure!(output.status.success(), "{:#?}", output);
-        Ok(())
+    fn command_to_run_test_file(&self, context: &LightContext, test_file: &Path) -> Command {
+        Self::test_command(context, test_file)
     }
 
-    #[allow(clippy::unwrap_used)]
-    fn exec(
+    fn command_to_build_test(&self, context: &LightContext, _span: &Span) -> Command {
+        let mut command = Command::new("forge");
+        command.current_dir(context.root);
+        command.arg("build");
+        command
+    }
+
+    fn command_to_run_test(
         &self,
         context: &LightContext,
         span: &Span,
-    ) -> Result<Option<(Exec, Option<Box<Postprocess>>)>> {
+    ) -> (Command, Vec<String>, Option<Box<Postprocess>>) {
         #[allow(clippy::expect_used)]
         let test_name = self
             .span_test_name_map
@@ -134,42 +121,14 @@ impl Interface for Foundry {
             .cloned()
             .expect("Test ident is not set");
 
-        {
-            let mut command = Command::new("forge");
-            command.current_dir(context.root);
-            command.arg("build");
-            command.args(&context.opts.args);
-            command.stdout(Stdio::null());
-            command.stderr(Stdio::null());
-
-            debug!("{:?}", command);
-
-            let status = command.status()?;
-            if !status.success() {
-                return Ok(None);
-            }
-        }
-
-        let mut exec = Exec::cmd("forge");
-        exec = exec.cwd(context.root);
-        exec = exec.env("FOUNDRY_FUZZ_RUNS", "1");
-        exec = exec.args(&[
-            "test",
-            "--match-path",
-            &util::strip_prefix(&span.source_file, context.root)
-                .unwrap()
-                .to_string_lossy(),
-            "--match-test",
-            &test_name,
-        ]);
-        exec = exec.args(&context.opts.args);
-        exec = exec.stdout(Redirection::Pipe);
-        exec = exec.stderr(NullFile);
+        let mut command = Self::test_command(context, &span.source_file);
+        command.args(["--match-test", &test_name]);
 
         let span = span.clone();
 
-        Ok(Some((
-            exec,
+        (
+            command,
+            Vec::new(),
             Some(Box::new(move |context: &LightContext, popen| {
                 let stdout = popen
                     .stdout
@@ -195,11 +154,25 @@ impl Interface for Foundry {
                     Ok(true)
                 }
             })),
-        )))
+        )
     }
 }
 
 impl Foundry {
+    fn test_command(context: &LightContext, test_file: &Path) -> Command {
+        let mut command = Command::new("forge");
+        command.current_dir(context.root);
+        command.env("FOUNDRY_FUZZ_RUNS", "1");
+        command.args([
+            "test",
+            "--match-path",
+            &util::strip_prefix(test_file, context.root)
+                .unwrap()
+                .to_string_lossy(),
+        ]);
+        command
+    }
+
     fn set_span_test_name(&mut self, span: &Span, name: &str) {
         self.span_test_name_map
             .insert(span.clone(), name.to_owned());
