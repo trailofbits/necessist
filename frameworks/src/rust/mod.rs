@@ -1,4 +1,5 @@
-use anyhow::{anyhow, ensure, Context, Result};
+use anyhow::{anyhow, ensure, Context, Error, Result};
+use bstr::{io::BufReadExt, BStr};
 use cargo_metadata::Package;
 use log::debug;
 use necessist_core::{
@@ -9,7 +10,6 @@ use std::{
     collections::BTreeMap,
     ffi::OsStr,
     fs::read_to_string,
-    io::BufRead,
     path::{Path, PathBuf},
     process::{Command, Stdio},
     rc::Rc,
@@ -175,9 +175,22 @@ impl Interface for Rust {
                     .as_ref()
                     .ok_or_else(|| anyhow!("Failed to get stdout"))?;
                 let reader = std::io::BufReader::new(stdout);
-                let running_1_test = reader.lines().try_fold(false, |prev, line| {
-                    let line = line?;
-                    Ok::<_, std::io::Error>(prev || line == "running 1 test")
+                let running_1_test = reader.byte_lines().try_fold(false, |prev, result| {
+                    let buf = result?;
+                    let line = match std::str::from_utf8(&buf) {
+                        Ok(line) => line,
+                        Err(error) => {
+                            source_warn(
+                                context,
+                                Warning::OutputInvalid,
+                                &span,
+                                &format!("{error}: {:?}`", BStr::new(&buf)),
+                                WarnFlags::empty(),
+                            )?;
+                            return Ok(prev);
+                        }
+                    };
+                    Ok::<_, Error>(prev || line == "running 1 test")
                 })?;
                 if running_1_test {
                     return Ok(true);
