@@ -2,13 +2,18 @@
 
 Run tests with statements and method calls removed to help identify broken tests
 
-Install from [crates.io]:
+## Installation
+
+#### System requirements:
+Install `pkg-config` and `libsqlite3-dev` on your system.
+
+#### Install from [crates.io]:
 
 ```
 cargo install necessist --version=^0.1.0-beta
 ```
 
-Install from [github.com]:
+#### Install from [github.com]:
 
 ```
 cargo install --git https://github.com/trailofbits/necessist --branch release
