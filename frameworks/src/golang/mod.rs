@@ -1,4 +1,5 @@
-use anyhow::{anyhow, ensure, Context, Result};
+use anyhow::{anyhow, ensure, Context, Error, Result};
+use bstr::{io::BufReadExt, BStr};
 use log::debug;
 use necessist_core::{
     framework::{Interface, Postprocess},
@@ -7,7 +8,6 @@ use necessist_core::{
 use std::{
     collections::BTreeMap,
     fs::read_to_string,
-    io::BufRead,
     path::{Path, PathBuf},
     process::{Command, Stdio},
     rc::Rc,
@@ -151,9 +151,22 @@ impl Interface for Golang {
                     .as_ref()
                     .ok_or_else(|| anyhow!("Failed to get stdout"))?;
                 let reader = std::io::BufReader::new(stdout);
-                let run = reader.lines().try_fold(false, |prev, line| {
-                    let line = line?;
-                    Ok::<_, std::io::Error>(prev || line == format!("=== RUN   {test_name}"))
+                let run = reader.byte_lines().try_fold(false, |prev, result| {
+                    let buf = result?;
+                    let line = match std::str::from_utf8(&buf) {
+                        Ok(line) => line,
+                        Err(error) => {
+                            source_warn(
+                                context,
+                                Warning::OutputInvalid,
+                                &span,
+                                &format!("{error}: {:?}`", BStr::new(&buf)),
+                                WarnFlags::empty(),
+                            )?;
+                            return Ok(prev);
+                        }
+                    };
+                    Ok::<_, Error>(prev || line == format!("=== RUN   {test_name}"))
                 })?;
                 if run {
                     return Ok(true);
