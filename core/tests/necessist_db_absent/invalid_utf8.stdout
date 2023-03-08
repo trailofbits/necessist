@@ -1,0 +1,6 @@
+2 candidates in 1 test file
+examples/invalid_utf8/src/lib.rs: dry running
+examples/invalid_utf8/src/lib.rs: mutilating
+examples/invalid_utf8/src/lib.rs:8:5-8:19: Warning: invalid utf-8 sequence of 1 bytes from index 0: "/xFE"`
+Silence this warning with: --allow output-invalid
+examples/invalid_utf8/src/lib.rs:8:5-8:19: `write = false;` passed
