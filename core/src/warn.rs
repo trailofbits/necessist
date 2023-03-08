@@ -9,6 +9,8 @@ use heck::ToKebabCase;
 use lazy_static::lazy_static;
 use std::{collections::BTreeMap, sync::Mutex};
 
+// smoelius: `Warning` is part of Necessist's public API. Please try to follow the naming convention
+// of `what` (e.g., `Output`) followed by `why` (e.g., `Invalid`).
 #[derive(Clone, Copy, Debug, Eq, Ord, PartialEq, PartialOrd)]
 #[cfg_attr(feature = "clap", derive(clap::ValueEnum))]
 #[non_exhaustive]
