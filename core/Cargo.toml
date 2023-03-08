@@ -9,6 +9,11 @@ authors = ["Samuel Moelius <sam@moeli.us>"]
 license = "AGPL-3.0"
 repository = "https://github.com/trailofbits/necessist"
 
+[[test]]
+name = "ci"
+path = "tests/ci.rs"
+required-features = ["ci"]
+
 [dependencies]
 ansi_term = "0.12"
 anyhow = "1.0"
