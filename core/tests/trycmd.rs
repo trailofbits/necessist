@@ -98,8 +98,11 @@ fn check_toml() {
         }
 
         let file_stem = &*path.file_stem().unwrap().to_string_lossy();
-        let example = file_stem.split_once('_').map_or(file_stem, |(s, _)| s);
-        assert!(args.contains(&format!("--root=examples/{example}").as_str()));
+        let example = args
+            .iter()
+            .find_map(|arg| arg.strip_prefix("--root=examples/"))
+            .unwrap();
+        assert!(file_stem.starts_with(example));
 
         let stderr = document.as_table().and_then(|table| table.get("stderr"));
         assert!(stderr.is_some() || path.with_extension("stderr").try_exists().unwrap());
