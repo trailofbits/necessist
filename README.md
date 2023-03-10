@@ -5,7 +5,8 @@ Run tests with statements and method calls removed to help identify broken tests
 ## Installation
 
 #### System requirements:
-Install `pkg-config` and `libsqlite3-dev` on your system.
+
+Install `pkg-config` and `sqlite3` development files on your system (e.g., `sudo apt install pkg-config libsqlite3-dev` on Ubuntu).
 
 #### Install from [crates.io]:
 
