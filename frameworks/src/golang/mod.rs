@@ -1,9 +1,6 @@
 use super::Low;
-use anyhow::{anyhow, Context, Error, Result};
-use bstr::{io::BufReadExt, BStr};
-use necessist_core::{
-    framework::Postprocess, source_warn, util, warn, Config, LightContext, Span, WarnFlags, Warning,
-};
+use anyhow::{anyhow, Context, Result};
+use necessist_core::{util, warn, Config, LightContext, Span, WarnFlags, Warning};
 use std::{
     collections::BTreeMap,
     fs::read_to_string,
@@ -105,7 +102,11 @@ impl Low for Golang {
         &self,
         context: &LightContext,
         span: &Span,
-    ) -> (Command, Vec<String>, Option<Box<Postprocess>>) {
+    ) -> (
+        Command,
+        Vec<String>,
+        Option<(bool, Box<dyn Fn(&str) -> bool>, String)>,
+    ) {
         #[allow(clippy::expect_used)]
         let test_name = self
             .span_test_name_map
@@ -115,47 +116,16 @@ impl Low for Golang {
         let mut command = Self::test_command(context, &span.source_file);
         command.args([format!("-run=^{test_name}$").as_ref(), "-v"]);
 
-        let test_name = test_name.clone();
-        let span = span.clone();
+        let needle = format!("=== RUN   {test_name}");
 
         (
             command,
             Vec::new(),
-            Some(Box::new(move |context: &LightContext, popen| {
-                let stdout = popen
-                    .stdout
-                    .as_ref()
-                    .ok_or_else(|| anyhow!("Failed to get stdout"))?;
-                let reader = std::io::BufReader::new(stdout);
-                let run = reader.byte_lines().try_fold(false, |prev, result| {
-                    let buf = result?;
-                    let line = match std::str::from_utf8(&buf) {
-                        Ok(line) => line,
-                        Err(error) => {
-                            source_warn(
-                                context,
-                                Warning::OutputInvalid,
-                                &span,
-                                &format!("{error}: {:?}`", BStr::new(&buf)),
-                                WarnFlags::empty(),
-                            )?;
-                            return Ok(prev);
-                        }
-                    };
-                    Ok::<_, Error>(prev || line == format!("=== RUN   {test_name}"))
-                })?;
-                if run {
-                    return Ok(true);
-                }
-                source_warn(
-                    context,
-                    Warning::RunTestFailed,
-                    &span,
-                    &format!("Failed to run test `{test_name}`"),
-                    WarnFlags::empty(),
-                )?;
-                Ok(false)
-            })),
+            Some((
+                false,
+                Box::new(move |line| line == needle),
+                test_name.clone(),
+            )),
         )
     }
 }

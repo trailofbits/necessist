@@ -1,12 +1,9 @@
 use super::Low;
 use anyhow::{anyhow, Context, Result};
-use necessist_core::{
-    framework::Postprocess, source_warn, util, warn, Config, LightContext, Span, WarnFlags, Warning,
-};
+use necessist_core::{util, warn, Config, LightContext, Span, WarnFlags, Warning};
 use std::{
     collections::BTreeMap,
     fs::read_to_string,
-    io::BufRead,
     path::{Path, PathBuf},
     process::Command,
     rc::Rc,
@@ -113,7 +110,11 @@ impl Low for Foundry {
         &self,
         context: &LightContext,
         span: &Span,
-    ) -> (Command, Vec<String>, Option<Box<Postprocess>>) {
+    ) -> (
+        Command,
+        Vec<String>,
+        Option<(bool, Box<dyn Fn(&str) -> bool>, String)>,
+    ) {
         #[allow(clippy::expect_used)]
         let test_name = self
             .span_test_name_map
@@ -124,36 +125,14 @@ impl Low for Foundry {
         let mut command = Self::test_command(context, &span.source_file);
         command.args(["--match-test", &test_name]);
 
-        let span = span.clone();
-
         (
             command,
             Vec::new(),
-            Some(Box::new(move |context: &LightContext, popen| {
-                let stdout = popen
-                    .stdout
-                    .as_ref()
-                    .ok_or_else(|| anyhow!("Failed to get stdout"))?;
-                let reader = std::io::BufReader::new(stdout);
-                let no_tests_matched = reader.lines().try_fold(false, |prev, line| {
-                    let line = line?;
-                    Ok::<_, std::io::Error>(
-                        prev || line.starts_with("No tests match the provided pattern"),
-                    )
-                })?;
-                if no_tests_matched {
-                    source_warn(
-                        context,
-                        Warning::RunTestFailed,
-                        &span,
-                        &format!("Failed to run test `{test_name}`"),
-                        WarnFlags::empty(),
-                    )?;
-                    Ok(false)
-                } else {
-                    Ok(true)
-                }
-            })),
+            Some((
+                true,
+                Box::new(|line| !line.starts_with("No tests match the provided pattern")),
+                test_name,
+            )),
         )
     }
 }

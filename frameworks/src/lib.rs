@@ -1,10 +1,11 @@
-use anyhow::{ensure, Result};
+use anyhow::{anyhow, ensure, Error, Result};
+use bstr::{io::BufReadExt, BStr};
 use clap::ValueEnum;
 use heck::ToKebabCase;
 use log::debug;
 use necessist_core::{
     framework::{Applicable, Interface as High, Postprocess, ToImplementation},
-    Config, LightContext, Span,
+    source_warn, Config, LightContext, Span, WarnFlags, Warning,
 };
 use std::{
     path::Path,
@@ -128,19 +129,61 @@ impl<T: Low> High for Adapter<T> {
             }
         }
 
-        let (mut command, final_args, postprocess) = self.0.command_to_run_test(context, span);
+        let (mut command, final_args, init_f_test) = self.0.command_to_run_test(context, span);
         command.args(&context.opts.args);
         command.args(final_args);
 
         let mut exec = exec_from_command(&command);
-        if postprocess.is_some() {
+        if init_f_test.is_some() {
             exec = exec.stdout(Redirection::Pipe);
         } else {
             exec = exec.stdout(NullFile);
         }
         exec = exec.stderr(NullFile);
 
-        Ok(Some((exec, postprocess)))
+        let span = span.clone();
+
+        Ok(Some((
+            exec,
+            init_f_test.map(|(init, f, test)| -> Box<Postprocess> {
+                Box::new(move |context: &LightContext, popen| {
+                    let stdout = popen
+                        .stdout
+                        .as_ref()
+                        .ok_or_else(|| anyhow!("Failed to get stdout"))?;
+                    let reader = std::io::BufReader::new(stdout);
+                    let run = reader.byte_lines().try_fold(init, |prev, result| {
+                        let buf = result?;
+                        let line = match std::str::from_utf8(&buf) {
+                            Ok(line) => line,
+                            Err(error) => {
+                                source_warn(
+                                    context,
+                                    Warning::OutputInvalid,
+                                    &span,
+                                    &format!("{error}: {:?}`", BStr::new(&buf)),
+                                    WarnFlags::empty(),
+                                )?;
+                                return Ok(prev);
+                            }
+                        };
+                        let x = f(line);
+                        Ok::<_, Error>(if init { prev && x } else { prev || x })
+                    })?;
+                    if run {
+                        return Ok(true);
+                    }
+                    source_warn(
+                        context,
+                        Warning::RunTestFailed,
+                        &span,
+                        &format!("Failed to run test `{test}`"),
+                        WarnFlags::empty(),
+                    )?;
+                    Ok(false)
+                })
+            }),
+        )))
     }
 }
 
@@ -159,7 +202,11 @@ trait Low: std::fmt::Debug {
         &self,
         context: &LightContext,
         span: &Span,
-    ) -> (Command, Vec<String>, Option<Box<Postprocess>>);
+    ) -> (
+        Command,
+        Vec<String>,
+        Option<(bool, Box<dyn Fn(&str) -> bool>, String)>,
+    );
 }
 
 fn exec_from_command(command: &Command) -> Exec {
