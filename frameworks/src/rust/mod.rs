@@ -1,10 +1,7 @@
 use super::Low;
-use anyhow::{anyhow, Context, Error, Result};
-use bstr::{io::BufReadExt, BStr};
+use anyhow::{Context, Result};
 use cargo_metadata::Package;
-use necessist_core::{
-    framework::Postprocess, source_warn, util, warn, Config, LightContext, Span, WarnFlags, Warning,
-};
+use necessist_core::{util, warn, Config, LightContext, Span, WarnFlags, Warning};
 use std::{
     collections::BTreeMap,
     ffi::OsStr,
@@ -133,7 +130,11 @@ impl Low for Rust {
         &self,
         context: &LightContext,
         span: &Span,
-    ) -> (Command, Vec<String>, Option<Box<Postprocess>>) {
+    ) -> (
+        Command,
+        Vec<String>,
+        Option<(bool, Box<dyn Fn(&str) -> bool>, String)>,
+    ) {
         #[allow(clippy::expect_used)]
         let test_path = self
             .span_test_path_map
@@ -141,46 +142,10 @@ impl Low for Rust {
             .expect("Test path is not set");
         let test = test_path.join("::");
 
-        let span = span.clone();
-
         (
             self.test_command(context, &span.source_file),
             vec!["--".to_owned(), "--exact".to_owned(), test.clone()],
-            Some(Box::new(move |context: &LightContext, popen| {
-                let stdout = popen
-                    .stdout
-                    .as_ref()
-                    .ok_or_else(|| anyhow!("Failed to get stdout"))?;
-                let reader = std::io::BufReader::new(stdout);
-                let running_1_test = reader.byte_lines().try_fold(false, |prev, result| {
-                    let buf = result?;
-                    let line = match std::str::from_utf8(&buf) {
-                        Ok(line) => line,
-                        Err(error) => {
-                            source_warn(
-                                context,
-                                Warning::OutputInvalid,
-                                &span,
-                                &format!("{error}: {:?}`", BStr::new(&buf)),
-                                WarnFlags::empty(),
-                            )?;
-                            return Ok(prev);
-                        }
-                    };
-                    Ok::<_, Error>(prev || line == "running 1 test")
-                })?;
-                if running_1_test {
-                    return Ok(true);
-                }
-                source_warn(
-                    context,
-                    Warning::RunTestFailed,
-                    &span,
-                    &format!("Failed to run test `{test}`"),
-                    WarnFlags::empty(),
-                )?;
-                Ok(false)
-            })),
+            Some((false, Box::new(|line| line == "running 1 test"), test)),
         )
     }
 }
