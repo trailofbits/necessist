@@ -1,4 +1,4 @@
-use super::Low;
+use super::{Low, ProcessLines};
 use anyhow::{Context, Result};
 use cargo_metadata::Package;
 use necessist_core::{util, warn, Config, LightContext, Span, WarnFlags, Warning};
@@ -130,11 +130,7 @@ impl Low for Rust {
         &self,
         context: &LightContext,
         span: &Span,
-    ) -> (
-        Command,
-        Vec<String>,
-        Option<(bool, Box<dyn Fn(&str) -> bool>, String)>,
-    ) {
+    ) -> (Command, Vec<String>, Option<(ProcessLines, String)>) {
         #[allow(clippy::expect_used)]
         let test_path = self
             .span_test_path_map
@@ -145,7 +141,7 @@ impl Low for Rust {
         (
             self.test_command(context, &span.source_file),
             vec!["--".to_owned(), "--exact".to_owned(), test.clone()],
-            Some((false, Box::new(|line| line == "running 1 test"), test)),
+            Some(((false, Box::new(|line| line == "running 1 test")), test)),
         )
     }
 }

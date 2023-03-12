@@ -145,7 +145,7 @@ impl<T: Low> High for Adapter<T> {
 
         Ok(Some((
             exec,
-            init_f_test.map(|(init, f, test)| -> Box<Postprocess> {
+            init_f_test.map(|((init, f), test)| -> Box<Postprocess> {
                 Box::new(move |context: &LightContext, popen| {
                     let stdout = popen
                         .stdout
@@ -187,6 +187,8 @@ impl<T: Low> High for Adapter<T> {
     }
 }
 
+type ProcessLines = (bool, Box<dyn Fn(&str) -> bool>);
+
 trait Low: std::fmt::Debug {
     fn parse(
         &mut self,
@@ -202,11 +204,7 @@ trait Low: std::fmt::Debug {
         &self,
         context: &LightContext,
         span: &Span,
-    ) -> (
-        Command,
-        Vec<String>,
-        Option<(bool, Box<dyn Fn(&str) -> bool>, String)>,
-    );
+    ) -> (Command, Vec<String>, Option<(ProcessLines, String)>);
 }
 
 fn exec_from_command(command: &Command) -> Exec {
