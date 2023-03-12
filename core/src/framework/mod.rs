@@ -18,7 +18,7 @@ type AutoUnion<T, U> = Auto<Union<T, U>>;
 
 pub type Postprocess = dyn Fn(&LightContext, Popen) -> Result<bool>;
 
-pub trait Interface: std::fmt::Debug {
+pub trait Interface {
     fn name(&self) -> String {
         #[allow(clippy::unwrap_used)]
         let (_, type_name) = type_name::<Self>().rsplit_once("::").unwrap();
@@ -36,6 +36,10 @@ pub trait Interface: std::fmt::Debug {
         context: &LightContext,
         span: &Span,
     ) -> Result<Option<(Exec, Option<Box<Postprocess>>)>>;
+}
+
+pub trait Applicable {
+    fn applicable(&self, context: &LightContext) -> Result<bool>;
 }
 
 pub trait ToImplementation {

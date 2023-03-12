@@ -2,7 +2,7 @@ use anyhow::Result;
 use clap::ValueEnum;
 use heck::ToKebabCase;
 use necessist_core::{
-    framework::{Interface, ToImplementation},
+    framework::{Applicable, Interface, ToImplementation},
     LightContext,
 };
 use strum_macros::EnumIter;
@@ -30,14 +30,25 @@ pub enum Identifier {
     Rust,
 }
 
+impl Applicable for Identifier {
+    fn applicable(&self, context: &LightContext) -> Result<bool> {
+        match *self {
+            Self::Foundry => Foundry::applicable(context),
+            Self::Golang => Golang::applicable(context),
+            Self::HardhatTs => HardhatTs::applicable(context),
+            Self::Rust => Rust::applicable(context),
+        }
+    }
+}
+
 impl ToImplementation for Identifier {
     fn to_implementation(&self, context: &LightContext) -> Result<Option<Box<dyn Interface>>> {
-        match *self {
-            Self::Foundry => Foundry::applicable(context).map(implementation_as_interface),
-            Self::Golang => Golang::applicable(context).map(implementation_as_interface),
-            Self::HardhatTs => HardhatTs::applicable(context).map(implementation_as_interface),
-            Self::Rust => Rust::applicable(context).map(implementation_as_interface),
-        }
+        Ok(Some(match *self {
+            Self::Foundry => implementation_as_interface(Foundry::new(context)),
+            Self::Golang => implementation_as_interface(Golang::new(context)),
+            Self::HardhatTs => implementation_as_interface(HardhatTs::new(context)),
+            Self::Rust => implementation_as_interface(Rust::new(context)),
+        }))
     }
 }
 
@@ -48,8 +59,6 @@ impl std::fmt::Display for Identifier {
 }
 
 /// Utility function
-fn implementation_as_interface(
-    implementation: Option<impl Interface + 'static>,
-) -> Option<Box<dyn Interface>> {
-    implementation.map(|implementation| Box::new(implementation) as Box<dyn Interface>)
+fn implementation_as_interface(implementation: impl Interface + 'static) -> Box<dyn Interface> {
+    Box::new(implementation) as Box<dyn Interface>
 }

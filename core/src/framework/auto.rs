@@ -1,6 +1,7 @@
-use super::{Interface, ToImplementation, Union};
+use super::{Applicable, Interface, ToImplementation, Union};
 use crate::LightContext;
 use anyhow::{ensure, Result};
+use std::fmt::Display;
 use strum::IntoEnumIterator;
 
 #[cfg(feature = "clap")]
@@ -23,13 +24,19 @@ impl<T> Default for Auto<T> {
 
 impl<T> ToImplementation for Auto<T>
 where
-    T: IntoEnumIterator + ToImplementation,
+    T: Applicable + Display + IntoEnumIterator + ToImplementation,
 {
     fn to_implementation(&self, context: &LightContext) -> Result<Option<Box<dyn Interface>>> {
         match &self.0 {
             Union::Left(_) => {
                 let unflattened_frameworks = T::iter()
-                    .map(|framework| framework.to_implementation(context))
+                    .map(|framework| {
+                        if framework.applicable(context)? {
+                            Ok(Some(framework))
+                        } else {
+                            Ok(None)
+                        }
+                    })
                     .collect::<Result<Vec<_>>>()?;
 
                 let applicable_frameworks = unflattened_frameworks
@@ -39,11 +46,20 @@ where
 
                 ensure!(
                     applicable_frameworks.len() <= 1,
-                    "Found multiple applicable frameworks: {:#?}",
+                    "Found multiple applicable frameworks: {}; please select one with \
+                     --framework <FRAMEWORK>",
                     applicable_frameworks
+                        .iter()
+                        .map(ToString::to_string)
+                        .collect::<Vec<_>>()
+                        .join(", ")
                 );
 
-                Ok(applicable_frameworks.into_iter().next())
+                if let Some(framework) = applicable_frameworks.into_iter().next() {
+                    framework.to_implementation(context)
+                } else {
+                    Ok(None)
+                }
             }
             Union::Right(framework) => framework.to_implementation(context),
         }

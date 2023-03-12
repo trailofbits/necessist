@@ -1,5 +1,5 @@
 use crate::{
-    framework::{self, ToImplementation},
+    framework::{self, Applicable, ToImplementation},
     note, source_warn, sqlite, util, warn, Backup, Outcome, Rewriter, SourceFile, Span,
     ToConsoleString, WarnFlags, Warning,
 };
@@ -12,6 +12,7 @@ use serde::{Deserialize, Serialize};
 use std::{
     collections::BTreeMap,
     env::{current_dir, var},
+    fmt::Display,
     fs::{read_to_string, write, OpenOptions},
     io::Write,
     iter::Peekable,
@@ -87,7 +88,7 @@ pub struct Config {
 /// Necessist's main entrypoint.
 // smoelius: The reason `framework` is not included as a field in `Necessist` is to avoid having
 // to parameterize every function that takes a `Necessist` as an argument.
-pub fn necessist<Identifier: IntoEnumIterator + ToImplementation>(
+pub fn necessist<Identifier: Applicable + Display + IntoEnumIterator + ToImplementation>(
     opts: &Necessist,
     framework: framework::Auto<Identifier>,
 ) -> Result<()> {
@@ -152,7 +153,7 @@ pub fn necessist<Identifier: IntoEnumIterator + ToImplementation>(
 }
 
 #[allow(clippy::type_complexity)]
-fn prepare<Identifier: IntoEnumIterator + ToImplementation>(
+fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementation>(
     context: &LightContext,
     framework: framework::Auto<Identifier>,
 ) -> Result<
@@ -376,7 +377,7 @@ fn dump(context: &LightContext, removals: &[Removal]) {
     }
 }
 
-fn find_framework<Identifier: IntoEnumIterator + ToImplementation>(
+fn find_framework<Identifier: Applicable + Display + IntoEnumIterator + ToImplementation>(
     context: &LightContext,
     identifier: framework::Auto<Identifier>,
 ) -> Result<Box<dyn framework::Interface>> {

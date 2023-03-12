@@ -26,15 +26,11 @@ pub struct Golang {
 }
 
 impl Golang {
-    pub fn applicable(context: &LightContext) -> Result<Option<Self>> {
-        if context.root.join("go.mod").try_exists()? {
-            Ok(Some(Self::new(context)))
-        } else {
-            Ok(None)
-        }
+    pub fn applicable(context: &LightContext) -> Result<bool> {
+        context.root.join("go.mod").try_exists().map_err(Into::into)
     }
 
-    fn new(context: &LightContext) -> Self {
+    pub fn new(context: &LightContext) -> Self {
         Self {
             root: Rc::new(context.root.to_path_buf()),
             span_test_name_map: BTreeMap::new(),
