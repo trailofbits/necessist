@@ -1,4 +1,4 @@
-use super::Low;
+use super::{Low, ProcessLines};
 use anyhow::{anyhow, Context, Result};
 use necessist_core::{util, warn, Config, LightContext, Span, WarnFlags, Warning};
 use std::{
@@ -102,11 +102,7 @@ impl Low for Golang {
         &self,
         context: &LightContext,
         span: &Span,
-    ) -> (
-        Command,
-        Vec<String>,
-        Option<(bool, Box<dyn Fn(&str) -> bool>, String)>,
-    ) {
+    ) -> (Command, Vec<String>, Option<(ProcessLines, String)>) {
         #[allow(clippy::expect_used)]
         let test_name = self
             .span_test_name_map
@@ -122,8 +118,7 @@ impl Low for Golang {
             command,
             Vec::new(),
             Some((
-                false,
-                Box::new(move |line| line == needle),
+                (false, Box::new(move |line| line == needle)),
                 test_name.clone(),
             )),
         )
