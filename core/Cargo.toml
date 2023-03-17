@@ -54,3 +54,4 @@ syn = "2.0"
 [features]
 default = []
 ci = []
+dogfood = []

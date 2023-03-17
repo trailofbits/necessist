@@ -1,10 +1,11 @@
+#![cfg(feature = "dogfood")]
+
 use assert_cmd::Command;
 use std::io::{stderr, Write};
 
 const TIMEOUT: &str = "5";
 
 #[test]
-#[ignore]
 fn dogfood() {
     if Command::new("git")
         .args(["diff", "--exit-code"])
