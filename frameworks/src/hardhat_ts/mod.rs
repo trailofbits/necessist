@@ -1,3 +1,4 @@
+use super::ts_utils::install_node_modules;
 use anyhow::{anyhow, ensure, Context, Result};
 use lazy_static::lazy_static;
 use log::debug;
@@ -142,6 +143,8 @@ impl Interface for HardhatTs {
     }
 
     fn dry_run(&self, context: &LightContext, test_file: &Path) -> Result<()> {
+        install_node_modules(context)?;
+
         compile(context)?;
 
         let mut command = Command::new("npx");

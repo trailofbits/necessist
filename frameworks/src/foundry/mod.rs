@@ -1,3 +1,4 @@
+use super::ts_utils::install_node_modules;
 use anyhow::{anyhow, ensure, Context, Result};
 use log::debug;
 use necessist_core::{
@@ -99,6 +100,8 @@ impl Interface for Foundry {
     }
 
     fn dry_run(&self, context: &LightContext, test_file: &Path) -> Result<()> {
+        install_node_modules(context)?;
+
         let mut command = Command::new("forge");
         command.current_dir(context.root);
         command.env("FOUNDRY_FUZZ_RUNS", "1");
