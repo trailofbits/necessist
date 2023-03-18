@@ -67,9 +67,14 @@ impl HardhatTs {
 }
 
 lazy_static! {
-    static ref LINE_RE: Regex = {
+    static ref LINE_WITH_TIME_RE: Regex = {
+        // smoelius: The initial `.` is the check mark.
         #[allow(clippy::unwrap_used)]
-        Regex::new(r"^\s*✔ (.*) \(.*\)$").unwrap()
+        Regex::new(r"^\s*. (.*) \(.*\)$").unwrap()
+    };
+    static ref LINE_WITHOUT_TIME_RE: Regex = {
+        #[allow(clippy::unwrap_used)]
+        Regex::new(r"^\s*. (.*)$").unwrap()
     };
 }
 
@@ -164,7 +169,10 @@ impl Interface for HardhatTs {
 
         let stdout = std::str::from_utf8(&output.stdout)?;
         for line in stdout.lines() {
-            if let Some(captures) = LINE_RE.captures(line) {
+            if let Some(captures) = LINE_WITH_TIME_RE
+                .captures(line)
+                .or_else(|| LINE_WITHOUT_TIME_RE.captures(line))
+            {
                 assert!(captures.len() == 2);
                 it_message_state_map.insert(captures[1].to_string(), ItMessageState::Found);
             }
@@ -203,7 +211,7 @@ impl Interface for HardhatTs {
                     context,
                     Warning::ItMessageNotFound,
                     span,
-                    &format!("`it` messages {it_message:?} was not found during dry run"),
+                    &format!("`it` message {it_message:?} was not found during dry run"),
                     WarnFlags::empty(),
                 )?;
                 *state = ItMessageState::WarningEmitted;
