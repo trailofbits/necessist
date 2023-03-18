@@ -1,0 +1,6 @@
+url = "https://github.com/golang/go"
+rev = "go1.20.1"
+framework = "golang"
+full = true
+
+subdir = "src/encoding/base64"

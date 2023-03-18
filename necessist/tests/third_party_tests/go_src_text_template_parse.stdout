@@ -1,0 +1,63 @@
+38 candidates in 1 test file
+$DIR/src/text/template/parse/parse_test.go: dry running
+$DIR/src/text/template/parse/parse_test.go: mutilating
+$DIR/src/text/template/parse/parse_test.go:97:4-97:26: `typ = itemCharConstant` failed
+$DIR/src/text/template/parse/parse_test.go:99:17-99:38: `.Sscan(test.text, &c)` nonbuildable
+$DIR/src/text/template/parse/parse_test.go:101:5-101:22: `typ = itemComplex` failed
+$DIR/src/text/template/parse/parse_test.go:104:17-104:46: `.newNumber(0, test.text, typ)` nonbuildable
+$DIR/src/text/template/parse/parse_test.go:116:5-116:45: `fmt.Printf("%s\n\t%s\n", test.text, err)` passed
+$DIR/src/text/template/parse/parse_test.go:116:8-116:45: `.Printf("%s\n\t%s\n", test.text, err)` nonbuildable
+$DIR/src/text/template/parse/parse_test.go:362:2-362:21: `testParse(false, t)` passed
+$DIR/src/text/template/parse/parse_test.go:367:2-367:20: `testParse(true, t)` passed
+$DIR/src/text/template/parse/parse_test.go:371:2-371:19: `textFormat = "%q"` failed
+$DIR/src/text/template/parse/parse_test.go:372:17-372:34: `textFormat = "%s"` passed
+$DIR/src/text/template/parse/parse_test.go:380:4-390:5: `.Run(test.name, func(t *testing.T) {
+			tr := New(test.name)
+			tr.Mode = ParseComments
+			tmpl, err := tr.Parse(test.input, "", "", make(map[string]*Tree))
+			if err != nil {
+				t.Errorf("%q: expected error; got none", test.name)
+			}
+			if result := tmpl.Root.String(); result != test.result {
+				t.Errorf("%s=(%q): got\n\t%v\nexpected\n\t%v", test.name, test.input, result, test.result)
+			}
+		})` nonbuildable
+$DIR/src/text/template/parse/parse_test.go:382:4-382:27: `tr.Mode = ParseComments` failed
+$DIR/src/text/template/parse/parse_test.go:383:19-383:69: `.Parse(test.input, "", "", make(map[string]*Tree))` nonbuildable
+$DIR/src/text/template/parse/parse_test.go:387:26-387:35: `.String()` nonbuildable
+$DIR/src/text/template/parse/parse_test.go:398:2-398:19: `textFormat = "%q"` passed
+$DIR/src/text/template/parse/parse_test.go:399:17-399:34: `textFormat = "%s"` passed
+$DIR/src/text/template/parse/parse_test.go:408:23-408:88: `.Parse(inp, "", "", make(map[string]*Tree), funcsWithKeywordFunc)` nonbuildable
+$DIR/src/text/template/parse/parse_test.go:417:23-417:88: `.Parse(inp, "", "", make(map[string]*Tree), make(map[string]any))` nonbuildable
+$DIR/src/text/template/parse/parse_test.go:426:2-426:19: `textFormat = "%q"` passed
+$DIR/src/text/template/parse/parse_test.go:427:17-427:43: `textFormat = oldTextFormat` nonbuildable
+$DIR/src/text/template/parse/parse_test.go:429:2-429:25: `tr.Mode = SkipFuncCheck` failed
+$DIR/src/text/template/parse/parse_test.go:430:17-430:69: `.Parse("{{fn 1 2}}", "", "", make(map[string]*Tree))` nonbuildable
+$DIR/src/text/template/parse/parse_test.go:435:24-435:33: `.String()` nonbuildable
+$DIR/src/text/template/parse/parse_test.go:462:27-462:82: `.Parse(test.input, "", "", make(map[string]*Tree), nil)` nonbuildable
+$DIR/src/text/template/parse/parse_test.go:474:26-474:91: `.Parse("{{if true}}{{end}}", "", "", make(map[string]*Tree), nil)` nonbuildable
+$DIR/src/text/template/parse/parse_test.go:478:18-478:25: `.Copy()` passed
+$DIR/src/text/template/parse/parse_test.go:479:35-479:68: `.ErrorContext(tree.Root.Nodes[0])` nonbuildable
+$DIR/src/text/template/parse/parse_test.go:480:37-480:74: `.ErrorContext(treeCopy.Root.Nodes[0])` nonbuildable
+$DIR/src/text/template/parse/parse_test.go:594:4-602:5: `.Run(test.name, func(t *testing.T) {
+			_, err := New(test.name).Parse(test.input, "", "", make(map[string]*Tree))
+			if err == nil {
+				t.Fatalf("expected error %q, got nil", test.result)
+			}
+			if !strings.Contains(err.Error(), test.result) {
+				t.Fatalf("error %q does not contain %q", err, test.result)
+			}
+		})` nonbuildable
+$DIR/src/text/template/parse/parse_test.go:595:28-595:78: `.Parse(test.input, "", "", make(map[string]*Tree))` nonbuildable
+$DIR/src/text/template/parse/parse_test.go:599:15-599:50: `.Contains(err.Error(), test.result)` nonbuildable
+$DIR/src/text/template/parse/parse_test.go:607:2-611:3: `const (
+		input = `a{{block "inner" .}}bar{{.}}baz{{end}}b`
+		outer = `a{{template "inner" .}}b`
+		inner = `bar{{.}}baz`
+	)` nonbuildable
+$DIR/src/text/template/parse/parse_test.go:613:27-613:62: `.Parse(input, "", "", treeSet, nil)` nonbuildable
+$DIR/src/text/template/parse/parse_test.go:617:22-617:31: `.String()` nonbuildable
+$DIR/src/text/template/parse/parse_test.go:624:24-624:33: `.String()` nonbuildable
+$DIR/src/text/template/parse/parse_test.go:631:2-631:17: `const count = 3` nonbuildable
+$DIR/src/text/template/parse/parse_test.go:632:17-632:52: `.Repeat("{{printf 1234}}\n", count)` nonbuildable
+$DIR/src/text/template/parse/parse_test.go:633:27-633:81: `.Parse(text, "", "", make(map[string]*Tree), builtins)` nonbuildable

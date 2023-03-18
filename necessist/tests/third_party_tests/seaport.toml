@@ -1,0 +1,5 @@
+url = "https://github.com/ProjectOpenSea/seaport"
+framework = "hardhat-ts"
+
+[config]
+ignored_functions = ["checkExpectedEvents"]

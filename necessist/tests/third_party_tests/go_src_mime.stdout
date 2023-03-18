@@ -1,0 +1,165 @@
+310 candidates in 9 test files
+$DIR/src/mime/encodedword_test.go: dry running
+$DIR/src/mime/encodedword_test.go: mutilating
+$DIR/src/mime/encodedword_test.go:29:28-29:45: `.Repeat("é", 10),` nonbuildable
+$DIR/src/mime/encodedword_test.go:29:69-29:90: `Repeat("=C3=A9", 10) ` nonbuildable
+$DIR/src/mime/encodedword_test.go:30:28-30:45: `.Repeat("é", 11),` nonbuildable
+$DIR/src/mime/encodedword_test.go:30:69-30:90: `Repeat("=C3=A9", 10) ` nonbuildable
+$DIR/src/mime/encodedword_test.go:31:32-31:51: `.Repeat("\xe9", 22)` nonbuildable
+$DIR/src/mime/encodedword_test.go:31:80-31:98: `.Repeat("=E9", 22)` nonbuildable
+$DIR/src/mime/encodedword_test.go:32:28-32:47: `.Repeat("\x80", 22)` nonbuildable
+$DIR/src/mime/encodedword_test.go:32:71-32:89: `.Repeat("=80", 21)` nonbuildable
+$DIR/src/mime/encodedword_test.go:33:32-33:51: `.Repeat("\xe9", 45)` nonbuildable
+$DIR/src/mime/encodedword_test.go:33:80-33:99: `.Repeat("6enp", 15)` nonbuildable
+$DIR/src/mime/encodedword_test.go:34:28-34:47: `.Repeat("\x80", 48)` nonbuildable
+$DIR/src/mime/encodedword_test.go:34:71-34:90: `.Repeat("gICA", 15)` nonbuildable
+$DIR/src/mime/encodedword_test.go:38:19-38:50: `.Encode(test.charset, test.src)` nonbuildable
+$DIR/src/mime/encodedword_test.go:49:22-49:39: `.Repeat("à", 30)}` nonbuildable
+$DIR/src/mime/encodedword_test.go:50:22-50:39: `.Repeat("é", 60)}` nonbuildable
+$DIR/src/mime/encodedword_test.go:51:22-51:39: `.Repeat("ï", 25)}` nonbuildable
+$DIR/src/mime/encodedword_test.go:52:22-52:39: `.Repeat("ô", 37)}` nonbuildable
+$DIR/src/mime/encodedword_test.go:53:22-53:41: `.Repeat("\x80", 50)` nonbuildable
+$DIR/src/mime/encodedword_test.go:58:16-58:42: `.Encode("utf-8", test.src)` nonbuildable
+$DIR/src/mime/encodedword_test.go:62:5-62:16: `wordLen = 0` timed-out
+$DIR/src/mime/encodedword_test.go:66:4-66:13: `wordLen++` passed
+$DIR/src/mime/encodedword_test.go:97:16-97:33: `.Decode(test.src)` nonbuildable
+$DIR/src/mime/encodedword_test.go:147:16-147:39: `.DecodeHeader(test.src)` nonbuildable
+$DIR/src/mime/encodedword_test.go:184:23-184:38: `.ReadAll(input)` nonbuildable
+$DIR/src/mime/encodedword_test.go:192:5-192:8: `i++` failed
+$DIR/src/mime/encodedword_test.go:194:19-194:34: `.NewReader(got)` nonbuildable
+$DIR/src/mime/encodedword_test.go:197:18-197:41: `.DecodeHeader(test.src)` nonbuildable
+$DIR/src/mime/encodedword_test.go:210:22-210:40: `.New("Test error")` nonbuildable
+$DIR/src/mime/encodedword_test.go:214:18-214:52: `.DecodeHeader("=?charset?Q?foo?=")` nonbuildable
+$DIR/src/mime/mediatype_test.go: dry running
+$DIR/src/mime/mediatype_test.go: mutilating
+$DIR/src/mime/mediatype_test.go:104:4-104:21: `sm[s[i]] = s[i+1]` failed
+$DIR/src/mime/mediatype_test.go:432:14-432:40: `.DeepEqual(params, test.p)` nonbuildable
+$DIR/src/mime/mediatype_test.go:530:20-530:36: `.ToLower(tt.typ)` nonbuildable
+$DIR/src/mime/mediatype_test.go:534:4-534:26: `k = strings.ToLower(k)` failed
+$DIR/src/mime/mediatype_test.go:534:15-534:26: `.ToLower(k)` nonbuildable
+$DIR/src/mime/multipart/formdata_test.go: dry running
+$DIR/src/mime/multipart/formdata_test.go: Warning: dry run failed: Output {
+    status: ExitStatus(
+        unix_wait_status(
+            256,
+        ),
+    ),
+    stdout: "",
+    stderr: "package std/mime/multipart\n\tmultipart/formdata.go:10:2: use of internal package internal/godebug not allowed\n",
+}
+Silence this warning with: --allow dry-run-failed
+$DIR/src/mime/multipart/multipart_test.go: dry running
+$DIR/src/mime/multipart/multipart_test.go: Warning: dry run failed: Output {
+    status: ExitStatus(
+        unix_wait_status(
+            256,
+        ),
+    ),
+    stdout: "",
+    stderr: "package std/mime/multipart\n\tmultipart/formdata.go:10:2: use of internal package internal/godebug not allowed\n",
+}
+$DIR/src/mime/multipart/writer_test.go: dry running
+$DIR/src/mime/multipart/writer_test.go: Warning: dry run failed: Output {
+    status: ExitStatus(
+        unix_wait_status(
+            256,
+        ),
+    ),
+    stdout: "",
+    stderr: "package std/mime/multipart\n\tmultipart/formdata.go:10:2: use of internal package internal/godebug not allowed\n",
+}
+$DIR/src/mime/quotedprintable/reader_test.go: dry running
+$DIR/src/mime/quotedprintable/reader_test.go: mutilating
+$DIR/src/mime/quotedprintable/reader_test.go:72:15-72:63: `.Copy(&buf, NewReader(strings.NewReader(tt.in)))` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:72:44-72:61: `.NewReader(tt.in)` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:73:16-73:25: `.String()` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:82:17-82:29: `.Sprint(err)` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:110:17-110:36: `.LookPath("qprint")` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:119:12-119:20: `.Short()` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:120:3-120:8: `n = 4` passed
+$DIR/src/mime/quotedprintable/reader_test.go:123:13-123:31: `.HasSuffix(s, "=")` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:123:42-123:60: `.Contains(s, "==")` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:126:3-126:14: `buf.Reset()` passed
+$DIR/src/mime/quotedprintable/reader_test.go:126:6-126:14: `.Reset()` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:127:15-127:59: `.Copy(&buf, NewReader(strings.NewReader(s)))` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:127:44-127:57: `.NewReader(s)` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:130:14-130:57: `.Contains(errStr, "invalid bytes after =:")` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:131:5-131:37: `errStr = "invalid bytes after ="` timed-out
+$DIR/src/mime/quotedprintable/reader_test.go:133:4-133:17: `res[errStr]++` failed
+$DIR/src/mime/quotedprintable/reader_test.go:134:14-134:52: `.Contains(errStr, "invalid hex byte ")` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:135:15-135:41: `.HasSuffix(errStr, "0x20")` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:135:53-135:72: `.Contains(s, "=0 ")` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:135:83-135:102: `.Contains(s, "=A ")` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:135:113-135:131: `.Contains(s, "= ")` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:138:15-138:41: `.HasSuffix(errStr, "0x3d")` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:138:53-138:72: `.Contains(s, "=0=")` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:138:83-138:102: `.Contains(s, "=A=")` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:141:15-141:41: `.HasSuffix(errStr, "0x0a")` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:141:52-141:78: `.HasSuffix(errStr, "0x0d")` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:146:14-146:49: `.Contains(errStr, "unexpected EOF")` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:149:53-149:68: `.MatchString(s)` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:156:15-156:39: `.Command("qprint", "-d")` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:157:4-157:36: `cmd.Stdin = strings.NewReader(s)` passed
+$DIR/src/mime/quotedprintable/reader_test.go:157:23-157:36: `.NewReader(s)` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:158:22-158:35: `.StderrPipe()` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:160:5-160:15: `panic(err)` passed
+$DIR/src/mime/quotedprintable/reader_test.go:164:16-164:34: `.NewReader(stderr)` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:165:15-165:32: `.ReadString('\n')` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:167:6-167:28: `qpres <- errors.New(s)` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:167:21-167:28: `.New(s)` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:171:7-171:25: `cmd.Process.Kill()` passed
+$DIR/src/mime/quotedprintable/reader_test.go:171:18-171:25: `.Kill()` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:176:21-176:30: `.Output()` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:178:6-178:19: `qpres <- want` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:184:28-184:37: `.String()` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:185:63-185:72: `.String()` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:190:15-190:38: `.After(5 * time.Second)` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:194:3-194:14: `res["OK"]++` failed
+$DIR/src/mime/quotedprintable/reader_test.go:198:3-198:59: `outcomes = append(outcomes, fmt.Sprintf("%v: %d", k, v))` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:198:34-198:58: `.Sprintf("%v: %d", k, v)` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:200:2-200:24: `sort.Strings(outcomes)` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:200:6-200:24: `.Strings(outcomes)` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:201:16-201:37: `.Join(outcomes, "\n")` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:206:12-206:20: `.Short()` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:207:3-210:19: `want = `OK: 896
+invalid bytes after =: 100
+quotedprintable: invalid hex byte 0x0d: 26
+unexpected EOF: 3`` passed
+$DIR/src/mime/quotedprintable/writer_test.go: dry running
+$DIR/src/mime/quotedprintable/writer_test.go: mutilating
+$DIR/src/mime/quotedprintable/writer_test.go:15:2-15:22: `testWriter(t, false)` passed
+$DIR/src/mime/quotedprintable/writer_test.go:19:2-19:21: `testWriter(t, true)` passed
+$DIR/src/mime/quotedprintable/writer_test.go:123:16-123:31: `.Write(testMsg)` nonbuildable
+$DIR/src/mime/quotedprintable/writer_test.go:131:21-131:32: `.ReadAll(r)` nonbuildable
+$DIR/src/mime/type_test.go: dry running
+$DIR/src/mime/type_test.go: mutilating
+$DIR/src/mime/type_test.go:37:2-37:20: `once = sync.Once{}` passed
+$DIR/src/mime/type_test.go:56:3-56:19: `clearMimeTypes()` passed
+$DIR/src/mime/type_test.go:57:3-57:27: `setType(".foo", "x/foo")` failed
+$DIR/src/mime/type_test.go:58:3-58:27: `setType(".bar", "x/bar")` failed
+$DIR/src/mime/type_test.go:59:3-59:38: `setType(".Bar", "x/bar; capital=1")` failed
+$DIR/src/mime/type_test.go:80:2-80:48: `const custom = "test/test; charset=iso-8859-1"` nonbuildable
+$DIR/src/mime/type_test.go:81:2-81:39: `const caps = "test/test; WAS=ALLCAPS"` nonbuildable
+$DIR/src/mime/type_test.go:84:3-84:19: `clearMimeTypes()` passed
+$DIR/src/mime/type_test.go:85:3-85:25: `setType(".TEST", caps)` failed
+$DIR/src/mime/type_test.go:86:3-86:27: `setType(".tesT", custom)` failed
+$DIR/src/mime/type_test.go:106:3-106:19: `clearMimeTypes()` passed
+$DIR/src/mime/type_test.go:107:3-107:31: `setType(".gif", "image/gif")` failed
+$DIR/src/mime/type_test.go:108:3-108:30: `setType(".a", "foo/letter")` failed
+$DIR/src/mime/type_test.go:109:3-109:30: `setType(".b", "foo/letter")` passed
+$DIR/src/mime/type_test.go:110:3-110:30: `setType(".B", "foo/letter")` passed
+$DIR/src/mime/type_test.go:111:3-111:31: `setType(".PNG", "image/png")` failed
+$DIR/src/mime/type_test.go:128:47-128:81: `.Contains(err.Error(), tt.wantErr)` nonbuildable
+$DIR/src/mime/type_test.go:139:14-139:38: `.DeepEqual(got, tt.want)` nonbuildable
+$DIR/src/mime/type_test.go:146:14-149:4: `.AllocsPerRun(10000, func() {
+		TypeByExtension(".html")
+		TypeByExtension(".HtML")
+	})` nonbuildable
+$DIR/src/mime/type_test.go:147:3-147:27: `TypeByExtension(".html")` passed
+$DIR/src/mime/type_test.go:148:3-148:27: `TypeByExtension(".HtML")` passed
+$DIR/src/mime/type_test.go:197:3-197:19: `clearMimeTypes()` passed
+$DIR/src/mime/type_test.go:199:3-199:53: `setMimeTypes(builtinTypesLower, builtinTypesLower)` failed
+$DIR/src/mime/type_test.go:216:14-216:38: `.DeepEqual(got, tt.want)` nonbuildable
+$DIR/src/mime/type_unix_test.go: dry running
+$DIR/src/mime/type_unix_test.go: mutilating
+$DIR/src/mime/type_unix_test.go:24:2-24:21: `initMimeUnixTest(t)` failed
