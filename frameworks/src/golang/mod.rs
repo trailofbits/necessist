@@ -181,21 +181,23 @@ impl Interface for Golang {
 }
 
 impl Golang {
-    fn build_test_command(_context: &LightContext, test_file: &Path) -> Command {
+    fn build_test_command(context: &LightContext, test_file: &Path) -> Command {
         #[allow(clippy::expect_used)]
-        let package_path =
-            test_file_package_path(test_file).expect("Failed to get test file package path");
+        let package_path = test_file_package_path(context, test_file)
+            .expect("Failed to get test file package path");
         let mut command = Command::new("go");
+        command.current_dir(context.root);
         command.arg("test");
         command.arg(package_path);
         command
     }
 
-    fn build_test_exec(_context: &LightContext, test_file: &Path) -> Exec {
+    fn build_test_exec(context: &LightContext, test_file: &Path) -> Exec {
         #[allow(clippy::expect_used)]
-        let package_path =
-            test_file_package_path(test_file).expect("Failed to get test file package path");
+        let package_path = test_file_package_path(context, test_file)
+            .expect("Failed to get test file package path");
         let mut exec = Exec::cmd("go");
+        exec = exec.cwd(context.root);
         exec = exec.arg("test");
         exec = exec.arg(package_path);
         exec
@@ -224,12 +226,12 @@ fn check_config(context: &LightContext, config: &Config) -> Result<()> {
     Ok(())
 }
 
-fn test_file_package_path(test_file: &Path) -> Result<String> {
+fn test_file_package_path(context: &LightContext, test_file: &Path) -> Result<String> {
     let dir = test_file
         .parent()
         .ok_or_else(|| anyhow!("Failed to get parent"))?;
 
-    assert!(dir.is_absolute());
+    let stripped = util::strip_prefix(dir, context.root)?;
 
-    Ok(dir.to_string_lossy().to_string())
+    Ok(Path::new(".").join(stripped).to_string_lossy().to_string())
 }
