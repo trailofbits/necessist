@@ -1,0 +1,10 @@
+7 candidates in 1 test file
+$DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol: dry running
+$DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol: mutilating
+$DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol:36:36-36:53: `.encode("newKey")` nonbuildable
+$DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol:39:49-39:67: `.getDONPublicKey()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol:45:13-45:43: `.setDONPublicKey(donPublicKey)` failed
+$DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol:46:44-46:62: `.getDONPublicKey()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol:77:47-77:61: `.getRegistry()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol:81:13-81:42: `.setRegistry(registryAddress)` failed
+$DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol:82:42-82:56: `.getRegistry()` nonbuildable

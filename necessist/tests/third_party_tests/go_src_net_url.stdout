@@ -1,0 +1,109 @@
+74 candidates in 1 test file
+$DIR/src/net/url/url_test.go: dry running
+$DIR/src/net/url/url_test.go: mutilating
+$DIR/src/net/url/url_test.go:664:14-664:35: `.DeepEqual(u, tt.out)` nonbuildable
+$DIR/src/net/url/url_test.go:778:4-778:27: `expected = tt.roundtrip` failed
+$DIR/src/net/url/url_test.go:780:9-780:18: `.String()` nonbuildable
+$DIR/src/net/url/url_test.go:787:19-787:28: `.String()` nonbuildable
+$DIR/src/net/url/url_test.go:852:4-856:5: `.Run(tt.name, func(t *testing.T) {
+			if g, w := tt.url.Redacted(), tt.want; g != w {
+				t.Fatalf("got: %q\nwant: %q", g, w)
+			}
+		})` nonbuildable
+$DIR/src/net/url/url_test.go:853:21-853:32: `.Redacted()` nonbuildable
+$DIR/src/net/url/url_test.go:943:13-943:34: `.Contains(tt.in, "+")` nonbuildable
+$DIR/src/net/url/url_test.go:944:4-944:46: `in = strings.ReplaceAll(tt.in, "+", "%20")` failed
+$DIR/src/net/url/url_test.go:944:16-944:46: `.ReplaceAll(tt.in, "+", "%20")` nonbuildable
+$DIR/src/net/url/url_test.go:950:36-950:66: `.ReplaceAll(tt.in, "+", "XXX")` nonbuildable
+$DIR/src/net/url/url_test.go:954:5-954:15: `in = tt.in` failed
+$DIR/src/net/url/url_test.go:955:5-955:44: `out = strings.ReplaceAll(s, "XXX", "+")` nonbuildable
+$DIR/src/net/url/url_test.go:955:18-955:44: `.ReplaceAll(s, "XXX", "+")` nonbuildable
+$DIR/src/net/url/url_test.go:959:3-959:33: `actual, err = PathUnescape(in)` failed
+$DIR/src/net/url/url_test.go:1086:15-1086:24: `.Encode()` nonbuildable
+$DIR/src/net/url/url_test.go:1265:14-1265:36: `.ResolveReference(rel)` nonbuildable
+$DIR/src/net/url/url_test.go:1266:16-1266:25: `.String()` nonbuildable
+$DIR/src/net/url/url_test.go:1274:19-1274:35: `.Parse(test.rel)` nonbuildable
+$DIR/src/net/url/url_test.go:1277:23-1277:32: `.String()` nonbuildable
+$DIR/src/net/url/url_test.go:1284:3-1284:38: `url = base.ResolveReference(opaque)` failed
+$DIR/src/net/url/url_test.go:1284:13-1284:38: `.ResolveReference(opaque)` failed
+$DIR/src/net/url/url_test.go:1289:3-1289:41: `url, err = base.Parse("scheme:opaque")` passed
+$DIR/src/net/url/url_test.go:1289:18-1289:41: `.Parse("scheme:opaque")` nonbuildable
+$DIR/src/net/url/url_test.go:1303:8-1303:16: `.Query()` nonbuildable
+$DIR/src/net/url/url_test.go:1307:14-1307:25: `.Get("foo")` nonbuildable
+$DIR/src/net/url/url_test.go:1311:14-1311:25: `.Get("Foo")` nonbuildable
+$DIR/src/net/url/url_test.go:1314:14-1314:25: `.Get("bar")` nonbuildable
+$DIR/src/net/url/url_test.go:1317:14-1317:25: `.Get("baz")` nonbuildable
+$DIR/src/net/url/url_test.go:1320:14-1320:25: `.Has("foo")` nonbuildable
+$DIR/src/net/url/url_test.go:1323:14-1323:25: `.Has("bar")` nonbuildable
+$DIR/src/net/url/url_test.go:1326:14-1326:25: `.Has("baz")` nonbuildable
+$DIR/src/net/url/url_test.go:1329:14-1329:29: `.Has("noexist")` nonbuildable
+$DIR/src/net/url/url_test.go:1332:2-1332:14: `v.Del("bar")` failed
+$DIR/src/net/url/url_test.go:1332:3-1332:14: `.Del("bar")` nonbuildable
+$DIR/src/net/url/url_test.go:1333:14-1333:25: `.Get("bar")` nonbuildable
+$DIR/src/net/url/url_test.go:1431:4-1459:5: `.Run(test.query, func(t *testing.T) {
+			form, err := ParseQuery(test.query)
+			if test.ok != (err == nil) {
+				want := "<error>"
+				if test.ok {
+					want = "<nil>"
+				}
+				t.Errorf("Unexpected error: %v, want %v", err, want)
+			}
+			if len(form) != len(test.out) {
+				t.Errorf("len(form) = %d, want %d", len(form), len(test.out))
+			}
+			for k, evs := range test.out {
+				vs, ok := form[k]
+				if !ok {
+					t.Errorf("Missing key %q", k)
+					continue
+				}
+				if len(vs) != len(evs) {
+					t.Errorf("len(form[%q]) = %d, want %d", k, len(vs), len(evs))
+					continue
+				}
+				for j, ev := range evs {
+					if v := vs[j]; v != ev {
+						t.Errorf("form[%q][%d] = %q, want %q", k, j, v, ev)
+					}
+				}
+			}
+		})` nonbuildable
+$DIR/src/net/url/url_test.go:1436:6-1436:20: `want = "<nil>"` passed
+$DIR/src/net/url/url_test.go:1587:14-1587:27: `.RequestURI()` nonbuildable
+$DIR/src/net/url/url_test.go:1596:2-1596:23: `const url = "%gh&%ij"` nonbuildable
+$DIR/src/net/url/url_test.go:1598:15-1598:27: `.Sprint(err)` nonbuildable
+$DIR/src/net/url/url_test.go:1599:13-1599:37: `.Contains(errStr, "%gh")` nonbuildable
+$DIR/src/net/url/url_test.go:1659:19-1659:32: `.RequestURI()` nonbuildable
+$DIR/src/net/url/url_test.go:1805:9-1805:19: `.Timeout()` nonbuildable
+$DIR/src/net/url/url_test.go:1806:59-1806:69: `.Timeout()` passed
+$DIR/src/net/url/url_test.go:1809:9-1809:21: `.Temporary()` nonbuildable
+$DIR/src/net/url/url_test.go:1810:61-1810:73: `.Temporary()` passed
+$DIR/src/net/url/url_test.go:1849:18-1849:29: `.Hostname()` nonbuildable
+$DIR/src/net/url/url_test.go:1849:32-1849:39: `.Port()` nonbuildable
+$DIR/src/net/url/url_test.go:1867:17-1867:28: `.Marshal(u)` nonbuildable
+$DIR/src/net/url/url_test.go:1880:2-1880:30: `err = json.Unmarshal(js, u1)` nonbuildable
+$DIR/src/net/url/url_test.go:1880:12-1880:30: `.Unmarshal(js, u1)` nonbuildable
+$DIR/src/net/url/url_test.go:1884:7-1884:16: `.String()` nonbuildable
+$DIR/src/net/url/url_test.go:1884:21-1884:30: `.String()` nonbuildable
+$DIR/src/net/url/url_test.go:1895:2-1895:36: `err = gob.NewEncoder(&w).Encode(u)` failed
+$DIR/src/net/url/url_test.go:1895:11-1895:26: `.NewEncoder(&w)` nonbuildable
+$DIR/src/net/url/url_test.go:1895:26-1895:36: `.Encode(u)` nonbuildable
+$DIR/src/net/url/url_test.go:1901:2-1901:37: `err = gob.NewDecoder(&w).Decode(u1)` failed
+$DIR/src/net/url/url_test.go:1901:11-1901:26: `.NewDecoder(&w)` nonbuildable
+$DIR/src/net/url/url_test.go:1901:26-1901:37: `.Decode(u1)` nonbuildable
+$DIR/src/net/url/url_test.go:1905:7-1905:16: `.String()` nonbuildable
+$DIR/src/net/url/url_test.go:1905:21-1905:30: `.String()` nonbuildable
+$DIR/src/net/url/url_test.go:1923:16-1923:27: `.Username()` nonbuildable
+$DIR/src/net/url/url_test.go:1927:20-1927:31: `.Password()` nonbuildable
+$DIR/src/net/url/url_test.go:1931:16-1931:25: `.String()` nonbuildable
+$DIR/src/net/url/url_test.go:1938:24-1938:36: `.Sprint(err)` nonbuildable
+$DIR/src/net/url/url_test.go:1938:75-1938:98: `.Contains(got, wantsub)` nonbuildable
+$DIR/src/net/url/url_test.go:1951:3-1951:62: `const wantSub = "net/url: invalid control character in URL"` nonbuildable
+$DIR/src/net/url/url_test.go:1952:16-1952:28: `.Sprint(err)` nonbuildable
+$DIR/src/net/url/url_test.go:1952:38-1952:61: `.Contains(got, wantSub)` nonbuildable
+$DIR/src/net/url/url_test.go:2196:4-2196:29: `wantErr = "non-nil error"` passed
+$DIR/src/net/url/url_test.go:2204:4-2204:30: `u = u.JoinPath(tt.elem...)` failed
+$DIR/src/net/url/url_test.go:2204:9-2204:30: `.JoinPath(tt.elem...)` failed
+$DIR/src/net/url/url_test.go:2205:4-2205:20: `out = u.String()` failed
+$DIR/src/net/url/url_test.go:2205:11-2205:20: `.String()` nonbuildable

@@ -1,0 +1,31 @@
+20 candidates in 3 test files
+$DIR/src/os/user/listgroups_unix_test.go: dry running
+$DIR/src/os/user/listgroups_unix_test.go: mutilating
+$DIR/src/os/user/listgroups_unix_test.go:74:46-74:63: Warning: Failed to run test `TestListGroups`
+
+This may indicate a bug in Necessist. Consider opening an issue at: https://github.com/trailofbits/necessist/issues
+
+Silence this warning with: --allow run-test-failed
+$DIR/src/os/user/listgroups_unix_test.go:85:3-85:32: Warning: Failed to run test `TestListGroups`
+$DIR/src/os/user/lookup_unix_test.go: dry running
+$DIR/src/os/user/lookup_unix_test.go: mutilating
+$DIR/src/os/user/lookup_unix_test.go:39:45-39:62: Warning: Failed to run test `TestFindGroupName`
+$DIR/src/os/user/lookup_unix_test.go:85:42-85:59: Warning: Failed to run test `TestFindGroupId`
+$DIR/src/os/user/lookup_unix_test.go:154:44-154:58: Warning: Failed to run test `TestInvalidUserId`
+$DIR/src/os/user/lookup_unix_test.go:165:41-165:58: Warning: Failed to run test `TestLookupUserId`
+$DIR/src/os/user/lookup_unix_test.go:194:45-194:69: Warning: Failed to run test `TestLookupUserPopulatesAllFields`
+$DIR/src/os/user/lookup_unix_test.go:205:13-205:32: Warning: Failed to run test `TestLookupUserPopulatesAllFields`
+$DIR/src/os/user/lookup_unix_test.go:233:44-233:61: Warning: Failed to run test `TestLookupUser`
+$DIR/src/os/user/user_test.go: dry running
+$DIR/src/os/user/user_test.go: mutilating
+$DIR/src/os/user/user_test.go:21:3-21:19: `userBuffer = old` nonbuildable
+$DIR/src/os/user/user_test.go:23:2-23:16: `userBuffer = 1` passed
+$DIR/src/os/user/user_test.go:61:2-61:14: `checkUser(t)` passed
+$DIR/src/os/user/user_test.go:74:2-74:23: `compare(t, want, got)` nonbuildable
+$DIR/src/os/user/user_test.go:78:2-78:14: `checkUser(t)` passed
+$DIR/src/os/user/user_test.go:88:2-88:23: `compare(t, want, got)` nonbuildable
+$DIR/src/os/user/user_test.go:101:3-101:20: `groupBuffer = old` nonbuildable
+$DIR/src/os/user/user_test.go:103:2-103:17: `groupBuffer = 1` passed
+$DIR/src/os/user/user_test.go:104:2-104:15: `checkGroup(t)` passed
+$DIR/src/os/user/user_test.go:139:2-139:19: `checkGroupList(t)` passed
+$DIR/src/os/user/user_test.go:144:19-144:30: `.GroupIds()` nonbuildable

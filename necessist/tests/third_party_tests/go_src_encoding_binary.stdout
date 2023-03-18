@@ -1,0 +1,154 @@
+119 candidates in 2 test files
+$DIR/src/encoding/binary/binary_test.go: dry running
+$DIR/src/encoding/binary/binary_test.go: mutilating
+$DIR/src/encoding/binary/binary_test.go:138:47-138:83: `testRead(t, LittleEndian, little, s)` passed
+$DIR/src/encoding/binary/binary_test.go:139:47-139:84: `testWrite(t, LittleEndian, little, s)` passed
+$DIR/src/encoding/binary/binary_test.go:140:47-140:85: `testWrite(t, LittleEndian, little, &s)` passed
+$DIR/src/encoding/binary/binary_test.go:142:44-142:74: `testRead(t, BigEndian, big, s)` passed
+$DIR/src/encoding/binary/binary_test.go:143:44-143:75: `testWrite(t, BigEndian, big, s)` passed
+$DIR/src/encoding/binary/binary_test.go:144:44-144:76: `testWrite(t, BigEndian, big, &s)` passed
+$DIR/src/encoding/binary/binary_test.go:148:19-148:34: `.NewReader(src)` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:149:2-149:57: `checkResult(t, "ReadSlice", BigEndian, err, slice, res)` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:155:2-155:64: `checkResult(t, "WriteSlice", BigEndian, err, buf.Bytes(), src)` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:155:50-155:58: `.Bytes()` failed
+$DIR/src/encoding/binary/binary_test.go:161:2-161:57: `err = Read(bytes.NewReader([]byte{0}), BigEndian, &res)` passed
+$DIR/src/encoding/binary/binary_test.go:161:18-161:39: `.NewReader([]byte{0})` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:162:2-162:56: `checkResult(t, "ReadBool", BigEndian, err, res, false)` passed
+$DIR/src/encoding/binary/binary_test.go:163:2-163:13: `res = false` passed
+$DIR/src/encoding/binary/binary_test.go:164:2-164:57: `err = Read(bytes.NewReader([]byte{1}), BigEndian, &res)` failed
+$DIR/src/encoding/binary/binary_test.go:164:18-164:39: `.NewReader([]byte{1})` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:165:2-165:55: `checkResult(t, "ReadBool", BigEndian, err, res, true)` passed
+$DIR/src/encoding/binary/binary_test.go:166:2-166:13: `res = false` passed
+$DIR/src/encoding/binary/binary_test.go:167:2-167:57: `err = Read(bytes.NewReader([]byte{2}), BigEndian, &res)` failed
+$DIR/src/encoding/binary/binary_test.go:167:18-167:39: `.NewReader([]byte{2})` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:168:2-168:55: `checkResult(t, "ReadBool", BigEndian, err, res, true)` passed
+$DIR/src/encoding/binary/binary_test.go:173:19-173:51: `.NewReader([]byte{0, 1, 2, 255})` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:174:2-174:89: `checkResult(t, "ReadBoolSlice", BigEndian, err, slice, []bool{false, true, true, true})` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:192:17-192:32: `.ValueOf(array)` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:192:32-192:39: `.Elem()` failed
+$DIR/src/encoding/binary/binary_test.go:194:3-197:4: `switch src.Index(0).Kind() {
+		case reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+			unsigned = true
+		}` failed
+$DIR/src/encoding/binary/binary_test.go:194:13-194:22: `.Index(0)` failed
+$DIR/src/encoding/binary/binary_test.go:194:22-194:29: `.Kind()` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:198:22-198:28: `.Len()` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:200:5-200:49: `src.Index(i).SetUint(uint64(i * 0x07654321))` passed
+$DIR/src/encoding/binary/binary_test.go:200:8-200:17: `.Index(i)` failed
+$DIR/src/encoding/binary/binary_test.go:200:17-200:49: `.SetUint(uint64(i * 0x07654321))` passed
+$DIR/src/encoding/binary/binary_test.go:202:5-202:47: `src.Index(i).SetInt(int64(i * 0x07654321))` passed
+$DIR/src/encoding/binary/binary_test.go:202:8-202:17: `.Index(i)` failed
+$DIR/src/encoding/binary/binary_test.go:202:17-202:47: `.SetInt(int64(i * 0x07654321))` passed
+$DIR/src/encoding/binary/binary_test.go:205:3-205:14: `buf.Reset()` passed
+$DIR/src/encoding/binary/binary_test.go:205:6-205:14: `.Reset()` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:206:18-206:38: `.Slice(0, src.Len())` passed
+$DIR/src/encoding/binary/binary_test.go:206:31-206:37: `.Len()` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:207:40-207:52: `.Interface()` failed
+$DIR/src/encoding/binary/binary_test.go:211:17-211:33: `.New(src.Type())` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:211:25-211:32: `.Type()` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:211:33-211:40: `.Elem()` failed
+$DIR/src/encoding/binary/binary_test.go:212:18-212:38: `.Slice(0, dst.Len())` failed
+$DIR/src/encoding/binary/binary_test.go:212:31-212:37: `.Len()` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:213:3-213:51: `err = Read(buf, BigEndian, dstSlice.Interface())` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:213:38-213:50: `.Interface()` failed
+$DIR/src/encoding/binary/binary_test.go:217:14-217:58: `.DeepEqual(src.Interface(), dst.Interface())` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:217:28-217:40: `.Interface()` failed
+$DIR/src/encoding/binary/binary_test.go:217:45-217:57: `.Interface()` failed
+$DIR/src/encoding/binary/binary_test.go:230:15-230:45: `.Indirect(reflect.ValueOf(ts))` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:230:32-230:44: `.ValueOf(ts)` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:231:19-231:30: `.NumField()` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:232:12-232:21: `.Field(i)` failed
+$DIR/src/encoding/binary/binary_test.go:232:21-232:28: `.Type()` failed
+$DIR/src/encoding/binary/binary_test.go:232:28-232:37: `.String()` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:234:4-234:15: `typ = "int"` passed
+$DIR/src/encoding/binary/binary_test.go:236:37-236:46: `.Field(i)` failed
+$DIR/src/encoding/binary/binary_test.go:236:46-236:58: `.Interface()` failed
+$DIR/src/encoding/binary/binary_test.go:237:59-237:68: `.Field(i)` passed
+$DIR/src/encoding/binary/binary_test.go:237:68-237:75: `.Type()` passed
+$DIR/src/encoding/binary/binary_test.go:238:21-238:48: `.Contains(err.Error(), typ)` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:303:2-303:25: `structSize = sync.Map{}` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:307:13-310:5: `.Range(func(_, _ any) bool {
+			i++
+			return true
+		})` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:308:4-308:7: `i++` failed
+$DIR/src/encoding/binary/binary_test.go:317:3-317:17: `total += delta` failed
+$DIR/src/encoding/binary/binary_test.go:321:2-323:3: `type foo struct {
+		A uint32
+	}` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:325:2-329:3: `type bar struct {
+		A Struct
+		B foo
+		C Struct
+	}` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:374:2-374:31: `Read(&buf, LittleEndian, &u2)` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:381:49-381:62: `.TypeOf(data)` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:381:62-381:71: `.String()` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:390:2-390:9: `read(0)` passed
+$DIR/src/encoding/binary/binary_test.go:392:2-392:10: `read(&s)` passed
+$DIR/src/encoding/binary/binary_test.go:394:2-394:10: `read(&p)` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:398:2-398:33: `const data = "0123456789abcdef"` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:409:3-416:4: `switch i {
+		case 0:
+			errWant = io.EOF
+		case len(data):
+			errWant = nil
+		default:
+			errWant = io.ErrUnexpectedEOF
+		}` failed
+$DIR/src/encoding/binary/binary_test.go:418:25-418:45: `.NewReader(data[:i])` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:421:25-421:45: `.NewReader(data[:i])` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:446:2-449:3: `type byteOrder interface {
+		ByteOrder
+		AppendByteOrder
+	}` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:452:3-452:19: `const offset = 3` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:459:8-459:29: `.Float64bits(math.Pi)` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:460:8-460:28: `.Float64bits(math.E)` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:463:4-463:36: `order.PutUint16(buf[:2], want16)` failed
+$DIR/src/encoding/binary/binary_test.go:463:9-463:36: `.PutUint16(buf[:2], want16)` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:464:19-464:35: `.Uint16(buf[:2])` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:467:4-467:50: `buf = order.AppendUint16(buf[:offset], want16)` failed
+$DIR/src/encoding/binary/binary_test.go:467:15-467:50: `.AppendUint16(buf[:offset], want16)` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:468:19-468:40: `.Uint16(buf[offset:])` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:476:4-476:36: `order.PutUint32(buf[:4], want32)` failed
+$DIR/src/encoding/binary/binary_test.go:476:9-476:36: `.PutUint32(buf[:4], want32)` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:477:19-477:35: `.Uint32(buf[:4])` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:480:4-480:50: `buf = order.AppendUint32(buf[:offset], want32)` failed
+$DIR/src/encoding/binary/binary_test.go:480:15-480:50: `.AppendUint32(buf[:offset], want32)` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:481:19-481:40: `.Uint32(buf[offset:])` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:489:4-489:36: `order.PutUint64(buf[:8], want64)` failed
+$DIR/src/encoding/binary/binary_test.go:489:9-489:36: `.PutUint64(buf[:8], want64)` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:490:19-490:35: `.Uint64(buf[:8])` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:493:4-493:50: `buf = order.AppendUint64(buf[:offset], want64)` failed
+$DIR/src/encoding/binary/binary_test.go:493:15-493:50: `.AppendUint64(buf[:offset], want64)` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:494:19-494:40: `.Uint64(buf[offset:])` nonbuildable
+$DIR/src/encoding/binary/binary_test.go:514:2-514:42: `testReadInvalidDestination(t, BigEndian)` passed
+$DIR/src/encoding/binary/binary_test.go:515:2-515:45: `testReadInvalidDestination(t, LittleEndian)` passed
+$DIR/src/encoding/binary/varint_test.go: dry running
+$DIR/src/encoding/binary/varint_test.go: mutilating
+$DIR/src/encoding/binary/varint_test.go:23:2-23:37: `testConstant(t, 16, MaxVarintLen16)` passed
+$DIR/src/encoding/binary/varint_test.go:24:2-24:37: `testConstant(t, 32, MaxVarintLen32)` passed
+$DIR/src/encoding/binary/varint_test.go:25:2-25:37: `testConstant(t, 64, MaxVarintLen64)` passed
+$DIR/src/encoding/binary/varint_test.go:103:3-103:19: `testVarint(t, x)` passed
+$DIR/src/encoding/binary/varint_test.go:104:3-104:20: `testVarint(t, -x)` passed
+$DIR/src/encoding/binary/varint_test.go:107:3-107:19: `testVarint(t, x)` passed
+$DIR/src/encoding/binary/varint_test.go:108:3-108:20: `testVarint(t, -x)` passed
+$DIR/src/encoding/binary/varint_test.go:114:3-114:28: `testUvarint(t, uint64(x))` nonbuildable
+$DIR/src/encoding/binary/varint_test.go:117:3-117:20: `testUvarint(t, x)` passed
+$DIR/src/encoding/binary/varint_test.go:130:30-130:45: `.NewReader(buf)` nonbuildable
+$DIR/src/encoding/binary/varint_test.go:133:4-133:33: `wantErr = io.ErrUnexpectedEOF` failed
+$DIR/src/encoding/binary/varint_test.go:155:6-155:17: `b[i] = 0xff` nonbuildable
+$DIR/src/encoding/binary/varint_test.go:157:5-157:15: `b[999] = 0` passed
+$DIR/src/encoding/binary/varint_test.go:185:4-193:5: `.Run(tt.name, func(t *testing.T) {
+			value, n := Uvarint(tt.in)
+			if g, w := n, tt.wantN; g != w {
+				t.Errorf("bytes returned=%d, want=%d", g, w)
+			}
+			if g, w := value, tt.wantValue; g != w {
+				t.Errorf("value=%d, want=%d", g, w)
+			}
+		})` nonbuildable
+$DIR/src/encoding/binary/varint_test.go:215:2-215:102: `testOverflow(t, []byte{0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x2}, 0, -10, overflow)` passed
+$DIR/src/encoding/binary/varint_test.go:216:2-216:126: `testOverflow(t, []byte{0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x1, 0, 0}, 0, -11, overflow)` passed
+$DIR/src/encoding/binary/varint_test.go:217:2-217:115: `testOverflow(t, []byte{0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF}, 1<<64-1, -11, overflow)` passed

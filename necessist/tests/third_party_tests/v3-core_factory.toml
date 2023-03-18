@@ -1,0 +1,3 @@
+url = "https://github.com/Uniswap/v3-core"
+test_files = ["test/UniswapV3Factory.spec.ts"]
+full = true

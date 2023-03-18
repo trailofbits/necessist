@@ -1,0 +1,4 @@
+url = "https://github.com/smartcontractkit/chainlink"
+subdir = "contracts"
+framework = "foundry"
+full = true
