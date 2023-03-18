@@ -19,7 +19,7 @@ ansi_term = "0.12"
 anyhow = "1.0"
 atty = "0.2"
 bitflags = "2.0"
-clap = { version = "4.1", features = ["cargo"], optional = true }
+clap = { version = "4.1", features = ["cargo", "derive"], optional = true }
 ctrlc = "3.2"
 diesel = { version = "2.0", features = ["sqlite"] }
 git2 = "0.16"
