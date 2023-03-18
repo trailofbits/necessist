@@ -19,6 +19,8 @@ use hardhat_ts::HardhatTs;
 mod rust;
 use rust::Rust;
 
+mod ts_utils;
+
 #[derive(Debug, Clone, Copy, EnumIter, Eq, Ord, PartialEq, PartialOrd, ValueEnum)]
 #[cfg_attr(feature = "clap", derive(clap::ValueEnum))]
 #[non_exhaustive]
