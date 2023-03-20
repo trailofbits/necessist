@@ -966,7 +966,7 @@ dependencies = [
  "strum",
  "strum_macros",
  "subprocess",
- "syn 1.0.109",
+ "syn 2.0.2",
  "tempfile",
  "toml",
 ]
@@ -992,7 +992,7 @@ dependencies = [
  "strum_macros",
  "subprocess",
  "swc_core",
- "syn 1.0.109",
+ "syn 2.0.2",
  "thiserror",
  "tree-sitter",
  "tree-sitter-go",
