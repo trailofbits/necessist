@@ -41,7 +41,7 @@ swc_core = { version = "0.64", features = ["common", "ecma_ast", "ecma_parser", 
 
 # Rust
 cargo_metadata = "0.15"
-syn = { version = "1.0", features = ["extra-traits", "full", "visit"] }
+syn = { version = "2.0", features = ["extra-traits", "full", "visit"] }
 
 [dev-dependencies]
 curl = "0.4"
@@ -50,4 +50,4 @@ curl = "0.4"
 cargo_metadata = "0.15"
 curl = "0.4"
 heck = "0.4"
-syn = "1.0"
+syn = "2.0"

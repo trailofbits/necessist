@@ -49,7 +49,7 @@ trycmd = "0.14"
 cargo_metadata = "0.15"
 curl = "0.4"
 heck = "0.4"
-syn = "1.0"
+syn = "2.0"
 
 [features]
 default = []
