@@ -11,7 +11,7 @@ use syn::{
     punctuated::Punctuated,
     spanned::Spanned,
     visit::{visit_expr_method_call, visit_item_fn, visit_item_mod, visit_stmt, Visit},
-    Expr, ExprMacro, ExprMethodCall, File, Ident, ItemFn, ItemMod, Macro, PathSegment, Stmt, Token,
+    Expr, ExprMethodCall, File, Ident, ItemFn, ItemMod, Macro, PathSegment, Stmt, StmtMacro, Token,
 };
 
 #[cfg_attr(
@@ -217,7 +217,7 @@ where
 fn is_test(item: &ItemFn) -> Option<&Ident> {
     if item.attrs.iter().any(|attr| {
         let path = attr
-            .path
+            .path()
             .segments
             .iter()
             .map(|PathSegment { ident, arguments }| {
@@ -244,7 +244,7 @@ fn is_test(item: &ItemFn) -> Option<&Ident> {
 
 fn is_method_call_statement(stmt: &Stmt) -> bool {
     match stmt {
-        Stmt::Expr(expr) | Stmt::Semi(expr, ..) => Some(expr),
+        Stmt::Expr(expr, _) => Some(expr),
         _ => None,
     }
     .map_or(false, |expr| matches!(expr, Expr::MethodCall(..)))
@@ -252,7 +252,7 @@ fn is_method_call_statement(stmt: &Stmt) -> bool {
 
 fn is_control(stmt: &Stmt) -> bool {
     match stmt {
-        Stmt::Expr(expr) | Stmt::Semi(expr, ..) => Some(expr),
+        Stmt::Expr(expr, _) => Some(expr),
         _ => None,
     }
     .map_or(false, |expr| {
@@ -276,11 +276,7 @@ const IGNORED_MACROS: &[&str] = &[
 
 fn is_ignored_macro(config: &Config, stmt: &Stmt) -> bool {
     match stmt {
-        Stmt::Expr(expr) | Stmt::Semi(expr, ..) => Some(expr),
-        _ => None,
-    }
-    .map_or(false, |expr| match expr {
-        Expr::Macro(ExprMacro {
+        Stmt::Macro(StmtMacro {
             mac: Macro { path, .. },
             ..
         }) => path.get_ident().map_or(false, |ident| {
@@ -288,7 +284,7 @@ fn is_ignored_macro(config: &Config, stmt: &Stmt) -> bool {
             IGNORED_MACROS.binary_search(&s.as_ref()).is_ok() || config.ignored_macros.contains(&s)
         }),
         _ => false,
-    })
+    }
 }
 
 const IGNORED_METHODS: &[&str] = &[
