@@ -64,7 +64,7 @@ fn format() {
 
 #[test]
 fn license() {
-    let re = Regex::new(r"^[^:]*\b(Apache-2.0|0BSD|BSD-\d-Clause|CC0-1.0|MIT)\b").unwrap();
+    let re = Regex::new(r"^[^:]*\b(Apache-2.0|0BSD|BSD-\d-Clause|CC0-1.0|MIT|MPL-2\.0)\b").unwrap();
 
     for line in std::str::from_utf8(
         &Command::new("cargo")
