@@ -192,6 +192,8 @@ In addition to the below, the Golang framework ignores:
 - `copied`
 - `deref`
 - `deref_mut`
+- `expect`
+- `expect_err`
 - `into_boxed_bytes`
 - `into_boxed_os_str`
 - `into_boxed_path`
@@ -219,6 +221,8 @@ In addition to the below, the Golang framework ignores:
 - `clone` (e.g. [`std::clone::Clone::clone`])
 - `cloned` (e.g. [`std::iter::Iterator::cloned`])
 - `copied` (e.g. [`std::iter::Iterator::copied`])
+- `expect` (e.g. [`std::option::Option::expect`])
+- `expect_err` (e.g. [`std::result::Result::expect_err`])
 - `into_owned` (e.g. [`std::borrow::Cow::into_owned`])
 - `success` (e.g. [`assert_cmd::assert::Assert::success`])
 - `unwrap` (e.g. [`std::option::Option::unwrap`])
@@ -265,7 +269,9 @@ Necessist is licensed and distributed under the AGPLv3 license. [Contact us](mai
 [`std::clone::clone::clone`]: https://doc.rust-lang.org/std/clone/trait.Clone.html#tymethod.clone
 [`std::iter::iterator::cloned`]: https://doc.rust-lang.org/std/iter/trait.Iterator.html#tymethod.cloned
 [`std::iter::iterator::copied`]: https://doc.rust-lang.org/std/iter/trait.Iterator.html#tymethod.copied
+[`std::option::option::expect`]: https://doc.rust-lang.org/std/option/enum.Option.html#method.expect
 [`std::option::option::unwrap`]: https://doc.rust-lang.org/std/option/enum.Option.html#method.unwrap
+[`std::result::result::expect_err`]: https://doc.rust-lang.org/std/result/enum.Result.html#method.expect_err
 [`std::result::result::unwrap_err`]: https://doc.rust-lang.org/std/result/enum.Result.html#method.unwrap_err
 [`testing.t`]: https://pkg.go.dev/testing#T
 [`unnecessary_conversion_for_trait`]: https://github.com/trailofbits/dylint/tree/master/examples/supplementary/unnecessary_conversion_for_trait
