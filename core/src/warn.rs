@@ -35,6 +35,7 @@ impl std::fmt::Display for Warning {
 }
 
 bitflags! {
+    #[derive(Clone, Copy)]
     pub struct Flags: u8 {
         const ONCE = 1 << 0;
     }
