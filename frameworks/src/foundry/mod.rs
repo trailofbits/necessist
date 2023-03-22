@@ -102,7 +102,13 @@ impl Interface for Foundry {
         let mut command = Command::new("forge");
         command.current_dir(context.root);
         command.env("FOUNDRY_FUZZ_RUNS", "1");
-        command.args(["test", "--match-path", &test_file.to_string_lossy()]);
+        command.args([
+            "test",
+            "--match-path",
+            &util::strip_prefix(&test_file, context.root)
+                .unwrap()
+                .to_string_lossy(),
+        ]);
         command.args(&context.opts.args);
 
         debug!("{:?}", command);
