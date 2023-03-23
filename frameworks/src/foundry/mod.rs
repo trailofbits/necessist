@@ -105,7 +105,7 @@ impl Interface for Foundry {
         command.args([
             "test",
             "--match-path",
-            &util::strip_prefix(&test_file, context.root)
+            &util::strip_prefix(test_file, context.root)
                 .unwrap()
                 .to_string_lossy(),
         ]);
