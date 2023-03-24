@@ -2,48 +2,88 @@
 
 Run tests with statements and method calls removed to help identify broken tests
 
+Necessist currently supports Foundry, Golang, Hardhat TS, and Rust.
+
+**Contents**
+
+- [Installation](#installation)
+- [Overview](#overview)
+- [Usage](#usage)
+- [Details](#details)
+- [Configuration files](#configuration-files-experimental)
+- [Goals](#goals)
+- [Limitations](#limitations)
+- [License](#license)
+
 ## Installation
 
 #### System requirements:
 
-Install `pkg-config` and `sqlite3` development files on your system (e.g., `sudo apt install pkg-config libsqlite3-dev` on Ubuntu).
+Install `pkg-config` and `sqlite3` development files on your system, e.g., on Ubuntu:
 
-#### Install from [crates.io]:
-
+```sh
+sudo apt install pkg-config libsqlite3-dev
 ```
+
+#### Install Necessist from [crates.io]:
+
+```sh
 cargo install necessist --version=^0.1.0-beta
 ```
 
-#### Install from [github.com]:
+#### Install Necessist from [github.com]:
 
-```
+```sh
 cargo install --git https://github.com/trailofbits/necessist --branch release
 ```
 
 ## Overview
 
-The following hypothetical test verifies that a login mechanism works. Suppose the test would pass if `session.send_password(...)` were removed. This could indicate that the wrong condition is checked thereafter. Or worse, it could indicate a bug in the login mechanism.
+Necessist iteratively removes statements and method calls from tests and then runs them. If a test passes with a statement or method call removed, it could indicate a problem in the test. Or worse, it could indicate a problem in the code being tested.
+
+### Example
+
+This example is from [`rust-openssl`]. The `verify_untrusted_callback_override_ok` test checks that a failed certificate validation can be overridden by a callback. But if the callback were never called (e.g., because of a failed connection), the test would still pass. Necessist reveals this fact by showing that the test passes without the call to `set_verify_callback`:
 
 ```rust
 #[test]
-fn login_works() {
-    let session = Session::new(URL);
-    session.send_username(USERNAME).unwrap();
-    session.send_password(PASSWORD).unwrap(); // <-- Test passes without this
-    assert!(session.read().unwrap().contains(WELCOME));
+fn verify_untrusted_callback_override_ok() {
+    let server = Server::builder().build();
+
+    let mut client = server.client();
+    client
+        .ctx()
+        .set_verify_callback(SslVerifyMode::PEER, |_, x509| { //
+            assert!(x509.current_cert().is_some());           // Test passes without this call
+            true                                              // to `set_verify_callback`.
+        });                                                   //
+
+    client.connect();
 }
 ```
 
-Necessist iteratively removes statements and method calls from tests and then runs them to help identify such cases.
+Following this discovery, a flag was [added to the test] to record whether the callback is called. The flag must be set for the test to succeed:
 
-Generally speaking, Necessist will not attempt to remove a statement if it is one the following:
+```rust
+#[test]
+fn verify_untrusted_callback_override_ok() {
+    static CALLED_BACK: AtomicBool = AtomicBool::new(false);  // Added
 
-- A statement containing other statements (e.g., a `for` loop)
-- A statement consisting of a single method call
-- A declaration (e.g., a local or `let` binding)
-- A `break`, `continue`, or `return`
+    let server = Server::builder().build();
 
-Also, for some frameworks, certain statements and methods are ignored (see [below](#supported-frameworks)).
+    let mut client = server.client();
+    client
+        .ctx()
+        .set_verify_callback(SslVerifyMode::PEER, |_, x509| {
+            CALLED_BACK.store(true, Ordering::SeqCst);        // Added
+            assert!(x509.current_cert().is_some());
+            true
+        });
+
+    client.connect();
+    assert!(CALLED_BACK.load(Ordering::SeqCst));              // Added
+}
+```
 
 ## Usage
 
@@ -72,11 +112,9 @@ Options:
   -V, --version                Print version
 ```
 
-By default, Necessist outputs to both the console and to an sqlite database. For the latter, a tool like [sqlitebrowser](https://sqlitebrowser.org/) can be used to filter/sort the results.
+### Output
 
-## Output
-
-By default, Necessist outputs only when tests pass. Passing `--verbose` causes Necessist to instead output all of the removal outcomes below.
+By default, Necessist outputs to the console only when tests pass. Passing `--verbose` causes Necessist to instead output all of the removal outcomes below.
 
 | Outcome                                      | Meaning (With the statement/method call removed...) |
 | -------------------------------------------- | --------------------------------------------------- |
@@ -85,9 +123,18 @@ By default, Necessist outputs only when tests pass. Passing `--verbose` causes N
 | <span style="color:green">failed</span>      | The test(s) built but failed.                       |
 | <span style="color:blue">nonbuildable</span> | The test(s) did not build.                          |
 
-## Supported frameworks
+By default, Necessist outputs to both the console and to an sqlite database. For the latter, a tool like [sqlitebrowser](https://sqlitebrowser.org/) can be used to filter/sort the results.
 
-Click on a framework to see its specifics.
+## Details
+
+Generally speaking, Necessist will not attempt to remove a statement if it is one the following:
+
+- A statement containing other statements (e.g., a `for` loop)
+- A statement consisting of a single method call
+- A declaration (e.g., a local or `let` binding)
+- A `break`, `continue`, or `return`
+
+Also, for some frameworks, certain statements and methods are ignored. Click on a framework to see its specifics.
 
 <details>
 <summary>Foundry</summary>
@@ -254,7 +301,7 @@ A configuration file allows one to tailor Necessist's behavior with respect to a
 
 ## Goals
 
-- If a project uses a [supported framework](#supported-frameworks), then `cd`ing into the project's directory and typing `necessist` (with no arguments) should produce meaningful output.
+- If a project uses a supported framework, then `cd`ing into the project's directory and typing `necessist` (with no arguments) should produce meaningful output.
 
 ## References
 
@@ -265,6 +312,7 @@ A configuration file allows one to tailor Necessist's behavior with respect to a
 Necessist is licensed and distributed under the AGPLv3 license. [Contact us](mailto:opensource@trailofbits.com) if you're looking for an exception to the terms.
 
 [`assert_cmd::assert::assert::success`]: https://docs.rs/assert_cmd/latest/assert_cmd/assert/struct.Assert.html#method.success
+[`rust-openssl`]: https://github.com/sfackler/rust-openssl
 [`std::borrow::cow::into_owned`]: https://doc.rust-lang.org/std/borrow/enum.Cow.html#method.into_owned
 [`std::clone::clone::clone`]: https://doc.rust-lang.org/std/clone/trait.Clone.html#tymethod.clone
 [`std::iter::iterator::cloned`]: https://doc.rust-lang.org/std/iter/trait.Iterator.html#tymethod.cloned
@@ -275,8 +323,8 @@ Necessist is licensed and distributed under the AGPLv3 license. [Contact us](mai
 [`std::result::result::unwrap_err`]: https://doc.rust-lang.org/std/result/enum.Result.html#method.unwrap_err
 [`testing.t`]: https://pkg.go.dev/testing#T
 [`unnecessary_conversion_for_trait`]: https://github.com/trailofbits/dylint/tree/master/examples/supplementary/unnecessary_conversion_for_trait
+[added to the test]: https://github.com/sfackler/rust-openssl/pull/1852
 [crates.io]: https://crates.io/crates/necessist
-[foundry]: https://github.com/foundry-rs/foundry
 [github.com]: https://github.com/trailofbits/necessist
 [preprint]: https://agroce.github.io/asej18.pdf
 [toml]: https://toml.io/en/
