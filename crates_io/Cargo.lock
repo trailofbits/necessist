@@ -954,7 +954,7 @@ dependencies = [
  "strum",
  "strum_macros",
  "subprocess",
- "syn 2.0.4",
+ "syn 2.0.10",
  "tempfile",
  "toml",
 ]
@@ -980,7 +980,7 @@ dependencies = [
  "strum_macros",
  "subprocess",
  "swc_core",
- "syn 2.0.4",
+ "syn 2.0.10",
  "thiserror",
  "tree-sitter",
  "tree-sitter-go",
@@ -1402,7 +1402,7 @@ checksum = "e13cca257d068dd3a390d04b2c3009a3fad2ee5048dfa8f239d048372810470c"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.4",
+ "syn 2.0.10",
 ]
 
 [[package]]
@@ -1499,7 +1499,7 @@ checksum = "e801c1712f48475582b7696ac71e0ca34ebb30e09338425384269d9717c62cad"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.4",
+ "syn 2.0.10",
 ]
 
 [[package]]
@@ -1621,9 +1621,9 @@ dependencies = [
 
 [[package]]
 name = "string_enum"
-version = "0.4.0"
+version = "0.3.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0090512bdfee4b56d82480d66c0fd8a6f53f0fe0f97e075e949b252acdd482e0"
+checksum = "91f42363e5ca94ea6f3faee9e3b5e1a4047535ae323f5c0579385fb2ae95874e"
 dependencies = [
  "pmutil",
  "proc-macro2",
@@ -1710,9 +1710,9 @@ dependencies = [
 
 [[package]]
 name = "swc_core"
-version = "0.70.0"
+version = "0.69.30"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8749989b6a04f7783200dafbb03c473dc0c1b161096e568e74360e15ebc8da45"
+checksum = "3a12f8659a478288dd2b077372ec73384c1a588787b9a2244781780f7ab01b03"
 dependencies = [
  "swc_atoms",
  "swc_common",
@@ -1725,14 +1725,15 @@ dependencies = [
 
 [[package]]
 name = "swc_ecma_ast"
-version = "0.101.0"
+version = "0.100.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d02efbeb54f23ff0db676869d234369881e2a57f729194f37da51c8a25d53e6f"
+checksum = "93c69d8727a1057867a9e5da47cbd42cea3c9e2376c6d8160b03b2afa05c38f4"
 dependencies = [
  "bitflags 1.3.2",
  "is-macro",
  "num-bigint",
  "scoped-tls",
+ "serde",
  "string_enum",
  "swc_atoms",
  "swc_common",
@@ -1741,9 +1742,9 @@ dependencies = [
 
 [[package]]
 name = "swc_ecma_parser"
-version = "0.131.0"
+version = "0.130.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f349fa26135e0bb04bce9a06f37181936f094e12368a3abe347a596ecfa01520"
+checksum = "d13839e9b45659856ac0cb906ca601c2d6ef3f0225bb717efd974c04d0767eb3"
 dependencies = [
  "either",
  "lexical",
@@ -1761,9 +1762,9 @@ dependencies = [
 
 [[package]]
 name = "swc_ecma_transforms_base"
-version = "0.123.0"
+version = "0.122.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "662568b8c35cfcb5ce9bb6238f166d7d10b35349b9e7df22649290af919a533e"
+checksum = "6d4e773aa99f30c651232690b731f2f65641c817658b8457074dfce20f41705f"
 dependencies = [
  "better_scoped_tls",
  "bitflags 1.3.2",
@@ -1784,9 +1785,9 @@ dependencies = [
 
 [[package]]
 name = "swc_ecma_utils"
-version = "0.114.0"
+version = "0.113.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "eb7ee10aea89ed07ca42d2ee1486154d63c4e1002eba75cc813a846fc0c1ad26"
+checksum = "63b7bb4af825cf96ad8761c8129fffa4fa417c3fda5ad913fc84518802d8f08b"
 dependencies = [
  "indexmap",
  "num_cpus",
@@ -1802,9 +1803,9 @@ dependencies = [
 
 [[package]]
 name = "swc_ecma_visit"
-version = "0.87.0"
+version = "0.86.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "53ba86a49466594a4cad1f9141a9c00351f3d71577d2530d9666885760895b36"
+checksum = "3735a8ed79979d2e1a4a688e08b88bcd1d983cbe9fdf0f0e550814569c1d42da"
 dependencies = [
  "num-bigint",
  "swc_atoms",
@@ -1875,9 +1876,9 @@ dependencies = [
 
 [[package]]
 name = "syn"
-version = "2.0.4"
+version = "2.0.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2c622ae390c9302e214c31013517c2061ecb2699935882c60a9b37f82f8625ae"
+checksum = "5aad1363ed6d37b84299588d62d3a7d95b5a5c2d9aad5c85609fda12afaa1f40"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -1934,7 +1935,7 @@ checksum = "f9456a42c5b0d803c8cd86e73dd7cc9edd429499f37a3550d286d5e86720569f"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.4",
+ "syn 2.0.10",
 ]
 
 [[package]]
