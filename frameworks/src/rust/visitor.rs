@@ -11,7 +11,8 @@ use syn::{
     punctuated::Punctuated,
     spanned::Spanned,
     visit::{visit_expr_method_call, visit_item_fn, visit_item_mod, visit_stmt, Visit},
-    Expr, ExprMethodCall, File, Ident, ItemFn, ItemMod, Macro, PathSegment, Stmt, StmtMacro, Token,
+    Expr, ExprMacro, ExprMethodCall, File, Ident, ItemFn, ItemMod, Macro, PathSegment, Stmt,
+    StmtMacro, Token,
 };
 
 #[cfg_attr(
@@ -279,7 +280,14 @@ fn is_ignored_macro(config: &Config, stmt: &Stmt) -> bool {
         Stmt::Macro(StmtMacro {
             mac: Macro { path, .. },
             ..
-        }) => path.get_ident().map_or(false, |ident| {
+        })
+        | Stmt::Expr(
+            Expr::Macro(ExprMacro {
+                mac: Macro { path, .. },
+                ..
+            }),
+            _,
+        ) => path.get_ident().map_or(false, |ident| {
             let s = ident.to_string();
             IGNORED_MACROS.binary_search(&s.as_ref()).is_ok() || config.ignored_macros.contains(&s)
         }),
