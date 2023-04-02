@@ -24,9 +24,7 @@ jobs:
         run: ./scripts/publish.sh
 
       - name: Update release branch
-        run: |
-          git checkout release
-          git push origin release
+        run: git push origin ${{ github.ref }}:release
 
       - name: Get version
         id: get-version
