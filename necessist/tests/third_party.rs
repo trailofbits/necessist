@@ -4,6 +4,7 @@ use regex::Regex;
 use serde::Deserialize;
 use std::{
     collections::BTreeMap,
+    env::{consts, var},
     ffi::OsStr,
     fs::read_dir,
     fs::{read_to_string, remove_file, write},
@@ -64,15 +65,23 @@ fn all_tests() {
             continue;
         }
 
+        // smoelius: `TESTNAME` is what Clippy uses:
+        // https://github.com/rust-lang/rust-clippy/blame/f8f9d01c2ad0dff565bdd60feeb4cbd09dada8cd/book/src/development/adding_lints.md#L99
+        if var("TESTNAME").ok().map_or(false, |testname| {
+            path.file_stem() != Some(OsStr::new(&testname))
+        }) {
+            continue;
+        }
+
         let contents = read_to_string(&path).unwrap();
         let test: Test = toml::from_str(&contents).unwrap();
 
         if test
             .target_os
             .as_ref()
-            .map_or(false, |target_os| target_os != std::env::consts::OS)
+            .map_or(false, |target_os| target_os != consts::OS)
         {
-            return;
+            continue;
         }
 
         tests

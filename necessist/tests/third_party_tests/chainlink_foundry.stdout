@@ -1,4 +1,11 @@
-7 candidates in 1 test file
+8 candidates in 2 test files
+$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol: dry running
+$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol: mutilating
+$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:102:47-106:6: `.calculatePaymentAmountTest(
+      gasAfterPaymentCalculation,
+      fulfillmentFlatFeeLinkPPM,
+      weiPerUnitGas
+    )` nonbuildable
 $DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol: dry running
 $DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol: mutilating
 $DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol:36:36-36:53: `.encode("newKey")` nonbuildable
