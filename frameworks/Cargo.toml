@@ -30,7 +30,7 @@ walkdir = "2.3"
 # Foundry
 # smoelius: New `solang-parser` releases may contain breaking changes:
 # https://github.com/hyperledger/solang/pull/1213
-solang-parser = "=0.2.3"
+solang-parser = "=0.2.4"
 
 # Golang
 tree-sitter = "0.20"
