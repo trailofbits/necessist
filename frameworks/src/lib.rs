@@ -1,16 +1,18 @@
-use anyhow::{anyhow, Error, Result};
-use assert_cmd::output::OutputError;
-use bstr::{io::BufReadExt, BStr};
+use anyhow::Result;
 use clap::ValueEnum;
 use heck::ToKebabCase;
-use log::debug;
 use necessist_core::{
-    framework::{Applicable, Interface as High, Postprocess, ToImplementation},
-    source_warn, Config, LightContext, Span, WarnFlags, Warning,
+    framework::{
+        Applicable, AsParse, AsRun, Interface, Parse as ParseHigh, Postprocess, Run as RunHigh,
+        ToImplementation,
+    },
+    LightContext, Span,
 };
-use std::{path::Path, process::Command};
+use std::{cell::RefCell, path::Path, rc::Rc};
 use strum_macros::EnumIter;
-use subprocess::{Exec, NullFile, Redirection};
+use subprocess::Exec;
+
+// Framework modules
 
 mod foundry;
 use foundry::Foundry;
@@ -23,6 +25,14 @@ use hardhat_ts::HardhatTs;
 
 mod rust;
 use rust::Rust;
+
+// Other modules
+
+mod parsing;
+use parsing::{ParseAdapter, ParseLow};
+
+mod running;
+use running::{ProcessLines, RunAdapter, RunLow};
 
 mod ts_utils;
 
@@ -49,18 +59,16 @@ impl Applicable for Identifier {
 }
 
 impl ToImplementation for Identifier {
-    fn to_implementation(&self, _context: &LightContext) -> Result<Option<Box<dyn High>>> {
+    fn to_implementation(&self, _context: &LightContext) -> Result<Option<Box<dyn Interface>>> {
         Ok(Some(match *self {
-            Self::Foundry => implementation_as_interface(Adapter)(Foundry::new()),
+            Self::Foundry => implementation_as_interface(ParseRunAdapter::new)(Foundry::new()),
 
-            Self::Golang => implementation_as_interface(Adapter)(Golang::new()),
+            Self::Golang => implementation_as_interface(ParseRunAdapter::new)(Golang::new()),
 
-            // smoelius: `HardhatTs` implements the high-level interface directly.
-            Self::HardhatTs => {
-                implementation_as_interface(std::convert::identity)(HardhatTs::new())
-            }
+            // smoelius: `HardhatTs` implements the high-level `Run` interface directly.
+            Self::HardhatTs => implementation_as_interface(ParseAdapter)(HardhatTs::new()),
 
-            Self::Rust => implementation_as_interface(Adapter)(Rust::new()),
+            Self::Rust => implementation_as_interface(ParseRunAdapter::new)(Rust::new()),
         }))
     }
 }
@@ -72,151 +80,52 @@ impl std::fmt::Display for Identifier {
 }
 
 /// Utility function
-fn implementation_as_interface<T, U: High + 'static>(
+fn implementation_as_interface<T, U: Interface + 'static>(
     adapter: impl Fn(T) -> U,
-) -> impl Fn(T) -> Box<dyn High> {
-    move |implementation| Box::new(adapter(implementation)) as Box<dyn High>
+) -> impl Fn(T) -> Box<dyn Interface> {
+    move |implementation| Box::new(adapter(implementation)) as Box<dyn Interface>
 }
 
-#[derive(Debug)]
-struct Adapter<T>(T);
-
-impl<T: Low> High for Adapter<T> {
-    fn parse(
-        &mut self,
-        context: &LightContext,
-        config: &Config,
-        test_files: &[&Path],
-    ) -> Result<Vec<Span>> {
-        self.0.parse(context, config, test_files)
-    }
-
+impl<T: RunHigh> RunHigh for ParseAdapter<T> {
     fn dry_run(&self, context: &LightContext, test_file: &Path) -> Result<()> {
-        // smoelius: `REQUIRES_NODE_MODULES` is a hack. But at present, I don't know how it should
-        // be generalized.
-        if T::REQUIRES_NODE_MODULES {
-            ts_utils::install_node_modules(context)?;
-        }
-
-        let mut command = self.0.command_to_run_test_file(context, test_file);
-        command.args(&context.opts.args);
-
-        debug!("{:?}", command);
-
-        let output = command.output()?;
-        if !output.status.success() {
-            return Err(OutputError::new(output).into());
-        }
-        Ok(())
+        self.0.dry_run(context, test_file)
     }
-
     fn exec(
         &self,
         context: &LightContext,
         span: &Span,
     ) -> Result<Option<(Exec, Option<Box<Postprocess>>)>> {
-        {
-            let mut command = self.0.command_to_build_test(context, span);
-            command.args(&context.opts.args);
-
-            debug!("{:?}", command);
-
-            let output = command.output()?;
-            if !output.status.success() {
-                debug!("{}", OutputError::new(output));
-                return Ok(None);
-            }
-        }
-
-        let (mut command, final_args, init_f_test) = self.0.command_to_run_test(context, span);
-        command.args(&context.opts.args);
-        command.args(final_args);
-
-        let mut exec = exec_from_command(&command);
-        if init_f_test.is_some() {
-            exec = exec.stdout(Redirection::Pipe);
-        } else {
-            exec = exec.stdout(NullFile);
-        }
-        exec = exec.stderr(NullFile);
-
-        let span = span.clone();
-
-        Ok(Some((
-            exec,
-            init_f_test.map(|((init, f), test)| -> Box<Postprocess> {
-                Box::new(move |context: &LightContext, popen| {
-                    let stdout = popen
-                        .stdout
-                        .as_ref()
-                        .ok_or_else(|| anyhow!("Failed to get stdout"))?;
-                    let reader = std::io::BufReader::new(stdout);
-                    let run = reader.byte_lines().try_fold(init, |prev, result| {
-                        let buf = result?;
-                        let line = match std::str::from_utf8(&buf) {
-                            Ok(line) => line,
-                            Err(error) => {
-                                source_warn(
-                                    context,
-                                    Warning::OutputInvalid,
-                                    &span,
-                                    &format!("{error}: {:?}`", BStr::new(&buf)),
-                                    WarnFlags::empty(),
-                                )?;
-                                return Ok(prev);
-                            }
-                        };
-                        let x = f(line);
-                        Ok::<_, Error>(if init { prev && x } else { prev || x })
-                    })?;
-                    if run {
-                        return Ok(true);
-                    }
-                    source_warn(
-                        context,
-                        Warning::RunTestFailed,
-                        &span,
-                        &format!("Failed to run test `{test}`"),
-                        WarnFlags::empty(),
-                    )?;
-                    Ok(false)
-                })
-            }),
-        )))
+        self.0.exec(context, span)
     }
 }
 
-type ProcessLines = (bool, Box<dyn Fn(&str) -> bool>);
+impl<T: ParseLow + RunHigh> Interface for ParseAdapter<T> {}
 
-trait Low: std::fmt::Debug {
-    fn parse(
-        &mut self,
-        context: &LightContext,
-        config: &Config,
-        test_files: &[&Path],
-    ) -> Result<Vec<Span>>;
-
-    const REQUIRES_NODE_MODULES: bool = false;
-    fn command_to_run_test_file(&self, context: &LightContext, test_file: &Path) -> Command;
-    fn command_to_build_test(&self, context: &LightContext, span: &Span) -> Command;
-    fn command_to_run_test(
-        &self,
-        context: &LightContext,
-        span: &Span,
-    ) -> (Command, Vec<String>, Option<(ProcessLines, String)>);
+struct ParseRunAdapter<T> {
+    parse: ParseAdapter<Rc<RefCell<T>>>,
+    run: RunAdapter<Rc<RefCell<T>>>,
 }
 
-fn exec_from_command(command: &Command) -> Exec {
-    let mut exec = Exec::cmd(command.get_program()).args(&command.get_args().collect::<Vec<_>>());
-    for (key, val) in command.get_envs() {
-        if let Some(val) = val {
-            exec = exec.env(key, val);
-        } else {
-            exec = exec.env_remove(key);
+impl<T> ParseRunAdapter<T> {
+    fn new(value: T) -> Self {
+        let rc = Rc::new(RefCell::new(value));
+        Self {
+            parse: ParseAdapter(rc.clone()),
+            run: RunAdapter(rc),
         }
     }
-    if let Some(path) = command.get_current_dir() {
-        exec = exec.cwd(path);
-    }
-    exec
 }
+
+impl<T: ParseLow> AsParse for ParseRunAdapter<T> {
+    fn as_parse(&mut self) -> &mut dyn ParseHigh {
+        &mut self.parse
+    }
+}
+
+impl<T: RunLow> AsRun for ParseRunAdapter<T> {
+    fn as_run(&self) -> &dyn RunHigh {
+        &self.run
+    }
+}
+
+impl<T: ParseLow + RunLow> Interface for ParseRunAdapter<T> {}

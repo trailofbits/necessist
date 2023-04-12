@@ -1,4 +1,4 @@
-use super::{Low, ProcessLines};
+use super::{ParseLow, ProcessLines, RunLow};
 use anyhow::{anyhow, Context, Result};
 use necessist_core::{util, warn, Config, LightContext, Span, WarnFlags, Warning};
 use std::{collections::BTreeMap, fs::read_to_string, path::Path, process::Command};
@@ -28,7 +28,7 @@ impl Foundry {
     }
 }
 
-impl Low for Foundry {
+impl ParseLow for Foundry {
     fn parse(
         &mut self,
         context: &LightContext,
@@ -82,7 +82,9 @@ impl Low for Foundry {
 
         Ok(spans)
     }
+}
 
+impl RunLow for Foundry {
     const REQUIRES_NODE_MODULES: bool = true;
 
     fn command_to_run_test_file(&self, context: &LightContext, test_file: &Path) -> Command {
