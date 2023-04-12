@@ -1,4 +1,4 @@
-use super::{Low, ProcessLines};
+use super::{ParseLow, ProcessLines, RunLow};
 use anyhow::{anyhow, Context, Result};
 use necessist_core::{util, warn, Config, LightContext, Span, WarnFlags, Warning};
 use std::{collections::BTreeMap, fs::read_to_string, path::Path, process::Command};
@@ -25,7 +25,7 @@ impl Golang {
     }
 }
 
-impl Low for Golang {
+impl ParseLow for Golang {
     #[cfg_attr(
         dylint_lib = "non_local_effect_before_error_return",
         allow(non_local_effect_before_error_return)
@@ -79,7 +79,9 @@ impl Low for Golang {
 
         Ok(spans)
     }
+}
 
+impl RunLow for Golang {
     fn command_to_run_test_file(&self, context: &LightContext, test_file: &Path) -> Command {
         Self::test_command(context, test_file)
     }

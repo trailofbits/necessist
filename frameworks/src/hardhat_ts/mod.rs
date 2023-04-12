@@ -1,4 +1,4 @@
-use super::{ts_utils, High};
+use super::{ts_utils, ParseLow, RunHigh};
 use anyhow::{anyhow, Context, Result};
 use assert_cmd::output::OutputError;
 use lazy_static::lazy_static;
@@ -76,7 +76,7 @@ lazy_static! {
     };
 }
 
-impl High for HardhatTs {
+impl ParseLow for HardhatTs {
     #[cfg_attr(
         dylint_lib = "non_local_effect_before_error_return",
         allow(non_local_effect_before_error_return)
@@ -144,7 +144,9 @@ impl High for HardhatTs {
 
         Ok(spans)
     }
+}
 
+impl RunHigh for HardhatTs {
     fn dry_run(&self, context: &LightContext, test_file: &Path) -> Result<()> {
         ts_utils::install_node_modules(context)?;
 

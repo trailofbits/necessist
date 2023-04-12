@@ -1,4 +1,4 @@
-use super::{Low, ProcessLines};
+use super::{ParseLow, ProcessLines, RunLow};
 use anyhow::{Context, Result};
 use cargo_metadata::Package;
 use necessist_core::{util, warn, Config, LightContext, Span, WarnFlags, Warning};
@@ -44,7 +44,7 @@ impl Rust {
     }
 }
 
-impl Low for Rust {
+impl ParseLow for Rust {
     #[allow(clippy::similar_names)]
     #[cfg_attr(
         dylint_lib = "non_local_effect_before_error_return",
@@ -104,7 +104,9 @@ impl Low for Rust {
 
         Ok(spans)
     }
+}
 
+impl RunLow for Rust {
     fn command_to_run_test_file(&self, context: &LightContext, test_file: &Path) -> Command {
         self.test_command(context, test_file)
     }
