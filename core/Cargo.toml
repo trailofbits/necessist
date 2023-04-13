@@ -9,11 +9,6 @@ authors = ["Samuel Moelius <sam@moeli.us>"]
 license = "AGPL-3.0"
 repository = "https://github.com/trailofbits/necessist"
 
-[[test]]
-name = "ci"
-path = "tests/ci.rs"
-required-features = ["ci"]
-
 [dependencies]
 ansi_term = "0.12"
 anyhow = "1.0"
@@ -39,19 +34,10 @@ toml = "0.7"
 
 [dev-dependencies]
 assert_cmd = "2.0"
-ctor = "0.2"
-curl = "0.4"
-fs_extra = "1.3"
 predicates = "3.0"
-trycmd = "0.14"
 
 [build-dependencies]
 cargo_metadata = "0.15"
 curl = "0.4"
 heck = "0.4"
 syn = "2.0"
-
-[features]
-default = []
-ci = []
-dogfood = []
