@@ -22,13 +22,6 @@ fn initialize() {
 
 #[test]
 fn trycmd() {
-    // smoelius: Ensure `necessist` binary is up to date.
-    Command::new("cargo")
-        .args(["build", "--bin", "necessist"])
-        .current_dir("..")
-        .assert()
-        .success();
-
     TestCases::new()
         .env("TRYCMD", "1")
         .case("tests/necessist_db_absent/*.toml");

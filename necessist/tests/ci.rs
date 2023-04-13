@@ -1,4 +1,5 @@
 use assert_cmd::assert::OutputAssertExt;
+use cargo_metadata::MetadataCommand;
 use regex::Regex;
 use std::{
     env::{remove_var, set_current_dir},
@@ -60,6 +61,46 @@ fn format() {
     preserves_cleanliness(|| {
         Command::new("cargo").arg("fmt").assert().success();
     });
+}
+
+#[test]
+fn github() {
+    const EXCEPTIONS: &[&str] = &["ci_is_disabled", "dogfood", "general"];
+
+    let metadata = MetadataCommand::new().no_deps().exec().unwrap();
+    let package = metadata
+        .packages
+        .into_iter()
+        .find(|package| package.name == "necessist")
+        .unwrap();
+    let mut metadata_tests = package
+        .targets
+        .into_iter()
+        .filter_map(|target| {
+            if target.is_test() && !EXCEPTIONS.contains(&target.name.as_str()) {
+                Some(target.name)
+            } else {
+                None
+            }
+        })
+        .chain(std::iter::once(String::from("other")))
+        .collect::<Vec<_>>();
+    metadata_tests.sort();
+
+    let ci_yml = Path::new(env!("CARGO_MANIFEST_DIR")).join("../.github/workflows/ci.yml");
+    let contents = read_to_string(ci_yml).unwrap();
+    let test_array = contents
+        .lines()
+        .find_map(|line| line.trim_start().strip_prefix("test: "))
+        .unwrap();
+    let ci_tests = test_array
+        .strip_prefix('[')
+        .and_then(|s| s.strip_suffix(']'))
+        .unwrap()
+        .split(", ")
+        .collect::<Vec<_>>();
+
+    assert_eq!(metadata_tests, ci_tests);
 }
 
 #[test]
@@ -141,12 +182,6 @@ fn prettier() {
 #[test]
 fn readme_contains_usage() {
     let readme = read_to_string("README.md").unwrap();
-
-    // smoelius: Ensure `necessist` binary is up to date.
-    Command::new("cargo")
-        .args(["build", "--bin", "necessist"])
-        .assert()
-        .success();
 
     let stdout = assert_cmd::Command::cargo_bin("necessist")
         .unwrap()

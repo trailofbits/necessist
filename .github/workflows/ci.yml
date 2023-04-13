@@ -16,6 +16,7 @@ jobs:
     strategy:
       matrix:
         environment: [ubuntu-latest, macos-latest]
+        test: [ci, other, sqlite_urls, third_party, trycmd]
 
     runs-on: ${{ matrix.environment }}
 
@@ -54,4 +55,19 @@ jobs:
           go-version: "^1.20.1"
 
       - name: Test
-        run: cargo test --features=ci
+        run: |
+          if [[ '${{ matrix.test }}' != 'other' ]]; then
+            cargo test -p necessist --test ${{ matrix.test }} --features=ci
+          else
+            cargo test -p necessist --test general
+            cargo test -p necessist-core
+            cargo test -p necessist-frameworks
+          fi
+
+  all-checks:
+    needs: [test]
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: true
