@@ -17,6 +17,10 @@ jobs:
       matrix:
         environment: [ubuntu-latest, macos-latest]
         test: [ci, other, sqlite_urls, third_party, trycmd]
+        # smoelius: There is no need to run the `ci` test on multiple platforms.
+        exclude:
+          - environment: macos-latest
+            test: ci
 
     runs-on: ${{ matrix.environment }}
 
