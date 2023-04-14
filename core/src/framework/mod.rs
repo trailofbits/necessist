@@ -16,6 +16,14 @@ pub use union::Union;
 #[allow(dead_code)]
 type AutoUnion<T, U> = Auto<Union<T, U>>;
 
+pub trait Applicable {
+    fn applicable(&self, context: &LightContext) -> Result<bool>;
+}
+
+pub trait ToImplementation {
+    fn to_implementation(&self, context: &LightContext) -> Result<Option<Box<dyn Interface>>>;
+}
+
 pub type Postprocess = dyn Fn(&LightContext, Popen) -> Result<bool>;
 
 pub trait Interface {
@@ -36,12 +44,4 @@ pub trait Interface {
         context: &LightContext,
         span: &Span,
     ) -> Result<Option<(Exec, Option<Box<Postprocess>>)>>;
-}
-
-pub trait Applicable {
-    fn applicable(&self, context: &LightContext) -> Result<bool>;
-}
-
-pub trait ToImplementation {
-    fn to_implementation(&self, context: &LightContext) -> Result<Option<Box<dyn Interface>>>;
 }
