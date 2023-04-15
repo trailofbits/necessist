@@ -1,7 +1,7 @@
 use super::{ParseLow, ProcessLines, RunLow};
-use anyhow::{Context, Result};
+use anyhow::Result;
 use cargo_metadata::Package;
-use necessist_core::{util, warn, Config, LightContext, Span, WarnFlags, Warning};
+use necessist_core::{warn, Config, LightContext, Span, WarnFlags, Warning};
 use std::{
     collections::BTreeMap,
     ffi::OsStr,
@@ -9,8 +9,6 @@ use std::{
     path::{Path, PathBuf},
     process::Command,
 };
-use syn::parse_file;
-use walkdir::WalkDir;
 
 mod parsing;
 use parsing::{cached_test_file_fs_module_path, cached_test_file_package, Parsing};
@@ -45,64 +43,47 @@ impl Rust {
 }
 
 impl ParseLow for Rust {
-    #[allow(clippy::similar_names)]
-    #[cfg_attr(
-        dylint_lib = "non_local_effect_before_error_return",
-        allow(non_local_effect_before_error_return)
-    )]
-    #[cfg_attr(dylint_lib = "overscoped_allow", allow(overscoped_allow))]
-    fn parse(
+    type File = syn::File;
+
+    fn check_config(context: &LightContext, config: &Config) -> Result<()> {
+        if !config.ignored_functions.is_empty() {
+            warn(
+                context,
+                Warning::IgnoredFunctionsUnsupported,
+                "The rust framework does not currently support the `ignored_functions` configuration",
+                WarnFlags::ONCE,
+            )?;
+        }
+
+        Ok(())
+    }
+
+    fn walk_dir(root: &Path) -> Box<dyn Iterator<Item = walkdir::Result<walkdir::DirEntry>>> {
+        Box::new(
+            walkdir::WalkDir::new(root)
+                .into_iter()
+                .filter_entry(|entry| {
+                    let path = entry.path();
+                    path.file_name() != Some(OsStr::new("target"))
+                        && (!path.is_file() || path.extension() == Some(OsStr::new("rs")))
+                }),
+        )
+    }
+
+    fn parse_file(&self, test_file: &Path) -> Result<Self::File> {
+        let content = read_to_string(test_file)?;
+        syn::parse_file(&content).map_err(Into::into)
+    }
+
+    fn visit(
         &mut self,
         context: &LightContext,
         config: &Config,
-        test_files: &[&Path],
+        test_file: &Path,
+        file: &Self::File,
     ) -> Result<Vec<Span>> {
-        check_config(context, config)?;
-
         let mut parsing = Parsing::default();
-        let mut spans = Vec::new();
-
-        #[cfg_attr(
-            dylint_lib = "non_local_effect_before_error_return",
-            allow(non_local_effect_before_error_return)
-        )]
-        let mut visit_test_file = |test_file: &Path| -> Result<()> {
-            assert!(test_file.is_absolute());
-            assert!(test_file.starts_with(context.root.as_path()));
-            let content = read_to_string(test_file)?;
-            #[allow(clippy::unwrap_used)]
-            let file = parse_file(&content).with_context(|| {
-                format!(
-                    "Failed to parse {:?}",
-                    util::strip_prefix(test_file, context.root).unwrap()
-                )
-            })?;
-            let spans_visited = visit(context, config, self, &mut parsing, test_file, &file)?;
-            spans.extend(spans_visited);
-            Ok(())
-        };
-
-        if test_files.is_empty() {
-            for entry in WalkDir::new(context.root.as_path())
-                .into_iter()
-                .filter_entry(|entry| entry.path().file_name() != Some(OsStr::new("target")))
-            {
-                let entry = entry?;
-                let path = entry.path();
-
-                if path.extension() != Some(OsStr::new("rs")) {
-                    continue;
-                }
-
-                visit_test_file(path)?;
-            }
-        } else {
-            for path in test_files {
-                visit_test_file(path)?;
-            }
-        }
-
-        Ok(spans)
+        visit(context, config, self, &mut parsing, test_file, file)
     }
 }
 
@@ -135,19 +116,6 @@ impl RunLow for Rust {
             Some(((false, Box::new(|line| line == "running 1 test")), test)),
         )
     }
-}
-
-fn check_config(context: &LightContext, config: &Config) -> Result<()> {
-    if !config.ignored_functions.is_empty() {
-        warn(
-            context,
-            Warning::IgnoredFunctionsUnsupported,
-            "The rust framework does not currently support the `ignored_functions` configuration",
-            WarnFlags::ONCE,
-        )?;
-    }
-
-    Ok(())
 }
 
 impl Rust {

@@ -26,7 +26,7 @@ pub(super) fn visit(
     root: Rc<PathBuf>,
     test_file: &Path,
     contents: &str,
-    source_unit: &mut SourceUnit,
+    source_unit: &SourceUnit,
 ) -> Vec<Span> {
     let mut visitor = Visitor::new(framework, root, test_file, contents);
     #[allow(clippy::unwrap_used)]

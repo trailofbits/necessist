@@ -1,8 +1,8 @@
 use super::{ParseLow, ProcessLines, RunLow};
-use anyhow::{anyhow, Context, Result};
+use anyhow::{anyhow, Result};
 use necessist_core::{util, warn, Config, LightContext, Span, WarnFlags, Warning};
+use solang_parser::pt::SourceUnit;
 use std::{collections::BTreeMap, fs::read_to_string, path::Path, process::Command};
-use walkdir::WalkDir;
 
 mod visitor;
 use visitor::visit;
@@ -29,58 +29,62 @@ impl Foundry {
 }
 
 impl ParseLow for Foundry {
-    fn parse(
-        &mut self,
-        context: &LightContext,
-        config: &Config,
-        test_files: &[&Path],
-    ) -> Result<Vec<Span>> {
-        check_config(context, config)?;
+    type File = (String, SourceUnit);
 
-        let mut spans = Vec::new();
-
-        let mut visit_test_file = |test_file: &Path| -> Result<()> {
-            assert!(test_file.is_absolute());
-            assert!(test_file.starts_with(context.root.as_path()));
-            let contents = read_to_string(test_file)?;
-            #[allow(clippy::unwrap_used)]
-            let (mut source_unit, _comments) = solang_parser::parse(&contents, 0)
-                .map_err(|error| anyhow!(format!("{error:?}")))
-                .with_context(|| {
-                    format!(
-                        "Failed to parse {:?}",
-                        util::strip_prefix(test_file, context.root).unwrap()
-                    )
-                })?;
-            let spans_visited = visit(
-                self,
-                context.root.clone(),
-                test_file,
-                &contents,
-                &mut source_unit,
-            );
-            spans.extend(spans_visited);
-            Ok(())
-        };
-
-        if test_files.is_empty() {
-            for entry in WalkDir::new(context.root.join("test")) {
-                let entry = entry?;
-                let path = entry.path();
-
-                if !path.to_string_lossy().ends_with(".t.sol") {
-                    continue;
-                }
-
-                visit_test_file(path)?;
-            }
-        } else {
-            for path in test_files {
-                visit_test_file(path)?;
-            }
+    fn check_config(context: &LightContext, config: &Config) -> Result<()> {
+        if !config.ignored_functions.is_empty() {
+            warn(
+                context,
+                Warning::IgnoredMacrosUnsupported,
+                "The foundry framework does not support the `ignored_functions` configuration",
+                WarnFlags::ONCE,
+            )?;
         }
 
-        Ok(spans)
+        if !config.ignored_macros.is_empty() {
+            warn(
+                context,
+                Warning::IgnoredMacrosUnsupported,
+                "The foundry framework does not support the `ignored_macros` configuration",
+                WarnFlags::ONCE,
+            )?;
+        }
+
+        Ok(())
+    }
+
+    fn walk_dir(root: &Path) -> Box<dyn Iterator<Item = walkdir::Result<walkdir::DirEntry>>> {
+        Box::new(
+            walkdir::WalkDir::new(root.join("test"))
+                .into_iter()
+                .filter_entry(|entry| {
+                    let path = entry.path();
+                    !path.is_file() || path.to_string_lossy().ends_with(".t.sol")
+                }),
+        )
+    }
+
+    fn parse_file(&self, test_file: &Path) -> Result<Self::File> {
+        let contents = read_to_string(test_file)?;
+        solang_parser::parse(&contents, 0)
+            .map(|(source_unit, _)| (contents, source_unit))
+            .map_err(|error| anyhow!(format!("{error:?}")))
+    }
+
+    fn visit(
+        &mut self,
+        context: &LightContext,
+        _config: &Config,
+        test_file: &Path,
+        file: &Self::File,
+    ) -> Result<Vec<Span>> {
+        Ok(visit(
+            self,
+            context.root.clone(),
+            test_file,
+            &file.0,
+            &file.1,
+        ))
     }
 }
 
@@ -146,26 +150,4 @@ impl Foundry {
         self.span_test_name_map
             .insert(span.clone(), name.to_owned());
     }
-}
-
-fn check_config(context: &LightContext, config: &Config) -> Result<()> {
-    if !config.ignored_functions.is_empty() {
-        warn(
-            context,
-            Warning::IgnoredMacrosUnsupported,
-            "The foundry framework does not support the `ignored_functions` configuration",
-            WarnFlags::ONCE,
-        )?;
-    }
-
-    if !config.ignored_macros.is_empty() {
-        warn(
-            context,
-            Warning::IgnoredMacrosUnsupported,
-            "The foundry framework does not support the `ignored_macros` configuration",
-            WarnFlags::ONCE,
-        )?;
-    }
-
-    Ok(())
 }
