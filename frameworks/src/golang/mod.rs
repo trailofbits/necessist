@@ -2,8 +2,7 @@ use super::{ParseLow, ProcessLines, RunLow};
 use anyhow::{anyhow, Context, Result};
 use necessist_core::{util, warn, Config, LightContext, Span, WarnFlags, Warning};
 use std::{collections::BTreeMap, fs::read_to_string, path::Path, process::Command};
-use tree_sitter::Parser;
-use walkdir::WalkDir;
+use tree_sitter::{Parser, Tree};
 
 mod visitor;
 use visitor::visit;
@@ -26,58 +25,62 @@ impl Golang {
 }
 
 impl ParseLow for Golang {
-    #[cfg_attr(
-        dylint_lib = "non_local_effect_before_error_return",
-        allow(non_local_effect_before_error_return)
-    )]
-    fn parse(
-        &mut self,
-        context: &LightContext,
-        config: &Config,
-        test_files: &[&Path],
-    ) -> Result<Vec<Span>> {
-        check_config(context, config)?;
+    type File = (String, Tree);
 
-        let mut spans = Vec::new();
-
-        let mut visit_test_file = |test_file: &Path| -> Result<()> {
-            assert!(test_file.is_absolute());
-            assert!(test_file.starts_with(context.root.as_path()));
-            let text = read_to_string(test_file)?;
-            let mut parser = Parser::new();
-            parser
-                .set_language(tree_sitter_go::language())
-                .with_context(|| "Failed to load Go grammar")?;
-            #[allow(clippy::unwrap_used)]
-            let tree = parser.parse(&text, None).ok_or_else(|| {
-                anyhow!(
-                    "Failed to parse {:?}",
-                    util::strip_prefix(test_file, context.root).unwrap()
-                )
-            })?;
-            let spans_visited = visit(self, context.root.clone(), test_file, &text, &tree)?;
-            spans.extend(spans_visited);
-            Ok(())
-        };
-
-        if test_files.is_empty() {
-            for entry in WalkDir::new(context.root.as_path()) {
-                let entry = entry?;
-                let path = entry.path();
-
-                if !path.to_string_lossy().ends_with("_test.go") {
-                    continue;
-                }
-
-                visit_test_file(path)?;
-            }
-        } else {
-            for path in test_files {
-                visit_test_file(path)?;
-            }
+    fn check_config(context: &LightContext, config: &Config) -> Result<()> {
+        if !config.ignored_functions.is_empty() {
+            warn(
+                context,
+                Warning::IgnoredMacrosUnsupported,
+                "The golang framework does not support the `ignored_functions` configuration",
+                WarnFlags::ONCE,
+            )?;
         }
 
-        Ok(spans)
+        if !config.ignored_macros.is_empty() {
+            warn(
+                context,
+                Warning::IgnoredMacrosUnsupported,
+                "The golang framework does not support the `ignored_macros` configuration",
+                WarnFlags::ONCE,
+            )?;
+        }
+
+        Ok(())
+    }
+
+    fn walk_dir(root: &Path) -> Box<dyn Iterator<Item = walkdir::Result<walkdir::DirEntry>>> {
+        Box::new(
+            walkdir::WalkDir::new(root)
+                .into_iter()
+                .filter_entry(|entry| {
+                    let path = entry.path();
+                    !path.is_file() || path.to_string_lossy().ends_with("_test.go")
+                }),
+        )
+    }
+
+    fn parse_file(&self, test_file: &Path) -> Result<Self::File> {
+        let text = read_to_string(test_file)?;
+        let mut parser = Parser::new();
+        parser
+            .set_language(tree_sitter_go::language())
+            .with_context(|| "Failed to load Go grammar")?;
+        // smoelius: https://github.com/tree-sitter/tree-sitter/issues/255
+        parser
+            .parse(&text, None)
+            .map(|tree| (text, tree))
+            .ok_or_else(|| anyhow!("Unspecified error"))
+    }
+
+    fn visit(
+        &mut self,
+        context: &LightContext,
+        _config: &Config,
+        test_file: &Path,
+        file: &Self::File,
+    ) -> Result<Vec<Span>> {
+        visit(self, context.root.clone(), test_file, &file.0, &file.1)
     }
 }
 
@@ -130,28 +133,6 @@ impl Golang {
         command.arg(package_path);
         command
     }
-}
-
-fn check_config(context: &LightContext, config: &Config) -> Result<()> {
-    if !config.ignored_functions.is_empty() {
-        warn(
-            context,
-            Warning::IgnoredMacrosUnsupported,
-            "The golang framework does not support the `ignored_functions` configuration",
-            WarnFlags::ONCE,
-        )?;
-    }
-
-    if !config.ignored_macros.is_empty() {
-        warn(
-            context,
-            Warning::IgnoredMacrosUnsupported,
-            "The golang framework does not support the `ignored_macros` configuration",
-            WarnFlags::ONCE,
-        )?;
-    }
-
-    Ok(())
 }
 
 fn test_file_package_path(context: &LightContext, test_file: &Path) -> Result<String> {
