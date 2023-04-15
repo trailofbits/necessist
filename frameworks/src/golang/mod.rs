@@ -1,4 +1,4 @@
-use super::{ParseLow, ProcessLines, RunLow};
+use super::{ParseLow, ProcessLines, RunLow, WalkDirResult};
 use anyhow::{anyhow, Context, Result};
 use necessist_core::{util, warn, Config, LightContext, Span, WarnFlags, Warning};
 use std::{collections::BTreeMap, fs::read_to_string, path::Path, process::Command};
@@ -49,7 +49,7 @@ impl ParseLow for Golang {
         Ok(())
     }
 
-    fn walk_dir(root: &Path) -> Box<dyn Iterator<Item = walkdir::Result<walkdir::DirEntry>>> {
+    fn walk_dir(root: &Path) -> Box<dyn Iterator<Item = WalkDirResult>> {
         Box::new(
             walkdir::WalkDir::new(root)
                 .into_iter()

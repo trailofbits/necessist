@@ -1,4 +1,4 @@
-use super::{ts_utils, ParseLow, RunHigh};
+use super::{ts_utils, ParseLow, RunHigh, WalkDirResult};
 use anyhow::{anyhow, Result};
 use assert_cmd::output::OutputError;
 use lazy_static::lazy_static;
@@ -92,7 +92,7 @@ impl ParseLow for HardhatTs {
         Ok(())
     }
 
-    fn walk_dir(root: &Path) -> Box<dyn Iterator<Item = walkdir::Result<walkdir::DirEntry>>> {
+    fn walk_dir(root: &Path) -> Box<dyn Iterator<Item = WalkDirResult>> {
         Box::new(
             walkdir::WalkDir::new(root.join("test"))
                 .into_iter()

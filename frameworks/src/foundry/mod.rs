@@ -1,4 +1,4 @@
-use super::{ParseLow, ProcessLines, RunLow};
+use super::{ParseLow, ProcessLines, RunLow, WalkDirResult};
 use anyhow::{anyhow, Result};
 use necessist_core::{util, warn, Config, LightContext, Span, WarnFlags, Warning};
 use solang_parser::pt::SourceUnit;
@@ -53,7 +53,7 @@ impl ParseLow for Foundry {
         Ok(())
     }
 
-    fn walk_dir(root: &Path) -> Box<dyn Iterator<Item = walkdir::Result<walkdir::DirEntry>>> {
+    fn walk_dir(root: &Path) -> Box<dyn Iterator<Item = WalkDirResult>> {
         Box::new(
             walkdir::WalkDir::new(root.join("test"))
                 .into_iter()

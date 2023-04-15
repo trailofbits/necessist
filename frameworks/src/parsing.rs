@@ -3,10 +3,12 @@ use anyhow::{Context, Result};
 use necessist_core::{util, Config, LightContext, Span};
 use std::{cell::RefCell, path::Path, rc::Rc};
 
+pub type WalkDirResult = walkdir::Result<walkdir::DirEntry>;
+
 pub trait ParseLow {
     type File;
     fn check_config(context: &LightContext, config: &Config) -> Result<()>;
-    fn walk_dir(root: &Path) -> Box<dyn Iterator<Item = walkdir::Result<walkdir::DirEntry>>>;
+    fn walk_dir(root: &Path) -> Box<dyn Iterator<Item = WalkDirResult>>;
     fn parse_file(&self, test_file: &Path) -> Result<Self::File>;
     fn visit(
         &mut self,
@@ -22,7 +24,7 @@ impl<T: ParseLow> ParseLow for Rc<RefCell<T>> {
     fn check_config(context: &LightContext, config: &Config) -> Result<()> {
         T::check_config(context, config)
     }
-    fn walk_dir(root: &Path) -> Box<dyn Iterator<Item = walkdir::Result<walkdir::DirEntry>>> {
+    fn walk_dir(root: &Path) -> Box<dyn Iterator<Item = WalkDirResult>> {
         T::walk_dir(root)
     }
     fn parse_file(&self, test_file: &Path) -> Result<Self::File> {

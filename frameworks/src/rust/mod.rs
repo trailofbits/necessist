@@ -1,4 +1,4 @@
-use super::{ParseLow, ProcessLines, RunLow};
+use super::{ParseLow, ProcessLines, RunLow, WalkDirResult};
 use anyhow::Result;
 use cargo_metadata::Package;
 use necessist_core::{warn, Config, LightContext, Span, WarnFlags, Warning};
@@ -58,7 +58,7 @@ impl ParseLow for Rust {
         Ok(())
     }
 
-    fn walk_dir(root: &Path) -> Box<dyn Iterator<Item = walkdir::Result<walkdir::DirEntry>>> {
+    fn walk_dir(root: &Path) -> Box<dyn Iterator<Item = WalkDirResult>> {
         Box::new(
             walkdir::WalkDir::new(root)
                 .into_iter()
