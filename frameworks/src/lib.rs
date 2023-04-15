@@ -29,7 +29,7 @@ use rust::Rust;
 // Other modules
 
 mod parsing;
-use parsing::{ParseAdapter, ParseLow};
+use parsing::{ParseAdapter, ParseLow, WalkDirResult};
 
 mod running;
 use running::{ProcessLines, RunAdapter, RunLow};
