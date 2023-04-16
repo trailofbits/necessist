@@ -18,6 +18,7 @@ use std::{
     iter::Peekable,
     path::{Path, PathBuf},
     process::{Command, Stdio},
+    rc::Rc,
     sync::atomic::{AtomicBool, Ordering},
     time::Duration,
 };
@@ -35,7 +36,7 @@ pub(crate) struct Removal {
 
 struct Context<'a> {
     opts: Necessist,
-    root: PathBuf,
+    root: Rc<PathBuf>,
     println: &'a dyn Fn(&dyn AsRef<str>),
     sqlite: Option<sqlite::Sqlite>,
     framework: Box<dyn framework::Interface>,
@@ -54,7 +55,7 @@ impl<'a> Context<'a> {
 
 pub struct LightContext<'a> {
     pub opts: &'a Necessist,
-    pub root: &'a Path,
+    pub root: &'a Rc<PathBuf>,
     pub println: &'a dyn Fn(&dyn AsRef<str>),
 }
 
@@ -99,7 +100,8 @@ pub fn necessist<Identifier: Applicable + Display + IntoEnumIterator + ToImpleme
     let root = opts
         .root
         .as_ref()
-        .map_or_else(current_dir, |root| root.canonicalize())?;
+        .map_or_else(current_dir, |root| root.canonicalize())
+        .map(Rc::new)?;
 
     let mut context = LightContext {
         opts: &opts,
@@ -396,7 +398,7 @@ fn canonicalize_test_files(context: &LightContext) -> Result<Vec<PathBuf>> {
         .map(|path| {
             let path_buf = path.canonicalize()?;
             ensure!(
-                path_buf.starts_with(context.root),
+                path_buf.starts_with(context.root.as_path()),
                 "{:?} is not in {:?}",
                 path_buf,
                 context.root

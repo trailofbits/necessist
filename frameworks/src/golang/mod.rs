@@ -1,13 +1,7 @@
 use super::{Low, ProcessLines};
 use anyhow::{anyhow, Context, Result};
 use necessist_core::{util, warn, Config, LightContext, Span, WarnFlags, Warning};
-use std::{
-    collections::BTreeMap,
-    fs::read_to_string,
-    path::{Path, PathBuf},
-    process::Command,
-    rc::Rc,
-};
+use std::{collections::BTreeMap, fs::read_to_string, path::Path, process::Command};
 use tree_sitter::Parser;
 use walkdir::WalkDir;
 
@@ -16,7 +10,6 @@ use visitor::visit;
 
 #[derive(Debug)]
 pub struct Golang {
-    root: Rc<PathBuf>,
     span_test_name_map: BTreeMap<Span, String>,
 }
 
@@ -25,9 +18,8 @@ impl Golang {
         context.root.join("go.mod").try_exists().map_err(Into::into)
     }
 
-    pub fn new(context: &LightContext) -> Self {
+    pub fn new() -> Self {
         Self {
-            root: Rc::new(context.root.to_path_buf()),
             span_test_name_map: BTreeMap::new(),
         }
     }
@@ -50,7 +42,7 @@ impl Low for Golang {
 
         let mut visit_test_file = |test_file: &Path| -> Result<()> {
             assert!(test_file.is_absolute());
-            assert!(test_file.starts_with(context.root));
+            assert!(test_file.starts_with(context.root.as_path()));
             let text = read_to_string(test_file)?;
             let mut parser = Parser::new();
             parser
@@ -63,13 +55,13 @@ impl Low for Golang {
                     util::strip_prefix(test_file, context.root).unwrap()
                 )
             })?;
-            let spans_visited = visit(self, self.root.clone(), test_file, &text, &tree)?;
+            let spans_visited = visit(self, context.root.clone(), test_file, &text, &tree)?;
             spans.extend(spans_visited);
             Ok(())
         };
 
         if test_files.is_empty() {
-            for entry in WalkDir::new(context.root) {
+            for entry in WalkDir::new(context.root.as_path()) {
                 let entry = entry?;
                 let path = entry.path();
 
@@ -131,7 +123,7 @@ impl Golang {
         let package_path = test_file_package_path(context, test_file)
             .expect("Failed to get test file package path");
         let mut command = Command::new("go");
-        command.current_dir(context.root);
+        command.current_dir(context.root.as_path());
         command.arg("test");
         command.arg(package_path);
         command

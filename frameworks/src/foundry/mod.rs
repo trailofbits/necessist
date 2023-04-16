@@ -1,13 +1,7 @@
 use super::{Low, ProcessLines};
 use anyhow::{anyhow, Context, Result};
 use necessist_core::{util, warn, Config, LightContext, Span, WarnFlags, Warning};
-use std::{
-    collections::BTreeMap,
-    fs::read_to_string,
-    path::{Path, PathBuf},
-    process::Command,
-    rc::Rc,
-};
+use std::{collections::BTreeMap, fs::read_to_string, path::Path, process::Command};
 use walkdir::WalkDir;
 
 mod visit;
@@ -17,7 +11,6 @@ use visitor::visit;
 
 #[derive(Debug)]
 pub struct Foundry {
-    root: Rc<PathBuf>,
     span_test_name_map: BTreeMap<Span, String>,
 }
 
@@ -30,9 +23,8 @@ impl Foundry {
             .map_err(Into::into)
     }
 
-    pub fn new(context: &LightContext) -> Self {
+    pub fn new() -> Self {
         Self {
-            root: Rc::new(context.root.to_path_buf()),
             span_test_name_map: BTreeMap::new(),
         }
     }
@@ -51,7 +43,7 @@ impl Low for Foundry {
 
         let mut visit_test_file = |test_file: &Path| -> Result<()> {
             assert!(test_file.is_absolute());
-            assert!(test_file.starts_with(context.root));
+            assert!(test_file.starts_with(context.root.as_path()));
             let contents = read_to_string(test_file)?;
             #[allow(clippy::unwrap_used)]
             let (mut source_unit, _comments) = solang_parser::parse(&contents, 0)
@@ -64,7 +56,7 @@ impl Low for Foundry {
                 })?;
             let spans_visited = visit(
                 self,
-                self.root.clone(),
+                context.root.clone(),
                 test_file,
                 &contents,
                 &mut source_unit,
@@ -101,7 +93,7 @@ impl Low for Foundry {
 
     fn command_to_build_test(&self, context: &LightContext, _span: &Span) -> Command {
         let mut command = Command::new("forge");
-        command.current_dir(context.root);
+        command.current_dir(context.root.as_path());
         command.arg("build");
         command
     }
@@ -138,7 +130,7 @@ impl Low for Foundry {
 impl Foundry {
     fn test_command(context: &LightContext, test_file: &Path) -> Command {
         let mut command = Command::new("forge");
-        command.current_dir(context.root);
+        command.current_dir(context.root.as_path());
         command.env("FOUNDRY_FUZZ_RUNS", "1");
         command.args([
             "test",

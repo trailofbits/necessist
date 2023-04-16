@@ -4,7 +4,7 @@ use necessist_core::{
     warn, Config, LightContext, SourceFile, Span, ToInternalSpan, WarnFlags, Warning,
 };
 use std::{
-    path::{Path, PathBuf, StripPrefixError},
+    path::{Path, StripPrefixError},
     rc::Rc,
 };
 use syn::{
@@ -24,11 +24,10 @@ pub(super) fn visit(
     config: &Config,
     framework: &mut Rust,
     parsing: &mut Parsing,
-    root: Rc<PathBuf>,
     test_file: &Path,
     file: &File,
 ) -> Result<Vec<Span>> {
-    let mut visitor = Visitor::new(context, config, framework, parsing, root, test_file);
+    let mut visitor = Visitor::new(context, config, framework, parsing, test_file);
     visitor.visit_file(file);
     if let Some(error) = visitor.error {
         Err(error)
@@ -152,7 +151,6 @@ where
         config: &'config Config,
         framework: &'framework mut Rust,
         parsing: &'parsing mut Parsing,
-        root: Rc<PathBuf>,
         test_file: &Path,
     ) -> Self {
         Self {
@@ -160,7 +158,7 @@ where
             config,
             framework,
             parsing,
-            source_file: SourceFile::new(root, Rc::new(test_file.to_path_buf())),
+            source_file: SourceFile::new(context.root.clone(), Rc::new(test_file.to_path_buf())),
             module_path: Vec::new(),
             test_ident: None,
             n_stmt_leaves_visited: 0,

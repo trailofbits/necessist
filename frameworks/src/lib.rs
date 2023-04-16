@@ -51,18 +51,18 @@ impl Applicable for Identifier {
 }
 
 impl ToImplementation for Identifier {
-    fn to_implementation(&self, context: &LightContext) -> Result<Option<Box<dyn High>>> {
+    fn to_implementation(&self, _context: &LightContext) -> Result<Option<Box<dyn High>>> {
         Ok(Some(match *self {
-            Self::Foundry => implementation_as_interface(Adapter)(Foundry::new(context)),
+            Self::Foundry => implementation_as_interface(Adapter)(Foundry::new()),
 
-            Self::Golang => implementation_as_interface(Adapter)(Golang::new(context)),
+            Self::Golang => implementation_as_interface(Adapter)(Golang::new()),
 
             // smoelius: `HardhatTs` implements the high-level interface directly.
             Self::HardhatTs => {
-                implementation_as_interface(std::convert::identity)(HardhatTs::new(context))
+                implementation_as_interface(std::convert::identity)(HardhatTs::new())
             }
 
-            Self::Rust => implementation_as_interface(Adapter)(Rust::new(context)),
+            Self::Rust => implementation_as_interface(Adapter)(Rust::new()),
         }))
     }
 }
