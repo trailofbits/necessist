@@ -42,7 +42,6 @@ impl Default for ItMessageState {
 
 #[derive(Debug)]
 pub struct HardhatTs {
-    root: Rc<PathBuf>,
     span_it_message_map: BTreeMap<Span, String>,
     test_file_it_message_state_map: RefCell<BTreeMap<PathBuf, BTreeMap<String, ItMessageState>>>,
 }
@@ -56,9 +55,8 @@ impl HardhatTs {
             .map_err(Into::into)
     }
 
-    pub fn new(context: &LightContext) -> Self {
+    pub fn new() -> Self {
         Self {
-            root: Rc::new(context.root.to_path_buf()),
             span_it_message_map: BTreeMap::new(),
             test_file_it_message_state_map: RefCell::new(BTreeMap::new()),
         }
@@ -94,7 +92,7 @@ impl High for HardhatTs {
 
         let mut visit_test_file = |test_file: &Path| -> Result<()> {
             assert!(test_file.is_absolute());
-            assert!(test_file.starts_with(context.root));
+            assert!(test_file.starts_with(context.root.as_path()));
             let source_map: Rc<SourceMap> = Rc::default();
             let source_file = source_map.load_file(test_file)?;
             let lexer = Lexer::new(
@@ -118,7 +116,7 @@ impl High for HardhatTs {
                 config,
                 self,
                 source_map,
-                self.root.clone(),
+                context.root.clone(),
                 test_file,
                 &module,
             );
@@ -152,7 +150,7 @@ impl High for HardhatTs {
         compile(context)?;
 
         let mut command = Command::new("npx");
-        command.current_dir(context.root);
+        command.current_dir(context.root.as_path());
         command.args(["hardhat", "test", &test_file.to_string_lossy()]);
         command.args(&context.opts.args);
 
@@ -222,7 +220,7 @@ impl High for HardhatTs {
         }
 
         let mut exec = Exec::cmd("npx");
-        exec = exec.cwd(context.root);
+        exec = exec.cwd(context.root.as_path());
         exec = exec.args(&["hardhat", "test", &span.source_file.to_string_lossy()]);
         exec = exec.args(&context.opts.args);
         exec = exec.stdout(NullFile);
@@ -255,7 +253,7 @@ fn check_config(context: &LightContext, config: &Config) -> Result<()> {
 
 fn compile(context: &LightContext) -> Result<()> {
     let mut command = Command::new("npx");
-    command.current_dir(context.root);
+    command.current_dir(context.root.as_path());
     command.args(["hardhat", "compile"]);
     command.args(&context.opts.args);
     command.stdout(Stdio::null());

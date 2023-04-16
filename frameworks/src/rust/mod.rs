@@ -8,7 +8,6 @@ use std::{
     fs::read_to_string,
     path::{Path, PathBuf},
     process::Command,
-    rc::Rc,
 };
 use syn::parse_file;
 use walkdir::WalkDir;
@@ -24,7 +23,6 @@ use visitor::visit;
 
 #[derive(Debug)]
 pub struct Rust {
-    root: Rc<PathBuf>,
     test_file_flags_cache: BTreeMap<PathBuf, Vec<String>>,
     span_test_path_map: BTreeMap<Span, Vec<String>>,
 }
@@ -38,9 +36,8 @@ impl Rust {
             .map_err(Into::into)
     }
 
-    pub fn new(context: &LightContext) -> Self {
+    pub fn new() -> Self {
         Self {
-            root: Rc::new(context.root.to_path_buf()),
             test_file_flags_cache: BTreeMap::new(),
             span_test_path_map: BTreeMap::new(),
         }
@@ -71,7 +68,7 @@ impl Low for Rust {
         )]
         let mut visit_test_file = |test_file: &Path| -> Result<()> {
             assert!(test_file.is_absolute());
-            assert!(test_file.starts_with(context.root));
+            assert!(test_file.starts_with(context.root.as_path()));
             let content = read_to_string(test_file)?;
             #[allow(clippy::unwrap_used)]
             let file = parse_file(&content).with_context(|| {
@@ -80,21 +77,13 @@ impl Low for Rust {
                     util::strip_prefix(test_file, context.root).unwrap()
                 )
             })?;
-            let spans_visited = visit(
-                context,
-                config,
-                self,
-                &mut parsing,
-                self.root.clone(),
-                test_file,
-                &file,
-            )?;
+            let spans_visited = visit(context, config, self, &mut parsing, test_file, &file)?;
             spans.extend(spans_visited);
             Ok(())
         };
 
         if test_files.is_empty() {
-            for entry in WalkDir::new(context.root)
+            for entry in WalkDir::new(context.root.as_path())
                 .into_iter()
                 .filter_entry(|entry| entry.path().file_name() != Some(OsStr::new("target")))
             {

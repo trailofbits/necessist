@@ -17,7 +17,7 @@ pub fn install_node_modules(context: &LightContext) -> Result<()> {
         command
     };
 
-    command.current_dir(context.root);
+    command.current_dir(context.root.as_path());
 
     debug!("{:?}", command);
 
