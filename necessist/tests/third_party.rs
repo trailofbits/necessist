@@ -3,17 +3,25 @@ use pretty_assertions::assert_eq;
 use regex::Regex;
 use serde::Deserialize;
 use std::{
-    collections::BTreeMap,
+    collections::{BTreeMap, HashSet},
     env::{consts, var},
     ffi::OsStr,
-    fs::read_dir,
-    fs::{read_to_string, remove_file, write},
+    fmt::Write as _,
+    fs::{read_dir, read_to_string, remove_file, write},
     io::{stderr, BufRead, BufReader, Read, Write},
-    path::Path,
+    panic::{set_hook, take_hook},
+    path::{Path, PathBuf},
+    process::{exit, Command},
+    sync::mpsc::channel,
+    thread::{available_parallelism, spawn},
     time::Instant,
 };
 use subprocess::{Exec, Redirection};
-use tempfile::tempdir;
+use tempfile::{tempdir, TempDir};
+
+// smoelius: `ERROR_EXIT_CODE` is from:
+// https://github.com/rust-lang/rust/blob/12397e9dd5a97460d76c884d449ca1c2d26da8ed/src/libtest/lib.rs#L94
+const ERROR_EXIT_CODE: i32 = 101;
 
 // smoelius: The Go packages were chosen because their ratios of "number of tests" to "time required
 // to run the tests" are high.
@@ -45,6 +53,44 @@ struct Test {
     full: bool,
 }
 
+#[derive(Clone, Eq, Ord, PartialEq, PartialOrd)]
+struct Key {
+    url: String,
+    rev: Option<String>,
+}
+
+impl Key {
+    fn from_test(test: &Test) -> Self {
+        Self {
+            url: test.url.clone(),
+            rev: test.rev.clone(),
+        }
+    }
+}
+
+struct Repo {
+    tempdir: TempDir,
+    inited: bool,
+    busy: bool,
+}
+
+struct Task {
+    /// Repo url and revision
+    key: Key,
+
+    /// Path to temporary directory to hold the repo
+    tempdir: PathBuf,
+
+    /// Whether the repo has been cloned already
+    inited: bool,
+
+    /// Path to toml file describing the test
+    path: PathBuf,
+
+    /// The [`Test`] itself
+    test: Test,
+}
+
 lazy_static! {
     static ref LINE_RE: Regex = Regex::new(r"^(\d+) candidates in (\d+) test file(s)?$").unwrap();
 }
@@ -56,6 +102,7 @@ lazy_static! {
 #[test]
 fn all_tests() {
     let mut tests = BTreeMap::<_, Vec<_>>::new();
+    let mut n_tests = 0;
 
     for entry in read_dir("tests/third_party_tests").unwrap() {
         let entry = entry.unwrap();
@@ -84,45 +131,161 @@ fn all_tests() {
             continue;
         }
 
-        tests
-            .entry((test.url.clone(), test.rev.clone()))
-            .or_default()
-            .push((path, test));
+        let key = Key::from_test(&test);
+        tests.entry(key).or_default().push((path, test));
+        n_tests += 1;
     }
 
-    for ((url, rev), tests) in tests {
+    run_tests_concurrently(tests, n_tests);
+}
+
+fn run_tests_concurrently(mut tests: BTreeMap<Key, Vec<(PathBuf, Test)>>, mut n_tests: usize) {
+    let hook = take_hook();
+    set_hook(Box::new(move |panic_info| {
+        hook(panic_info);
+        #[allow(clippy::explicit_write)]
+        writeln!(
+            stderr(),
+            "
+If you do not see a panic message above, check that you passed --nocapture to the test binary.
+",
+        )
+        .unwrap();
+        exit(ERROR_EXIT_CODE);
+    }));
+
+    let mut repos = BTreeMap::new();
+
+    for key in tests.keys().cloned() {
         let tempdir = tempdir().unwrap();
 
-        init_tempdir(tempdir.path(), &url, &rev);
+        repos.insert(
+            key,
+            Repo {
+                tempdir,
+                inited: false,
+                busy: false,
+            },
+        );
+    }
 
-        assert!(!tests.is_empty());
+    let (tx_output, rx_output) = channel::<(Key, usize, String)>();
 
-        for (path, test) in tests {
-            run_test(tempdir.path(), &path, &test);
+    let n_children = available_parallelism().unwrap().get();
+    let mut children = Vec::new();
+
+    for i in 0..n_children {
+        let tx_output = tx_output.clone();
+        let (tx_task, rx_task) = channel::<Task>();
+        children.push((
+            tx_task,
+            spawn(move || {
+                while let Ok(task) = rx_task.recv() {
+                    let mut output = if task.inited {
+                        String::new()
+                    } else {
+                        init_tempdir(&task.tempdir, &task.key)
+                    };
+                    output += &run_test(&task.tempdir, &task.path, &task.test);
+                    tx_output.send((task.key, i, output)).unwrap();
+                }
+            }),
+        ));
+    }
+
+    let mut children_idle = (0..n_children).collect::<HashSet<usize>>();
+
+    while n_tests > 0 || children_idle.len() < n_children {
+        let mut found = true;
+
+        while n_tests > 0 && !children_idle.is_empty() && found {
+            found = false;
+
+            let mut tests_len = 0;
+
+            for tests in tests.values_mut() {
+                tests_len += tests.len();
+
+                let Some((_, test)) = tests.last() else {
+                    continue;
+                };
+
+                let key = Key::from_test(test);
+
+                let repo = repos.get_mut(&key).unwrap();
+                if repo.busy {
+                    continue;
+                }
+                repo.busy = true;
+
+                let (path, test) = tests.pop().unwrap();
+
+                let task = Task {
+                    key,
+                    tempdir: repo.tempdir.path().to_path_buf(),
+                    inited: repo.inited,
+                    path,
+                    test,
+                };
+
+                let i = *children_idle.iter().next().unwrap();
+                children_idle.remove(&i);
+                children[i].0.send(task).unwrap();
+
+                n_tests -= 1;
+                found = true;
+                break;
+            }
+
+            assert!(found || n_tests == tests_len);
+        }
+
+        if children_idle.len() < n_children {
+            let (key, i, output) = rx_output.recv().unwrap();
+
+            #[allow(clippy::explicit_write)]
+            write!(
+                stderr(),
+                "
+{output}"
+            )
+            .unwrap();
+
+            children_idle.insert(i);
+
+            let repo = repos.get_mut(&key).unwrap();
+            repo.inited = true;
+            repo.busy = false;
         }
     }
-}
 
-fn init_tempdir(tempdir: &Path, url: &str, rev: &Option<String>) {
-    let mut exec =
-        Exec::cmd("git").args(&["clone", "--recursive", &url, &tempdir.to_string_lossy()]);
-    if let Some(rev) = rev {
-        exec = exec.args(&["--branch", &rev]);
-    } else {
-        exec = exec.arg("--depth=1");
+    for (tx_task, child) in children {
+        drop(tx_task);
+        child.join().unwrap();
     }
-    assert!(exec
-        .stdout(Redirection::Merge)
-        .stderr(Redirection::Merge)
-        .join()
-        .unwrap()
-        .success());
-
-    #[allow(clippy::explicit_write)]
-    writeln!(stderr()).unwrap();
 }
 
-fn run_test(tempdir: &Path, path: &Path, test: &Test) {
+#[must_use]
+fn init_tempdir(tempdir: &Path, key: &Key) -> String {
+    let mut command = Command::new("git");
+    command.args(["clone", "--recursive", &key.url, &tempdir.to_string_lossy()]);
+    if let Some(rev) = &key.rev {
+        command.args(["--branch", rev]);
+    } else {
+        command.arg("--depth=1");
+    }
+    let output = command.output().unwrap();
+    assert!(output.status.success());
+
+    let mut output = std::str::from_utf8(&output.stderr).unwrap().to_owned();
+    writeln!(output).unwrap();
+
+    output
+}
+
+fn run_test(tempdir: &Path, path: &Path, test: &Test) -> String {
+    let mut output = String::new();
+
     let tempdir_canonicalized = tempdir.canonicalize().unwrap();
 
     let path_stdout = path.with_extension("stdout");
@@ -139,10 +302,15 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) {
 
     let mut candidates_prev = None;
 
-    for config in configs {
+    for (i, config) in configs.iter().enumerate() {
+        if i > 0 {
+            #[allow(clippy::explicit_write)]
+            writeln!(output).unwrap();
+        }
+
         #[allow(clippy::explicit_write)]
         writeln!(
-            stderr(),
+            output,
             "{}{}{}{}",
             test.url,
             if let Some(subdir) = &test.subdir {
@@ -203,14 +371,14 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) {
             let _ = stdout.read_to_end(&mut buf).unwrap();
 
             #[allow(clippy::explicit_write)]
-            writeln!(stderr(), "elapsed: {:?}\n", start.elapsed()).unwrap();
+            writeln!(output, "elapsed: {:?}", start.elapsed()).unwrap();
         } else {
             let reader = BufReader::new(stdout);
             let line = reader.lines().next().unwrap().unwrap();
-            writeln!(&mut buf, "{line}").unwrap();
+            writeln!(buf, "{line}").unwrap();
 
             #[allow(clippy::explicit_write)]
-            writeln!(stderr(), "{line}\n").unwrap();
+            writeln!(output, "{line}").unwrap();
 
             popen.kill().unwrap();
 
@@ -236,4 +404,6 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) {
 
         assert_eq!(stdout_expected, stdout_normalized);
     }
+
+    output
 }
