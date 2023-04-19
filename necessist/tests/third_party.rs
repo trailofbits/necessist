@@ -93,26 +93,7 @@ fn all_tests() {
     for ((url, rev), tests) in tests {
         let tempdir = tempdir().unwrap();
 
-        let mut exec = Exec::cmd("git").args(&[
-            "clone",
-            "--recursive",
-            &url,
-            &tempdir.path().to_string_lossy(),
-        ]);
-        if let Some(rev) = rev {
-            exec = exec.args(&["--branch", &rev]);
-        } else {
-            exec = exec.arg("--depth=1");
-        }
-        assert!(exec
-            .stdout(Redirection::Merge)
-            .stderr(Redirection::Merge)
-            .join()
-            .unwrap()
-            .success());
-
-        #[allow(clippy::explicit_write)]
-        writeln!(stderr()).unwrap();
+        init_tempdir(tempdir.path(), &url, &rev);
 
         assert!(!tests.is_empty());
 
@@ -120,6 +101,25 @@ fn all_tests() {
             run_test(tempdir.path(), &path, &test);
         }
     }
+}
+
+fn init_tempdir(tempdir: &Path, url: &str, rev: &Option<String>) {
+    let mut exec =
+        Exec::cmd("git").args(&["clone", "--recursive", &url, &tempdir.to_string_lossy()]);
+    if let Some(rev) = rev {
+        exec = exec.args(&["--branch", &rev]);
+    } else {
+        exec = exec.arg("--depth=1");
+    }
+    assert!(exec
+        .stdout(Redirection::Merge)
+        .stderr(Redirection::Merge)
+        .join()
+        .unwrap()
+        .success());
+
+    #[allow(clippy::explicit_write)]
+    writeln!(stderr()).unwrap();
 }
 
 fn run_test(tempdir: &Path, path: &Path, test: &Test) {
