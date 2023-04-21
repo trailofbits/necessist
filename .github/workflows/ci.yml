@@ -11,6 +11,9 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  CARGO_TERM_COLOR: always
+
 jobs:
   test:
     strategy:
@@ -23,9 +26,6 @@ jobs:
             test: ci
 
     runs-on: ${{ matrix.environment }}
-
-    env:
-      CARGO_TERM_COLOR: always
 
     steps:
       - uses: actions/checkout@v3
