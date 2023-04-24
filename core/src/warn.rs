@@ -6,7 +6,6 @@ use ansi_term::{
 use anyhow::{bail, Result};
 use bitflags::bitflags;
 use heck::ToKebabCase;
-use lazy_static::lazy_static;
 use std::{collections::BTreeMap, sync::Mutex};
 
 // smoelius: `Warning` is part of Necessist's public API. Please try to follow the naming convention
@@ -83,9 +82,7 @@ bitflags! {
     }
 }
 
-lazy_static! {
-    static ref WARNING_STATE_MAP: Mutex<BTreeMap<Warning, State>> = Mutex::new(BTreeMap::new());
-}
+static WARNING_STATE_MAP: Mutex<BTreeMap<Warning, State>> = Mutex::new(BTreeMap::new());
 
 #[cfg_attr(
     dylint_lib = "non_local_effect_before_error_return",
