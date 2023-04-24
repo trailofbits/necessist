@@ -85,6 +85,18 @@ fn verify_untrusted_callback_override_ok() {
 }
 ```
 
+### Comparison to conventional mutation testing
+
+Conventional mutation testing tries to identify _gaps in test coverage_, whereas Necessist tries to identify _bugs in existing tests_.
+
+Conventional mutation testing tools (such a [`universalmutator`]) randomly inject faults into source code, and see whether the code's tests still pass. If they do, it could mean the code's tests are inadequate.
+
+Notably, conventional mutation testing is about finding deficiencies in the set of tests as a whole, not in individual tests. That is, for any given test, randomly injecting faults into the code is not especially likely to reveal bugs in that test. This is unfortunate since some tests are more important than others, e.g., because ensuring the correctness of some parts of the code is more important than others.
+
+By comparison, Necessist's approach of iteratively removing statements and method calls does target individual tests, and thus can reveal bugs in individual tests.
+
+Of course, there is overlap is the sets of problems the two approaches can uncover, e.g., a failure to find an injected fault could indicate a bug in a test. Nonetheless, for the reasons just given, we see the two approaches as complementary, not competing.
+
 ## Usage
 
 ```
@@ -329,3 +341,4 @@ Necessist is licensed and distributed under the AGPLv3 license. [Contact us](mai
 [github.com]: https://github.com/trailofbits/necessist
 [preprint]: https://agroce.github.io/asej18.pdf
 [toml]: https://toml.io/en/
+[`universalmutator`]: https://github.com/agroce/universalmutator
