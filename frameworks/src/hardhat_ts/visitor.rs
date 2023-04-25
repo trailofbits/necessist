@@ -92,6 +92,10 @@ impl<'config, 'framework> Visit for Visitor<'config, 'framework> {
     }
 
     fn visit_stmt(&mut self, stmt: &Stmt) {
+        let mut ignored_function_call = false;
+
+        let n_before = self.n_stmt_leaves_visited;
+
         // smoelius: If the statement is an ignored function call, do not visit its `Member`
         // subexpressions. E.g., in a call of the form `assert.equal(...)`, do not remove
         // `.equal(...)`.
@@ -99,6 +103,7 @@ impl<'config, 'framework> Visit for Visitor<'config, 'framework> {
             args, type_args, ..
         }) = is_ignored_function_call(self.config, stmt)
         {
+            ignored_function_call = true;
             for arg in args {
                 self.visit_expr_or_spread(arg);
             }
@@ -106,30 +111,31 @@ impl<'config, 'framework> Visit for Visitor<'config, 'framework> {
                 self.visit_ts_type_param_instantiation(type_arg);
             }
         } else {
-            let n_before = self.n_stmt_leaves_visited;
             visit_stmt(self, stmt);
-            let n_after = self.n_stmt_leaves_visited;
+        }
 
-            // smoelius: Consider this a "leaf" if-and-only-if no "leaves" were added during the
-            // recursive call.
-            if n_before != n_after {
-                return;
-            }
-            self.n_stmt_leaves_visited += 1;
+        let n_after = self.n_stmt_leaves_visited;
 
-            if_chain! {
-                if let Some(it_message) = &self.it_message;
-                if !is_method_call_statement(stmt);
-                if !matches!(
-                        stmt,
-                        Stmt::Break(_) | Stmt::Continue(_) | Stmt::Decl(_) | Stmt::Return(_)
-                    );
-                then {
-                    let span = stmt
-                        .span()
-                        .to_internal_span(&self.source_map, &self.source_file);
-                    self.elevate_span(span, it_message.clone());
-                }
+        // smoelius: Consider this a "leaf" if-and-only-if no "leaves" were added during the
+        // recursive call.
+        if n_before != n_after {
+            return;
+        }
+        self.n_stmt_leaves_visited += 1;
+
+        if_chain! {
+            if let Some(it_message) = &self.it_message;
+            if !ignored_function_call;
+            if !is_method_call_statement(stmt);
+            if !matches!(
+                    stmt,
+                    Stmt::Break(_) | Stmt::Continue(_) | Stmt::Decl(_) | Stmt::Return(_)
+                );
+            then {
+                let span = stmt
+                    .span()
+                    .to_internal_span(&self.source_map, &self.source_file);
+                self.elevate_span(span, it_message.clone());
             }
         }
     }

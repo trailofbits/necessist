@@ -1,0 +1,314 @@
+$DIR/test/DefaultOperatorFilterer.t.sol:39:28-39:52: `.filterTest(notFiltered)`
+$DIR/test/DefaultOperatorFilterer.t.sol:41:28-41:90: `.encodeWithSelector(AddressFiltered.selector, filteredAddress)`
+$DIR/test/DefaultOperatorFilterer.t.sol:52:28-52:119: `.encodeWithSelector(OperatorFilterer.OperatorNotAllowed.selector, address(filteredAddress))`
+$DIR/test/OperatorFilterRegistry.t.sol:40:28-40:68: `.encodeWithSelector(NotOwnable.selector)`
+$DIR/test/OperatorFilterRegistry.t.sol:59:28-59:76: `.encodeWithSelector(OnlyAddressOrOwner.selector)`
+$DIR/test/OperatorFilterRegistry.t.sol:64:17-64:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:65:28-65:75: `.encodeWithSelector(AlreadyRegistered.selector)`
+$DIR/test/OperatorFilterRegistry.t.sol:86:28-86:76: `.encodeWithSelector(OnlyAddressOrOwner.selector)`
+$DIR/test/OperatorFilterRegistry.t.sol:91:17-91:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:92:28-92:75: `.encodeWithSelector(AlreadyRegistered.selector)`
+$DIR/test/OperatorFilterRegistry.t.sol:97:28-97:79: `.encodeWithSelector(CannotSubscribeToSelf.selector)`
+$DIR/test/OperatorFilterRegistry.t.sol:102:28-102:97: `.encodeWithSelector(NotRegistered.selector, makeAddr("subscription"))`
+$DIR/test/OperatorFilterRegistry.t.sol:118:17-118:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:119:17-119:75: `.updateOperator(address(this), makeAddr("operator"), true)`
+$DIR/test/OperatorFilterRegistry.t.sol:120:17-120:82: `.updateCodeHash(address(this), bytes32(bytes4(0xdeadbeef)), true)`
+$DIR/test/OperatorFilterRegistry.t.sol:137:28-137:76: `.encodeWithSelector(OnlyAddressOrOwner.selector)`
+$DIR/test/OperatorFilterRegistry.t.sol:142:17-142:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:143:28-143:76: `.encodeWithSelector(CannotCopyFromSelf.selector)`
+$DIR/test/OperatorFilterRegistry.t.sol:148:17-148:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:149:28-149:75: `.encodeWithSelector(AlreadyRegistered.selector)`
+$DIR/test/OperatorFilterRegistry.t.sol:154:28-154:95: `.encodeWithSelector(NotRegistered.selector, makeAddr("registrant"))`
+$DIR/test/OperatorFilterRegistry.t.sol:159:17-159:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:169:28-169:76: `.encodeWithSelector(OnlyAddressOrOwner.selector)`
+$DIR/test/OperatorFilterRegistry.t.sol:174:28-174:86: `.encodeWithSelector(NotRegistered.selector, address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:188:17-188:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:189:17-189:75: `.updateOperator(address(this), makeAddr("operator"), true)`
+$DIR/test/OperatorFilterRegistry.t.sol:199:17-199:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:200:28-200:98: `.encodeWithSelector(AddressNotFiltered.selector, makeAddr("operator"))`
+$DIR/test/OperatorFilterRegistry.t.sol:205:17-205:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:206:17-206:75: `.updateOperator(address(this), makeAddr("operator"), true)`
+$DIR/test/OperatorFilterRegistry.t.sol:207:28-207:102: `.encodeWithSelector(AddressAlreadyFiltered.selector, makeAddr("operator"))`
+$DIR/test/OperatorFilterRegistry.t.sol:212:17-212:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:222:28-222:76: `.encodeWithSelector(OnlyAddressOrOwner.selector)`
+$DIR/test/OperatorFilterRegistry.t.sol:227:17-227:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:228:28-228:74: `.encodeWithSelector(CannotFilterEOAs.selector)`
+$DIR/test/OperatorFilterRegistry.t.sol:233:28-233:86: `.encodeWithSelector(NotRegistered.selector, address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:247:17-247:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:248:17-248:82: `.updateCodeHash(address(this), bytes32(bytes4(0xdeadbeef)), true)`
+$DIR/test/OperatorFilterRegistry.t.sol:258:17-258:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:259:28-259:106: `.encodeWithSelector(CodeHashNotFiltered.selector, bytes32(bytes4(0xdeadbeef)))`
+$DIR/test/OperatorFilterRegistry.t.sol:264:17-264:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:265:17-265:82: `.updateCodeHash(address(this), bytes32(bytes4(0xdeadbeef)), true)`
+$DIR/test/OperatorFilterRegistry.t.sol:266:28-266:110: `.encodeWithSelector(CodeHashAlreadyFiltered.selector, bytes32(bytes4(0xdeadbeef)))`
+$DIR/test/OperatorFilterRegistry.t.sol:271:17-271:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:274:9-274:45: `operator[0] = makeAddr("operator1");`
+$DIR/test/OperatorFilterRegistry.t.sol:275:9-275:45: `operator[1] = makeAddr("operator2");`
+$DIR/test/OperatorFilterRegistry.t.sol:287:28-287:76: `.encodeWithSelector(OnlyAddressOrOwner.selector)`
+$DIR/test/OperatorFilterRegistry.t.sol:295:9-295:45: `operator[0] = makeAddr("operator1");`
+$DIR/test/OperatorFilterRegistry.t.sol:296:9-296:45: `operator[1] = makeAddr("operator2");`
+$DIR/test/OperatorFilterRegistry.t.sol:297:28-297:86: `.encodeWithSelector(NotRegistered.selector, address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:314:17-314:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:315:17-315:76: `.updateOperator(address(this), makeAddr("operator1"), true)`
+$DIR/test/OperatorFilterRegistry.t.sol:316:17-316:76: `.updateOperator(address(this), makeAddr("operator2"), true)`
+$DIR/test/OperatorFilterRegistry.t.sol:319:9-319:45: `operator[0] = makeAddr("operator1");`
+$DIR/test/OperatorFilterRegistry.t.sol:320:9-320:45: `operator[1] = makeAddr("operator2");`
+$DIR/test/OperatorFilterRegistry.t.sol:331:17-331:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:333:9-333:45: `operator[0] = makeAddr("operator1");`
+$DIR/test/OperatorFilterRegistry.t.sol:334:9-334:45: `operator[1] = makeAddr("operator2");`
+$DIR/test/OperatorFilterRegistry.t.sol:335:28-335:99: `.encodeWithSelector(AddressNotFiltered.selector, makeAddr("operator1"))`
+$DIR/test/OperatorFilterRegistry.t.sol:340:17-340:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:341:17-341:76: `.updateOperator(address(this), makeAddr("operator1"), true)`
+$DIR/test/OperatorFilterRegistry.t.sol:342:17-342:76: `.updateOperator(address(this), makeAddr("operator2"), true)`
+$DIR/test/OperatorFilterRegistry.t.sol:344:9-344:45: `operator[0] = makeAddr("operator1");`
+$DIR/test/OperatorFilterRegistry.t.sol:345:9-345:45: `operator[1] = makeAddr("operator2");`
+$DIR/test/OperatorFilterRegistry.t.sol:346:28-346:103: `.encodeWithSelector(AddressAlreadyFiltered.selector, makeAddr("operator1"))`
+$DIR/test/OperatorFilterRegistry.t.sol:351:17-351:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:353:9-353:51: `codeHash[0] = bytes32(bytes4(0xdeadbeef));`
+$DIR/test/OperatorFilterRegistry.t.sol:354:9-354:51: `codeHash[1] = bytes32(bytes4(0xdeafbeef));`
+$DIR/test/OperatorFilterRegistry.t.sol:362:28-362:76: `.encodeWithSelector(OnlyAddressOrOwner.selector)`
+$DIR/test/OperatorFilterRegistry.t.sol:370:9-370:51: `codeHash[0] = bytes32(bytes4(0xdeadbeef));`
+$DIR/test/OperatorFilterRegistry.t.sol:371:9-371:51: `codeHash[1] = bytes32(bytes4(0xdeafbeef));`
+$DIR/test/OperatorFilterRegistry.t.sol:372:28-372:86: `.encodeWithSelector(NotRegistered.selector, address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:389:17-389:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:390:17-390:82: `.updateCodeHash(address(this), bytes32(bytes4(0xdeadbeef)), true)`
+$DIR/test/OperatorFilterRegistry.t.sol:391:17-391:82: `.updateCodeHash(address(this), bytes32(bytes4(0xdeafbeef)), true)`
+$DIR/test/OperatorFilterRegistry.t.sol:394:9-394:51: `codeHash[0] = bytes32(bytes4(0xdeadbeef));`
+$DIR/test/OperatorFilterRegistry.t.sol:395:9-395:51: `codeHash[1] = bytes32(bytes4(0xdeafbeef));`
+$DIR/test/OperatorFilterRegistry.t.sol:406:17-406:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:408:9-408:51: `codeHash[0] = bytes32(bytes4(0xdeadbeef));`
+$DIR/test/OperatorFilterRegistry.t.sol:409:9-409:51: `codeHash[1] = bytes32(bytes4(0xdeafbeef));`
+$DIR/test/OperatorFilterRegistry.t.sol:410:28-410:106: `.encodeWithSelector(CodeHashNotFiltered.selector, bytes32(bytes4(0xdeadbeef)))`
+$DIR/test/OperatorFilterRegistry.t.sol:415:17-415:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:417:9-417:51: `codeHash[0] = bytes32(bytes4(0xdeadbeef));`
+$DIR/test/OperatorFilterRegistry.t.sol:418:9-418:37: `codeHash[1] = keccak256("");`
+$DIR/test/OperatorFilterRegistry.t.sol:424:17-424:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:425:17-425:82: `.updateCodeHash(address(this), bytes32(bytes4(0xdeadbeef)), true)`
+$DIR/test/OperatorFilterRegistry.t.sol:426:17-426:82: `.updateCodeHash(address(this), bytes32(bytes4(0xdeafbeef)), true)`
+$DIR/test/OperatorFilterRegistry.t.sol:428:9-428:51: `codeHash[0] = bytes32(bytes4(0xdeadbeef));`
+$DIR/test/OperatorFilterRegistry.t.sol:429:9-429:51: `codeHash[1] = bytes32(bytes4(0xdeafbeef));`
+$DIR/test/OperatorFilterRegistry.t.sol:430:28-430:110: `.encodeWithSelector(CodeHashAlreadyFiltered.selector, bytes32(bytes4(0xdeadbeef)))`
+$DIR/test/OperatorFilterRegistry.t.sol:459:17-459:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:460:28-460:79: `.encodeWithSelector(CannotSubscribeToSelf.selector)`
+$DIR/test/OperatorFilterRegistry.t.sol:465:17-465:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:466:28-466:86: `.encodeWithSelector(CannotSubscribeToZeroAddress.selector)`
+$DIR/test/OperatorFilterRegistry.t.sol:489:17-489:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:491:28-491:85: `.encodeWithSelector(NotRegistered.selector, subscription)`
+$DIR/test/OperatorFilterRegistry.t.sol:547:28-547:86: `.encodeWithSelector(NotRegistered.selector, address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:568:17-568:40: `.register(subscription)`
+$DIR/test/OperatorFilterRegistry.t.sol:569:17-569:62: `.updateOperator(subscription, operator, true)`
+$DIR/test/OperatorFilterRegistry.t.sol:570:17-570:62: `.updateCodeHash(subscription, codeHash, true)`
+$DIR/test/OperatorFilterRegistry.t.sol:572:17-572:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:573:17-573:56: `.subscribe(address(this), subscription)`
+$DIR/test/OperatorFilterRegistry.t.sol:587:28-587:86: `.encodeWithSelector(NotRegistered.selector, address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:592:17-592:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:593:28-593:71: `.encodeWithSelector(NotSubscribed.selector)`
+$DIR/test/OperatorFilterRegistry.t.sol:604:17-604:40: `.register(subscription)`
+$DIR/test/OperatorFilterRegistry.t.sol:605:17-605:62: `.updateOperator(subscription, operator, true)`
+$DIR/test/OperatorFilterRegistry.t.sol:606:17-606:71: `.updateOperator(subscription, duplicateOperator, true)`
+$DIR/test/OperatorFilterRegistry.t.sol:607:17-607:62: `.updateCodeHash(subscription, codeHash, true)`
+$DIR/test/OperatorFilterRegistry.t.sol:608:17-608:71: `.updateCodeHash(subscription, duplicateCodeHash, true)`
+$DIR/test/OperatorFilterRegistry.t.sol:612:17-612:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:613:17-613:72: `.updateOperator(address(this), duplicateOperator, true)`
+$DIR/test/OperatorFilterRegistry.t.sol:614:17-614:72: `.updateCodeHash(address(this), duplicateCodeHash, true)`
+$DIR/test/OperatorFilterRegistry.t.sol:636:17-636:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:644:17-644:40: `.register(subscription)`
+$DIR/test/OperatorFilterRegistry.t.sol:646:17-646:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:649:28-649:76: `.encodeWithSelector(OnlyAddressOrOwner.selector)`
+$DIR/test/OperatorFilterRegistry.t.sol:655:28-655:86: `.encodeWithSelector(NotRegistered.selector, address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:664:17-664:40: `.register(subscription)`
+$DIR/test/OperatorFilterRegistry.t.sol:665:17-665:62: `.updateOperator(subscription, operator, true)`
+$DIR/test/OperatorFilterRegistry.t.sol:666:17-666:62: `.updateCodeHash(subscription, codeHash, true)`
+$DIR/test/OperatorFilterRegistry.t.sol:668:17-668:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:669:17-669:56: `.subscribe(address(this), subscription)`
+$DIR/test/OperatorFilterRegistry.t.sol:671:28-671:99: `.encodeWithSelector(CannotUpdateWhileSubscribed.selector, subscription)`
+$DIR/test/OperatorFilterRegistry.t.sol:676:17-676:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:678:28-678:85: `.encodeWithSelector(NotRegistered.selector, subscription)`
+$DIR/test/OperatorFilterRegistry.t.sol:686:11-686:31: `.etch(toCheck, code)`
+$DIR/test/OperatorFilterRegistry.t.sol:694:11-694:31: `.etch(toCheck, code)`
+$DIR/test/OperatorFilterRegistry.t.sol:695:17-695:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:696:17-696:63: `.updateCodeHash(address(this), codeHash, true)`
+$DIR/test/OperatorFilterRegistry.t.sol:697:28-697:73: `.isCodeHashOfFiltered(address(this), toCheck)`
+$DIR/test/OperatorFilterRegistry.t.sol:705:11-705:31: `.etch(toCheck, code)`
+$DIR/test/OperatorFilterRegistry.t.sol:708:17-708:40: `.register(subscription)`
+$DIR/test/OperatorFilterRegistry.t.sol:709:17-709:62: `.updateCodeHash(subscription, codeHash, true)`
+$DIR/test/OperatorFilterRegistry.t.sol:711:17-711:67: `.registerAndSubscribe(address(this), subscription)`
+$DIR/test/OperatorFilterRegistry.t.sol:712:28-712:73: `.isCodeHashOfFiltered(address(this), toCheck)`
+$DIR/test/OperatorFilterRegistry.t.sol:720:11-720:31: `.etch(toCheck, code)`
+$DIR/test/OperatorFilterRegistry.t.sol:723:17-723:40: `.register(subscription)`
+$DIR/test/OperatorFilterRegistry.t.sol:724:17-724:62: `.updateCodeHash(subscription, codeHash, true)`
+$DIR/test/OperatorFilterRegistry.t.sol:726:17-726:67: `.registerAndSubscribe(address(this), subscription)`
+$DIR/test/OperatorFilterRegistry.t.sol:727:28-727:72: `.isCodeHashFiltered(address(this), codeHash)`
+$DIR/test/OperatorFilterRegistry.t.sol:735:17-735:40: `.register(subscription)`
+$DIR/test/OperatorFilterRegistry.t.sol:736:17-736:62: `.updateOperator(subscription, operator, true)`
+$DIR/test/OperatorFilterRegistry.t.sol:738:17-738:67: `.registerAndSubscribe(address(this), subscription)`
+$DIR/test/OperatorFilterRegistry.t.sol:739:28-739:72: `.isOperatorFiltered(address(this), operator)`
+$DIR/test/OperatorFilterRegistry.t.sol:747:17-747:40: `.register(subscription)`
+$DIR/test/OperatorFilterRegistry.t.sol:748:17-748:62: `.updateOperator(subscription, operator, true)`
+$DIR/test/OperatorFilterRegistry.t.sol:750:17-750:67: `.registerAndSubscribe(address(this), subscription)`
+$DIR/test/OperatorFilterRegistry.t.sol:751:26-751:59: `.filteredOperators(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:752:26-752:59: `.filteredOperators(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:760:11-760:31: `.etch(toCheck, code)`
+$DIR/test/OperatorFilterRegistry.t.sol:763:17-763:40: `.register(subscription)`
+$DIR/test/OperatorFilterRegistry.t.sol:764:17-764:62: `.updateCodeHash(subscription, codeHash, true)`
+$DIR/test/OperatorFilterRegistry.t.sol:766:17-766:67: `.registerAndSubscribe(address(this), subscription)`
+$DIR/test/OperatorFilterRegistry.t.sol:767:26-767:60: `.filteredCodeHashes(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:768:26-768:60: `.filteredCodeHashes(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:776:17-776:40: `.register(subscription)`
+$DIR/test/OperatorFilterRegistry.t.sol:777:17-777:62: `.updateOperator(subscription, operator, true)`
+$DIR/test/OperatorFilterRegistry.t.sol:779:17-779:67: `.registerAndSubscribe(address(this), subscription)`
+$DIR/test/OperatorFilterRegistry.t.sol:787:11-787:31: `.etch(toCheck, code)`
+$DIR/test/OperatorFilterRegistry.t.sol:790:17-790:40: `.register(subscription)`
+$DIR/test/OperatorFilterRegistry.t.sol:791:17-791:62: `.updateCodeHash(subscription, codeHash, true)`
+$DIR/test/OperatorFilterRegistry.t.sol:793:17-793:67: `.registerAndSubscribe(address(this), subscription)`
+$DIR/test/OperatorFilterRegistry.t.sol:798:17-798:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:799:28-799:56: `.isRegistered(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:812:11-812:31: `.etch(toCheck, code)`
+$DIR/test/OperatorFilterRegistry.t.sol:813:17-813:41: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol:814:17-814:63: `.updateOperator(address(this), operator, true)`
+$DIR/test/OperatorFilterRegistry.t.sol:815:17-815:63: `.updateCodeHash(address(this), codeHash, true)`
+$DIR/test/OperatorFilterRegistry.t.sol:817:28-817:82: `.isOperatorAllowed(address(this), makeAddr("allowed"))`
+$DIR/test/OperatorFilterRegistry.t.sol:818:28-818:92: `.encodeWithSelector(AddressFiltered.selector, address(operator))`
+$DIR/test/OperatorFilterRegistry.t.sol:829:11-829:31: `.etch(toCheck, code)`
+$DIR/test/OperatorFilterRegistry.t.sol:832:17-832:40: `.register(subscription)`
+$DIR/test/OperatorFilterRegistry.t.sol:833:17-833:62: `.updateOperator(subscription, operator, true)`
+$DIR/test/OperatorFilterRegistry.t.sol:834:17-834:62: `.updateCodeHash(subscription, codeHash, true)`
+$DIR/test/OperatorFilterRegistry.t.sol:836:17-836:67: `.registerAndSubscribe(address(this), subscription)`
+$DIR/test/OperatorFilterRegistry.t.sol:838:28-838:82: `.isOperatorAllowed(address(this), makeAddr("allowed"))`
+$DIR/test/OperatorFilterRegistry.t.sol:839:28-839:92: `.encodeWithSelector(AddressFiltered.selector, address(operator))`
+$DIR/test/OperatorFilterRegistry.t.sol:861:28-861:86: `.encodeWithSelector(NotRegistered.selector, address(this))`
+$DIR/test/OperatorFilterer.t.sol:36:28-36:52: `.testFilter(notFiltered)`
+$DIR/test/OperatorFilterer.t.sol:38:28-38:90: `.encodeWithSelector(AddressFiltered.selector, filteredAddress)`
+$DIR/test/OperatorFilterer.t.sol:49:11-49:24: `.recordLogs()`
+$DIR/test/OperatorFilterer.t.sol:51:34-51:52: `.getRecordedLogs()`
+$DIR/test/OperatorFilterer.t.sol:60:66-60:90: `.getNonce(address(this))`
+$DIR/test/OperatorFilterer.t.sol:71:66-71:90: `.getNonce(address(this))`
+$DIR/test/OperatorFilterer.t.sol:82:11-82:39: `.etch(address(registry), "")`
+$DIR/test/OperatorFilterer.t.sol:90:28-90:119: `.encodeWithSelector(OperatorFilterer.OperatorNotAllowed.selector, address(filteredAddress))`
+$DIR/test/OwnedRegistrant.t.sol:24:28-24:62: `.isRegistered(address(registrant))`
+$DIR/test/OwnedRegistrant.t.sol:25:17-25:76: `.updateOperator(address(registrant), filteredAddress, true)`
+$DIR/test/RevokableDefaultOperatorFilterer.t.sol:36:28-36:52: `.filterTest(notFiltered)`
+$DIR/test/RevokableDefaultOperatorFilterer.t.sol:38:28-38:90: `.encodeWithSelector(AddressFiltered.selector, filteredAddress)`
+$DIR/test/RevokableDefaultOperatorFilterer.t.sol:48:28-48:90: `.encodeWithSelector(AddressFiltered.selector, filteredAddress)`
+$DIR/test/RevokableOperatorFilterer.t.sol:42:28-42:52: `.testFilter(notFiltered)`
+$DIR/test/RevokableOperatorFilterer.t.sol:44:28-44:90: `.encodeWithSelector(AddressFiltered.selector, filteredAddress)`
+$DIR/test/RevokableOperatorFilterer.t.sol:55:11-55:24: `.recordLogs()`
+$DIR/test/RevokableOperatorFilterer.t.sol:57:34-57:52: `.getRecordedLogs()`
+$DIR/test/RevokableOperatorFilterer.t.sol:66:66-66:90: `.getNonce(address(this))`
+$DIR/test/RevokableOperatorFilterer.t.sol:77:66-77:90: `.getNonce(address(this))`
+$DIR/test/RevokableOperatorFilterer.t.sol:88:11-88:39: `.etch(address(registry), "")`
+$DIR/test/RevokableOperatorFilterer.t.sol:95:17-95:66: `.updateOperatorFilterRegistryAddress(newRegistry)`
+$DIR/test/RevokableOperatorFilterer.t.sol:101:28-101:63: `.encodeWithSignature("OnlyOwner()")`
+$DIR/test/RevokableOperatorFilterer.t.sol:106:17-106:65: `.updateOperatorFilterRegistryAddress(address(0))`
+$DIR/test/RevokableOperatorFilterer.t.sol:132:28-132:95: `.encodeWithSignature("InitialRegistryAddressCannotBeZeroAddress()")`
+$DIR/test/UpdatableOperatorFilterer.t.sol:44:28-44:52: `.testFilter(notFiltered)`
+$DIR/test/UpdatableOperatorFilterer.t.sol:46:28-46:90: `.encodeWithSelector(AddressFiltered.selector, filteredAddress)`
+$DIR/test/UpdatableOperatorFilterer.t.sol:57:11-57:24: `.recordLogs()`
+$DIR/test/UpdatableOperatorFilterer.t.sol:59:34-59:52: `.getRecordedLogs()`
+$DIR/test/UpdatableOperatorFilterer.t.sol:68:66-68:90: `.getNonce(address(this))`
+$DIR/test/UpdatableOperatorFilterer.t.sol:79:66-79:90: `.getNonce(address(this))`
+$DIR/test/UpdatableOperatorFilterer.t.sol:90:11-90:39: `.etch(address(registry), "")`
+$DIR/test/UpdatableOperatorFilterer.t.sol:97:17-97:66: `.updateOperatorFilterRegistryAddress(newRegistry)`
+$DIR/test/UpdatableOperatorFilterer.t.sol:103:28-103:63: `.encodeWithSignature("OnlyOwner()")`
+$DIR/test/UpdatableOperatorFilterer.t.sol:108:17-108:65: `.updateOperatorFilterRegistryAddress(address(0))`
+$DIR/test/UpdatableOperatorFilterer.t.sol:122:28-122:119: `.encodeWithSelector(OperatorFilterer.OperatorNotAllowed.selector, address(filteredAddress))`
+$DIR/test/example/ExampleERC1155.t.sol:37:28-37:90: `.encodeWithSelector(AddressFiltered.selector, filteredAddress)`
+$DIR/test/example/ExampleERC1155.t.sol:49:16-49:31: `.mint(alice, 1)`
+$DIR/test/example/ExampleERC1155.t.sol:60:16-60:31: `.mint(alice, 1)`
+$DIR/test/example/ExampleERC1155.t.sol:62:9-62:20: `ids[0] = 1;`
+$DIR/test/example/ExampleERC1155.t.sol:64:9-64:24: `amounts[0] = 1;`
+$DIR/test/example/ExampleERC1155.t.sol:76:16-76:29: `.mint(bob, 1)`
+$DIR/test/example/ExampleERC1155.t.sol:92:16-92:29: `.mint(bob, 1)`
+$DIR/test/example/ExampleERC1155.t.sol:103:27-103:72: `.supportsInterface(type(IERC165).interfaceId)`
+$DIR/test/example/ExampleERC1155.t.sol:104:27-104:73: `.supportsInterface(type(IERC1155).interfaceId)`
+$DIR/test/example/ExampleERC721.t.sol:37:28-37:90: `.encodeWithSelector(AddressFiltered.selector, filteredAddress)`
+$DIR/test/example/ExampleERC721.t.sol:47:16-47:31: `.mint(alice, 1)`
+$DIR/test/example/ExampleERC721.t.sol:58:16-58:31: `.mint(alice, 1)`
+$DIR/test/example/ExampleERC721.t.sol:59:16-59:31: `.mint(alice, 2)`
+$DIR/test/example/ExampleERC721.t.sol:72:16-72:29: `.mint(bob, 1)`
+$DIR/test/example/ExampleERC721.t.sol:87:16-87:29: `.mint(bob, 1)`
+$DIR/test/example/ExampleERC721.t.sol:101:27-101:72: `.supportsInterface(type(IERC165).interfaceId)`
+$DIR/test/example/ExampleERC721.t.sol:102:27-102:72: `.supportsInterface(type(IERC721).interfaceId)`
+$DIR/test/example/RevokableERC1155.t.sol:37:28-37:90: `.encodeWithSelector(AddressFiltered.selector, filteredAddress)`
+$DIR/test/example/RevokableERC1155.t.sol:49:16-49:31: `.mint(alice, 1)`
+$DIR/test/example/RevokableERC1155.t.sol:60:16-60:31: `.mint(alice, 1)`
+$DIR/test/example/RevokableERC1155.t.sol:62:9-62:20: `ids[0] = 1;`
+$DIR/test/example/RevokableERC1155.t.sol:64:9-64:24: `amounts[0] = 1;`
+$DIR/test/example/RevokableERC1155.t.sol:76:16-76:29: `.mint(bob, 1)`
+$DIR/test/example/RevokableERC1155.t.sol:92:16-92:29: `.mint(bob, 1)`
+$DIR/test/example/RevokableERC1155.t.sol:105:16-105:41: `.mint(makeAddr("bob"), 1)`
+$DIR/test/example/RevokableERC1155.t.sol:119:27-119:72: `.supportsInterface(type(IERC165).interfaceId)`
+$DIR/test/example/RevokableERC1155.t.sol:120:27-120:73: `.supportsInterface(type(IERC1155).interfaceId)`
+$DIR/test/example/RevokableERC721.t.sol:37:28-37:90: `.encodeWithSelector(AddressFiltered.selector, filteredAddress)`
+$DIR/test/example/RevokableERC721.t.sol:47:16-47:31: `.mint(alice, 1)`
+$DIR/test/example/RevokableERC721.t.sol:58:16-58:31: `.mint(alice, 1)`
+$DIR/test/example/RevokableERC721.t.sol:59:16-59:31: `.mint(alice, 2)`
+$DIR/test/example/RevokableERC721.t.sol:72:16-72:29: `.mint(bob, 1)`
+$DIR/test/example/RevokableERC721.t.sol:87:16-87:29: `.mint(bob, 1)`
+$DIR/test/example/RevokableERC721.t.sol:103:16-103:41: `.mint(makeAddr("bob"), 1)`
+$DIR/test/example/RevokableERC721.t.sol:117:27-117:72: `.supportsInterface(type(IERC165).interfaceId)`
+$DIR/test/example/RevokableERC721.t.sol:118:27-118:72: `.supportsInterface(type(IERC721).interfaceId)`
+$DIR/test/example/upgradeable/ExampleERC1155Upgradeable.t.sol:48:28-48:90: `.encodeWithSelector(AddressFiltered.selector, filteredAddress)`
+$DIR/test/example/upgradeable/ExampleERC1155Upgradeable.t.sol:60:16-60:31: `.mint(alice, 1)`
+$DIR/test/example/upgradeable/ExampleERC1155Upgradeable.t.sol:71:16-71:31: `.mint(alice, 1)`
+$DIR/test/example/upgradeable/ExampleERC1155Upgradeable.t.sol:73:9-73:20: `ids[0] = 1;`
+$DIR/test/example/upgradeable/ExampleERC1155Upgradeable.t.sol:75:9-75:24: `amounts[0] = 1;`
+$DIR/test/example/upgradeable/ExampleERC1155Upgradeable.t.sol:87:16-87:29: `.mint(bob, 1)`
+$DIR/test/example/upgradeable/ExampleERC1155Upgradeable.t.sol:103:16-103:29: `.mint(bob, 1)`
+$DIR/test/example/upgradeable/ExampleERC1155Upgradeable.t.sol:114:27-114:72: `.supportsInterface(type(IERC165).interfaceId)`
+$DIR/test/example/upgradeable/ExampleERC1155Upgradeable.t.sol:115:27-115:73: `.supportsInterface(type(IERC1155).interfaceId)`
+$DIR/test/example/upgradeable/ExampleERC721Upgradeable.t.sol:48:28-48:90: `.encodeWithSelector(AddressFiltered.selector, filteredAddress)`
+$DIR/test/example/upgradeable/ExampleERC721Upgradeable.t.sol:58:16-58:31: `.mint(alice, 1)`
+$DIR/test/example/upgradeable/ExampleERC721Upgradeable.t.sol:69:16-69:31: `.mint(alice, 1)`
+$DIR/test/example/upgradeable/ExampleERC721Upgradeable.t.sol:70:16-70:31: `.mint(alice, 2)`
+$DIR/test/example/upgradeable/ExampleERC721Upgradeable.t.sol:83:16-83:29: `.mint(bob, 1)`
+$DIR/test/example/upgradeable/ExampleERC721Upgradeable.t.sol:98:16-98:29: `.mint(bob, 1)`
+$DIR/test/example/upgradeable/ExampleERC721Upgradeable.t.sol:112:27-112:72: `.supportsInterface(type(IERC165).interfaceId)`
+$DIR/test/example/upgradeable/ExampleERC721Upgradeable.t.sol:113:27-113:72: `.supportsInterface(type(IERC721).interfaceId)`
+$DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol:49:28-49:90: `.encodeWithSelector(AddressFiltered.selector, filteredAddress)`
+$DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol:61:16-61:31: `.mint(alice, 1)`
+$DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol:72:16-72:31: `.mint(alice, 1)`
+$DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol:74:9-74:20: `ids[0] = 1;`
+$DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol:76:9-76:24: `amounts[0] = 1;`
+$DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol:88:16-88:29: `.mint(bob, 1)`
+$DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol:104:16-104:29: `.mint(bob, 1)`
+$DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol:117:16-117:41: `.mint(makeAddr("bob"), 1)`
+$DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol:131:27-131:72: `.supportsInterface(type(IERC165).interfaceId)`
+$DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol:132:27-132:73: `.supportsInterface(type(IERC1155).interfaceId)`
+$DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol:48:28-48:90: `.encodeWithSelector(AddressFiltered.selector, filteredAddress)`
+$DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol:58:16-58:31: `.mint(alice, 1)`
+$DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol:69:16-69:31: `.mint(alice, 1)`
+$DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol:70:16-70:31: `.mint(alice, 2)`
+$DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol:83:16-83:29: `.mint(bob, 1)`
+$DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol:98:16-98:29: `.mint(bob, 1)`
+$DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol:114:16-114:41: `.mint(makeAddr("bob"), 1)`
+$DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol:128:27-128:72: `.supportsInterface(type(IERC165).interfaceId)`
+$DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol:129:27-129:72: `.supportsInterface(type(IERC721).interfaceId)`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:54:28-54:90: `.encodeWithSelector(AddressFiltered.selector, filteredAddress)`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:64:16-64:31: `.mint(alice, 1)`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:75:16-75:31: `.mint(alice, 1)`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:76:16-76:31: `.mint(alice, 2)`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:89:16-89:29: `.mint(bob, 1)`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:104:16-104:29: `.mint(bob, 1)`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:167:28-167:52: `.testFilter(notFiltered)`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:169:28-169:90: `.encodeWithSelector(AddressFiltered.selector, filteredAddress)`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:180:11-180:24: `.recordLogs()`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:182:18-182:67: `.initialize(address(registry), address(0), false)`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:183:34-183:52: `.getRecordedLogs()`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:193:66-193:90: `.getNonce(address(this))`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:218:66-218:90: `.getNonce(address(this))`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:239:11-239:39: `.etch(address(registry), "")`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:241:18-241:67: `.initialize(address(registry), address(0), false)`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:247:17-247:66: `.updateOperatorFilterRegistryAddress(newRegistry)`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:253:28-253:63: `.encodeWithSignature("OnlyOwner()")`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:258:17-258:65: `.updateOperatorFilterRegistryAddress(address(0))`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:272:26-272:70: `.initialize(stubRegistry, address(0), false)`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:273:28-273:119: `.encodeWithSelector(OperatorFilterer.OperatorNotAllowed.selector, address(filteredAddress))`
+$DIR/test/upgradeable/RevokableUpgradeableOperatorFilterer.t.sol:30:17-30:48: `.revokeOperatorFilterRegistry()`
+$DIR/test/upgradeable/UpgradeableOperatorFilterer.t.sol:21:17-21:51: `.init(DEFAULT_SUBSCRIPTION, false)`
+$DIR/test/upgradeable/UpgradeableOperatorFilterer.t.sol:26:17-26:41: `.init(address(0), false)`
+$DIR/test/validation/Validation.t.sol:70:24-70:41: `.ownerOf(tokenId)`
+$DIR/test/validation/Validation.t.sol:71:13-71:28: `owner = _owner;`
+$DIR/test/validation/Validation.t.sol:72:32-74:10: `{
+            // Do nothing
+        }`

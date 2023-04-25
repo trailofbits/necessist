@@ -6,9 +6,9 @@ use std::{
     collections::{BTreeMap, HashSet},
     env::{consts, var},
     ffi::OsStr,
-    fmt::Write as _,
+    fmt::{Debug, Write as _},
     fs::{read_dir, read_to_string, remove_file, write},
-    io::{stderr, BufRead, BufReader, Read, Write},
+    io::{stderr, Read, Write},
     panic::{set_hook, take_hook},
     path::{Path, PathBuf},
     process::{exit, Command},
@@ -288,19 +288,11 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> String {
 
     let tempdir_canonicalized = tempdir.canonicalize().unwrap();
 
-    let path_stdout = path.with_extension("stdout");
-
-    let stdout_expected = read_to_string(&path_stdout)
-        .map_err(|error| format!("Failed to read {path_stdout:?}: {error}"))
-        .unwrap();
-
     let configs = if test.config.is_empty() {
         vec![None]
     } else {
         vec![None, Some(&test.config)]
     };
-
-    let mut candidates_prev = None;
 
     for (i, config) in configs.iter().enumerate() {
         if i > 0 {
@@ -331,6 +323,18 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> String {
         )
         .unwrap();
 
+        let path_stdout = if test.full {
+            path.with_extension("stdout")
+        } else if config.is_none() {
+            path.with_extension("without_config.stdout")
+        } else {
+            path.with_extension("with_config.stdout")
+        };
+
+        let stdout_expected = read_to_string(&path_stdout)
+            .map_err(|error| format!("Failed to read {path_stdout:?}: {error}"))
+            .unwrap();
+
         let root = test
             .subdir
             .as_ref()
@@ -349,10 +353,14 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> String {
             "--root",
             &root.to_string_lossy(),
             "--allow=config-files-experimental",
-            "--verbose",
         ]);
         if let Some(framework) = &test.framework {
             exec = exec.args(&["--framework", framework]);
+        }
+        if test.full {
+            exec = exec.arg("--verbose");
+        } else {
+            exec = exec.arg("--dump-candidates");
         }
         for test_file in &test.test_files {
             exec = exec.arg(tempdir.join(test_file));
@@ -362,38 +370,15 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> String {
 
         let start = Instant::now();
 
-        let mut popen = exec.popen().unwrap();
+        let popen = exec.popen().unwrap();
         let mut stdout = popen.stdout.as_ref().unwrap();
 
         let mut buf = Vec::new();
 
-        if test.full {
-            let _ = stdout.read_to_end(&mut buf).unwrap();
+        let _ = stdout.read_to_end(&mut buf).unwrap();
 
-            #[allow(clippy::explicit_write)]
-            writeln!(output, "elapsed: {:?}", start.elapsed()).unwrap();
-        } else {
-            let reader = BufReader::new(stdout);
-            let line = reader.lines().next().unwrap().unwrap();
-            writeln!(buf, "{line}").unwrap();
-
-            #[allow(clippy::explicit_write)]
-            writeln!(output, "{line}").unwrap();
-
-            popen.kill().unwrap();
-
-            let captures = LINE_RE
-                .captures(&line)
-                .unwrap_or_else(|| panic!("Failed to find matching line for test {path:?}"));
-            assert_eq!(4, captures.len());
-            let candidates_curr = captures[1].parse::<usize>().unwrap();
-            if let Some(candidates_prev) = candidates_prev {
-                assert!(candidates_prev > candidates_curr);
-            } else if !test.config.is_empty() {
-                candidates_prev = Some(candidates_curr);
-                continue;
-            }
-        }
+        #[allow(clippy::explicit_write)]
+        writeln!(output, "elapsed: {:?}", start.elapsed()).unwrap();
 
         let stdout_actual = std::str::from_utf8(&buf).unwrap();
 
@@ -402,8 +387,67 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> String {
         let stdout_normalized =
             stdout_actual.replace(&tempdir_canonicalized.to_string_lossy().to_string(), "$DIR");
 
-        assert_eq!(stdout_expected, stdout_normalized);
+        if enabled("BLESS") {
+            write(path_stdout, stdout_normalized).unwrap();
+        } else {
+            assert_eq!(stdout_expected, stdout_normalized, "{:?}", output);
+        }
     }
 
     output
+}
+
+#[test]
+fn stdout_subsequence() {
+    for entry in read_dir("tests/third_party_tests").unwrap() {
+        let entry = entry.unwrap();
+        let path = entry.path();
+
+        let Some(base) = path
+            .to_string_lossy()
+            .strip_suffix(".without_config.stdout")
+            .map(ToOwned::to_owned)
+        else {
+            continue;
+        };
+
+        let path_with_config = Path::new(&base).with_extension("with_config.stdout");
+        if !path_with_config.try_exists().unwrap_or_default() {
+            continue;
+        }
+
+        let contents_with_config = read_to_string(path_with_config).unwrap();
+        let contents_without_config = read_to_string(path).unwrap();
+
+        let lines_with_config = contents_with_config.lines();
+        let lines_without_config = contents_without_config.lines();
+
+        assert!(
+            subsequence(lines_with_config, lines_without_config),
+            "failed for {base:?}"
+        );
+    }
+}
+
+fn subsequence<T>(xs: impl Iterator<Item = T>, mut ys: impl Iterator<Item = T>) -> bool
+where
+    T: Debug + Eq,
+{
+    let mut xs = xs.peekable();
+
+    while let Some(x) = xs.peek() {
+        let Some(y) = ys.next() else {
+            dbg!(x);
+            return false;
+        };
+        if *x == y {
+            let _ = xs.next();
+        }
+    }
+
+    true
+}
+
+fn enabled(key: &str) -> bool {
+    var(key).map_or(false, |value| value != "0")
 }

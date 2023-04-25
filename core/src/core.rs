@@ -66,6 +66,7 @@ pub struct Necessist {
     pub default_config: bool,
     pub deny: Vec<Warning>,
     pub dump: bool,
+    pub dump_candidates: bool,
     pub no_dry_run: bool,
     pub no_sqlite: bool,
     pub quiet: bool,
@@ -204,6 +205,11 @@ fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementatio
     let n_spans = spans.len();
 
     let test_file_span_map = build_test_file_span_map(spans);
+
+    if context.opts.dump_candidates {
+        dump_candidates(context, &test_file_span_map)?;
+        return Ok(None);
+    }
 
     (context.println)({
         let n_test_files = test_file_span_map.keys().len();
@@ -475,9 +481,32 @@ fn build_test_file_span_map(mut spans: Vec<Span>) -> BTreeMap<SourceFile, Vec<Sp
     test_file_span_map
 }
 
+fn dump_candidates(
+    context: &LightContext,
+    test_file_span_map: &BTreeMap<SourceFile, Vec<Span>>,
+) -> Result<()> {
+    for span in test_file_span_map.values().flatten() {
+        let contents = read_to_string(&*span.source_file)?;
+
+        // smoelius: Creating a new `Rewriter` here is just as silly as it is in `attempt_removal`
+        // (see comment therein).
+        let mut rewriter = Rewriter::new(&contents);
+        let (start, end) = rewriter.offsets_from_span(span);
+
+        let bytes = &contents.as_bytes()[start..end];
+        let text = std::str::from_utf8(bytes)?;
+
+        (context.println)(&format!("{}: `{}`", span.to_console_string(), text));
+    }
+
+    Ok(())
+}
+
 fn attempt_removal(context: &Context, span: &Span) -> Result<(String, Option<Outcome>)> {
     let _backup = Backup::new(&*span.source_file)?;
 
+    // smoelius: Each time `attempt_removal` is called, it creates a new `Rewriter`, which seems
+    // silly. It ought to be possible to create and reuse one `Rewriter` for each source file.
     let contents = read_to_string(&*span.source_file)?;
     let mut rewriter = Rewriter::new(&contents);
     let text = rewriter.rewrite(span, "");
