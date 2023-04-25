@@ -99,6 +99,7 @@ Options:
       --default-config         Create a default necessist.toml file in the project's root directory (experimental)
       --deny <WARNING>         Treat <WARNING> as an error; `--deny all` treats all warnings as errors
       --dump                   Dump sqlite database contents to the console
+      --dump-candidates        Dump removal candidates and exit (for debugging)
       --framework <FRAMEWORK>  Assume testing framework is <FRAMEWORK> [possible values: auto, foundry, golang, hardhat-ts, rust]
       --no-dry-run             Do not perform dry runs
       --no-sqlite              Do not output to an sqlite database

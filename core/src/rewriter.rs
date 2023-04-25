@@ -47,7 +47,8 @@ impl<'original> Rewriter<'original> {
         replaced
     }
 
-    fn offsets_from_span(&mut self, span: &Span) -> (usize, usize) {
+    // smoelius: `pub` to facilitate `--dump-candidates`.
+    pub fn offsets_from_span(&mut self, span: &Span) -> (usize, usize) {
         use offset_calculator::Interface;
 
         let (start, start_ascii) = self.offset_calculator.offset_from_line_column(span.start());

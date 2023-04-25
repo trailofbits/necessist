@@ -1,0 +1,2137 @@
+$DIR/integration_tests/tests/acm.rs:14:11-14:38: `.list_certificates(request)`
+$DIR/integration_tests/tests/acmpca.rs:14:21-14:59: `.list_certificate_authorities(request)`
+$DIR/integration_tests/tests/alexaforbusiness.rs:14:26-14:47: `.list_skills(request)`
+$DIR/integration_tests/tests/alexaforbusiness.rs:17:5-22:6: `match response {
+        Ok(_) => (),
+        Err(e) => assert!(
+            format!("{}", e).contains("Organization does not exist for the given aws account")
+        ),
+    }`
+$DIR/integration_tests/tests/amplify.rs:13:9-13:39: `.list_apps(Default::default())`
+$DIR/integration_tests/tests/amplify.rs:15:9-15:43: `.expect("expected an ok response")`
+$DIR/integration_tests/tests/apigateway.rs:14:11-14:34: `.get_rest_apis(request)`
+$DIR/integration_tests/tests/apigatewaymanagementapi.rs:26:9-29:11: `.post_to_connection(PostToConnectionRequest {
+            connection_id: "bogus".into(),
+            ..PostToConnectionRequest::default()
+        })`
+$DIR/integration_tests/tests/apigatewaymanagementapi.rs:27:35-27:42: `.into()`
+$DIR/integration_tests/tests/apigatewayv2.rs:13:9-13:38: `.get_apis(Default::default())`
+$DIR/integration_tests/tests/apigatewayv2.rs:15:9-15:43: `.expect("expected an ok response")`
+$DIR/integration_tests/tests/application-autocaling.rs:20:11-20:46: `.describe_scaling_policies(request)`
+$DIR/integration_tests/tests/appmesh.rs:13:18-13:58: `.list_meshes(ListMeshesInput::default())`
+$DIR/integration_tests/tests/appstream.rs:16:24-16:49: `.describe_fleets(request)`
+$DIR/integration_tests/tests/appsync.rs:16:24-16:51: `.list_graphql_apis(request)`
+$DIR/integration_tests/tests/athena.rs:14:11-14:39: `.list_named_queries(request)`
+$DIR/integration_tests/tests/autoscaling-plans.rs:17:21-17:53: `.describe_scaling_plans(request)`
+$DIR/integration_tests/tests/autoscaling-plans.rs:19:5-22:6: `match res {
+        Err(e) => panic!("Error getting scaling plans: {:?}", e),
+        Ok(response) => println!("Got this response: {:?}", response),
+    }`
+$DIR/integration_tests/tests/autoscaling.rs:14:26-14:64: `.describe_auto_scaling_groups(request)`
+$DIR/integration_tests/tests/batch.rs:14:11-14:45: `.describe_job_definitions(request)`
+$DIR/integration_tests/tests/budgets.rs:17:26-17:52: `.describe_budgets(request)`
+$DIR/integration_tests/tests/chime.rs:14:24-14:47: `.list_accounts(request)`
+$DIR/integration_tests/tests/cloud9.rs:14:24-14:51: `.list_environments(request)`
+$DIR/integration_tests/tests/clouddirectory.rs:14:24-14:50: `.list_directories(request)`
+$DIR/integration_tests/tests/cloudformation.rs:14:24-14:45: `.list_stacks(request)`
+$DIR/integration_tests/tests/cloudformation.rs:28:24-28:45: `.list_stacks(request)`
+$DIR/integration_tests/tests/cloudfront.rs:16:24-16:52: `.list_distributions(request)`
+$DIR/integration_tests/tests/cloudhsm.rs:16:17-16:37: `.list_hapgs(request)`
+$DIR/integration_tests/tests/cloudhsm.rs:19:29-19:70: `.contains("This service is unavailable.")`
+$DIR/integration_tests/tests/cloudhsm.rs:20:17-20:19: `()`
+$DIR/integration_tests/tests/cloudhsm.rs:33:17-33:36: `.list_hsms(request)`
+$DIR/integration_tests/tests/cloudhsm.rs:36:29-36:70: `.contains("This service is unavailable.")`
+$DIR/integration_tests/tests/cloudhsm.rs:37:17-37:19: `()`
+$DIR/integration_tests/tests/cloudhsm.rs:49:17-49:44: `.list_luna_clients(request)`
+$DIR/integration_tests/tests/cloudhsm.rs:52:29-52:70: `.contains("This service is unavailable.")`
+$DIR/integration_tests/tests/cloudhsm.rs:53:17-53:19: `()`
+$DIR/integration_tests/tests/cloudhsmv2.rs:14:26-14:53: `.describe_clusters(request)`
+$DIR/integration_tests/tests/cloudsearch.rs:14:26-14:52: `.describe_domains(request)`
+$DIR/integration_tests/tests/cloudtrail.rs:14:11-14:36: `.describe_trails(request)`
+$DIR/integration_tests/tests/cloudwatch.rs:30:26-30:51: `.put_metric_data(request)`
+$DIR/integration_tests/tests/codebuild.rs:14:24-14:47: `.list_projects(request)`
+$DIR/integration_tests/tests/codecommit.rs:14:11-14:38: `.list_repositories(request)`
+$DIR/integration_tests/tests/codedeploy.rs:14:11-14:38: `.list_applications(request)`
+$DIR/integration_tests/tests/codepipeline.rs:14:11-14:35: `.list_pipelines(request)`
+$DIR/integration_tests/tests/codestar.rs:14:24-14:47: `.list_projects(request)`
+$DIR/integration_tests/tests/cognito-idp.rs:19:24-19:49: `.list_user_pools(request)`
+$DIR/integration_tests/tests/cognito-sync.rs:14:24-14:58: `.list_identity_pool_usage(request)`
+$DIR/integration_tests/tests/cognitoidentity.rs:43:5-43:30: `request.max_results = 10;`
+$DIR/integration_tests/tests/cognitoidentity.rs:45:11-45:40: `.list_identity_pools(request)`
+$DIR/integration_tests/tests/cognitoidentity.rs:53:5-53:30: `request.max_results = 10;`
+$DIR/integration_tests/tests/cognitoidentity.rs:54:5-54:54: `request.identity_pool_id = "invalid".to_string();`
+$DIR/integration_tests/tests/cognitoidentity.rs:56:5-59:7: `match client.list_identities(request).await {
+        Err(RusotoError::Validation(msg)) => assert!(msg.contains("identityPoolId")),
+        err @ _ => panic!("Expected Validation error - got {:#?}", err),
+    };`
+$DIR/integration_tests/tests/cognitoidentity.rs:56:17-56:42: `.list_identities(request)`
+$DIR/integration_tests/tests/cognitoidentity.rs:67:40-67:53: `.nanosecond()`
+$DIR/integration_tests/tests/cognitoidentity.rs:81:39-81:83: `.create_identity_pool(create_identity_input)`
+$DIR/integration_tests/tests/cognitoidentity.rs:100:43-100:62: `.replace("'", "\"")`
+$DIR/integration_tests/tests/cognitoidentity.rs:107:26-107:57: `.create_role(input_create_role)`
+$DIR/integration_tests/tests/cognitoidentity.rs:124:7-124:26: `.replace("'", "\"")`
+$DIR/integration_tests/tests/cognitoidentity.rs:133:15-133:50: `.put_role_policy(role_policy_input)`
+$DIR/integration_tests/tests/cognitoidentity.rs:137:10-137:64: `.insert("authenticated".to_string(), role.arn.clone())`
+$DIR/integration_tests/tests/cognitoidentity.rs:138:10-138:66: `.insert("unauthenticated".to_string(), role.arn.clone())`
+$DIR/integration_tests/tests/cognitoidentity.rs:144:19-144:56: `.set_identity_pool_roles(roles_input)`
+$DIR/integration_tests/tests/cognitoidentity.rs:150:11-150:75: `.insert(developper_provider_name.to_string(), login.to_string())`
+$DIR/integration_tests/tests/cognitoidentity.rs:157:34-157:91: `.get_open_id_token_for_developer_identity(register_input)`
+$DIR/integration_tests/tests/cognitoidentity.rs:160:5-160:42: `sleep(Duration::from_secs(10)).await;`
+$DIR/integration_tests/tests/cognitoidentity.rs:164:10-164:53: `.identity_id(response.identity_id.unwrap())`
+$DIR/integration_tests/tests/cognitoidentity.rs:165:10-165:33: `.region(region.clone())`
+$DIR/integration_tests/tests/cognitoidentity.rs:166:10-166:87: `.login("cognito-identity.amazonaws.com".to_string(), response.token.unwrap())`
+$DIR/integration_tests/tests/cognitoidentity.rs:167:10-167:18: `.build()`
+$DIR/integration_tests/tests/cognitoidentity.rs:168:25-168:39: `.credentials()`
+$DIR/integration_tests/tests/cognitoidentity.rs:180:19-180:68: `.delete_identity_pool(delete_identity_pool_input)`
+$DIR/integration_tests/tests/cognitoidentity.rs:188:15-188:55: `.delete_role_policy(delete_policy_input)`
+$DIR/integration_tests/tests/cognitoidentity.rs:195:15-195:46: `.delete_role(delete_role_input)`
+$DIR/integration_tests/tests/comprehend.rs:19:17-19:43: `.detect_sentiment(request)`
+$DIR/integration_tests/tests/comprehendmedical.rs:18:17-18:37: `.detect_phi(request)`
+$DIR/integration_tests/tests/config.rs:17:17-17:48: `.describe_config_rules(request)`
+$DIR/integration_tests/tests/config.rs:32:17-32:53: `.describe_delivery_channels(request)`
+$DIR/integration_tests/tests/core.rs:12:31-12:45: `.credentials()`
+$DIR/integration_tests/tests/core.rs:16:11-16:46: `.put("Action", "GetCallerIdentity")`
+$DIR/integration_tests/tests/core.rs:17:11-17:40: `.put("Version", "2011-06-15")`
+$DIR/integration_tests/tests/core.rs:18:12-18:31: `.set_params(params)`
+$DIR/integration_tests/tests/core.rs:19:12-19:50: `.add_header("x-test-header", "foobar")`
+$DIR/integration_tests/tests/core.rs:21:16-21:96: `.generate_presigned_url(&credentials, &std::time::Duration::from_secs(60), true)`
+$DIR/integration_tests/tests/core.rs:25:9-25:19: `.get(&url)`
+$DIR/integration_tests/tests/core.rs:26:9-26:43: `.header("x-test-header", "foobar")`
+$DIR/integration_tests/tests/core.rs:27:9-27:16: `.send()`
+$DIR/integration_tests/tests/core.rs:29:9-29:30: `.expect("to succeed")`
+$DIR/integration_tests/tests/core.rs:41:11-41:46: `.put("Action", "GetCallerIdentity")`
+$DIR/integration_tests/tests/core.rs:42:11-42:40: `.put("Version", "2011-06-15")`
+$DIR/integration_tests/tests/core.rs:43:12-43:31: `.set_params(params)`
+$DIR/integration_tests/tests/core.rs:45:9-45:36: `.sign_and_dispatch(request)`
+$DIR/integration_tests/tests/core.rs:55:50-55:96: `.expect("failed to create request dispatcher")`
+$DIR/integration_tests/tests/core.rs:58:11-58:46: `.put("Action", "GetCallerIdentity")`
+$DIR/integration_tests/tests/core.rs:59:11-59:40: `.put("Version", "2011-06-15")`
+$DIR/integration_tests/tests/core.rs:60:12-60:31: `.set_params(params)`
+$DIR/integration_tests/tests/core.rs:62:9-62:36: `.sign_and_dispatch(request)`
+$DIR/integration_tests/tests/cur.rs:14:24-14:61: `.describe_report_definitions(request)`
+$DIR/integration_tests/tests/datapipeline.rs:14:11-14:35: `.list_pipelines(request)`
+$DIR/integration_tests/tests/dax.rs:14:11-14:38: `.describe_clusters(request)`
+$DIR/integration_tests/tests/devicefarm.rs:14:11-14:33: `.list_devices(request)`
+$DIR/integration_tests/tests/directconnect.rs:16:11-16:41: `.describe_connections(request)`
+$DIR/integration_tests/tests/directconnect.rs:27:17-27:47: `.describe_connections(request)`
+$DIR/integration_tests/tests/directconnect.rs:39:11-39:32: `.describe_locations()`
+$DIR/integration_tests/tests/directconnect.rs:46:11-46:39: `.describe_virtual_gateways()`
+$DIR/integration_tests/tests/discovery.rs:25:17-25:40: `.describe_tags(request)`
+$DIR/integration_tests/tests/discovery.rs:51:17-51:46: `.list_configurations(request)`
+$DIR/integration_tests/tests/dms.rs:16:24-16:52: `.describe_endpoints(request)`
+$DIR/integration_tests/tests/docdb.rs:14:24-14:54: `.describe_db_clusters(request)`
+$DIR/integration_tests/tests/ds.rs:16:11-16:36: `.describe_trusts(request)`
+$DIR/integration_tests/tests/ds.rs:24:11-24:41: `.describe_directories(request)`
+$DIR/integration_tests/tests/ds.rs:31:5-31:55: `request.directory_id = "d-11111aaaaa".to_string();`
+$DIR/integration_tests/tests/ds.rs:33:17-33:58: `.describe_conditional_forwarders(request)`
+$DIR/integration_tests/tests/ds.rs:45:5-45:55: `request.directory_id = "d-11111aaaaa".to_string();`
+$DIR/integration_tests/tests/ds.rs:47:17-47:54: `.describe_domain_controllers(request)`
+$DIR/integration_tests/tests/ds.rs:60:11-60:42: `.describe_event_topics(request)`
+$DIR/integration_tests/tests/dynamodb.rs:19:26-19:47: `.list_tables(request)`
+$DIR/integration_tests/tests/dynamodb.rs:34:11-34:32: `.list_tables(request)`
+$DIR/integration_tests/tests/dynamodbstreams.rs:14:11-14:33: `.list_streams(request)`
+$DIR/integration_tests/tests/ec2-instance-connect.rs:15:40-15:47: `.into()`
+$DIR/integration_tests/tests/ec2-instance-connect.rs:16:34-16:41: `.into()`
+$DIR/integration_tests/tests/ec2-instance-connect.rs:17:37-17:44: `.into()`
+$DIR/integration_tests/tests/ec2-instance-connect.rs:18:417-18:424: `.into()`
+$DIR/integration_tests/tests/ec2-instance-connect.rs:21:17-21:46: `.send_ssh_public_key(request)`
+$DIR/integration_tests/tests/ec2.rs:17:5-17:77: `req.instance_ids = Some(vec!["i-00000000".into(), "i-00000001".into()]);`
+$DIR/integration_tests/tests/ec2.rs:18:14-18:38: `.describe_instances(req)`
+$DIR/integration_tests/tests/ec2.rs:44:32-44:39: `.into()`
+$DIR/integration_tests/tests/ec2.rs:48:16-48:37: `.create_snapshot(req)`
+$DIR/integration_tests/tests/ec2.rs:65:16-65:33: `.create_tags(req)`
+$DIR/integration_tests/tests/ecr.rs:14:11-14:42: `.describe_repositories(request)`
+$DIR/integration_tests/tests/ecs.rs:16:35-16:66: `.read_buf_size(1024 * 1024 * 2)`
+$DIR/integration_tests/tests/ecs.rs:22:14-22:60: `.list_clusters(ListClustersRequest::default())`
+$DIR/integration_tests/tests/ecs.rs:24:45-24:63: `.unwrap_or(vec![])`
+$DIR/integration_tests/tests/ecs.rs:34:9-37:11: `.list_clusters(ListClustersRequest {
+            next_token: Some("bogus".to_owned()),
+            ..Default::default()
+        })`
+$DIR/integration_tests/tests/efs.rs:14:24-14:55: `.describe_file_systems(request)`
+$DIR/integration_tests/tests/eks.rs:14:24-14:47: `.list_clusters(request)`
+$DIR/integration_tests/tests/elasticache.rs:14:26-14:59: `.describe_cache_clusters(request)`
+$DIR/integration_tests/tests/elasticbeanstalk.rs:16:24-16:55: `.describe_applications(request)`
+$DIR/integration_tests/tests/elastictranscoder.rs:116:5-116:24: `initialize().await;`
+$DIR/integration_tests/tests/elastictranscoder.rs:119:27-119:46: `.create_s3_client()`
+$DIR/integration_tests/tests/elastictranscoder.rs:120:30-120:56: `.create_bucket(&s3_client)`
+$DIR/integration_tests/tests/elastictranscoder.rs:121:31-121:57: `.create_bucket(&s3_client)`
+$DIR/integration_tests/tests/elastictranscoder.rs:128:11-128:36: `.create_pipeline(request)`
+$DIR/integration_tests/tests/elastictranscoder.rs:130:5-130:59: `client.delete_bucket(&s3_client, &input_bucket).await;`
+$DIR/integration_tests/tests/elastictranscoder.rs:130:11-130:52: `.delete_bucket(&s3_client, &input_bucket)`
+$DIR/integration_tests/tests/elastictranscoder.rs:131:5-131:60: `client.delete_bucket(&s3_client, &output_bucket).await;`
+$DIR/integration_tests/tests/elastictranscoder.rs:131:11-131:53: `.delete_bucket(&s3_client, &output_bucket)`
+$DIR/integration_tests/tests/elastictranscoder.rs:140:5-140:24: `initialize().await;`
+$DIR/integration_tests/tests/elastictranscoder.rs:161:26-161:49: `.create_preset(request)`
+$DIR/integration_tests/tests/elastictranscoder.rs:181:5-181:48: `info!("Created preset with id: {:?}", &id);`
+$DIR/integration_tests/tests/elastictranscoder.rs:186:11-186:34: `.delete_preset(request)`
+$DIR/integration_tests/tests/elastictranscoder.rs:186:40-186:45: `.ok()`
+$DIR/integration_tests/tests/elastictranscoder.rs:195:5-195:24: `initialize().await;`
+$DIR/integration_tests/tests/elastictranscoder.rs:216:26-216:49: `.create_preset(request)`
+$DIR/integration_tests/tests/elastictranscoder.rs:220:5-220:65: `tokio::time::sleep(std::time::Duration::from_secs(2)).await;`
+$DIR/integration_tests/tests/elastictranscoder.rs:223:26-223:49: `.delete_preset(request)`
+$DIR/integration_tests/tests/elastictranscoder.rs:226:5-226:48: `info!("Deleted preset with id: {:?}", &id);`
+$DIR/integration_tests/tests/elastictranscoder.rs:233:5-233:24: `initialize().await;`
+$DIR/integration_tests/tests/elastictranscoder.rs:242:26-242:55: `.list_jobs_by_status(request)`
+$DIR/integration_tests/tests/elastictranscoder.rs:248:5-251:7: `info!(
+        "Got list of jobs with status \"{}\": {:?}",
+        &status, response.jobs
+    );`
+$DIR/integration_tests/tests/elastictranscoder.rs:258:5-258:24: `initialize().await;`
+$DIR/integration_tests/tests/elastictranscoder.rs:263:26-263:50: `.list_pipelines(request)`
+$DIR/integration_tests/tests/elastictranscoder.rs:269:5-269:62: `info!("Got list of pipelines: {:?}", response.pipelines);`
+$DIR/integration_tests/tests/elastictranscoder.rs:276:5-276:24: `initialize().await;`
+$DIR/integration_tests/tests/elastictranscoder.rs:280:26-280:48: `.list_presets(request)`
+$DIR/integration_tests/tests/elastictranscoder.rs:287:5-287:35: `info!("Got list of presets.");`
+$DIR/integration_tests/tests/elastictranscoder.rs:289:9-289:44: `info!("Preset: {:?}", preset.name);`
+$DIR/integration_tests/tests/elastictranscoder.rs:294:9-294:68: `.filter(|x| x.id == Some(AWS_ETS_WEB_PRESET_ID.to_owned()))`
+$DIR/integration_tests/tests/elastictranscoder.rs:295:9-295:16: `.next()`
+$DIR/integration_tests/tests/elastictranscoder.rs:307:43-307:74: `.list_presets(page_two_request)`
+$DIR/integration_tests/tests/elastictranscoder.rs:311:17-311:76: `.filter(|x| x.id == Some(AWS_ETS_WEB_PRESET_ID.to_owned()))`
+$DIR/integration_tests/tests/elastictranscoder.rs:312:17-312:24: `.next()`
+$DIR/integration_tests/tests/elastictranscoder.rs:325:5-325:24: `initialize().await;`
+$DIR/integration_tests/tests/elastictranscoder.rs:332:26-332:47: `.read_preset(request)`
+$DIR/integration_tests/tests/elastictranscoder.rs:341:5-341:44: `info!("Got preset: {:?}", preset.name);`
+$DIR/integration_tests/tests/elb.rs:15:24-15:57: `.describe_load_balancers(request)`
+$DIR/integration_tests/tests/elbv2.rs:15:24-15:57: `.describe_load_balancers(request)`
+$DIR/integration_tests/tests/emr.rs:14:11-14:34: `.list_clusters(request)`
+$DIR/integration_tests/tests/emr.rs:22:17-22:45: `.describe_job_flows(request)`
+$DIR/integration_tests/tests/events.rs:14:11-14:31: `.list_rules(request)`
+$DIR/integration_tests/tests/firehose.rs:14:11-14:42: `.list_delivery_streams(request)`
+$DIR/integration_tests/tests/fms.rs:20:5-31:6: `match client.list_policies(request).await {
+        Err(e) => match e {
+            RusotoError::Unknown(ref e) => assert!(
+                str::from_utf8(&e.body)
+                    .unwrap()
+                    .contains("is not currently delegated by AWS FM"),
+                "Missing error message"
+            ),
+            _ => panic!("Should have a typed error from FMS, got {:?}", e),
+        },
+        Ok(res) => println!("Got these policies: {:?}", res),
+    }`
+$DIR/integration_tests/tests/fms.rs:20:17-20:40: `.list_policies(request)`
+$DIR/integration_tests/tests/fsx.rs:14:21-14:52: `.describe_file_systems(request)`
+$DIR/integration_tests/tests/gamelift.rs:14:24-14:45: `.list_fleets(request)`
+$DIR/integration_tests/tests/glacier.rs:21:24-21:45: `.list_vaults(request)`
+$DIR/integration_tests/tests/glue.rs:14:24-14:47: `.get_databases(request)`
+$DIR/integration_tests/tests/greengrass.rs:17:24-17:45: `.list_groups(request)`
+$DIR/integration_tests/tests/guardduty.rs:18:24-18:50: `.list_invitations(request)`
+$DIR/integration_tests/tests/iam.rs:18:8-18:26: `.get_user(request)`
+$DIR/integration_tests/tests/iam.rs:29:8-29:28: `.list_users(request)`
+$DIR/integration_tests/tests/importexport.rs:16:24-16:43: `.list_jobs(request)`
+$DIR/integration_tests/tests/inspector.rs:14:11-14:41: `.list_assessment_runs(request)`
+$DIR/integration_tests/tests/iot.rs:16:11-16:32: `.list_things(request)`
+$DIR/integration_tests/tests/kafka.rs:14:26-14:49: `.list_clusters(request)`
+$DIR/integration_tests/tests/kinesis.rs:99:11-99:33: `.list_streams(request)`
+$DIR/integration_tests/tests/kinesis.rs:110:43-114:15: `.describe_stream(rusoto_kinesis::DescribeStreamInput {
+                stream_name: stream.name.clone(),
+
+                ..Default::default()
+            })`
+$DIR/integration_tests/tests/kinesis.rs:118:17-118:64: `sleep(std::time::Duration::from_secs(2)).await;`
+$DIR/integration_tests/tests/kinesis.rs:126:19-130:15: `.start_stream_encryption(rusoto_kinesis::StartStreamEncryptionInput {
+                encryption_type: "KMS".to_string(),
+                key_id: kms_id,
+                stream_name: stream.name.clone(),
+            })`
+$DIR/integration_tests/tests/kinesis.rs:135:9-135:59: `tokio::time::sleep(Duration::from_secs(10)).await;`
+$DIR/integration_tests/tests/kinesis.rs:138:13-141:15: `.register_stream_consumer(rusoto_kinesis::RegisterStreamConsumerInput {
+                consumer_name: "test-consumer".to_string(),
+                stream_arn: stream.arn.clone(),
+            })`
+$DIR/integration_tests/tests/kinesis.rs:146:46-151:15: `.describe_stream_consumer(rusoto_kinesis::DescribeStreamConsumerInput {
+                consumer_arn: Some(consumer_result.consumer.consumer_arn.clone()),
+                stream_arn: Some(stream.arn.clone()),
+
+                ..Default::default()
+            })`
+$DIR/integration_tests/tests/kinesis.rs:155:17-155:64: `sleep(std::time::Duration::from_secs(2)).await;`
+$DIR/integration_tests/tests/kinesis.rs:163:13-167:15: `.list_shards(rusoto_kinesis::ListShardsInput {
+                stream_name: Some(stream.name.clone()),
+
+                ..Default::default()
+            })`
+$DIR/integration_tests/tests/kinesis.rs:173:13-181:15: `.subscribe_to_shard(rusoto_kinesis::SubscribeToShardInput {
+                consumer_arn: consumer_result.consumer.consumer_arn,
+                shard_id: shard_id.clone(),
+                starting_position: rusoto_kinesis::StartingPosition {
+                    sequence_number: None,
+                    timestamp: None,
+                    type_: "TRIM_HORIZON".to_string()
+                },
+            })`
+$DIR/integration_tests/tests/kinesis.rs:191:32-197:15: `.put_record(rusoto_kinesis::PutRecordInput {
+                data: bytes::Bytes::copy_from_slice(message.as_bytes()),
+                partition_key: "hello".to_string(),
+                stream_name: stream.name.clone(),
+
+                ..Default::default()
+            })`
+$DIR/integration_tests/tests/kinesis.rs:205:48-205:55: `.next()`
+$DIR/integration_tests/tests/kinesis.rs:211:31-211:49: `.extend(e.records)`
+$DIR/integration_tests/tests/kinesisanalytics.rs:14:24-14:51: `.list_applications(request)`
+$DIR/integration_tests/tests/kinesisvideo.rs:14:22-14:44: `.list_streams(request)`
+$DIR/integration_tests/tests/kms.rs:14:11-14:30: `.list_keys(request)`
+$DIR/integration_tests/tests/lambda.rs:14:24-14:48: `.list_functions(request)`
+$DIR/integration_tests/tests/lambda.rs:28:28-28:44: `.invoke(request)`
+$DIR/integration_tests/tests/lambda.rs:50:28-50:44: `.invoke(request)`
+$DIR/integration_tests/tests/lexmodels.rs:14:24-14:42: `.get_bots(request)`
+$DIR/integration_tests/tests/licensemanager.rs:13:24-13:47: `.get_service_settings()`
+$DIR/integration_tests/tests/lightsail.rs:14:24-14:45: `.get_domains(request)`
+$DIR/integration_tests/tests/logs.rs:156:40-156:86: `.expect("failed to create request dispatcher")`
+$DIR/integration_tests/tests/logs.rs:158:42-158:98: `.expect("failed to create default credentials provider")`
+$DIR/integration_tests/tests/logs.rs:160:5-160:95: `rusoto_logs_test_executor(client, "should_put_log_events", "should_put_log_events").await;`
+$DIR/integration_tests/tests/logs.rs:165:40-165:86: `.expect("failed to create request dispatcher")`
+$DIR/integration_tests/tests/logs.rs:167:42-167:98: `.expect("failed to create default credentials provider")`
+$DIR/integration_tests/tests/logs.rs:174:5-178:13: `rusoto_logs_test_executor(
+        client,
+        "should_put_log_events_with_encoding",
+        "should_put_log_events_with_encoding",
+    ).await;`
+$DIR/integration_tests/tests/machinelearning.rs:20:5-25:7: `match client.describe_batch_predictions(request).await {
+        Ok(_) => (),
+        Err(e) => assert!(e
+            .to_string()
+            .contains("AmazonML is no longer available to new customers")),
+    };`
+$DIR/integration_tests/tests/machinelearning.rs:20:17-20:53: `.describe_batch_predictions(request)`
+$DIR/integration_tests/tests/machinelearning.rs:32:5-37:7: `match client.describe_data_sources(request).await {
+        Ok(_) => (),
+        Err(e) => assert!(e
+            .to_string()
+            .contains("AmazonML is no longer available to new customers")),
+    };`
+$DIR/integration_tests/tests/machinelearning.rs:32:17-32:48: `.describe_data_sources(request)`
+$DIR/integration_tests/tests/machinelearning.rs:44:5-49:7: `match client.describe_evaluations(request).await {
+        Ok(_) => (),
+        Err(e) => assert!(e
+            .to_string()
+            .contains("AmazonML is no longer available to new customers")),
+    };`
+$DIR/integration_tests/tests/machinelearning.rs:44:17-44:47: `.describe_evaluations(request)`
+$DIR/integration_tests/tests/mediaconvert.rs:14:5-17:6: `match client.list_jobs(request).await {
+        Ok(resp) => println!("Got success response of {:?}", resp),
+        Err(err) => assert!(format!("{}", err).contains("You must use the subscription API")), // needs to be enabled per account
+    }`
+$DIR/integration_tests/tests/mediaconvert.rs:14:17-14:36: `.list_jobs(request)`
+$DIR/integration_tests/tests/medialive.rs:14:5-17:6: `match client.list_channels(request).await {
+        Ok(resp) => println!("Got success response of {:?}", resp),
+        Err(err) => panic!("Should get list of channels, got: {:?}", err),
+    }`
+$DIR/integration_tests/tests/medialive.rs:14:17-14:40: `.list_channels(request)`
+$DIR/integration_tests/tests/mediapackage.rs:14:5-17:6: `match client.list_origin_endpoints(request).await {
+        Ok(resp) => println!("Got success response of {:?}", resp),
+        Err(err) => panic!("Should get list of origin endpoints, got: {:?}", err),
+    }`
+$DIR/integration_tests/tests/mediapackage.rs:14:17-14:48: `.list_origin_endpoints(request)`
+$DIR/integration_tests/tests/mgh.rs:14:24-14:54: `.list_migration_tasks(request)`
+$DIR/integration_tests/tests/mq.rs:14:24-14:46: `.list_brokers(request)`
+$DIR/integration_tests/tests/mturk.rs:17:17-17:37: `.list_hi_ts(request)`
+$DIR/integration_tests/tests/mturk.rs:19:13-28:14: `match e {
+                RusotoError::Unknown(ref e) => assert!(
+                    str::from_utf8(&e.body).unwrap().contains(
+                        "Your AWS account must be linked to your Amazon Mechanical Turk Account"
+                    ),
+                    "Missing error message"
+                ),
+                RusotoError::Service(ListHITsError::RequestError(_)) => (), // request doesn't work without a linked mturk account, this is ok
+                _ => panic!("Should have a typed error from MTurk, got {:?}", e),
+            }`
+$DIR/integration_tests/tests/neptune.rs:14:5-17:6: `match client.describe_db_clusters(request).await {
+        Err(e) => panic!("Error listing Neptune clusters: {}", e),
+        Ok(clusters) => println!("Found clusters: {:?}", clusters),
+    }`
+$DIR/integration_tests/tests/neptune.rs:14:17-14:47: `.describe_db_clusters(request)`
+$DIR/integration_tests/tests/opsworks.rs:14:11-14:36: `.describe_stacks(request)`
+$DIR/integration_tests/tests/opsworks.rs:21:11-21:38: `.describe_my_user_profile()`
+$DIR/integration_tests/tests/opsworkscm.rs:14:24-14:50: `.describe_servers(request)`
+$DIR/integration_tests/tests/organizations.rs:15:24-15:48: `.describe_organization()`
+$DIR/integration_tests/tests/pricing.rs:14:5-17:6: `match client.describe_services(request).await {
+        Err(e) => panic!("Couldn't describe services: {}", e),
+        Ok(result) => println!("Services: {:?}", result),
+    }`
+$DIR/integration_tests/tests/pricing.rs:14:17-14:44: `.describe_services(request)`
+$DIR/integration_tests/tests/qldb.rs:13:9-13:53: `.list_ledgers(ListLedgersRequest::default())`
+$DIR/integration_tests/tests/qldb.rs:15:9-15:43: `.expect("expected an ok response")`
+$DIR/integration_tests/tests/ram.rs:13:9-16:11: `.list_resources(ListResourcesRequest {
+            resource_owner: "SELF".into(),
+            ..ListResourcesRequest::default()
+        })`
+$DIR/integration_tests/tests/ram.rs:14:35-14:42: `.into()`
+$DIR/integration_tests/tests/ram.rs:18:9-18:43: `.expect("expected an ok response")`
+$DIR/integration_tests/tests/rds.rs:18:24-18:54: `.describe_db_clusters(request)`
+$DIR/integration_tests/tests/rds.rs:33:9-33:19: `.push(tag)`
+$DIR/integration_tests/tests/rds.rs:43:24-43:70: `.create_option_group(create_opt_group_request)`
+$DIR/integration_tests/tests/rds.rs:53:31-53:73: `.delete_option_group(delete_opt_group_req)`
+$DIR/integration_tests/tests/redshift.rs:15:24-15:51: `.describe_clusters(request)`
+$DIR/integration_tests/tests/rekognition.rs:14:24-14:50: `.list_collections(request)`
+$DIR/integration_tests/tests/resourcegroups.rs:14:24-14:45: `.list_groups(request)`
+$DIR/integration_tests/tests/resourcegroupstagging.rs:16:24-16:47: `.get_resources(request)`
+$DIR/integration_tests/tests/route53.rs:14:11-14:38: `.list_hosted_zones(request)`
+$DIR/integration_tests/tests/route53domains.rs:14:11-14:36: `.list_operations(request)`
+$DIR/integration_tests/tests/s3.rs:169:5-169:20: `init_logging();`
+$DIR/integration_tests/tests/s3.rs:180:44-180:77: `.create_bucket(create_bucket_req)`
+$DIR/integration_tests/tests/s3.rs:189:30-189:45: `.list_buckets()`
+$DIR/integration_tests/tests/s3.rs:196:13-196:33: `bucket_found = true;`
+$DIR/integration_tests/tests/s3.rs:207:32-207:62: `.list_objects_v2(list_obj_req)`
+$DIR/integration_tests/tests/s3.rs:210:5-210:61: `test_delete_bucket(&test_client.s3, &bucket_name).await;`
+$DIR/integration_tests/tests/s3.rs:211:5-211:39: `test_client.bucket_deleted = true;`
+$DIR/integration_tests/tests/s3.rs:212:5-212:33: `test_client.cleanup().await;`
+$DIR/integration_tests/tests/s3.rs:212:16-212:26: `.cleanup()`
+$DIR/integration_tests/tests/s3.rs:218:5-218:20: `init_logging();`
+$DIR/integration_tests/tests/s3.rs:222:5-222:104: `test_client.create_test_bucket_with_acl(bucket_name.clone(), Some("public-read".to_owned())).await;`
+$DIR/integration_tests/tests/s3.rs:222:16-222:97: `.create_test_bucket_with_acl(bucket_name.clone(), Some("public-read".to_owned()))`
+$DIR/integration_tests/tests/s3.rs:227:9-227:79: `test_put_bucket_cors(&test_client.s3, &test_client.bucket_name).await;`
+$DIR/integration_tests/tests/s3.rs:235:5-235:96: `test_get_object_no_such_object(&test_client.s3, &test_client.bucket_name, &filename).await;`
+$DIR/integration_tests/tests/s3.rs:238:5-244:13: `test_put_object_with_filename_and_acl(
+        &test_client.s3,
+        &test_client.bucket_name,
+        &filename,
+        &"tests/sample-data/no_credentials",
+        Some("public-read".to_owned()),
+    ).await;`
+$DIR/integration_tests/tests/s3.rs:247:5-252:13: `test_put_object_with_filename(
+        &test_client.s3,
+        &test_client.bucket_name,
+        &filename2,
+        &"tests/sample-data/no_credentials",
+    ).await;`
+$DIR/integration_tests/tests/s3.rs:255:34-255:60: `.create_anonymous_client()`
+$DIR/integration_tests/tests/s3.rs:258:5-258:79: `test_head_object(&ro_s3client, &test_client.bucket_name, &filename).await;`
+$DIR/integration_tests/tests/s3.rs:266:5-266:83: `test_head_object(&test_client.s3, &test_client.bucket_name, &filename2).await;`
+$DIR/integration_tests/tests/s3.rs:269:5-269:78: `test_get_object(&ro_s3client, &test_client.bucket_name, &filename).await;`
+$DIR/integration_tests/tests/s3.rs:270:5-270:84: `test_get_object_range(&ro_s3client, &test_client.bucket_name, &filename).await;`
+$DIR/integration_tests/tests/s3.rs:274:9-274:73: `test_client.put_test_object(format!("test_object_{}", i)).await;`
+$DIR/integration_tests/tests/s3.rs:274:20-274:66: `.put_test_object(format!("test_object_{}", i))`
+$DIR/integration_tests/tests/s3.rs:278:5-278:81: `list_items_in_bucket_paged_v1(&ro_s3client, &test_client.bucket_name).await;`
+$DIR/integration_tests/tests/s3.rs:283:9-283:85: `list_items_in_bucket_paged_v2(&ro_s3client, &test_client.bucket_name).await;`
+$DIR/integration_tests/tests/s3.rs:287:5-287:82: `test_copy_object(&test_client.s3, &test_client.bucket_name, &filename).await;`
+$DIR/integration_tests/tests/s3.rs:290:5-290:84: `test_delete_object(&test_client.s3, &test_client.bucket_name, &filename).await;`
+$DIR/integration_tests/tests/s3.rs:294:9-294:71: `test_client.delete_object(format!("test_object_{}", i)).await;`
+$DIR/integration_tests/tests/s3.rs:294:20-294:64: `.delete_object(format!("test_object_{}", i))`
+$DIR/integration_tests/tests/s3.rs:297:5-297:33: `test_client.cleanup().await;`
+$DIR/integration_tests/tests/s3.rs:297:16-297:26: `.cleanup()`
+$DIR/integration_tests/tests/s3.rs:303:5-303:20: `init_logging();`
+$DIR/integration_tests/tests/s3.rs:307:5-307:63: `test_client.create_test_bucket(bucket_name.clone()).await;`
+$DIR/integration_tests/tests/s3.rs:307:16-307:56: `.create_test_bucket(bucket_name.clone())`
+$DIR/integration_tests/tests/s3.rs:311:5-316:13: `test_put_object_with_filename(
+        &test_client.s3,
+        &test_client.bucket_name,
+        &utf8_filename,
+        &"tests/sample-data/no_credentials",
+    ).await;`
+$DIR/integration_tests/tests/s3.rs:318:5-318:92: `test_copy_object_utf8(&test_client.s3, &test_client.bucket_name, &utf8_filename).await;`
+$DIR/integration_tests/tests/s3.rs:319:5-319:89: `test_delete_object(&test_client.s3, &test_client.bucket_name, &utf8_filename).await;`
+$DIR/integration_tests/tests/s3.rs:321:5-321:33: `test_client.cleanup().await;`
+$DIR/integration_tests/tests/s3.rs:321:16-321:26: `.cleanup()`
+$DIR/integration_tests/tests/s3.rs:327:5-327:20: `init_logging();`
+$DIR/integration_tests/tests/s3.rs:331:5-331:63: `test_client.create_test_bucket(bucket_name.clone()).await;`
+$DIR/integration_tests/tests/s3.rs:331:16-331:56: `.create_test_bucket(bucket_name.clone())`
+$DIR/integration_tests/tests/s3.rs:336:5-341:13: `test_put_object_with_filename(
+        &test_client.s3,
+        &test_client.bucket_name,
+        &binary_filename,
+        &"tests/sample-data/binary-file",
+    ).await;`
+$DIR/integration_tests/tests/s3.rs:342:5-342:88: `test_get_object(&test_client.s3, &test_client.bucket_name, &binary_filename).await;`
+$DIR/integration_tests/tests/s3.rs:343:5-343:99: `test_get_object_async_read(&test_client.s3, &test_client.bucket_name, &binary_filename).await;`
+$DIR/integration_tests/tests/s3.rs:344:5-344:91: `test_delete_object(&test_client.s3, &test_client.bucket_name, &binary_filename).await;`
+$DIR/integration_tests/tests/s3.rs:346:5-346:33: `test_client.cleanup().await;`
+$DIR/integration_tests/tests/s3.rs:346:16-346:26: `.cleanup()`
+$DIR/integration_tests/tests/s3.rs:352:5-352:20: `init_logging();`
+$DIR/integration_tests/tests/s3.rs:356:5-356:63: `test_client.create_test_bucket(bucket_name.clone()).await;`
+$DIR/integration_tests/tests/s3.rs:356:16-356:56: `.create_test_bucket(bucket_name.clone())`
+$DIR/integration_tests/tests/s3.rs:360:13-363:6: `.insert(
+        "rusoto-metadata-some".to_string(),
+        "some-test-value".to_string(),
+    )`
+$DIR/integration_tests/tests/s3.rs:364:13-364:72: `.insert("rusoto-metadata-none".to_string(), "".to_string())`
+$DIR/integration_tests/tests/s3.rs:366:5-372:13: `test_put_object_with_metadata(
+        &test_client.s3,
+        &test_client.bucket_name,
+        &metadata_filename,
+        &"tests/sample-data/no_credentials",
+        &metadata,
+    ).await;`
+$DIR/integration_tests/tests/s3.rs:374:5-379:13: `test_head_object_with_metadata(
+        &test_client.s3,
+        &test_client.bucket_name,
+        &metadata_filename,
+        &metadata,
+    ).await;`
+$DIR/integration_tests/tests/s3.rs:380:5-385:13: `test_get_object_with_metadata(
+        &test_client.s3,
+        &test_client.bucket_name,
+        &metadata_filename,
+        &metadata,
+    ).await;`
+$DIR/integration_tests/tests/s3.rs:386:5-390:13: `test_delete_object(
+        &test_client.s3,
+        &test_client.bucket_name,
+        &metadata_filename,
+    ).await;`
+$DIR/integration_tests/tests/s3.rs:392:5-392:33: `test_client.cleanup().await;`
+$DIR/integration_tests/tests/s3.rs:392:16-392:26: `.cleanup()`
+$DIR/integration_tests/tests/s3.rs:398:5-398:20: `init_logging();`
+$DIR/integration_tests/tests/s3.rs:402:5-402:63: `test_client.create_test_bucket(bucket_name.clone()).await;`
+$DIR/integration_tests/tests/s3.rs:402:16-402:56: `.create_test_bucket(bucket_name.clone())`
+$DIR/integration_tests/tests/s3.rs:406:5-411:13: `test_put_object_with_filename(
+        &test_client.s3,
+        &test_client.bucket_name,
+        &filename,
+        &"tests/sample-data/no_credentials",
+    ).await;`
+$DIR/integration_tests/tests/s3.rs:415:9-415:23: `.credentials()`
+$DIR/integration_tests/tests/s3.rs:420:5-425:13: `test_get_object_with_presigned_url(
+        &test_client.region,
+        &credentials,
+        &test_client.bucket_name,
+        &filename,
+    ).await;`
+$DIR/integration_tests/tests/s3.rs:426:5-431:13: `test_get_object_with_expired_presigned_url(
+        &test_client.region,
+        &credentials,
+        &test_client.bucket_name,
+        &filename,
+    ).await;`
+$DIR/integration_tests/tests/s3.rs:432:5-437:13: `test_put_object_with_presigned_url(
+        &test_client.region,
+        &credentials,
+        &test_client.bucket_name,
+        &filename,
+    ).await;`
+$DIR/integration_tests/tests/s3.rs:438:5-443:13: `test_delete_object_with_presigned_url(
+        &test_client.region,
+        &credentials,
+        &test_client.bucket_name,
+        &filename,
+    ).await;`
+$DIR/integration_tests/tests/s3.rs:447:5-452:13: `test_put_object_with_filename(
+        &test_client.s3,
+        &test_client.bucket_name,
+        &utf8_filename,
+        &"tests/sample-data/no_credentials",
+    ).await;`
+$DIR/integration_tests/tests/s3.rs:454:5-459:13: `test_get_object_with_presigned_url(
+        &test_client.region,
+        &credentials,
+        &test_client.bucket_name,
+        &utf8_filename,
+    ).await;`
+$DIR/integration_tests/tests/s3.rs:460:5-465:13: `test_get_object_with_expired_presigned_url(
+        &test_client.region,
+        &credentials,
+        &test_client.bucket_name,
+        &utf8_filename,
+    ).await;`
+$DIR/integration_tests/tests/s3.rs:466:5-471:13: `test_put_object_with_presigned_url(
+        &test_client.region,
+        &credentials,
+        &test_client.bucket_name,
+        &utf8_filename,
+    ).await;`
+$DIR/integration_tests/tests/s3.rs:472:5-477:13: `test_delete_object_with_presigned_url(
+        &test_client.region,
+        &credentials,
+        &test_client.bucket_name,
+        &utf8_filename,
+    ).await;`
+$DIR/integration_tests/tests/s3.rs:479:5-479:33: `test_client.cleanup().await;`
+$DIR/integration_tests/tests/s3.rs:479:16-479:26: `.cleanup()`
+$DIR/integration_tests/tests/s3.rs:484:5-484:20: `init_logging();`
+$DIR/integration_tests/tests/s3.rs:488:5-488:63: `test_client.create_test_bucket(bucket_name.clone()).await;`
+$DIR/integration_tests/tests/s3.rs:488:16-488:56: `.create_test_bucket(bucket_name.clone())`
+$DIR/integration_tests/tests/s3.rs:493:9-493:23: `.credentials()`
+$DIR/integration_tests/tests/s3.rs:498:5-504:13: `test_multipart_upload(
+        &test_client.s3,
+        &test_client.region,
+        &credentials,
+        &test_client.bucket_name,
+        &multipart_filename,
+    ).await;`
+$DIR/integration_tests/tests/s3.rs:508:5-513:13: `test_put_object_stream_with_filename(
+        &test_client.s3,
+        &test_client.bucket_name,
+        &streaming_filename,
+        &"tests/sample-data/binary-file",
+    ).await;`
+$DIR/integration_tests/tests/s3.rs:515:5-519:13: `test_delete_object(
+        &test_client.s3,
+        &test_client.bucket_name,
+        &multipart_filename,
+    ).await;`
+$DIR/integration_tests/tests/s3.rs:521:5-525:13: `test_delete_object(
+        &test_client.s3,
+        &test_client.bucket_name,
+        &streaming_filename,
+    ).await;`
+$DIR/integration_tests/tests/s3.rs:527:5-527:33: `test_client.cleanup().await;`
+$DIR/integration_tests/tests/s3.rs:527:16-527:26: `.cleanup()`
+$DIR/integration_tests/tests/s3.rs:532:5-532:20: `init_logging();`
+$DIR/integration_tests/tests/s3.rs:536:5-536:63: `test_client.create_test_bucket(bucket_name.clone()).await;`
+$DIR/integration_tests/tests/s3.rs:536:16-536:56: `.create_test_bucket(bucket_name.clone())`
+$DIR/integration_tests/tests/s3.rs:540:5-540:57: `test_client.put_test_object(filename.clone()).await;`
+$DIR/integration_tests/tests/s3.rs:540:16-540:50: `.put_test_object(filename.clone())`
+$DIR/integration_tests/tests/s3.rs:551:9-551:39: `.list_objects(list_obj_req_v1)`
+$DIR/integration_tests/tests/s3.rs:553:9-553:45: `.expect("failed to list objects v1")`
+$DIR/integration_tests/tests/s3.rs:580:9-580:42: `.list_objects_v2(list_obj_req_v2)`
+$DIR/integration_tests/tests/s3.rs:582:9-582:45: `.expect("failed to list objects v2")`
+$DIR/integration_tests/tests/s3.rs:602:5-602:67: `test_delete_object(&test_client.s3, &bucket_name, &key).await;`
+$DIR/integration_tests/tests/s3.rs:604:5-604:33: `test_client.cleanup().await;`
+$DIR/integration_tests/tests/s3.rs:604:16-604:26: `.cleanup()`
+$DIR/integration_tests/tests/s3.rs:609:5-609:20: `init_logging();`
+$DIR/integration_tests/tests/s3.rs:614:5-614:63: `test_client.create_test_bucket(bucket_name.clone()).await;`
+$DIR/integration_tests/tests/s3.rs:614:16-614:56: `.create_test_bucket(bucket_name.clone())`
+$DIR/integration_tests/tests/s3.rs:617:5-617:64: `test_client.put_test_object(filename_spaces.clone()).await;`
+$DIR/integration_tests/tests/s3.rs:617:16-617:57: `.put_test_object(filename_spaces.clone())`
+$DIR/integration_tests/tests/s3.rs:626:9-626:30: `.list_objects_v2(req)`
+$DIR/integration_tests/tests/s3.rs:636:5-636:79: `test_delete_object(&test_client.s3, &bucket_name, &filename_spaces).await;`
+$DIR/integration_tests/tests/s3.rs:638:5-638:33: `test_client.cleanup().await;`
+$DIR/integration_tests/tests/s3.rs:638:16-638:26: `.cleanup()`
+$DIR/integration_tests/tests/sagemaker.rs:13:20-13:37: `.list_models(req)`
+$DIR/integration_tests/tests/sdb.rs:20:24-20:46: `.list_domains(request)`
+$DIR/integration_tests/tests/sdb.rs:35:31-35:64: `.create_domain(create_domain_req)`
+$DIR/integration_tests/tests/sdb.rs:41:37-41:59: `.list_domains(request)`
+$DIR/integration_tests/tests/sdb.rs:55:31-55:57: `.delete_domain(delete_req)`
+$DIR/integration_tests/tests/secretsmanager.rs:18:24-18:46: `.list_secrets(request)`
+$DIR/integration_tests/tests/securityhub.rs:19:11-19:37: `.list_invitations(request)`
+$DIR/integration_tests/tests/serverlessrepo.rs:13:24-13:51: `.list_applications(request)`
+$DIR/integration_tests/tests/servicecatalog.rs:14:24-14:49: `.list_portfolios(request)`
+$DIR/integration_tests/tests/servicediscovery.rs:14:21-14:44: `.list_services(request)`
+$DIR/integration_tests/tests/ses.rs:13:24-13:56: `.list_verified_email_addresses()`
+$DIR/integration_tests/tests/shield.rs:13:24-13:46: `.list_attacks(request)`
+$DIR/integration_tests/tests/sms.rs:14:9-14:51: `.get_servers(GetServersRequest::default())`
+$DIR/integration_tests/tests/snowball.rs:14:24-14:52: `.describe_addresses(request)`
+$DIR/integration_tests/tests/sns.rs:14:24-14:45: `.list_topics(request)`
+$DIR/integration_tests/tests/sqs.rs:31:21-31:42: `.list_queues(request)`
+$DIR/integration_tests/tests/sqs.rs:31:48-31:77: `.expect("List queues failed")`
+$DIR/integration_tests/tests/sqs.rs:43:10-46:6: `.insert(
+        String::from("ReceiveMessageWaitTimeSeconds"),
+        String::from("1"),
+    )`
+$DIR/integration_tests/tests/sqs.rs:54:9-54:38: `.create_queue(q_creation_req)`
+$DIR/integration_tests/tests/sqs.rs:56:9-56:39: `.expect("Create queue failed")`
+$DIR/integration_tests/tests/sqs.rs:74:9-74:46: `.get_queue_url(get_q_by_name_request)`
+$DIR/integration_tests/tests/sqs.rs:76:9-76:51: `.expect("Get queue by URL request failed")`
+$DIR/integration_tests/tests/sqs.rs:79:9-79:66: `.expect("Queue url should be available from list queues")`
+$DIR/integration_tests/tests/sqs.rs:91:5-94:6: `match sqs.get_queue_attributes(queue_attributes_req).await {
+        Ok(result) => println!("Queue attributes: {:?}", result),
+        Err(e) => panic!("Error getting queue attributes: {:?}", e),
+    }`
+$DIR/integration_tests/tests/sqs.rs:91:14-91:57: `.get_queue_attributes(queue_attributes_req)`
+$DIR/integration_tests/tests/sqs.rs:103:23-103:54: `.send_message(send_msg_request)`
+$DIR/integration_tests/tests/sqs.rs:117:23-117:56: `.receive_message(receive_request)`
+$DIR/integration_tests/tests/sqs.rs:119:9-119:63: `.expect("Expected to have a receive message response")`
+$DIR/integration_tests/tests/sqs.rs:121:9-121:47: `.expect("message should be available")`
+$DIR/integration_tests/tests/sqs.rs:136:9-142:10: `match sqs.delete_message(delete_message_request).await {
+            Ok(_) => println!(
+                "Deleted message via receipt handle {:?}",
+                msg.receipt_handle
+            ),
+            Err(e) => panic!("Couldn't delete message: {:?}", e),
+        }`
+$DIR/integration_tests/tests/sqs.rs:136:18-136:57: `.delete_message(delete_message_request)`
+$DIR/integration_tests/tests/sqs.rs:148:5-151:6: `match sqs.delete_queue(queue_deletion_req).await {
+        Ok(_) => (),
+        Err(e) => panic!("Couldn't delete queue: {:?}", e),
+    }`
+$DIR/integration_tests/tests/sqs.rs:148:14-148:47: `.delete_queue(queue_deletion_req)`
+$DIR/integration_tests/tests/sqs.rs:167:9-167:38: `.create_queue(q_creation_req)`
+$DIR/integration_tests/tests/sqs.rs:169:9-169:39: `.expect("create queue failed")`
+$DIR/integration_tests/tests/sqs.rs:179:9-179:42: `.receive_message(receive_request)`
+$DIR/integration_tests/tests/sqs.rs:183:11-183:17: `.err()`
+$DIR/integration_tests/tests/sqs.rs:183:17-183:60: `.expect("receive did not fail as expected")`
+$DIR/integration_tests/tests/sqs.rs:188:8-188:41: `.delete_queue(queue_deletion_req)`
+$DIR/integration_tests/tests/sqs.rs:190:9-190:39: `.expect("delete queue failed")`
+$DIR/integration_tests/tests/sqs.rs:206:9-206:38: `.create_queue(q_creation_req)`
+$DIR/integration_tests/tests/sqs.rs:208:9-208:39: `.expect("Create queue failed")`
+$DIR/integration_tests/tests/sqs.rs:226:9-226:46: `.get_queue_url(get_q_by_name_request)`
+$DIR/integration_tests/tests/sqs.rs:228:9-228:51: `.expect("Get queue by URL request failed")`
+$DIR/integration_tests/tests/sqs.rs:231:9-231:66: `.expect("Queue url should be available from list queues")`
+$DIR/integration_tests/tests/sqs.rs:243:5-246:6: `match sqs.get_queue_attributes(queue_attributes_req).await {
+        Ok(result) => println!("Queue attributes: {:?}", result),
+        Err(e) => panic!("Error getting queue attributes: {:?}", e),
+    }`
+$DIR/integration_tests/tests/sqs.rs:243:14-243:57: `.get_queue_attributes(queue_attributes_req)`
+$DIR/integration_tests/tests/sqs.rs:265:23-265:60: `.send_message_batch(send_msg_request)`
+$DIR/integration_tests/tests/sqs.rs:279:23-279:56: `.receive_message(receive_request)`
+$DIR/integration_tests/tests/sqs.rs:282:9-282:63: `.expect("Expected to have a receive message response")`
+$DIR/integration_tests/tests/sqs.rs:284:9-284:47: `.expect("message should be available")`
+$DIR/integration_tests/tests/sqs.rs:293:23-296:11: `.push(DeleteMessageBatchRequestEntry {
+            receipt_handle: msg.receipt_handle.clone().unwrap(),
+            id: msg.message_id.clone().unwrap(),
+        })`
+$DIR/integration_tests/tests/sqs.rs:302:5-305:6: `match sqs.delete_message_batch(delete_message_request).await {
+        Ok(_) => println!("Deleted messages via receipt handle {:?}", delete_entries),
+        Err(e) => panic!("Couldn't delete message: {:?}", e),
+    }`
+$DIR/integration_tests/tests/sqs.rs:302:14-302:59: `.delete_message_batch(delete_message_request)`
+$DIR/integration_tests/tests/sqs.rs:310:5-313:6: `match sqs.delete_queue(queue_deletion_req).await {
+        Ok(_) => (),
+        Err(e) => panic!("Couldn't delete queue: {:?}", e),
+    }`
+$DIR/integration_tests/tests/sqs.rs:310:14-310:47: `.delete_queue(queue_deletion_req)`
+$DIR/integration_tests/tests/ssm.rs:16:11-16:35: `.list_documents(request)`
+$DIR/integration_tests/tests/ssm.rs:24:11-24:34: `.list_commands(request)`
+$DIR/integration_tests/tests/ssm.rs:32:11-32:45: `.list_command_invocations(request)`
+$DIR/integration_tests/tests/stepfunctions.rs:14:24-14:53: `.list_state_machines(request)`
+$DIR/integration_tests/tests/storagegateway.rs:14:11-14:34: `.list_gateways(request)`
+$DIR/integration_tests/tests/sts.rs:16:9-20:11: `.assume_role(AssumeRoleRequest {
+            role_arn: "bogus".to_owned(),
+            role_session_name: "rusoto_test_session".to_owned(),
+            ..Default::default()
+        })`
+$DIR/integration_tests/tests/sts.rs:34:9-38:11: `.get_session_token(GetSessionTokenRequest {
+            token_code: Some("123456".to_owned()),
+            serial_number: Some("123456789".to_owned()),
+            ..Default::default()
+        })`
+$DIR/integration_tests/tests/sts.rs:55:5-58:6: `match sts_creds_provider.credentials().await {
+        Err(e) => panic!("sts credentials provider error: {:?}", e),
+        Ok(r) => println!("sts credentials provider result: {:?}", r),
+    }`
+$DIR/integration_tests/tests/sts.rs:55:29-55:43: `.credentials()`
+$DIR/integration_tests/tests/sts.rs:70:5-70:82: `Ec2Client::new_with(HttpClient::new().unwrap(), provider, Region::default());`
+$DIR/integration_tests/tests/swf.rs:14:5-14:42: `request.maximum_page_size = Some(10);`
+$DIR/integration_tests/tests/swf.rs:15:5-15:60: `request.registration_status = "REGISTERED".to_string();`
+$DIR/integration_tests/tests/swf.rs:17:11-17:33: `.list_domains(request)`
+$DIR/integration_tests/tests/translate.rs:19:24-19:48: `.translate_text(request)`
+$DIR/integration_tests/tests/waf-regional.rs:14:24-14:44: `.list_rules(request)`
+$DIR/integration_tests/tests/workspaces.rs:14:11-14:40: `.describe_workspaces(request)`
+$DIR/integration_tests/tests/xray.rs:17:42-17:59: `.unix_timestamp()`
+$DIR/integration_tests/tests/xray.rs:26:24-26:51: `.get_service_graph(request)`
+$DIR/rusoto/core/src/client.rs:200:5-200:34: `is_send_and_sync::<Client>();`
+$DIR/rusoto/core/src/proto/json/error.rs:81:22-81:29: `.into()`
+$DIR/rusoto/core/src/proto/json/error.rs:101:22-101:29: `.into()`
+$DIR/rusoto/core/src/proto/xml/util.rs:293:25-293:51: `.read_to_string(&mut body)`
+$DIR/rusoto/core/src/proto/xml/util.rs:295:33-295:45: `.into_iter()`
+$DIR/rusoto/core/src/proto/xml/util.rs:295:45-295:56: `.peekable()`
+$DIR/rusoto/core/src/proto/xml/util.rs:299:19-299:26: `.next()`
+$DIR/rusoto/core/src/proto/xml/util.rs:315:25-315:51: `.read_to_string(&mut body)`
+$DIR/rusoto/core/src/proto/xml/util.rs:317:33-317:45: `.into_iter()`
+$DIR/rusoto/core/src/proto/xml/util.rs:317:45-317:56: `.peekable()`
+$DIR/rusoto/core/src/proto/xml/util.rs:321:15-321:22: `.next()`
+$DIR/rusoto/core/src/proto/xml/util.rs:322:15-322:22: `.next()`
+$DIR/rusoto/core/src/proto/xml/util.rs:324:9-327:10: `match start_element("ListQueuesResult", &mut reader) {
+            Ok(_) => (),
+            Err(_) => panic!("Couldn't find start element"),
+        }`
+$DIR/rusoto/core/src/proto/xml/util.rs:334:25-334:51: `.read_to_string(&mut body)`
+$DIR/rusoto/core/src/proto/xml/util.rs:336:33-336:45: `.into_iter()`
+$DIR/rusoto/core/src/proto/xml/util.rs:336:45-336:56: `.peekable()`
+$DIR/rusoto/core/src/proto/xml/util.rs:340:15-340:22: `.next()`
+$DIR/rusoto/core/src/proto/xml/util.rs:341:15-341:22: `.next()`
+$DIR/rusoto/core/src/proto/xml/util.rs:343:15-343:22: `.next()`
+$DIR/rusoto/core/src/proto/xml/util.rs:357:25-357:51: `.read_to_string(&mut body)`
+$DIR/rusoto/core/src/proto/xml/util.rs:359:33-359:45: `.into_iter()`
+$DIR/rusoto/core/src/proto/xml/util.rs:359:45-359:56: `.peekable()`
+$DIR/rusoto/core/src/proto/xml/util.rs:363:15-363:22: `.next()`
+$DIR/rusoto/core/src/proto/xml/util.rs:364:15-364:22: `.next()`
+$DIR/rusoto/core/src/proto/xml/util.rs:368:15-368:22: `.next()`
+$DIR/rusoto/core/src/proto/xml/util.rs:369:15-369:22: `.next()`
+$DIR/rusoto/core/src/proto/xml/util.rs:370:15-370:22: `.next()`
+$DIR/rusoto/core/src/proto/xml/util.rs:371:15-371:22: `.next()`
+$DIR/rusoto/core/src/proto/xml/util.rs:373:9-376:10: `match end_element("ListQueuesResult", &mut reader) {
+            Ok(_) => (),
+            Err(_) => panic!("Couldn't find end element"),
+        }`
+$DIR/rusoto/core/src/proto/xml/util.rs:383:27-383:39: `.into_iter()`
+$DIR/rusoto/core/src/proto/xml/util.rs:383:39-383:50: `.peekable()`
+$DIR/rusoto/core/src/proto/xml/util.rs:387:9-387:41: `find_start_element(&mut reader);`
+$DIR/rusoto/core/src/proto/xml/util.rs:391:9-391:41: `find_start_element(&mut reader);`
+$DIR/rusoto/core/src/request.rs:520:9-520:42: `is_send_and_sync::<HttpClient>();`
+$DIR/rusoto/credential/src/container.rs:149:9-149:68: `env::set_var(AWS_CONTAINER_CREDENTIALS_RELATIVE_URI, path);`
+$DIR/rusoto/credential/src/container.rs:150:9-150:67: `env::set_var(AWS_CONTAINER_CREDENTIALS_FULL_URI, "dummy");`
+$DIR/rusoto/credential/src/container.rs:151:9-151:66: `env::set_var(AWS_CONTAINER_AUTHORIZATION_TOKEN, "dummy");`
+$DIR/rusoto/credential/src/container.rs:153:9-153:65: `env::remove_var(AWS_CONTAINER_CREDENTIALS_RELATIVE_URI);`
+$DIR/rusoto/credential/src/container.rs:154:9-154:61: `env::remove_var(AWS_CONTAINER_CREDENTIALS_FULL_URI);`
+$DIR/rusoto/credential/src/container.rs:155:9-155:60: `env::remove_var(AWS_CONTAINER_AUTHORIZATION_TOKEN);`
+$DIR/rusoto/credential/src/container.rs:157:29-157:34: `.ok()`
+$DIR/rusoto/credential/src/container.rs:165:9-165:65: `env::remove_var(AWS_CONTAINER_CREDENTIALS_RELATIVE_URI);`
+$DIR/rusoto/credential/src/container.rs:166:9-166:61: `env::remove_var(AWS_CONTAINER_CREDENTIALS_FULL_URI);`
+$DIR/rusoto/credential/src/container.rs:174:9-174:66: `env::set_var(AWS_CONTAINER_CREDENTIALS_RELATIVE_URI, "");`
+$DIR/rusoto/credential/src/container.rs:175:9-175:62: `env::set_var(AWS_CONTAINER_CREDENTIALS_FULL_URI, "");`
+$DIR/rusoto/credential/src/container.rs:176:9-176:61: `env::set_var(AWS_CONTAINER_AUTHORIZATION_TOKEN, "");`
+$DIR/rusoto/credential/src/container.rs:178:9-178:65: `env::remove_var(AWS_CONTAINER_CREDENTIALS_RELATIVE_URI);`
+$DIR/rusoto/credential/src/container.rs:179:9-179:61: `env::remove_var(AWS_CONTAINER_CREDENTIALS_FULL_URI);`
+$DIR/rusoto/credential/src/container.rs:180:9-180:60: `env::remove_var(AWS_CONTAINER_AUTHORIZATION_TOKEN);`
+$DIR/rusoto/credential/src/container.rs:188:9-188:65: `env::remove_var(AWS_CONTAINER_CREDENTIALS_RELATIVE_URI);`
+$DIR/rusoto/credential/src/container.rs:189:9-189:63: `env::set_var(AWS_CONTAINER_CREDENTIALS_FULL_URI, url);`
+$DIR/rusoto/credential/src/container.rs:190:9-190:66: `env::set_var(AWS_CONTAINER_AUTHORIZATION_TOKEN, "dummy");`
+$DIR/rusoto/credential/src/container.rs:192:9-192:61: `env::remove_var(AWS_CONTAINER_CREDENTIALS_FULL_URI);`
+$DIR/rusoto/credential/src/container.rs:193:9-193:60: `env::remove_var(AWS_CONTAINER_AUTHORIZATION_TOKEN);`
+$DIR/rusoto/credential/src/container.rs:195:29-195:34: `.ok()`
+$DIR/rusoto/credential/src/container.rs:204:9-204:65: `env::remove_var(AWS_CONTAINER_CREDENTIALS_RELATIVE_URI);`
+$DIR/rusoto/credential/src/container.rs:205:9-205:63: `env::set_var(AWS_CONTAINER_CREDENTIALS_FULL_URI, url);`
+$DIR/rusoto/credential/src/container.rs:206:9-206:60: `env::remove_var(AWS_CONTAINER_AUTHORIZATION_TOKEN);`
+$DIR/rusoto/credential/src/container.rs:208:9-208:61: `env::remove_var(AWS_CONTAINER_CREDENTIALS_FULL_URI);`
+$DIR/rusoto/credential/src/container.rs:210:29-210:34: `.ok()`
+$DIR/rusoto/credential/src/container.rs:219:9-219:65: `env::remove_var(AWS_CONTAINER_CREDENTIALS_RELATIVE_URI);`
+$DIR/rusoto/credential/src/container.rs:220:9-220:63: `env::set_var(AWS_CONTAINER_CREDENTIALS_FULL_URI, url);`
+$DIR/rusoto/credential/src/container.rs:221:9-221:61: `env::set_var(AWS_CONTAINER_AUTHORIZATION_TOKEN, "");`
+$DIR/rusoto/credential/src/container.rs:223:9-223:61: `env::remove_var(AWS_CONTAINER_CREDENTIALS_FULL_URI);`
+$DIR/rusoto/credential/src/container.rs:224:9-224:60: `env::remove_var(AWS_CONTAINER_AUTHORIZATION_TOKEN);`
+$DIR/rusoto/credential/src/container.rs:226:29-226:34: `.ok()`
+$DIR/rusoto/credential/src/environment.rs:179:9-179:47: `env::set_var(AWS_ACCESS_KEY_ID, "id");`
+$DIR/rusoto/credential/src/environment.rs:180:9-180:55: `env::set_var(AWS_SECRET_ACCESS_KEY, "secret");`
+$DIR/rusoto/credential/src/environment.rs:181:9-181:50: `env::set_var(AWS_SESSION_TOKEN, "token");`
+$DIR/rusoto/credential/src/environment.rs:182:52-182:66: `.credentials()`
+$DIR/rusoto/credential/src/environment.rs:183:9-183:44: `env::remove_var(AWS_ACCESS_KEY_ID);`
+$DIR/rusoto/credential/src/environment.rs:184:9-184:48: `env::remove_var(AWS_SECRET_ACCESS_KEY);`
+$DIR/rusoto/credential/src/environment.rs:185:9-185:44: `env::remove_var(AWS_SESSION_TOKEN);`
+$DIR/rusoto/credential/src/environment.rs:187:27-187:32: `.ok()`
+$DIR/rusoto/credential/src/environment.rs:196:9-196:47: `env::set_var(AWS_ACCESS_KEY_ID, "id");`
+$DIR/rusoto/credential/src/environment.rs:197:9-197:55: `env::set_var(AWS_SECRET_ACCESS_KEY, "secret");`
+$DIR/rusoto/credential/src/environment.rs:198:9-198:44: `env::remove_var(AWS_SESSION_TOKEN);`
+$DIR/rusoto/credential/src/environment.rs:199:52-199:66: `.credentials()`
+$DIR/rusoto/credential/src/environment.rs:200:9-200:44: `env::remove_var(AWS_ACCESS_KEY_ID);`
+$DIR/rusoto/credential/src/environment.rs:201:9-201:48: `env::remove_var(AWS_SECRET_ACCESS_KEY);`
+$DIR/rusoto/credential/src/environment.rs:203:27-203:32: `.ok()`
+$DIR/rusoto/credential/src/environment.rs:212:9-212:44: `env::remove_var(AWS_ACCESS_KEY_ID);`
+$DIR/rusoto/credential/src/environment.rs:213:9-213:55: `env::set_var(AWS_SECRET_ACCESS_KEY, "secret");`
+$DIR/rusoto/credential/src/environment.rs:214:9-214:44: `env::remove_var(AWS_SESSION_TOKEN);`
+$DIR/rusoto/credential/src/environment.rs:215:52-215:66: `.credentials()`
+$DIR/rusoto/credential/src/environment.rs:216:9-216:48: `env::remove_var(AWS_SECRET_ACCESS_KEY);`
+$DIR/rusoto/credential/src/environment.rs:227:9-227:48: `env::remove_var(AWS_SECRET_ACCESS_KEY);`
+$DIR/rusoto/credential/src/environment.rs:228:9-228:47: `env::set_var(AWS_ACCESS_KEY_ID, "id");`
+$DIR/rusoto/credential/src/environment.rs:229:9-229:44: `env::remove_var(AWS_SESSION_TOKEN);`
+$DIR/rusoto/credential/src/environment.rs:230:52-230:66: `.credentials()`
+$DIR/rusoto/credential/src/environment.rs:231:9-231:44: `env::remove_var(AWS_ACCESS_KEY_ID);`
+$DIR/rusoto/credential/src/environment.rs:242:9-242:48: `env::remove_var(AWS_SECRET_ACCESS_KEY);`
+$DIR/rusoto/credential/src/environment.rs:243:9-243:44: `env::remove_var(AWS_ACCESS_KEY_ID);`
+$DIR/rusoto/credential/src/environment.rs:244:9-244:44: `env::remove_var(AWS_SESSION_TOKEN);`
+$DIR/rusoto/credential/src/environment.rs:245:52-245:66: `.credentials()`
+$DIR/rusoto/credential/src/environment.rs:256:9-256:47: `env::set_var(AWS_ACCESS_KEY_ID, "id");`
+$DIR/rusoto/credential/src/environment.rs:257:9-257:55: `env::set_var(AWS_SECRET_ACCESS_KEY, "secret");`
+$DIR/rusoto/credential/src/environment.rs:258:9-258:50: `env::set_var(AWS_SESSION_TOKEN, "token");`
+$DIR/rusoto/credential/src/environment.rs:259:9-259:63: `env::set_var(AWS_CREDENTIAL_EXPIRATION, "lore ipsum");`
+$DIR/rusoto/credential/src/environment.rs:260:52-260:66: `.credentials()`
+$DIR/rusoto/credential/src/environment.rs:261:9-261:44: `env::remove_var(AWS_ACCESS_KEY_ID);`
+$DIR/rusoto/credential/src/environment.rs:262:9-262:48: `env::remove_var(AWS_SECRET_ACCESS_KEY);`
+$DIR/rusoto/credential/src/environment.rs:263:9-263:44: `env::remove_var(AWS_SESSION_TOKEN);`
+$DIR/rusoto/credential/src/environment.rs:264:9-264:52: `env::remove_var(AWS_CREDENTIAL_EXPIRATION);`
+$DIR/rusoto/credential/src/environment.rs:276:26-276:39: `.to_rfc3339()`
+$DIR/rusoto/credential/src/environment.rs:277:9-277:47: `env::set_var(AWS_ACCESS_KEY_ID, "id");`
+$DIR/rusoto/credential/src/environment.rs:278:9-278:55: `env::set_var(AWS_SECRET_ACCESS_KEY, "secret");`
+$DIR/rusoto/credential/src/environment.rs:279:9-279:50: `env::set_var(AWS_SESSION_TOKEN, "token");`
+$DIR/rusoto/credential/src/environment.rs:280:9-280:58: `env::set_var(AWS_CREDENTIAL_EXPIRATION, now_str);`
+$DIR/rusoto/credential/src/environment.rs:281:52-281:66: `.credentials()`
+$DIR/rusoto/credential/src/environment.rs:282:9-282:44: `env::remove_var(AWS_ACCESS_KEY_ID);`
+$DIR/rusoto/credential/src/environment.rs:283:9-283:48: `env::remove_var(AWS_SECRET_ACCESS_KEY);`
+$DIR/rusoto/credential/src/environment.rs:284:9-284:44: `env::remove_var(AWS_SESSION_TOKEN);`
+$DIR/rusoto/credential/src/environment.rs:285:9-285:52: `env::remove_var(AWS_CREDENTIAL_EXPIRATION);`
+$DIR/rusoto/credential/src/environment.rs:287:27-287:32: `.ok()`
+$DIR/rusoto/credential/src/environment.rs:299:9-299:78: `env::set_var(AWS_CREDENTIAL_EXPIRATION, "1996-12-19t16:39:57-08:00");`
+$DIR/rusoto/credential/src/environment.rs:300:9-300:47: `env::set_var(AWS_ACCESS_KEY_ID, "id");`
+$DIR/rusoto/credential/src/environment.rs:301:9-301:55: `env::set_var(AWS_SECRET_ACCESS_KEY, "secret");`
+$DIR/rusoto/credential/src/environment.rs:302:52-302:66: `.credentials()`
+$DIR/rusoto/credential/src/environment.rs:303:9-303:52: `env::remove_var(AWS_CREDENTIAL_EXPIRATION);`
+$DIR/rusoto/credential/src/environment.rs:304:9-304:44: `env::remove_var(AWS_ACCESS_KEY_ID);`
+$DIR/rusoto/credential/src/environment.rs:305:9-305:48: `env::remove_var(AWS_SECRET_ACCESS_KEY);`
+$DIR/rusoto/credential/src/environment.rs:321:26-321:39: `.to_rfc3339()`
+$DIR/rusoto/credential/src/environment.rs:322:9-322:51: `env::set_var("MYAPP_ACCESS_KEY_ID", "id");`
+$DIR/rusoto/credential/src/environment.rs:323:9-323:59: `env::set_var("MYAPP_SECRET_ACCESS_KEY", "secret");`
+$DIR/rusoto/credential/src/environment.rs:324:9-324:54: `env::set_var("MYAPP_SESSION_TOKEN", "token");`
+$DIR/rusoto/credential/src/environment.rs:325:9-325:62: `env::set_var("MYAPP_CREDENTIAL_EXPIRATION", now_str);`
+$DIR/rusoto/credential/src/environment.rs:327:13-327:27: `.credentials()`
+$DIR/rusoto/credential/src/environment.rs:329:9-329:48: `env::remove_var("MYAPP_ACCESS_KEY_ID");`
+$DIR/rusoto/credential/src/environment.rs:330:9-330:52: `env::remove_var("MYAPP_SECRET_ACCESS_KEY");`
+$DIR/rusoto/credential/src/environment.rs:331:9-331:48: `env::remove_var("MYAPP_SESSION_TOKEN");`
+$DIR/rusoto/credential/src/environment.rs:332:9-332:56: `env::remove_var("MYAPP_CREDENTIAL_EXPIRATION");`
+$DIR/rusoto/credential/src/environment.rs:334:27-334:32: `.ok()`
+$DIR/rusoto/credential/src/lib.rs:485:9-485:45: `is_send_and_sync::<ChainProvider>();`
+$DIR/rusoto/credential/src/lib.rs:486:9-486:69: `is_send_and_sync::<AutoRefreshingProvider<ChainProvider>>();`
+$DIR/rusoto/credential/src/lib.rs:487:9-487:58: `is_send_and_sync::<DefaultCredentialsProvider>();`
+$DIR/rusoto/credential/src/lib.rs:498:43-498:57: `.credentials()`
+$DIR/rusoto/credential/src/lib.rs:498:63-500:10: `.expect(
+            "Failed to get credentials from profile provider using tests/sample-data/multiple_profile_credentials",
+        )`
+$DIR/rusoto/credential/src/profile.rs:445:13-445:26: `.get(DEFAULT)`
+$DIR/rusoto/credential/src/profile.rs:446:13-446:73: `.expect("No Default profile in default_profile_credentials")`
+$DIR/rusoto/credential/src/profile.rs:461:13-461:24: `.get("foo")`
+$DIR/rusoto/credential/src/profile.rs:462:13-462:70: `.expect("No foo profile in multiple_profile_credentials")`
+$DIR/rusoto/credential/src/profile.rs:467:13-467:24: `.get("bar")`
+$DIR/rusoto/credential/src/profile.rs:468:13-468:70: `.expect("No bar profile in multiple_profile_credentials")`
+$DIR/rusoto/credential/src/profile.rs:482:13-482:26: `.get(DEFAULT)`
+$DIR/rusoto/credential/src/profile.rs:483:13-483:73: `.expect("No Default profile in default_profile_credentials")`
+$DIR/rusoto/credential/src/profile.rs:498:30-498:35: `.ok()`
+$DIR/rusoto/credential/src/profile.rs:502:13-502:26: `.get(DEFAULT)`
+$DIR/rusoto/credential/src/profile.rs:503:13-503:73: `.expect("No Default profile in default_profile_credentials")`
+$DIR/rusoto/credential/src/profile.rs:515:30-515:35: `.ok()`
+$DIR/rusoto/credential/src/profile.rs:519:13-519:24: `.get("foo")`
+$DIR/rusoto/credential/src/profile.rs:520:13-520:70: `.expect("No foo profile in multiple_profile_credentials")`
+$DIR/rusoto/credential/src/profile.rs:525:13-525:24: `.get("bar")`
+$DIR/rusoto/credential/src/profile.rs:526:13-526:70: `.expect("No bar profile in multiple_profile_credentials")`
+$DIR/rusoto/credential/src/profile.rs:537:30-537:35: `.ok()`
+$DIR/rusoto/credential/src/profile.rs:541:13-541:26: `.get(DEFAULT)`
+$DIR/rusoto/credential/src/profile.rs:542:13-542:70: `.expect("No default profile in full_profile_credentials")`
+$DIR/rusoto/credential/src/profile.rs:554:30-554:44: `.credentials()`
+$DIR/rusoto/credential/src/profile.rs:558:27-558:32: `.ok()`
+$DIR/rusoto/credential/src/profile.rs:567:9-567:69: `env::set_var(AWS_SHARED_CREDENTIALS_FILE, credentials_path);`
+$DIR/rusoto/credential/src/profile.rs:572:9-572:54: `env::remove_var(AWS_SHARED_CREDENTIALS_FILE);`
+$DIR/rusoto/credential/src/profile.rs:579:9-579:69: `env::set_var(AWS_SHARED_CREDENTIALS_FILE, credentials_path);`
+$DIR/rusoto/credential/src/profile.rs:580:9-580:42: `env::set_var(AWS_PROFILE, "bar");`
+$DIR/rusoto/credential/src/profile.rs:585:29-585:43: `.credentials()`
+$DIR/rusoto/credential/src/profile.rs:587:9-587:54: `env::remove_var(AWS_SHARED_CREDENTIALS_FILE);`
+$DIR/rusoto/credential/src/profile.rs:588:9-588:38: `env::remove_var(AWS_PROFILE);`
+$DIR/rusoto/credential/src/profile.rs:598:30-598:44: `.credentials()`
+$DIR/rusoto/credential/src/profile.rs:610:9-613:11: `env::set_var(
+            AWS_CONFIG_FILE,
+            "tests/sample-data/credential_process_config",
+        );`
+$DIR/rusoto/credential/src/profile.rs:615:30-615:44: `.credentials()`
+$DIR/rusoto/credential/src/profile.rs:619:27-619:32: `.ok()`
+$DIR/rusoto/credential/src/profile.rs:627:9-627:42: `env::remove_var(AWS_CONFIG_FILE);`
+$DIR/rusoto/credential/src/profile.rs:635:17-635:36: `.set_profile("foo")`
+$DIR/rusoto/credential/src/profile.rs:677:30-677:35: `.ok()`
+$DIR/rusoto/credential/src/profile.rs:681:13-681:26: `.get(DEFAULT)`
+$DIR/rusoto/credential/src/profile.rs:682:13-682:70: `.expect("No default profile in full_profile_credentials")`
+$DIR/rusoto/credential/src/profile.rs:690:9-690:42: `env::set_var(AWS_PROFILE, "bar");`
+$DIR/rusoto/credential/src/profile.rs:692:9-692:38: `env::remove_var(AWS_PROFILE);`
+$DIR/rusoto/credential/src/profile.rs:698:9-698:39: `env::set_var(AWS_PROFILE, "");`
+$DIR/rusoto/credential/src/profile.rs:700:9-700:38: `env::remove_var(AWS_PROFILE);`
+$DIR/rusoto/credential/src/profile.rs:706:9-706:38: `env::remove_var(AWS_PROFILE);`
+$DIR/rusoto/credential/src/profile.rs:713:9-713:58: `env::set_var(AWS_SHARED_CREDENTIALS_FILE, "bar");`
+$DIR/rusoto/credential/src/profile.rs:718:9-718:54: `env::remove_var(AWS_SHARED_CREDENTIALS_FILE);`
+$DIR/rusoto/credential/src/profile.rs:724:9-724:55: `env::set_var(AWS_SHARED_CREDENTIALS_FILE, "");`
+$DIR/rusoto/credential/src/profile.rs:729:9-729:54: `env::remove_var(AWS_SHARED_CREDENTIALS_FILE);`
+$DIR/rusoto/credential/src/profile.rs:735:9-735:54: `env::remove_var(AWS_SHARED_CREDENTIALS_FILE);`
+$DIR/rusoto/credential/src/profile.rs:748:36-748:58: `.region_from_profile()`
+$DIR/rusoto/credential/src/profile.rs:762:36-762:58: `.region_from_profile()`
+$DIR/rusoto/credential/src/static_provider.rs:113:9-113:23: `.credentials()`
+$DIR/rusoto/credential/src/static_provider.rs:122:17-122:31: `.credentials()`
+$DIR/rusoto/credential/src/static_provider.rs:136:9-136:23: `.credentials()`
+$DIR/rusoto/credential/src/static_provider.rs:140:35-140:48: `.expires_at()`
+$DIR/rusoto/credential/src/static_provider.rs:155:30-155:44: `.credentials()`
+$DIR/rusoto/credential/src/static_provider.rs:156:9-156:53: `thread::sleep(time::Duration::from_secs(1));`
+$DIR/rusoto/credential/src/static_provider.rs:157:30-157:44: `.credentials()`
+$DIR/rusoto/credential/src/variable.rs:194:52-194:59: `.into()`
+$DIR/rusoto/credential/src/variable.rs:195:40-195:47: `.into()`
+$DIR/rusoto/credential/src/variable.rs:196:36-196:43: `.into()`
+$DIR/rusoto/credential/src/variable.rs:203:9-203:20: `_send(var);`
+$DIR/rusoto/credential/src/variable.rs:210:9-210:20: `_sync(var);`
+$DIR/rusoto/credential/src/variable.rs:237:9-237:41: `std::env::set_var(VALUE, VALUE);`
+$DIR/rusoto/credential/src/variable.rs:241:9-241:37: `std::env::remove_var(VALUE);`
+$DIR/rusoto/credential/src/variable.rs:249:9-249:38: `std::env::set_var(VALUE, "");`
+$DIR/rusoto/credential/src/variable.rs:252:9-252:37: `std::env::remove_var(VALUE);`
+$DIR/rusoto/credential/src/variable.rs:259:9-259:38: `writeln!(file, "{}", VALUE)?;`
+$DIR/rusoto/credential/src/variable.rs:260:58-260:65: `.path()`
+$DIR/rusoto/credential/src/variable.rs:263:9-263:15: `Ok(())`
+$DIR/rusoto/credential/src/variable.rs:270:9-270:28: `file.write(VALUE)?;`
+$DIR/rusoto/credential/src/variable.rs:270:13-270:26: `.write(VALUE)`
+$DIR/rusoto/credential/src/variable.rs:271:61-271:68: `.path()`
+$DIR/rusoto/credential/src/variable.rs:274:9-274:15: `Ok(())`
+$DIR/rusoto/credential/tests/instance-profile-test.rs:11:13-11:49: `.set_timeout(Duration::from_secs(5))`
+$DIR/rusoto/credential/tests/instance-profile-test.rs:12:13-12:56: `.set_ip_addr_with_port("127.0.0.1", "8080")`
+$DIR/rusoto/credential/tests/instance-profile-test.rs:14:25-14:39: `.credentials()`
+$DIR/rusoto/credential/tests/instance-profile-test.rs:14:45-14:67: `.expect("credentials")`
+$DIR/rusoto/credential/tests/instance-profile-test.rs:19:25-19:38: `.expires_at()`
+$DIR/rusoto/services/application-autoscaling/src/custom/custom_tests.rs:12:55-12:72: `.with_body(&body)`
+$DIR/rusoto/services/application-autoscaling/src/custom/custom_tests.rs:16:24-16:69: `.register_scalable_target(Default::default())`
+$DIR/rusoto/services/application-autoscaling/src/custom/custom_tests.rs:18:11-18:61: `.expect("Couldn't parse register_scalable_target")`
+$DIR/rusoto/services/application-autoscaling/src/custom/custom_tests.rs:25:55-25:72: `.with_body(&body)`
+$DIR/rusoto/services/application-autoscaling/src/custom/custom_tests.rs:29:24-29:69: `.register_scalable_target(Default::default())`
+$DIR/rusoto/services/application-autoscaling/src/custom/custom_tests.rs:31:11-31:61: `.expect("Couldn't parse register_scalable_target")`
+$DIR/rusoto/services/autoscaling/src/generated.rs:14361:59-14361:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/autoscaling/src/generated.rs:14365:28-14365:51: `.delete_policy(request)`
+$DIR/rusoto/services/autoscaling/src/generated.rs:14375:59-14375:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/autoscaling/src/generated.rs:14379:28-14379:56: `.describe_adjustment_types()`
+$DIR/rusoto/services/autoscaling/src/generated.rs:14389:59-14389:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/autoscaling/src/generated.rs:14393:28-14393:66: `.describe_auto_scaling_groups(request)`
+$DIR/rusoto/services/autoscaling/src/generated.rs:14403:59-14403:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/autoscaling/src/generated.rs:14407:28-14407:69: `.describe_auto_scaling_instances(request)`
+$DIR/rusoto/services/autoscaling/src/generated.rs:14417:59-14417:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/autoscaling/src/generated.rs:14421:28-14421:71: `.describe_auto_scaling_notification_types()`
+$DIR/rusoto/services/autoscaling/src/generated.rs:14431:59-14431:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/autoscaling/src/generated.rs:14435:28-14435:68: `.describe_launch_configurations(request)`
+$DIR/rusoto/services/autoscaling/src/generated.rs:14445:59-14445:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/autoscaling/src/generated.rs:14449:28-14449:63: `.describe_metric_collection_types()`
+$DIR/rusoto/services/autoscaling/src/generated.rs:14459:59-14459:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/autoscaling/src/generated.rs:14463:28-14463:74: `.describe_notification_configurations(request)`
+$DIR/rusoto/services/autoscaling/src/generated.rs:14473:59-14473:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/autoscaling/src/generated.rs:14477:28-14477:55: `.describe_policies(request)`
+$DIR/rusoto/services/autoscaling/src/generated.rs:14487:59-14487:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/autoscaling/src/generated.rs:14491:28-14491:65: `.describe_scaling_activities(request)`
+$DIR/rusoto/services/autoscaling/src/generated.rs:14501:59-14501:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/autoscaling/src/generated.rs:14505:28-14505:61: `.describe_scaling_process_types()`
+$DIR/rusoto/services/autoscaling/src/generated.rs:14515:59-14515:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/autoscaling/src/generated.rs:14519:28-14519:64: `.describe_scheduled_actions(request)`
+$DIR/rusoto/services/autoscaling/src/generated.rs:14529:59-14529:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/autoscaling/src/generated.rs:14533:28-14533:51: `.describe_tags(request)`
+$DIR/rusoto/services/autoscaling/src/generated.rs:14543:59-14543:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/autoscaling/src/generated.rs:14547:28-14547:64: `.describe_termination_policy_types()`
+$DIR/rusoto/services/cloudformation/src/custom/custom_tests.rs:15:9-49:10: `.with_body(
+            r#"<?xml version="1.0" encoding="UTF-8"?>
+        <ListStacksResponse xmlns="http://cloudformation.amazonaws.com/doc/2010-05-15/">
+            <ListStacksResult>
+            <StackSummaries>
+                <member>
+                <StackId>
+                    arn:aws:cloudformation:us-east-1:1234567:stack/TestCreate1/aaaaa
+                </StackId>
+                <StackStatus>CREATE_IN_PROGRESS</StackStatus>
+                <StackName>vpc1</StackName>
+                <CreationTime>2011-05-23T15:47:44Z</CreationTime>
+                <TemplateDescription>
+                    Creates one EC2 instance and a load balancer.
+                </TemplateDescription>
+                </member>
+                <member>
+                <StackId>
+                    arn:aws:cloudformation:us-east-1:1234567:stack/TestDelete2/bbbbb
+                </StackId>
+                <StackStatus>DELETE_COMPLETE</StackStatus>
+                <DeletionTime>2011-03-10T16:20:51Z</DeletionTime>
+                <StackName>WP1</StackName>
+                <CreationTime>2011-03-05T19:57:58Z</CreationTime>
+                <TemplateDescription>
+                    A simple basic Cloudformation Template.
+                </TemplateDescription>
+                </member>
+            </StackSummaries>
+            </ListStacksResult>
+            <ResponseMetadata>
+            <RequestId>b9b4b068-3a41-11e5-94eb-example</RequestId>
+            </ResponseMetadata>
+        </ListStacksResponse>"#,
+        )`
+$DIR/rusoto/services/cloudformation/src/custom/custom_tests.rs:50:9-66:11: `.with_request_checker(|request: &SignedRequest| {
+            assert_eq!("POST", request.method);
+            assert_eq!("/", request.path);
+            if let Some(SignedRequestPayload::Buffer(ref buffer)) = request.payload {
+                let params: Params = serde_urlencoded::from_bytes(buffer).unwrap();
+                assert_eq!(
+                    Some(&Some("CREATE_IN_PROGRESS".to_owned())),
+                    params.get("StackStatusFilter.member.1")
+                );
+                assert_eq!(
+                    Some(&Some("DELETE_COMPLETE".to_owned())),
+                    params.get("StackStatusFilter.member.2")
+                );
+            } else {
+                panic!("Unexpected request.payload: {:?}", request.payload);
+            }
+        })`
+$DIR/rusoto/services/cloudformation/src/custom/custom_tests.rs:78:25-78:46: `.list_stacks(request)`
+$DIR/rusoto/services/cloudformation/src/generated.rs:16254:59-16254:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/cloudformation/src/generated.rs:16258:28-16258:57: `.cancel_update_stack(request)`
+$DIR/rusoto/services/cloudformation/src/generated.rs:16268:59-16268:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/cloudformation/src/generated.rs:16272:28-16272:53: `.describe_stacks(request)`
+$DIR/rusoto/services/cloudformation/src/generated.rs:16282:59-16282:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/cloudformation/src/generated.rs:16286:28-16286:50: `.get_template(request)`
+$DIR/rusoto/services/cloudformation/src/generated.rs:16296:59-16296:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/cloudformation/src/generated.rs:16300:28-16300:49: `.list_stacks(request)`
+$DIR/rusoto/services/cloudfront/src/custom/custom_tests.rs:14:55-14:72: `.with_body(&body)`
+$DIR/rusoto/services/cloudfront/src/custom/custom_tests.rs:19:24-19:52: `.list_distributions(request)`
+$DIR/rusoto/services/cloudfront/src/generated.rs:21611:59-21611:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/cloudfront/src/generated.rs:21615:28-21615:76: `.get_cloud_front_origin_access_identity(request)`
+$DIR/rusoto/services/cloudfront/src/generated.rs:21625:59-21625:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/cloudfront/src/generated.rs:21629:28-21629:54: `.get_distribution(request)`
+$DIR/rusoto/services/cloudfront/src/generated.rs:21639:59-21639:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/cloudfront/src/generated.rs:21643:28-21643:54: `.get_invalidation(request)`
+$DIR/rusoto/services/cloudfront/src/generated.rs:21653:59-21653:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/cloudfront/src/generated.rs:21657:28-21657:64: `.get_streaming_distribution(request)`
+$DIR/rusoto/services/cloudfront/src/generated.rs:21667:59-21667:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/cloudfront/src/generated.rs:21672:13-21672:64: `.list_cloud_front_origin_access_identities(request)`
+$DIR/rusoto/services/cloudfront/src/generated.rs:21683:59-21683:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/cloudfront/src/generated.rs:21687:28-21687:56: `.list_distributions(request)`
+$DIR/rusoto/services/cloudfront/src/generated.rs:21697:59-21697:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/cloudfront/src/generated.rs:21701:28-21701:56: `.list_invalidations(request)`
+$DIR/rusoto/services/cloudfront/src/generated.rs:21711:59-21711:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/cloudfront/src/generated.rs:21715:28-21715:66: `.list_streaming_distributions(request)`
+$DIR/rusoto/services/cloudwatch/src/custom/custom_tests.rs:13:9-13:23: `.with_body("")`
+$DIR/rusoto/services/cloudwatch/src/custom/custom_tests.rs:14:9-46:11: `.with_request_checker(|request: &SignedRequest| {
+            assert_eq!("POST", request.method);
+            assert_eq!("/", request.path);
+            if let Some(SignedRequestPayload::Buffer(ref buffer)) = request.payload {
+                let params: Params = serde_urlencoded::from_bytes(buffer).unwrap();
+                assert_eq!(
+                    params.get("Namespace"),
+                    Some(&Some("TestNamespace".to_owned()))
+                );
+                assert_eq!(
+                    params.get("MetricData.member.1.MetricName"),
+                    Some(&Some("buffers".to_owned()))
+                );
+                assert_eq!(
+                    params.get("MetricData.member.1.Unit"),
+                    Some(&Some("Bytes".to_owned()))
+                );
+                assert_eq!(
+                    params.get("MetricData.member.1.Value"),
+                    Some(&Some("1".to_owned()))
+                );
+                assert_eq!(
+                    params.get("MetricData.member.1.Dimensions.member.1.Name"),
+                    Some(&Some("foo".to_owned()))
+                );
+                assert_eq!(
+                    params.get("MetricData.member.1.Dimensions.member.1.Value"),
+                    Some(&Some("bar".to_owned()))
+                );
+            } else {
+                panic!("Unexpected request.payload: {:?}", request.payload);
+            }
+        })`
+$DIR/rusoto/services/cloudwatch/src/custom/custom_tests.rs:65:26-65:51: `.put_metric_data(request)`
+$DIR/rusoto/services/cloudwatch/src/generated.rs:8595:59-8595:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/cloudwatch/src/generated.rs:8599:28-8599:60: `.describe_alarm_history(request)`
+$DIR/rusoto/services/cloudwatch/src/generated.rs:8609:59-8609:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/cloudwatch/src/generated.rs:8613:28-8613:60: `.describe_alarm_history(request)`
+$DIR/rusoto/services/cloudwatch/src/generated.rs:8623:59-8623:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/cloudwatch/src/generated.rs:8627:28-8627:53: `.describe_alarms(request)`
+$DIR/rusoto/services/cloudwatch/src/generated.rs:8637:59-8637:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/cloudwatch/src/generated.rs:8641:28-8641:50: `.list_metrics(request)`
+$DIR/rusoto/services/cognito-identity/src/custom/mod.rs:150:35-150:43: `.build()`
+$DIR/rusoto/services/cognito-identity/src/custom/mod.rs:157:9-157:60: `.login("provider".to_string(), "token".to_string())`
+$DIR/rusoto/services/cognito-identity/src/custom/mod.rs:158:9-158:17: `.build()`
+$DIR/rusoto/services/cognito-identity/src/custom/mod.rs:163:50-163:83: `.identity_id("id_id".to_string())`
+$DIR/rusoto/services/cognito-identity/src/custom/mod.rs:163:83-163:91: `.build()`
+$DIR/rusoto/services/cognito-identity/src/custom/mod.rs:173:13-173:46: `.identity_id("id_id".to_string())`
+$DIR/rusoto/services/cognito-identity/src/custom/mod.rs:174:13-174:40: `.region(Region::EuCentral1)`
+$DIR/rusoto/services/cognito-identity/src/custom/mod.rs:175:13-175:64: `.login("provider".to_string(), "token".to_string())`
+$DIR/rusoto/services/cognito-identity/src/custom/mod.rs:176:13-176:48: `.custom_role_arn("arn".to_string())`
+$DIR/rusoto/services/cognito-identity/src/custom/mod.rs:177:13-177:21: `.build()`
+$DIR/rusoto/services/cognito-identity/src/custom/mod.rs:192:13-192:46: `.identity_id("id_id".to_string())`
+$DIR/rusoto/services/cognito-identity/src/custom/mod.rs:193:13-193:40: `.region(Region::EuCentral1)`
+$DIR/rusoto/services/cognito-identity/src/custom/mod.rs:194:13-194:66: `.login("provider1".to_string(), "token1".to_string())`
+$DIR/rusoto/services/cognito-identity/src/custom/mod.rs:195:13-195:66: `.login("provider2".to_string(), "token2".to_string())`
+$DIR/rusoto/services/cognito-identity/src/custom/mod.rs:196:13-196:21: `.build()`
+$DIR/rusoto/services/dynamodb/src/custom/custom_tests.rs:16:22-16:30: `.bytes()`
+$DIR/rusoto/services/dynamodb/src/custom/custom_tests.rs:16:30-16:40: `.collect()`
+$DIR/rusoto/services/ec2/src/generated.rs:106562:59-106562:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:106565:28-106565:56: `.describe_instances(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:106575:59-106575:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:106578:28-106578:54: `.allocate_address(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:106588:59-106588:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:106591:28-106591:65: `.assign_private_ip_addresses(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:106601:59-106601:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:106604:28-106604:55: `.associate_address(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:106614:59-106614:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:106617:28-106617:59: `.associate_route_table(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:106627:59-106627:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:106630:28-106630:51: `.attach_volume(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:106640:59-106640:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:106643:28-106643:56: `.attach_vpn_gateway(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:106653:59-106653:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:106656:28-106656:53: `.bundle_instance(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:106666:59-106666:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:106669:28-106669:56: `.cancel_bundle_task(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:106679:59-106679:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:106682:28-106682:71: `.cancel_reserved_instances_listing(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:106692:59-106692:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:106695:28-106695:67: `.cancel_spot_instance_requests(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:106705:59-106705:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:106708:28-106708:62: `.confirm_product_instance(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:106718:59-106718:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:106721:28-106721:51: `.copy_snapshot(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:106731:59-106731:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:106734:28-106734:61: `.create_customer_gateway(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:106744:59-106744:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:106747:28-106747:57: `.create_dhcp_options(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:106757:59-106757:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:106760:28-106760:65: `.create_instance_export_task(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:106770:59-106770:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:106773:28-106773:53: `.create_key_pair(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:106783:59-106783:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:106786:28-106786:56: `.create_network_acl(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:106796:59-106796:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:106799:28-106799:62: `.create_network_interface(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:106809:59-106809:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:106812:28-106812:71: `.create_reserved_instances_listing(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:106822:59-106822:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:106825:28-106825:56: `.create_route_table(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:106835:59-106835:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:106838:28-106838:53: `.create_snapshot(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:106848:59-106848:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:106851:28-106851:71: `.create_spot_datafeed_subscription(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:106861:59-106861:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:106864:28-106864:51: `.create_subnet(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:106874:59-106874:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:106877:28-106877:51: `.create_volume(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:106887:59-106887:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:106890:28-106890:48: `.create_vpc(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:106900:59-106900:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:106903:28-106903:56: `.create_vpn_gateway(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:106913:59-106913:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:106916:28-106916:61: `.delete_internet_gateway(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:106926:59-106926:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:106929:28-106929:65: `.describe_account_attributes(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:106939:59-106939:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:106942:28-106942:56: `.describe_addresses(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:106952:59-106952:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:106955:28-106955:65: `.describe_availability_zones(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:106965:59-106965:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:106968:28-106968:59: `.describe_bundle_tasks(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:106978:59-106978:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:106981:28-106981:64: `.describe_customer_gateways(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:106991:59-106991:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:106994:28-106994:59: `.describe_dhcp_options(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107004:59-107004:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107007:28-107007:59: `.describe_export_tasks(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107017:59-107017:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107020:28-107020:65: `.describe_instance_attribute(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107030:59-107030:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107033:28-107033:62: `.describe_instance_status(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107043:59-107043:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107046:28-107046:56: `.describe_instances(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107056:59-107056:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107059:28-107059:64: `.describe_internet_gateways(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107069:59-107069:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107072:28-107072:56: `.describe_key_pairs(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107082:59-107082:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107085:28-107085:59: `.describe_network_acls(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107095:59-107095:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107098:28-107098:65: `.describe_network_interfaces(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107108:59-107108:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107111:28-107111:63: `.describe_placement_groups(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107121:59-107121:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107124:28-107124:54: `.describe_regions(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107134:59-107134:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107137:28-107137:75: `.describe_reserved_instances_offerings(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107147:59-107147:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107150:28-107150:65: `.describe_reserved_instances(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107160:59-107160:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107163:28-107163:59: `.describe_route_tables(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107173:59-107173:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107176:28-107176:62: `.describe_security_groups(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107186:59-107186:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107189:28-107189:56: `.describe_snapshots(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107199:59-107199:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107202:28-107202:69: `.describe_spot_instance_requests(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107212:59-107212:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107215:28-107215:65: `.describe_spot_price_history(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107225:59-107225:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107228:28-107228:54: `.describe_subnets(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107238:59-107238:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107241:28-107241:51: `.describe_tags(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107251:59-107251:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107254:28-107254:60: `.describe_volume_status(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107264:59-107264:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107267:28-107267:54: `.describe_volumes(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107277:59-107277:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107280:28-107280:51: `.describe_vpcs(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107290:59-107290:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107293:28-107293:62: `.describe_vpn_connections(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107303:59-107303:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107306:28-107306:59: `.describe_vpn_gateways(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107316:59-107316:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107319:28-107319:62: `.detach_network_interface(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107329:59-107329:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107332:28-107332:51: `.detach_volume(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107342:59-107342:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107345:28-107345:55: `.get_password_data(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107355:59-107355:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107358:28-107358:53: `.import_instance(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107368:59-107368:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107371:28-107371:53: `.import_key_pair(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107381:59-107381:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107384:28-107384:51: `.import_volume(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107394:59-107394:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107397:28-107397:63: `.modify_snapshot_attribute(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107407:59-107407:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107410:28-107410:55: `.monitor_instances(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107420:59-107420:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107423:28-107423:52: `.register_image(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107433:59-107433:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107436:28-107436:69: `.replace_network_acl_association(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107446:59-107446:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107449:28-107449:60: `.request_spot_instances(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107459:59-107459:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107462:28-107462:51: `.run_instances(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107472:59-107472:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107475:28-107475:53: `.start_instances(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107485:59-107485:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107488:28-107488:52: `.stop_instances(request)`
+$DIR/rusoto/services/ec2/src/generated.rs:107498:59-107498:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ec2/src/generated.rs:107501:28-107501:57: `.unmonitor_instances(request)`
+$DIR/rusoto/services/elasticbeanstalk/src/generated.rs:11862:59-11862:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/elasticbeanstalk/src/generated.rs:11866:28-11866:60: `.check_dns_availability(request)`
+$DIR/rusoto/services/elasticbeanstalk/src/generated.rs:11876:59-11876:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/elasticbeanstalk/src/generated.rs:11880:28-11880:64: `.create_application_version(request)`
+$DIR/rusoto/services/elasticbeanstalk/src/generated.rs:11890:59-11890:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/elasticbeanstalk/src/generated.rs:11894:28-11894:56: `.create_application(request)`
+$DIR/rusoto/services/elasticbeanstalk/src/generated.rs:11904:59-11904:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/elasticbeanstalk/src/generated.rs:11908:28-11908:67: `.create_configuration_template(request)`
+$DIR/rusoto/services/elasticbeanstalk/src/generated.rs:11918:59-11918:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/elasticbeanstalk/src/generated.rs:11922:28-11922:56: `.create_environment(request)`
+$DIR/rusoto/services/elasticbeanstalk/src/generated.rs:11932:59-11932:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/elasticbeanstalk/src/generated.rs:11936:28-11936:54: `.create_storage_location()`
+$DIR/rusoto/services/elasticbeanstalk/src/generated.rs:11946:59-11946:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/elasticbeanstalk/src/generated.rs:11950:28-11950:56: `.delete_application(request)`
+$DIR/rusoto/services/elasticbeanstalk/src/generated.rs:11960:59-11960:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/elasticbeanstalk/src/generated.rs:11964:28-11964:67: `.describe_application_versions(request)`
+$DIR/rusoto/services/elasticbeanstalk/src/generated.rs:11974:59-11974:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/elasticbeanstalk/src/generated.rs:11978:28-11978:59: `.describe_applications(request)`
+$DIR/rusoto/services/elasticbeanstalk/src/generated.rs:11988:59-11988:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/elasticbeanstalk/src/generated.rs:11992:28-11992:68: `.describe_configuration_options(request)`
+$DIR/rusoto/services/elasticbeanstalk/src/generated.rs:12002:59-12002:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/elasticbeanstalk/src/generated.rs:12006:28-12006:59: `.describe_environments(request)`
+$DIR/rusoto/services/elasticbeanstalk/src/generated.rs:12016:59-12016:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/elasticbeanstalk/src/generated.rs:12020:28-12020:53: `.describe_events(request)`
+$DIR/rusoto/services/elasticbeanstalk/src/generated.rs:12030:59-12030:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/elasticbeanstalk/src/generated.rs:12034:28-12034:61: `.list_available_solution_stacks()`
+$DIR/rusoto/services/elasticbeanstalk/src/generated.rs:12044:59-12044:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/elasticbeanstalk/src/generated.rs:12048:28-12048:63: `.retrieve_environment_info(request)`
+$DIR/rusoto/services/elasticbeanstalk/src/generated.rs:12058:59-12058:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/elasticbeanstalk/src/generated.rs:12062:28-12062:59: `.terminate_environment(request)`
+$DIR/rusoto/services/elasticbeanstalk/src/generated.rs:12072:59-12072:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/elasticbeanstalk/src/generated.rs:12076:28-12076:64: `.update_application_version(request)`
+$DIR/rusoto/services/elasticbeanstalk/src/generated.rs:12086:59-12086:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/elasticbeanstalk/src/generated.rs:12090:28-12090:56: `.update_application(request)`
+$DIR/rusoto/services/elb/src/generated.rs:7164:59-7164:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/elb/src/generated.rs:7167:28-7167:61: `.describe_load_balancers(request)`
+$DIR/rusoto/services/elb/src/generated.rs:7177:59-7177:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/elb/src/generated.rs:7180:28-7180:69: `.describe_load_balancer_policies(request)`
+$DIR/rusoto/services/elb/src/generated.rs:7190:59-7190:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/elb/src/generated.rs:7193:28-7193:73: `.describe_load_balancer_policy_types(request)`
+$DIR/rusoto/services/elb/src/generated.rs:7203:59-7203:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/elb/src/generated.rs:7206:28-7206:61: `.describe_load_balancers(request)`
+$DIR/rusoto/services/elbv2/src/generated.rs:10182:59-10182:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/elbv2/src/generated.rs:10185:28-10185:61: `.describe_load_balancers(request)`
+$DIR/rusoto/services/elbv2/src/generated.rs:10195:59-10195:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/elbv2/src/generated.rs:10198:28-10198:61: `.describe_load_balancers(request)`
+$DIR/rusoto/services/glacier/src/custom/custom_tests.rs:11:9-11:181: `.with_header("Location", "/111122223333/vaults/examplevault/multipart-uploads/OW2fM5iVylEpFEMM9_HpKowRapC3vn5sSL39_396UW9zLFUWVrnRHaPjUJddQ5OxSHVXjYtrN47NBZ-khxOjyEXAMPLE")`
+$DIR/rusoto/services/glacier/src/custom/custom_tests.rs:12:9-12:146: `.with_header("x-amz-multipart-upload-id", "OW2fM5iVylEpFEMM9_HpKowRapC3vn5sSL39_396UW9zLFUWVrnRHaPjUJddQ5OxSHVXjYtrN47NBZ-khxOjyEXAMPLE")`
+$DIR/rusoto/services/glacier/src/custom/custom_tests.rs:21:9-21:66: `.initiate_multipart_upload(initiate_multipart_upload_req)`
+$DIR/rusoto/services/glacier/src/custom/custom_tests.rs:23:9-23:43: `.expect("Should parse empty body")`
+$DIR/rusoto/services/glacier/src/custom/custom_tests.rs:30:55-30:99: `.with_header("x-amz-sha256-tree-hash", "42")`
+$DIR/rusoto/services/glacier/src/custom/custom_tests.rs:40:9-40:53: `.upload_multipart_part(upload_part_copy_req)`
+$DIR/rusoto/services/glacier/src/custom/custom_tests.rs:42:9-42:43: `.expect("Should parse empty body")`
+$DIR/rusoto/services/iam/src/generated.rs:27529:59-27529:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/iam/src/generated.rs:27532:28-27532:46: `.get_user(request)`
+$DIR/rusoto/services/iam/src/generated.rs:27542:59-27542:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/iam/src/generated.rs:27545:28-27545:63: `.create_virtual_mfa_device(request)`
+$DIR/rusoto/services/iam/src/generated.rs:27555:59-27555:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/iam/src/generated.rs:27558:28-27558:50: `.get_account_summary()`
+$DIR/rusoto/services/iam/src/generated.rs:27568:59-27568:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/iam/src/generated.rs:27571:28-27571:47: `.get_group(request)`
+$DIR/rusoto/services/iam/src/generated.rs:27581:59-27581:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/iam/src/generated.rs:27584:28-27584:53: `.get_user_policy(request)`
+$DIR/rusoto/services/iam/src/generated.rs:27592:59-27592:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/iam/src/generated.rs:27595:28-27595:46: `.get_user(request)`
+$DIR/rusoto/services/iam/src/generated.rs:27605:59-27605:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/iam/src/generated.rs:27608:28-27608:54: `.list_access_keys(request)`
+$DIR/rusoto/services/iam/src/generated.rs:27618:59-27618:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/iam/src/generated.rs:27621:28-27621:58: `.list_account_aliases(request)`
+$DIR/rusoto/services/iam/src/generated.rs:27631:59-27631:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/iam/src/generated.rs:27634:28-27634:49: `.list_groups(request)`
+$DIR/rusoto/services/iam/src/generated.rs:27644:59-27644:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/iam/src/generated.rs:27647:28-27647:60: `.list_instance_profiles(request)`
+$DIR/rusoto/services/iam/src/generated.rs:27657:59-27657:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/iam/src/generated.rs:27660:28-27660:54: `.list_mfa_devices(request)`
+$DIR/rusoto/services/iam/src/generated.rs:27670:59-27670:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/iam/src/generated.rs:27673:28-27673:48: `.list_roles(request)`
+$DIR/rusoto/services/iam/src/generated.rs:27683:59-27683:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/iam/src/generated.rs:27686:28-27686:62: `.list_server_certificates(request)`
+$DIR/rusoto/services/iam/src/generated.rs:27696:59-27696:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/iam/src/generated.rs:27699:28-27699:63: `.list_signing_certificates(request)`
+$DIR/rusoto/services/iam/src/generated.rs:27709:59-27709:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/iam/src/generated.rs:27712:28-27712:48: `.list_users(request)`
+$DIR/rusoto/services/iam/src/generated.rs:27722:59-27722:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/iam/src/generated.rs:27725:28-27725:62: `.list_virtual_mfa_devices(request)`
+$DIR/rusoto/services/importexport/src/generated.rs:1816:59-1816:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/importexport/src/generated.rs:1820:28-1820:48: `.get_status(request)`
+$DIR/rusoto/services/importexport/src/generated.rs:1830:59-1830:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/importexport/src/generated.rs:1834:28-1834:47: `.list_jobs(request)`
+$DIR/rusoto/services/lambda/src/custom/custom_tests.rs:16:30-16:37: `.into()`
+$DIR/rusoto/services/lambda/src/custom/custom_tests.rs:19:55-19:86: `.with_json_body(policy.clone())`
+$DIR/rusoto/services/lambda/src/custom/custom_tests.rs:22:9-25:11: `.get_policy(GetPolicyRequest {
+            function_name: "test-func".into(),
+            ..GetPolicyRequest::default()
+        })`
+$DIR/rusoto/services/lambda/src/custom/custom_tests.rs:23:39-23:46: `.into()`
+$DIR/rusoto/services/lambda/src/custom/custom_tests.rs:36:9-36:46: `.with_body(r#"{"arbitrary":"json"}"#)`
+$DIR/rusoto/services/lambda/src/custom/custom_tests.rs:37:9-37:56: `.with_header("X-Amz-Function-Error", "Handled")`
+$DIR/rusoto/services/lambda/src/custom/custom_tests.rs:38:9-38:56: `.with_header("X-Amz-Log-Result", "foo bar baz")`
+$DIR/rusoto/services/lambda/src/custom/custom_tests.rs:39:9-47:11: `.with_request_checker(|request: &SignedRequest| {
+            assert_eq!("POST", request.method);
+            if let Some(SignedRequestPayload::Buffer(ref buffer)) = request.payload {
+                assert_eq!(b"raw payload", buffer.as_ref());
+            } else {
+                panic!("request payload is not a buffer");
+            }
+            assert_eq!("/2015-03-31/functions/foo/invocations", request.path);
+        })`
+$DIR/rusoto/services/lambda/src/custom/custom_tests.rs:52:47-52:54: `.into()`
+$DIR/rusoto/services/lambda/src/custom/custom_tests.rs:57:24-57:40: `.invoke(request)`
+$DIR/rusoto/services/lex-runtime/src/custom/custom_tests.rs:24:63-24:89: `.with_body(mock_resp_body)`
+$DIR/rusoto/services/lex-runtime/src/custom/custom_tests.rs:36:10-36:45: `.insert("CarType".to_owned(), None)`
+$DIR/rusoto/services/lex-runtime/src/custom/custom_tests.rs:37:10-37:69: `.insert("PickUpCity".to_owned(), Some("Boston".to_owned()))`
+$DIR/rusoto/services/lex-runtime/src/custom/custom_tests.rs:56:46-56:71: `.post_text(post_text_req)`
+$DIR/rusoto/services/rds/src/generated.rs:36241:59-36241:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/rds/src/generated.rs:36244:28-36244:59: `.describe_db_instances(request)`
+$DIR/rusoto/services/rds/src/generated.rs:36254:59-36254:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/rds/src/generated.rs:36257:28-36257:65: `.describe_db_engine_versions(request)`
+$DIR/rusoto/services/rds/src/generated.rs:36267:59-36267:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/rds/src/generated.rs:36270:28-36270:59: `.describe_db_instances(request)`
+$DIR/rusoto/services/rds/src/generated.rs:36280:59-36280:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/rds/src/generated.rs:36283:28-36283:66: `.describe_db_parameter_groups(request)`
+$DIR/rusoto/services/rds/src/generated.rs:36293:59-36293:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/rds/src/generated.rs:36296:28-36296:65: `.describe_db_security_groups(request)`
+$DIR/rusoto/services/rds/src/generated.rs:36306:59-36306:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/rds/src/generated.rs:36309:28-36309:59: `.describe_db_snapshots(request)`
+$DIR/rusoto/services/rds/src/generated.rs:36319:59-36319:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/rds/src/generated.rs:36322:28-36322:63: `.describe_db_subnet_groups(request)`
+$DIR/rusoto/services/rds/src/generated.rs:36332:59-36332:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/rds/src/generated.rs:36335:28-36335:63: `.describe_event_categories(request)`
+$DIR/rusoto/services/rds/src/generated.rs:36345:59-36345:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/rds/src/generated.rs:36348:28-36348:66: `.describe_event_subscriptions(request)`
+$DIR/rusoto/services/rds/src/generated.rs:36358:59-36358:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/rds/src/generated.rs:36361:28-36361:53: `.describe_events(request)`
+$DIR/rusoto/services/rds/src/generated.rs:36371:59-36371:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/rds/src/generated.rs:36374:28-36374:60: `.describe_option_groups(request)`
+$DIR/rusoto/services/rds/src/generated.rs:36384:59-36384:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/rds/src/generated.rs:36388:13-36388:63: `.describe_reserved_db_instances_offerings(request)`
+$DIR/rusoto/services/rds/src/generated.rs:36399:59-36399:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/rds/src/generated.rs:36402:28-36402:68: `.describe_reserved_db_instances(request)`
+$DIR/rusoto/services/redshift/src/generated.rs:24910:59-24910:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/redshift/src/generated.rs:24915:13-24915:63: `.authorize_cluster_security_group_ingress(request)`
+$DIR/rusoto/services/redshift/src/generated.rs:24926:59-24926:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/redshift/src/generated.rs:24930:28-24930:59: `.copy_cluster_snapshot(request)`
+$DIR/rusoto/services/redshift/src/generated.rs:24940:59-24940:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/redshift/src/generated.rs:24944:28-24944:68: `.create_cluster_parameter_group(request)`
+$DIR/rusoto/services/redshift/src/generated.rs:24954:59-24954:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/redshift/src/generated.rs:24958:28-24958:67: `.create_cluster_security_group(request)`
+$DIR/rusoto/services/redshift/src/generated.rs:24968:59-24968:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/redshift/src/generated.rs:24972:28-24972:61: `.create_cluster_snapshot(request)`
+$DIR/rusoto/services/redshift/src/generated.rs:24982:59-24982:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/redshift/src/generated.rs:24986:28-24986:65: `.create_cluster_subnet_group(request)`
+$DIR/rusoto/services/redshift/src/generated.rs:24996:59-24996:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/redshift/src/generated.rs:25000:28-25000:52: `.create_cluster(request)`
+$DIR/rusoto/services/redshift/src/generated.rs:25010:59-25010:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/redshift/src/generated.rs:25014:28-25014:68: `.delete_cluster_parameter_group(request)`
+$DIR/rusoto/services/redshift/src/generated.rs:25024:59-25024:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/redshift/src/generated.rs:25028:28-25028:61: `.delete_cluster_snapshot(request)`
+$DIR/rusoto/services/redshift/src/generated.rs:25038:59-25038:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/redshift/src/generated.rs:25042:28-25042:52: `.delete_cluster(request)`
+$DIR/rusoto/services/redshift/src/generated.rs:25052:59-25052:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/redshift/src/generated.rs:25056:28-25056:71: `.describe_cluster_parameter_groups(request)`
+$DIR/rusoto/services/redshift/src/generated.rs:25066:59-25066:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/redshift/src/generated.rs:25070:28-25070:65: `.describe_cluster_parameters(request)`
+$DIR/rusoto/services/redshift/src/generated.rs:25080:59-25080:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/redshift/src/generated.rs:25084:28-25084:70: `.describe_cluster_security_groups(request)`
+$DIR/rusoto/services/redshift/src/generated.rs:25094:59-25094:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/redshift/src/generated.rs:25098:28-25098:64: `.describe_cluster_snapshots(request)`
+$DIR/rusoto/services/redshift/src/generated.rs:25108:59-25108:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/redshift/src/generated.rs:25112:28-25112:68: `.describe_cluster_subnet_groups(request)`
+$DIR/rusoto/services/redshift/src/generated.rs:25122:59-25122:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/redshift/src/generated.rs:25126:28-25126:63: `.describe_cluster_versions(request)`
+$DIR/rusoto/services/redshift/src/generated.rs:25136:59-25136:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/redshift/src/generated.rs:25140:28-25140:55: `.describe_clusters(request)`
+$DIR/rusoto/services/redshift/src/generated.rs:25150:59-25150:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/redshift/src/generated.rs:25154:28-25154:53: `.describe_events(request)`
+$DIR/rusoto/services/redshift/src/generated.rs:25164:59-25164:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/redshift/src/generated.rs:25168:28-25168:72: `.describe_orderable_cluster_options(request)`
+$DIR/rusoto/services/redshift/src/generated.rs:25178:59-25178:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/redshift/src/generated.rs:25182:28-25182:70: `.describe_reserved_node_offerings(request)`
+$DIR/rusoto/services/redshift/src/generated.rs:25192:59-25192:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/redshift/src/generated.rs:25196:28-25196:61: `.describe_reserved_nodes(request)`
+$DIR/rusoto/services/redshift/src/generated.rs:25206:59-25206:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/redshift/src/generated.rs:25210:28-25210:53: `.describe_resize(request)`
+$DIR/rusoto/services/redshift/src/generated.rs:25220:59-25220:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/redshift/src/generated.rs:25224:28-25224:68: `.modify_cluster_parameter_group(request)`
+$DIR/rusoto/services/redshift/src/generated.rs:25234:59-25234:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/redshift/src/generated.rs:25238:28-25238:69: `.purchase_reserved_node_offering(request)`
+$DIR/rusoto/services/redshift/src/generated.rs:25248:59-25248:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/redshift/src/generated.rs:25252:28-25252:52: `.reboot_cluster(request)`
+$DIR/rusoto/services/redshift/src/generated.rs:25262:59-25262:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/redshift/src/generated.rs:25266:28-25266:67: `.reset_cluster_parameter_group(request)`
+$DIR/rusoto/services/redshift/src/generated.rs:25276:59-25276:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/redshift/src/generated.rs:25280:28-25280:67: `.restore_from_cluster_snapshot(request)`
+$DIR/rusoto/services/redshift/src/generated.rs:25290:59-25290:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/redshift/src/generated.rs:25294:28-25294:75: `.revoke_cluster_security_group_ingress(request)`
+$DIR/rusoto/services/route53/src/custom/custom_tests.rs:11:55-21:6: `.with_body(
+        r#"<?xml version="1.0"?>
+            <ErrorResponse xmlns="https://route53.amazonaws.com/doc/2013-04-01/">
+                <Error>
+                    <Type>Sender</Type>
+                    <Code>NoSuchHostedZone</Code>
+                    <Message>No hosted zone found with ID: NO-SUCH-ZONE</Message>
+                </Error>
+                <RequestId>20c2984f-279e-11e8-9a16-83e7725d8022</RequestId>
+            </ErrorResponse>"#,
+    )`
+$DIR/rusoto/services/route53/src/custom/custom_tests.rs:29:24-29:59: `.list_resource_record_sets(request)`
+$DIR/rusoto/services/route53/src/custom/custom_tests.rs:31:21-31:27: `.err()`
+$DIR/rusoto/services/route53/src/generated.rs:15029:59-15029:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/route53/src/generated.rs:15032:28-15032:53: `.get_hosted_zone(request)`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:13:55-19:6: `.with_body(
+        r#"<?xml version="1.0" encoding="UTF-8"?>
+            <CopyPartResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+                <LastModified>2018-11-10T02:47:18.000Z</LastModified>
+                <ETag>&quot;9a9d1bbe80188883302bff764b4cb321&quot;</ETag>
+            </CopyPartResult>"#,
+    )`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:29:24-29:63: `.upload_part_copy(upload_part_copy_req)`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:42:55-55:6: `.with_body(
+        r#"<?xml version="1.0" encoding="UTF-8"?>
+        <ListVersionsResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+          <DeleteMarker>
+          </DeleteMarker>
+          <Version>
+          </Version>
+          <DeleteMarker>
+          </DeleteMarker>
+          <Version>
+          </Version>
+        </ListVersionsResult>
+        "#,
+    )`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:58:9-61:11: `.list_object_versions(ListObjectVersionsRequest {
+            bucket: "test_bucket".to_string(),
+            ..Default::default()
+        })`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:74:55-74:72: `.with_body(&body)`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:78:9-82:11: `.create_multipart_upload(CreateMultipartUploadRequest {
+            bucket: "example-bucket".to_owned(),
+            key: "example-object".to_owned(),
+            ..Default::default()
+        })`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:104:55-104:72: `.with_body(&body)`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:108:9-113:11: `.complete_multipart_upload(CompleteMultipartUploadRequest {
+            bucket: "example-bucket".to_owned(),
+            key: "example-object".to_owned(),
+            upload_id: "VXBsb2FkIElEIGZvciA2aWWpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA".to_owned(),
+            ..Default::default()
+        })`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:130:55-130:72: `.with_body(&body)`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:134:9-137:11: `.list_multipart_uploads(ListMultipartUploadsRequest {
+            bucket: "example-bucket".to_owned(),
+            ..Default::default()
+        })`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:183:9-214:30: `.with_body(r#"
+        <?xml version="1.0" encoding="UTF-8"?>
+        <ListPartsResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+            <Bucket>rusoto1440826511</Bucket>
+            <Key>testfile.zip</Key>
+            <UploadId>PeePB_uORK5f2AURP_SWcQ4NO1P1oqnGNNNFK3nhFfzMeksdvG7x7nFfH1qk7a3HSossNYB7t8QhcN1Fg6ax7AXbwvAKIZ9DilB4tUcpM7qyUEgkszN4iDmMvSaImGFK</UploadId>
+            <Initiator>
+                <ID>arn:aws:iam::347452556412:user/matthew</ID>
+                <DisplayName>matthew</DisplayName>
+            </Initiator>
+            <Owner>
+                <ID>b84c6b0c308085829b6562b586f6664fc00faab6cfd441e90ad418ea916eed83</ID>
+                <DisplayName>matthew</DisplayName>
+            </Owner>
+            <StorageClass>STANDARD</StorageClass>
+            <PartNumberMarker>0</PartNumberMarker>
+            <NextPartNumberMarker>2</NextPartNumberMarker>
+            <MaxParts>1000</MaxParts>
+            <IsTruncated>false</IsTruncated>
+            <Part>
+                <PartNumber>1</PartNumber>
+                <LastModified>2015-09-08T21:02:04.000Z</LastModified>
+                <ETag>&quot;ddcaa99616d7cd06d0a5abfef6ccebbb&quot;</ETag>
+                <Size>5242880</Size>
+            </Part>
+            <Part>
+                <PartNumber>2</PartNumber>
+                <LastModified>2015-09-08T21:02:09.000Z</LastModified>
+                <ETag>&quot;c865f7d241e2c9e3d3b5fee6955c616e&quot;</ETag>
+                <Size>5242880</Size>
+            </Part>
+        </ListPartsResult>"#)`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:215:9-219:11: `.with_request_checker(|request: &SignedRequest| {
+            assert_eq!(request.method, "GET");
+            assert_eq!(request.path, "/rusoto1440826511/testfile.zip");
+            assert!(request.payload.is_none());
+        })`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:222:5-222:48: `req.bucket = "rusoto1440826511".to_owned();`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:223:5-223:41: `req.key = "testfile.zip".to_owned();`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:226:24-226:40: `.list_parts(req)`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:269:55-282:6: `.with_body(
+        r#"
+        <?xml version="1.0" encoding="UTF-8"?>
+        <ListMultipartUploadsResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+            <Bucket>rusoto1440826568</Bucket>
+            <KeyMarker></KeyMarker>
+            <UploadIdMarker></UploadIdMarker>
+            <NextKeyMarker></NextKeyMarker>
+            <NextUploadIdMarker></NextUploadIdMarker>
+            <MaxUploads>1000</MaxUploads>
+            <IsTruncated>false</IsTruncated>
+        </ListMultipartUploadsResult>
+    "#,
+    )`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:285:5-285:43: `req.bucket = "test-bucket".to_owned();`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:288:24-288:52: `.list_multipart_uploads(req)`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:337:9-357:10: `.with_body(
+            r#"
+        <?xml version="1.0" encoding="UTF-8"?>
+        <ListAllMyBucketsResult xmlns="http://s3.amazonaws.com/doc/2006-03-01">
+            <Owner>
+            <ID>bcaf1ffd86f461ca5fb16fd081034f</ID>
+            <DisplayName>webfile</DisplayName>
+            </Owner>
+            <Buckets>
+            <Bucket>
+                    <Name>quotes</Name>
+                    <CreationDate>2006-02-03T16:45:09.000Z</CreationDate>
+            </Bucket>
+            <Bucket>
+                    <Name>samples</Name>
+                    <CreationDate>2006-02-03T16:41:58.000Z</CreationDate>
+            </Bucket>
+            </Buckets>
+        </ListAllMyBucketsResult>
+        "#,
+        )`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:358:9-362:11: `.with_request_checker(|request: &SignedRequest| {
+            assert_eq!(request.method, "GET");
+            assert_eq!(request.path, "/");
+            assert!(request.payload.is_none());
+        })`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:365:24-365:39: `.list_buckets()`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:374:26-374:33: `.get(0)`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:385:9-385:23: `.with_body("")`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:386:9-386:48: `.with_header("x-amz-expiration", "foo")`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:387:9-387:45: `.with_header("x-amz-restore", "bar")`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:391:24-391:45: `.head_object(request)`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:423:9-423:23: `.with_body("")`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:424:9-437:11: `.with_request_checker(|request: &SignedRequest| {
+            assert_eq!(request.method, "GET");
+            assert_eq!(request.path, "/bucket/key");
+            assert_eq!(
+                *request.params.get("response-content-type").unwrap(),
+                sstr("response_content_type")
+            );
+            assert!(request
+                .headers
+                .get("range")
+                .unwrap()
+                .contains(&Vec::from("range")));
+            assert!(request.payload.is_none());
+        })`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:440:19-440:39: `.get_object(request)`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:449:55-449:72: `.with_body(&body)`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:453:9-456:11: `.get_bucket_location(GetBucketLocationRequest {
+            bucket: "example-bucket".to_owned(),
+            expected_bucket_owner: sstr("expected_bucket_owner"),
+        })`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:471:9-471:16: `.into()`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:474:9-474:44: `.map_ok(|b| BytesMut::from(&b[..]))`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:475:9-475:22: `.try_concat()`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:488:5-488:40: `assert_clone::<GetObjectRequest>();`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:490:5-490:44: `assert_clone::<RestoreObjectRequest>();`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:500:55-507:6: `.with_body(
+        r#"<?xml version="1.0" encoding="UTF-8"?>
+        <Error>
+            <Code>NoSuchBucket</Code>
+            <Message>The specified bucket does not exist</Message>
+            <RequestId>4442587FB7D0A2F9</RequestId>
+        </Error>"#,
+    )`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:515:24-515:49: `.list_objects_v2(request)`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:517:21-517:27: `.err()`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:542:28-542:49: `.head_object(request)`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:546:5-546:44: `request = HeadObjectRequest::default();`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:547:5-547:57: `result = client.head_object(request).await.unwrap();`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs:547:20-547:41: `.head_object(request)`
+$DIR/rusoto/services/s3/src/generated.rs:23407:59-23407:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/s3/src/generated.rs:23410:28-23410:51: `.create_bucket(request)`
+$DIR/rusoto/services/s3/src/generated.rs:23420:59-23420:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/s3/src/generated.rs:23423:28-23423:50: `.list_objects(request)`
+$DIR/rusoto/services/s3/src/generated.rs:23433:59-23433:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/s3/src/generated.rs:23436:28-23436:52: `.get_bucket_acl(request)`
+$DIR/rusoto/services/s3/src/generated.rs:23446:59-23446:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/s3/src/generated.rs:23449:28-23449:57: `.get_bucket_location(request)`
+$DIR/rusoto/services/s3/src/generated.rs:23459:59-23459:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/s3/src/generated.rs:23462:28-23462:56: `.get_bucket_logging(request)`
+$DIR/rusoto/services/s3/src/generated.rs:23472:59-23472:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/s3/src/generated.rs:23475:28-23475:55: `.get_bucket_policy(request)`
+$DIR/rusoto/services/s3/src/generated.rs:23485:59-23485:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/s3/src/generated.rs:23488:28-23488:43: `.list_buckets()`
+$DIR/rusoto/services/s3/src/generated.rs:23498:59-23498:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/s3/src/generated.rs:23501:28-23501:60: `.list_multipart_uploads(request)`
+$DIR/rusoto/services/s3/src/generated.rs:23511:59-23511:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/s3/src/generated.rs:23514:28-23514:58: `.list_object_versions(request)`
+$DIR/rusoto/services/s3/src/generated.rs:23524:59-23524:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/s3/src/generated.rs:23527:28-23527:50: `.list_objects(request)`
+$DIR/rusoto/services/ses/src/generated.rs:13018:59-13018:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ses/src/generated.rs:13021:28-13021:53: `.delete_identity(request)`
+$DIR/rusoto/services/ses/src/generated.rs:13031:59-13031:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ses/src/generated.rs:13034:28-13034:53: `.delete_identity(request)`
+$DIR/rusoto/services/ses/src/generated.rs:13044:59-13044:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ses/src/generated.rs:13047:28-13047:66: `.get_identity_dkim_attributes(request)`
+$DIR/rusoto/services/ses/src/generated.rs:13057:59-13057:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ses/src/generated.rs:13060:28-13060:74: `.get_identity_notification_attributes(request)`
+$DIR/rusoto/services/ses/src/generated.rs:13070:59-13070:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ses/src/generated.rs:13073:28-13073:74: `.get_identity_verification_attributes(request)`
+$DIR/rusoto/services/ses/src/generated.rs:13083:59-13083:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ses/src/generated.rs:13086:28-13086:45: `.get_send_quota()`
+$DIR/rusoto/services/ses/src/generated.rs:13096:59-13096:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ses/src/generated.rs:13099:28-13099:50: `.get_send_statistics()`
+$DIR/rusoto/services/ses/src/generated.rs:13109:59-13109:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ses/src/generated.rs:13112:28-13112:53: `.list_identities(request)`
+$DIR/rusoto/services/ses/src/generated.rs:13122:59-13122:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ses/src/generated.rs:13125:28-13125:48: `.send_email(request)`
+$DIR/rusoto/services/ses/src/generated.rs:13135:59-13135:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ses/src/generated.rs:13138:28-13138:52: `.send_raw_email(request)`
+$DIR/rusoto/services/ses/src/generated.rs:13148:59-13148:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ses/src/generated.rs:13151:28-13151:63: `.set_identity_dkim_enabled(request)`
+$DIR/rusoto/services/ses/src/generated.rs:13161:59-13161:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ses/src/generated.rs:13164:28-13164:56: `.verify_domain_dkim(request)`
+$DIR/rusoto/services/ses/src/generated.rs:13174:59-13174:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/ses/src/generated.rs:13177:28-13177:60: `.verify_domain_identity(request)`
+$DIR/rusoto/services/sns/src/custom/custom_tests.rs:16:48-42:11: `.with_request_checker(|request: &SignedRequest| {
+            assert_eq!("POST", request.method);
+
+            if let Some(SignedRequestPayload::Buffer(ref buffer)) = request.payload {
+                let params: Params = serde_urlencoded::from_bytes(buffer).unwrap();
+                for idx in 1..2 {
+                    let key = params.get(format!("Attributes.entry.{}.key", idx).as_str());
+                    match key.unwrap().as_ref().unwrap().as_str() {
+                        "PlatformCredential" => {
+                            assert_eq!(
+                                Some(&Some("YOUR_PLATFORM_CREDENTIAL".to_owned())),
+                                params.get(format!("Attributes.entry.{}.value", idx).as_str())
+                            );
+                        }
+                        "PlatformPrincipal" => {
+                            assert_eq!(
+                                Some(&Some("YOUR_PLATFORM_PRINCIPAL".to_owned())),
+                                params.get(format!("Attributes.entry.{}.value", idx).as_str())
+                            );
+                        }
+                        _ => panic!("invalid params. {:?}", params),
+                    }
+                }
+            } else {
+                panic!("Unexpected request.payload: {:?}", request.payload);
+            }
+        })`
+$DIR/rusoto/services/sns/src/custom/custom_tests.rs:22:37-22:91: `.get(format!("Attributes.entry.{}.key", idx).as_str())`
+$DIR/rusoto/services/sns/src/custom/custom_tests.rs:46:21-49:6: `.insert(
+        "PlatformCredential".to_string(),
+        "YOUR_PLATFORM_CREDENTIAL".to_string(),
+    )`
+$DIR/rusoto/services/sns/src/custom/custom_tests.rs:50:21-53:6: `.insert(
+        "PlatformPrincipal".to_string(),
+        "YOUR_PLATFORM_PRINCIPAL".to_string(),
+    )`
+$DIR/rusoto/services/sns/src/custom/custom_tests.rs:60:11-60:50: `.create_platform_application(sns_input)`
+$DIR/rusoto/services/sns/src/custom/custom_tests.rs:66:48-82:11: `.with_request_checker(|request: &SignedRequest| {
+            assert_eq!("POST", request.method);
+
+            if let Some(SignedRequestPayload::Buffer(ref buffer)) = request.payload {
+                let params: Params = serde_urlencoded::from_bytes(buffer).unwrap();
+                assert_eq!(
+                    Some(&Some("Enabled".to_owned())),
+                    params.get("Attributes.entry.1.key")
+                );
+                assert_eq!(
+                    Some(&Some("false".to_owned())),
+                    params.get("Attributes.entry.1.value")
+                );
+            } else {
+                panic!("Unexpected request.payload: {:?}", request.payload);
+            }
+        })`
+$DIR/rusoto/services/sns/src/custom/custom_tests.rs:86:21-86:72: `.insert("Enabled".to_string(), "false".to_string())`
+$DIR/rusoto/services/sns/src/custom/custom_tests.rs:94:11-94:47: `.create_platform_endpoint(sns_input)`
+$DIR/rusoto/services/sns/src/custom/custom_tests.rs:100:48-116:11: `.with_request_checker(|request: &SignedRequest| {
+            assert_eq!("POST", request.method);
+
+            if let Some(SignedRequestPayload::Buffer(ref buffer)) = request.payload {
+                let params: Params = serde_urlencoded::from_bytes(buffer).unwrap();
+                assert_eq!(
+                    Some(&Some("PlatformCredential".to_owned())),
+                    params.get("Attributes.entry.1.key")
+                );
+                assert_eq!(
+                    Some(&Some("YOUR_PLATFORM_CREDENTIAL".to_owned())),
+                    params.get("Attributes.entry.1.value")
+                );
+            } else {
+                panic!("Unexpected request.payload: {:?}", request.payload);
+            }
+        })`
+$DIR/rusoto/services/sns/src/custom/custom_tests.rs:120:21-123:6: `.insert(
+        "PlatformCredential".to_string(),
+        "YOUR_PLATFORM_CREDENTIAL".to_string(),
+    )`
+$DIR/rusoto/services/sns/src/custom/custom_tests.rs:130:9-130:56: `.set_platform_application_attributes(sns_input)`
+$DIR/rusoto/services/sns/src/custom/custom_tests.rs:138:48-154:11: `.with_request_checker(|request: &SignedRequest| {
+            assert_eq!("POST", request.method);
+
+            if let Some(SignedRequestPayload::Buffer(ref buffer)) = request.payload {
+                let params: Params = serde_urlencoded::from_bytes(buffer).unwrap();
+                assert_eq!(
+                    Some(&Some("Enabled".to_owned())),
+                    params.get("Attributes.entry.1.key")
+                );
+                assert_eq!(
+                    Some(&Some("false".to_owned())),
+                    params.get("Attributes.entry.1.value")
+                );
+            } else {
+                panic!("Unexpected request.payload: {:?}", request.payload);
+            }
+        })`
+$DIR/rusoto/services/sns/src/custom/custom_tests.rs:158:21-158:72: `.insert("Enabled".to_string(), "false".to_string())`
+$DIR/rusoto/services/sns/src/custom/custom_tests.rs:164:11-164:46: `.set_endpoint_attributes(sns_input)`
+$DIR/rusoto/services/sns/src/custom/custom_tests.rs:169:55-183:6: `.with_body(
+        r#"<GetSMSAttributesResponse xmlns="http://sns.amazonaws.com/doc/2010-03-31/">
+              <GetSMSAttributesResult>
+                <attributes>
+                  <entry>
+                    <key>DefaultSMSType</key>
+                    <value>Promotional</value>
+                  </entry>
+                </attributes>
+              </GetSMSAttributesResult>
+              <ResponseMetadata>
+                <RequestId>7e20a670-be23-5b05-9364-f02cc763f409</RequestId>
+              </ResponseMetadata>
+            </GetSMSAttributesResponse>"#,
+    )`
+$DIR/rusoto/services/sns/src/custom/custom_tests.rs:189:25-189:55: `.get_sms_attributes(sns_input)`
+$DIR/rusoto/services/sns/src/custom/custom_tests.rs:201:48-217:11: `.with_request_checker(|request: &SignedRequest| {
+            assert_eq!("POST", request.method);
+
+            if let Some(SignedRequestPayload::Buffer(ref buffer)) = request.payload {
+                let params: Params = serde_urlencoded::from_bytes(buffer).unwrap();
+                assert_eq!(
+                    Some(&Some("DefaultSMSType".to_owned())),
+                    params.get("attributes.entry.1.key")
+                );
+                assert_eq!(
+                    Some(&Some("Promotional".to_owned())),
+                    params.get("attributes.entry.1.value")
+                );
+            } else {
+                panic!("Unexpected request.payload: {:?}", request.payload);
+            }
+        })`
+$DIR/rusoto/services/sns/src/custom/custom_tests.rs:221:21-221:85: `.insert("DefaultSMSType".to_string(), "Promotional".to_string())`
+$DIR/rusoto/services/sns/src/custom/custom_tests.rs:225:11-225:41: `.set_sms_attributes(sns_input)`
+$DIR/rusoto/services/sns/src/custom/custom_tests.rs:231:9-253:10: `.with_body(
+            r#"<GetSubscriptionAttributesResponse xmlns="https://sns.amazonaws.com/doc/2010-03-31/">
+                <GetSubscriptionAttributesResult>
+                    <Attributes>
+                        <entry>
+                            <key>Owner</key>
+                            <value>123456789012</value>
+                        </entry>
+                        <entry>
+                            <key>DeliveryPolicy</key>
+                            <value>{&quot;healthyRetryPolicy&quot;:{&quot;numRetries&quot;:10}}</value>
+                        </entry>
+                        <entry>
+                            <key>SubscriptionArn</key>
+                            <value>arn:aws:sns:us-east-2:123456789012:My-Topic:80289ba6-0fd4-4079-afb4-ce8c8260f0ca</value>
+                        </entry>
+                    </Attributes>
+                </GetSubscriptionAttributesResult>
+                <ResponseMetadata>
+                    <RequestId>057f074c-33a7-11df-9540-99d0768312d3</RequestId>
+                </ResponseMetadata>
+            </GetSubscriptionAttributesResponse>"#,
+        )`
+$DIR/rusoto/services/sns/src/custom/custom_tests.rs:259:25-259:64: `.get_subscription_attributes(sns_input)`
+$DIR/rusoto/services/sns/src/generated.rs:7283:59-7283:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/sns/src/generated.rs:7286:28-7286:50: `.delete_topic(request)`
+$DIR/rusoto/services/sns/src/generated.rs:7296:59-7296:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/sns/src/generated.rs:7299:28-7299:52: `.add_permission(request)`
+$DIR/rusoto/services/sns/src/generated.rs:7309:59-7309:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/sns/src/generated.rs:7312:28-7312:58: `.confirm_subscription(request)`
+$DIR/rusoto/services/sns/src/generated.rs:7322:59-7322:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/sns/src/generated.rs:7325:28-7325:50: `.create_topic(request)`
+$DIR/rusoto/services/sns/src/generated.rs:7335:59-7335:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/sns/src/generated.rs:7338:28-7338:65: `.get_subscription_attributes(request)`
+$DIR/rusoto/services/sns/src/generated.rs:7348:59-7348:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/sns/src/generated.rs:7351:28-7351:58: `.get_topic_attributes(request)`
+$DIR/rusoto/services/sns/src/generated.rs:7361:59-7361:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/sns/src/generated.rs:7364:28-7364:65: `.list_subscriptions_by_topic(request)`
+$DIR/rusoto/services/sns/src/generated.rs:7374:59-7374:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/sns/src/generated.rs:7377:28-7377:56: `.list_subscriptions(request)`
+$DIR/rusoto/services/sns/src/generated.rs:7387:59-7387:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/sns/src/generated.rs:7390:28-7390:49: `.list_topics(request)`
+$DIR/rusoto/services/sns/src/generated.rs:7398:59-7398:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/sns/src/generated.rs:7401:28-7401:45: `.publish(request)`
+$DIR/rusoto/services/sns/src/generated.rs:7411:59-7411:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/sns/src/generated.rs:7414:28-7414:47: `.subscribe(request)`
+$DIR/rusoto/services/sqs/src/custom/custom_tests.rs:19:9-39:10: `.with_body(
+            r#"<?xml version="1.0" encoding="UTF-8"?>
+        <SendMessageResponse>
+            <SendMessageResult>
+                <MD5OfMessageBody>
+                    fafb00f5732ab283681e124bf8747ed1
+                </MD5OfMessageBody>
+                <MD5OfMessageAttributes>
+            3ae8f24a165a8cedc005670c81a27295
+                </MD5OfMessageAttributes>
+                <MessageId>
+                    5fea7756-0ea4-451a-a703-a558b933e274
+                </MessageId>
+            </SendMessageResult>
+            <ResponseMetadata>
+                <RequestId>
+                    27daac76-34dd-47df-bd01-1f6e873584a0
+                </RequestId>
+            </ResponseMetadata>
+        </SendMessageResponse>"#,
+        )`
+$DIR/rusoto/services/sqs/src/custom/custom_tests.rs:40:9-62:11: `.with_request_checker(|request: &SignedRequest| {
+            println!("{:#?}", request.params);
+
+            assert_eq!("POST", request.method);
+            assert_eq!("/", request.path);
+            if let Some(SignedRequestPayload::Buffer(ref buffer)) = request.payload {
+                let params: Params = serde_urlencoded::from_bytes(buffer).unwrap();
+                assert_eq!(
+                    Some(&Some("test_attribute_name".to_owned())),
+                    params.get("MessageAttribute.1.Name")
+                );
+                assert_eq!(
+                    Some(&Some("test_attribute_value".to_owned())),
+                    params.get("MessageAttribute.1.Value.StringValue")
+                );
+                assert_eq!(
+                    Some(&Some("String".to_owned())),
+                    params.get("MessageAttribute.1.Value.DataType")
+                );
+            } else {
+                panic!("Unexpected request.payload: {:?}", request.payload);
+            }
+        })`
+$DIR/rusoto/services/sqs/src/custom/custom_tests.rs:66:23-73:6: `.insert(
+        "test_attribute_name".to_owned(),
+        MessageAttributeValue {
+            string_value: Some("test_attribute_value".to_owned()),
+            data_type: "String".to_owned(),
+            ..Default::default()
+        },
+    )`
+$DIR/rusoto/services/sqs/src/custom/custom_tests.rs:82:25-82:47: `.send_message(request)`
+$DIR/rusoto/services/sqs/src/custom/custom_tests.rs:88:9-117:10: `.with_body(
+            r#"<?xml version="1.0" encoding="UTF-8"?>
+        <ReceiveMessageResponse>
+            <ReceiveMessageResult>
+            <Message>
+                <MessageId>
+                5fea7756-0ea4-451a-a703-a558b933e274
+                </MessageId>
+                <ReceiptHandle>
+                MbZj6wDWli+JvwwJaBV+3dcjk2YW2vA3+STFFljTM8tJJg6HRG6PYSasuWXPJB+Cw
+                Lj1FjgXUv1uSj1gUPAWV66FU/WeR4mq2OKpEGYWbnLmpRCJVAyeMjeU5ZBdtcQ+QE
+                auMZc8ZRv37sIW2iJKq3M9MFx1YvV11A2x/KSbkJ0=
+                </ReceiptHandle>
+                <MD5OfBody>
+                fafb00f5732ab283681e124bf8747ed1
+                </MD5OfBody>
+                <Body>This is a test message</Body>
+                <Attribute>
+                <Name>SenderId</Name>
+                <Value>195004372649</Value>
+                </Attribute>
+            </Message>
+            </ReceiveMessageResult>
+            <ResponseMetadata>
+            <RequestId>
+                b6633655-283d-45b4-aee4-4e84e0ae6afa
+            </RequestId>
+            </ResponseMetadata>
+        </ReceiveMessageResponse>"#,
+        )`
+$DIR/rusoto/services/sqs/src/custom/custom_tests.rs:118:9-137:11: `.with_request_checker(|request: &SignedRequest| {
+            assert_eq!("POST", request.method);
+            assert_eq!("/", request.path);
+            if let Some(SignedRequestPayload::Buffer(ref buffer)) = request.payload {
+                let params: Params = serde_urlencoded::from_bytes(buffer).unwrap();
+                assert_eq!(
+                    params.get("Action"),
+                    Some(&Some("ReceiveMessage".to_owned()))
+                );
+                assert_eq!(
+                    params.get("MaxNumberOfMessages"),
+                    Some(&Some("1".to_owned()))
+                );
+                assert_eq!(params.get("VisibilityTimeout"), Some(&Some("2".to_owned())));
+                assert_eq!(params.get("WaitTimeSeconds"), Some(&Some("3".to_owned())));
+                assert_eq!(params.get("Integer"), None);
+            } else {
+                panic!("Unexpected request.payload: {:?}", request.payload);
+            }
+        })`
+$DIR/rusoto/services/sqs/src/custom/custom_tests.rs:148:25-148:50: `.receive_message(request)`
+$DIR/rusoto/services/sqs/src/custom/custom_tests.rs:153:55-164:6: `.with_body(
+        r#"<?xml version="1.0"?>
+        <ErrorResponse xmlns="http://queue.amazonaws.com/doc/2012-11-05/">
+            <Error>
+                <Type>Sender</Type>
+                <Code>AWS.SimpleQueueService.NonExistentQueue</Code>
+                <Message>The specified queue does not exist for this wsdl version.</Message>
+                <Detail/>
+            </Error>
+            <RequestId>8f8f9957-c0d9-536a-9ca6-ca7483be06ad</RequestId>
+        </ErrorResponse>"#,
+    )`
+$DIR/rusoto/services/sqs/src/custom/custom_tests.rs:172:24-172:47: `.get_queue_url(request)`
+$DIR/rusoto/services/sqs/src/custom/custom_tests.rs:174:21-174:27: `.err()`
+$DIR/rusoto/services/sqs/src/custom/custom_tests.rs:186:9-218:10: `.with_body(
+            r#"<?xml version="1.0" encoding="UTF-8"?>
+        <ReceiveMessageResponse>
+            <ReceiveMessageResult>
+            <Message>
+                <MessageId>
+                    5fea7756-0ea4-451a-a703-a558b933e274
+                </MessageId>
+                <ReceiptHandle>
+                    MbZj6wDWli+JvwwJaBV+3dcjk2YW2vA3+STFFljTM8tJJg6HRG6PYSasuWXPJB+Cw
+                    Lj1FjgXUv1uSj1gUPAWV66FU/WeR4mq2OKpEGYWbnLmpRCJVAyeMjeU5ZBdtcQ+QE
+                    auMZc8ZRv37sIW2iJKq3M9MFx1YvV11A2x/KSbkJ0=
+                </ReceiptHandle>
+                <MD5OfBody>
+                    fafb00f5732ab283681e124bf8747ed1
+                </MD5OfBody>
+                <Body>This is a test message</Body>
+                <MessageAttribute>
+                    <Name>test_attribute_name</Name>
+                    <Value>
+                        <DataType>String</DataType>
+                        <StringValue>test_attribute_value</StringValue>
+                    </Value>
+                </MessageAttribute>
+            </Message>
+            </ReceiveMessageResult>
+            <ResponseMetadata>
+            <RequestId>
+                b6633655-283d-45b4-aee4-4e84e0ae6afa
+            </RequestId>
+            </ResponseMetadata>
+        </ReceiveMessageResponse>"#,
+        )`
+$DIR/rusoto/services/sqs/src/custom/custom_tests.rs:226:24-226:49: `.receive_message(request)`
+$DIR/rusoto/services/sqs/src/custom/custom_tests.rs:232:27-232:33: `.pop()`
+$DIR/rusoto/services/sqs/src/custom/custom_tests.rs:234:23-241:6: `.insert(
+        "test_attribute_name".to_owned(),
+        MessageAttributeValue {
+            string_value: Some("test_attribute_value".to_owned()),
+            data_type: "String".to_owned(),
+            ..Default::default()
+        },
+    )`
+$DIR/rusoto/services/sqs/src/generated.rs:3824:59-3824:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/sqs/src/generated.rs:3827:28-3827:50: `.delete_queue(request)`
+$DIR/rusoto/services/sqs/src/generated.rs:3837:59-3837:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/sqs/src/generated.rs:3840:28-3840:52: `.add_permission(request)`
+$DIR/rusoto/services/sqs/src/generated.rs:3850:59-3850:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/sqs/src/generated.rs:3853:28-3853:69: `.change_message_visibility_batch(request)`
+$DIR/rusoto/services/sqs/src/generated.rs:3863:59-3863:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/sqs/src/generated.rs:3866:28-3866:50: `.create_queue(request)`
+$DIR/rusoto/services/sqs/src/generated.rs:3876:59-3876:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/sqs/src/generated.rs:3879:28-3879:58: `.delete_message_batch(request)`
+$DIR/rusoto/services/sqs/src/generated.rs:3889:59-3889:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/sqs/src/generated.rs:3892:28-3892:58: `.get_queue_attributes(request)`
+$DIR/rusoto/services/sqs/src/generated.rs:3902:59-3902:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/sqs/src/generated.rs:3905:28-3905:51: `.get_queue_url(request)`
+$DIR/rusoto/services/sqs/src/generated.rs:3915:59-3915:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/sqs/src/generated.rs:3918:28-3918:49: `.list_queues(request)`
+$DIR/rusoto/services/sqs/src/generated.rs:3928:59-3928:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/sqs/src/generated.rs:3931:28-3931:53: `.receive_message(request)`
+$DIR/rusoto/services/sqs/src/generated.rs:3941:59-3941:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/sqs/src/generated.rs:3944:28-3944:56: `.send_message_batch(request)`
+$DIR/rusoto/services/sqs/src/generated.rs:3954:59-3954:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/sqs/src/generated.rs:3957:28-3957:50: `.send_message(request)`
+$DIR/rusoto/services/sts/src/custom/credential.rs:415:5-415:48: `is_send::<StsSessionCredentialsProvider>();`
+$DIR/rusoto/services/sts/src/custom/credential.rs:416:5-416:58: `is_send::<StsAssumeRoleSessionCredentialsProvider>();`
+$DIR/rusoto/services/sts/src/custom/credential.rs:417:5-417:69: `is_send::<StsWebIdentityFederationSessionCredentialsProvider>();`
+$DIR/rusoto/services/sts/src/custom/web_identity.rs:154:9-154:96: `WebIdentityProvider::new(Secret::from("".to_string()), "", Some(Some("".to_string())));`
+$DIR/rusoto/services/sts/src/custom/web_identity.rs:165:9-165:44: `writeln!(file, "{}", TOKEN_VALUE)?;`
+$DIR/rusoto/services/sts/src/custom/web_identity.rs:167:38-167:45: `.path()`
+$DIR/rusoto/services/sts/src/custom/web_identity.rs:167:45-167:63: `.to_string_lossy()`
+$DIR/rusoto/services/sts/src/custom/web_identity.rs:171:22-171:35: `.load_token()`
+$DIR/rusoto/services/sts/src/custom/web_identity.rs:173:9-173:15: `Ok(())`
+$DIR/rusoto/services/sts/src/generated.rs:1963:59-1963:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/sts/src/generated.rs:1966:28-1966:55: `.get_session_token(request)`
+$DIR/rusoto/services/sts/src/generated.rs:1976:59-1976:85: `.with_body(&mock_response)`
+$DIR/rusoto/services/sts/src/generated.rs:1979:28-1979:55: `.get_session_token(request)`
+$DIR/rusoto/signature/src/region.rs:350:9-350:74: `assert_tokens(&Region::ApEast1, &tokens_for_region("ap-east-1"));`
+$DIR/rusoto/signature/src/region.rs:351:9-351:84: `assert_tokens(&Region::ApNortheast1, &tokens_for_region("ap-northeast-1"));`
+$DIR/rusoto/signature/src/region.rs:352:9-352:84: `assert_tokens(&Region::ApNortheast2, &tokens_for_region("ap-northeast-2"));`
+$DIR/rusoto/signature/src/region.rs:353:9-353:84: `assert_tokens(&Region::ApNortheast3, &tokens_for_region("ap-northeast-3"));`
+$DIR/rusoto/signature/src/region.rs:354:9-354:76: `assert_tokens(&Region::ApSouth1, &tokens_for_region("ap-south-1"));`
+$DIR/rusoto/signature/src/region.rs:355:9-355:84: `assert_tokens(&Region::ApSoutheast1, &tokens_for_region("ap-southeast-1"));`
+$DIR/rusoto/signature/src/region.rs:356:9-356:84: `assert_tokens(&Region::ApSoutheast2, &tokens_for_region("ap-southeast-2"));`
+$DIR/rusoto/signature/src/region.rs:357:9-357:84: `assert_tokens(&Region::ApSoutheast3, &tokens_for_region("ap-southeast-3"));`
+$DIR/rusoto/signature/src/region.rs:358:9-358:80: `assert_tokens(&Region::CaCentral1, &tokens_for_region("ca-central-1"));`
+$DIR/rusoto/signature/src/region.rs:359:9-359:80: `assert_tokens(&Region::EuCentral1, &tokens_for_region("eu-central-1"));`
+$DIR/rusoto/signature/src/region.rs:360:9-360:74: `assert_tokens(&Region::EuWest1, &tokens_for_region("eu-west-1"));`
+$DIR/rusoto/signature/src/region.rs:361:9-361:74: `assert_tokens(&Region::EuWest2, &tokens_for_region("eu-west-2"));`
+$DIR/rusoto/signature/src/region.rs:362:9-362:74: `assert_tokens(&Region::EuWest3, &tokens_for_region("eu-west-3"));`
+$DIR/rusoto/signature/src/region.rs:363:9-363:76: `assert_tokens(&Region::EuNorth1, &tokens_for_region("eu-north-1"));`
+$DIR/rusoto/signature/src/region.rs:364:9-364:76: `assert_tokens(&Region::EuSouth1, &tokens_for_region("eu-south-1"));`
+$DIR/rusoto/signature/src/region.rs:365:9-365:76: `assert_tokens(&Region::MeSouth1, &tokens_for_region("me-south-1"));`
+$DIR/rusoto/signature/src/region.rs:366:9-366:74: `assert_tokens(&Region::SaEast1, &tokens_for_region("sa-east-1"));`
+$DIR/rusoto/signature/src/region.rs:367:9-367:74: `assert_tokens(&Region::UsEast1, &tokens_for_region("us-east-1"));`
+$DIR/rusoto/signature/src/region.rs:368:9-368:74: `assert_tokens(&Region::UsEast2, &tokens_for_region("us-east-2"));`
+$DIR/rusoto/signature/src/region.rs:369:9-369:74: `assert_tokens(&Region::UsWest1, &tokens_for_region("us-west-1"));`
+$DIR/rusoto/signature/src/region.rs:370:9-370:74: `assert_tokens(&Region::UsWest2, &tokens_for_region("us-west-2"));`
+$DIR/rusoto/signature/src/region.rs:371:9-371:81: `assert_tokens(&Region::UsGovEast1, &tokens_for_region("us-gov-east-1"));`
+$DIR/rusoto/signature/src/region.rs:372:9-372:81: `assert_tokens(&Region::UsGovWest1, &tokens_for_region("us-gov-west-1"));`
+$DIR/rusoto/signature/src/region.rs:373:9-373:76: `assert_tokens(&Region::CnNorth1, &tokens_for_region("cn-north-1"));`
+$DIR/rusoto/signature/src/region.rs:374:9-374:84: `assert_tokens(&Region::CnNorthwest1, &tokens_for_region("cn-northwest-1"));`
+$DIR/rusoto/signature/src/region.rs:375:9-375:76: `assert_tokens(&Region::AfSouth1, &tokens_for_region("af-south-1"));`
+$DIR/rusoto/signature/src/region.rs:393:9-402:11: `assert_tokens(
+            &custom_region,
+            &[
+                Token::Tuple { len: 2 },
+                Token::String("eu-east-1"),
+                Token::Some,
+                Token::String("http://localhost:8000"),
+                Token::TupleEnd,
+            ],
+        );`
+$DIR/rusoto/signature/src/signature.rs:860:16-865:11: `.sign(&AwsCredentials::new(
+            "foo_access_key",
+            "foo_secret_key",
+            None,
+            None,
+        ))`
+$DIR/rusoto/signature/src/signature.rs:867:47-867:58: `.try_into()`
+$DIR/rusoto/signature/src/signature.rs:882:16-887:11: `.sign(&AwsCredentials::new(
+            "foo_access_key",
+            "foo_secret_key",
+            None,
+            None,
+        ))`
+$DIR/rusoto/signature/src/signature.rs:895:9-895:55: `query_encoding_escaped_chars_range(0u8, 45u8);`
+$DIR/rusoto/signature/src/signature.rs:896:9-896:56: `query_encoding_escaped_chars_range(47u8, 48u8);`
+$DIR/rusoto/signature/src/signature.rs:897:9-897:56: `query_encoding_escaped_chars_range(58u8, 65u8);`
+$DIR/rusoto/signature/src/signature.rs:898:9-898:56: `query_encoding_escaped_chars_range(91u8, 95u8);`
+$DIR/rusoto/signature/src/signature.rs:899:9-899:56: `query_encoding_escaped_chars_range(96u8, 97u8);`
+$DIR/rusoto/signature/src/signature.rs:900:9-900:58: `query_encoding_escaped_chars_range(123u8, 126u8);`
+$DIR/rusoto/signature/src/signature.rs:901:9-901:58: `query_encoding_escaped_chars_range(127u8, 128u8);`
+$DIR/rusoto/signature/src/signature.rs:920:16-920:48: `.add_param("arg1%7B", "arg1%7B")`
+$DIR/rusoto/signature/src/signature.rs:921:16-921:49: `.add_param("arg2%7B+%2B", "+%2B")`
+$DIR/rusoto/signature/src/signature.rs:939:16-942:10: `.add_param(
+            "key:with@funny&characters",
+            "value with/funny%characters/Рускии",
+        )`
+$DIR/rusoto/signature/src/signature.rs:955:15-955:59: `.insert("key".into(), Some("val+ue".into()))`
+$DIR/rusoto/signature/src/signature.rs:955:28-955:35: `.into()`
+$DIR/rusoto/signature/src/signature.rs:955:50-955:57: `.into()`
+$DIR/rusoto/signature/src/signature.rs:992:16-992:66: `.insert("content-length".to_owned(), vec![vec![]])`
+$DIR/rusoto/signature/src/signature.rs:994:16-994:64: `.insert("content-type".to_owned(), vec![vec![]])`
+$DIR/rusoto/signature/src/signature.rs:995:16-995:62: `.insert("x-amz-date".to_owned(), vec![vec![]])`
+$DIR/rusoto/signature/src/signature.rs:1002:16-1002:65: `.insert("cache-control".to_owned(), vec![vec![]])`
+$DIR/rusoto/signature/src/signature.rs:1005:16-1005:66: `.insert("content-length".to_owned(), vec![vec![]])`
+$DIR/rusoto/signature/src/signature.rs:1007:16-1007:64: `.insert("content-type".to_owned(), vec![vec![]])`
+$DIR/rusoto/signature/src/signature.rs:1008:16-1008:56: `.insert("host".to_owned(), vec![vec![]])`
+$DIR/rusoto/signature/src/signature.rs:1009:16-1009:62: `.insert("x-amz-date".to_owned(), vec![vec![]])`
+$DIR/rusoto/signature/src/signature.rs:1020:16-1020:65: `.insert("cache-control".to_owned(), vec![vec![]])`
+$DIR/rusoto/signature/src/signature.rs:1023:16-1023:66: `.insert("content-length".to_owned(), vec![vec![]])`
+$DIR/rusoto/signature/src/signature.rs:1098:16-1103:11: `.sign(&AwsCredentials::new(
+            "foo_access_key",
+            "foo_secret_key",
+            None,
+            None,
+        ))`
+$DIR/rusoto/signature/src/signature.rs:1105:52-1105:73: `.get("authorization")`
+$DIR/rusoto/signature/src/stream.rs:163:32-163:50: `.into_async_read()`
+$DIR/rusoto/signature/src/stream.rs:187:32-187:53: `.into_blocking_read()`
+$DIR/rusoto/signature/src/stream.rs:214:32-214:50: `.into_async_read()`
+$DIR/service_crategen/src/commands/generate/codegen/rest_request_generator.rs:355:59-355:100: `.expect("failed to parse operation json")`

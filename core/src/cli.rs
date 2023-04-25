@@ -30,6 +30,8 @@ pub struct Opts<Identifier: Clone + Send + Sync + ValueEnum + 'static> {
     deny: Vec<Warning>,
     #[clap(long, help = "Dump sqlite database contents to the console")]
     dump: bool,
+    #[clap(long, help = "Dump removal candidates and exit (for debugging)")]
+    dump_candidates: bool,
     #[clap(long, help = "Assume testing framework is <FRAMEWORK>")]
     framework: Option<framework::Auto<Identifier>>,
     #[clap(long, help = "Do not perform dry runs")]
@@ -70,6 +72,7 @@ impl<Identifier: Clone + Send + Sync + ValueEnum> From<Opts<Identifier>>
             default_config,
             deny,
             dump,
+            dump_candidates,
             framework,
             no_dry_run,
             no_sqlite,
@@ -92,6 +95,7 @@ impl<Identifier: Clone + Send + Sync + ValueEnum> From<Opts<Identifier>>
                 default_config,
                 deny,
                 dump,
+                dump_candidates,
                 no_dry_run,
                 no_sqlite,
                 quiet,
