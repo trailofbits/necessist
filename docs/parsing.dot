@@ -1,0 +1,9 @@
+digraph {
+    context -> config;
+    config -> framework;
+    framework -> generic_visitor;
+    framework -> file;
+    file -> storage;
+    generic_visitor -> storage;
+    storage -> visitor;
+}

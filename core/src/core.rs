@@ -85,6 +85,8 @@ pub struct Config {
     pub ignored_functions: Vec<String>,
     #[serde(default)]
     pub ignored_macros: Vec<String>,
+    #[serde(default)]
+    pub ignored_methods: Vec<String>,
 }
 
 /// Necessist's main entrypoint.
