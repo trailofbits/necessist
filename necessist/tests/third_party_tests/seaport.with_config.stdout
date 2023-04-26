@@ -7956,6 +7956,50 @@ $DIR/test/router.spec.ts:673:20-676:9: `.provider.request({
         method: "hardhat_stopImpersonatingAccount",
         params: [marketplaceContract.address],
       })`
+$DIR/test/router.spec.ts:752:49-752:75: `.getBalance(buyer.address)`
+$DIR/test/router.spec.ts:755:5-764:7: `await router.connect(buyer).fulfillAvailableAdvancedOrders(
+      {
+        ...params,
+        seaportContracts: params.seaportContracts.slice(0, 1),
+        advancedOrderParams: params.advancedOrderParams.slice(0, 1),
+      },
+      {
+        value,
+      }
+    );`
+$DIR/test/router.spec.ts:755:17-755:32: `.connect(buyer)`
+$DIR/test/router.spec.ts:755:32-764:6: `.fulfillAvailableAdvancedOrders(
+      {
+        ...params,
+        seaportContracts: params.seaportContracts.slice(0, 1),
+        advancedOrderParams: params.advancedOrderParams.slice(0, 1),
+      },
+      {
+        value,
+      }
+    )`
+$DIR/test/router.spec.ts:758:33-758:62: `.seaportContracts.slice(0, 1)`
+$DIR/test/router.spec.ts:759:36-759:68: `.advancedOrderParams.slice(0, 1)`
+$DIR/test/router.spec.ts:767:5-769:8: `await router.connect(buyer).fulfillAvailableAdvancedOrders(params, {
+      value: value.mul(2),
+    });`
+$DIR/test/router.spec.ts:767:17-767:32: `.connect(buyer)`
+$DIR/test/router.spec.ts:767:32-769:7: `.fulfillAvailableAdvancedOrders(params, {
+      value: value.mul(2),
+    })`
+$DIR/test/router.spec.ts:768:19-768:26: `.mul(2)`
+$DIR/test/router.spec.ts:772:28-772:43: `.ownerOf(nftId)`
+$DIR/test/router.spec.ts:773:28-773:44: `.ownerOf(nftId2)`
+$DIR/test/router.spec.ts:776:48-776:74: `.getBalance(buyer.address)`
+$DIR/test/router.spec.ts:783:13-783:28: `.connect(buyer)`
+$DIR/test/router.spec.ts:783:28-785:9: `.fulfillAvailableAdvancedOrders(params, {
+        value,
+      })`
+$DIR/test/router.spec.ts:790:5-790:78: `params.advancedOrderParams[0].advancedOrders[0].parameters.orderType = 4;`
+$DIR/test/router.spec.ts:792:13-792:28: `.connect(buyer)`
+$DIR/test/router.spec.ts:792:28-794:9: `.fulfillAvailableAdvancedOrders(params, {
+        value,
+      })`
 $DIR/test/transferhelper.spec.ts:157:29-157:66: `.max(1, randomInt(itemsToCreate - 2))`
 $DIR/test/transferhelper.spec.ts:158:30-158:79: `.max(1, randomInt(itemsToCreate - numERC20s - 1))`
 $DIR/test/transferhelper.spec.ts:159:31-159:78: `.max(1, itemsToCreate - numERC20s - numERC721s)`

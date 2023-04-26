@@ -1,4 +1,5 @@
 url = "https://github.com/ProjectOpenSea/seaport"
+rev = "1.5"
 framework = "hardhat-ts"
 
 [config]
