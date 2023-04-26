@@ -14,14 +14,14 @@ use subprocess::Exec;
 
 // Framework modules
 
-mod foundry;
+/* mod foundry;
 use foundry::Foundry;
 
 mod golang;
 use golang::Golang;
 
 mod hardhat_ts;
-use hardhat_ts::HardhatTs;
+use hardhat_ts::HardhatTs; */
 
 mod rust;
 use rust::Rust;
@@ -29,7 +29,10 @@ use rust::Rust;
 // Other modules
 
 mod parsing;
-use parsing::{ParseAdapter, ParseLow, WalkDirResult};
+use parsing::{AbstractTypes, MaybeNamed, Named, ParseAdapter, ParseLow, Spanned, WalkDirResult};
+
+mod generic_visitor;
+use generic_visitor::GenericVisitor;
 
 mod running;
 use running::{ProcessLines, RunAdapter, RunLow};
@@ -41,18 +44,18 @@ mod ts_utils;
 #[non_exhaustive]
 #[remain::sorted]
 pub enum Identifier {
-    Foundry,
+    /* Foundry,
     Golang,
-    HardhatTs,
+    HardhatTs, */
     Rust,
 }
 
 impl Applicable for Identifier {
     fn applicable(&self, context: &LightContext) -> Result<bool> {
         match *self {
-            Self::Foundry => Foundry::applicable(context),
+            /* Self::Foundry => Foundry::applicable(context),
             Self::Golang => Golang::applicable(context),
-            Self::HardhatTs => HardhatTs::applicable(context),
+            Self::HardhatTs => HardhatTs::applicable(context), */
             Self::Rust => Rust::applicable(context),
         }
     }
@@ -61,13 +64,13 @@ impl Applicable for Identifier {
 impl ToImplementation for Identifier {
     fn to_implementation(&self, _context: &LightContext) -> Result<Option<Box<dyn Interface>>> {
         Ok(Some(match *self {
-            Self::Foundry => implementation_as_interface(ParseRunAdapter::new)(Foundry::new()),
+            /* Self::Foundry => implementation_as_interface(ParseRunAdapter::new)(Foundry::new()),
 
             Self::Golang => implementation_as_interface(ParseRunAdapter::new)(Golang::new()),
 
             // smoelius: `HardhatTs` implements the high-level `Run` interface directly.
             Self::HardhatTs => implementation_as_interface(ParseAdapter)(HardhatTs::new()),
-
+            */
             Self::Rust => implementation_as_interface(ParseRunAdapter::new)(Rust::new()),
         }))
     }
@@ -117,7 +120,10 @@ impl<T> ParseRunAdapter<T> {
 }
 
 impl<T: ParseLow> AsParse for ParseRunAdapter<T> {
-    fn as_parse(&mut self) -> &mut dyn ParseHigh {
+    fn as_parse(&self) -> &dyn ParseHigh {
+        &self.parse
+    }
+    fn as_parse_mut(&mut self) -> &mut dyn ParseHigh {
         &mut self.parse
     }
 }

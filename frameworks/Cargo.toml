@@ -20,6 +20,7 @@ heck = "0.4"
 if_chain = "1.0"
 lazy_static = "1.4"
 log = "0.4"
+paste = "1.0"
 regex = "1.8"
 remain = "0.2"
 strum = "0.24"
@@ -42,6 +43,7 @@ swc_core = { version = "0.76", features = ["common", "ecma_ast", "ecma_parser", 
 
 # Rust
 cargo_metadata = "0.15"
+quote = "1.0"
 syn = { version = "2.0", features = ["extra-traits", "full", "visit"] }
 
 [dev-dependencies]

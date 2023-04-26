@@ -1,17 +1,46 @@
 use super::TryInsert;
-use anyhow::{anyhow, Result};
+use anyhow::{anyhow, Error, Result};
 use cargo_metadata::{MetadataCommand, Package};
-use necessist_core::util;
+use necessist_core::{util, Span};
 use std::{
     collections::BTreeMap,
     path::{Path, PathBuf},
 };
+use syn::{ExprMethodCall, File, Ident, Stmt};
 
 /// Structures needed during parsing but not after.
-#[derive(Default)]
-pub(super) struct Storage {
+pub struct Storage<'ast> {
+    pub module_path: Vec<&'ast Ident>,
+    pub last_statement_visited: Option<&'ast Stmt>,
+    pub last_method_call_visited: Option<&'ast ExprMethodCall>,
     pub test_file_fs_module_path_cache: BTreeMap<PathBuf, Vec<String>>,
     pub test_file_package_cache: BTreeMap<PathBuf, Package>,
+    pub error: Option<Error>,
+}
+
+impl<'ast> Storage<'ast> {
+    pub fn new(_file: &'ast File) -> Self {
+        Self {
+            module_path: Vec::new(),
+            last_statement_visited: None,
+            last_method_call_visited: None,
+            test_file_fs_module_path_cache: BTreeMap::new(),
+            test_file_package_cache: BTreeMap::new(),
+            error: None,
+        }
+    }
+
+    pub fn test_path(&mut self, span: &Span, name: &str) -> Result<Vec<String>> {
+        let mut test_path = cached_test_file_fs_module_path(
+            &mut self.test_file_fs_module_path_cache,
+            &mut self.test_file_package_cache,
+            &span.source_file,
+        )
+        .cloned()?;
+        test_path.extend(self.module_path.iter().map(ToString::to_string));
+        test_path.push(name.to_string());
+        Ok(test_path)
+    }
 }
 
 #[cfg_attr(

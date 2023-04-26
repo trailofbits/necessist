@@ -1,86 +1,85 @@
-use super::{cached_test_file_fs_module_path, Rust, Storage};
-use anyhow::{Error, Result};
-use necessist_core::{
-    warn, Config, LightContext, SourceFile, Span, ToInternalSpan, WarnFlags, Warning,
-};
-use std::{
-    path::{Path, StripPrefixError},
-    rc::Rc,
-};
+use super::{GenericVisitor, MacroCall, Rust, Storage};
+use anyhow::Result;
+use necessist_core::Span;
+use std::cell::RefCell;
 use syn::{
-    punctuated::Punctuated,
-    spanned::Spanned,
-    visit::{visit_expr_method_call, visit_item_fn, visit_item_mod, visit_stmt, Visit},
-    Expr, ExprMacro, ExprMethodCall, File, Ident, ItemFn, ItemMod, Macro, PathSegment, Stmt,
-    StmtMacro, Token,
+    visit::{
+        visit_expr_call, visit_expr_macro, visit_expr_method_call, visit_item_fn, visit_item_mod,
+        visit_stmt, visit_stmt_macro, Visit,
+    },
+    ExprCall, ExprMacro, ExprMethodCall, File, Ident, ItemFn, ItemMod, PathSegment, Stmt,
+    StmtMacro,
 };
 
 #[cfg_attr(
     dylint_lib = "non_local_effect_before_error_return",
     allow(non_local_effect_before_error_return)
 )]
-pub(super) fn visit(
-    context: &LightContext,
-    config: &Config,
-    framework: &mut Rust,
-    storage: &mut Storage,
-    test_file: &Path,
-    file: &File,
+pub(super) fn visit<'ast>(
+    generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Rust>,
+    storage: &RefCell<Storage<'ast>>,
+    file: &'ast File,
 ) -> Result<Vec<Span>> {
-    let mut visitor = Visitor::new(context, config, framework, storage, test_file);
+    let mut visitor = Visitor::new(generic_visitor, storage);
     visitor.visit_file(file);
-    if let Some(error) = visitor.error {
+    if let Some(error) = storage.borrow_mut().error.take() {
         Err(error)
     } else {
-        Ok(visitor.spans)
+        Ok(visitor.generic_visitor.spans_visited())
     }
 }
 
-struct Visitor<'ast, 'context, 'config, 'framework, 'storage> {
-    context: &'context LightContext<'context>,
-    config: &'config Config,
-    framework: &'framework mut Rust,
-    storage: &'storage mut Storage,
-    source_file: SourceFile,
-    module_path: Vec<&'ast Ident>,
+struct Visitor<'context, 'config, 'framework, 'ast, 'storage> {
+    generic_visitor: GenericVisitor<'context, 'config, 'framework, 'ast, Rust>,
+    storage: &'storage RefCell<Storage<'ast>>,
     test_ident: Option<&'ast Ident>,
-    n_stmt_leaves_visited: usize,
-    spans: Vec<Span>,
-    error: Option<Error>,
 }
 
-impl<'ast, 'context, 'config, 'framework, 'storage> Visit<'ast>
-    for Visitor<'ast, 'context, 'config, 'framework, 'storage>
-where
-    'ast: 'storage,
-    'framework: 'storage,
+impl<'context, 'config, 'framework, 'ast, 'storage>
+    Visitor<'context, 'config, 'framework, 'ast, 'storage>
+{
+    fn new(
+        generic_visitor: GenericVisitor<'context, 'config, 'framework, 'ast, Rust>,
+        storage: &'storage RefCell<Storage<'ast>>,
+    ) -> Self {
+        Self {
+            generic_visitor,
+            storage,
+            test_ident: None,
+        }
+    }
+}
+
+impl<'context, 'config, 'framework, 'ast, 'storage> Visit<'ast>
+    for Visitor<'context, 'config, 'framework, 'ast, 'storage>
 {
     fn visit_item_mod(&mut self, item: &'ast ItemMod) {
-        if self.error.is_some() {
-            return;
-        }
-
         if self.test_ident.is_none() {
-            self.module_path.push(&item.ident);
+            self.storage.borrow_mut().module_path.push(&item.ident);
         }
 
         visit_item_mod(self, item);
 
         if self.test_ident.is_none() {
-            assert_eq!(self.module_path.pop(), Some(&item.ident));
+            assert_eq!(
+                self.storage.borrow_mut().module_path.pop(),
+                Some(&item.ident)
+            );
         }
     }
 
     fn visit_item_fn(&mut self, item: &'ast ItemFn) {
-        if self.error.is_some() {
-            return;
-        }
-
         if let Some(ident) = is_test(item) {
             assert!(self.test_ident.is_none());
             self.test_ident = Some(ident);
 
-            visit_item_fn(self, item);
+            let walk = self.generic_visitor.visit_test(self.storage, item);
+
+            if walk {
+                visit_item_fn(self, item);
+            }
+
+            self.generic_visitor.visit_test_post(self.storage, item);
 
             assert!(self.test_ident == Some(ident));
             self.test_ident = None;
@@ -88,128 +87,74 @@ where
     }
 
     fn visit_stmt(&mut self, stmt: &'ast Stmt) {
-        if self.error.is_some() {
-            return;
+        let walk = self.generic_visitor.visit_statement(self.storage, stmt);
+
+        if walk {
+            self.storage.borrow_mut().last_statement_visited = Some(stmt);
+
+            visit_stmt(self, stmt);
         }
 
-        let n_before = self.n_stmt_leaves_visited;
-        visit_stmt(self, stmt);
-        let n_after = self.n_stmt_leaves_visited;
+        self.generic_visitor
+            .visit_statement_post(self.storage, stmt);
+    }
 
-        // smoelius: Consider this a "leaf" if-and-only-if no "leaves" were added during the
-        // recursive call.
-        if n_before != n_after {
-            return;
-        }
-        self.n_stmt_leaves_visited += 1;
+    fn visit_expr_call(&mut self, call: &'ast ExprCall) {
+        let walk = self.generic_visitor.visit_function_call(self.storage, call);
 
-        if let Some(ident) = self.test_ident {
-            if !is_method_call_statement(stmt)
-                && !matches!(stmt, Stmt::Item(_) | Stmt::Local(_))
-                && !is_control(stmt)
-                && !is_ignored_macro(self.config, stmt)
-            {
-                let span = stmt.span().to_internal_span(&self.source_file);
-                self.elevate_span(span, ident);
-            }
+        if walk {
+            visit_expr_call(self, call);
         }
+
+        self.generic_visitor
+            .visit_function_call_post(self.storage, call);
+    }
+
+    fn visit_stmt_macro(&mut self, mac: &'ast StmtMacro) {
+        let macro_call = MacroCall::Stmt(mac);
+
+        let walk = self
+            .generic_visitor
+            .visit_macro_call(self.storage, macro_call);
+
+        if walk {
+            visit_stmt_macro(self, mac);
+        }
+
+        self.generic_visitor
+            .visit_macro_call_post(self.storage, macro_call);
+    }
+
+    fn visit_expr_macro(&mut self, mac: &'ast ExprMacro) {
+        let macro_call = MacroCall::Expr(mac);
+
+        let walk = self
+            .generic_visitor
+            .visit_macro_call(self.storage, macro_call);
+
+        if walk {
+            visit_expr_macro(self, mac);
+        }
+
+        self.generic_visitor
+            .visit_macro_call_post(self.storage, macro_call);
     }
 
     fn visit_expr_method_call(&mut self, method_call: &'ast ExprMethodCall) {
-        if self.error.is_some() {
-            return;
+        let walk = self
+            .generic_visitor
+            .visit_method_call(self.storage, method_call);
+
+        self.storage.borrow_mut().last_method_call_visited = Some(method_call);
+
+        if walk {
+            visit_expr_method_call(self, method_call);
+        } else {
+            self.visit_expr(&method_call.receiver);
         }
 
-        visit_expr_method_call(self, method_call);
-
-        let ExprMethodCall {
-            dot_token,
-            method,
-            args,
-            ..
-        } = method_call;
-
-        if let Some(ident) = self.test_ident {
-            if !is_ignored_method(method, args) {
-                let mut span = method_call.span().to_internal_span(&self.source_file);
-                span.start = dot_token.span().start();
-                assert!(span.start <= span.end);
-                self.elevate_span(span, ident);
-            }
-        }
-    }
-}
-
-impl<'ast, 'context, 'config, 'framework, 'storage>
-    Visitor<'ast, 'context, 'config, 'framework, 'storage>
-where
-    'ast: 'storage,
-    'framework: 'storage,
-{
-    fn new(
-        context: &'context LightContext,
-        config: &'config Config,
-        framework: &'framework mut Rust,
-        storage: &'storage mut Storage,
-        test_file: &Path,
-    ) -> Self {
-        Self {
-            context,
-            config,
-            framework,
-            storage,
-            source_file: SourceFile::new(context.root.clone(), Rc::new(test_file.to_path_buf())),
-            module_path: Vec::new(),
-            test_ident: None,
-            n_stmt_leaves_visited: 0,
-            spans: Vec::new(),
-            error: None,
-        }
-    }
-
-    #[cfg_attr(
-        dylint_lib = "non_local_effect_before_error_return",
-        allow(non_local_effect_before_error_return)
-    )]
-    fn elevate_span(&mut self, span: Span, ident: &Ident) {
-        let result = (|| {
-            let _ = self.framework.cached_test_file_flags(
-                &mut self.storage.test_file_package_cache,
-                &span.source_file,
-            )?;
-            let test_path = match self.test_path(&span, ident) {
-                Ok(test_path) => test_path,
-                Err(error) => {
-                    if error.downcast_ref::<StripPrefixError>().is_some() {
-                        warn(
-                            self.context,
-                            Warning::ModulePathUnknown,
-                            &format!("Failed to determine module path: {error}"),
-                            WarnFlags::empty(),
-                        )?;
-                    }
-                    return Ok(());
-                }
-            };
-            self.framework.set_span_test_path(&span, test_path);
-            self.spans.push(span);
-            Ok(())
-        })();
-        if let Err(error) = result {
-            self.error = self.error.take().or(Some(error));
-        }
-    }
-
-    fn test_path(&mut self, span: &Span, ident: &Ident) -> Result<Vec<String>> {
-        let mut test_path = cached_test_file_fs_module_path(
-            &mut self.storage.test_file_fs_module_path_cache,
-            &mut self.storage.test_file_package_cache,
-            &span.source_file,
-        )
-        .cloned()?;
-        test_path.extend(self.module_path.iter().map(ToString::to_string));
-        test_path.push(ident.to_string());
-        Ok(test_path)
+        self.generic_visitor
+            .visit_method_call_post(self.storage, method_call);
     }
 }
 
@@ -241,113 +186,10 @@ fn is_test(item: &ItemFn) -> Option<&Ident> {
     }
 }
 
-fn is_method_call_statement(stmt: &Stmt) -> bool {
-    match stmt {
-        Stmt::Expr(expr, _) => Some(expr),
-        _ => None,
-    }
-    .map_or(false, |expr| matches!(expr, Expr::MethodCall(..)))
-}
-
-fn is_control(stmt: &Stmt) -> bool {
-    match stmt {
-        Stmt::Expr(expr, _) => Some(expr),
-        _ => None,
-    }
-    .map_or(false, |expr| {
-        matches!(expr, Expr::Break(_) | Expr::Continue(_) | Expr::Return(_))
-    })
-}
-
-const IGNORED_MACROS: &[&str] = &[
-    "assert",
-    "assert_eq",
-    "assert_matches",
-    "assert_ne",
-    "eprint",
-    "eprintln",
-    "panic",
-    "print",
-    "println",
-    "unimplemented",
-    "unreachable",
-];
-
-fn is_ignored_macro(config: &Config, stmt: &Stmt) -> bool {
-    match stmt {
-        Stmt::Macro(StmtMacro {
-            mac: Macro { path, .. },
-            ..
-        })
-        | Stmt::Expr(
-            Expr::Macro(ExprMacro {
-                mac: Macro { path, .. },
-                ..
-            }),
-            _,
-        ) => path.get_ident().map_or(false, |ident| {
-            let s = ident.to_string();
-            IGNORED_MACROS.binary_search(&s.as_ref()).is_ok() || config.ignored_macros.contains(&s)
-        }),
-        _ => false,
-    }
-}
-
-const IGNORED_METHODS: &[&str] = &[
-    "as_bytes",
-    "as_mut",
-    "as_mut_os_str",
-    "as_mut_os_string",
-    "as_mut_slice",
-    "as_mut_str",
-    "as_os_str",
-    "as_os_str_bytes",
-    "as_path",
-    "as_ref",
-    "as_slice",
-    "as_str",
-    "borrow",
-    "borrow_mut",
-    "clone",
-    "cloned",
-    "copied",
-    "deref",
-    "deref_mut",
-    "expect",
-    "expect_err",
-    "into_boxed_bytes",
-    "into_boxed_os_str",
-    "into_boxed_path",
-    "into_boxed_slice",
-    "into_boxed_str",
-    "into_bytes",
-    "into_os_string",
-    "into_owned",
-    "into_path_buf",
-    "into_string",
-    "into_vec",
-    "iter",
-    "iter_mut",
-    "success",
-    "to_os_string",
-    "to_owned",
-    "to_path_buf",
-    "to_string",
-    "to_vec",
-    "unwrap",
-    "unwrap_err",
-];
-
-fn is_ignored_method(method: &Ident, args: &Punctuated<Expr, Token![,]>) -> bool {
-    IGNORED_METHODS
-        .binary_search(&method.to_string().as_ref())
-        .is_ok()
-        && args.is_empty()
-}
-
 #[cfg(test)]
 mod test {
-    use super::{IGNORED_MACROS, IGNORED_METHODS};
+    use super::Rust;
+    use crate::ParseLow;
     use if_chain::if_chain;
     use std::fs::read_to_string;
     use syn::{parse_file, Expr, ExprArray, ExprLit, ExprReference, Item, ItemConst, Lit};
@@ -370,12 +212,12 @@ mod test {
 
     #[test]
     fn readme_contains_ignored_macros() {
-        assert!(readme_contains_code_bulleted_list(IGNORED_MACROS));
+        assert!(readme_contains_code_bulleted_list(Rust::IGNORED_MACROS));
     }
 
     #[test]
     fn readme_contains_ignored_methods() {
-        assert!(readme_contains_code_bulleted_list(IGNORED_METHODS));
+        assert!(readme_contains_code_bulleted_list(Rust::IGNORED_METHODS));
     }
 
     #[test]
@@ -385,12 +227,12 @@ mod test {
 
     #[test]
     fn ignored_macros_are_sorted() {
-        assert_eq!(sort(IGNORED_MACROS), IGNORED_MACROS);
+        assert_eq!(sort(Rust::IGNORED_MACROS), Rust::IGNORED_MACROS);
     }
 
     #[test]
     fn ignored_methods_are_sorted() {
-        assert_eq!(sort(IGNORED_METHODS), IGNORED_METHODS);
+        assert_eq!(sort(Rust::IGNORED_METHODS), Rust::IGNORED_METHODS);
     }
 
     #[test]
@@ -442,7 +284,7 @@ mod test {
             .collect::<Vec<_>>();
         watched_methods.sort_unstable();
         watched_methods.dedup();
-        assert_eq!(watched_methods, IGNORED_METHODS);
+        assert_eq!(watched_methods, Rust::IGNORED_METHODS);
     }
 
     fn readme_contains_code_bulleted_list(items: &[&str]) -> bool {

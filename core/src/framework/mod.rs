@@ -1,7 +1,6 @@
 use crate::{Config, LightContext, Span};
 use anyhow::Result;
-use heck::ToKebabCase;
-use std::{any::type_name, path::Path};
+use std::path::Path;
 use subprocess::{Exec, Popen};
 
 mod auto;
@@ -24,15 +23,10 @@ pub trait ToImplementation {
     fn to_implementation(&self, context: &LightContext) -> Result<Option<Box<dyn Interface>>>;
 }
 
-pub trait Interface: Parse + Run {
-    fn name(&self) -> String {
-        #[allow(clippy::unwrap_used)]
-        let (_, type_name) = type_name::<Self>().rsplit_once("::").unwrap();
-        type_name.to_kebab_case()
-    }
-}
+pub trait Interface: Parse + Run {}
 
 pub trait Parse {
+    fn name(&self) -> String;
     fn parse(
         &mut self,
         context: &LightContext,
@@ -53,7 +47,8 @@ pub trait Run {
 }
 
 pub trait AsParse {
-    fn as_parse(&mut self) -> &mut dyn Parse;
+    fn as_parse(&self) -> &dyn Parse;
+    fn as_parse_mut(&mut self) -> &mut dyn Parse;
 }
 
 pub trait AsRun {
@@ -61,6 +56,9 @@ pub trait AsRun {
 }
 
 impl<T: AsParse> Parse for T {
+    fn name(&self) -> String {
+        self.as_parse().name()
+    }
     #[cfg_attr(
         dylint_lib = "non_local_effect_before_error_return",
         allow(non_local_effect_before_error_return)
@@ -71,7 +69,7 @@ impl<T: AsParse> Parse for T {
         config: &Config,
         test_files: &[&Path],
     ) -> Result<Vec<Span>> {
-        self.as_parse().parse(context, config, test_files)
+        self.as_parse_mut().parse(context, config, test_files)
     }
 }
 
