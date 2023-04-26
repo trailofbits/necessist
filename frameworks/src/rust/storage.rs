@@ -9,7 +9,7 @@ use std::{
 
 /// Structures needed during parsing but not after.
 #[derive(Default)]
-pub(super) struct Parsing {
+pub(super) struct Storage {
     pub test_file_fs_module_path_cache: BTreeMap<PathBuf, Vec<String>>,
     pub test_file_package_cache: BTreeMap<PathBuf, Package>,
 }

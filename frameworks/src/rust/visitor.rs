@@ -1,4 +1,4 @@
-use super::{cached_test_file_fs_module_path, Parsing, Rust};
+use super::{cached_test_file_fs_module_path, Rust, Storage};
 use anyhow::{Error, Result};
 use necessist_core::{
     warn, Config, LightContext, SourceFile, Span, ToInternalSpan, WarnFlags, Warning,
@@ -23,11 +23,11 @@ pub(super) fn visit(
     context: &LightContext,
     config: &Config,
     framework: &mut Rust,
-    parsing: &mut Parsing,
+    storage: &mut Storage,
     test_file: &Path,
     file: &File,
 ) -> Result<Vec<Span>> {
-    let mut visitor = Visitor::new(context, config, framework, parsing, test_file);
+    let mut visitor = Visitor::new(context, config, framework, storage, test_file);
     visitor.visit_file(file);
     if let Some(error) = visitor.error {
         Err(error)
@@ -36,11 +36,11 @@ pub(super) fn visit(
     }
 }
 
-struct Visitor<'ast, 'context, 'config, 'framework, 'parsing> {
+struct Visitor<'ast, 'context, 'config, 'framework, 'storage> {
     context: &'context LightContext<'context>,
     config: &'config Config,
     framework: &'framework mut Rust,
-    parsing: &'parsing mut Parsing,
+    storage: &'storage mut Storage,
     source_file: SourceFile,
     module_path: Vec<&'ast Ident>,
     test_ident: Option<&'ast Ident>,
@@ -49,11 +49,11 @@ struct Visitor<'ast, 'context, 'config, 'framework, 'parsing> {
     error: Option<Error>,
 }
 
-impl<'ast, 'context, 'config, 'framework, 'parsing> Visit<'ast>
-    for Visitor<'ast, 'context, 'config, 'framework, 'parsing>
+impl<'ast, 'context, 'config, 'framework, 'storage> Visit<'ast>
+    for Visitor<'ast, 'context, 'config, 'framework, 'storage>
 where
-    'ast: 'parsing,
-    'framework: 'parsing,
+    'ast: 'storage,
+    'framework: 'storage,
 {
     fn visit_item_mod(&mut self, item: &'ast ItemMod) {
         if self.error.is_some() {
@@ -140,24 +140,24 @@ where
     }
 }
 
-impl<'ast, 'context, 'config, 'framework, 'parsing>
-    Visitor<'ast, 'context, 'config, 'framework, 'parsing>
+impl<'ast, 'context, 'config, 'framework, 'storage>
+    Visitor<'ast, 'context, 'config, 'framework, 'storage>
 where
-    'ast: 'parsing,
-    'framework: 'parsing,
+    'ast: 'storage,
+    'framework: 'storage,
 {
     fn new(
         context: &'context LightContext,
         config: &'config Config,
         framework: &'framework mut Rust,
-        parsing: &'parsing mut Parsing,
+        storage: &'storage mut Storage,
         test_file: &Path,
     ) -> Self {
         Self {
             context,
             config,
             framework,
-            parsing,
+            storage,
             source_file: SourceFile::new(context.root.clone(), Rc::new(test_file.to_path_buf())),
             module_path: Vec::new(),
             test_ident: None,
@@ -174,7 +174,7 @@ where
     fn elevate_span(&mut self, span: Span, ident: &Ident) {
         let result = (|| {
             let _ = self.framework.cached_test_file_flags(
-                &mut self.parsing.test_file_package_cache,
+                &mut self.storage.test_file_package_cache,
                 &span.source_file,
             )?;
             let test_path = match self.test_path(&span, ident) {
@@ -202,8 +202,8 @@ where
 
     fn test_path(&mut self, span: &Span, ident: &Ident) -> Result<Vec<String>> {
         let mut test_path = cached_test_file_fs_module_path(
-            &mut self.parsing.test_file_fs_module_path_cache,
-            &mut self.parsing.test_file_package_cache,
+            &mut self.storage.test_file_fs_module_path_cache,
+            &mut self.storage.test_file_package_cache,
             &span.source_file,
         )
         .cloned()?;

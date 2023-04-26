@@ -10,8 +10,8 @@ use std::{
     process::Command,
 };
 
-mod parsing;
-use parsing::{cached_test_file_fs_module_path, cached_test_file_package, Parsing};
+mod storage;
+use storage::{cached_test_file_fs_module_path, cached_test_file_package, Storage};
 
 mod try_insert;
 use try_insert::TryInsert;
@@ -82,8 +82,8 @@ impl ParseLow for Rust {
         test_file: &Path,
         file: &Self::File,
     ) -> Result<Vec<Span>> {
-        let mut parsing = Parsing::default();
-        visit(context, config, self, &mut parsing, test_file, file)
+        let mut storage = Storage::default();
+        visit(context, config, self, &mut storage, test_file, file)
     }
 }
 
