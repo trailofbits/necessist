@@ -1,5 +1,6 @@
 use super::{ts_utils::install_node_modules, High};
 use anyhow::{anyhow, ensure, Context, Result};
+use assert_cmd::output::OutputError;
 use lazy_static::lazy_static;
 use log::debug;
 use necessist_core::{
@@ -157,7 +158,9 @@ impl High for HardhatTs {
         debug!("{:?}", command);
 
         let output = command.output()?;
-        ensure!(output.status.success(), "{:#?}", output);
+        if !output.status.success() {
+            return Err(OutputError::new(output).into());
+        }
 
         let mut test_file_it_message_state_map = self.test_file_it_message_state_map.borrow_mut();
         let it_message_state_map = test_file_it_message_state_map

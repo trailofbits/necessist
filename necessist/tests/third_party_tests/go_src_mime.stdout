@@ -38,36 +38,33 @@ $DIR/src/mime/mediatype_test.go:530:20-530:36: `.ToLower(tt.typ)` nonbuildable
 $DIR/src/mime/mediatype_test.go:534:4-534:26: `k = strings.ToLower(k)` failed
 $DIR/src/mime/mediatype_test.go:534:15-534:26: `.ToLower(k)` nonbuildable
 $DIR/src/mime/multipart/formdata_test.go: dry running
-$DIR/src/mime/multipart/formdata_test.go: Warning: dry run failed: Output {
-    status: ExitStatus(
-        unix_wait_status(
-            256,
-        ),
-    ),
-    stdout: "",
-    stderr: "package std/mime/multipart\n\tmultipart/formdata.go:10:2: use of internal package internal/godebug not allowed\n",
-}
+$DIR/src/mime/multipart/formdata_test.go: Warning: dry run failed: code=1
+stdout=""
+stderr=```
+package std/mime/multipart
+\tmultipart/formdata.go:10:2: use of internal package internal/godebug not allowed
+```
+
+
 Silence this warning with: --allow dry-run-failed
 $DIR/src/mime/multipart/multipart_test.go: dry running
-$DIR/src/mime/multipart/multipart_test.go: Warning: dry run failed: Output {
-    status: ExitStatus(
-        unix_wait_status(
-            256,
-        ),
-    ),
-    stdout: "",
-    stderr: "package std/mime/multipart\n\tmultipart/formdata.go:10:2: use of internal package internal/godebug not allowed\n",
-}
+$DIR/src/mime/multipart/multipart_test.go: Warning: dry run failed: code=1
+stdout=""
+stderr=```
+package std/mime/multipart
+\tmultipart/formdata.go:10:2: use of internal package internal/godebug not allowed
+```
+
+
 $DIR/src/mime/multipart/writer_test.go: dry running
-$DIR/src/mime/multipart/writer_test.go: Warning: dry run failed: Output {
-    status: ExitStatus(
-        unix_wait_status(
-            256,
-        ),
-    ),
-    stdout: "",
-    stderr: "package std/mime/multipart\n\tmultipart/formdata.go:10:2: use of internal package internal/godebug not allowed\n",
-}
+$DIR/src/mime/multipart/writer_test.go: Warning: dry run failed: code=1
+stdout=""
+stderr=```
+package std/mime/multipart
+\tmultipart/formdata.go:10:2: use of internal package internal/godebug not allowed
+```
+
+
 $DIR/src/mime/quotedprintable/reader_test.go: dry running
 $DIR/src/mime/quotedprintable/reader_test.go: mutilating
 $DIR/src/mime/quotedprintable/reader_test.go:72:15-72:63: `.Copy(&buf, NewReader(strings.NewReader(tt.in)))` nonbuildable
