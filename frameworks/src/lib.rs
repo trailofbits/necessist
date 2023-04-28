@@ -1,4 +1,5 @@
-use anyhow::{anyhow, ensure, Error, Result};
+use anyhow::{anyhow, Error, Result};
+use assert_cmd::output::OutputError;
 use bstr::{io::BufReadExt, BStr};
 use clap::ValueEnum;
 use heck::ToKebabCase;
@@ -106,7 +107,9 @@ impl<T: Low> High for Adapter<T> {
         debug!("{:?}", command);
 
         let output = command.output()?;
-        ensure!(output.status.success(), "{:#?}", output);
+        if !output.status.success() {
+            return Err(OutputError::new(output).into());
+        }
         Ok(())
     }
 
