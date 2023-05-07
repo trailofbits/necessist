@@ -1,7 +1,7 @@
 use lazy_static::lazy_static;
-use pretty_assertions::assert_eq;
 use regex::Regex;
 use serde::Deserialize;
+use similar_asserts::SimpleDiff;
 use std::{
     collections::{BTreeMap, HashSet},
     env::{consts, var},
@@ -390,7 +390,11 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> String {
         if enabled("BLESS") {
             write(path_stdout, stdout_normalized).unwrap();
         } else {
-            assert_eq!(stdout_expected, stdout_normalized, "{:?}", output);
+            assert!(
+                stdout_expected == stdout_normalized,
+                "{}",
+                SimpleDiff::from_str(&stdout_expected, &stdout_normalized, "left", "right")
+            );
         }
     }
 
