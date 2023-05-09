@@ -25,8 +25,8 @@ impl Drop for RemoveFile {
 ///
 /// ```
 /// use necessist_core::util::strip_current_dir;
-/// use std::path::Path;
 /// use std::env::current_dir;
+/// use std::path::Path;
 ///
 /// let path = current_dir().unwrap().join("foo.txt");
 /// let stripped = strip_current_dir(&path);
