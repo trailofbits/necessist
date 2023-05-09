@@ -59,7 +59,10 @@ fn dylint() {
 #[test]
 fn format() {
     preserves_cleanliness(|| {
-        Command::new("cargo").arg("fmt").assert().success();
+        Command::new("cargo")
+            .args(["+nightly", "fmt"])
+            .assert()
+            .success();
     });
 }
 

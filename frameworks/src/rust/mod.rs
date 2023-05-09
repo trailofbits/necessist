@@ -183,7 +183,8 @@ impl Rust {
                 if let Some(name) = test_file_test(package, test_file) {
                     flags.extend(["--test".to_owned(), name.clone()]);
                 } else {
-                    // smoelius: Failed to find a test target with this file name. Assume it is a unit test.
+                    // smoelius: Failed to find a test target with this file name. Assume it is a
+                    // unit test.
                     for kind in package.targets.iter().flat_map(|target| &target.kind) {
                         match kind.as_ref() {
                             "bin" => flags.push("--bins".to_owned()),
