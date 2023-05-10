@@ -57,43 +57,6 @@ struct FunctionCall<'a> {
 }
 
 impl<'config, 'framework> Visit for Visitor<'config, 'framework> {
-    fn visit_expr(&mut self, expr: &Expr) {
-        if let Some(it_message) = is_it_call_expr(expr) {
-            assert!(self.it_message.is_none());
-            self.it_message = Some(it_message.clone());
-
-            visit_expr(self, expr);
-
-            assert_eq!(self.it_message, Some(it_message));
-            self.it_message = None;
-
-            return;
-        }
-
-        visit_expr(self, expr);
-
-        if_chain! {
-            if let Some(it_message) = &self.it_message;
-            if let Some(MethodCall {
-                span,
-                obj,
-                path,
-                args,
-                ..
-            }) = is_method_call(expr);
-            if !is_ignored_method(&path, args);
-            then {
-                let mut span = *span;
-                span.lo = obj.span().hi;
-                assert!(span.lo <= span.hi);
-                self.elevate_span(
-                    span.to_internal_span(&self.source_map, &self.source_file),
-                    it_message.clone(),
-                );
-            }
-        }
-    }
-
     fn visit_stmt(&mut self, stmt: &Stmt) {
         let mut ignored_function_call = false;
 
@@ -139,6 +102,43 @@ impl<'config, 'framework> Visit for Visitor<'config, 'framework> {
                     .span()
                     .to_internal_span(&self.source_map, &self.source_file);
                 self.elevate_span(span, it_message.clone());
+            }
+        }
+    }
+
+    fn visit_expr(&mut self, expr: &Expr) {
+        if let Some(it_message) = is_it_call_expr(expr) {
+            assert!(self.it_message.is_none());
+            self.it_message = Some(it_message.clone());
+
+            visit_expr(self, expr);
+
+            assert_eq!(self.it_message, Some(it_message));
+            self.it_message = None;
+
+            return;
+        }
+
+        visit_expr(self, expr);
+
+        if_chain! {
+            if let Some(it_message) = &self.it_message;
+            if let Some(MethodCall {
+                span,
+                obj,
+                path,
+                args,
+                ..
+            }) = is_method_call(expr);
+            if !is_ignored_method(&path, args);
+            then {
+                let mut span = *span;
+                span.lo = obj.span().hi;
+                assert!(span.lo <= span.hi);
+                self.elevate_span(
+                    span.to_internal_span(&self.source_map, &self.source_file),
+                    it_message.clone(),
+                );
             }
         }
     }
