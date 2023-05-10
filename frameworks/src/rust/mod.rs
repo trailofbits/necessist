@@ -48,6 +48,58 @@ impl Rust {
 }
 
 #[derive(Clone, Copy)]
+pub enum Expression<'ast> {
+    Await(&'ast syn::ExprAwait),
+    Field(Field<'ast>),
+    Call(Call<'ast>),
+    MacroCall(MacroCall<'ast>),
+    Other,
+}
+
+impl<'ast> From<&'ast syn::Expr> for Expression<'ast> {
+    fn from(value: &'ast syn::Expr) -> Self {
+        match value {
+            syn::Expr::Await(await_) => Expression::Await(await_),
+            syn::Expr::Field(field) => Expression::Field(Field::Field(field)),
+            syn::Expr::Call(call) => Expression::Call(Call::FunctionCall(call)),
+            syn::Expr::Macro(mac) => Expression::MacroCall(MacroCall::Expr(mac)),
+            _ => Expression::Other,
+        }
+    }
+}
+
+// smoelius: Implementing `MaybeNamed` for `Expression` is mainly to deal with languages where
+// calling a function in a module/package looks like a field access, e.g., Go and TS. Since Rust is
+// not such a language, it is safe to return `None` for expression types that don't already
+// implement `MaybeNamed`.
+impl<'ast> MaybeNamed for Expression<'ast> {
+    fn name(&self) -> Option<String> {
+        #[allow(clippy::match_same_arms, clippy::match_wildcard_for_single_variants)]
+        match self {
+            Expression::Await(_) => None,
+            Expression::Field(field) => field.name(),
+            Expression::Call(call) => call.name(),
+            Expression::MacroCall(macro_call) => Some(macro_call.name()),
+            _ => None,
+        }
+    }
+}
+
+#[derive(Clone, Copy)]
+pub enum Field<'ast> {
+    Field(&'ast syn::ExprField),
+
+    /// A method call pretending to be a field.
+    MethodCall(&'ast syn::ExprMethodCall),
+}
+
+#[derive(Clone, Copy)]
+pub enum Call<'ast> {
+    FunctionCall(&'ast syn::ExprCall),
+    MethodCall(&'ast syn::ExprMethodCall),
+}
+
+#[derive(Clone, Copy)]
 pub enum MacroCall<'ast> {
     Stmt(&'ast syn::StmtMacro),
     Expr(&'ast syn::ExprMacro),
@@ -69,10 +121,11 @@ impl AbstractTypes for Types {
     type File = syn::File;
     type Test<'ast> = &'ast syn::ItemFn;
     type Statement<'ast> = &'ast syn::Stmt;
-    type FieldAccess<'ast> = &'ast syn::ExprField;
-    type FunctionCall<'ast> = &'ast syn::ExprCall;
+    type Expression<'ast> = Expression<'ast>;
+    type Await<'ast> = &'ast syn::ExprAwait;
+    type Field<'ast> = Field<'ast>;
+    type Call<'ast> = Call<'ast>;
     type MacroCall<'ast> = MacroCall<'ast>;
-    type MethodCall<'ast> = &'ast syn::ExprMethodCall;
 }
 
 impl<'ast> Named for <Types as AbstractTypes>::Test<'ast> {
@@ -81,35 +134,44 @@ impl<'ast> Named for <Types as AbstractTypes>::Test<'ast> {
     }
 }
 
-impl<'ast> MaybeNamed for <Types as AbstractTypes>::FieldAccess<'ast> {
+impl<'ast> MaybeNamed for <Types as AbstractTypes>::Field<'ast> {
     fn name(&self) -> Option<String> {
-        if let syn::Member::Named(ident) = &self.member {
-            Some(ident.to_string())
-        } else {
-            None
+        match self {
+            Field::Field(field) => {
+                if let syn::Member::Named(ident) = &field.member {
+                    Some(ident.to_string())
+                } else {
+                    None
+                }
+            }
+            Field::MethodCall(method_call) => Some(method_call.method.to_string()),
         }
     }
 }
 
-impl<'ast> MaybeNamed for <Types as AbstractTypes>::FunctionCall<'ast> {
+impl<'ast> MaybeNamed for <Types as AbstractTypes>::Call<'ast> {
     fn name(&self) -> Option<String> {
-        if let syn::Expr::Path(path) = &*self.func {
-            Some(path.to_token_stream().to_string().replace(' ', ""))
-        } else {
-            None
+        match self {
+            Call::FunctionCall(call) => {
+                if let syn::Expr::Path(path) = &*call.func {
+                    Some(
+                        path.to_token_stream()
+                            .into_iter()
+                            .map(|tt| tt.to_string())
+                            .collect::<String>(),
+                    )
+                } else {
+                    None
+                }
+            }
+            Call::MethodCall(method_call) => Some(method_call.method.to_string()),
         }
     }
 }
 
-impl<'ast> MaybeNamed for <Types as AbstractTypes>::MacroCall<'ast> {
-    fn name(&self) -> Option<String> {
-        Some(self.path().to_token_stream().to_string().replace(' ', ""))
-    }
-}
-
-impl<'ast> MaybeNamed for <Types as AbstractTypes>::MethodCall<'ast> {
-    fn name(&self) -> Option<String> {
-        Some(self.method.to_string())
+impl<'ast> Named for <Types as AbstractTypes>::MacroCall<'ast> {
+    fn name(&self) -> String {
+        self.path().to_token_stream().to_string().replace(' ', "")
     }
 }
 
@@ -119,9 +181,37 @@ impl<'ast> Spanned for <Types as AbstractTypes>::Statement<'ast> {
     }
 }
 
-impl<'ast> Spanned for <Types as AbstractTypes>::FunctionCall<'ast> {
+impl<'ast> Spanned for <Types as AbstractTypes>::Field<'ast> {
     fn span(&self, source_file: &SourceFile) -> Span {
-        <_ as syn::spanned::Spanned>::span(self).to_internal_span(source_file)
+        let span = match self {
+            Field::Field(field) => {
+                let mut span =
+                    <_ as syn::spanned::Spanned>::span(field).to_internal_span(source_file);
+                span.start = <_ as syn::spanned::Spanned>::span(&field.dot_token).start();
+                span
+            }
+            Field::MethodCall(method_call) => {
+                let mut span =
+                    <_ as syn::spanned::Spanned>::span(method_call).to_internal_span(source_file);
+                span.start = <_ as syn::spanned::Spanned>::span(&method_call.dot_token).start();
+                span
+            }
+        };
+        assert!(span.start <= span.end);
+        span
+    }
+}
+
+impl<'ast> Spanned for <Types as AbstractTypes>::Call<'ast> {
+    fn span(&self, source_file: &SourceFile) -> Span {
+        match self {
+            Call::FunctionCall(call) => {
+                <_ as syn::spanned::Spanned>::span(call).to_internal_span(source_file)
+            }
+            Call::MethodCall(method_call) => {
+                <_ as syn::spanned::Spanned>::span(method_call).to_internal_span(source_file)
+            }
+        }
     }
 }
 
@@ -131,21 +221,12 @@ impl<'ast> Spanned for <Types as AbstractTypes>::MacroCall<'ast> {
     }
 }
 
-impl<'ast> Spanned for <Types as AbstractTypes>::MethodCall<'ast> {
-    fn span(&self, source_file: &SourceFile) -> Span {
-        let mut span = <_ as syn::spanned::Spanned>::span(self).to_internal_span(source_file);
-        span.start = <_ as syn::spanned::Spanned>::span(&self.dot_token).start();
-        assert!(span.start <= span.end);
-        span
-    }
-}
-
 impl ParseLow for Rust {
     type Types = Types;
 
-    const IGNORED_FUNCTIONS: &'static [&'static str] = &[];
+    const IGNORED_FUNCTIONS: Option<&'static [&'static str]> = Some(&[]);
 
-    const IGNORED_MACROS: &'static [&'static str] = &[
+    const IGNORED_MACROS: Option<&'static [&'static str]> = Some(&[
         "assert",
         "assert_eq",
         "assert_matches",
@@ -157,9 +238,9 @@ impl ParseLow for Rust {
         "println",
         "unimplemented",
         "unreachable",
-    ];
+    ]);
 
-    const IGNORED_METHODS: &'static [&'static str] = &[
+    const IGNORED_METHODS: Option<&'static [&'static str]> = Some(&[
         "as_bytes",
         "as_mut",
         "as_mut_os_str",
@@ -202,7 +283,7 @@ impl ParseLow for Rust {
         "to_vec",
         "unwrap",
         "unwrap_err",
-    ];
+    ]);
 
     fn walk_dir(root: &Path) -> Box<dyn Iterator<Item = WalkDirResult>> {
         Box::new(
@@ -221,9 +302,10 @@ impl ParseLow for Rust {
         syn::parse_file(&content).map_err(Into::into)
     }
 
-    fn storage_from_file(
-        file: &<Self::Types as AbstractTypes>::File,
-    ) -> <Self::Types as AbstractTypes>::Storage<'_> {
+    fn storage_from_file<'ast>(
+        &self,
+        file: &'ast <Self::Types as AbstractTypes>::File,
+    ) -> <Self::Types as AbstractTypes>::Storage<'ast> {
         Storage::new(file)
     }
 
@@ -279,31 +361,29 @@ impl ParseLow for Rust {
         _storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
         test: <Self::Types as AbstractTypes>::Test<'ast>,
     ) -> Vec<<Self::Types as AbstractTypes>::Statement<'ast>> {
-        test.block.stmts.iter().collect::<Vec<_>>()
+        test.block
+            .stmts
+            .iter()
+            .map(|stmt| stmt as _)
+            .collect::<Vec<_>>()
     }
 
-    fn statement_is_call<'ast>(
+    fn statement_is_expression<'ast>(
         &self,
         _storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
-        statement: &'ast syn::Stmt,
-    ) -> bool {
-        matches!(statement, syn::Stmt::Macro(_))
-            || match statement {
-                syn::Stmt::Expr(expr, _) => Some(expr),
-                _ => None,
-            }
-            .map_or(false, |expr| {
-                matches!(
-                    expr,
-                    syn::Expr::Call(..) | syn::Expr::Macro(..) | syn::Expr::MethodCall(..)
-                )
-            })
+        statement: <Self::Types as AbstractTypes>::Statement<'ast>,
+    ) -> Option<<Self::Types as AbstractTypes>::Expression<'ast>> {
+        match statement {
+            syn::Stmt::Expr(expr, _) => Some(Expression::from(expr)),
+            syn::Stmt::Macro(mac) => Some(Expression::MacroCall(MacroCall::Stmt(mac))),
+            _ => None,
+        }
     }
 
     fn statement_is_control<'ast>(
         &self,
         _storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
-        statement: &'ast syn::Stmt,
+        statement: <Self::Types as AbstractTypes>::Statement<'ast>,
     ) -> bool {
         match statement {
             syn::Stmt::Expr(expr, _) => Some(expr),
@@ -325,143 +405,90 @@ impl ParseLow for Rust {
         matches!(statement, syn::Stmt::Item(_) | syn::Stmt::Local(_))
     }
 
-    fn function_call_is_statement<'ast>(
-        &self,
-        storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
-        function_call: <Self::Types as AbstractTypes>::FunctionCall<'ast>,
-    ) -> Option<<Self::Types as AbstractTypes>::Statement<'ast>> {
-        storage
-            .borrow()
-            .last_statement_visited
-            .and_then(|statement| {
-                if let syn::Stmt::Expr(syn::Expr::Call(last_function_call), _) = statement {
-                    if function_call == last_function_call {
-                        Some(statement)
-                    } else {
-                        None
-                    }
-                } else {
-                    None
-                }
-            })
-    }
-
-    fn macro_call_is_statement<'ast>(
-        &self,
-        storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
-        macro_call: <Self::Types as AbstractTypes>::MacroCall<'ast>,
-    ) -> Option<<Self::Types as AbstractTypes>::Statement<'ast>> {
-        storage
-            .borrow()
-            .last_statement_visited
-            .and_then(|statement| {
-                if match (macro_call, statement) {
-                    (MacroCall::Stmt(stmt_macro), syn::Stmt::Macro(last_macro_call)) => {
-                        stmt_macro == last_macro_call
-                    }
-                    (
-                        MacroCall::Expr(expr_macro),
-                        syn::Stmt::Expr(syn::Expr::Macro(last_macro_call), _),
-                    ) => expr_macro == last_macro_call,
-                    (_, _) => false,
-                } {
-                    Some(statement)
-                } else {
-                    None
-                }
-            })
-    }
-
-    fn method_call_is_statement<'ast>(
-        &self,
-        storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
-        method_call: <Self::Types as AbstractTypes>::MethodCall<'ast>,
-    ) -> Option<<Self::Types as AbstractTypes>::Statement<'ast>> {
-        storage
-            .borrow()
-            .last_statement_visited
-            .and_then(|statement| {
-                if let syn::Stmt::Expr(syn::Expr::MethodCall(last_method_call), _) = statement {
-                    if method_call == last_method_call {
-                        Some(statement)
-                    } else {
-                        None
-                    }
-                } else {
-                    None
-                }
-            })
-    }
-
-    fn field_access_has_inner_field_access<'ast>(
+    fn expression_is_await<'ast>(
         &self,
         _storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
-        field_access: <Self::Types as AbstractTypes>::FieldAccess<'ast>,
-    ) -> Option<<Self::Types as AbstractTypes>::FieldAccess<'ast>> {
-        if let syn::Expr::Field(field_access) = &*field_access.base {
-            Some(field_access)
+        expression: <Self::Types as AbstractTypes>::Expression<'ast>,
+    ) -> Option<<Self::Types as AbstractTypes>::Await<'ast>> {
+        if let Expression::Await(await_) = expression {
+            Some(await_)
         } else {
             None
         }
     }
 
-    fn function_call_has_inner_field_access<'ast>(
+    fn expression_is_field<'ast>(
         &self,
         _storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
-        function_call: <Self::Types as AbstractTypes>::FunctionCall<'ast>,
-    ) -> Option<<Self::Types as AbstractTypes>::FieldAccess<'ast>> {
-        if let syn::Expr::Field(field_access) = &*function_call.func {
-            Some(field_access)
+        expression: <Self::Types as AbstractTypes>::Expression<'ast>,
+    ) -> Option<<Self::Types as AbstractTypes>::Field<'ast>> {
+        if let Expression::Field(field) = expression {
+            Some(field)
         } else {
             None
         }
     }
 
-    fn method_call_has_inner_field_access<'ast>(
+    fn expression_is_call<'ast>(
         &self,
         _storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
-        method_call: <Self::Types as AbstractTypes>::MethodCall<'ast>,
-    ) -> Option<<Self::Types as AbstractTypes>::FieldAccess<'ast>> {
-        if let syn::Expr::Field(field_access) = &*method_call.receiver {
-            Some(field_access)
+        expression: <Self::Types as AbstractTypes>::Expression<'ast>,
+    ) -> Option<<Self::Types as AbstractTypes>::Call<'ast>> {
+        if let Expression::Call(call) = expression {
+            Some(call)
         } else {
             None
         }
     }
 
-    fn function_call_is_method_call_receiver<'ast>(
+    fn expression_is_macro_call<'ast>(
         &self,
-        storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
-        function_call: <Self::Types as AbstractTypes>::FunctionCall<'ast>,
-    ) -> bool {
-        storage
-            .borrow()
-            .last_method_call_visited
-            .map_or(false, |method_call| {
-                if let syn::Expr::Call(last_function_call) = &*method_call.receiver {
-                    function_call == last_function_call
-                } else {
-                    false
-                }
-            })
+        _storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
+        expression: <Self::Types as AbstractTypes>::Expression<'ast>,
+    ) -> Option<<Self::Types as AbstractTypes>::MacroCall<'ast>> {
+        if let Expression::MacroCall(macro_call) = expression {
+            Some(macro_call)
+        } else {
+            None
+        }
     }
 
-    fn macro_call_is_method_call_receiver<'ast>(
+    fn await_arg<'ast>(
         &self,
-        storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
-        macro_call: <Self::Types as AbstractTypes>::MacroCall<'ast>,
-    ) -> bool {
-        storage
-            .borrow()
-            .last_method_call_visited
-            .map_or(false, |method_call| {
-                match (macro_call, &*method_call.receiver) {
-                    (MacroCall::Expr(macro_call), syn::Expr::Macro(ref last_macro_call)) => {
-                        macro_call == last_macro_call
-                    }
-                    (_, _) => false,
-                }
-            })
+        _storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
+        await_: <Self::Types as AbstractTypes>::Await<'ast>,
+    ) -> <Self::Types as AbstractTypes>::Expression<'ast> {
+        Expression::from(&*await_.base)
+    }
+
+    fn field_base<'ast>(
+        &self,
+        _storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
+        field: <Self::Types as AbstractTypes>::Field<'ast>,
+    ) -> <Self::Types as AbstractTypes>::Expression<'ast> {
+        Expression::from(match field {
+            Field::Field(field) => &*field.base,
+            Field::MethodCall(method_call) => &*method_call.receiver,
+        })
+    }
+
+    fn call_callee<'ast>(
+        &self,
+        _storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
+        call: <Self::Types as AbstractTypes>::Call<'ast>,
+    ) -> <Self::Types as AbstractTypes>::Expression<'ast> {
+        match call {
+            Call::FunctionCall(call) => Expression::from(&*call.func),
+            Call::MethodCall(method_call) => Expression::Field(Field::MethodCall(method_call)),
+        }
+    }
+
+    fn macro_call_callee<'ast>(
+        &self,
+        _storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
+        _macro_call: <Self::Types as AbstractTypes>::MacroCall<'ast>,
+    ) -> <Self::Types as AbstractTypes>::Expression<'ast> {
+        Expression::Other
     }
 }
 

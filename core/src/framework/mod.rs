@@ -1,4 +1,4 @@
-use crate::{Config, LightContext, Span};
+use crate::{config, LightContext, Span};
 use anyhow::Result;
 use std::path::Path;
 use subprocess::{Exec, Popen};
@@ -30,7 +30,7 @@ pub trait Parse {
     fn parse(
         &mut self,
         context: &LightContext,
-        config: &Config,
+        config: &config::Toml,
         test_files: &[&Path],
     ) -> Result<Vec<Span>>;
 }
@@ -66,7 +66,7 @@ impl<T: AsParse> Parse for T {
     fn parse(
         &mut self,
         context: &LightContext,
-        config: &Config,
+        config: &config::Toml,
         test_files: &[&Path],
     ) -> Result<Vec<Span>> {
         self.as_parse_mut().parse(context, config, test_files)

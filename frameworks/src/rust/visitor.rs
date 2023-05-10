@@ -1,4 +1,4 @@
-use super::{GenericVisitor, MacroCall, Rust, Storage};
+use super::{Call, GenericVisitor, MacroCall, Rust, Storage};
 use anyhow::Result;
 use necessist_core::Span;
 use std::cell::RefCell;
@@ -90,8 +90,6 @@ impl<'context, 'config, 'framework, 'ast, 'storage> Visit<'ast>
         let walk = self.generic_visitor.visit_statement(self.storage, stmt);
 
         if walk {
-            self.storage.borrow_mut().last_statement_visited = Some(stmt);
-
             visit_stmt(self, stmt);
         }
 
@@ -99,15 +97,18 @@ impl<'context, 'config, 'framework, 'ast, 'storage> Visit<'ast>
             .visit_statement_post(self.storage, stmt);
     }
 
-    fn visit_expr_call(&mut self, call: &'ast ExprCall) {
-        let walk = self.generic_visitor.visit_function_call(self.storage, call);
+    fn visit_expr_call(&mut self, function_call: &'ast ExprCall) {
+        let call = Call::FunctionCall(function_call);
+
+        let walk = self.generic_visitor.visit_call(self.storage, call);
 
         if walk {
-            visit_expr_call(self, call);
+            visit_expr_call(self, function_call);
+        } else {
+            self.visit_expr(&function_call.func);
         }
 
-        self.generic_visitor
-            .visit_function_call_post(self.storage, call);
+        self.generic_visitor.visit_call_post(self.storage, call);
     }
 
     fn visit_stmt_macro(&mut self, mac: &'ast StmtMacro) {
@@ -141,11 +142,9 @@ impl<'context, 'config, 'framework, 'ast, 'storage> Visit<'ast>
     }
 
     fn visit_expr_method_call(&mut self, method_call: &'ast ExprMethodCall) {
-        let walk = self
-            .generic_visitor
-            .visit_method_call(self.storage, method_call);
+        let call = Call::MethodCall(method_call);
 
-        self.storage.borrow_mut().last_method_call_visited = Some(method_call);
+        let walk = self.generic_visitor.visit_call(self.storage, call);
 
         if walk {
             visit_expr_method_call(self, method_call);
@@ -153,8 +152,7 @@ impl<'context, 'config, 'framework, 'ast, 'storage> Visit<'ast>
             self.visit_expr(&method_call.receiver);
         }
 
-        self.generic_visitor
-            .visit_method_call_post(self.storage, method_call);
+        self.generic_visitor.visit_call_post(self.storage, call);
     }
 }
 
@@ -212,12 +210,16 @@ mod test {
 
     #[test]
     fn readme_contains_ignored_macros() {
-        assert!(readme_contains_code_bulleted_list(Rust::IGNORED_MACROS));
+        assert!(readme_contains_code_bulleted_list(
+            Rust::IGNORED_MACROS.unwrap()
+        ));
     }
 
     #[test]
     fn readme_contains_ignored_methods() {
-        assert!(readme_contains_code_bulleted_list(Rust::IGNORED_METHODS));
+        assert!(readme_contains_code_bulleted_list(
+            Rust::IGNORED_METHODS.unwrap()
+        ));
     }
 
     #[test]
@@ -227,12 +229,18 @@ mod test {
 
     #[test]
     fn ignored_macros_are_sorted() {
-        assert_eq!(sort(Rust::IGNORED_MACROS), Rust::IGNORED_MACROS);
+        assert_eq!(
+            sort(Rust::IGNORED_MACROS.unwrap()),
+            Rust::IGNORED_MACROS.unwrap()
+        );
     }
 
     #[test]
     fn ignored_methods_are_sorted() {
-        assert_eq!(sort(Rust::IGNORED_METHODS), Rust::IGNORED_METHODS);
+        assert_eq!(
+            sort(Rust::IGNORED_METHODS.unwrap()),
+            Rust::IGNORED_METHODS.unwrap()
+        );
     }
 
     #[test]
@@ -284,7 +292,7 @@ mod test {
             .collect::<Vec<_>>();
         watched_methods.sort_unstable();
         watched_methods.dedup();
-        assert_eq!(watched_methods, Rust::IGNORED_METHODS);
+        assert_eq!(watched_methods, Rust::IGNORED_METHODS.unwrap());
     }
 
     fn readme_contains_code_bulleted_list(items: &[&str]) -> bool {

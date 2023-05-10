@@ -1,4 +1,5 @@
 use crate::{
+    config,
     framework::{self, Applicable, ToImplementation},
     note, source_warn, sqlite, util, warn, Backup, Outcome, Rewriter, SourceFile, Span,
     ToConsoleString, WarnFlags, Warning,
@@ -8,7 +9,6 @@ use anyhow::{anyhow, bail, ensure, Result};
 use heck::ToKebabCase;
 use indicatif::ProgressBar;
 use log::debug;
-use serde::{Deserialize, Serialize};
 use std::{
     collections::BTreeMap,
     env::{current_dir, var},
@@ -77,16 +77,6 @@ pub struct Necessist {
     pub verbose: bool,
     pub test_files: Vec<PathBuf>,
     pub args: Vec<String>,
-}
-
-#[derive(Default, Deserialize, Serialize)]
-pub struct Config {
-    #[serde(default)]
-    pub ignored_functions: Vec<String>,
-    #[serde(default)]
-    pub ignored_macros: Vec<String>,
-    #[serde(default)]
-    pub ignored_methods: Vec<String>,
 }
 
 /// Necessist's main entrypoint.
@@ -175,7 +165,7 @@ fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementatio
         return Ok(None);
     }
 
-    let config = read_config(context, context.root)?;
+    let config = config::Toml::read(context, context.root)?;
 
     let (sqlite, past_removals) = if context.opts.no_sqlite {
         (None, Vec::new())
@@ -351,28 +341,9 @@ fn default_config(context: &LightContext, root: &Path) -> Result<()> {
         WarnFlags::empty(),
     )?;
 
-    let toml = toml::to_string(&Config::default())?;
+    let toml = toml::to_string(&config::Toml::default())?;
 
     write(path_buf, toml).map_err(Into::into)
-}
-
-fn read_config(context: &LightContext, root: &Path) -> Result<Config> {
-    let path_buf = root.join("necessist.toml");
-
-    if !path_buf.try_exists()? {
-        return Ok(Config::default());
-    }
-
-    warn(
-        context,
-        Warning::ConfigFilesExperimental,
-        "Configuration files are experimental",
-        WarnFlags::empty(),
-    )?;
-
-    let contents = read_to_string(path_buf)?;
-
-    toml::from_str(&contents).map_err(Into::into)
 }
 
 fn dump(context: &LightContext, removals: &[Removal]) {

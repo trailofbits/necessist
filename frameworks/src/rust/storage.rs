@@ -6,13 +6,11 @@ use std::{
     collections::BTreeMap,
     path::{Path, PathBuf},
 };
-use syn::{ExprMethodCall, File, Ident, Stmt};
+use syn::{File, Ident};
 
 /// Structures needed during parsing but not after.
 pub struct Storage<'ast> {
     pub module_path: Vec<&'ast Ident>,
-    pub last_statement_visited: Option<&'ast Stmt>,
-    pub last_method_call_visited: Option<&'ast ExprMethodCall>,
     pub test_file_fs_module_path_cache: BTreeMap<PathBuf, Vec<String>>,
     pub test_file_package_cache: BTreeMap<PathBuf, Package>,
     pub error: Option<Error>,
@@ -22,8 +20,6 @@ impl<'ast> Storage<'ast> {
     pub fn new(_file: &'ast File) -> Self {
         Self {
             module_path: Vec::new(),
-            last_statement_visited: None,
-            last_method_call_visited: None,
             test_file_fs_module_path_cache: BTreeMap::new(),
             test_file_package_cache: BTreeMap::new(),
             error: None,
