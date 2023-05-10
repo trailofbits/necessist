@@ -1,65 +1,69 @@
 use super::{AbstractTypes, MaybeNamed, Named, ParseLow, Spanned};
 use if_chain::if_chain;
-use necessist_core::{Config, LightContext, SourceFile, Span};
+use necessist_core::{config, LightContext, SourceFile, Span};
 use paste::paste;
 use std::cell::RefCell;
 
 pub struct GenericVisitor<'context, 'config, 'framework, 'ast, T: ParseLow + ?Sized> {
     pub context: &'context LightContext<'context>,
-    pub config: &'config Config,
+    pub config: &'config config::Compiled,
     pub framework: &'framework mut T,
     pub source_file: SourceFile,
     pub test_name: Option<String>,
     pub last_statement_in_test: Option<<T::Types as AbstractTypes>::Statement<'ast>>,
     pub n_statement_leaves_visited: usize,
     pub n_before: Vec<usize>,
+    pub call_statement: Option<<T::Types as AbstractTypes>::Statement<'ast>>,
     pub spans_visited: Vec<Span>,
 }
 
-macro_rules! visit_call {
-    ($this:expr, $storage:expr, $inner_field_access:expr, $is_method_call_receiver:expr, $call:expr, $x:ident) => {
+/// `call_info` return values. See that method for details.
+struct CallInfo {
+    span: Span,
+    is_method: bool,
+    is_ignored: bool,
+}
+
+struct VisitMaybeMacroCallArgs<'ast, 'storage, 'span, T: ParseLow> {
+    storage: &'storage RefCell<<T::Types as AbstractTypes>::Storage<'ast>>,
+    span: &'span Span,
+    is_ignored_as_call: bool,
+    is_method_call: bool,
+    is_ignored_as_method_call: bool,
+}
+
+// smoelius: The things we want to remove are only:
+// - entire statements (function, macro, or method calls with the receiver)
+// - method calls (without the receiver)
+// So, for example, a function, macro, or method call that is a method call receiver should not be
+// removed because it is necessarily not an entire statement.
+macro_rules! visit_maybe_macro_call {
+    ($this:expr, $args:expr) => {
         paste! {
-            let statement = $this.framework.[< $x _call_is_statement >]($storage, $call);
+            let statement = $this.call_statement.take();
 
             if_chain! {
                 if let Some(test_name) = $this.test_name.as_ref();
                 if statement.map_or(true, |statement| !$this.is_last_statement_in_test(statement));
-                if !$is_method_call_receiver;
                 then {
-                    let dotted_path = $call.name().map(|name| {
-                        let mut path_rev = vec![name];
-
-                        let mut maybe_field_access = $inner_field_access;
-                        while let Some(field_access) = maybe_field_access {
-                            let Some(name) = field_access.name() else {
-                                break
-                            };
-                            path_rev.push(name);
-                            maybe_field_access = $this.framework.field_access_has_inner_field_access($storage, field_access);
+                    if let Some(statement) = statement {
+                        if !$args.is_ignored_as_call {
+                            let span = statement.span(&$this.source_file);
+                            $this.framework.on_candidate_found($this.context, $args.storage, &test_name, &span);
+                            $this.spans_visited.push(span);
                         }
-
-                        path_rev
-                            .iter()
-                            .map(String::as_str)
-                            .rev()
-                            .collect::<Vec<_>>()
-                            .join(".")
-                    });
-
-                    // smoelius: Return false (i.e., don't descend into the call arguments) only if the
-                    // callee is ignored.
-                    if dotted_path.map_or(true, |dotted_path| !$this.[< is_ignored_ $x >]($this.config, &dotted_path)) {
-                        let span = if let Some(statement) = statement {
-                            statement.span(&$this.source_file)
-                        } else {
-                            $call.span(&$this.source_file)
-                        };
-                        $this.framework.on_candidate_found($this.context, $storage, &test_name, &span);
-                        $this.spans_visited.push(span);
-                        true
-                    } else {
-                        false
                     }
+
+                    // smoelius: If the entire call is ignored, then treat the method call as
+                    // ignored as well.
+                    if !$args.is_ignored_as_call && $args.is_method_call && !$args.is_ignored_as_method_call {
+                        $this.framework.on_candidate_found($this.context, $args.storage, &test_name, &$args.span);
+                        $this.spans_visited.push($args.span.clone());
+                    }
+
+                    // smoelius: Return false (i.e., don't descend into the call arguments) only if
+                    // the call or method call is ignored.
+                    !$args.is_ignored_as_call && !$args.is_ignored_as_method_call
                 } else {
                     true
                 }
@@ -69,7 +73,7 @@ macro_rules! visit_call {
 }
 
 macro_rules! visit_call_post {
-    ($this:expr, $storage:expr, $call:expr, $x:ident) => {};
+    ($this:expr, $storage:expr) => {};
 }
 
 impl<'context, 'config, 'framework, 'ast, T: ParseLow>
@@ -111,11 +115,16 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
 
     pub fn visit_statement(
         &mut self,
-        _storage: &RefCell<<T::Types as AbstractTypes>::Storage<'ast>>,
-        _statement: <T::Types as AbstractTypes>::Statement<'ast>,
+        storage: &RefCell<<T::Types as AbstractTypes>::Storage<'ast>>,
+        statement: <T::Types as AbstractTypes>::Statement<'ast>,
     ) -> bool {
         let n_before = self.n_statement_leaves_visited;
         self.n_before.push(n_before);
+
+        if self.statement_is_call(storage, statement) {
+            assert!(self.call_statement.is_none());
+            self.call_statement = Some(statement);
+        }
 
         true
     }
@@ -125,6 +134,10 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
         storage: &RefCell<<T::Types as AbstractTypes>::Storage<'ast>>,
         statement: <T::Types as AbstractTypes>::Statement<'ast>,
     ) {
+        // smoelius: `self.call_statement` should have been cleared by `visit_maybe_macro_call!`. If
+        // not, it's a bug.
+        assert!(self.call_statement.is_none());
+
         let n_before = self.n_before.pop().unwrap();
         let n_after = self.n_statement_leaves_visited;
 
@@ -136,11 +149,11 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
         }
         self.n_statement_leaves_visited += 1;
 
-        // smoelius: Call statements are handled by the visit/visit-post functions specific
-        // to the call type.
+        // smoelius: Call/macro call statements are handled by the visit/visit-post functions
+        // specific to the call type.
         if let Some(test_name) = self.test_name.as_ref() {
             if !self.is_last_statement_in_test(statement)
-                && !self.framework.statement_is_call(storage, statement)
+                && !self.statement_is_call(storage, statement)
                 && !self.framework.statement_is_control(storage, statement)
                 && !self.framework.statement_is_declaration(storage, statement)
             {
@@ -152,38 +165,54 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
         }
     }
 
-    pub fn visit_function_call(
+    // smoelius: If `visit_call` returns false and the call is a method call, the
+    // framework-specific visitor should still descend into the method call receiver.
+    pub fn visit_call(
         &mut self,
         storage: &RefCell<<T::Types as AbstractTypes>::Storage<'ast>>,
-        function_call: <T::Types as AbstractTypes>::FunctionCall<'ast>,
+        call: <T::Types as AbstractTypes>::Call<'ast>,
     ) -> bool {
-        let inner_field_access = self
-            .framework
-            .function_call_has_inner_field_access(storage, function_call);
-        let is_method_call_receiver = self
-            .framework
-            .function_call_is_method_call_receiver(storage, function_call);
-        visit_call! {
-            self,
-            storage,
-            inner_field_access,
-            is_method_call_receiver,
-            function_call,
-            function
+        let call_span = call.span(&self.source_file);
+        if let Some((field, name)) = self.callee_is_named_field(storage, call) {
+            let inner_most_call_info = self.call_info(storage, &call_span, field, &name, true);
+            let call_info = self.call_info(storage, &call_span, field, &name, false);
+            assert!(call_info.is_method);
+            visit_maybe_macro_call! {
+                self,
+                (VisitMaybeMacroCallArgs::<'_, '_, '_, T> {
+                    storage,
+                    span: &call_info.span,
+                    is_ignored_as_call: !inner_most_call_info.is_method && inner_most_call_info.is_ignored,
+                    is_method_call: true,
+                    is_ignored_as_method_call: call_info.is_ignored
+                })
+            }
+        } else {
+            let is_ignored_as_call = call
+                .name()
+                .map_or(false, |name| self.config.is_ignored_function(&name));
+            visit_maybe_macro_call! {
+                self,
+                (VisitMaybeMacroCallArgs::<'_, '_, '_, T> {
+                    storage,
+                    span: &call_span,
+                    is_ignored_as_call,
+                    is_method_call: false,
+                    is_ignored_as_method_call: false
+                })
+            }
         }
     }
 
     #[allow(clippy::unused_self)]
-    pub fn visit_function_call_post(
+    pub fn visit_call_post(
         &mut self,
         _storage: &RefCell<<T::Types as AbstractTypes>::Storage<'ast>>,
-        _function_call: <T::Types as AbstractTypes>::FunctionCall<'ast>,
+        _call: <T::Types as AbstractTypes>::Call<'ast>,
     ) {
         visit_call_post! {
             self,
-            storage,
-            function_call,
-            function
+            storage
         }
     }
 
@@ -192,17 +221,16 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
         storage: &RefCell<<T::Types as AbstractTypes>::Storage<'ast>>,
         macro_call: <T::Types as AbstractTypes>::MacroCall<'ast>,
     ) -> bool {
-        let inner_field_access = None::<<T::Types as AbstractTypes>::FieldAccess<'ast>>;
-        let is_method_call_receiver = self
-            .framework
-            .macro_call_is_method_call_receiver(storage, macro_call);
-        visit_call! {
+        let name = macro_call.name();
+        visit_maybe_macro_call! {
             self,
-            storage,
-            inner_field_access,
-            is_method_call_receiver,
-            macro_call,
-            macro
+            (VisitMaybeMacroCallArgs::<'_, '_, '_, T> {
+                storage,
+                span: &macro_call.span(&self.source_file),
+                is_ignored_as_call: self.config.is_ignored_macro(&name),
+                is_method_call: false,
+                is_ignored_as_method_call: false
+            })
         }
     }
 
@@ -214,44 +242,7 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
     ) {
         visit_call_post! {
             self,
-            storage,
-            macro_call,
-            macro
-        }
-    }
-
-    // smoelius: When `visit_method_call` returns false, the framework-specific visitor should still
-    // traverse the receiver.
-    pub fn visit_method_call(
-        &mut self,
-        storage: &RefCell<<T::Types as AbstractTypes>::Storage<'ast>>,
-        method_call: <T::Types as AbstractTypes>::MethodCall<'ast>,
-    ) -> bool {
-        let inner_field_access = self
-            .framework
-            .method_call_has_inner_field_access(storage, method_call);
-        let is_method_call_receiver = false;
-        visit_call! {
-            self,
-            storage,
-            inner_field_access,
-            is_method_call_receiver,
-            method_call,
-            method
-        }
-    }
-
-    #[allow(clippy::unused_self)]
-    pub fn visit_method_call_post(
-        &mut self,
-        _storage: &RefCell<<T::Types as AbstractTypes>::Storage<'ast>>,
-        _method_call: <T::Types as AbstractTypes>::MethodCall<'ast>,
-    ) {
-        visit_call_post! {
-            self,
-            storage,
-            method_call,
-            method
+            storage
         }
     }
 
@@ -262,21 +253,172 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
         self.last_statement_in_test == Some(statement)
     }
 
-    #[allow(clippy::unused_self)]
-    fn is_ignored_function(&self, config: &Config, dotted_path: &str) -> bool {
-        T::IGNORED_FUNCTIONS.binary_search(&dotted_path).is_ok()
-            || config.ignored_functions.iter().any(|s| s == dotted_path)
+    fn statement_is_call(
+        &self,
+        storage: &RefCell<<T::Types as AbstractTypes>::Storage<'ast>>,
+        statement: <T::Types as AbstractTypes>::Statement<'ast>,
+    ) -> bool {
+        let Some(mut expression) = self.framework.statement_is_expression(storage, statement) else {
+            return false;
+        };
+
+        loop {
+            #[allow(clippy::needless_bool)]
+            if let Some(await_) = self.framework.expression_is_await(storage, expression) {
+                expression = self.framework.await_arg(storage, await_);
+            } else if let Some(field) = self.framework.expression_is_field(storage, expression) {
+                expression = self.framework.field_base(storage, field);
+            } else if self
+                .framework
+                .expression_is_call(storage, expression)
+                .is_some()
+                || self
+                    .framework
+                    .expression_is_macro_call(storage, expression)
+                    .is_some()
+            {
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 
-    #[allow(clippy::unused_self)]
-    fn is_ignored_macro(&self, config: &Config, dotted_path: &str) -> bool {
-        T::IGNORED_MACROS.binary_search(&dotted_path).is_ok()
-            || config.ignored_macros.iter().any(|s| s == dotted_path)
+    /// Serves two functions that would require similar implementations:
+    /// - extracting method call paths, e.g.:
+    ///
+    ///   ```ignore
+    ///   operator.connect(...).signer.sendTransaction(...)
+    ///                         ^^^^^^^^^^^^^^^^^^^^^^
+    ///    ```
+    ///
+    /// - extracting the innermost function or macro call path, e.g.:
+    ///
+    ///   ```ignore
+    ///   operator.connect(...).signer.sendTransaction(...)
+    ///   ^^^^^^^^^^^^^^^^
+    ///   ```
+    ///
+    /// For the latter, the `innermost` flag must be set to true. Roughly speaking, `call_info`
+    /// walks the expression from right to left. When it encounters arguments (`(...)`), it either
+    /// returns the accumulated method path (when `innermost` is not set), or recurses (when
+    /// `innermost` is set).
+    ///
+    /// `call_info`'s return value includes the call span, whether the call is a method call, and
+    /// whether the call is ignored. For the last of these, `call_info` can tell which `is_ignored`
+    /// method to use, because it can tell from the context the call's type (i.e., function, macro,
+    /// or method call).
+    fn call_info(
+        &self,
+        storage: &RefCell<<T::Types as AbstractTypes>::Storage<'ast>>,
+        call_span: &Span,
+        mut field: <T::Types as AbstractTypes>::Field<'ast>,
+        name: &str,
+        innermost: bool,
+    ) -> CallInfo {
+        let mut path_span = call_span.clone();
+        path_span.start = field.span(&self.source_file).start;
+
+        let mut path_rev = vec![name.to_owned()];
+        let mut base = self.framework.field_base(storage, field);
+
+        while let Some((field_inner, name_inner)) = self.field_base_is_named_field(storage, field) {
+            path_span.start = field_inner.span(&self.source_file).start;
+            path_rev.push(name_inner);
+            base = self.framework.field_base(storage, field_inner);
+            field = field_inner;
+        }
+
+        let path = path_rev
+            .iter()
+            .map(String::as_str)
+            .rev()
+            .collect::<Vec<_>>()
+            .join(".");
+
+        if let Some(call) = self.framework.expression_is_call(storage, base) {
+            if innermost {
+                return if let Some((field, name)) = self.callee_is_named_field(storage, call) {
+                    self.call_info(
+                        storage,
+                        &call.span(&self.source_file),
+                        field,
+                        &name,
+                        innermost,
+                    )
+                } else {
+                    let name = call.name();
+                    let is_ignored = name
+                        .as_ref()
+                        .map_or(false, |name| self.config.is_ignored_function(name));
+                    CallInfo {
+                        span: call.span(&self.source_file),
+                        is_method: false,
+                        is_ignored,
+                    }
+                };
+            }
+        } else if let Some(macro_call) = self.framework.expression_is_macro_call(storage, base) {
+            if innermost {
+                let name = macro_call.name();
+                let is_ignored = self.config.is_ignored_macro(&name);
+                return CallInfo {
+                    span: macro_call.span(&self.source_file),
+                    is_method: false,
+                    is_ignored,
+                };
+            }
+        } else if let Some(name) = base.name() {
+            if innermost {
+                let name = format!("{name}.{path}");
+                let is_ignored = self.config.is_ignored_function(&name);
+                return CallInfo {
+                    span: call_span.clone(),
+                    is_method: false,
+                    is_ignored,
+                };
+            }
+        }
+
+        let is_ignored = self.config.is_ignored_method(&path);
+        CallInfo {
+            span: path_span,
+            is_method: true,
+            is_ignored,
+        }
     }
 
-    #[allow(clippy::unused_self)]
-    fn is_ignored_method(&self, config: &Config, dotted_path: &str) -> bool {
-        T::IGNORED_METHODS.binary_search(&dotted_path).is_ok()
-            || config.ignored_methods.iter().any(|s| s == dotted_path)
+    fn field_base_is_named_field(
+        &self,
+        storage: &RefCell<<T::Types as AbstractTypes>::Storage<'ast>>,
+        field: <T::Types as AbstractTypes>::Field<'ast>,
+    ) -> Option<(<T::Types as AbstractTypes>::Field<'ast>, String)> {
+        let expression = self.framework.field_base(storage, field);
+        if_chain! {
+            if let Some(field) = self.framework.expression_is_field(storage, expression);
+            if let Some(name) = field.name();
+            then {
+                Some((field, name))
+            } else {
+                None
+            }
+        }
+    }
+
+    fn callee_is_named_field(
+        &self,
+        storage: &RefCell<<T::Types as AbstractTypes>::Storage<'ast>>,
+        call: <T::Types as AbstractTypes>::Call<'ast>,
+    ) -> Option<(<T::Types as AbstractTypes>::Field<'ast>, String)> {
+        let expression = self.framework.call_callee(storage, call);
+        if_chain! {
+            if let Some(field) = self.framework.expression_is_field(storage, expression);
+            if let Some(name) = field.name();
+            then {
+                Some((field, name))
+            } else {
+                None
+            }
+        }
     }
 }

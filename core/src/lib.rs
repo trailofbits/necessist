@@ -10,9 +10,11 @@ use backup::Backup;
 #[cfg(feature = "clap")]
 pub mod cli;
 
+pub mod config;
+
 mod core;
 use crate::core::Removal;
-pub use crate::core::{necessist, Config, LightContext, Necessist};
+pub use crate::core::{necessist, LightContext, Necessist};
 
 pub mod framework;
 
