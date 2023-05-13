@@ -87,6 +87,53 @@ impl Span {
             self.end.column + 1
         )
     }
+
+    #[must_use]
+    pub fn trim_start(&self) -> Self {
+        // smoelius: Ignoring errors is a hack.
+        let Ok(text) = self.source_text() else {
+            return self.clone();
+        };
+
+        let mut start = self.start;
+        for ch in text.chars() {
+            if ch.is_whitespace() {
+                if ch == '\n' {
+                    start.line += 1;
+                    start.column = 0;
+                } else {
+                    start.column += 1;
+                }
+            } else {
+                break;
+            }
+        }
+
+        self.with_start(start)
+    }
+
+    #[must_use]
+    pub fn with_start(&self, start: proc_macro2::LineColumn) -> Self {
+        Self {
+            source_file: self.source_file.clone(),
+            start,
+            end: self.end,
+        }
+    }
+
+    pub fn source_text(&self) -> Result<String> {
+        let contents = std::fs::read_to_string(&*self.source_file)?;
+
+        // smoelius: Creating a new `Rewriter` here is just as silly as it is in `attempt_removal`
+        // (see comment therein).
+        let mut rewriter = crate::rewriter::Rewriter::new(&contents);
+        let (start, end) = rewriter.offsets_from_span(self);
+
+        let bytes = &contents.as_bytes()[start..end];
+        let text = std::str::from_utf8(bytes)?;
+
+        Ok(text.to_owned())
+    }
 }
 
 #[allow(clippy::module_name_repetitions)]

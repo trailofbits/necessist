@@ -54,15 +54,16 @@ impl Spanned for Infallible {
     }
 }
 
+// smoelius: When there is ambiguity, try to use names used by Rust/`syn`.
 pub trait AbstractTypes {
     type Storage<'ast>;
     type File;
     type Test<'ast>: Copy + Named + 'ast;
     type Statement<'ast>: Copy + Eq + Spanned;
-    type Expression<'ast>: Copy + MaybeNamed;
+    // smoelius: `<Expression as MaybeNamed>::name` is allowed to return `None` when the expression
+    // is one of the other known types, e.g., `Await`, `Call`, etc.
+    type Expression<'ast>: Copy + MaybeNamed + Spanned;
     type Await<'ast>: Copy;
-    // smoelius: The span returned `<Field as Spanned>::span` should exclude the base, i.e.,
-    // include only the dot and the member.
     type Field<'ast>: Copy + MaybeNamed + Spanned + 'ast;
     type Call<'ast>: Copy + MaybeNamed + Spanned + 'ast;
     type MacroCall<'ast>: Copy + Named + Spanned + 'ast;
@@ -419,6 +420,12 @@ impl<T: ParseLow> ParseAdapter<T> {
             .unwrap_or_default()
             .iter()
             .map(ToString::to_string)
+            .chain(
+                T::IGNORED_METHODS
+                    .unwrap_or_default()
+                    .iter()
+                    .map(|pattern| format!("*.{pattern}")),
+            )
             .collect::<Vec<_>>();
         let ignored_macros = T::IGNORED_MACROS
             .unwrap_or_default()
@@ -435,8 +442,9 @@ impl<T: ParseLow> ParseAdapter<T> {
             ignored_functions,
             ignored_macros,
             ignored_methods,
+            ..Default::default()
         };
 
-        builtins.merge(config).compile()
+        builtins.merge(config).unwrap().compile()
     }
 }

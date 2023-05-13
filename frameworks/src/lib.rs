@@ -14,10 +14,10 @@ use subprocess::Exec;
 
 // Framework modules
 
-/* mod foundry;
+mod foundry;
 use foundry::Foundry;
 
-mod golang;
+/* mod golang;
 use golang::Golang; */
 
 mod hardhat_ts;
@@ -44,8 +44,8 @@ mod ts_utils;
 #[non_exhaustive]
 #[remain::sorted]
 pub enum Identifier {
-    /* Foundry,
-    Golang, */
+    Foundry,
+    // Golang,
     HardhatTs,
     Rust,
 }
@@ -53,8 +53,8 @@ pub enum Identifier {
 impl Applicable for Identifier {
     fn applicable(&self, context: &LightContext) -> Result<bool> {
         match *self {
-            /* Self::Foundry => Foundry::applicable(context),
-            Self::Golang => Golang::applicable(context), */
+            Self::Foundry => Foundry::applicable(context),
+            // Self::Golang => Golang::applicable(context),
             Self::HardhatTs => HardhatTs::applicable(context),
             Self::Rust => Rust::applicable(context),
         }
@@ -64,10 +64,10 @@ impl Applicable for Identifier {
 impl ToImplementation for Identifier {
     fn to_implementation(&self, _context: &LightContext) -> Result<Option<Box<dyn Interface>>> {
         Ok(Some(match *self {
-            /* Self::Foundry => implementation_as_interface(ParseRunAdapter::new)(Foundry::new()),
+            Self::Foundry => implementation_as_interface(ParseRunAdapter::new)(Foundry::new()),
 
-            Self::Golang => implementation_as_interface(ParseRunAdapter::new)(Golang::new()),
-            */
+            // Self::Golang => implementation_as_interface(ParseRunAdapter::new)(Golang::new()),
+
             // smoelius: `HardhatTs` implements the high-level `Run` interface directly.
             Self::HardhatTs => implementation_as_interface(ParseAdapter)(HardhatTs::new()),
 

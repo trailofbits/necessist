@@ -459,15 +459,7 @@ fn dump_candidates(
     test_file_span_map: &BTreeMap<SourceFile, Vec<Span>>,
 ) -> Result<()> {
     for span in test_file_span_map.values().flatten() {
-        let contents = read_to_string(&*span.source_file)?;
-
-        // smoelius: Creating a new `Rewriter` here is just as silly as it is in `attempt_removal`
-        // (see comment therein).
-        let mut rewriter = Rewriter::new(&contents);
-        let (start, end) = rewriter.offsets_from_span(span);
-
-        let bytes = &contents.as_bytes()[start..end];
-        let text = std::str::from_utf8(bytes)?;
+        let text = span.source_text()?;
 
         (context.println)(&format!("{}: `{}`", span.to_console_string(), text));
     }

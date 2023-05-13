@@ -124,6 +124,12 @@ impl<'ast, T: PartialEq> PartialEq for SourceMapped<'ast, T> {
 
 impl<'ast, T: Eq> Eq for SourceMapped<'ast, T> {}
 
+impl<'ast, T: SwcSpanned> Spanned for SourceMapped<'ast, T> {
+    fn span(&self, source_file: &SourceFile) -> Span {
+        SwcSpanned::span(self.node).to_internal_span(self.source_map, source_file)
+    }
+}
+
 pub struct Types;
 
 impl AbstractTypes for Types {
@@ -146,23 +152,10 @@ impl<'ast> Named for Test<'ast> {
 
 impl<'ast> MaybeNamed for <Types as AbstractTypes>::Expression<'ast> {
     fn name(&self) -> Option<String> {
-        #[allow(clippy::match_same_arms)]
-        match self.node {
-            Expr::Await(_) => None,
-            Expr::Member(member) => {
-                <<Types as AbstractTypes>::Field<'ast> as MaybeNamed>::name(&SourceMapped {
-                    source_map: self.source_map,
-                    node: member,
-                })
-            }
-            Expr::Call(call) => {
-                <<Types as AbstractTypes>::Call<'ast> as MaybeNamed>::name(&SourceMapped {
-                    source_map: self.source_map,
-                    node: call,
-                })
-            }
-            Expr::Ident(ident) => Some(ident.as_ref().to_owned()),
-            _ => None,
+        if let Expr::Ident(ident) = self.node {
+            Some(ident.as_ref().to_owned())
+        } else {
+            None
         }
     }
 }
@@ -188,28 +181,6 @@ impl<'ast> MaybeNamed for <Types as AbstractTypes>::Call<'ast> {
                 None
             }
         }
-    }
-}
-
-impl<'ast> Spanned for <Types as AbstractTypes>::Statement<'ast> {
-    fn span(&self, source_file: &SourceFile) -> Span {
-        SwcSpanned::span(self.node).to_internal_span(self.source_map, source_file)
-    }
-}
-
-impl<'ast> Spanned for <Types as AbstractTypes>::Field<'ast> {
-    fn span(&self, source_file: &SourceFile) -> Span {
-        let mut span = SwcSpanned::span(self.node).to_internal_span(self.source_map, source_file);
-        let span_obj =
-            SwcSpanned::span(&self.node.obj).to_internal_span(self.source_map, source_file);
-        span.start = span_obj.end;
-        span
-    }
-}
-
-impl<'ast> Spanned for <Types as AbstractTypes>::Call<'ast> {
-    fn span(&self, source_file: &SourceFile) -> Span {
-        SwcSpanned::span(self.node).to_internal_span(self.source_map, source_file)
     }
 }
 
@@ -261,7 +232,7 @@ impl ParseLow for HardhatTs {
         storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
         file: &'ast <Self::Types as AbstractTypes>::File,
     ) -> Result<Vec<Span>> {
-        Ok(visit(generic_visitor, storage, &file.1))
+        visit(generic_visitor, storage, &file.1)
     }
 
     fn on_candidate_found(
