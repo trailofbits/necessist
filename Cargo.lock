@@ -1190,6 +1190,7 @@ dependencies = [
  "log",
  "necessist-core",
  "paste",
+ "proc-macro2",
  "quote",
  "regex",
  "remain",

@@ -309,23 +309,20 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
     /// method to use, because it can tell from the context the call's type (i.e., function, macro,
     /// or method call).
     fn call_info(
-        &self,
+        &mut self,
         storage: &RefCell<<T::Types as AbstractTypes>::Storage<'ast>>,
         call_span: &Span,
         mut field: <T::Types as AbstractTypes>::Field<'ast>,
         name: &str,
         innermost: bool,
     ) -> CallInfo {
-        let mut path_span = call_span.clone();
-        path_span.start = field.span(&self.source_file).start;
-
-        let mut path_rev = vec![name.to_owned()];
         let mut base = self.framework.field_base(storage, field);
 
+        let mut path_rev = vec![name.to_owned()];
+
         while let Some((field_inner, name_inner)) = self.field_base_is_named_field(storage, field) {
-            path_span.start = field_inner.span(&self.source_file).start;
-            path_rev.push(name_inner);
             base = self.framework.field_base(storage, field_inner);
+            path_rev.push(name_inner);
             field = field_inner;
         }
 
@@ -371,7 +368,15 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
         } else if let Some(name) = base.name() {
             if innermost {
                 let name = format!("{name}.{path}");
-                let is_ignored = self.config.is_ignored_function(&name);
+                let is_ignored_as_function = self.config.is_ignored_function(&name);
+                let is_ignored_as_method = self.config.is_ignored_method(&path);
+                let is_ignored = match self.config.ignored_path_disambiguation() {
+                    config::IgnoredPathDisambiguation::None => {
+                        is_ignored_as_function || is_ignored_as_method
+                    }
+                    config::IgnoredPathDisambiguation::Function => is_ignored_as_function,
+                    config::IgnoredPathDisambiguation::Method => is_ignored_as_method,
+                };
                 return CallInfo {
                     span: call_span.clone(),
                     is_method: false,
@@ -380,6 +385,9 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
             }
         }
 
+        let path_span = call_span
+            .with_start(base.span(&self.source_file).end)
+            .trim_start();
         let is_ignored = self.config.is_ignored_method(&path);
         CallInfo {
             span: path_span,

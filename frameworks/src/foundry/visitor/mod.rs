@@ -1,270 +1,143 @@
-use super::Foundry;
+use super::{Foundry, FunctionCall, GenericVisitor, Storage, Test, WithContents};
+use anyhow::Result;
 use if_chain::if_chain;
-use necessist_core::{LineColumn, SourceFile, Span};
-use solang_parser::pt::{
-    CodeLocation, Expression, FunctionDefinition, Identifier, Loc, SourceUnit, Statement,
-};
-use std::{
-    path::{Path, PathBuf},
-    rc::Rc,
-};
-use thiserror::Error;
+use necessist_core::Span;
+use solang_parser::pt::{Expression, FunctionDefinition, Identifier, Loc, SourceUnit, Statement};
+use std::{cell::RefCell, convert::Infallible};
 
 mod visit;
 use visit::{self as visit_fns, Visitor as _};
 
-#[cfg_attr(
-    dylint_lib = "inconsistent_qualification",
-    allow(inconsistent_qualification)
-)]
-#[derive(Error, Debug)]
-#[error(transparent)]
-struct Error(anyhow::Error);
+// smoelius: Used for ignoring statements that are prefixed by a cheatcode.
+static FAUX_CONTINUE: Statement = Statement::Continue(Loc::Builtin);
 
-pub(super) fn visit(
-    framework: &mut Foundry,
-    root: Rc<PathBuf>,
-    test_file: &Path,
-    contents: &str,
-    source_unit: &SourceUnit,
-) -> Vec<Span> {
-    let mut visitor = Visitor::new(framework, root, test_file, contents);
-    #[allow(clippy::unwrap_used)]
-    visitor.visit_source_unit(source_unit).unwrap();
-    visitor.spans
+/// Wraps a reference to a vector of `Statement`s so that uses of `filter_statements` and
+/// `is_prefix_cheatcode` can be restricted to this file.
+#[derive(Clone, Copy)]
+pub struct Statements<'ast>(&'ast Vec<Statement>);
+
+impl<'ast> Statements<'ast> {
+    pub fn get(self) -> impl Iterator<Item = &'ast Statement> {
+        filter_statements(self.0)
+    }
 }
 
-struct Visitor<'ast, 'contents, 'framework> {
-    framework: &'framework mut Foundry,
-    source_file: SourceFile,
-    contents: &'contents str,
-    test_name: Option<&'ast str>,
-    n_stmt_leaves_visited: usize,
-    spans: Vec<Span>,
+pub(super) fn visit<'ast>(
+    generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Foundry>,
+    storage: &RefCell<Storage<'ast>>,
+    source_unit: &'ast SourceUnit,
+) -> Result<Vec<Span>> {
+    let mut visitor = Visitor::new(generic_visitor, storage);
+    visitor.visit_source_unit(source_unit)?;
+    Ok(visitor.generic_visitor.spans_visited())
 }
 
-#[allow(dead_code)]
-struct MethodCall<'a> {
-    pub loc: Loc,
-    pub obj: &'a Expression,
-    pub ident: &'a Identifier,
-    pub args: &'a Vec<Expression>,
+struct Visitor<'context, 'config, 'framework, 'ast, 'storage> {
+    generic_visitor: GenericVisitor<'context, 'config, 'framework, 'ast, Foundry>,
+    storage: &'storage RefCell<Storage<'ast>>,
 }
 
-impl<'ast, 'contents, 'framework> visit_fns::Visitor<'ast>
-    for Visitor<'ast, 'contents, 'framework>
+impl<'context, 'config, 'framework, 'ast, 'storage>
+    Visitor<'context, 'config, 'framework, 'ast, 'storage>
 {
-    type Error = Error;
-
-    #[cfg_attr(
-        dylint_lib = "non_local_effect_before_error_return",
-        allow(non_local_effect_before_error_return)
-    )]
-    fn visit_function_definition(
-        &mut self,
-        func: &'ast FunctionDefinition,
-    ) -> Result<(), Self::Error> {
-        if let Some(name) = is_test_function(func) {
-            assert!(self.test_name.is_none());
-            self.test_name = Some(name);
-
-            if let Some(Statement::Block { statements, .. }) = &func.body {
-                // smoelius: Skip the last statement.
-                self.visit_statements(
-                    statements
-                        .split_last()
-                        .map_or(&[] as &[Statement], |(_, stmts)| stmts),
-                )?;
-            }
-
-            assert!(self.test_name == Some(name));
-            self.test_name = None;
-        }
-
-        Ok(())
-    }
-
-    fn visit_statement(&mut self, stmt: &'ast Statement) -> Result<(), Error> {
-        let n_before = self.n_stmt_leaves_visited;
-        if let Statement::Block { statements, .. } = stmt {
-            self.visit_statements(statements)?;
-        } else {
-            visit_fns::visit_statement(self, stmt)?;
-        }
-        let n_after = self.n_stmt_leaves_visited;
-
-        // smoelius: Consider this a "leaf" if-and-only-if no "leaves" were added during the
-        // recursive call.
-        if n_before != n_after {
-            return Ok(());
-        }
-        self.n_stmt_leaves_visited += 1;
-
-        if let Some(ident) = self.test_name {
-            if !is_method_call_statement(stmt)
-                && !is_variable_definition(stmt)
-                && !is_control(stmt)
-                && !matches!(stmt, Statement::Emit(..))
-                && !is_ignored_function_call_statement(stmt)
-            {
-                let span = stmt
-                    .loc()
-                    .extend_to_semicolon(self.contents)
-                    .to_internal_span(&self.source_file, self.contents);
-                self.elevate_span(span, ident);
-            }
-        }
-
-        Ok(())
-    }
-
-    fn visit_expression(&mut self, expr: &'ast Expression) -> Result<(), Self::Error> {
-        visit_fns::visit_expression(self, expr)?;
-
-        if_chain! {
-            if let Some(name) = self.test_name;
-            if let Some(MethodCall {
-                loc, obj, ident, ..
-            }) = is_method_call(expr);
-            if !is_ignored_method(ident);
-            then {
-                let mut span = loc.to_internal_span(&self.source_file, self.contents);
-                span.start = obj
-                    .loc()
-                    .to_internal_span(&self.source_file, self.contents)
-                    .end;
-                assert!(span.start <= span.end);
-                self.elevate_span(span, name);
-            }
-        }
-
-        Ok(())
-    }
-}
-
-impl<'ast, 'contents, 'framework> Visitor<'ast, 'contents, 'framework> {
     fn new(
-        framework: &'framework mut Foundry,
-        root: Rc<PathBuf>,
-        test_file: &Path,
-        contents: &'contents str,
+        generic_visitor: GenericVisitor<'context, 'config, 'framework, 'ast, Foundry>,
+        storage: &'storage RefCell<Storage<'ast>>,
     ) -> Self {
         Self {
-            framework,
-            source_file: SourceFile::new(root, Rc::new(test_file.to_path_buf())),
-            contents,
-            test_name: None,
-            n_stmt_leaves_visited: 0,
-            spans: Vec::new(),
+            generic_visitor,
+            storage,
         }
     }
+}
 
-    fn visit_statements<I: IntoIterator<Item = &'ast Statement>>(
+impl<'context, 'config, 'framework, 'ast, 'storage> visit_fns::Visitor<'ast>
+    for Visitor<'context, 'config, 'framework, 'ast, 'storage>
+{
+    type Error = Infallible;
+
+    fn visit_function_definition(
         &mut self,
-        stmts: I,
-    ) -> Result<(), Error> {
-        let mut prev = None;
-        for stmt in stmts {
-            if prev.map_or(false, is_prefix_cheatcode) {
-                continue;
+        function_definition: &'ast FunctionDefinition,
+    ) -> Result<(), Self::Error> {
+        if let Some(test) = is_test_function(function_definition) {
+            let walk = self.generic_visitor.visit_test(self.storage, test);
+
+            if walk {
+                visit_fns::visit_function_definition(self, function_definition)?;
             }
-            self.visit_statement(stmt)?;
-            prev = Some(stmt);
+
+            self.generic_visitor.visit_test_post(self.storage, test);
         }
+
         Ok(())
     }
 
-    fn elevate_span(&mut self, span: Span, name: &str) {
-        self.framework.set_span_test_name(&span, name);
-        self.spans.push(span);
+    fn visit_statement(&mut self, statement: &'ast Statement) -> Result<(), Self::Error> {
+        if let Statement::Block { statements, .. } = statement {
+            for statement in filter_statements(statements) {
+                self.visit_statement(statement)?;
+            }
+
+            return Ok(());
+        }
+
+        let statement = WithContents {
+            contents: self.storage.borrow().contents,
+            value: statement,
+        };
+
+        let walk = self
+            .generic_visitor
+            .visit_statement(self.storage, statement);
+
+        if walk {
+            visit_fns::visit_statement(self, statement.value)?;
+        }
+
+        self.generic_visitor
+            .visit_statement_post(self.storage, statement);
+
+        Ok(())
+    }
+
+    fn visit_expression(&mut self, expression: &'ast Expression) -> Result<(), Self::Error> {
+        if let Expression::FunctionCall(loc, callee, args) = expression {
+            let call = WithContents {
+                contents: self.storage.borrow().contents,
+                value: FunctionCall {
+                    loc: *loc,
+                    callee,
+                    args,
+                },
+            };
+
+            let walk = self.generic_visitor.visit_call(self.storage, call);
+
+            if walk {
+                visit_fns::visit_expression(self, expression)?;
+            } else {
+                self.visit_expression(callee)?;
+            }
+
+            self.generic_visitor.visit_call_post(self.storage, call);
+
+            return Ok(());
+        }
+
+        Ok(())
     }
 }
 
-fn is_test_function(func: &FunctionDefinition) -> Option<&str> {
+fn is_test_function(function_definition: &FunctionDefinition) -> Option<Test<'_>> {
     if_chain! {
-        if let Some(Identifier { name, .. }) = &func.name;
+        if let Some(Identifier { name, .. }) = &function_definition.name;
         if name.starts_with("test");
+        if let Some(Statement::Block { statements, .. }) = &function_definition.body;
         then {
-            Some(name)
-        } else {
-            None
-        }
-    }
-}
-
-fn is_method_call_statement(stmt: &Statement) -> bool {
-    if_chain! {
-        if let Statement::Expression(_, expr) = stmt;
-        if is_method_call(expr).is_some();
-        then {
-            true
-        } else {
-            false
-        }
-    }
-}
-
-fn is_variable_definition(stmt: &Statement) -> bool {
-    if matches!(stmt, Statement::VariableDefinition(..)) {
-        return true;
-    }
-
-    if_chain! {
-        if let Statement::Expression(_, expr) = stmt;
-        if let Expression::Assign(_, lhs, _) = expr;
-        if let Expression::List(_, params) = &**lhs;
-        // smoelius: My current belief is: a multiple assignment (i.e., not a declaration) uses the
-        // the `Param`s `ty` fields to hold the variables being assigned to.
-        if params
-            .iter()
-            .any(|(_, param)| param.as_ref().map_or(false, |param| param.name.is_some()));
-        then {
-            true
-        } else {
-            false
-        }
-    }
-}
-
-fn is_control(stmt: &Statement) -> bool {
-    matches!(
-        stmt,
-        Statement::Break(..)
-            | Statement::Continue(..)
-            | Statement::Return(..)
-            | Statement::Revert(..)
-            | Statement::RevertNamedArgs(..)
-    )
-}
-
-fn is_ignored_function_call_statement(stmt: &Statement) -> bool {
-    if_chain! {
-        if let Statement::Expression(_, expr) = stmt;
-        if let Expression::FunctionCall(_, func, _) = expr;
-        if let Expression::Variable(ident) = &**func;
-        if is_ignored_function(ident);
-        then {
-            true
-        } else {
-            false
-        }
-    }
-}
-
-fn is_ignored_function(ident: &Identifier) -> bool {
-    ident.to_string().starts_with("assert")
-}
-
-fn is_method_call(expr: &Expression) -> Option<MethodCall> {
-    if_chain! {
-        if let Expression::FunctionCall(loc, callee, args) = expr;
-        if let Expression::MemberAccess(_, obj, ident) = &**callee;
-        then {
-            Some(MethodCall {
-                loc: *loc,
-                obj,
-                ident,
-                args,
+            Some(Test {
+                name,
+                statements: Statements(statements),
             })
         } else {
             None
@@ -272,30 +145,28 @@ fn is_method_call(expr: &Expression) -> Option<MethodCall> {
     }
 }
 
-const IGNORED_METHODS: &[&str] = &[
-    "expectEmit",
-    "expectRevert",
-    "prank",
-    "startPrank",
-    "stopPrank",
-];
-
-fn is_ignored_method(ident: &Identifier) -> bool {
-    IGNORED_METHODS
-        .binary_search(&ident.to_string().as_ref())
-        .is_ok()
+fn filter_statements<'ast, I: IntoIterator<Item = &'ast Statement>>(
+    statements: I,
+) -> impl Iterator<Item = &'ast Statement> {
+    let mut prev = None;
+    statements.into_iter().map(move |statement| {
+        let next = if prev.map_or(false, is_prefix_cheatcode) {
+            &FAUX_CONTINUE
+        } else {
+            statement
+        };
+        prev = Some(statement);
+        next
+    })
 }
 
-fn is_prefix_cheatcode(stmt: &Statement) -> bool {
+fn is_prefix_cheatcode(statement: &Statement) -> bool {
     if_chain! {
-        if let Statement::Expression(_, expr) = stmt;
-        if let Some(MethodCall {
-            obj,
-            ident: Identifier { name: method, .. },
-            ..
-        }) = is_method_call(expr);
-        if let Expression::Variable(var) = obj;
-        if var.to_string() == "vm";
+        if let Statement::Expression(_, expression) = statement;
+        if let Expression::FunctionCall(_loc, callee, _args) = expression;
+        if let Expression::MemberAccess(_, base, Identifier { name: method, .. }) = &**callee;
+        if let Expression::Variable(variable) = &**base;
+        if variable.to_string() == "vm";
         if method == "prank" || method.starts_with("expect");
         then {
             true
@@ -305,86 +176,17 @@ fn is_prefix_cheatcode(stmt: &Statement) -> bool {
     }
 }
 
-trait ExtendToSemicolon {
-    fn extend_to_semicolon(&self, contents: &str) -> Self;
-}
-
-impl ExtendToSemicolon for Loc {
-    fn extend_to_semicolon(&self, contents: &str) -> Self {
-        match *self {
-            Self::File(file_no, start, mut end) => {
-                let mut chars = contents.chars().skip(end).peekable();
-                while chars.peek().map_or(false, |c| c.is_whitespace()) {
-                    end += 1;
-                    let _ = chars.next();
-                }
-                if chars.next() == Some(';') {
-                    Self::File(file_no, start, end + 1)
-                } else {
-                    *self
-                }
-            }
-            _ => *self,
-        }
-    }
-}
-
-trait ToInternalSpan {
-    fn to_internal_span(&self, source_file: &SourceFile, contents: &str) -> Span;
-}
-
-impl ToInternalSpan for Loc {
-    fn to_internal_span(&self, source_file: &SourceFile, contents: &str) -> Span {
-        Span {
-            source_file: source_file.clone(),
-            start: self.start().to_line_column(contents),
-            end: self.end().to_line_column(contents),
-        }
-    }
-}
-
-trait ToLineColumn {
-    fn to_line_column(&self, contents: &str) -> LineColumn;
-}
-
-impl ToLineColumn for usize {
-    fn to_line_column(&self, contents: &str) -> LineColumn {
-        let (line, column) = offset_to_line_column(contents, *self);
-        LineColumn { line, column }
-    }
-}
-
-// smoelius: `offset_to_line_column` is based on code from:
-// https://github.com/hyperledger/solang/blob/be2e03043232ca84fe05375e22fda97139cb1619/src/sema/file.rs#L8-L64
-
-/// Convert an offset to line (one based) and column number (zero based)
-pub fn offset_to_line_column(contents: &str, loc: usize) -> (usize, usize) {
-    let mut line_starts = Vec::new();
-
-    for (ind, c) in contents.char_indices() {
-        if c == '\n' {
-            line_starts.push(ind + 1);
-        }
-    }
-
-    let line_no = line_starts.partition_point(|&line_start| loc >= line_start);
-
-    let col_no = if line_no > 0 {
-        loc - line_starts[line_no - 1]
-    } else {
-        loc
-    };
-
-    (line_no + 1, col_no)
-}
-
 #[cfg(test)]
 mod test {
-    use super::IGNORED_METHODS;
+    use super::Foundry;
+    use crate::ParseLow;
 
     #[test]
-    fn ignored_methods_are_sorted() {
-        assert_eq!(sort(IGNORED_METHODS), IGNORED_METHODS);
+    fn ignored_functions_are_sorted() {
+        assert_eq!(
+            sort(Foundry::IGNORED_FUNCTIONS.unwrap()),
+            Foundry::IGNORED_FUNCTIONS.unwrap()
+        );
     }
 
     fn sort<'a>(items: &'a [&str]) -> Vec<&'a str> {

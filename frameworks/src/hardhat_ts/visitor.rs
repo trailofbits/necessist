@@ -1,19 +1,21 @@
 use super::{is_it_call_expr, is_it_call_stmt, GenericVisitor, HardhatTs, SourceMapped, Storage};
+use anyhow::Result;
 use necessist_core::Span;
 use std::cell::RefCell;
 use swc_core::ecma::{
     ast::{Expr, Module, Stmt},
-    visit::{visit_callee, visit_expr, visit_stmt, Visit},
+    visit::{visit_expr, visit_stmt, Visit},
 };
 
+#[allow(clippy::unnecessary_wraps)]
 pub(super) fn visit<'ast>(
     generic_visitor: GenericVisitor<'_, '_, '_, 'ast, HardhatTs>,
     storage: &RefCell<Storage<'ast>>,
     module: &Module,
-) -> Vec<Span> {
+) -> Result<Vec<Span>> {
     let mut visitor = Visitor::new(generic_visitor, storage);
     visitor.visit_module(module);
-    visitor.generic_visitor.spans_visited()
+    Ok(visitor.generic_visitor.spans_visited())
 }
 
 struct Visitor<'context, 'config, 'framework, 'ast, 'storage> {
@@ -92,7 +94,7 @@ impl<'context, 'config, 'framework, 'ast, 'storage> Visit
             if walk {
                 visit_expr(self, expr);
             } else {
-                visit_callee(self, &call.node.callee);
+                self.visit_callee(&call.node.callee);
             }
 
             self.generic_visitor.visit_call_post(self.storage, call);

@@ -53,7 +53,7 @@ pub enum Expression<'ast> {
     Field(Field<'ast>),
     Call(Call<'ast>),
     MacroCall(MacroCall<'ast>),
-    Other,
+    Other(proc_macro2::Span),
 }
 
 impl<'ast> From<&'ast syn::Expr> for Expression<'ast> {
@@ -63,24 +63,7 @@ impl<'ast> From<&'ast syn::Expr> for Expression<'ast> {
             syn::Expr::Field(field) => Expression::Field(Field::Field(field)),
             syn::Expr::Call(call) => Expression::Call(Call::FunctionCall(call)),
             syn::Expr::Macro(mac) => Expression::MacroCall(MacroCall::Expr(mac)),
-            _ => Expression::Other,
-        }
-    }
-}
-
-// smoelius: Implementing `MaybeNamed` for `Expression` is mainly to deal with languages where
-// calling a function in a module/package looks like a field access, e.g., Go and TS. Since Rust is
-// not such a language, it is safe to return `None` for expression types that don't already
-// implement `MaybeNamed`.
-impl<'ast> MaybeNamed for Expression<'ast> {
-    fn name(&self) -> Option<String> {
-        #[allow(clippy::match_same_arms, clippy::match_wildcard_for_single_variants)]
-        match self {
-            Expression::Await(_) => None,
-            Expression::Field(field) => field.name(),
-            Expression::Call(call) => call.name(),
-            Expression::MacroCall(macro_call) => Some(macro_call.name()),
-            _ => None,
+            _ => Expression::Other(<_ as syn::spanned::Spanned>::span(value)),
         }
     }
 }
@@ -134,6 +117,15 @@ impl<'ast> Named for <Types as AbstractTypes>::Test<'ast> {
     }
 }
 
+// smoelius: Implementing `MaybeNamed` for `Expression` is mainly to deal with languages where
+// calling a function in a module/package looks like a field access, e.g., Go and TS. Since Rust is
+// not such a language, it is safe to return `None`.
+impl<'ast> MaybeNamed for Expression<'ast> {
+    fn name(&self) -> Option<String> {
+        None
+    }
+}
+
 impl<'ast> MaybeNamed for <Types as AbstractTypes>::Field<'ast> {
     fn name(&self) -> Option<String> {
         match self {
@@ -175,6 +167,20 @@ impl<'ast> Named for <Types as AbstractTypes>::MacroCall<'ast> {
     }
 }
 
+impl<'ast> Spanned for <Types as AbstractTypes>::Expression<'ast> {
+    fn span(&self, source_file: &SourceFile) -> Span {
+        match self {
+            Expression::Await(await_) => {
+                <_ as syn::spanned::Spanned>::span(await_).to_internal_span(source_file)
+            }
+            Expression::Call(call) => call.span(source_file),
+            Expression::Field(field) => field.span(source_file),
+            Expression::MacroCall(macro_call) => macro_call.span(source_file),
+            Expression::Other(span) => span.to_internal_span(source_file),
+        }
+    }
+}
+
 impl<'ast> Spanned for <Types as AbstractTypes>::Statement<'ast> {
     fn span(&self, source_file: &SourceFile) -> Span {
         <_ as syn::spanned::Spanned>::span(self).to_internal_span(source_file)
@@ -183,22 +189,14 @@ impl<'ast> Spanned for <Types as AbstractTypes>::Statement<'ast> {
 
 impl<'ast> Spanned for <Types as AbstractTypes>::Field<'ast> {
     fn span(&self, source_file: &SourceFile) -> Span {
-        let span = match self {
+        match self {
             Field::Field(field) => {
-                let mut span =
-                    <_ as syn::spanned::Spanned>::span(field).to_internal_span(source_file);
-                span.start = <_ as syn::spanned::Spanned>::span(&field.dot_token).start();
-                span
+                <_ as syn::spanned::Spanned>::span(field).to_internal_span(source_file)
             }
             Field::MethodCall(method_call) => {
-                let mut span =
-                    <_ as syn::spanned::Spanned>::span(method_call).to_internal_span(source_file);
-                span.start = <_ as syn::spanned::Spanned>::span(&method_call.dot_token).start();
-                span
+                <_ as syn::spanned::Spanned>::span(method_call).to_internal_span(source_file)
             }
-        };
-        assert!(span.start <= span.end);
-        span
+        }
     }
 }
 
@@ -217,7 +215,14 @@ impl<'ast> Spanned for <Types as AbstractTypes>::Call<'ast> {
 
 impl<'ast> Spanned for <Types as AbstractTypes>::MacroCall<'ast> {
     fn span(&self, source_file: &SourceFile) -> Span {
-        <_ as syn::spanned::Spanned>::span(self.path()).to_internal_span(source_file)
+        match self {
+            MacroCall::Stmt(stmt) => {
+                <_ as syn::spanned::Spanned>::span(stmt).to_internal_span(source_file)
+            }
+            MacroCall::Expr(expr) => {
+                <_ as syn::spanned::Spanned>::span(expr).to_internal_span(source_file)
+            }
+        }
     }
 }
 
@@ -486,9 +491,15 @@ impl ParseLow for Rust {
     fn macro_call_callee<'ast>(
         &self,
         _storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
-        _macro_call: <Self::Types as AbstractTypes>::MacroCall<'ast>,
+        macro_call: <Self::Types as AbstractTypes>::MacroCall<'ast>,
     ) -> <Self::Types as AbstractTypes>::Expression<'ast> {
-        Expression::Other
+        let mac = match macro_call {
+            MacroCall::Stmt(mac) => &mac.mac,
+            MacroCall::Expr(mac) => &mac.mac,
+        };
+        let span_path = <_ as syn::spanned::Spanned>::span(&mac.path);
+        let span_bang = <_ as syn::spanned::Spanned>::span(&mac.bang_token);
+        Expression::Other(span_path.join(span_bang).unwrap())
     }
 }
 

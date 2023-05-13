@@ -49,7 +49,7 @@ impl<'original> Rewriter<'original> {
         replaced
     }
 
-    // smoelius: `pub` to facilitate `--dump-candidates`.
+    // smoelius: `pub` to facilitate `Span::source_text` (among other things).
     pub fn offsets_from_span(&mut self, span: &Span) -> (usize, usize) {
         use offset_calculator::Interface;
 
