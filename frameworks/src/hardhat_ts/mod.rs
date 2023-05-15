@@ -1,5 +1,5 @@
 use super::{ts_utils::install_node_modules, High};
-use anyhow::{anyhow, ensure, Context, Result};
+use anyhow::{anyhow, Context, Result};
 use assert_cmd::output::OutputError;
 use lazy_static::lazy_static;
 use log::debug;
@@ -12,7 +12,7 @@ use std::{
     collections::BTreeMap,
     ffi::OsStr,
     path::{Path, PathBuf},
-    process::{Command, Stdio},
+    process::Command,
     rc::Rc,
 };
 use subprocess::{Exec, NullFile};
@@ -186,7 +186,8 @@ impl High for HardhatTs {
         context: &LightContext,
         span: &Span,
     ) -> Result<Option<(Exec, Option<Box<Postprocess>>)>> {
-        if compile(context).is_err() {
+        if let Err(error) = compile(context) {
+            debug!("{}", error);
             return Ok(None);
         }
 
@@ -259,12 +260,12 @@ fn compile(context: &LightContext) -> Result<()> {
     command.current_dir(context.root.as_path());
     command.args(["hardhat", "compile"]);
     command.args(&context.opts.args);
-    command.stdout(Stdio::null());
-    command.stderr(Stdio::null());
 
     debug!("{:?}", command);
 
     let output = command.output()?;
-    ensure!(output.status.success(), "{:#?}", output);
+    if !output.status.success() {
+        return Err(OutputError::new(output).into());
+    };
     Ok(())
 }
