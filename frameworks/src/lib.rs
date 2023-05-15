@@ -8,10 +8,7 @@ use necessist_core::{
     framework::{Applicable, Interface as High, Postprocess, ToImplementation},
     source_warn, Config, LightContext, Span, WarnFlags, Warning,
 };
-use std::{
-    path::Path,
-    process::{Command, Stdio},
-};
+use std::{path::Path, process::Command};
 use strum_macros::EnumIter;
 use subprocess::{Exec, NullFile, Redirection};
 
@@ -121,13 +118,12 @@ impl<T: Low> High for Adapter<T> {
         {
             let mut command = self.0.command_to_build_test(context, span);
             command.args(&context.opts.args);
-            command.stdout(Stdio::null());
-            command.stderr(Stdio::null());
 
             debug!("{:?}", command);
 
-            let status = command.status()?;
-            if !status.success() {
+            let output = command.output()?;
+            if !output.status.success() {
+                debug!("{}", OutputError::new(output));
                 return Ok(None);
             }
         }
