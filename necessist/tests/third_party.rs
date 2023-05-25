@@ -136,7 +136,17 @@ fn all_tests() {
         n_tests += 1;
     }
 
-    run_tests_concurrently(tests, n_tests);
+    if n_tests == 1 {
+        let (key, mut tests) = tests.pop_first().unwrap();
+        let (path, test) = tests.remove(0);
+        let tempdir = tempdir().unwrap();
+        let mut output = init_tempdir(tempdir.path(), &key);
+        output += &run_test(tempdir.path(), &path, &test);
+        #[allow(clippy::explicit_write)]
+        write!(stderr(), "{output}").unwrap();
+    } else {
+        run_tests_concurrently(tests, n_tests);
+    }
 }
 
 fn run_tests_concurrently(mut tests: BTreeMap<Key, Vec<(PathBuf, Test)>>, mut n_tests: usize) {
