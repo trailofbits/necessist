@@ -1,4 +1,4 @@
-133 candidates in 3 test files
+134 candidates in 3 test files
 $DIR/src/testing/iotest/logger_test.go: dry running
 $DIR/src/testing/iotest/logger_test.go: mutilating
 $DIR/src/testing/iotest/logger_test.go:25:12-25:21: `.Writer()` nonbuildable
@@ -130,6 +130,15 @@ $DIR/src/testing/iotest/reader_test.go:216:18-216:26: `.Read(b)` nonbuildable
 $DIR/src/testing/iotest/reader_test.go:220:2-220:21: `b = make([]byte, 5)` passed
 $DIR/src/testing/iotest/reader_test.go:221:15-221:23: `.Read(b)` nonbuildable
 $DIR/src/testing/iotest/reader_test.go:236:27-236:45: `.New("io failure")` nonbuildable
+$DIR/src/testing/iotest/reader_test.go:242:3-250:5: `t.Run(tt.name, func(t *testing.T) {
+			n, err := ErrReader(tt.err).Read(nil)
+			if err != tt.err {
+				t.Fatalf("Error mismatch\nGot:  %v\nWant: %v", err, tt.err)
+			}
+			if n != 0 {
+				t.Fatalf("Byte count mismatch: got %d want 0", n)
+			}
+		})` nonbuildable
 $DIR/src/testing/iotest/reader_test.go:242:4-250:5: `.Run(tt.name, func(t *testing.T) {
 			n, err := ErrReader(tt.err).Read(nil)
 			if err != tt.err {

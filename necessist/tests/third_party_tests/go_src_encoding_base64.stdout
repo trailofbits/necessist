@@ -1,7 +1,7 @@
-88 candidates in 1 test file
+87 candidates in 1 test file
 $DIR/src/encoding/base64/base64_test.go: dry running
 $DIR/src/encoding/base64/base64_test.go: mutilating
-$DIR/src/encoding/base64/base64_test.go:113:17-113:51: `.EncodeToString([]byte(p.decoded))` nonbuildable
+$DIR/src/encoding/base64/base64_test.go:113:13-113:51: `.enc.EncodeToString([]byte(p.decoded))` nonbuildable
 $DIR/src/encoding/base64/base64_test.go:114:4-115:29: `testEqual(t, "Encode(%q) = %q, want %q", p.decoded,
 				got, tt.conv(p.encoded))` nonbuildable
 $DIR/src/encoding/base64/base64_test.go:115:12-115:28: `.conv(p.encoded)` nonbuildable
@@ -17,13 +17,13 @@ $DIR/src/encoding/base64/base64_test.go:145:3-145:64: `testEqual(t, "Close gave 
 $DIR/src/encoding/base64/base64_test.go:146:3-146:101: `testEqual(t, "Encoding/%d of %q = %q, want %q", bs, bigtest.decoded, bb.String(), bigtest.encoded)` passed
 $DIR/src/encoding/base64/base64_test.go:146:74-146:83: `.String()` failed
 $DIR/src/encoding/base64/base64_test.go:153:17-153:33: `.conv(p.encoded)` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:154:31-154:56: `.DecodedLen(len(encoded))` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:155:24-155:54: `.Decode(dbuf, []byte(encoded))` nonbuildable
+$DIR/src/encoding/base64/base64_test.go:154:27-154:56: `.enc.DecodedLen(len(encoded))` nonbuildable
+$DIR/src/encoding/base64/base64_test.go:155:20-155:54: `.enc.Decode(dbuf, []byte(encoded))` nonbuildable
 $DIR/src/encoding/base64/base64_test.go:156:4-156:76: `testEqual(t, "Decode(%q) = error %v, want %v", encoded, err, error(nil))` passed
 $DIR/src/encoding/base64/base64_test.go:157:4-157:83: `testEqual(t, "Decode(%q) = length %v, want %v", encoded, count, len(p.decoded))` passed
 $DIR/src/encoding/base64/base64_test.go:158:4-158:87: `testEqual(t, "Decode(%q) = %q, want %q", encoded, string(dbuf[0:count]), p.decoded)` passed
 $DIR/src/encoding/base64/base64_test.go:160:4-160:44: `dbuf, err = tt.enc.DecodeString(encoded)` failed
-$DIR/src/encoding/base64/base64_test.go:160:22-160:44: `.DecodeString(encoded)` nonbuildable
+$DIR/src/encoding/base64/base64_test.go:160:18-160:44: `.enc.DecodeString(encoded)` nonbuildable
 $DIR/src/encoding/base64/base64_test.go:161:4-161:82: `testEqual(t, "DecodeString(%q) = error %v, want %v", encoded, err, error(nil))` passed
 $DIR/src/encoding/base64/base64_test.go:162:4-162:84: `testEqual(t, "DecodeString(%q) = %q, want %q", encoded, string(dbuf), p.decoded)` passed
 $DIR/src/encoding/base64/base64_test.go:169:45-169:66: `.NewReader(p.encoded)` nonbuildable
@@ -41,17 +41,11 @@ $DIR/src/encoding/base64/base64_test.go:193:4-193:14: `total += n` failed
 $DIR/src/encoding/base64/base64_test.go:198:3-198:110: `testEqual(t, "Decoding/%d of %q = %q, want %q", bs, bigtest.encoded, string(buf[0:total]), bigtest.decoded)` passed
 $DIR/src/encoding/base64/base64_test.go:233:35-233:61: `.DecodedLen(len(tc.input))` nonbuildable
 $DIR/src/encoding/base64/base64_test.go:234:24-234:55: `.Decode(dbuf, []byte(tc.input))` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:241:3-246:4: `switch err := err.(type) {
-		case CorruptInputError:
-			testEqual(t, "Corruption in %q at offset %v, want %v", tc.input, int(err), tc.offset)
-		default:
-			t.Error("Decoder failed to detect corruption in", tc)
-		}` passed
+$DIR/src/encoding/base64/base64_test.go:243:4-243:89: `testEqual(t, "Corruption in %q at offset %v, want %v", tc.input, int(err), tc.offset)` nonbuildable
 $DIR/src/encoding/base64/base64_test.go:252:18-252:41: `.EncodeToString(buf[:])` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:255:63-255:71: `.Stack()` nonbuildable
 $DIR/src/encoding/base64/base64_test.go:258:23-258:49: `.Decode(buf[:], []byte(s))` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:282:19-282:36: `.EncodedLen(tt.n)` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:303:19-303:36: `.DecodedLen(tt.n)` nonbuildable
+$DIR/src/encoding/base64/base64_test.go:282:15-282:36: `.enc.EncodedLen(tt.n)` nonbuildable
+$DIR/src/encoding/base64/base64_test.go:303:15-303:36: `.enc.DecodedLen(tt.n)` nonbuildable
 $DIR/src/encoding/base64/base64_test.go:312:2-312:80: `const alpha = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"` nonbuildable
 $DIR/src/encoding/base64/base64_test.go:314:3-314:31: `raw[i] = alpha[i%len(alpha)]` passed
 $DIR/src/encoding/base64/base64_test.go:318:14-318:25: `.Write(raw)` nonbuildable
