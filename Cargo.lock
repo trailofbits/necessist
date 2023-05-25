@@ -1186,9 +1186,9 @@ dependencies = [
  "curl",
  "heck",
  "if_chain",
- "lazy_static",
  "log",
  "necessist-core",
+ "once_cell",
  "paste",
  "proc-macro2",
  "quote",
@@ -2433,8 +2433,7 @@ dependencies = [
 [[package]]
 name = "tree-sitter"
 version = "0.20.10"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e747b1f9b7b931ed39a548c1fae149101497de3c1fc8d9e18c62c1a66c683d3d"
+source = "git+https://github.com/smoelius/tree-sitter.git?branch=rework-lifetimes#ec5bc631d9618c3ce7ebece85319530d70d9cb6c"
 dependencies = [
  "cc",
  "regex",

@@ -1,4 +1,4 @@
-20 candidates in 3 test files
+18 candidates in 3 test files
 $DIR/src/os/user/listgroups_unix_test.go: dry running
 $DIR/src/os/user/listgroups_unix_test.go: mutilating
 $DIR/src/os/user/listgroups_unix_test.go:74:46-74:63: Warning: Failed to run test `TestListGroups`
@@ -21,9 +21,7 @@ $DIR/src/os/user/user_test.go: mutilating
 $DIR/src/os/user/user_test.go:21:3-21:19: `userBuffer = old` nonbuildable
 $DIR/src/os/user/user_test.go:23:2-23:16: `userBuffer = 1` passed
 $DIR/src/os/user/user_test.go:61:2-61:14: `checkUser(t)` passed
-$DIR/src/os/user/user_test.go:74:2-74:23: `compare(t, want, got)` nonbuildable
 $DIR/src/os/user/user_test.go:78:2-78:14: `checkUser(t)` passed
-$DIR/src/os/user/user_test.go:88:2-88:23: `compare(t, want, got)` nonbuildable
 $DIR/src/os/user/user_test.go:101:3-101:20: `groupBuffer = old` nonbuildable
 $DIR/src/os/user/user_test.go:103:2-103:17: `groupBuffer = 1` passed
 $DIR/src/os/user/user_test.go:104:2-104:15: `checkGroup(t)` passed

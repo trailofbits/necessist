@@ -1,4 +1,4 @@
-310 candidates in 9 test files
+301 candidates in 9 test files
 $DIR/src/mime/encodedword_test.go: dry running
 $DIR/src/mime/encodedword_test.go: mutilating
 $DIR/src/mime/encodedword_test.go:29:28-29:45: `.Repeat("é", 10),` nonbuildable
@@ -13,13 +13,13 @@ $DIR/src/mime/encodedword_test.go:33:32-33:51: `.Repeat("\xe9", 45)` nonbuildabl
 $DIR/src/mime/encodedword_test.go:33:80-33:99: `.Repeat("6enp", 15)` nonbuildable
 $DIR/src/mime/encodedword_test.go:34:28-34:47: `.Repeat("\x80", 48)` nonbuildable
 $DIR/src/mime/encodedword_test.go:34:71-34:90: `.Repeat("gICA", 15)` nonbuildable
-$DIR/src/mime/encodedword_test.go:38:19-38:50: `.Encode(test.charset, test.src)` nonbuildable
+$DIR/src/mime/encodedword_test.go:38:15-38:50: `.enc.Encode(test.charset, test.src)` nonbuildable
 $DIR/src/mime/encodedword_test.go:49:22-49:39: `.Repeat("à", 30)}` nonbuildable
 $DIR/src/mime/encodedword_test.go:50:22-50:39: `.Repeat("é", 60)}` nonbuildable
 $DIR/src/mime/encodedword_test.go:51:22-51:39: `.Repeat("ï", 25)}` nonbuildable
 $DIR/src/mime/encodedword_test.go:52:22-52:39: `.Repeat("ô", 37)}` nonbuildable
 $DIR/src/mime/encodedword_test.go:53:22-53:41: `.Repeat("\x80", 50)` nonbuildable
-$DIR/src/mime/encodedword_test.go:58:16-58:42: `.Encode("utf-8", test.src)` nonbuildable
+$DIR/src/mime/encodedword_test.go:58:12-58:42: `.enc.Encode("utf-8", test.src)` nonbuildable
 $DIR/src/mime/encodedword_test.go:62:5-62:16: `wordLen = 0` timed-out
 $DIR/src/mime/encodedword_test.go:66:4-66:13: `wordLen++` passed
 $DIR/src/mime/encodedword_test.go:97:16-97:33: `.Decode(test.src)` nonbuildable
@@ -74,6 +74,80 @@ $DIR/src/mime/quotedprintable/reader_test.go:82:17-82:29: `.Sprint(err)` nonbuil
 $DIR/src/mime/quotedprintable/reader_test.go:110:17-110:36: `.LookPath("qprint")` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go:119:12-119:20: `.Short()` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go:120:3-120:8: `n = 4` passed
+$DIR/src/mime/quotedprintable/reader_test.go:122:2-195:4: `everySequence("", "0A \r\n=", n, func(s string) {
+		if strings.HasSuffix(s, "=") || strings.Contains(s, "==") {
+			return
+		}
+		buf.Reset()
+		_, err := io.Copy(&buf, NewReader(strings.NewReader(s)))
+		if err != nil {
+			errStr := err.Error()
+			if strings.Contains(errStr, "invalid bytes after =:") {
+				errStr = "invalid bytes after ="
+			}
+			res[errStr]++
+			if strings.Contains(errStr, "invalid hex byte ") {
+				if strings.HasSuffix(errStr, "0x20") && (strings.Contains(s, "=0 ") || strings.Contains(s, "=A ") || strings.Contains(s, "= ")) {
+					return
+				}
+				if strings.HasSuffix(errStr, "0x3d") && (strings.Contains(s, "=0=") || strings.Contains(s, "=A=")) {
+					return
+				}
+				if strings.HasSuffix(errStr, "0x0a") || strings.HasSuffix(errStr, "0x0d") {
+					// bunch of cases; since whitespace at the end of a line before \n is removed.
+					return
+				}
+			}
+			if strings.Contains(errStr, "unexpected EOF") {
+				return
+			}
+			if errStr == "invalid bytes after =" && badSoftRx.MatchString(s) {
+				return
+			}
+			t.Errorf("decode(%q) = %v", s, err)
+			return
+		}
+		if *useQprint {
+			cmd := exec.Command("qprint", "-d")
+			cmd.Stdin = strings.NewReader(s)
+			stderr, err := cmd.StderrPipe()
+			if err != nil {
+				panic(err)
+			}
+			qpres := make(chan any, 2)
+			go func() {
+				br := bufio.NewReader(stderr)
+				s, _ := br.ReadString('\n')
+				if s != "" {
+					qpres <- errors.New(s)
+					if cmd.Process != nil {
+						// It can get stuck on invalid input, like:
+						// echo -n "0000= " | qprint -d
+						cmd.Process.Kill()
+					}
+				}
+			}()
+			go func() {
+				want, err := cmd.Output()
+				if err == nil {
+					qpres <- want
+				}
+			}()
+			select {
+			case got := <-qpres:
+				if want, ok := got.([]byte); ok {
+					if string(want) != buf.String() {
+						t.Errorf("go decode(%q) = %q; qprint = %q", s, want, buf.String())
+					}
+				} else {
+					t.Logf("qprint -d(%q) = %v", s, got)
+				}
+			case <-time.After(5 * time.Second):
+				t.Logf("qprint timeout on %q", s)
+			}
+		}
+		res["OK"]++
+	})` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go:123:13-123:31: `.HasSuffix(s, "=")` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go:123:42-123:60: `.Contains(s, "==")` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go:126:3-126:14: `buf.Reset()` passed
@@ -105,11 +179,10 @@ $DIR/src/mime/quotedprintable/reader_test.go:165:15-165:32: `.ReadString('\n')` 
 $DIR/src/mime/quotedprintable/reader_test.go:167:6-167:28: `qpres <- errors.New(s)` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go:167:21-167:28: `.New(s)` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go:171:7-171:25: `cmd.Process.Kill()` passed
-$DIR/src/mime/quotedprintable/reader_test.go:171:18-171:25: `.Kill()` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go:171:10-171:25: `.Process.Kill()` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go:176:21-176:30: `.Output()` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go:178:6-178:19: `qpres <- want` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go:184:28-184:37: `.String()` nonbuildable
-$DIR/src/mime/quotedprintable/reader_test.go:185:63-185:72: `.String()` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go:190:15-190:38: `.After(5 * time.Second)` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go:194:3-194:14: `res["OK"]++` failed
 $DIR/src/mime/quotedprintable/reader_test.go:198:3-198:59: `outcomes = append(outcomes, fmt.Sprintf("%v: %d", k, v))` nonbuildable
@@ -124,8 +197,6 @@ quotedprintable: invalid hex byte 0x0d: 26
 unexpected EOF: 3`` passed
 $DIR/src/mime/quotedprintable/writer_test.go: dry running
 $DIR/src/mime/quotedprintable/writer_test.go: mutilating
-$DIR/src/mime/quotedprintable/writer_test.go:15:2-15:22: `testWriter(t, false)` passed
-$DIR/src/mime/quotedprintable/writer_test.go:19:2-19:21: `testWriter(t, true)` passed
 $DIR/src/mime/quotedprintable/writer_test.go:123:16-123:31: `.Write(testMsg)` nonbuildable
 $DIR/src/mime/quotedprintable/writer_test.go:131:21-131:32: `.ReadAll(r)` nonbuildable
 $DIR/src/mime/type_test.go: dry running

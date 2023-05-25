@@ -5,12 +5,12 @@ use super::{
 use anyhow::{anyhow, Result};
 use assert_cmd::output::OutputError;
 use if_chain::if_chain;
-use lazy_static::lazy_static;
 use log::debug;
 use necessist_core::{
     framework::Postprocess, source_warn, LightContext, LineColumn, SourceFile, Span, WarnFlags,
     Warning,
 };
+use once_cell::sync::Lazy;
 use regex::Regex;
 use std::{
     cell::RefCell,
@@ -85,17 +85,15 @@ impl HardhatTs {
     }
 }
 
-lazy_static! {
-    static ref LINE_WITH_TIME_RE: Regex = {
-        // smoelius: The initial `.` is the check mark.
-        #[allow(clippy::unwrap_used)]
-        Regex::new(r"^\s*. (.*) \(.*\)$").unwrap()
-    };
-    static ref LINE_WITHOUT_TIME_RE: Regex = {
-        #[allow(clippy::unwrap_used)]
-        Regex::new(r"^\s*. (.*)$").unwrap()
-    };
-}
+static LINE_WITH_TIME_RE: Lazy<Regex> = Lazy::new(|| {
+    // smoelius: The initial `.` is the check mark.
+    #[allow(clippy::unwrap_used)]
+    Regex::new(r"^\s*. (.*) \(.*\)$").unwrap()
+});
+static LINE_WITHOUT_TIME_RE: Lazy<Regex> = Lazy::new(|| {
+    #[allow(clippy::unwrap_used)]
+    Regex::new(r"^\s*. (.*)$").unwrap()
+});
 
 #[derive(Clone, Copy)]
 pub struct Test<'ast> {

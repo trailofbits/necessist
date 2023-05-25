@@ -17,8 +17,8 @@ use subprocess::Exec;
 mod foundry;
 use foundry::Foundry;
 
-/* mod golang;
-use golang::Golang; */
+mod golang;
+use golang::Golang;
 
 mod hardhat_ts;
 use hardhat_ts::HardhatTs;
@@ -45,7 +45,7 @@ mod ts_utils;
 #[remain::sorted]
 pub enum Identifier {
     Foundry,
-    // Golang,
+    Golang,
     HardhatTs,
     Rust,
 }
@@ -54,7 +54,7 @@ impl Applicable for Identifier {
     fn applicable(&self, context: &LightContext) -> Result<bool> {
         match *self {
             Self::Foundry => Foundry::applicable(context),
-            // Self::Golang => Golang::applicable(context),
+            Self::Golang => Golang::applicable(context),
             Self::HardhatTs => HardhatTs::applicable(context),
             Self::Rust => Rust::applicable(context),
         }
@@ -66,7 +66,7 @@ impl ToImplementation for Identifier {
         Ok(Some(match *self {
             Self::Foundry => implementation_as_interface(ParseRunAdapter::new)(Foundry::new()),
 
-            // Self::Golang => implementation_as_interface(ParseRunAdapter::new)(Golang::new()),
+            Self::Golang => implementation_as_interface(ParseRunAdapter::new)(Golang::new()),
 
             // smoelius: `HardhatTs` implements the high-level `Run` interface directly.
             Self::HardhatTs => implementation_as_interface(ParseAdapter)(HardhatTs::new()),
