@@ -16,7 +16,7 @@ atty = "0.2"
 bitflags = "2.3"
 clap = { version = "4.3", features = ["cargo", "derive"], optional = true }
 ctrlc = "3.3"
-diesel = { version = "2.0", features = ["sqlite"] }
+diesel = { version = "2.1", features = ["sqlite"] }
 git2 = "0.17"
 heck = "0.4"
 indicatif = "0.17"
