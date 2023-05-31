@@ -157,6 +157,26 @@ fn markdown_link_check() {
 }
 
 #[test]
+fn modules() {
+    let metadata = MetadataCommand::new().no_deps().exec().unwrap();
+
+    for package in metadata.workspace_packages() {
+        Command::new("cargo")
+            .args([
+                "modules",
+                "generate",
+                "graph",
+                "--acyclic",
+                "--layout=none",
+                "--package",
+                &package.name,
+            ])
+            .assert()
+            .success();
+    }
+}
+
+#[test]
 fn prettier() {
     let tempdir = tempdir().unwrap();
 
