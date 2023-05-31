@@ -19,6 +19,7 @@ env:
 jobs:
   test:
     strategy:
+      fail-fast: false
       matrix:
         environment: [ubuntu-latest, macos-latest]
         test: [ci, other, sqlite_urls, third_party, trycmd]
