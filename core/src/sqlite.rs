@@ -6,8 +6,7 @@
 
 use crate::{util, Outcome, Span};
 use anyhow::{bail, Context, Result};
-use diesel::prelude::*;
-use diesel::{insert_into, sql_query, sqlite::SqliteConnection};
+use diesel::{insert_into, prelude::*, sql_query, sqlite::SqliteConnection};
 use git2::{Oid, Repository, RepositoryOpenFlags};
 use lazy_static::lazy_static;
 use regex::Regex;

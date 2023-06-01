@@ -1,9 +1,11 @@
 // smoelius: This file is a slight modification of:
 // https://github.com/smoelius/rustfmt_if_chain/blob/557c32c54b0e0f48da2d029a3a8f70db4c8dbf9b/src/rewriter.rs
 
-use crate::offset_based_rewriter::{self, OffsetBasedRewriter};
-use crate::offset_calculator::{self, OffsetCalculator};
-use crate::{LineColumn, Span};
+use crate::{
+    offset_based_rewriter::{self, OffsetBasedRewriter},
+    offset_calculator::{self, OffsetCalculator},
+    LineColumn, Span,
+};
 
 #[derive(Debug)]
 pub(crate) struct Rewriter<'original> {
