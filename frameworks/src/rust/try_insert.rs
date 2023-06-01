@@ -1,3 +1,6 @@
+// smoelius: Reevaluate whether this is the right approach. For an alternative, see
+// `core::SourceFile::new`. It avoids `entry(key.clone())`.
+
 use std::collections::btree_map::Entry;
 
 pub(crate) trait TryInsert<'a, V, E> {

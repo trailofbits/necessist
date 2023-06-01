@@ -6,19 +6,23 @@ use crate::{
     offset_calculator::{self, OffsetCalculator},
     LineColumn, Span,
 };
+use std::cell::RefCell;
 
 #[derive(Debug)]
-pub(crate) struct Rewriter<'original> {
+pub(crate) struct Rewriter<'original, 'oc> {
     line_column: LineColumn,
-    offset_calculator: OffsetCalculator<'original>,
+    offset_calculator: &'oc RefCell<OffsetCalculator<'original>>,
     offset_based_rewriter: OffsetBasedRewriter<'original>,
 }
 
-impl<'original> Rewriter<'original> {
-    pub fn new(original: &'original str) -> Self {
+impl<'original, 'oc> Rewriter<'original, 'oc> {
+    pub fn new(
+        original: &'original str,
+        offset_calculator: &'oc RefCell<OffsetCalculator<'original>>,
+    ) -> Self {
         Self {
             line_column: LineColumn { line: 1, column: 0 },
-            offset_calculator: OffsetCalculator::new(original),
+            offset_calculator,
             offset_based_rewriter: OffsetBasedRewriter::new(original),
         }
     }
@@ -50,11 +54,13 @@ impl<'original> Rewriter<'original> {
     }
 
     // smoelius: `pub` to facilitate `Span::source_text` (among other things).
-    pub fn offsets_from_span(&mut self, span: &Span) -> (usize, usize) {
+    pub fn offsets_from_span(&self, span: &Span) -> (usize, usize) {
         use offset_calculator::Interface;
 
-        let (start, start_ascii) = self.offset_calculator.offset_from_line_column(span.start());
-        let (end, end_ascii) = self.offset_calculator.offset_from_line_column(span.end());
+        let mut offset_calculator = self.offset_calculator.borrow_mut();
+
+        let (start, start_ascii) = offset_calculator.offset_from_line_column(span.start());
+        let (end, end_ascii) = offset_calculator.offset_from_line_column(span.end());
         assert!(!end_ascii || start_ascii);
         // smoelius: `Span`'s debug output doesn't seem to account for UTF-8.
         #[cfg(any())]

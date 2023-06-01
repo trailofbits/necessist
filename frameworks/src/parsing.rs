@@ -344,14 +344,13 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
 
             let storage = RefCell::new(self.0.storage_from_file(&file));
 
+            let source_file = SourceFile::new(context.root.clone(), test_file.to_path_buf())?;
+
             let generic_visitor = GenericVisitor {
                 context,
                 config: &config,
                 framework: &mut self.0,
-                source_file: SourceFile::new(
-                    context.root.clone(),
-                    Rc::new(test_file.to_path_buf()),
-                ),
+                source_file,
                 test_name: None,
                 last_statement_in_test: None,
                 n_statement_leaves_visited: 0,

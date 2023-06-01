@@ -1,8 +1,8 @@
-use crate::{SourceFile, ToConsoleString};
+use crate::{Backup, Rewriter, SourceFile, ToConsoleString};
 use anyhow::{anyhow, Result};
 use lazy_static::lazy_static;
 use regex::Regex;
-use std::{path::PathBuf, rc::Rc};
+use std::{fs::OpenOptions, io::Write, path::PathBuf, rc::Rc};
 
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct Span {
@@ -54,8 +54,9 @@ impl Span {
         let start_column = start_column.parse::<usize>()?;
         let end_line = end_line.parse::<usize>()?;
         let end_column = end_column.parse::<usize>()?;
+        let source_file = SourceFile::new(root.clone(), root.join(source_file))?;
         Ok(Self {
-            source_file: SourceFile::new(root.clone(), Rc::new(root.join(source_file))),
+            source_file,
             start: proc_macro2::LineColumn {
                 line: start_line,
                 column: start_column - 1,
@@ -122,17 +123,38 @@ impl Span {
     }
 
     pub fn source_text(&self) -> Result<String> {
-        let contents = std::fs::read_to_string(&*self.source_file)?;
+        let contents = self.source_file.contents();
 
         // smoelius: Creating a new `Rewriter` here is just as silly as it is in `attempt_removal`
         // (see comment therein).
-        let mut rewriter = crate::rewriter::Rewriter::new(&contents);
+        // smoelius: `Rewriter`s are now cheap to create because their underlying
+        // `OffsetCalculator`s are shared.
+        let rewriter = Rewriter::new(contents, self.source_file.offset_calculator());
         let (start, end) = rewriter.offsets_from_span(self);
 
         let bytes = &contents.as_bytes()[start..end];
         let text = std::str::from_utf8(bytes)?;
 
         Ok(text.to_owned())
+    }
+
+    pub fn remove(&self) -> Result<(String, Backup)> {
+        let backup = Backup::new(&*self.source_file)?;
+
+        let mut rewriter = Rewriter::new(
+            self.source_file.contents(),
+            self.source_file.offset_calculator(),
+        );
+
+        let text = rewriter.rewrite(self, "");
+
+        let mut file = OpenOptions::new()
+            .truncate(true)
+            .write(true)
+            .open(&*self.source_file)?;
+        file.write_all(rewriter.contents().as_bytes())?;
+
+        Ok((text, backup))
     }
 }
 
