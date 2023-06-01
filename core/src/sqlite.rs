@@ -1,3 +1,9 @@
+// smoelius: See: https://github.com/trailofbits/dylint/pull/701
+#![cfg_attr(
+    dylint_lib = "inconsistent_qualification",
+    allow(inconsistent_qualification)
+)]
+
 use crate::{util, Outcome, Span};
 use anyhow::{bail, Context, Result};
 use diesel::prelude::*;
