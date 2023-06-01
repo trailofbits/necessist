@@ -10,10 +10,14 @@ use std::str::{Chars, Split};
 #[derive(Debug)]
 pub struct CachingOffsetCalculator<'original> {
     lines: Split<'original, char>,
+    prefix: String,
     chars: Option<Chars<'original>>,
     line_column: LineColumn,
     offset: usize,
     ascii: bool,
+    earliest_non_ascii_zero_based_index: usize,
+    // smoelius: The offset is where the line ends, just past the newline.
+    lines_and_offsets: Vec<(String, usize)>,
 }
 
 #[derive(Debug)]
@@ -25,10 +29,13 @@ impl<'original> CachingOffsetCalculator<'original> {
     pub fn new(original: &'original str) -> Self {
         Self {
             lines: original.split('\n'),
+            prefix: String::new(),
             chars: None,
             line_column: LineColumn { line: 1, column: 0 },
             offset: 0,
             ascii: true,
+            earliest_non_ascii_zero_based_index: 0,
+            lines_and_offsets: Vec::new(),
         }
     }
 }
@@ -42,7 +49,27 @@ impl<'original> StatelessOffsetCalculator<'original> {
 
 impl<'original> Interface for CachingOffsetCalculator<'original> {
     fn offset_from_line_column(&mut self, line_column: LineColumn) -> (usize, bool) {
-        assert!(self.line_column <= line_column);
+        assert!(self.line_column.line == self.lines_and_offsets.len() + 1);
+
+        if line_column < self.line_column {
+            let prefix = if line_column.line < self.line_column.line {
+                &self.lines_and_offsets[line_column.line - 1].0
+            } else {
+                &self.prefix
+            };
+            let line_offset = if line_column.line <= 1 {
+                0
+            } else {
+                self.lines_and_offsets[line_column.line - 2].1
+            };
+            let (_, char_offset, prefix_is_ascii) =
+                Self::char_offset(&mut prefix.chars(), line_column.column);
+            let offset = line_offset + char_offset;
+            let ascii = (line_column.line - 1) < self.earliest_non_ascii_zero_based_index
+                || ((line_column.line - 1) == self.earliest_non_ascii_zero_based_index
+                    && prefix_is_ascii);
+            return (offset, ascii);
+        }
 
         let mut chars = self
             .chars
@@ -50,33 +77,64 @@ impl<'original> Interface for CachingOffsetCalculator<'original> {
             .unwrap_or_else(|| self.lines.next().unwrap().chars());
 
         if self.line_column.line < line_column.line {
-            let suffix = chars.collect::<String>();
-            self.offset += suffix.as_bytes().len() + 1;
-            self.ascii &= suffix.chars().all(|ch| ch.is_ascii());
-            self.line_column.line += 1;
-            self.line_column.column = 0;
-
-            while self.line_column.line < line_column.line {
-                let line = self.lines.next().unwrap();
-                self.offset += line.as_bytes().len() + 1;
-                self.ascii &= line.chars().all(|ch| ch.is_ascii());
-                self.line_column.line += 1;
-                self.line_column.column = 0;
-            }
+            self.push_lines(chars, line_column.line);
 
             chars = self.lines.next().unwrap().chars();
         }
 
-        let prefix = (&mut chars)
-            .take(line_column.column - self.line_column.column)
-            .collect::<String>();
-        self.offset += prefix.as_bytes().len();
-        self.ascii &= prefix.chars().all(|ch| ch.is_ascii());
+        assert!(self.line_column.line >= line_column.line);
+
+        let (prefix, offset, ascii) =
+            Self::char_offset(&mut chars, line_column.column - self.line_column.column);
+        self.prefix += &prefix;
+        self.chars = Some(chars);
+        self.offset += offset;
+        self.ascii &= ascii;
+
         self.line_column.column = line_column.column;
 
-        self.chars = Some(chars);
-
         (self.offset, self.ascii)
+    }
+}
+
+impl<'original> CachingOffsetCalculator<'original> {
+    fn push_lines(&mut self, chars: Chars<'_>, one_based_index: usize) {
+        let suffix = chars.collect::<String>();
+
+        self.offset += suffix.as_bytes().len() + 1;
+        self.ascii &= suffix.chars().all(|ch| ch.is_ascii());
+        self.line_column.line += 1;
+        self.line_column.column = 0;
+
+        let line = self.prefix.split_off(0) + &suffix;
+
+        if self.earliest_non_ascii_zero_based_index >= self.lines_and_offsets.len() && self.ascii {
+            self.earliest_non_ascii_zero_based_index += 1;
+        }
+        self.lines_and_offsets.push((line, self.offset));
+
+        while self.line_column.line < one_based_index {
+            let line = self.lines.next().unwrap();
+
+            self.offset += line.as_bytes().len() + 1;
+            self.ascii &= line.chars().all(|ch| ch.is_ascii());
+            self.line_column.line += 1;
+            self.line_column.column = 0;
+
+            if self.earliest_non_ascii_zero_based_index >= self.lines_and_offsets.len()
+                && self.ascii
+            {
+                self.earliest_non_ascii_zero_based_index += 1;
+            }
+            self.lines_and_offsets.push((line.to_owned(), self.offset));
+        }
+    }
+
+    fn char_offset(chars: &mut Chars<'_>, column: usize) -> (String, usize, bool) {
+        let prefix = chars.take(column).collect::<String>();
+        let offset = prefix.as_bytes().len();
+        let ascii = prefix.chars().all(|ch| ch.is_ascii());
+        (prefix, offset, ascii)
     }
 }
 

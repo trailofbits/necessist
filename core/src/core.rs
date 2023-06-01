@@ -1,8 +1,8 @@
 use crate::{
     config,
     framework::{self, Applicable, ToImplementation},
-    note, source_warn, sqlite, util, warn, Backup, Outcome, Rewriter, SourceFile, Span,
-    ToConsoleString, WarnFlags, Warning,
+    note, source_warn, sqlite, util, warn, Outcome, SourceFile, Span, ToConsoleString, WarnFlags,
+    Warning,
 };
 use ansi_term::Style;
 use anyhow::{anyhow, bail, ensure, Result};
@@ -13,8 +13,7 @@ use std::{
     collections::BTreeMap,
     env::{current_dir, var},
     fmt::Display,
-    fs::{read_to_string, write, OpenOptions},
-    io::Write,
+    fs::write,
     iter::Peekable,
     path::{Path, PathBuf},
     process::{Command, Stdio},
@@ -468,19 +467,7 @@ fn dump_candidates(
 }
 
 fn attempt_removal(context: &Context, span: &Span) -> Result<(String, Option<Outcome>)> {
-    let _backup = Backup::new(&*span.source_file)?;
-
-    // smoelius: Each time `attempt_removal` is called, it creates a new `Rewriter`, which seems
-    // silly. It ought to be possible to create and reuse one `Rewriter` for each source file.
-    let contents = read_to_string(&*span.source_file)?;
-    let mut rewriter = Rewriter::new(&contents);
-    let text = rewriter.rewrite(span, "");
-
-    let mut file = OpenOptions::new()
-        .truncate(true)
-        .write(true)
-        .open(&*span.source_file)?;
-    file.write_all(rewriter.contents().as_bytes())?;
+    let (text, _backup) = span.remove()?;
 
     let exec = context.framework.exec(&context.light(), span)?;
 
