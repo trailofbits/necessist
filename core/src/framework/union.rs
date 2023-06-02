@@ -1,8 +1,7 @@
-use std::marker::PhantomData;
-
 use super::{Interface, ToImplementation};
 use crate::LightContext;
 use anyhow::Result;
+use std::marker::PhantomData;
 use strum::IntoEnumIterator;
 
 #[cfg(feature = "clap")]
