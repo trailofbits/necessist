@@ -3,8 +3,7 @@ use cargo_metadata::MetadataCommand;
 use regex::Regex;
 use std::{
     env::{remove_var, set_current_dir},
-    fs::read_to_string,
-    fs::OpenOptions,
+    fs::{read_to_string, OpenOptions},
     io::{stderr, Write},
     path::Path,
     process::Command,
