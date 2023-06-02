@@ -1138,6 +1138,7 @@ dependencies = [
  "tempfile",
  "toml",
  "trycmd",
+ "walkdir",
 ]
 
 [[package]]

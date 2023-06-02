@@ -42,6 +42,7 @@ similar-asserts = "1.4"
 tempfile = "3.5"
 toml = "0.7"
 trycmd = "0.14"
+walkdir = "2.3"
 
 [target.'cfg(unix)'.dependencies]
 libc = "0.2"
