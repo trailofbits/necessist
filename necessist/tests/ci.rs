@@ -181,6 +181,8 @@ fn modules() {
 /// within this file.
 #[test]
 fn noninvasive_siblings() {
+    let re = Regex::new(r"use super::\{([^}]|\}[^;])*::").unwrap();
+
     for entry in WalkDir::new(Path::new(env!("CARGO_MANIFEST_DIR")).join(".."))
         .into_iter()
         .filter_entry(|entry| entry.path().file_name() != Some(OsStr::new("target")))
@@ -192,13 +194,14 @@ fn noninvasive_siblings() {
             continue;
         }
 
+        // smoelius: The regex matches its own declaration. Ignore.
+        if path.ends_with(file!()) {
+            continue;
+        }
+
         let contents = read_to_string(path).unwrap();
-        for (i, line) in contents.lines().enumerate() {
-            if let Some(suffix) = line.strip_prefix("use super::{") {
-                let msg = format!("failed for: {}:{}", path.to_string_lossy(), i + 1);
-                let middle = suffix.strip_suffix("};").expect(&msg);
-                assert!(!middle.contains("::"), "{}", msg);
-            }
+        if contents.contains("use super::{") {
+            assert!(!re.is_match(&contents), "failed for {path:?}");
         }
     }
 }
