@@ -1,4 +1,4 @@
-use super::{Applicable, Interface, ToImplementation, Union};
+use super::{union, Applicable, Interface, ToImplementation};
 use crate::LightContext;
 use anyhow::{ensure, Result};
 use std::fmt::Display;
@@ -14,11 +14,11 @@ enum Singleton {
 }
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq)]
-pub struct Auto<T>(Union<Singleton, T>);
+pub struct Auto<T>(union::Union<Singleton, T>);
 
 impl<T> Default for Auto<T> {
     fn default() -> Self {
-        Self(Union::Left(Singleton::Auto))
+        Self(union::Union::Left(Singleton::Auto))
     }
 }
 
@@ -28,7 +28,7 @@ where
 {
     fn to_implementation(&self, context: &LightContext) -> Result<Option<Box<dyn Interface>>> {
         match &self.0 {
-            Union::Left(_) => {
+            union::Union::Left(_) => {
                 let unflattened_frameworks = T::iter()
                     .map(|framework| {
                         if framework.applicable(context)? {
@@ -61,7 +61,7 @@ where
                     Ok(None)
                 }
             }
-            Union::Right(framework) => framework.to_implementation(context),
+            union::Union::Right(framework) => framework.to_implementation(context),
         }
     }
 }
@@ -73,7 +73,7 @@ where
 {
     fn value_variants<'a>() -> &'a [Self] {
         Box::leak(
-            Union::<Singleton, T>::value_variants()
+            union::Union::<Singleton, T>::value_variants()
                 .iter()
                 .cloned()
                 .map(Self)
@@ -87,6 +87,6 @@ where
     }
 
     fn from_str(input: &str, ignore_case: bool) -> Result<Self, String> {
-        Union::<Singleton, T>::from_str(input, ignore_case).map(Self)
+        union::Union::<Singleton, T>::from_str(input, ignore_case).map(Self)
     }
 }

@@ -4,17 +4,14 @@ use heck::ToKebabCase;
 use std::{any::type_name, path::Path};
 use subprocess::{Exec, Popen};
 
-mod auto;
-pub use auto::Auto;
+pub mod auto;
 
-mod empty;
-pub use empty::Empty;
+pub mod empty;
 
-mod union;
-pub use union::Union;
+pub mod union;
 
 #[allow(dead_code)]
-type AutoUnion<T, U> = Auto<Union<T, U>>;
+type AutoUnion<T, U> = auto::Auto<union::Union<T, U>>;
 
 pub type Postprocess = dyn Fn(&LightContext, Popen) -> Result<bool>;
 

@@ -3,11 +3,6 @@
 
 mod impls;
 
-use impls::LazyRewriter;
-
-#[cfg(feature = "check-rewrites")]
-use impls::EagerRewriter;
-
 pub trait Interface {
     fn contents(self) -> String;
     fn rewrite(&mut self, start: usize, end: usize, replacement: &str) -> String;
@@ -15,19 +10,19 @@ pub trait Interface {
 
 #[derive(Debug)]
 pub struct OffsetBasedRewriter<'original> {
-    lazy: LazyRewriter<'original>,
+    lazy: impls::LazyRewriter<'original>,
 
     #[cfg(feature = "check-rewrites")]
-    eager: EagerRewriter,
+    eager: impls::EagerRewriter,
 }
 
 impl<'original> OffsetBasedRewriter<'original> {
     pub fn new(original: &'original str) -> Self {
         Self {
-            lazy: LazyRewriter::new(original),
+            lazy: impls::LazyRewriter::new(original),
 
             #[cfg(feature = "check-rewrites")]
-            eager: EagerRewriter::new(original),
+            eager: impls::EagerRewriter::new(original),
         }
     }
 }

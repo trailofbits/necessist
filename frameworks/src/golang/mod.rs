@@ -6,7 +6,6 @@ use tree_sitter::Parser;
 use walkdir::WalkDir;
 
 mod visitor;
-use visitor::visit;
 
 #[derive(Debug)]
 pub struct Golang {
@@ -55,7 +54,8 @@ impl Low for Golang {
                     util::strip_prefix(test_file, context.root).unwrap()
                 )
             })?;
-            let spans_visited = visit(self, context.root.clone(), test_file, &text, &tree)?;
+            let spans_visited =
+                visitor::visit(self, context.root.clone(), test_file, &text, &tree)?;
             spans.extend(spans_visited);
             Ok(())
         };

@@ -92,7 +92,7 @@ pub struct Config {
 // to parameterize every function that takes a `Necessist` as an argument.
 pub fn necessist<Identifier: Applicable + Display + IntoEnumIterator + ToImplementation>(
     opts: &Necessist,
-    framework: framework::Auto<Identifier>,
+    framework: framework::auto::Auto<Identifier>,
 ) -> Result<()> {
     let mut opts = opts.clone();
 
@@ -158,7 +158,7 @@ pub fn necessist<Identifier: Applicable + Display + IntoEnumIterator + ToImpleme
 #[allow(clippy::type_complexity)]
 fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementation>(
     context: &LightContext,
-    framework: framework::Auto<Identifier>,
+    framework: framework::auto::Auto<Identifier>,
 ) -> Result<
     Option<(
         Option<sqlite::Sqlite>,
@@ -387,7 +387,7 @@ fn dump(context: &LightContext, removals: &[Removal]) {
 
 fn find_framework<Identifier: Applicable + Display + IntoEnumIterator + ToImplementation>(
     context: &LightContext,
-    identifier: framework::Auto<Identifier>,
+    identifier: framework::auto::Auto<Identifier>,
 ) -> Result<Box<dyn framework::Interface>> {
     let implementation = identifier.to_implementation(context)?;
 

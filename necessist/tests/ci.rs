@@ -177,8 +177,8 @@ fn modules() {
     }
 }
 
-/// `noninvasive_siblings` helps to expose circular module dependencies. See the [`modules`] test
-/// within this file.
+/// `noninvasive_siblings` and `semi_noninvasive_parents` help to expose circular module
+/// dependencies. See the [`modules`] test within this file.
 #[test]
 fn noninvasive_siblings() {
     let re = Regex::new(r"use super::\{([^}]|\}[^;])*::").unwrap();
@@ -200,8 +200,44 @@ fn noninvasive_siblings() {
         }
 
         let contents = read_to_string(path).unwrap();
+
         if contents.contains("use super::{") {
             assert!(!re.is_match(&contents), "failed for {path:?}");
+        }
+    }
+}
+
+#[test]
+fn semi_noninvasive_parents() {
+    let re = Regex::new(r"mod ([^;]*);").unwrap();
+
+    for entry in WalkDir::new(Path::new(env!("CARGO_MANIFEST_DIR")).join(".."))
+        .into_iter()
+        .filter_entry(|entry| entry.path().file_name() != Some(OsStr::new("target")))
+    {
+        let entry = entry.unwrap();
+        let path = entry.path();
+
+        if path.extension() != Some(OsStr::new("rs")) {
+            continue;
+        }
+
+        // smoelius: `lib.rs` files get a pass.
+        if path.file_name() == Some(OsStr::new("lib.rs")) {
+            continue;
+        }
+
+        let contents = read_to_string(path).unwrap();
+
+        for captures in re.captures_iter(&contents) {
+            assert_eq!(2, captures.len());
+            let name = &captures[1];
+            let pat = format!("use {name}::");
+            let pat_self = pat.clone() + "{self";
+            assert!(
+                !contents.contains(&pat) || contents.contains(&pat_self),
+                "{path:?} contains `{pat}` but not `{pat_self}`"
+            );
         }
     }
 }

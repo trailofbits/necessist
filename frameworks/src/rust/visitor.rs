@@ -1,4 +1,4 @@
-use super::{cached_test_file_fs_module_path, Parsing, Rust};
+use super::{parsing, Rust};
 use anyhow::{Error, Result};
 use necessist_core::{
     warn, Config, LightContext, SourceFile, Span, ToInternalSpan, WarnFlags, Warning,
@@ -23,7 +23,7 @@ pub(super) fn visit(
     context: &LightContext,
     config: &Config,
     framework: &mut Rust,
-    parsing: &mut Parsing,
+    parsing: &mut parsing::Parsing,
     test_file: &Path,
     file: &File,
 ) -> Result<Vec<Span>> {
@@ -40,7 +40,7 @@ struct Visitor<'ast, 'context, 'config, 'framework, 'parsing> {
     context: &'context LightContext<'context>,
     config: &'config Config,
     framework: &'framework mut Rust,
-    parsing: &'parsing mut Parsing,
+    parsing: &'parsing mut parsing::Parsing,
     source_file: SourceFile,
     module_path: Vec<&'ast Ident>,
     test_ident: Option<&'ast Ident>,
@@ -150,7 +150,7 @@ where
         context: &'context LightContext,
         config: &'config Config,
         framework: &'framework mut Rust,
-        parsing: &'parsing mut Parsing,
+        parsing: &'parsing mut parsing::Parsing,
         test_file: &Path,
     ) -> Self {
         Self {
@@ -201,7 +201,7 @@ where
     }
 
     fn test_path(&mut self, span: &Span, ident: &Ident) -> Result<Vec<String>> {
-        let mut test_path = cached_test_file_fs_module_path(
+        let mut test_path = parsing::cached_test_file_fs_module_path(
             &mut self.parsing.test_file_fs_module_path_cache,
             &mut self.parsing.test_file_package_cache,
             &span.source_file,

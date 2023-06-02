@@ -1,6 +1,6 @@
 use anyhow::Result;
 use clap::Parser;
-use necessist_core::{cli, framework::Auto, necessist, Necessist};
+use necessist_core::{cli, framework::auto::Auto, necessist, Necessist};
 use necessist_frameworks::Identifier;
 use std::env::args;
 

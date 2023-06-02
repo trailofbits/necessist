@@ -13,13 +13,12 @@ use syn::parse_file;
 use walkdir::WalkDir;
 
 mod parsing;
-use parsing::{cached_test_file_fs_module_path, cached_test_file_package, Parsing};
 
 mod try_insert;
-use try_insert::TryInsert;
+#[allow(unused_imports)]
+use try_insert::{self as _, TryInsert};
 
 mod visitor;
-use visitor::visit;
 
 #[derive(Debug)]
 pub struct Rust {
@@ -59,7 +58,7 @@ impl Low for Rust {
     ) -> Result<Vec<Span>> {
         check_config(context, config)?;
 
-        let mut parsing = Parsing::default();
+        let mut parsing = parsing::Parsing::default();
         let mut spans = Vec::new();
 
         #[cfg_attr(
@@ -77,7 +76,8 @@ impl Low for Rust {
                     util::strip_prefix(test_file, context.root).unwrap()
                 )
             })?;
-            let spans_visited = visit(context, config, self, &mut parsing, test_file, &file)?;
+            let spans_visited =
+                visitor::visit(context, config, self, &mut parsing, test_file, &file)?;
             spans.extend(spans_visited);
             Ok(())
         };
@@ -173,7 +173,7 @@ impl Rust {
         self.test_file_flags_cache
             .entry(test_file.to_path_buf())
             .or_try_insert_with(|| {
-                let package = cached_test_file_package(test_file_package_map, test_file)?;
+                let package = parsing::cached_test_file_package(test_file_package_map, test_file)?;
 
                 let mut flags = vec![
                     "--manifest-path".to_owned(),

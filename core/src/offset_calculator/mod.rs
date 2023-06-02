@@ -5,30 +5,25 @@ use proc_macro2::LineColumn;
 
 mod impls;
 
-use impls::CachingOffsetCalculator;
-
-#[cfg(feature = "check-offsets")]
-use impls::StatelessOffsetCalculator;
-
 pub trait Interface {
     fn offset_from_line_column(&mut self, line_column: LineColumn) -> (usize, bool);
 }
 
 #[derive(Debug)]
 pub struct OffsetCalculator<'original> {
-    caching: CachingOffsetCalculator<'original>,
+    caching: impls::CachingOffsetCalculator<'original>,
 
     #[cfg(feature = "check-offsets")]
-    stateless: StatelessOffsetCalculator<'original>,
+    stateless: impls::StatelessOffsetCalculator<'original>,
 }
 
 impl<'original> OffsetCalculator<'original> {
     pub fn new(original: &'original str) -> Self {
         Self {
-            caching: CachingOffsetCalculator::new(original),
+            caching: impls::CachingOffsetCalculator::new(original),
 
             #[cfg(feature = "check-offsets")]
-            stateless: StatelessOffsetCalculator::new(original),
+            stateless: impls::StatelessOffsetCalculator::new(original),
         }
     }
 }

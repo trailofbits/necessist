@@ -33,7 +33,7 @@ pub struct Opts<Identifier: Clone + Send + Sync + ValueEnum + 'static> {
     #[clap(long, help = "Dump removal candidates and exit (for debugging)")]
     dump_candidates: bool,
     #[clap(long, help = "Assume testing framework is <FRAMEWORK>")]
-    framework: Option<framework::Auto<Identifier>>,
+    framework: Option<framework::auto::Auto<Identifier>>,
     #[clap(long, help = "Do not perform dry runs")]
     no_dry_run: bool,
     #[clap(long, help = "Do not output to an sqlite database")]
@@ -64,7 +64,7 @@ pub struct Opts<Identifier: Clone + Send + Sync + ValueEnum + 'static> {
 }
 
 impl<Identifier: Clone + Send + Sync + ValueEnum> From<Opts<Identifier>>
-    for (Necessist, framework::Auto<Identifier>)
+    for (Necessist, framework::auto::Auto<Identifier>)
 {
     fn from(opts: Opts<Identifier>) -> Self {
         let Opts {

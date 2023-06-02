@@ -5,7 +5,6 @@ use std::{collections::BTreeMap, fs::read_to_string, path::Path, process::Comman
 use walkdir::WalkDir;
 
 mod visitor;
-use visitor::visit;
 
 #[derive(Debug)]
 pub struct Foundry {
@@ -52,7 +51,7 @@ impl Low for Foundry {
                         util::strip_prefix(test_file, context.root).unwrap()
                     )
                 })?;
-            let spans_visited = visit(
+            let spans_visited = visitor::visit(
                 self,
                 context.root.clone(),
                 test_file,

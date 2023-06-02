@@ -26,7 +26,6 @@ use swc_core::{
 use walkdir::WalkDir;
 
 mod visitor;
-use visitor::visit;
 
 #[derive(Debug, Eq, PartialEq)]
 enum ItMessageState {
@@ -113,7 +112,7 @@ impl High for HardhatTs {
                         util::strip_prefix(test_file, context.root).unwrap()
                     )
                 })?;
-            let spans_visited = visit(
+            let spans_visited = visitor::visit(
                 config,
                 self,
                 source_map,
