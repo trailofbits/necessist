@@ -1,7 +1,4 @@
-use super::{
-    visit::{self as visit_fns, Visitor as _},
-    Foundry,
-};
+use super::Foundry;
 use if_chain::if_chain;
 use necessist_core::{LineColumn, SourceFile, Span};
 use solang_parser::pt::{
@@ -12,6 +9,9 @@ use std::{
     rc::Rc,
 };
 use thiserror::Error;
+
+mod visit;
+use visit::{self as visit_fns, Visitor as _};
 
 #[cfg_attr(
     dylint_lib = "inconsistent_qualification",

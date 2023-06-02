@@ -4,8 +4,6 @@ use necessist_core::{util, warn, Config, LightContext, Span, WarnFlags, Warning}
 use std::{collections::BTreeMap, fs::read_to_string, path::Path, process::Command};
 use walkdir::WalkDir;
 
-mod visit;
-
 mod visitor;
 use visitor::visit;
 

@@ -1,4 +1,4 @@
-use super::{ts_utils::install_node_modules, High};
+use super::{ts_utils, High};
 use anyhow::{anyhow, Context, Result};
 use assert_cmd::output::OutputError;
 use lazy_static::lazy_static;
@@ -146,7 +146,7 @@ impl High for HardhatTs {
     }
 
     fn dry_run(&self, context: &LightContext, test_file: &Path) -> Result<()> {
-        install_node_modules(context)?;
+        ts_utils::install_node_modules(context)?;
 
         compile(context)?;
 
