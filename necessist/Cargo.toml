@@ -50,3 +50,4 @@ libc = "0.2"
 default = []
 ci = []
 dogfood = []
+strict = []

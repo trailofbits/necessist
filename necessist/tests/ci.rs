@@ -253,7 +253,7 @@ fn clippy_command(cargo_args: &[&str], rustc_args: &[&str]) -> Command {
 }
 
 fn preserves_cleanliness(f: impl FnOnce()) {
-    if dirty() {
+    if cfg!(not(feature = "strict")) && dirty() {
         #[allow(clippy::explicit_write)]
         writeln!(stderr(), "Skipping as repository is dirty").unwrap();
         return;
