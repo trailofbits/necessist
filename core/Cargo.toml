@@ -15,7 +15,7 @@ anyhow = "1.0"
 atty = "0.2"
 bitflags = "2.3"
 clap = { version = "4.3", features = ["cargo", "derive"], optional = true }
-ctrlc = "3.3"
+ctrlc = "3.4"
 diesel = { version = "2.1", features = ["sqlite"] }
 git2 = "0.17"
 heck = "0.4"
