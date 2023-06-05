@@ -97,6 +97,30 @@ By comparison, Necessist's approach of iteratively removing statements and metho
 
 Of course, there is overlap is the sets of problems the two approaches can uncover, e.g., a failure to find an injected fault could indicate a bug in a test. Nonetheless, for the reasons just given, we see the two approaches as complementary, not competing.
 
+### Theoretical motivation
+
+Generally speaking, Necessist should remove a statement `S` only if:
+
+- (`*`) `S`'s [weakest precondition] `P` has the same context (e.g., variables in scope) as `S`'s postcondition `Q`, and `P` does not imply `Q`.
+
+In this section, we explain why. For concision, we focus on statements, but the remarks in this section apply to method calls as well.
+
+Consider a test through the lens of [predicate transformer semantics]. A test is a function with no inputs or outputs. Thus, an alternative procedure for determining whether a test passes is the following. Starting with `True`, iteratively work backwards through the test's statements, computing the weakest precondition of each. If the precondition arrived at for the test's first statement is `True`, then the test passes. If the precondition is `False`, the test fails.
+
+Now, imagine we were to apply this procedure, and consider a statement `S` that violates (`*`). We argue that it wouldn't make sense to remove `S`:
+
+- If `S` adds or removes variables from the scope (e.g., `S` is a declaration), or `S` changes a variable's type, then removing `S` would likely result in a compilation failure. (On top of that, since `S`'s precondition and postcondition have different contexts, it's not clear how to compare them.)
+
+- If `S`'s precondition is stronger than its postcondition (e.g., `S` an `assert`), then `S` imposes constraints on the environments in which it executes. Put another way, `S` _tests_ something. Thus, removing `S` would likely detract from the overarching test's purpose.
+
+Conversely, consider a statement `S` that satisfies (`*`). Here is some intuition for why it might make sense to remove `S`. Think of `S` as _shifting_ the set of valid environments, rather than constraining them. More precisely, if `S`'s weakest precondition `P` does not imply `Q`, and if `Q` is satisfiable, the there is an assignment to `P` and `Q`'s free variables that satisfies both `P` and `Q`. If such an assignment results from each environment in which `S` is actually executed, then the necessity of `S` is called into question.
+
+To be clear, as currently implemented, Necessist does not actually compute weakest preconditions. Rather, Necessist operates purely on syntax. Intuitively, given a statement `S`, Necessist makes a "best guess" as to what `S`'s semantics would be, and removes or ignores `S` based on that guess.
+
+Even though (`*`) is not applied formally, it provides a criterion to guide selection of the statements that Necessist ignores. That is, if we imagine a predicate transformer semantics for one of Necessist's supported languages, and a statement `S` in that language, we can ask: would `S` satisfy (`*`)? If not, then then Necessist should likely ignore `S`.
+
+If you think one of Necessist's implicit rules violates this criterion, please open an issue!
+
 ## Usage
 
 ```
@@ -392,7 +416,9 @@ Necessist is licensed and distributed under the AGPLv3 license. [Contact us](mai
 [path]: #paths
 [paths]: #paths
 [patterns]: #patterns
+[predicate transformer semantics]: https://en.wikipedia.org/wiki/Predicate_transformer_semantics
 [preprint]: https://agroce.github.io/asej18.pdf
 [sqlitebrowser]: https://sqlitebrowser.org/
 [toml]: https://toml.io/en/
 [`universalmutator`]: https://github.com/agroce/universalmutator
+[weakest precondition]: https://en.wikipedia.org/wiki/Predicate_transformer_semantics#Weakest_preconditions
