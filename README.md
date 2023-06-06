@@ -136,16 +136,21 @@ By default, Necessist outputs to the console only when tests pass. Passing `--ve
 | <span style="color:green">failed</span>      | The test(s) built but failed.                       |
 | <span style="color:blue">nonbuildable</span> | The test(s) did not build.                          |
 
-By default, Necessist outputs to both the console and to an sqlite database. For the latter, a tool like [sqlitebrowser](https://sqlitebrowser.org/) can be used to filter/sort the results.
+By default, Necessist outputs to both the console and to an sqlite database. For the latter, a tool like [sqlitebrowser] can be used to filter/sort the results.
 
 ## Details
 
 Generally speaking, Necessist will not attempt to remove a statement if it is one the following:
 
-- A statement containing other statements (e.g., a `for` loop)
-- A statement consisting of a single method call
-- A declaration (e.g., a local or `let` binding)
-- A `break`, `continue`, or `return`
+- a statement containing other statements (e.g., a `for` loop)
+- a declaration (e.g., a local or `let` binding)
+- a `break`, `continue`, or `return`
+- the last statement in a test
+
+Similarly, Necessist will not attempt to remove a method call if:
+
+- It is the primary effect of an enclosing statement (e.g., `x.foo();`).
+- It appears in the argument list of an ignored function, method, or macro ([see below](#configuration-files-experimental)).
 
 Also, for some frameworks, certain statements and methods are ignored. Click on a framework to see its specifics.
 
@@ -154,21 +159,17 @@ Also, for some frameworks, certain statements and methods are ignored. Click on 
 
 In addition to the below, the Foundry framework ignores:
 
-- the last statement in a function body
 - a statement immediately following a use of `vm.prank` or any form of `vm.expect` (e.g., `vm.expectRevert`)
 - an `emit` statement
 
 #### Ignored functions
 
 - Anything beginning with `assert` (e.g., `assertEq`)
-
-#### Ignored methods
-
-- `expectEmit`
-- `expectRevert`
-- `prank`
-- `startPrank`
-- `stopPrank`
+- `vm.expectEmit`
+- `vm.expectRevert`
+- `vm.prank`
+- `vm.startPrank`
+- `vm.stopPrank`
 
 </details>
 
@@ -177,8 +178,8 @@ In addition to the below, the Foundry framework ignores:
 
 In addition to the below, the Golang framework ignores:
 
-- Any method call whose receiver is `assert` (e.g., `assert.Equal`)
-- Any method call whose receiver is `require` (e.g., `require.Equal`)
+- Anything beginning with `assert.` (e.g., `assert.Equal`)
+- Anything beginning with `require.` (e.g., `require.Equal`)
 - `defer` statements
 
 #### Ignored methods\*
@@ -203,13 +204,12 @@ In addition to the below, the Golang framework ignores:
 
 #### Ignored functions
 
-- Anything beginning with `assert` (e.g., `assert.equal`)
+- `assert`
+- Anything beginning with `assert.` (e.g., `assert.equal`)
 - `expect`
 
 #### Ignored methods
 
-- Anything beginning with `should` (e.g., `should.equal`)
-- Anything beginning with `to` (e.g., `to.equal`)
 - `toNumber`
 - `toString`
 
@@ -299,13 +299,54 @@ In addition to the below, the Golang framework ignores:
 
 A configuration file allows one to tailor Necessist's behavior with respect to a project. The file must be named `necessist.toml`, appear in the project's root directory, and be [toml] encoded. The file may contain one more of the options listed below.
 
-### Hardhat TS configuration options
+- `ignored_functions`, `ignored_methods`, `ignored_macros`: A list of strings interpreted as [patterns]. A function, method, or macro (respectively) whose [path] matches a pattern in the list is ignored. Note that `ignored_macros` is used only by the Rust framework currently.
 
-- `ignored_functions`: A list of strings. Functions whose names appear in the list are ignored.
+- `ignored_path_disambiguation`: One of the strings `Either`, `Function`, or `Method`. For a [path] that could refer to a function or method ([see below](#paths)), this option influences whether the function or method is ignored.
 
-### Rust configuration options
+  - `Either` (default): Ignore if the path matches either an `ignored_functions` or `ignored_macros` pattern.
 
-- `ignored_macros`: A list of strings. Macros whose names appear in the list are ignored.
+  - `Function`: Ignore only if the path matches an `ignored_functions` pattern.
+
+  - `Method`: Ignore only if the path matches an `ignored_methods` pattern.
+
+### Patterns
+
+A pattern is a string composed of letters, numbers, `.`, `_`, or `*`. Each character, other than `*`, is treated literally and matches itself only. A `*` matches any string, including the empty string.
+
+The following are examples of patterns:
+
+- `assert`: matches itself only
+- `assert_eq`: matches itself only
+- `assertEqual`: matches itself only
+- `assert.Equal`: matches itself only
+- `assert.*`: matches `assert.Equal`, but not `assert`, `assert_eq`, or `assertEqual`
+- `assert*`: matches `assert`, `assert_eq`, `assertEqual`, and `assert.Equal`
+- `*.Equal`: matches `assert.Equal`, but not `Equal`
+
+Notes:
+
+- Patterns match [paths], not individual identifiers.
+- `.` is treated literally like in a [`glob`] pattern, not like in regular expression.
+
+### Paths
+
+A path is a sequence of identifiers separated by `.`. Consider this example (from [Chainlink]):
+
+```sol
+operator.connect(roles.oracleNode).signer.sendTransaction({
+    to: operator.address,
+    data,
+}),
+```
+
+In the above, `operator.connect` and `signer.sendTransaction` are paths.
+
+Note, however, that paths like `operator.connect` are ambiguous:
+
+- If `operator` refers to package or module, then `operator.connect` refers to a function.
+- If `operator` refers to an object, then `operator.connect` refers to a method.
+
+By default, Necessist ignores such a path if it matches either an `ignored_functions` or `ignored_macros` pattern. Setting the `ignored_path_disambiguation` option above to `Function` or `Method` causes Necessist ignore the path only if it matches an `ignored_functions` or `ignored_macros` pattern (respectively).
 
 ## Limitations
 
@@ -326,6 +367,8 @@ A configuration file allows one to tailor Necessist's behavior with respect to a
 Necessist is licensed and distributed under the AGPLv3 license. [Contact us](mailto:opensource@trailofbits.com) if you're looking for an exception to the terms.
 
 [`assert_cmd::assert::assert::success`]: https://docs.rs/assert_cmd/latest/assert_cmd/assert/struct.Assert.html#method.success
+[Chainlink]: https://github.com/smartcontractkit/chainlink/blob/a39e54e157b57d5fc3dba0aed6ac9d58382953b2/contracts/test/v0.7/Operator.test.ts#L1725-L1728
+[`glob`]: https://man7.org/linux/man-pages/man7/glob.7.html
 [`rust-openssl`]: https://github.com/sfackler/rust-openssl
 [`std::borrow::cow::into_owned`]: https://doc.rust-lang.org/std/borrow/enum.Cow.html#method.into_owned
 [`std::clone::clone::clone`]: https://doc.rust-lang.org/std/clone/trait.Clone.html#tymethod.clone
@@ -340,6 +383,10 @@ Necessist is licensed and distributed under the AGPLv3 license. [Contact us](mai
 [added to the test]: https://github.com/sfackler/rust-openssl/pull/1852
 [crates.io]: https://crates.io/crates/necessist
 [github.com]: https://github.com/trailofbits/necessist
+[path]: #paths
+[paths]: #paths
+[patterns]: #patterns
 [preprint]: https://agroce.github.io/asej18.pdf
+[sqlitebrowser]: https://sqlitebrowser.org/
 [toml]: https://toml.io/en/
 [`universalmutator`]: https://github.com/agroce/universalmutator
