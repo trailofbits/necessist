@@ -16,7 +16,6 @@ use std::{collections::BTreeMap, sync::Mutex};
 #[remain::sorted]
 pub enum Warning {
     All,
-    ConfigFilesExperimental,
     DryRunFailed,
     FilesChanged,
     IgnoredFunctionsUnsupported,
@@ -177,8 +176,7 @@ pub(crate) fn note(context: &LightContext, msg: &str) {
 fn may_be_bug(warning: Warning) -> bool {
     match warning {
         Warning::All => unreachable!(),
-        Warning::ConfigFilesExperimental
-        | Warning::DryRunFailed
+        Warning::DryRunFailed
         | Warning::FilesChanged
         | Warning::IgnoredFunctionsUnsupported
         | Warning::IgnoredMacrosUnsupported

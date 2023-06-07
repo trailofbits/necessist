@@ -10,7 +10,7 @@ Necessist currently supports Foundry, Golang, Hardhat TS, and Rust.
 - [Overview](#overview)
 - [Usage](#usage)
 - [Details](#details)
-- [Configuration files](#configuration-files-experimental)
+- [Configuration files](#configuration-files)
 - [Goals](#goals)
 - [Limitations](#limitations)
 - [License](#license)
@@ -108,7 +108,7 @@ Arguments:
 
 Options:
       --allow <WARNING>        Silence <WARNING>; `--allow all` silences all warnings
-      --default-config         Create a default necessist.toml file in the project's root directory (experimental)
+      --default-config         Create a default necessist.toml file in the project's root directory
       --deny <WARNING>         Treat <WARNING> as an error; `--deny all` treats all warnings as errors
       --dump                   Dump sqlite database contents to the console
       --dump-candidates        Dump removal candidates and exit (for debugging)
@@ -150,7 +150,7 @@ Generally speaking, Necessist will not attempt to remove a statement if it is on
 Similarly, Necessist will not attempt to remove a method call if:
 
 - It is the primary effect of an enclosing statement (e.g., `x.foo();`).
-- It appears in the argument list of an ignored function, method, or macro ([see below](#configuration-files-experimental)).
+- It appears in the argument list of an ignored function, method, or macro ([see below](#configuration-files)).
 
 Also, for some frameworks, certain statements and methods are ignored. Click on a framework to see its specifics.
 
@@ -293,9 +293,7 @@ In addition to the below, the Golang framework ignores:
 
 <p></p>
 
-## Configuration files (experimental)
-
-**Configuration files are experimental and their behavior could change at any time.**
+## Configuration files
 
 A configuration file allows one to tailor Necessist's behavior with respect to a project. The file must be named `necessist.toml`, appear in the project's root directory, and be [toml] encoded. The file may contain one more of the options listed below.
 

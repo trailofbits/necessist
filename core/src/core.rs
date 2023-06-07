@@ -326,19 +326,12 @@ fn process_options(opts: &mut Necessist) -> Result<()> {
     Ok(())
 }
 
-fn default_config(context: &LightContext, root: &Path) -> Result<()> {
+fn default_config(_context: &LightContext, root: &Path) -> Result<()> {
     let path_buf = root.join("necessist.toml");
 
     if path_buf.try_exists()? {
         bail!("A configuration file already exists at {:?}", path_buf);
     }
-
-    warn(
-        context,
-        Warning::ConfigFilesExperimental,
-        "Configuration files are experimental",
-        WarnFlags::empty(),
-    )?;
 
     let toml = toml::to_string(&config::Toml::default())?;
 
