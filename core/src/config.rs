@@ -141,3 +141,50 @@ fn escape(pattern: &str) -> Result<String> {
 
     Ok(s)
 }
+
+#[test]
+fn patterns() {
+    const EXAMPLES: &[(&str, &[&str], &[&str])] = &[
+        (
+            "assert",
+            &["assert"],
+            &["assert_eq", "assertEqual", "assert.Equal"],
+        ),
+        (
+            "assert_eq",
+            &["assert_eq"],
+            &["assert", "assertEqual", "assert.Equal"],
+        ),
+        (
+            "assertEqual",
+            &["assertEqual"],
+            &["assert", "assert_eq", "assert.Equal"],
+        ),
+        (
+            "assert.Equal",
+            &["assert.Equal"],
+            &["assert", "assert_eq", "assertEqual"],
+        ),
+        (
+            "assert.*",
+            &["assert.Equal"],
+            &["assert", "assert_eq", "assertEqual"],
+        ),
+        (
+            "assert*",
+            &["assert", "assert_eq", "assertEqual", "assert.Equal"],
+            &[],
+        ),
+        ("*.Equal", &["assert.Equal"], &["Equal"]),
+    ];
+
+    for (pattern, positive, negative) in EXAMPLES {
+        let re = compile_pattern(pattern).unwrap();
+        for text in *positive {
+            assert!(re.is_match(text));
+        }
+        for text in *negative {
+            assert!(!re.is_match(text));
+        }
+    }
+}
