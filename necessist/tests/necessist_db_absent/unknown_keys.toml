@@ -1,0 +1,10 @@
+args = ["--no-sqlite", "--root=examples/unknown_keys"]
+
+[bin]
+name = "necessist"
+
+[fs]
+cwd = "../../.."
+
+[status]
+code = 1
