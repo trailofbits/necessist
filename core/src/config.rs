@@ -1,7 +1,7 @@
 use crate::LightContext;
 use anyhow::{bail, Result};
 use regex::Regex;
-use std::{fs::read_to_string, path::Path};
+use std::{collections::BTreeMap, fs::read_to_string, path::Path};
 
 #[derive(Clone, Copy, Default, Eq, PartialEq, serde::Deserialize, serde::Serialize)]
 pub enum IgnoredPathDisambiguation {
@@ -47,6 +47,8 @@ pub struct Toml {
     pub ignored_methods: Vec<String>,
     #[serde(default)]
     pub ignored_path_disambiguation: Option<IgnoredPathDisambiguation>,
+    #[serde(flatten)]
+    pub other: BTreeMap<String, toml::Value>,
 }
 
 impl Toml {
@@ -59,7 +61,16 @@ impl Toml {
 
         let contents = read_to_string(path_buf)?;
 
-        toml::from_str(&contents).map_err(Into::into)
+        let toml: Self = toml::from_str(&contents)?;
+
+        if !toml.other.is_empty() {
+            bail!(
+                "Configuration file contains unknown keys: {:#?}",
+                toml.other.keys().collect::<Vec<_>>()
+            );
+        }
+
+        Ok(toml)
     }
 
     pub fn merge(&mut self, other: &Self) -> Option<&mut Self> {
@@ -68,6 +79,7 @@ impl Toml {
             ignored_macros,
             ignored_methods,
             ignored_path_disambiguation,
+            other: _,
         } = other;
 
         if self.ignored_path_disambiguation.is_some()
@@ -92,6 +104,7 @@ impl Toml {
             ignored_macros,
             ignored_methods,
             ignored_path_disambiguation,
+            other: _,
         } = self;
 
         let ignored_functions = compile_ignored(ignored_functions)?;
