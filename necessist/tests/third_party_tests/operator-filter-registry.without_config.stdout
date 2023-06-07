@@ -284,31 +284,26 @@ $DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol:98:16-98:2
 $DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol:114:16-114:41: `.mint(makeAddr("bob"), 1)`
 $DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol:128:27-128:72: `.supportsInterface(type(IERC165).interfaceId)`
 $DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol:129:27-129:72: `.supportsInterface(type(IERC721).interfaceId)`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:54:28-54:90: `.encodeWithSelector(AddressFiltered.selector, filteredAddress)`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:64:16-64:31: `.mint(alice, 1)`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:75:16-75:31: `.mint(alice, 1)`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:76:16-76:31: `.mint(alice, 2)`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:89:16-89:29: `.mint(bob, 1)`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:104:16-104:29: `.mint(bob, 1)`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:167:28-167:52: `.testFilter(notFiltered)`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:169:28-169:90: `.encodeWithSelector(AddressFiltered.selector, filteredAddress)`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:180:11-180:24: `.recordLogs()`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:182:18-182:67: `.initialize(address(registry), address(0), false)`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:183:34-183:52: `.getRecordedLogs()`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:193:66-193:90: `.getNonce(address(this))`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:218:66-218:90: `.getNonce(address(this))`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:239:11-239:39: `.etch(address(registry), "")`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:241:18-241:67: `.initialize(address(registry), address(0), false)`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:247:17-247:66: `.updateOperatorFilterRegistryAddress(newRegistry)`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:253:28-253:63: `.encodeWithSignature("OnlyOwner()")`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:258:17-258:65: `.updateOperatorFilterRegistryAddress(address(0))`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:272:26-272:70: `.initialize(stubRegistry, address(0), false)`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:273:28-273:119: `.encodeWithSelector(OperatorFilterer.OperatorNotAllowed.selector, address(filteredAddress))`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:52:28-52:90: `.encodeWithSelector(AddressFiltered.selector, filteredAddress)`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:62:16-62:31: `.mint(alice, 1)`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:73:16-73:31: `.mint(alice, 1)`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:74:16-74:31: `.mint(alice, 2)`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:87:16-87:29: `.mint(bob, 1)`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:102:16-102:29: `.mint(bob, 1)`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:163:28-163:52: `.testFilter(notFiltered)`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:165:28-165:90: `.encodeWithSelector(AddressFiltered.selector, filteredAddress)`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:176:11-176:24: `.recordLogs()`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:178:18-178:67: `.initialize(address(registry), address(0), false)`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:179:34-179:52: `.getRecordedLogs()`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:188:66-188:90: `.getNonce(address(this))`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:213:66-213:90: `.getNonce(address(this))`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:234:11-234:39: `.etch(address(registry), "")`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:236:18-236:67: `.initialize(address(registry), address(0), false)`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:242:17-242:66: `.updateOperatorFilterRegistryAddress(newRegistry)`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:248:28-248:63: `.encodeWithSignature("OnlyOwner()")`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:253:17-253:65: `.updateOperatorFilterRegistryAddress(address(0))`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:268:26-268:70: `.initialize(stubRegistry, address(0), false)`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol:269:28-269:119: `.encodeWithSelector(OperatorFilterer.OperatorNotAllowed.selector, address(filteredAddress))`
 $DIR/test/upgradeable/RevokableUpgradeableOperatorFilterer.t.sol:30:17-30:48: `.revokeOperatorFilterRegistry()`
 $DIR/test/upgradeable/UpgradeableOperatorFilterer.t.sol:21:17-21:51: `.init(DEFAULT_SUBSCRIPTION, false)`
 $DIR/test/upgradeable/UpgradeableOperatorFilterer.t.sol:26:17-26:41: `.init(address(0), false)`
-$DIR/test/validation/Validation.t.sol:70:24-70:41: `.ownerOf(tokenId)`
-$DIR/test/validation/Validation.t.sol:71:13-71:28: `owner = _owner;`
-$DIR/test/validation/Validation.t.sol:72:32-74:10: `{
-            // Do nothing
-        }`
