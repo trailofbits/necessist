@@ -17,7 +17,7 @@ pub struct Opts<Identifier: Clone + Send + Sync + ValueEnum + 'static> {
     allow: Vec<Warning>,
     #[clap(
         long,
-        help = "Create a default necessist.toml file in the project's root directory (experimental)"
+        help = "Create a default necessist.toml file in the project's root directory"
     )]
     default_config: bool,
     #[clap(

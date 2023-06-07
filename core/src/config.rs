@@ -1,4 +1,4 @@
-use crate::{warn, LightContext, WarnFlags, Warning};
+use crate::LightContext;
 use anyhow::{bail, Result};
 use regex::Regex;
 use std::{fs::read_to_string, path::Path};
@@ -50,19 +50,12 @@ pub struct Toml {
 }
 
 impl Toml {
-    pub fn read(context: &LightContext, root: &Path) -> Result<Self> {
+    pub fn read(_context: &LightContext, root: &Path) -> Result<Self> {
         let path_buf = root.join("necessist.toml");
 
         if !path_buf.try_exists()? {
             return Ok(Self::default());
         }
-
-        warn(
-            context,
-            Warning::ConfigFilesExperimental,
-            "Configuration files are experimental",
-            WarnFlags::empty(),
-        )?;
 
         let contents = read_to_string(path_buf)?;
 

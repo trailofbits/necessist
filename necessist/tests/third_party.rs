@@ -358,12 +358,7 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> String {
         }
 
         let mut exec = Exec::cmd("../target/debug/necessist");
-        exec = exec.args(&[
-            "--no-sqlite",
-            "--root",
-            &root.to_string_lossy(),
-            "--allow=config-files-experimental",
-        ]);
+        exec = exec.args(&["--no-sqlite", "--root", &root.to_string_lossy()]);
         if let Some(framework) = &test.framework {
             exec = exec.args(&["--framework", framework]);
         }
