@@ -27,6 +27,15 @@ fn clippy() {
 }
 
 #[test]
+fn doc() {
+    Command::new("cargo")
+        .args(["doc", "--document-private-items"])
+        .env("RUSTDOCFLAGS", "-D warnings")
+        .assert()
+        .success();
+}
+
+#[test]
 fn dylint() {
     // smoelius: Generate `warnings.json` and run Clippy for `overscoped_allow`.
     let file = OpenOptions::new()
