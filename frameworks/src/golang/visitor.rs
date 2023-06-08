@@ -116,6 +116,9 @@ impl<'context, 'config, 'framework, 'ast, 'storage>
         Ok(())
     }
 
+    /// Visits `cursor`'s current node, which [`Self::visit_current_node_and_possibility`] has
+    /// already determined to be a statement. Calls [`Self::walk_or_skip`] unconditionally, with
+    /// `walk` set to the value [`GenericVisitor::visit_statement`] returns.
     fn visit_statement(
         &mut self,
         cursor: &mut bounded_cursor::BoundedCursor<'ast>,
@@ -142,6 +145,9 @@ impl<'context, 'config, 'framework, 'ast, 'storage>
         Ok(())
     }
 
+    /// Visits `cursor`'s current node, which [`Self::visit_current_node_and_possibility`] has
+    /// already determined to be a call. Calls [`Self::walk_or_skip`] unconditionally, with `walk`
+    /// set to the value [`GenericVisitor::visit_call`] returns.
     fn visit_call(
         &mut self,
         cursor: &mut bounded_cursor::BoundedCursor<'ast>,
@@ -165,6 +171,8 @@ impl<'context, 'config, 'framework, 'ast, 'storage>
         Ok(())
     }
 
+    /// If `walk` is true, calls [`Self::next_possibility`]; otherwise, skips `cursor`s current node
+    /// and returns.
     fn walk_or_skip(
         &mut self,
         cursor: &mut bounded_cursor::BoundedCursor<'ast>,
@@ -181,6 +189,9 @@ impl<'context, 'config, 'framework, 'ast, 'storage>
         self.next_possibility(cursor, possible_iter, true)
     }
 
+    /// Visits each descendant node in the subtree rooted at `cursor`s current node (unless a
+    /// descendant node is an a subtree that is explicitly skipped by [`GenericVisitor`]). Calls
+    /// [`Self::walk_possibilities`] on each such node.
     fn walk_nodes(&mut self, cursor: &mut bounded_cursor::BoundedCursor<'ast>) -> Result<()> {
         trace!();
 
@@ -203,6 +214,8 @@ impl<'context, 'config, 'framework, 'ast, 'storage>
         Ok(())
     }
 
+    /// Calls [`Self::visit_current_node_and_possibility`] with `cursor`'s current node and each
+    /// [`Possibility`].
     fn walk_possibilities(
         &mut self,
         cursor: &mut bounded_cursor::BoundedCursor<'ast>,
@@ -225,6 +238,14 @@ impl<'context, 'config, 'framework, 'ast, 'storage>
         Ok(false)
     }
 
+    /// Moves `possible_iter` to the next [`Possibility`] (if any) and does one of the following:
+    /// - If `recurse` is true and `possible_iter` is not exhausted, calls
+    ///   [`Self::visit_current_node_and_possibility`].
+    /// - If `recurse` is true and `possible_iter` is exhausted, calls [`Self::walk_nodes`].
+    /// - If `recurse` is false, returns `Ok(false)` (indicating the node and its subtree were not
+    ///   explored).
+    ///
+    /// **This function is tricky because it may recurse or not, depending on `recurse`.**
     fn next_possibility(
         &mut self,
         cursor: &mut bounded_cursor::BoundedCursor<'ast>,
@@ -248,6 +269,11 @@ impl<'context, 'config, 'framework, 'ast, 'storage>
         }
     }
 
+    /// Visits `cursor`'s current node and `possible_iter`'s current possibility. Returns a `bool`
+    /// wrapped in a `Result`. That `bool` indicates whether `cursor`'s current node matched the
+    /// current possibility, and so the node's subtree need not be considered further by
+    /// [`Self::visit_current_node_and_possibility`]'s caller (which happens to be
+    /// [`Self::walk_possibilities`]).
     fn visit_current_node_and_possibility(
         &mut self,
         cursor: &mut bounded_cursor::BoundedCursor<'ast>,
