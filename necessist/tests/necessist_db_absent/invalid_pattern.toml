@@ -1,0 +1,10 @@
+args = ["--no-sqlite", "--root=examples/invalid_pattern"]
+
+[bin]
+name = "necessist"
+
+[fs]
+cwd = "../../.."
+
+[status]
+code = 1
