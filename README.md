@@ -241,6 +241,7 @@ In addition to the below, the Golang framework ignores:
 - `as_mut_slice`
 - `as_mut_str`
 - `as_os_str`
+- `as_os_str_bytes`
 - `as_path`
 - `as_ref`
 - `as_slice`
