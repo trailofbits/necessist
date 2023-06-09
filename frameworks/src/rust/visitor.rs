@@ -301,6 +301,7 @@ const IGNORED_METHODS: &[&str] = &[
     "as_mut_slice",
     "as_mut_str",
     "as_os_str",
+    "as_os_str_bytes",
     "as_path",
     "as_ref",
     "as_slice",
@@ -442,7 +443,7 @@ mod test {
             .collect::<Vec<_>>();
         watched_methods.sort_unstable();
         watched_methods.dedup();
-        assert_eq!(sort(IGNORED_METHODS), watched_methods);
+        assert_eq!(watched_methods, IGNORED_METHODS);
     }
 
     fn readme_contains_code_bulleted_list(items: &[&str]) -> bool {
