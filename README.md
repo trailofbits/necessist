@@ -99,27 +99,41 @@ Of course, there is overlap is the sets of problems the two approaches can uncov
 
 ### Theoretical motivation
 
-Generally speaking, Necessist should remove a statement `S` only if:
+The following criterion (`*`) comes close to describing the statements that Necessist aims to remove:
 
-- (`*`) `S`'s [weakest precondition] `P` has the same context (e.g., variables in scope) as `S`'s postcondition `Q`, and `P` does not imply `Q`.
+- (`*`) Statement `S`'s [weakest precondition] `P` has the same context (e.g., variables in scope) as `S`'s postcondition `Q`, and `P` does not imply `Q`.
 
-In this section, we explain why. For concision, we focus on statements, but the remarks in this section apply to method calls as well.
+In this section, we motivate (`*`) and explain why it is useful. For concision, we focus on statements, but the remarks in this section apply to method calls as well.
 
 Consider a test through the lens of [predicate transformer semantics]. A test is a function with no inputs or outputs. Thus, an alternative procedure for determining whether a test passes is the following. Starting with `True`, iteratively work backwards through the test's statements, computing the weakest precondition of each. If the precondition arrived at for the test's first statement is `True`, then the test passes. If the precondition is `False`, the test fails.
 
-Now, imagine we were to apply this procedure, and consider a statement `S` that violates (`*`). We argue that it wouldn't make sense to remove `S`:
+Now, imagine we were to apply this procedure, and consider a statement `S` that violates (`*`). We argue that it might not make sense to remove `S`:
 
 - If `S` adds or removes variables from the scope (e.g., `S` is a declaration), or `S` changes a variable's type, then removing `S` would likely result in a compilation failure. (On top of that, since `S`'s precondition and postcondition have different contexts, it's not clear how to compare them.)
 
 - If `S`'s precondition is stronger than its postcondition (e.g., `S` an `assert`), then `S` imposes constraints on the environments in which it executes. Put another way, `S` _tests_ something. Thus, removing `S` would likely detract from the overarching test's purpose.
 
-Conversely, consider a statement `S` that satisfies (`*`). Here is some intuition for why it might make sense to remove `S`. Think of `S` as _shifting_ the set of valid environments, rather than constraining them. More precisely, if `S`'s weakest precondition `P` does not imply `Q`, and if `Q` is satisfiable, the there is an assignment to `P` and `Q`'s free variables that satisfies both `P` and `Q`. If such an assignment results from each environment in which `S` is actually executed, then the necessity of `S` is called into question.
+Conversely, consider a statement `S` that satisfies (`*`). Here is why it might make sense to remove `S`. Think of `S` as _shifting_ the set of valid environments, rather than constraining them. More precisely, if `S`'s weakest precondition `P` does not imply `Q`, and if `Q` is satisfiable, the there is an assignment to `P` and `Q`'s free variables that satisfies both `P` and `Q`. If such an assignment results from each environment in which `S` is actually executed, then the necessity of `S` is called into question.
 
-To be clear, as currently implemented, Necessist does not actually compute weakest preconditions. Rather, Necessist operates purely on syntax. Intuitively, given a statement `S`, Necessist makes a "best guess" as to what `S`'s semantics would be, and removes or ignores `S` based on that guess.
+The main utility of (`*`) is in helping to select the statements that Necessist ignores. That is, if we imagine a predicate transformer semantics for one of Necessist's supported languages, and a statement `S` in that language, we can ask: would `S` satisfy (`*`)? If not, then then Necessist should likely ignore `S`.
 
-Even though (`*`) is not applied formally, it provides a criterion to guide selection of the statements that Necessist ignores. That is, if we imagine a predicate transformer semantics for one of Necessist's supported languages, and a statement `S` in that language, we can ask: would `S` satisfy (`*`)? If not, then then Necessist should likely ignore `S`.
+But (`*`) has other nice consequences. For example, the rule that the last statement in a test should not be removed follows from (`*`). To see this, note the such a statement's postcondition `Q` is always `True`. Thus, if the statement doesn't change the context, then its weakest precondition necessarily implies `Q`.
 
-If you think one of Necessist's implicit rules violates this criterion, please open an issue!
+Having said all this, (`*`) doesn't quite capture what Necessist actually _does_. The next example is due to @2over12. Consider a statement `x.foo();` with a weakest precondition and postcondition as follows:
+
+```rust
+{ Q ^ x.y == x.z ^ x.y > 2}
+x.foo();
+{ Q }
+```
+
+Unless `x.foo` is ignored via a [configuration file], Necessist will remove `x.foo();`. It does so despite the fact the `x.foo();` does not change the context, and `Q ^ x.y == x.z ^ x.y > 2` implies `Q`.
+
+However, it's not entirely clear whether Necessist _should_ remove this statement. The condition `x.y == x.z ^ x.y > 2` could be the result of side effects that were unintentional. In that case, knowing whether the enclosing test passes without `x.foo();` could be useful.
+
+The question comes down to: what is an "interesting statement" to remove? The (`*`) criterion essentially defines an "interesting statement" as one that affects a subsequently asserted condition. Another possible definition of "interesting statement" (also due to @2over12) could involve [strongest postconditions] and heuristics to determine whether those postconditions contain "interesting clauses." Yet other possibilities could involve frameworks besides [Hoare logic] entirely.
+
+For now, (`*`) serves as a useful guide in selecting which statements Necessist should ignore. We leave refinement of (`*`) to future work.
 
 ## Usage
 
@@ -411,8 +425,10 @@ Necessist is licensed and distributed under the AGPLv3 license. [Contact us](mai
 [`testing.t`]: https://pkg.go.dev/testing#T
 [`unnecessary_conversion_for_trait`]: https://github.com/trailofbits/dylint/tree/master/examples/supplementary/unnecessary_conversion_for_trait
 [added to the test]: https://github.com/sfackler/rust-openssl/pull/1852
+[configuration file]: #configuration-files
 [crates.io]: https://crates.io/crates/necessist
 [github.com]: https://github.com/trailofbits/necessist
+[Hoare logic]: https://en.wikipedia.org/wiki/Hoare_logic
 [path]: #paths
 [paths]: #paths
 [patterns]: #patterns
@@ -421,4 +437,5 @@ Necessist is licensed and distributed under the AGPLv3 license. [Contact us](mai
 [sqlitebrowser]: https://sqlitebrowser.org/
 [toml]: https://toml.io/en/
 [`universalmutator`]: https://github.com/agroce/universalmutator
+[strongest postconditions]: https://en.wikipedia.org/wiki/Predicate_transformer_semantics#Strongest_postcondition
 [weakest precondition]: https://en.wikipedia.org/wiki/Predicate_transformer_semantics#Weakest_preconditions
