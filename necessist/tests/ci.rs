@@ -200,6 +200,7 @@ fn noninvasive_siblings() {
         }
 
         let contents = read_to_string(path).unwrap();
+
         if contents.contains("use super::{") {
             assert!(!re.is_match(&contents), "failed for {path:?}");
         }
