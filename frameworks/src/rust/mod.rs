@@ -63,6 +63,7 @@ impl<'ast> From<&'ast syn::Expr> for Expression<'ast> {
             syn::Expr::Field(field) => Expression::Field(Field::Field(field)),
             syn::Expr::Call(call) => Expression::Call(Call::FunctionCall(call)),
             syn::Expr::Macro(mac) => Expression::MacroCall(MacroCall::Expr(mac)),
+            syn::Expr::MethodCall(method_call) => Expression::Call(Call::MethodCall(method_call)),
             _ => Expression::Other(<_ as syn::spanned::Spanned>::span(value)),
         }
     }
