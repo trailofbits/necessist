@@ -6109,7 +6109,6 @@ $DIR/contracts/test/v0.8/KeeperRegistrar.test.ts:430:7-432:69: `await linkToken
 $DIR/contracts/test/v0.8/KeeperRegistrar.test.ts:431:9-431:32: `.connect(requestSender)`
 $DIR/contracts/test/v0.8/KeeperRegistrar.test.ts:432:9-432:69: `.transferAndCall(registrar.address, amount, abiEncodedBytes)`
 $DIR/contracts/test/v0.8/KeeperRegistrar.test.ts:433:35-433:46: `.getState()`
-$DIR/contracts/test/v0.8/KeeperRegistrar.test.ts:433:47-433:75: `.state.numUpkeeps.toNumber()`
 $DIR/contracts/test/v0.8/KeeperRegistrar.test.ts:437:48-437:61: `.getAddress()`
 $DIR/contracts/test/v0.8/KeeperRegistrar.test.ts:440:7-447:10: `await registrar
         .connect(registrarOwner)
@@ -8177,7 +8176,6 @@ $DIR/contracts/test/v0.8/automation/KeeperRegistrar2_0.test.ts:456:7-458:69: `aw
 $DIR/contracts/test/v0.8/automation/KeeperRegistrar2_0.test.ts:457:9-457:32: `.connect(requestSender)`
 $DIR/contracts/test/v0.8/automation/KeeperRegistrar2_0.test.ts:458:9-458:69: `.transferAndCall(registrar.address, amount, abiEncodedBytes)`
 $DIR/contracts/test/v0.8/automation/KeeperRegistrar2_0.test.ts:459:35-459:46: `.getState()`
-$DIR/contracts/test/v0.8/automation/KeeperRegistrar2_0.test.ts:459:47-459:75: `.state.numUpkeeps.toNumber()`
 $DIR/contracts/test/v0.8/automation/KeeperRegistrar2_0.test.ts:463:48-463:61: `.getAddress()`
 $DIR/contracts/test/v0.8/automation/KeeperRegistrar2_0.test.ts:466:7-473:10: `await registrar
         .connect(registrarOwner)
@@ -11224,13 +11222,11 @@ $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:883:33-883:40: `.w
 $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:884:53-884:64: `.getState()`
 $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:886:45-886:72: `.sub(registryPremiumBefore)`
 $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:912:22-912:32: `.from('1')`
-$DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:915:12-915:31: `.premium.toString()`
 $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:922:32-922:58: `.mul(BigNumber.from('10'))`
 $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:922:46-922:57: `.from('10')`
 $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:923:9-923:33: `mock.setCanPerform(true)`
 $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:923:13-923:33: `.setCanPerform(true)`
 $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:932:33-932:40: `.wait()`
-$DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:949:12-949:29: `.total.toString()`
 $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:955:9-955:33: `mock.setCanPerform(true)`
 $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:955:13-955:33: `.setCanPerform(true)`
 $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:957:39-957:53: `.from(1000000)`
@@ -11288,7 +11284,6 @@ $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:996:9-1002:10: `tx
 $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1001:29-1001:38: `.mul('5')`
 $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1003:33-1003:40: `.wait()`
 $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1020:25-1020:51: `.div(gasCeilingMultiplier)`
-$DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1021:12-1021:29: `.total.toString()`
 $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1028:11-1028:26: `.connect(owner)`
 $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1029:11-1029:55: `.deploy(linkToken.address, registry.address)`
 $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1031:11-1031:26: `.connect(owner)`
@@ -11678,7 +11673,6 @@ $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1727:24-1739:18: `
                   ' margin over gasUsed',
                   netGasUsedPlusOverhead.sub(receipt.gasUsed).toString(),
                 )`
-$DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1736:41-1736:69: `.args.gasOverhead.toString()`
 $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1738:41-1738:62: `.sub(receipt.gasUsed)`
 $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1759:40-1759:50: `.from('0')`
 $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1761:11-1761:50: `mock = await upkeepMockFactory.deploy()`
@@ -11758,7 +11752,6 @@ $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1849:29-1849:38: `
 $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1852:33-1852:40: `.wait()`
 $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1871:25-1871:51: `.div(gasCeilingMultiplier)`
 $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1872:22-1872:39: `.from(numUpkeeps)`
-$DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1873:12-1873:29: `.total.toString()`
 $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1956:17-1956:34: `.connect(keeper1)`
 $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1956:34-1956:49: `.recoverFunds()`
 $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1962:44-1962:72: `.balanceOf(registry.address)`

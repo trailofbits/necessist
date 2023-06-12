@@ -22,6 +22,7 @@ struct CallInfo {
     span: Span,
     is_method: bool,
     is_ignored: bool,
+    is_nested: bool,
 }
 
 struct VisitMaybeMacroCallArgs<'ast, 'storage, 'span, T: ParseLow> {
@@ -182,7 +183,8 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
                 (VisitMaybeMacroCallArgs::<'_, '_, '_, T> {
                     storage,
                     span: &call_info.span,
-                    is_ignored_as_call: !inner_most_call_info.is_method && inner_most_call_info.is_ignored,
+                    is_ignored_as_call: (!inner_most_call_info.is_method && inner_most_call_info.is_ignored)
+                        || (!inner_most_call_info.is_nested && call_info.is_ignored),
                     is_method_call: true,
                     is_ignored_as_method_call: call_info.is_ignored
                 })
@@ -304,17 +306,30 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
     /// returns the accumulated method path (when `innermost` is not set), or recurses (when
     /// `innermost` is set).
     ///
-    /// `call_info`'s return value includes the call span, whether the call is a method call, and
-    /// whether the call is ignored. For the last of these, `call_info` can tell which `is_ignored`
-    /// method to use, because it can tell from the context the call's type (i.e., function, macro,
-    /// or method call).
+    /// `call_info`'s return value includes the call span, whether the call is a method call,
+    /// whether the call is ignored, and whether the call is nested (i.e., whether `call_info`
+    /// recurse). For the "is ignored" part, `call_info` can tell which `is_ignored` method to use,
+    /// because it can tell from the context the call's type (i.e., function, macro, or method
+    /// call).
     fn call_info(
+        &mut self,
+        storage: &RefCell<<T::Types as AbstractTypes>::Storage<'ast>>,
+        call_span: &Span,
+        field: <T::Types as AbstractTypes>::Field<'ast>,
+        name: &str,
+        innermost: bool,
+    ) -> CallInfo {
+        self.call_info_inner(storage, call_span, field, name, innermost, false)
+    }
+
+    fn call_info_inner(
         &mut self,
         storage: &RefCell<<T::Types as AbstractTypes>::Storage<'ast>>,
         call_span: &Span,
         mut field: <T::Types as AbstractTypes>::Field<'ast>,
         name: &str,
         innermost: bool,
+        recursed: bool,
     ) -> CallInfo {
         let mut base = self.framework.field_base(storage, field);
 
@@ -336,12 +351,13 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
         if let Some(call) = self.framework.expression_is_call(storage, base) {
             if innermost {
                 return if let Some((field, name)) = self.callee_is_named_field(storage, call) {
-                    self.call_info(
+                    self.call_info_inner(
                         storage,
                         &call.span(&self.source_file),
                         field,
                         &name,
                         innermost,
+                        true,
                     )
                 } else {
                     let name = call.name();
@@ -352,6 +368,7 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
                         span: call.span(&self.source_file),
                         is_method: false,
                         is_ignored,
+                        is_nested: true,
                     }
                 };
             }
@@ -363,6 +380,7 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
                     span: macro_call.span(&self.source_file),
                     is_method: false,
                     is_ignored,
+                    is_nested: recursed,
                 };
             }
         } else if let Some(name) = base.name() {
@@ -381,6 +399,7 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
                     span: call_span.clone(),
                     is_method: false,
                     is_ignored,
+                    is_nested: recursed,
                 };
             }
         }
@@ -393,6 +412,7 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
             span: path_span,
             is_method: true,
             is_ignored,
+            is_nested: recursed,
         }
     }
 

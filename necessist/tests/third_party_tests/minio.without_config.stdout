@@ -8790,7 +8790,6 @@ $DIR/cmd/xl-storage_test.go:1879:17-1879:33: `.NewReader(data)`
 $DIR/cmd/xl-storage_test.go:1884:19-1884:31: `.Read(shard)`
 $DIR/cmd/xl-storage_test.go:1885:3-1885:21: `w.Write(shard[:n])`
 $DIR/cmd/xl-storage_test.go:1885:4-1885:21: `.Write(shard[:n])`
-$DIR/cmd/xl-storage_test.go:1894:2-1894:23: `w.(io.Closer).Close()`
 $DIR/cmd/xl-storage_test.go:1895:19-1895:125: `.storage.bitrotVerify(context.Background(), pathJoin(path, volName, fileName), size, algo, nil, shardSize)`
 $DIR/cmd/xl-storage_test.go:1895:48-1895:61: `.Background()`
 $DIR/cmd/xl-storage_test.go:1900:30-1900:39: `.String()`

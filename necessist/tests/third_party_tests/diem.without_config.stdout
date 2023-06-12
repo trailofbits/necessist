@@ -150,7 +150,6 @@ $DIR/common/channel/src/diem_channel_test.rs:55:15-55:26: `.push(0, 1)`
 $DIR/common/channel/src/diem_channel_test.rs:56:9-56:49: `sleep(Duration::from_millis(100)).await;`
 $DIR/common/channel/src/diem_channel_test.rs:57:9-57:36: `sender.push(0, 2).unwrap();`
 $DIR/common/channel/src/diem_channel_test.rs:57:15-57:26: `.push(0, 2)`
-$DIR/common/channel/src/diem_channel_test.rs:60:7-60:30: `.block_on(join(f1, f2))`
 $DIR/common/channel/src/diem_channel_test.rs:72:9-72:36: `sender.push(0, 0).unwrap();`
 $DIR/common/channel/src/diem_channel_test.rs:72:15-72:26: `.push(0, 0)`
 $DIR/common/channel/src/diem_channel_test.rs:73:9-73:36: `sender.push(0, 1).unwrap();`
@@ -778,15 +777,10 @@ $DIR/common/logger/src/sample.rs:185:20-185:51: `.push(std::thread::spawn(work))
 $DIR/common/logger/src/sample.rs:190:13-190:45: `count += handle.join().unwrap();`
 $DIR/common/logger/src/sample.rs:190:28-190:35: `.join()`
 $DIR/common/logger/tests/derive.rs:19:6-19:18: `.required(1)`
-$DIR/common/logger/tests/derive.rs:19:18-19:30: `.optional(2)`
-$DIR/common/logger/tests/derive.rs:31:6-31:15: `.s("foo")`
-$DIR/common/logger/tests/derive.rs:43:6-43:11: `.s(5)`
 $DIR/common/logger/tests/derive.rs:58:6-58:27: `.debug(vec![1, 2, 3])`
-$DIR/common/logger/tests/derive.rs:58:27-58:38: `.display(4)`
 $DIR/common/logger/tests/derive.rs:78:13-78:38: `write!(f, "Custom Error")`
 $DIR/common/logger/tests/derive.rs:87:9-87:35: `.debug_error(&debug_error)`
 $DIR/common/logger/tests/derive.rs:88:9-88:39: `.display_error(&display_error)`
-$DIR/common/logger/tests/logger.rs:22:22-22:35: `.logs.clone()`
 $DIR/common/logger/tests/logger.rs:23:5-26:18: `DiemLogger::builder()
         .is_async(false)
         .printer(Box::new(writer))
@@ -800,7 +794,23 @@ $DIR/common/logger/tests/logger.rs:31:30-31:40: `.remove(0)`
 $DIR/common/logger/tests/logger.rs:34:5-34:43: `info!(foo = 5, bar = 10, foobar = 15);`
 $DIR/common/logger/tests/logger.rs:35:22-35:30: `.write()`
 $DIR/common/logger/tests/logger.rs:35:30-35:40: `.remove(0)`
-$DIR/common/logger/tests/logger_custom_format.rs:22:22-22:35: `.logs.clone()`
+$DIR/common/logger/tests/logger_custom_format.rs:23:5-39:18: `DiemLogger::builder()
+        .is_async(false)
+        .printer(Box::new(writer))
+        .custom_format(|entry| {
+            use std::fmt::Write;
+            let mut w = String::new();
+            write!(w, "0000-00-00")?;
+            write!(w, " [{}]", entry.metadata().level())?;
+            if let Some(message) = entry.message() {
+                write!(w, " {}", message)?;
+            }
+            if !entry.data().is_empty() {
+                write!(w, " {}", serde_json::to_string(&entry.data()).unwrap())?;
+            }
+            Ok(w)
+        })
+        .build();`
 $DIR/common/logger/tests/logger_custom_format.rs:24:9-24:25: `.is_async(false)`
 $DIR/common/logger/tests/logger_custom_format.rs:25:9-25:35: `.printer(Box::new(writer))`
 $DIR/common/logger/tests/logger_custom_format.rs:26:9-38:11: `.custom_format(|entry| {
@@ -844,7 +854,6 @@ $DIR/common/logger/tests/remote.rs:37:11-37:39: `.read_until(b'\n', &mut buf)`
 $DIR/common/logger/tests/remote.rs:44:5-44:49: `stream.read_until(b'\n', &mut buf).unwrap();`
 $DIR/common/logger/tests/remote.rs:44:11-44:39: `.read_until(b'\n', &mut buf)`
 $DIR/common/logger/tests/remote.rs:50:11-50:18: `.join()`
-$DIR/common/logger/tests/tracing_translation_tests.rs:23:22-23:35: `.logs.clone()`
 $DIR/common/logger/tests/tracing_translation_tests.rs:24:5-27:18: `DiemLogger::builder()
         .is_async(false)
         .printer(Box::new(writer))
@@ -986,7 +995,6 @@ $DIR/common/time-service/src/mock.rs:590:9-590:41: `assert_pending!(timeout.poll
 $DIR/common/time-service/src/mock.rs:592:9-592:41: `assert_pending!(timeout.poll());`
 $DIR/common/time-service/src/mock.rs:594:9-594:30: `tx.send(()).unwrap();`
 $DIR/common/time-service/src/mock.rs:594:11-594:20: `.send(())`
-$DIR/common/time-service/src/mock.rs:597:9-597:51: `assert_ready_ok!(timeout.poll()).unwrap();`
 $DIR/common/time-service/src/mock.rs:602:43-602:63: `.timeout(ms(10), rx)`
 $DIR/common/time-service/src/mock.rs:604:9-604:41: `assert_pending!(timeout.poll());`
 $DIR/common/time-service/src/mock.rs:618:41-618:55: `.sleep(ms(20))`
@@ -1268,7 +1276,6 @@ $DIR/config/src/config/mod.rs:464:9-464:52: `NodeConfig::default_for_public_full
 $DIR/config/src/config/mod.rs:465:9-465:45: `NodeConfig::default_for_validator();`
 $DIR/config/src/config/mod.rs:466:9-466:55: `NodeConfig::default_for_validator_full_node();`
 $DIR/config/src/config/mod.rs:471:9-471:61: `NodeConfig::parse(docker_public_full_node).unwrap();`
-$DIR/config/src/config/mod.rs:475:13-475:77: `.unwrap_or_else(|e| panic!("Error in safety_rules.yaml: {}", e))`
 $DIR/config/src/config/secure_backend_config.rs:326:9-326:44: `temppath.create_as_file().unwrap();`
 $DIR/config/src/config/secure_backend_config.rs:326:17-326:34: `.create_as_file()`
 $DIR/config/src/config/secure_backend_config.rs:327:45-327:52: `.path()`
@@ -1281,11 +1288,8 @@ $DIR/config/src/config/test_config.rs:130:9-130:52: `test_config.random_executio
 $DIR/config/src/config/test_config.rs:130:20-130:51: `.random_execution_key(&mut rng)`
 $DIR/config/src/config/test_config.rs:136:9-136:59: `clone_test_config.auth_key = test_config.auth_key;`
 $DIR/config/src/config/test_config.rs:137:9-137:77: `clone_test_config.execution_key = test_config.execution_key.clone();`
-$DIR/config/src/config/test_config.rs:137:54-137:76: `.execution_key.clone()`
 $DIR/config/src/config/test_config.rs:138:9-138:75: `clone_test_config.operator_key = test_config.operator_key.clone();`
-$DIR/config/src/config/test_config.rs:138:53-138:74: `.operator_key.clone()`
 $DIR/config/src/config/test_config.rs:139:9-139:69: `clone_test_config.owner_key = test_config.owner_key.clone();`
-$DIR/config/src/config/test_config.rs:139:50-139:68: `.owner_key.clone()`
 $DIR/consensus/consensus-types/src/block_test.rs:47:38-47:52: `.quorum_cert()`
 $DIR/consensus/consensus-types/src/block_test.rs:47:52-47:70: `.certified_block()`
 $DIR/consensus/consensus-types/src/block_test.rs:50:18-54:10: `.gen_block_info(
@@ -1401,8 +1405,6 @@ $DIR/consensus/safety-rules/src/tests/vault.rs:23:17-30:19: `suite::run_test_sui
                     ),
                     *decoupled_execution,
                 );`
-$DIR/consensus/safety-rules/tests/binary.rs:17:29-17:43: `.test.as_mut()`
-$DIR/consensus/safety-rules/tests/binary.rs:18:34-18:57: `.consensus_key.as_ref()`
 $DIR/consensus/safety-rules/tests/binary.rs:18:66-18:80: `.private_key()`
 $DIR/consensus/safety-rules/tests/binary.rs:21:5-21:43: `test_config.waypoint = Some(waypoint);`
 $DIR/consensus/safety-rules/tests/binary.rs:24:87-24:94: `.into()`
@@ -2134,14 +2136,9 @@ $DIR/consensus/src/round_manager_test.rs:300:23-300:42: `.block_store.root()`
 $DIR/consensus/src/round_manager_test.rs:303:32-303:48: `.next_proposal()`
 $DIR/consensus/src/round_manager_test.rs:308:33-308:44: `.proposal()`
 $DIR/consensus/src/round_manager_test.rs:308:44-308:49: `.id()`
-$DIR/consensus/src/round_manager_test.rs:311:9-314:23: `node.round_manager
-            .process_proposal_msg(proposal_msg)
-            .await
-            .unwrap();`
 $DIR/consensus/src/round_manager_test.rs:311:13-312:48: `.round_manager
             .process_proposal_msg(proposal_msg)`
 $DIR/consensus/src/round_manager_test.rs:315:28-315:40: `.next_vote()`
-$DIR/consensus/src/round_manager_test.rs:317:9-317:70: `node.round_manager.process_vote_msg(vote_msg).await.unwrap();`
 $DIR/consensus/src/round_manager_test.rs:317:13-317:54: `.round_manager.process_vote_msg(vote_msg)`
 $DIR/consensus/src/round_manager_test.rs:320:32-320:48: `.next_proposal()`
 $DIR/consensus/src/round_manager_test.rs:321:36-321:47: `.proposal()`
@@ -2150,7 +2147,6 @@ $DIR/consensus/src/round_manager_test.rs:335:69-335:78: `.handle()`
 $DIR/consensus/src/round_manager_test.rs:341:9-341:36: `node.next_proposal().await;`
 $DIR/consensus/src/round_manager_test.rs:341:13-341:29: `.next_proposal()`
 $DIR/consensus/src/round_manager_test.rs:344:35-344:40: `.id()`
-$DIR/consensus/src/round_manager_test.rs:345:9-345:70: `node.round_manager.process_proposal(proposal).await.unwrap();`
 $DIR/consensus/src/round_manager_test.rs:345:13-345:54: `.round_manager.process_proposal(proposal)`
 $DIR/consensus/src/round_manager_test.rs:346:28-346:40: `.next_vote()`
 $DIR/consensus/src/round_manager_test.rs:349:35-349:67: `.round_manager.consensus_state()`
@@ -2160,26 +2156,14 @@ $DIR/consensus/src/round_manager_test.rs:369:33-369:38: `.id()`
 $DIR/consensus/src/round_manager_test.rs:371:33-371:38: `.id()`
 $DIR/consensus/src/round_manager_test.rs:374:9-374:36: `node.next_proposal().await;`
 $DIR/consensus/src/round_manager_test.rs:374:13-374:29: `.next_proposal()`
-$DIR/consensus/src/round_manager_test.rs:376:9-379:23: `node.round_manager
-            .process_proposal(new_block)
-            .await
-            .unwrap();`
 $DIR/consensus/src/round_manager_test.rs:376:13-377:41: `.round_manager
             .process_proposal(new_block)`
-$DIR/consensus/src/round_manager_test.rs:380:9-383:27: `node.round_manager
-            .process_proposal(old_block)
-            .await
-            .unwrap_err();`
 $DIR/consensus/src/round_manager_test.rs:380:13-381:41: `.round_manager
             .process_proposal(old_block)`
 $DIR/consensus/src/round_manager_test.rs:384:28-384:40: `.next_vote()`
 $DIR/consensus/src/round_manager_test.rs:397:56-397:65: `.handle()`
 $DIR/consensus/src/round_manager_test.rs:400:68-400:77: `.handle()`
 $DIR/consensus/src/round_manager_test.rs:401:9-401:15: `.pop()`
-$DIR/consensus/src/round_manager_test.rs:420:9-423:23: `node.round_manager
-            .process_proposal_msg(good_proposal)
-            .await
-            .unwrap();`
 $DIR/consensus/src/round_manager_test.rs:420:13-421:49: `.round_manager
             .process_proposal_msg(good_proposal)`
 $DIR/consensus/src/round_manager_test.rs:432:56-432:65: `.handle()`
@@ -2187,10 +2171,6 @@ $DIR/consensus/src/round_manager_test.rs:433:69-433:78: `.handle()`
 $DIR/consensus/src/round_manager_test.rs:434:25-434:31: `.pop()`
 $DIR/consensus/src/round_manager_test.rs:437:32-437:48: `.next_proposal()`
 $DIR/consensus/src/round_manager_test.rs:438:35-438:46: `.proposal()`
-$DIR/consensus/src/round_manager_test.rs:439:9-442:23: `node.round_manager
-            .process_proposal_msg(proposal_msg)
-            .await
-            .unwrap();`
 $DIR/consensus/src/round_manager_test.rs:439:13-440:48: `.round_manager
             .process_proposal_msg(proposal_msg)`
 $DIR/consensus/src/round_manager_test.rs:443:9-443:32: `node.next_vote().await;`
@@ -2210,10 +2190,6 @@ $DIR/consensus/src/round_manager_test.rs:457:9-459:23: `node.block_store
             .unwrap();`
 $DIR/consensus/src/round_manager_test.rs:457:13-458:68: `.block_store
             .insert_single_quorum_cert(block_0_quorum_cert.clone())`
-$DIR/consensus/src/round_manager_test.rs:461:9-464:27: `node.round_manager
-            .process_local_timeout(1)
-            .await
-            .unwrap_err();`
 $DIR/consensus/src/round_manager_test.rs:461:13-462:38: `.round_manager
             .process_local_timeout(1)`
 $DIR/consensus/src/round_manager_test.rs:465:39-465:51: `.next_vote()`
@@ -2221,10 +2197,6 @@ $DIR/consensus/src/round_manager_test.rs:478:56-478:65: `.handle()`
 $DIR/consensus/src/round_manager_test.rs:481:69-481:78: `.handle()`
 $DIR/consensus/src/round_manager_test.rs:482:35-482:41: `.pop()`
 $DIR/consensus/src/round_manager_test.rs:483:25-483:31: `.pop()`
-$DIR/consensus/src/round_manager_test.rs:503:9-506:23: `node.round_manager
-            .process_proposal_msg(good_proposal.clone())
-            .await
-            .unwrap();`
 $DIR/consensus/src/round_manager_test.rs:503:13-504:57: `.round_manager
             .process_proposal_msg(good_proposal.clone())`
 $DIR/consensus/src/round_manager_test.rs:514:56-514:65: `.handle()`
@@ -2234,45 +2206,23 @@ $DIR/consensus/src/round_manager_test.rs:524:36-524:55: `.sign(&node.signer)`
 $DIR/consensus/src/round_manager_test.rs:527:5-527:63: `tc.add_signature(node.signer.author(), timeout_signature);`
 $DIR/consensus/src/round_manager_test.rs:527:7-527:62: `.add_signature(node.signer.author(), timeout_signature)`
 $DIR/consensus/src/round_manager_test.rs:527:26-527:42: `.signer.author()`
-$DIR/consensus/src/round_manager_test.rs:534:9-537:23: `node.round_manager
-            .process_proposal_msg(skip_round_proposal)
-            .await
-            .unwrap();`
 $DIR/consensus/src/round_manager_test.rs:534:13-535:55: `.round_manager
             .process_proposal_msg(skip_round_proposal)`
 $DIR/consensus/src/round_manager_test.rs:553:56-553:65: `.handle()`
 $DIR/consensus/src/round_manager_test.rs:554:68-554:77: `.handle()`
 $DIR/consensus/src/round_manager_test.rs:555:9-555:15: `.pop()`
 $DIR/consensus/src/round_manager_test.rs:560:25-560:30: `.id()`
-$DIR/consensus/src/round_manager_test.rs:564:9-567:23: `node.round_manager
-            .process_proposal_msg(proposal)
-            .await
-            .unwrap();`
 $DIR/consensus/src/round_manager_test.rs:564:13-565:44: `.round_manager
             .process_proposal_msg(proposal)`
-$DIR/consensus/src/round_manager_test.rs:575:9-578:23: `node.round_manager
-            .process_block_retrieval(single_block_request)
-            .await
-            .unwrap();`
 $DIR/consensus/src/round_manager_test.rs:575:13-576:59: `.round_manager
             .process_block_retrieval(single_block_request)`
-$DIR/consensus/src/round_manager_test.rs:598:9-601:23: `node.round_manager
-            .process_block_retrieval(missing_block_request)
-            .await
-            .unwrap();`
 $DIR/consensus/src/round_manager_test.rs:598:13-599:60: `.round_manager
             .process_block_retrieval(missing_block_request)`
-$DIR/consensus/src/round_manager_test.rs:620:9-623:23: `node.round_manager
-            .process_block_retrieval(many_block_request)
-            .await
-            .unwrap();`
 $DIR/consensus/src/round_manager_test.rs:620:13-621:57: `.round_manager
             .process_block_retrieval(many_block_request)`
 $DIR/consensus/src/round_manager_test.rs:646:56-646:65: `.handle()`
 $DIR/consensus/src/round_manager_test.rs:647:68-647:77: `.handle()`
 $DIR/consensus/src/round_manager_test.rs:648:9-648:15: `.pop()`
-$DIR/consensus/src/round_manager_test.rs:650:53-650:68: `.signer.clone()`
-$DIR/consensus/src/round_manager_test.rs:650:74-650:94: `.block_store.clone()`
 $DIR/consensus/src/round_manager_test.rs:657:32-657:87: `.create_block_with_qc(genesis_qc.clone(), i, i, vec![])`
 $DIR/consensus/src/round_manager_test.rs:660:9-660:88: `tc.add_signature(inserter.signer().author(), inserter.signer().sign(&timeout));`
 $DIR/consensus/src/round_manager_test.rs:660:11-660:87: `.add_signature(inserter.signer().author(), inserter.signer().sign(&timeout))`
@@ -2299,10 +2249,6 @@ $DIR/consensus/src/round_manager_test.rs:664:5-679:8: `timed_block_on(&mut runti
         }
     });`
 $DIR/consensus/src/round_manager_test.rs:669:29-669:43: `.quorum_cert()`
-$DIR/consensus/src/round_manager_test.rs:674:13-677:27: `node.round_manager
-                .process_proposal_msg(proposal_msg)
-                .await
-                .unwrap();`
 $DIR/consensus/src/round_manager_test.rs:674:17-675:52: `.round_manager
                 .process_proposal_msg(proposal_msg)`
 $DIR/consensus/src/round_manager_test.rs:682:5-682:68: `node = node.restart(&mut playground, runtime.handle().clone());`
@@ -2314,10 +2260,6 @@ $DIR/consensus/src/round_manager_test.rs:698:69-698:78: `.handle()`
 $DIR/consensus/src/round_manager_test.rs:700:23-700:42: `.block_store.root()`
 $DIR/consensus/src/round_manager_test.rs:702:9-702:36: `node.next_proposal().await;`
 $DIR/consensus/src/round_manager_test.rs:702:13-702:29: `.next_proposal()`
-$DIR/consensus/src/round_manager_test.rs:705:9-708:27: `node.round_manager
-            .process_local_timeout(1)
-            .await
-            .unwrap_err();`
 $DIR/consensus/src/round_manager_test.rs:705:13-706:38: `.round_manager
             .process_local_timeout(1)`
 $DIR/consensus/src/round_manager_test.rs:709:28-709:40: `.next_vote()`
@@ -2327,18 +2269,10 @@ $DIR/consensus/src/round_manager_test.rs:729:69-729:78: `.handle()`
 $DIR/consensus/src/round_manager_test.rs:732:32-732:48: `.next_proposal()`
 $DIR/consensus/src/round_manager_test.rs:733:30-733:41: `.proposal()`
 $DIR/consensus/src/round_manager_test.rs:733:41-733:46: `.id()`
-$DIR/consensus/src/round_manager_test.rs:734:9-737:23: `node.round_manager
-            .process_proposal_msg(proposal_msg)
-            .await
-            .unwrap();`
 $DIR/consensus/src/round_manager_test.rs:734:13-735:48: `.round_manager
             .process_proposal_msg(proposal_msg)`
 $DIR/consensus/src/round_manager_test.rs:738:28-738:40: `.next_vote()`
 $DIR/consensus/src/round_manager_test.rs:739:28-739:35: `.vote()`
-$DIR/consensus/src/round_manager_test.rs:744:9-747:27: `node.round_manager
-            .process_local_timeout(1)
-            .await
-            .unwrap_err();`
 $DIR/consensus/src/round_manager_test.rs:744:13-745:38: `.round_manager
             .process_local_timeout(1)`
 $DIR/consensus/src/round_manager_test.rs:748:36-748:48: `.next_vote()`
@@ -2376,19 +2310,9 @@ $DIR/consensus/src/round_manager_test.rs:789:9-789:42: `ahead_node.next_proposal
 $DIR/consensus/src/round_manager_test.rs:789:19-789:35: `.next_proposal()`
 $DIR/consensus/src/round_manager_test.rs:790:9-790:43: `behind_node.next_proposal().await;`
 $DIR/consensus/src/round_manager_test.rs:790:20-790:36: `.next_proposal()`
-$DIR/consensus/src/round_manager_test.rs:792:9-796:27: `behind_node
-            .round_manager
-            .process_local_timeout(1)
-            .await
-            .unwrap_err();`
 $DIR/consensus/src/round_manager_test.rs:793:13-794:38: `.round_manager
             .process_local_timeout(1)`
 $DIR/consensus/src/round_manager_test.rs:797:43-797:55: `.next_vote()`
-$DIR/consensus/src/round_manager_test.rs:801:9-805:23: `ahead_node
-            .round_manager
-            .process_vote_msg(timeout_vote_msg)
-            .await
-            .unwrap();`
 $DIR/consensus/src/round_manager_test.rs:802:13-803:48: `.round_manager
             .process_vote_msg(timeout_vote_msg)`
 $DIR/consensus/src/round_manager_test.rs:806:36-806:53: `.next_sync_info()`
@@ -2399,20 +2323,11 @@ $DIR/consensus/src/round_manager_test.rs:818:5-818:39: `runtime.spawn(playground
 $DIR/consensus/src/round_manager_test.rs:818:12-818:38: `.spawn(playground.start())`
 $DIR/consensus/src/round_manager_test.rs:818:29-818:37: `.start()`
 $DIR/consensus/src/round_manager_test.rs:822:36-822:52: `.next_proposal()`
-$DIR/consensus/src/round_manager_test.rs:824:13-827:27: `node.round_manager
-                .process_proposal_msg(proposal_msg)
-                .await
-                .unwrap();`
 $DIR/consensus/src/round_manager_test.rs:824:17-825:52: `.round_manager
                 .process_proposal_msg(proposal_msg)`
 $DIR/consensus/src/round_manager_test.rs:828:32-828:44: `.next_vote()`
-$DIR/consensus/src/round_manager_test.rs:830:13-830:74: `node.round_manager.process_vote_msg(vote_msg).await.unwrap();`
 $DIR/consensus/src/round_manager_test.rs:830:17-830:58: `.round_manager.process_vote_msg(vote_msg)`
 $DIR/consensus/src/round_manager_test.rs:832:27-832:43: `.next_proposal()`
-$DIR/consensus/src/round_manager_test.rs:833:9-836:23: `node.round_manager
-            .process_proposal_msg(block_4.clone())
-            .await
-            .unwrap();`
 $DIR/consensus/src/round_manager_test.rs:833:13-834:51: `.round_manager
             .process_proposal_msg(block_4.clone())`
 $DIR/consensus/src/round_manager_test.rs:839:25-839:51: `.commit_cb_receiver.next()`
@@ -2421,15 +2336,6 @@ $DIR/consensus/src/round_manager_test.rs:842:33-842:40: `.vote()`
 $DIR/consensus/src/round_manager_test.rs:842:40-842:52: `.vote_data()`
 $DIR/consensus/src/round_manager_test.rs:845:22-845:33: `.proposed()`
 $DIR/consensus/src/round_manager_test.rs:846:22-846:31: `.parent()`
-$DIR/consensus/src/round_manager_test.rs:851:9-859:23: `node.round_manager
-            .ensure_round_and_sync_up(
-                sync_info.highest_round() + 1,
-                &sync_info,
-                node.signer.author(),
-                true,
-            )
-            .await
-            .unwrap();`
 $DIR/consensus/src/round_manager_test.rs:851:13-857:14: `.round_manager
             .ensure_round_and_sync_up(
                 sync_info.highest_round() + 1,
@@ -2449,10 +2355,6 @@ $DIR/consensus/src/round_manager_test.rs:877:12-877:38: `.spawn(playground.start
 $DIR/consensus/src/round_manager_test.rs:877:29-877:37: `.start()`
 $DIR/consensus/src/round_manager_test.rs:899:36-899:52: `.next_proposal()`
 $DIR/consensus/src/round_manager_test.rs:901:13-901:43: `reset_safety_rules(&mut node);`
-$DIR/consensus/src/round_manager_test.rs:903:13-906:27: `node.round_manager
-                .process_proposal_msg(proposal_msg)
-                .await
-                .unwrap();`
 $DIR/consensus/src/round_manager_test.rs:903:17-904:52: `.round_manager
                 .process_proposal_msg(proposal_msg)`
 $DIR/consensus/src/round_manager_test.rs:908:32-908:44: `.next_vote()`
@@ -2461,15 +2363,10 @@ $DIR/consensus/src/round_manager_test.rs:912:33-912:40: `.vote()`
 $DIR/consensus/src/round_manager_test.rs:912:40-912:52: `.vote_data()`
 $DIR/consensus/src/round_manager_test.rs:912:52-912:63: `.proposed()`
 $DIR/consensus/src/round_manager_test.rs:912:63-912:71: `.round()`
-$DIR/consensus/src/round_manager_test.rs:913:13-916:31: `node.round_manager
-                .process_local_timeout(round)
-                .await
-                .unwrap_err();`
 $DIR/consensus/src/round_manager_test.rs:913:17-914:46: `.round_manager
                 .process_local_timeout(round)`
 $DIR/consensus/src/round_manager_test.rs:917:32-917:44: `.next_vote()`
 $DIR/consensus/src/round_manager_test.rs:920:13-920:43: `reset_safety_rules(&mut node);`
-$DIR/consensus/src/round_manager_test.rs:921:13-921:74: `node.round_manager.process_vote_msg(vote_msg).await.unwrap();`
 $DIR/consensus/src/round_manager_test.rs:921:17-921:58: `.round_manager.process_vote_msg(vote_msg)`
 $DIR/consensus/src/round_manager_test.rs:925:9-925:36: `node.next_proposal().await;`
 $DIR/consensus/src/round_manager_test.rs:925:13-925:29: `.next_proposal()`
@@ -2540,7 +2437,6 @@ $DIR/crypto/crypto/src/unit_tests/cross_test.rs:127:5-127:74: `t.compile_fail("s
 $DIR/crypto/crypto/src/unit_tests/cross_test.rs:127:6-127:73: `.compile_fail("src/unit_tests/compilation/cross_test_trait_obj.rs")`
 $DIR/crypto/crypto/src/unit_tests/cross_test.rs:128:5-128:78: `t.compile_fail("src/unit_tests/compilation/cross_test_trait_obj_sig.rs");`
 $DIR/crypto/crypto/src/unit_tests/cross_test.rs:128:6-128:77: `.compile_fail("src/unit_tests/compilation/cross_test_trait_obj_sig.rs")`
-$DIR/crypto/crypto/src/unit_tests/cross_test.rs:129:6-129:77: `.compile_fail("src/unit_tests/compilation/cross_test_trait_obj_pub.rs")`
 $DIR/crypto/crypto/src/unit_tests/cryptohasher.rs:45:5-45:36: `salt.extend_from_slice(b"Foo");`
 $DIR/crypto/crypto/src/unit_tests/cryptohasher.rs:45:9-45:35: `.extend_from_slice(b"Foo")`
 $DIR/crypto/crypto/src/unit_tests/cryptohasher.rs:50:9-50:67: `digest.update(HashValue::sha3_256_of(&salt[..]).as_ref());`
@@ -2609,7 +2505,6 @@ $DIR/crypto/crypto/src/unit_tests/hash_test.rs:173:29-173:46: `.test_only_hash()
 $DIR/crypto/crypto/src/unit_tests/hash_test.rs:174:36-174:53: `.test_only_hash()`
 $DIR/crypto/crypto/src/unit_tests/hash_test.rs:182:29-182:46: `.test_only_hash()`
 $DIR/crypto/crypto/src/unit_tests/hash_test.rs:183:29-183:46: `.test_only_hash()`
-$DIR/crypto/crypto/src/unit_tests/hkdf_test.rs:158:6-158:62: `.compile_fail("src/unit_tests/compilation/small_kdf.rs")`
 $DIR/crypto/crypto/src/unit_tests/multi_ed25519_test.rs:71:53-71:77: `.map(|x| x.public_key())`
 $DIR/crypto/crypto/src/unit_tests/multi_ed25519_test.rs:71:63-71:76: `.public_key()`
 $DIR/crypto/crypto/src/unit_tests/multi_ed25519_test.rs:71:77-71:87: `.collect()`
@@ -2736,15 +2631,9 @@ $DIR/crypto/crypto/src/unit_tests/noise_test.rs:158:22-158:43: `.push("test_vect
 $DIR/crypto/crypto/src/unit_tests/noise_test.rs:159:5-159:51: `test_vectors_path.push("noise_cacophony.txt");`
 $DIR/crypto/crypto/src/unit_tests/noise_test.rs:159:22-159:50: `.push("noise_cacophony.txt")`
 $DIR/crypto/crypto/src/unit_tests/noise_test.rs:160:46-160:55: `.to_str()`
-$DIR/crypto/crypto/src/unit_tests/noise_test.rs:167:9-168:16: `.vectors
-        .iter()`
 $DIR/crypto/crypto/src/unit_tests/noise_test.rs:169:9-169:79: `.find(|vector| vector.protocol_name == "Noise_IK_25519_AESGCM_SHA256")`
-$DIR/crypto/crypto/src/unit_tests/noise_test.rs:175:60-175:81: `.init_static.as_ref()`
 $DIR/crypto/crypto/src/unit_tests/noise_test.rs:176:45-176:58: `.public_key()`
-$DIR/crypto/crypto/src/unit_tests/noise_test.rs:178:60-178:81: `.resp_static.as_ref()`
 $DIR/crypto/crypto/src/unit_tests/noise_test.rs:179:45-179:58: `.public_key()`
-$DIR/crypto/crypto/src/unit_tests/noise_test.rs:188:36-188:64: `.init_remote_static.as_ref()`
-$DIR/crypto/crypto/src/unit_tests/noise_test.rs:193:39-193:55: `.messages.iter()`
 $DIR/crypto/crypto/src/unit_tests/noise_test.rs:196:31-196:38: `.next()`
 $DIR/crypto/crypto/src/unit_tests/noise_test.rs:205:13-211:14: `.initiate_connection(
                 &mut rng,
@@ -2754,7 +2643,6 @@ $DIR/crypto/crypto/src/unit_tests/noise_test.rs:205:13-211:14: `.initiate_connec
                 &mut first_message,
             )`
 $DIR/crypto/crypto/src/unit_tests/noise_test.rs:216:31-216:38: `.next()`
-$DIR/crypto/crypto/src/unit_tests/noise_test.rs:221:53-221:77: `.resp_ephemeral.as_ref()`
 $DIR/crypto/crypto/src/unit_tests/noise_test.rs:229:17-235:18: `.respond_to_client_and_finalize(
                     &mut rng,
                     &prologue,
@@ -3085,7 +2973,6 @@ $DIR/execution/executor/tests/db_bootstrapper_test.rs:78:9-79:50: `.reader
         .get_state_proof(trusted_state.version())`
 $DIR/execution/executor/tests/db_bootstrapper_test.rs:79:39-79:49: `.version()`
 $DIR/execution/executor/tests/db_bootstrapper_test.rs:82:9-82:70: `.verify_and_ratchet(&state_proof, Some(&initial_accumulator))`
-$DIR/execution/executor/tests/db_bootstrapper_test.rs:266:78-266:90: `.key.clone()`
 $DIR/execution/executor/tests/db_bootstrapper_test.rs:275:5-275:71: `execute_and_commit(vec![txn1, txn2, txn3, txn4], &db_rw, &signer);`
 $DIR/execution/executor/tests/db_bootstrapper_test.rs:284:5-284:86: `restore_state_to_db(&db, accounts_backup, proof, root_hash, PRE_GENESIS_VERSION);`
 $DIR/execution/executor/tests/db_bootstrapper_test.rs:303:9-303:18: `.freeze()`
@@ -3096,7 +2983,6 @@ $DIR/execution/executor/tests/db_bootstrapper_test.rs:323:9-324:50: `.reader
         .get_state_proof(trusted_state.version())`
 $DIR/execution/executor/tests/db_bootstrapper_test.rs:324:39-324:49: `.version()`
 $DIR/execution/executor/tests/db_bootstrapper_test.rs:327:9-327:70: `.verify_and_ratchet(&state_proof, Some(&initial_accumulator))`
-$DIR/execution/executor/tests/db_bootstrapper_test.rs:346:78-346:90: `.key.clone()`
 $DIR/execution/executor/tests/db_bootstrapper_test.rs:354:5-354:68: `execute_and_commit(vec![txn1, txn2, txn3, txn4], &db, &signer);`
 $DIR/execution/executor/tests/db_bootstrapper_test.rs:360:9-361:58: `.reader
         .get_accumulator_summary(trusted_state.version())`
@@ -3133,7 +3019,6 @@ $DIR/execution/executor/tests/storage_integration_test.rs:61:5-61:35: `path.crea
 $DIR/execution/executor/tests/storage_integration_test.rs:61:9-61:25: `.create_as_dir()`
 $DIR/execution/executor/tests/storage_integration_test.rs:65:67-65:74: `.path()`
 $DIR/execution/executor/tests/storage_integration_test.rs:66:35-66:56: `.committed_block_id()`
-$DIR/execution/executor/tests/storage_integration_test.rs:67:80-67:92: `.key.clone()`
 $DIR/execution/executor/tests/storage_integration_test.rs:68:35-68:44: `.author()`
 $DIR/execution/executor/tests/storage_integration_test.rs:71:25-71:51: `.reader.get_state_proof(0)`
 $DIR/execution/executor/tests/storage_integration_test.rs:72:38-72:59: `.latest_ledger_info()`
@@ -3143,7 +3028,6 @@ $DIR/execution/executor/tests/storage_integration_test.rs:74:9-75:91: `.reader
 $DIR/execution/executor/tests/storage_integration_test.rs:78:9-79:93: `.reader
         .get_account_state_with_proof(diem_root_address(), current_version, current_version)`
 $DIR/execution/executor/tests/storage_integration_test.rs:104:20-104:33: `.public_key()`
-$DIR/execution/executor/tests/storage_integration_test.rs:123:37-123:49: `.key.clone()`
 $DIR/execution/executor/tests/storage_integration_test.rs:126:63-126:76: `.public_key()`
 $DIR/execution/executor/tests/storage_integration_test.rs:131:21-131:34: `.public_key()`
 $DIR/execution/executor/tests/storage_integration_test.rs:134:23-134:34: `.to_bytes()`
@@ -3166,12 +3050,10 @@ $DIR/execution/executor/tests/storage_integration_test.rs:189:9-190:93: `.reader
         .get_account_state_with_proof(diem_root_address(), current_version, current_version)`
 $DIR/execution/executor/tests/storage_integration_test.rs:212:9-213:93: `.reader
         .get_account_state_with_proof(diem_root_address(), current_version, current_version)`
-$DIR/execution/executor/tests/storage_integration_test.rs:215:51-215:65: `.blob.unwrap()`
 $DIR/execution/executor/tests/storage_integration_test.rs:231:5-231:35: `path.create_as_dir().unwrap();`
 $DIR/execution/executor/tests/storage_integration_test.rs:231:9-231:25: `.create_as_dir()`
 $DIR/execution/executor/tests/storage_integration_test.rs:236:66-236:73: `.path()`
 $DIR/execution/executor/tests/storage_integration_test.rs:237:35-237:56: `.committed_block_id()`
-$DIR/execution/executor/tests/storage_integration_test.rs:242:80-242:92: `.key.clone()`
 $DIR/execution/executor/tests/storage_integration_test.rs:243:35-243:44: `.author()`
 $DIR/execution/executor/tests/storage_integration_test.rs:244:35-244:49: `.private_key()`
 $DIR/execution/executor/tests/storage_integration_test.rs:245:45-245:58: `.public_key()`
@@ -3234,7 +3116,6 @@ $DIR/json-rpc/src/fuzzing.rs:51:5-54:7: `method_fuzzer(
         &gen_request_params!(["000000000000000000000000000000dd", 0, 1]),
         "get_account_state_with_proof",
     );`
-$DIR/json-rpc/src/stream_rpc/connection/client_connection.rs:294:9-294:69: `client_connection.send_raw(expected.clone()).await.unwrap();`
 $DIR/json-rpc/src/stream_rpc/connection/client_connection.rs:294:26-294:53: `.send_raw(expected.clone())`
 $DIR/json-rpc/src/stream_rpc/connection/client_connection.rs:295:42-295:49: `.recv()`
 $DIR/json-rpc/src/stream_rpc/connection/client_connection.rs:315:9-317:20: `client_connection
@@ -3270,7 +3151,6 @@ $DIR/json-rpc/src/stream_rpc/subscription_types.rs:348:43-348:50: `.recv()`
 $DIR/json-rpc/src/stream_rpc/subscription_types.rs:352:28-352:38: `.elapsed()`
 $DIR/json-rpc/src/stream_rpc/subscription_types.rs:352:38-352:50: `.as_millis()`
 $DIR/json-rpc/src/stream_rpc/subscription_types.rs:359:43-359:50: `.recv()`
-$DIR/json-rpc/src/stream_rpc/subscription_types.rs:364:15-364:23: `.abort()`
 $DIR/json-rpc/src/stream_rpc/subscription_types.rs:376:49-376:82: `.run(subscription_helper, params)`
 $DIR/json-rpc/src/stream_rpc/subscription_types.rs:386:30-386:37: `.recv()`
 $DIR/json-rpc/src/stream_rpc/subscription_types.rs:400:13-400:55: `subscription_helper.sleep_wiggled().await;`
@@ -3293,8 +3173,6 @@ $DIR/json-rpc/src/stream_rpc/tests/websockets.rs:67:9-67:44: `ws_client.send_tex
 $DIR/json-rpc/src/stream_rpc/tests/websockets.rs:67:18-67:37: `.send_text(request)`
 $DIR/json-rpc/src/stream_rpc/tests/websockets.rs:77:26-77:40: `.events.get(0)`
 $DIR/json-rpc/src/stream_rpc/tests/websockets.rs:78:29-78:35: `.key()`
-$DIR/json-rpc/src/stream_rpc/tests/websockets.rs:80:9-81:16: `.events
-        .iter()`
 $DIR/json-rpc/src/stream_rpc/tests/websockets.rs:82:9-82:67: `.filter(|(_, ev)| ev.key().to_string() == first_event_key)`
 $DIR/json-rpc/src/stream_rpc/tests/websockets.rs:82:29-82:35: `.key()`
 $DIR/json-rpc/src/stream_rpc/tests/websockets.rs:83:9-83:17: `.count()`
@@ -3380,6 +3258,18 @@ $DIR/json-rpc/src/tests/unit_tests.rs:1023:23-1023:34: `.post(&url)`
 $DIR/json-rpc/src/tests/unit_tests.rs:1023:34-1023:49: `.json(&request)`
 $DIR/json-rpc/src/tests/unit_tests.rs:1023:49-1023:56: `.send()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1059:41-1059:49: `.parse()`
+$DIR/json-rpc/src/tests/unit_tests.rs:1063:5-1074:8: `runtime.spawn(async move {
+        let validator = MockVMValidator;
+        while let Some((txn, cb)) = mp_events.next().await {
+            let vm_status = validator.validate_transaction(txn).unwrap().status();
+            let result = if vm_status.is_some() {
+                (MempoolStatus::new(MempoolStatusCode::VmError), vm_status)
+            } else {
+                (MempoolStatus::new(MempoolStatusCode::Accepted), None)
+            };
+            cb.send(Ok(result)).unwrap();
+        }
+    });`
 $DIR/json-rpc/src/tests/unit_tests.rs:1063:12-1074:7: `.spawn(async move {
         let validator = MockVMValidator;
         while let Some((txn, cb)) = mp_events.next().await {
@@ -3406,18 +3296,15 @@ $DIR/json-rpc/src/tests/unit_tests.rs:1080:15-1080:28: `.submit(&txn)`
 $DIR/json-rpc/src/tests/unit_tests.rs:1085:5-1085:37: `txn_submission(sender).unwrap();`
 $DIR/json-rpc/src/tests/unit_tests.rs:1092:22-1092:39: `.json_rpc_error()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1094:40-1094:57: `.as_status_code()`
-$DIR/json-rpc/src/tests/unit_tests.rs:1103:40-1103:60: `.all_accounts.iter()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1103:60-1103:67: `.next()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1107:9-1107:37: `.get_account(*first_account)`
 $DIR/json-rpc/src/tests/unit_tests.rs:1109:9-1109:22: `.into_inner()`
-$DIR/json-rpc/src/tests/unit_tests.rs:1111:43-1111:59: `.balances.iter()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1111:59-1111:81: `.map(|bal| bal.amount)`
 $DIR/json-rpc/src/tests/unit_tests.rs:1111:81-1111:91: `.collect()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1113:9-1113:33: `.get_balance_resources()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1116:9-1116:54: `.map(|(_, bal_resource)| bal_resource.coin())`
 $DIR/json-rpc/src/tests/unit_tests.rs:1116:46-1116:53: `.coin()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1117:9-1117:19: `.collect()`
-$DIR/json-rpc/src/tests/unit_tests.rs:1133:35-1133:55: `.all_accounts.iter()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1137:9-1137:60: `states.push(AccountState::try_from(blob).unwrap());`
 $DIR/json-rpc/src/tests/unit_tests.rs:1137:15-1137:59: `.push(AccountState::try_from(blob).unwrap())`
 $DIR/json-rpc/src/tests/unit_tests.rs:1138:9-1138:58: `batch.push(MethodRequest::get_account(*account));`
@@ -3427,7 +3314,6 @@ $DIR/json-rpc/src/tests/unit_tests.rs:1144:37-1144:49: `.into_iter()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1144:49-1144:61: `.enumerate()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1145:40-1145:53: `.into_inner()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1145:53-1145:74: `.unwrap_get_account()`
-$DIR/json-rpc/src/tests/unit_tests.rs:1146:47-1146:63: `.balances.iter()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1146:63-1146:85: `.map(|bal| bal.amount)`
 $DIR/json-rpc/src/tests/unit_tests.rs:1146:85-1146:95: `.collect()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1148:13-1148:37: `.get_balance_resources()`
@@ -3468,21 +3354,15 @@ $DIR/json-rpc/src/tests/unit_tests.rs:1270:9-1270:21: `.into_iter()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1273:13-1273:63: `.get_transactions(base_version, page as u64, true)`
 $DIR/json-rpc/src/tests/unit_tests.rs:1275:13-1275:26: `.into_inner()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1277:37-1277:49: `.enumerate()`
-$DIR/json-rpc/src/tests/unit_tests.rs:1285:17-1286:24: `.events
-                .iter()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1287:17-1287:53: `.filter(|(v, _)| *v == view.version)`
 $DIR/json-rpc/src/tests/unit_tests.rs:1288:17-1288:33: `.map(|(_, e)| e)`
 $DIR/json-rpc/src/tests/unit_tests.rs:1289:17-1289:37: `.collect::<Vec<_>>()`
-$DIR/json-rpc/src/tests/unit_tests.rs:1294:40-1294:54: `.events.iter()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1294:54-1294:66: `.enumerate()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1295:53-1295:60: `.get(i)`
 $DIR/json-rpc/src/tests/unit_tests.rs:1323:65-1323:75: `.payload()`
-$DIR/json-rpc/src/tests/unit_tests.rs:1338:31-1338:51: `.all_accounts.iter()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1340:25-1340:43: `.sequence_number()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1342:17-1342:58: `.get_account_transaction(*acc, seq, true)`
 $DIR/json-rpc/src/tests/unit_tests.rs:1344:17-1344:30: `.into_inner()`
-$DIR/json-rpc/src/tests/unit_tests.rs:1348:17-1349:24: `.all_txns
-                .iter()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1350:17-1358:19: `.find_map(|(t, status)| {
                     if let Ok(x) = t.as_signed_user_txn() {
                         if x.sender() == *acc && x.sequence_number() == seq {
@@ -3496,16 +3376,12 @@ $DIR/json-rpc/src/tests/unit_tests.rs:1351:37-1351:58: `.as_signed_user_txn()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1352:29-1352:38: `.sender()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1352:51-1352:69: `.sequence_number()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1357:21-1357:25: `None`
-$DIR/json-rpc/src/tests/unit_tests.rs:1363:17-1364:24: `.events
-                .iter()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1365:17-1365:58: `.filter(|(ev, _)| *ev == tx_view.version)`
 $DIR/json-rpc/src/tests/unit_tests.rs:1366:17-1366:33: `.map(|(_, e)| e)`
 $DIR/json-rpc/src/tests/unit_tests.rs:1367:17-1367:37: `.collect::<Vec<_>>()`
-$DIR/json-rpc/src/tests/unit_tests.rs:1374:43-1374:57: `.events.iter()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1374:57-1374:69: `.enumerate()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1375:53-1375:60: `.get(i)`
 $DIR/json-rpc/src/tests/unit_tests.rs:1395:71-1395:81: `.payload()`
-$DIR/json-rpc/src/tests/unit_tests.rs:1409:31-1409:51: `.all_accounts.iter()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1410:61-1410:79: `.sequence_number()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1413:13-1413:83: `.get_account_transactions(*acc, 0, max(1, min(1000, total * 2)), true)`
 $DIR/json-rpc/src/tests/unit_tests.rs:1415:13-1415:26: `.into_inner()`
@@ -3513,10 +3389,8 @@ $DIR/json-rpc/src/tests/unit_tests.rs:1427:9-1427:59: `.get_account_state_with_p
 $DIR/json-rpc/src/tests/unit_tests.rs:1429:9-1429:22: `.into_inner()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1443:9-1443:65: `.get_account_state_with_proof(account, Some(0), Some(0))`
 $DIR/json-rpc/src/tests/unit_tests.rs:1445:9-1445:22: `.into_inner()`
-$DIR/json-rpc/src/tests/unit_tests.rs:1447:39-1447:53: `.blob.as_ref()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1448:43-1448:85: `.proof.transaction_info_to_account_proof()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1449:54-1449:90: `.proof.transaction_info_with_proof()`
-$DIR/json-rpc/src/tests/unit_tests.rs:1455:73-1455:87: `.blob.unwrap()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1475:23-1475:48: `.get_state_proof(version)`
 $DIR/json-rpc/src/tests/unit_tests.rs:1475:57-1475:70: `.into_inner()`
 $DIR/json-rpc/src/tests/unit_tests.rs:1484:33-1484:54: `.get_network_status()`
@@ -3778,7 +3652,6 @@ $DIR/language/bytecode-verifier/bytecode-verifier-tests/src/unit_tests/bounds_te
     })`
 $DIR/language/bytecode-verifier/bytecode-verifier-tests/src/unit_tests/bounds_tests.rs:148:53-148:83: `.function_instantiations.len()`
 $DIR/language/bytecode-verifier/bytecode-verifier-tests/src/unit_tests/bounds_tests.rs:149:5-149:87: `m.function_defs[0].code.as_mut().unwrap().code = vec![CallGeneric(func_inst_idx)];`
-$DIR/language/bytecode-verifier/bytecode-verifier-tests/src/unit_tests/bounds_tests.rs:149:23-149:37: `.code.as_mut()`
 $DIR/language/bytecode-verifier/bytecode-verifier-tests/src/unit_tests/bounds_tests.rs:161:5-164:8: `s.function_instantiations.push(FunctionInstantiation {
         handle: FunctionHandleIndex::new(0),
         type_parameters: SignatureIndex::new(1),
@@ -3801,7 +3674,6 @@ $DIR/language/bytecode-verifier/bytecode-verifier-tests/src/unit_tests/bounds_te
     })`
 $DIR/language/bytecode-verifier/bytecode-verifier-tests/src/unit_tests/bounds_tests.rs:184:53-184:83: `.function_instantiations.len()`
 $DIR/language/bytecode-verifier/bytecode-verifier-tests/src/unit_tests/bounds_tests.rs:185:5-185:87: `m.function_defs[0].code.as_mut().unwrap().code = vec![CallGeneric(func_inst_idx)];`
-$DIR/language/bytecode-verifier/bytecode-verifier-tests/src/unit_tests/bounds_tests.rs:185:23-185:37: `.code.as_mut()`
 $DIR/language/bytecode-verifier/bytecode-verifier-tests/src/unit_tests/bounds_tests.rs:198:5-198:58: `s.signatures.push(Signature(vec![TypeParameter(0)]));`
 $DIR/language/bytecode-verifier/bytecode-verifier-tests/src/unit_tests/bounds_tests.rs:198:6-198:57: `.signatures.push(Signature(vec![TypeParameter(0)]))`
 $DIR/language/bytecode-verifier/bytecode-verifier-tests/src/unit_tests/bounds_tests.rs:199:5-202:8: `s.function_instantiations.push(FunctionInstantiation {
@@ -3828,7 +3700,6 @@ $DIR/language/bytecode-verifier/bytecode-verifier-tests/src/unit_tests/bounds_te
     })`
 $DIR/language/bytecode-verifier/bytecode-verifier-tests/src/unit_tests/bounds_tests.rs:223:53-223:83: `.function_instantiations.len()`
 $DIR/language/bytecode-verifier/bytecode-verifier-tests/src/unit_tests/bounds_tests.rs:224:5-224:87: `m.function_defs[0].code.as_mut().unwrap().code = vec![CallGeneric(func_inst_idx)];`
-$DIR/language/bytecode-verifier/bytecode-verifier-tests/src/unit_tests/bounds_tests.rs:224:23-224:37: `.code.as_mut()`
 $DIR/language/bytecode-verifier/bytecode-verifier-tests/src/unit_tests/bounds_tests.rs:237:5-238:67: `s.signatures
         .push(Signature(vec![Struct(StructHandleIndex::new(3))]));`
 $DIR/language/bytecode-verifier/bytecode-verifier-tests/src/unit_tests/bounds_tests.rs:237:6-238:66: `.signatures
@@ -4526,6 +4397,13 @@ $DIR/language/diem-framework/releases/src/tests.rs:17:17-18:101: `CompiledModule
 $DIR/language/diem-framework/releases/src/tests.rs:18:21-18:101: `.unwrap_or_else(|_| panic!("unable to deserialize module from version {}", ver))`
 $DIR/language/diem-framework/releases/src/tests.rs:20:13-20:33: `.collect::<Vec<_>>()`
 $DIR/language/diem-framework/releases/src/tests.rs:23:42-23:54: `.enumerate()`
+$DIR/language/diem-framework/releases/src/tests.rs:24:13-30:16: `bytecode_verifier::verify_module(module).unwrap_or_else(|_| {
+                panic!(
+                    "failed to verify module {} from version {}",
+                    module.self_id(),
+                    ver
+                )
+            });`
 $DIR/language/diem-framework/releases/src/tests.rs:24:53-30:15: `.unwrap_or_else(|_| {
                 panic!(
                     "failed to verify module {} from version {}",
@@ -4533,6 +4411,14 @@ $DIR/language/diem-framework/releases/src/tests.rs:24:53-30:15: `.unwrap_or_else
                     ver
                 )
             })`
+$DIR/language/diem-framework/releases/src/tests.rs:32:13-39:23: `bytecode_verifier::dependencies::verify_module(
+                module,
+                modules
+                    .iter()
+                    .enumerate()
+                    .flat_map(|(j, module)| if i == j { None } else { Some(module) }),
+            )
+            .unwrap();`
 $DIR/language/diem-framework/releases/src/tests.rs:36:21-36:33: `.enumerate()`
 $DIR/language/diem-framework/releases/src/tests.rs:37:21-37:86: `.flat_map(|(j, module)| if i == j { None } else { Some(module) })`
 $DIR/language/diem-framework/releases/src/tests.rs:37:57-37:61: `None`
@@ -4636,12 +4522,6 @@ $DIR/language/diem-vm/src/diem_vm.rs:599:5-599:29: `assert_sync::<DiemVM>();`
 $DIR/language/diem-vm/src/diem_vm.rs:600:5-600:38: `assert_send::<DiemVMValidator>();`
 $DIR/language/diem-vm/src/diem_vm.rs:601:5-601:38: `assert_sync::<DiemVMValidator>();`
 $DIR/language/diem-vm/src/diem_vm.rs:602:5-602:29: `assert_send::<MoveVM>();`
-$DIR/language/diem-vm/src/unit_tests/script_to_script_function_tests.rs:39:17-39:68: `CREATE_VALIDATOR_OPERATOR_ACCOUNT_BYTES!().to_vec()`
-$DIR/language/diem-vm/src/unit_tests/script_to_script_function_tests.rs:49:17-49:71: `ROTATE_AUTHENTICATION_KEY_WITH_NONCE_BYTES!().to_vec()`
-$DIR/language/diem-vm/src/unit_tests/script_to_script_function_tests.rs:52:17-52:77: `ROTATE_AUTHENTICATION_KEY_WITH_NONCE_ADMIN_BYTES!().to_vec()`
-$DIR/language/diem-vm/src/unit_tests/script_to_script_function_tests.rs:55:17-55:82: `ROTATE_AUTHENTICATION_KEY_WITH_RECOVERY_ADDRESS_BYTES!().to_vec()`
-$DIR/language/diem-vm/src/unit_tests/script_to_script_function_tests.rs:60:17-60:71: `SET_VALIDATOR_CONFIG_AND_RECONFIGURE_BYTES!().to_vec()`
-$DIR/language/diem-vm/src/unit_tests/script_to_script_function_tests.rs:64:17-64:74: `SET_VALIDATOR_OPERATOR_WITH_NONCE_ADMIN_BYTES!().to_vec()`
 $DIR/language/diem-vm/src/unit_tests/script_to_script_function_tests.rs:73:37-73:54: `.compiled_bytes()`
 $DIR/language/e2e-testsuite/src/tests/account_limits.rs:159:5-159:56: `executor.set_golden_file(current_function_name!());`
 $DIR/language/e2e-testsuite/src/tests/account_limits.rs:159:13-159:55: `.set_golden_file(current_function_name!())`
@@ -5943,7 +5823,6 @@ $DIR/language/e2e-testsuite/src/tests/data_store.rs:151:13-151:39: `.add_account
 $DIR/language/e2e-testsuite/src/tests/data_store.rs:155:5-155:37: `executor.execute_and_apply(txn);`
 $DIR/language/e2e-testsuite/src/tests/data_store.rs:155:13-155:36: `.execute_and_apply(txn)`
 $DIR/language/e2e-testsuite/src/tests/data_store.rs:159:26-159:55: `.execute_transaction(rem_txn)`
-$DIR/language/e2e-testsuite/src/tests/data_store.rs:165:13-165:49: `.apply_write_set(output.write_set())`
 $DIR/language/e2e-testsuite/src/tests/data_store.rs:165:36-165:48: `.write_set()`
 $DIR/language/e2e-testsuite/src/tests/data_store.rs:169:5-169:41: `executor.execute_and_apply(add_txn);`
 $DIR/language/e2e-testsuite/src/tests/data_store.rs:169:13-169:40: `.execute_and_apply(add_txn)`
@@ -5954,7 +5833,6 @@ $DIR/language/e2e-testsuite/src/tests/data_store.rs:193:9-193:51: `executor.appl
 $DIR/language/e2e-testsuite/src/tests/data_store.rs:193:17-193:50: `.apply_write_set(out.write_set())`
 $DIR/language/e2e-testsuite/src/tests/data_store.rs:193:37-193:49: `.write_set()`
 $DIR/language/e2e-testsuite/src/tests/data_store.rs:198:26-198:58: `.execute_transaction(borrow_txn)`
-$DIR/language/e2e-testsuite/src/tests/data_store.rs:204:13-204:49: `.apply_write_set(output.write_set())`
 $DIR/language/e2e-testsuite/src/tests/data_store.rs:204:36-204:48: `.write_set()`
 $DIR/language/e2e-testsuite/src/tests/execution_strategies.rs:38:32-38:41: `.map(txn)`
 $DIR/language/e2e-testsuite/src/tests/execution_strategies.rs:38:41-38:51: `.collect()`
@@ -6446,7 +6324,6 @@ $DIR/language/e2e-testsuite/src/tests/multi_agent.rs:225:13-225:45: `.add_accoun
 $DIR/language/e2e-testsuite/src/tests/multi_agent.rs:229:16-229:26: `.address()`
 $DIR/language/e2e-testsuite/src/tests/multi_agent.rs:232:16-232:26: `.account()`
 $DIR/language/e2e-testsuite/src/tests/multi_agent.rs:233:15-233:25: `.account()`
-$DIR/language/e2e-testsuite/src/tests/multi_agent.rs:233:25-233:40: `.pubkey.clone()`
 $DIR/language/e2e-testsuite/src/tests/multi_agent.rs:244:26-244:58: `.execute_transaction(signed_txn)`
 $DIR/language/e2e-testsuite/src/tests/on_chain_configs.rs:150:5-150:56: `executor.set_golden_file(current_function_name!());`
 $DIR/language/e2e-testsuite/src/tests/on_chain_configs.rs:150:13-150:55: `.set_golden_file(current_function_name!())`
@@ -7044,19 +6921,6 @@ $DIR/language/e2e-testsuite/src/tests/transaction_builder.rs:1247:31-1247:41: `.
 $DIR/language/e2e-testsuite/src/tests/transaction_builder.rs:1248:30-1248:48: `.auth_key_prefix()`
 $DIR/language/e2e-testsuite/src/tests/transaction_builder.rs:1252:13-1252:32: `.sequence_number(0)`
 $DIR/language/e2e-testsuite/src/tests/transaction_builder.rs:1253:13-1253:20: `.sign()`
-$DIR/language/e2e-testsuite/src/tests/transaction_builder.rs:1256:13-1268:6: `.execute_and_apply(
-        vasp_b
-            .transaction()
-            .script(encode_create_child_vasp_account_script(
-                account_config::type_tag_for_currency_code(account::currency_code("COIN")),
-                *vasp_b_child2.address(),
-                vasp_b_child2.auth_key_prefix(),
-                false,
-                0,
-            ))
-            .sequence_number(1)
-            .sign(),
-    )`
 $DIR/language/e2e-testsuite/src/tests/transaction_builder.rs:1258:13-1258:27: `.transaction()`
 $DIR/language/e2e-testsuite/src/tests/transaction_builder.rs:1259:13-1265:15: `.script(encode_create_child_vasp_account_script(
                 account_config::type_tag_for_currency_code(account::currency_code("COIN")),
@@ -7082,7 +6946,6 @@ $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:89:13-89:49: `.add_account_d
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:92:16-92:26: `.address()`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:95:16-95:26: `.account()`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:96:15-96:25: `.account()`
-$DIR/language/e2e-testsuite/src/tests/verify_txn.rs:96:25-96:40: `.pubkey.clone()`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:107:5-107:56: `executor.set_golden_file(current_function_name!());`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:107:13-107:55: `.set_golden_file(current_function_name!())`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:108:26-108:65: `.create_raw_account_data(1_000_010, 10)`
@@ -7097,7 +6960,6 @@ $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:114:13-114:45: `.add_account
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:117:16-117:26: `.address()`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:120:16-120:26: `.account()`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:121:15-121:25: `.account()`
-$DIR/language/e2e-testsuite/src/tests/verify_txn.rs:121:25-121:40: `.pubkey.clone()`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:138:5-138:56: `executor.set_golden_file(current_function_name!());`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:138:13-138:55: `.set_golden_file(current_function_name!())`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:140:26-140:65: `.create_raw_account_data(1_000_010, 10)`
@@ -7108,7 +6970,6 @@ $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:144:5-144:50: `executor.add_
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:144:13-144:49: `.add_account_data(&secondary_signer)`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:150:16-150:26: `.address()`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:154:15-154:25: `.account()`
-$DIR/language/e2e-testsuite/src/tests/verify_txn.rs:154:25-154:40: `.pubkey.clone()`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:169:5-169:56: `executor.set_golden_file(current_function_name!());`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:169:13-169:55: `.set_golden_file(current_function_name!())`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:170:26-170:65: `.create_raw_account_data(1_000_010, 10)`
@@ -7120,7 +6981,6 @@ $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:174:13-174:49: `.add_account
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:180:16-180:26: `.address()`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:183:16-183:26: `.account()`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:184:15-184:25: `.account()`
-$DIR/language/e2e-testsuite/src/tests/verify_txn.rs:184:25-184:40: `.pubkey.clone()`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:199:5-199:56: `executor.set_golden_file(current_function_name!());`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:199:13-199:55: `.set_golden_file(current_function_name!())`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:202:26-202:77: `.create_raw_account_data(1_000_010, sender_seq_num)`
@@ -7172,7 +7032,6 @@ $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:293:13-293:45: `.add_account
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:298:16-298:26: `.address()`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:301:16-301:26: `.account()`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:302:15-302:25: `.account()`
-$DIR/language/e2e-testsuite/src/tests/verify_txn.rs:302:25-302:40: `.pubkey.clone()`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:317:5-317:56: `executor.set_golden_file(current_function_name!());`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:317:13-317:55: `.set_golden_file(current_function_name!())`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:318:26-318:65: `.create_raw_account_data(1_000_010, 10)`
@@ -7184,7 +7043,6 @@ $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:322:13-322:49: `.add_account
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:325:16-325:26: `.address()`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:328:16-328:26: `.account()`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:329:15-329:25: `.account()`
-$DIR/language/e2e-testsuite/src/tests/verify_txn.rs:329:25-329:40: `.pubkey.clone()`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:344:5-344:56: `executor.set_golden_file(current_function_name!());`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:344:13-344:55: `.set_golden_file(current_function_name!())`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:345:26-345:65: `.create_raw_account_data(1_000_010, 10)`
@@ -7199,7 +7057,6 @@ $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:351:13-351:45: `.add_account
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:355:16-355:26: `.address()`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:362:16-362:26: `.account()`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:363:15-363:25: `.account()`
-$DIR/language/e2e-testsuite/src/tests/verify_txn.rs:363:25-363:40: `.pubkey.clone()`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:386:5-386:56: `executor.set_golden_file(current_function_name!());`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:386:13-386:55: `.set_golden_file(current_function_name!())`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:387:26-387:65: `.create_raw_account_data(1_000_010, 10)`
@@ -7209,7 +7066,6 @@ $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:390:13-390:39: `.add_account
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:394:16-394:26: `.address()`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:397:16-397:26: `.account()`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:398:15-398:25: `.account()`
-$DIR/language/e2e-testsuite/src/tests/verify_txn.rs:398:25-398:40: `.pubkey.clone()`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:721:5-721:56: `executor.set_golden_file(current_function_name!());`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:721:13-721:55: `.set_golden_file(current_function_name!())`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs:723:26-723:65: `.create_raw_account_data(1_000_000, 10)`
@@ -7780,7 +7636,6 @@ $DIR/language/move-vm/integration-tests/src/tests/bad_storage_tests.rs:235:9-236
             .unwrap();`
 $DIR/language/move-vm/integration-tests/src/tests/bad_storage_tests.rs:235:13-235:86: `.execute_function(&module_id, &fun_name, vec![], vec![], &mut gas_status)`
 $DIR/language/move-vm/integration-tests/src/tests/bad_storage_tests.rs:245:9-245:65: `m.function_defs[0].code.as_mut().unwrap().code = vec![];`
-$DIR/language/move-vm/integration-tests/src/tests/bad_storage_tests.rs:245:27-245:41: `.code.as_mut()`
 $DIR/language/move-vm/integration-tests/src/tests/bad_storage_tests.rs:247:9-247:41: `m.serialize(&mut blob).unwrap();`
 $DIR/language/move-vm/integration-tests/src/tests/bad_storage_tests.rs:247:10-247:31: `.serialize(&mut blob)`
 $DIR/language/move-vm/integration-tests/src/tests/bad_storage_tests.rs:248:9-248:64: `storage.publish_or_overwrite_module(m.self_id(), blob);`
@@ -7857,7 +7712,6 @@ $DIR/language/move-vm/integration-tests/src/tests/bad_storage_tests.rs:427:9-428
             .unwrap();`
 $DIR/language/move-vm/integration-tests/src/tests/bad_storage_tests.rs:427:13-427:86: `.execute_function(&module_id, &fun_name, vec![], vec![], &mut gas_status)`
 $DIR/language/move-vm/integration-tests/src/tests/bad_storage_tests.rs:434:9-434:65: `m.function_defs[0].code.as_mut().unwrap().code = vec![];`
-$DIR/language/move-vm/integration-tests/src/tests/bad_storage_tests.rs:434:27-434:41: `.code.as_mut()`
 $DIR/language/move-vm/integration-tests/src/tests/bad_storage_tests.rs:436:9-436:43: `m.serialize(&mut blob_m).unwrap();`
 $DIR/language/move-vm/integration-tests/src/tests/bad_storage_tests.rs:436:10-436:33: `.serialize(&mut blob_m)`
 $DIR/language/move-vm/integration-tests/src/tests/bad_storage_tests.rs:440:9-440:66: `storage.publish_or_overwrite_module(m.self_id(), blob_m);`
@@ -7897,13 +7751,10 @@ $DIR/language/move-vm/integration-tests/src/tests/bad_storage_tests.rs:563:13-56
             )`
 $DIR/language/move-vm/integration-tests/src/tests/loader_tests.rs:122:5-122:38: `adapter.publish_modules(modules);`
 $DIR/language/move-vm/integration-tests/src/tests/loader_tests.rs:122:12-122:37: `.publish_modules(modules)`
-$DIR/language/move-vm/integration-tests/src/tests/loader_tests.rs:124:12-124:29: `.call_functions()`
 $DIR/language/move-vm/integration-tests/src/tests/loader_tests.rs:132:5-132:38: `adapter.publish_modules(modules);`
 $DIR/language/move-vm/integration-tests/src/tests/loader_tests.rs:132:12-132:37: `.publish_modules(modules)`
-$DIR/language/move-vm/integration-tests/src/tests/loader_tests.rs:134:12-134:36: `.call_functions_async(3)`
 $DIR/language/move-vm/integration-tests/src/tests/loader_tests.rs:142:5-142:38: `adapter.publish_modules(modules);`
 $DIR/language/move-vm/integration-tests/src/tests/loader_tests.rs:142:12-142:37: `.publish_modules(modules)`
-$DIR/language/move-vm/integration-tests/src/tests/loader_tests.rs:144:12-144:37: `.call_functions_async(30)`
 $DIR/language/move-vm/integration-tests/src/tests/mutated_accounts_tests.rs:35:20-35:69: `.replace("{{ADDR}}", &format!("0x{}", TEST_ADDR))`
 $DIR/language/move-vm/integration-tests/src/tests/mutated_accounts_tests.rs:37:28-37:34: `.pop()`
 $DIR/language/move-vm/integration-tests/src/tests/mutated_accounts_tests.rs:39:5-39:37: `m.serialize(&mut blob).unwrap();`
@@ -8981,7 +8832,6 @@ $DIR/mempool/src/tests/multi_node_test.rs:587:5-587:54: `harness.add_txns(v_a, v
 $DIR/mempool/src/tests/multi_node_test.rs:587:12-587:53: `.add_txns(v_a, vec![test_transaction(1)])`
 $DIR/mempool/src/tests/multi_node_test.rs:589:5-589:54: `harness.broadcast_txns_and_validate(v_a, v_b, 1);`
 $DIR/mempool/src/tests/multi_node_test.rs:589:12-589:53: `.broadcast_txns_and_validate(v_a, v_b, 1)`
-$DIR/mempool/src/tests/multi_node_test.rs:590:12-590:53: `.broadcast_txns_and_validate(v_a, v_b, 2)`
 $DIR/mempool/src/tests/multi_node_test.rs:597:33-597:40: `.get(0)`
 $DIR/mempool/src/tests/multi_node_test.rs:597:61-597:68: `.get(1)`
 $DIR/mempool/src/tests/multi_node_test.rs:598:5-598:54: `harness.add_txns(v_a, vec![test_transaction(0)]);`
@@ -9005,7 +8855,6 @@ $DIR/mempool/src/tests/multi_node_test.rs:634:5-634:54: `harness.broadcast_txns_
 $DIR/mempool/src/tests/multi_node_test.rs:634:12-634:53: `.broadcast_txns_and_validate(v_a, v_b, 0)`
 $DIR/mempool/src/tests/multi_node_test.rs:636:5-636:54: `harness.broadcast_txns_and_validate(v_b, v_a, 1);`
 $DIR/mempool/src/tests/multi_node_test.rs:636:12-636:53: `.broadcast_txns_and_validate(v_b, v_a, 1)`
-$DIR/mempool/src/tests/multi_node_test.rs:638:12-638:53: `.broadcast_txns_and_validate(v_a, v_b, 2)`
 $DIR/mempool/src/tests/multi_node_test.rs:645:33-645:40: `.get(0)`
 $DIR/mempool/src/tests/multi_node_test.rs:645:61-645:68: `.get(1)`
 $DIR/mempool/src/tests/multi_node_test.rs:648:5-648:54: `harness.add_txns(v_a, vec![test_transaction(0)]);`
@@ -9042,7 +8891,6 @@ $DIR/mempool/src/tests/multi_node_test.rs:706:5-706:86: `harness.broadcast_txns_
 $DIR/mempool/src/tests/multi_node_test.rs:706:12-706:85: `.broadcast_txns_and_validate_with_networks(vfn_a, false, vfn_b, false, 0)`
 $DIR/mempool/src/tests/multi_node_test.rs:709:5-709:49: `harness.assert_no_message_sent(vfn_a, true);`
 $DIR/mempool/src/tests/multi_node_test.rs:709:12-709:48: `.assert_no_message_sent(vfn_a, true)`
-$DIR/mempool/src/tests/multi_node_test.rs:710:12-710:49: `.assert_no_message_sent(vfn_a, false)`
 $DIR/mempool/src/tests/multi_node_test.rs:716:5-716:61: `validator_mempool_config.broadcast_batch_size = Some(3);`
 $DIR/mempool/src/tests/multi_node_test.rs:717:5-717:53: `validator_mempool_config.mempool_size = Some(5);`
 $DIR/mempool/src/tests/multi_node_test.rs:719:5-719:55: `vfn_mempool_config.broadcast_batch_size = Some(3);`
@@ -9104,7 +8952,6 @@ $DIR/mempool/src/tests/multi_node_test.rs:851:16-851:50: `.assert_no_message_sen
 $DIR/mempool/src/tests/shared_mempool_test.rs:24:38-24:86: `.make_signed_transaction_with_expiration_time(0)`
 $DIR/mempool/src/tests/shared_mempool_test.rs:25:49-25:75: `.make_signed_transaction()`
 $DIR/mempool/src/tests/shared_mempool_test.rs:33:27-33:42: `.mempool.lock()`
-$DIR/mempool/src/tests/shared_mempool_test.rs:43:35-43:60: `.consensus_sender.clone()`
 $DIR/mempool/src/tests/shared_mempool_test.rs:44:5-47:8: `block_on(async {
         assert!(consensus_sender.send(req).await.is_ok());
         assert!(callback_rcv.await.is_ok());
@@ -9131,7 +8978,6 @@ $DIR/network/builder/src/test.rs:45:9-47:23: `listener_sender
             .unwrap();`
 $DIR/network/builder/src/test.rs:46:13-46:50: `.send_to(dialer_peer_id, msg.clone())`
 $DIR/network/builder/src/test.rs:48:28-48:35: `.next()`
-$DIR/network/builder/src/test.rs:57:7-57:52: `.runtime.block_on(join(f_dialer, f_listener))`
 $DIR/network/builder/src/test.rs:62:5-62:47: `::diem_logger::Logger::init_for_testing();`
 $DIR/network/builder/src/test.rs:76:22-76:93: `.send_rpc(listener_peer_id, msg_clone.clone(), Duration::from_secs(10))`
 $DIR/network/builder/src/test.rs:78:30-78:37: `.next()`
@@ -9179,12 +9025,6 @@ $DIR/network/discovery/src/validator_set.rs:208:9-213:11: `send_pubkey_update(
             different_pubkey,
             &mut reconfig_tx,
         );`
-$DIR/network/discovery/src/validator_set.rs:217:13-222:43: `timeout_at(
-                tokio::time::Instant::from(Instant::now() + Duration::from_secs(1)),
-                Box::pin(listener).run(),
-            )
-            .await
-            .expect_err("Expect timeout");`
 $DIR/network/discovery/src/validator_set.rs:219:35-219:41: `.run()`
 $DIR/network/discovery/src/validator_set.rs:226:9-226:64: `check_network_key_mismatch_metric(0, &network_context);`
 $DIR/network/discovery/src/validator_set.rs:227:9-227:59: `block_on(runtime.spawn(listener_future)).unwrap();`
@@ -9302,33 +9142,25 @@ $DIR/network/netcore/src/framing.rs:155:12-155:55: `.resize((u16::max_value() as
 $DIR/network/netcore/src/transport/memory.rs:116:33-116:73: `.listen_on("/memory/0".parse().unwrap())`
 $DIR/network/netcore/src/transport/memory.rs:116:55-116:63: `.parse()`
 $DIR/network/netcore/src/transport/memory.rs:119:45-119:59: `.into_future()`
-$DIR/network/netcore/src/transport/memory.rs:124:13-124:57: `socket.read_to_end(&mut buf).await.unwrap();`
 $DIR/network/netcore/src/transport/memory.rs:124:19-124:41: `.read_to_end(&mut buf)`
 $DIR/network/netcore/src/transport/memory.rs:128:25-128:45: `.dial(peer_id, addr)`
-$DIR/network/netcore/src/transport/memory.rs:132:13-132:61: `socket.write_all(b"hello world").await.unwrap();`
 $DIR/network/netcore/src/transport/memory.rs:132:19-132:45: `.write_all(b"hello world")`
-$DIR/network/netcore/src/transport/memory.rs:133:13-133:43: `socket.flush().await.unwrap();`
 $DIR/network/netcore/src/transport/memory.rs:133:19-133:27: `.flush()`
 $DIR/network/netcore/src/transport/memory.rs:136:9-136:42: `block_on(join(dialer, listener));`
 $DIR/network/netcore/src/transport/memory.rs:144:23-144:74: `.listen_on("/ip4/127.0.0.1/tcp/0".parse().unwrap())`
 $DIR/network/netcore/src/transport/memory.rs:144:56-144:64: `.parse()`
 $DIR/network/netcore/src/transport/memory.rs:148:23-148:79: `.dial(peer_id, "/ip4/127.0.0.1/tcp/22".parse().unwrap())`
 $DIR/network/netcore/src/transport/memory.rs:148:61-148:69: `.parse()`
-$DIR/network/netcore/src/transport/proxy_protocol.rs:186:13-186:66: `send_v4(&mut sender).await.expect("Successful send");`
 $DIR/network/netcore/src/transport/proxy_protocol.rs:194:41-194:59: `.to_socket_addrs()`
 $DIR/network/netcore/src/transport/proxy_protocol.rs:194:68-194:78: `.collect()`
 $DIR/network/netcore/src/transport/proxy_protocol.rs:195:40-195:48: `.first()`
 $DIR/network/netcore/src/transport/proxy_protocol.rs:200:9-200:40: `block_on(join(server, client));`
-$DIR/network/netcore/src/transport/proxy_protocol.rs:205:13-205:54: `receiver.read_exact(data).await.unwrap();`
 $DIR/network/netcore/src/transport/proxy_protocol.rs:205:21-205:38: `.read_exact(data)`
-$DIR/network/netcore/src/transport/proxy_protocol.rs:218:13-218:66: `send_v6(&mut sender).await.expect("Successful send");`
 $DIR/network/netcore/src/transport/proxy_protocol.rs:225:41-225:59: `.to_socket_addrs()`
 $DIR/network/netcore/src/transport/proxy_protocol.rs:225:68-225:78: `.collect()`
 $DIR/network/netcore/src/transport/proxy_protocol.rs:226:40-226:48: `.first()`
 $DIR/network/netcore/src/transport/proxy_protocol.rs:234:9-234:40: `block_on(join(server, client));`
-$DIR/network/netcore/src/transport/proxy_protocol.rs:239:13-239:54: `receiver.read_exact(data).await.unwrap();`
 $DIR/network/netcore/src/transport/proxy_protocol.rs:239:21-239:38: `.read_exact(data)`
-$DIR/network/netcore/src/transport/proxy_protocol.rs:258:13-258:54: `.for_each(|addr| test_skip_address(addr))`
 $DIR/network/netcore/src/transport/proxy_protocol.rs:300:9-300:38: `test_error_case(&[&[0; 12]]);`
 $DIR/network/netcore/src/transport/proxy_protocol.rs:303:9-303:54: `test_error_case(&[&PPV2_SIGNATURE, &[0x00]]);`
 $DIR/network/netcore/src/transport/proxy_protocol.rs:306:9-306:54: `test_error_case(&[&PPV2_SIGNATURE, &[0x22]]);`
@@ -9376,7 +9208,6 @@ $DIR/network/netcore/src/transport/tcp.rs:374:50-374:58: `.parse()`
 $DIR/network/netcore/src/transport/tcp.rs:390:17-390:37: `.collect::<Vec<_>>()`
 $DIR/network/netcore/src/transport/tcp.rs:397:17-397:37: `.collect::<Vec<_>>()`
 $DIR/network/netcore/src/transport/tcp.rs:404:17-404:37: `.collect::<Vec<_>>()`
-$DIR/network/netcore/src/transport/tcp.rs:408:11-408:23: `.block_on(f)`
 $DIR/network/src/connectivity_manager/test.rs:321:9-321:49: `mock.trigger_connectivity_check().await;`
 $DIR/network/src/connectivity_manager/test.rs:321:13-321:42: `.trigger_connectivity_check()`
 $DIR/network/src/connectivity_manager/test.rs:322:9-322:44: `mock.trigger_pending_dials().await;`
@@ -9670,31 +9501,21 @@ $DIR/network/src/noise/fuzzing.rs:198:5-198:31: `fuzz_responder(&init_msg);`
 $DIR/network/src/noise/fuzzing.rs:199:5-199:31: `fuzz_initiator(&resp_msg);`
 $DIR/network/src/noise/handshake.rs:573:19-573:88: `.upgrade_outbound(dialer_socket, server_public_key, bad_timestamp(1))`
 $DIR/network/src/noise/handshake.rs:574:19-574:52: `.upgrade_inbound(listener_socket)`
-$DIR/network/src/noise/handshake.rs:577:9-577:33: `client_session.unwrap();`
 $DIR/network/src/noise/handshake.rs:583:19-583:88: `.upgrade_outbound(dialer_socket, server_public_key, bad_timestamp(0))`
 $DIR/network/src/noise/handshake.rs:584:19-584:52: `.upgrade_inbound(listener_socket)`
-$DIR/network/src/noise/handshake.rs:587:9-587:37: `client_session.unwrap_err();`
-$DIR/network/src/noise/handshake.rs:588:9-588:37: `server_session.unwrap_err();`
 $DIR/network/src/noise/handshake.rs:593:19-593:88: `.upgrade_outbound(dialer_socket, server_public_key, bad_timestamp(1))`
 $DIR/network/src/noise/handshake.rs:594:19-594:52: `.upgrade_inbound(listener_socket)`
-$DIR/network/src/noise/handshake.rs:597:9-597:37: `client_session.unwrap_err();`
-$DIR/network/src/noise/handshake.rs:598:9-598:37: `server_session.unwrap_err();`
 $DIR/network/src/noise/handshake.rs:603:19-603:88: `.upgrade_outbound(dialer_socket, server_public_key, bad_timestamp(2))`
 $DIR/network/src/noise/handshake.rs:604:19-604:52: `.upgrade_inbound(listener_socket)`
-$DIR/network/src/noise/handshake.rs:607:9-607:33: `client_session.unwrap();`
 $DIR/network/src/noise/handshake.rs:661:9-661:75: `client.noise_config = noise::NoiseConfig::new(client_private_key);`
-$DIR/network/src/noise/handshake.rs:664:9-664:33: `client_res.unwrap_err();`
-$DIR/network/src/noise/handshake.rs:685:9-685:33: `client_res.unwrap_err();`
 $DIR/network/src/noise/handshake.rs:691:9-691:51: `::diem_logger::Logger::init_for_testing();`
 $DIR/network/src/noise/handshake.rs:695:9-695:86: `client.network_context = NetworkContext::mock_with_peer_id(PeerId::random());`
-$DIR/network/src/noise/handshake.rs:698:9-698:33: `client_res.unwrap_err();`
 $DIR/network/src/noise/handshake.rs:708:9-708:45: `dialer_socket.set_fragmented_read();`
 $DIR/network/src/noise/handshake.rs:708:22-708:44: `.set_fragmented_read()`
 $DIR/network/src/noise/handshake.rs:709:9-709:47: `listener_socket.set_fragmented_read();`
 $DIR/network/src/noise/handshake.rs:709:24-709:46: `.set_fragmented_read()`
 $DIR/network/src/noise/handshake.rs:716:19-716:97: `.upgrade_outbound(dialer_socket, server_public_key, AntiReplayTimestamps::now)`
 $DIR/network/src/noise/handshake.rs:717:19-717:52: `.upgrade_inbound(listener_socket)`
-$DIR/network/src/noise/handshake.rs:720:9-720:33: `client_session.unwrap();`
 $DIR/network/src/noise/stream.rs:620:9-620:52: `block_on(client.write_all(b"stormlight"))?;`
 $DIR/network/src/noise/stream.rs:620:24-620:49: `.write_all(b"stormlight")`
 $DIR/network/src/noise/stream.rs:621:9-621:43: `block_on(client.write_all(b" "))?;`
@@ -9762,20 +9583,15 @@ $DIR/network/src/peer/fuzzing.rs:133:9-133:23: `fuzz(&corpus);`
 $DIR/network/src/peer/test.rs:201:5-201:47: `::diem_logger::Logger::init_for_testing();`
 $DIR/network/src/peer/test.rs:205:15-205:24: `.handle()`
 $DIR/network/src/peer/test.rs:224:36-224:43: `.next()`
-$DIR/network/src/peer/test.rs:228:9-228:44: `client_sink.close().await.unwrap();`
 $DIR/network/src/peer/test.rs:228:20-228:28: `.close()`
 $DIR/network/src/peer/test.rs:234:13-234:60: `peer_handle.send_direct_send(send_msg.clone());`
 $DIR/network/src/peer/test.rs:234:24-234:59: `.send_direct_send(send_msg.clone())`
-$DIR/network/src/peer/test.rs:237:7-237:61: `.block_on(future::join3(peer.start(), server, client))`
 $DIR/network/src/peer/test.rs:237:35-237:43: `.start()`
 $DIR/network/src/peer/test.rs:244:5-244:47: `::diem_logger::Logger::init_for_testing();`
 $DIR/network/src/peer/test.rs:248:15-248:24: `.handle()`
-$DIR/network/src/peer/test.rs:267:13-267:55: `connection.send(&send_msg).await.unwrap();`
 $DIR/network/src/peer/test.rs:267:23-267:39: `.send(&send_msg)`
-$DIR/network/src/peer/test.rs:270:9-270:43: `connection.close().await.unwrap();`
 $DIR/network/src/peer/test.rs:270:19-270:27: `.close()`
 $DIR/network/src/peer/test.rs:276:42-276:49: `.next()`
-$DIR/network/src/peer/test.rs:280:7-280:61: `.block_on(future::join3(peer.start(), server, client))`
 $DIR/network/src/peer/test.rs:280:35-280:43: `.start()`
 $DIR/network/src/peer/test.rs:287:5-287:47: `::diem_logger::Logger::init_for_testing();`
 $DIR/network/src/peer/test.rs:292:38-292:47: `.handle()`
@@ -9800,27 +9616,21 @@ $DIR/network/src/peer/test.rs:328:9-333:16: `assert_disconnected_event(
             &mut connection_notifs_rx_b,
         )
         .await;`
-$DIR/network/src/peer/test.rs:336:7-336:69: `.block_on(future::join3(peer_a.start(), peer_b.start(), test))`
 $DIR/network/src/peer/test.rs:336:37-336:45: `.start()`
 $DIR/network/src/peer/test.rs:336:53-336:61: `.start()`
 $DIR/network/src/peer/test.rs:341:5-341:47: `::diem_logger::Logger::init_for_testing();`
 $DIR/network/src/peer/test.rs:345:15-345:24: `.handle()`
-$DIR/network/src/peer/test.rs:371:13-371:56: `client_sink.send(&send_msg).await.unwrap();`
 $DIR/network/src/peer/test.rs:371:24-371:40: `.send(&send_msg)`
 $DIR/network/src/peer/test.rs:373:41-373:48: `.next()`
-$DIR/network/src/peer/test.rs:377:9-377:44: `client_sink.close().await.unwrap();`
 $DIR/network/src/peer/test.rs:377:20-377:28: `.close()`
 $DIR/network/src/peer/test.rs:382:42-382:49: `.next()`
 $DIR/network/src/peer/test.rs:389:21-389:55: `req.res_tx.send(response).unwrap()`
 $DIR/network/src/peer/test.rs:389:24-389:46: `.res_tx.send(response)`
-$DIR/network/src/peer/test.rs:395:7-395:61: `.block_on(future::join3(peer.start(), server, client))`
 $DIR/network/src/peer/test.rs:395:35-395:43: `.start()`
 $DIR/network/src/peer/test.rs:400:5-400:47: `::diem_logger::Logger::init_for_testing();`
 $DIR/network/src/peer/test.rs:404:15-404:24: `.handle()`
-$DIR/network/src/peer/test.rs:430:13-430:56: `client_sink.send(&send_msg).await.unwrap();`
 $DIR/network/src/peer/test.rs:430:24-430:40: `.send(&send_msg)`
 $DIR/network/src/peer/test.rs:435:41-435:48: `.next()`
-$DIR/network/src/peer/test.rs:440:9-440:44: `client_sink.close().await.unwrap();`
 $DIR/network/src/peer/test.rs:440:20-440:28: `.close()`
 $DIR/network/src/peer/test.rs:447:42-447:49: `.next()`
 $DIR/network/src/peer/test.rs:449:13-452:15: `match received {
@@ -9831,41 +9641,32 @@ $DIR/network/src/peer/test.rs:450:58-450:75: `.push(req.res_tx)`
 $DIR/network/src/peer/test.rs:456:30-456:42: `.into_iter()`
 $DIR/network/src/peer/test.rs:458:13-458:48: `res_tx.send(Ok(response)).unwrap();`
 $DIR/network/src/peer/test.rs:458:19-458:38: `.send(Ok(response))`
-$DIR/network/src/peer/test.rs:461:7-461:61: `.block_on(future::join3(peer.start(), server, client))`
 $DIR/network/src/peer/test.rs:461:35-461:43: `.start()`
 $DIR/network/src/peer/test.rs:466:5-466:47: `::diem_logger::Logger::init_for_testing();`
 $DIR/network/src/peer/test.rs:471:15-471:24: `.handle()`
 $DIR/network/src/peer/test.rs:472:30-472:37: `.into()`
-$DIR/network/src/peer/test.rs:491:9-491:52: `client_sink.send(&send_msg).await.unwrap();`
 $DIR/network/src/peer/test.rs:491:20-491:36: `.send(&send_msg)`
 $DIR/network/src/peer/test.rs:494:38-494:45: `.next()`
 $DIR/network/src/peer/test.rs:507:9-507:66: `mock_time.advance_ms_async(INBOUND_RPC_TIMEOUT_MS).await;`
 $DIR/network/src/peer/test.rs:507:18-507:59: `.advance_ms_async(INBOUND_RPC_TIMEOUT_MS)`
 $DIR/network/src/peer/test.rs:511:9-511:37: `res_tx.cancellation().await;`
 $DIR/network/src/peer/test.rs:511:15-511:30: `.cancellation()`
-$DIR/network/src/peer/test.rs:514:9-514:44: `client_sink.close().await.unwrap();`
 $DIR/network/src/peer/test.rs:514:20-514:28: `.close()`
 $DIR/network/src/peer/test.rs:517:37-517:61: `.try_collect::<Vec<_>>()`
-$DIR/network/src/peer/test.rs:520:7-520:50: `.block_on(future::join(peer.start(), test))`
 $DIR/network/src/peer/test.rs:520:34-520:42: `.start()`
 $DIR/network/src/peer/test.rs:525:5-525:47: `::diem_logger::Logger::init_for_testing();`
 $DIR/network/src/peer/test.rs:529:15-529:24: `.handle()`
-$DIR/network/src/peer/test.rs:549:9-549:52: `client_sink.send(&send_msg).await.unwrap();`
 $DIR/network/src/peer/test.rs:549:20-549:36: `.send(&send_msg)`
 $DIR/network/src/peer/test.rs:552:38-552:45: `.next()`
 $DIR/network/src/peer/test.rs:565:9-565:22: `drop(res_tx);`
-$DIR/network/src/peer/test.rs:568:9-568:44: `client_sink.close().await.unwrap();`
 $DIR/network/src/peer/test.rs:568:20-568:28: `.close()`
 $DIR/network/src/peer/test.rs:571:37-571:61: `.try_collect::<Vec<_>>()`
-$DIR/network/src/peer/test.rs:574:7-574:50: `.block_on(future::join(peer.start(), test))`
 $DIR/network/src/peer/test.rs:574:34-574:42: `.start()`
 $DIR/network/src/peer/test.rs:579:5-579:47: `::diem_logger::Logger::init_for_testing();`
 $DIR/network/src/peer/test.rs:583:15-583:24: `.handle()`
 $DIR/network/src/peer/test.rs:596:17-596:87: `.send_rpc_request(PROTOCOL, Bytes::from(&b"hello world"[..]), timeout)`
 $DIR/network/src/peer/test.rs:606:41-606:48: `.next()`
-$DIR/network/src/peer/test.rs:629:13-629:56: `server_sink.send(&response).await.unwrap();`
 $DIR/network/src/peer/test.rs:629:24-629:40: `.send(&response)`
-$DIR/network/src/peer/test.rs:633:7-633:61: `.block_on(future::join3(peer.start(), server, client))`
 $DIR/network/src/peer/test.rs:633:35-633:43: `.start()`
 $DIR/network/src/peer/test.rs:638:5-638:47: `::diem_logger::Logger::init_for_testing();`
 $DIR/network/src/peer/test.rs:642:15-642:24: `.handle()`
@@ -9875,9 +9676,7 @@ $DIR/network/src/peer/test.rs:663:30-663:54: `.push(send_recv.boxed())`
 $DIR/network/src/peer/test.rs:663:45-663:53: `.boxed()`
 $DIR/network/src/peer/test.rs:667:9-667:51: `future::join_all(send_recv_futures).await;`
 $DIR/network/src/peer/test.rs:674:41-674:48: `.next()`
-$DIR/network/src/peer/test.rs:698:13-698:56: `server_sink.send(&response).await.unwrap();`
 $DIR/network/src/peer/test.rs:698:24-698:40: `.send(&response)`
-$DIR/network/src/peer/test.rs:702:7-702:61: `.block_on(future::join3(peer.start(), server, client))`
 $DIR/network/src/peer/test.rs:702:35-702:43: `.start()`
 $DIR/network/src/peer/test.rs:707:5-707:47: `::diem_logger::Logger::init_for_testing();`
 $DIR/network/src/peer/test.rs:711:15-711:24: `.handle()`
@@ -9885,11 +9684,9 @@ $DIR/network/src/peer/test.rs:727:9-727:56: `peer_handle.0.push(PROTOCOL, reques
 $DIR/network/src/peer/test.rs:727:22-727:46: `.push(PROTOCOL, request)`
 $DIR/network/src/peer/test.rs:730:37-730:44: `.next()`
 $DIR/network/src/peer/test.rs:745:9-745:27: `drop(response_rx);`
-$DIR/network/src/peer/test.rs:753:9-753:52: `server_sink.send(&response).await.unwrap();`
 $DIR/network/src/peer/test.rs:753:20-753:36: `.send(&response)`
 $DIR/network/src/peer/test.rs:756:9-756:40: `tokio::task::yield_now().await;`
 $DIR/network/src/peer/test.rs:760:9-760:27: `drop(peer_handle);`
-$DIR/network/src/peer/test.rs:762:7-762:50: `.block_on(future::join(peer.start(), test))`
 $DIR/network/src/peer/test.rs:762:34-762:42: `.start()`
 $DIR/network/src/peer/test.rs:767:5-767:47: `::diem_logger::Logger::init_for_testing();`
 $DIR/network/src/peer/test.rs:772:15-772:24: `.handle()`
@@ -9899,11 +9696,9 @@ $DIR/network/src/peer/test.rs:788:22-788:46: `.push(PROTOCOL, request)`
 $DIR/network/src/peer/test.rs:791:37-791:44: `.next()`
 $DIR/network/src/peer/test.rs:806:9-806:48: `mock_time.advance_async(timeout).await;`
 $DIR/network/src/peer/test.rs:806:18-806:41: `.advance_async(timeout)`
-$DIR/network/src/peer/test.rs:817:9-817:52: `server_sink.send(&response).await.unwrap();`
 $DIR/network/src/peer/test.rs:817:20-817:36: `.send(&response)`
 $DIR/network/src/peer/test.rs:820:9-820:40: `tokio::task::yield_now().await;`
 $DIR/network/src/peer/test.rs:824:9-824:27: `drop(peer_handle);`
-$DIR/network/src/peer/test.rs:826:7-826:50: `.block_on(future::join(peer.start(), test))`
 $DIR/network/src/peer/test.rs:826:34-826:42: `.start()`
 $DIR/network/src/peer/test.rs:832:5-832:47: `::diem_logger::Logger::init_for_testing();`
 $DIR/network/src/peer/test.rs:836:15-836:24: `.handle()`
@@ -9915,12 +9710,10 @@ $DIR/network/src/peer/test.rs:844:9-849:16: `assert_disconnected_event(
             &mut connection_notifs_rx,
         )
         .await;`
-$DIR/network/src/peer/test.rs:852:7-852:50: `.block_on(future::join(peer.start(), test))`
 $DIR/network/src/peer/test.rs:852:34-852:42: `.start()`
 $DIR/network/src/peer/test.rs:858:5-858:47: `::diem_logger::Logger::init_for_testing();`
 $DIR/network/src/peer/test.rs:862:15-862:24: `.handle()`
 $DIR/network/src/peer/test.rs:866:30-866:47: `.remote_peer_id()`
-$DIR/network/src/peer/test.rs:869:9-869:43: `connection.close().await.unwrap();`
 $DIR/network/src/peer/test.rs:869:19-869:27: `.close()`
 $DIR/network/src/peer/test.rs:870:9-875:16: `assert_disconnected_event(
             remote_peer_id,
@@ -9928,12 +9721,10 @@ $DIR/network/src/peer/test.rs:870:9-875:16: `assert_disconnected_event(
             &mut connection_notifs_rx,
         )
         .await;`
-$DIR/network/src/peer/test.rs:877:7-877:50: `.block_on(future::join(peer.start(), test))`
 $DIR/network/src/peer/test.rs:877:34-877:42: `.start()`
 $DIR/network/src/peer/test.rs:882:5-882:47: `::diem_logger::Logger::init_for_testing();`
 $DIR/network/src/peer/test.rs:885:11-885:20: `.handle()`
 $DIR/network/src/peer/test.rs:892:9-892:27: `drop(peer_handle);`
-$DIR/network/src/peer/test.rs:894:7-894:50: `.block_on(future::join(peer.start(), drop))`
 $DIR/network/src/peer/test.rs:894:34-894:42: `.start()`
 $DIR/network/src/peer_manager/conn_notifs_channel.rs:52:13-52:51: `send_new_peer(&mut sender, peer_id_a);`
 $DIR/network/src/peer_manager/conn_notifs_channel.rs:53:13-53:86: `send_lost_peer(&mut sender, peer_id_a, DisconnectReason::ConnectionLost);`
@@ -9985,7 +9776,6 @@ $DIR/network/src/peer_manager/tests.rs:280:9-289:16: `check_correct_connection_i
             &mut peer_manager,
         )
         .await;`
-$DIR/network/src/peer_manager/tests.rs:292:12-292:27: `.block_on(test)`
 $DIR/network/src/peer_manager/tests.rs:297:5-297:47: `::diem_logger::Logger::init_for_testing();`
 $DIR/network/src/peer_manager/tests.rs:303:40-303:49: `.handle()`
 $DIR/network/src/peer_manager/tests.rs:310:9-316:12: `peer_manager.add_peer(create_connection(
@@ -10026,7 +9816,6 @@ $DIR/network/src/peer_manager/tests.rs:329:9-338:16: `check_correct_connection_i
             &mut peer_manager,
         )
         .await;`
-$DIR/network/src/peer_manager/tests.rs:341:12-341:27: `.block_on(test)`
 $DIR/network/src/peer_manager/tests.rs:346:5-346:47: `::diem_logger::Logger::init_for_testing();`
 $DIR/network/src/peer_manager/tests.rs:352:40-352:49: `.handle()`
 $DIR/network/src/peer_manager/tests.rs:359:9-365:12: `peer_manager.add_peer(create_connection(
@@ -10067,7 +9856,6 @@ $DIR/network/src/peer_manager/tests.rs:378:9-387:16: `check_correct_connection_i
             &mut peer_manager,
         )
         .await;`
-$DIR/network/src/peer_manager/tests.rs:390:12-390:27: `.block_on(test)`
 $DIR/network/src/peer_manager/tests.rs:395:5-395:47: `::diem_logger::Logger::init_for_testing();`
 $DIR/network/src/peer_manager/tests.rs:401:40-401:49: `.handle()`
 $DIR/network/src/peer_manager/tests.rs:408:9-414:12: `peer_manager.add_peer(create_connection(
@@ -10108,7 +9896,6 @@ $DIR/network/src/peer_manager/tests.rs:427:9-436:16: `check_correct_connection_i
             &mut peer_manager,
         )
         .await;`
-$DIR/network/src/peer_manager/tests.rs:439:12-439:27: `.block_on(test)`
 $DIR/network/src/peer_manager/tests.rs:444:5-444:47: `::diem_logger::Logger::init_for_testing();`
 $DIR/network/src/peer_manager/tests.rs:450:40-450:49: `.handle()`
 $DIR/network/src/peer_manager/tests.rs:457:9-463:12: `peer_manager.add_peer(create_connection(
@@ -10149,7 +9936,6 @@ $DIR/network/src/peer_manager/tests.rs:476:9-485:16: `check_correct_connection_i
             &mut peer_manager,
         )
         .await;`
-$DIR/network/src/peer_manager/tests.rs:488:12-488:27: `.block_on(test)`
 $DIR/network/src/peer_manager/tests.rs:493:5-493:47: `::diem_logger::Logger::init_for_testing();`
 $DIR/network/src/peer_manager/tests.rs:499:40-499:49: `.handle()`
 $DIR/network/src/peer_manager/tests.rs:506:9-512:12: `peer_manager.add_peer(create_connection(
@@ -10190,7 +9976,6 @@ $DIR/network/src/peer_manager/tests.rs:523:9-532:16: `check_correct_connection_i
             &mut peer_manager,
         )
         .await;`
-$DIR/network/src/peer_manager/tests.rs:534:12-534:27: `.block_on(test)`
 $DIR/network/src/peer_manager/tests.rs:544:40-544:49: `.handle()`
 $DIR/network/src/peer_manager/tests.rs:548:9-554:12: `peer_manager.add_peer(create_connection(
             outbound,
@@ -10209,7 +9994,6 @@ $DIR/network/src/peer_manager/tests.rs:548:21-554:11: `.add_peer(create_connecti
 $DIR/network/src/peer_manager/tests.rs:566:39-566:46: `.into()`
 $DIR/network/src/peer_manager/tests.rs:571:9-571:53: `peer_manager.handle_connection_event(event);`
 $DIR/network/src/peer_manager/tests.rs:571:21-571:52: `.handle_connection_event(event)`
-$DIR/network/src/peer_manager/tests.rs:576:12-576:27: `.block_on(test)`
 $DIR/network/src/peer_manager/tests.rs:581:5-581:47: `::diem_logger::Logger::init_for_testing();`
 $DIR/network/src/peer_manager/tests.rs:587:40-587:49: `.handle()`
 $DIR/network/src/peer_manager/tests.rs:592:9-598:12: `peer_manager.add_peer(create_connection(
@@ -10242,7 +10026,6 @@ $DIR/network/src/peer_manager/tests.rs:626:9-626:53: `peer_manager.handle_connec
 $DIR/network/src/peer_manager/tests.rs:626:21-626:52: `.handle_connection_event(event)`
 $DIR/network/src/peer_manager/tests.rs:629:40-629:47: `.next()`
 $DIR/network/src/peer_manager/tests.rs:636:9-636:52: `disconnect_resp_rx.await.unwrap().unwrap();`
-$DIR/network/src/peer_manager/tests.rs:639:12-639:27: `.block_on(test)`
 $DIR/network/src/protocols/health_checker/test.rs:173:9-173:38: `harness.trigger_ping().await;`
 $DIR/network/src/protocols/health_checker/test.rs:173:16-173:31: `.trigger_ping()`
 $DIR/network/src/protocols/health_checker/test.rs:177:9-177:59: `harness.send_new_peer_notification(peer_id).await;`
@@ -10400,7 +10183,6 @@ $DIR/network/src/protocols/wire/messaging/v1/test.rs:85:24-85:39: `.send(&messag
 $DIR/network/src/protocols/wire/messaging/v1/test.rs:102:24-102:39: `.send(&message)`
 $DIR/network/src/protocols/wire/messaging/v1/test.rs:118:28-118:43: `.send(&message)`
 $DIR/network/src/protocols/wire/messaging/v1/test.rs:119:28-119:35: `.next()`
-$DIR/network/src/testutils/fake_socket.rs:327:13-327:56: `socket.read_exact(&mut buf).await.unwrap();`
 $DIR/network/src/testutils/fake_socket.rs:327:19-327:40: `.read_exact(&mut buf)`
 $DIR/network/src/testutils/fake_socket.rs:336:9-336:38: `socket.set_fragmented_read();`
 $DIR/network/src/testutils/fake_socket.rs:336:15-336:37: `.set_fragmented_read()`
@@ -10411,13 +10193,10 @@ $DIR/network/src/testutils/fake_socket.rs:353:9-353:41: `tx.save_writing(&mut tx
 $DIR/network/src/testutils/fake_socket.rs:353:11-353:40: `.save_writing(&mut tx_writes)`
 $DIR/network/src/testutils/fake_socket.rs:357:28-357:34: `.len()`
 $DIR/network/src/testutils/fake_socket.rs:358:31-358:48: `.write(&msg[i..])`
-$DIR/network/src/testutils/fake_socket.rs:361:35-361:52: `.written.as_ref()`
-$DIR/network/src/testutils/fake_socket.rs:364:13-364:39: `tx.close().await.unwrap();`
 $DIR/network/src/testutils/fake_socket.rs:364:15-364:23: `.close()`
 $DIR/network/src/testutils/fake_socket.rs:369:26-369:53: `.read_to_end(&mut read_buf)`
 $DIR/network/src/testutils/fake_socket.rs:381:9-381:31: `socket.set_trailing();`
 $DIR/network/src/testutils/fake_socket.rs:381:15-381:30: `.set_trailing()`
-$DIR/network/src/testutils/fake_socket.rs:385:13-385:56: `socket.read_exact(&mut buf).await.unwrap();`
 $DIR/network/src/testutils/fake_socket.rs:385:19-385:40: `.read_exact(&mut buf)`
 $DIR/network/src/testutils/fake_socket.rs:399:13-399:48: `dialer.save_writing(&mut init_msg);`
 $DIR/network/src/testutils/fake_socket.rs:399:19-399:47: `.save_writing(&mut init_msg)`
@@ -10434,14 +10213,6 @@ $DIR/network/src/testutils/fake_socket.rs:427:34-427:49: `.read(&mut buf)`
 $DIR/sdk/compatibility/src/lib.rs:38:21-38:30: `.client()`
 $DIR/sdk/compatibility/src/lib.rs:40:26-40:41: `.get_metadata()`
 $DIR/sdk/compatibility/src/lib.rs:40:42-40:55: `.into_inner()`
-$DIR/sdk/compatibility/src/lib.rs:44:5-44:46: `metadata.script_hash_allow_list.unwrap();`
-$DIR/sdk/compatibility/src/lib.rs:44:13-44:45: `.script_hash_allow_list.unwrap()`
-$DIR/sdk/compatibility/src/lib.rs:45:5-45:36: `metadata.diem_version.unwrap();`
-$DIR/sdk/compatibility/src/lib.rs:45:13-45:35: `.diem_version.unwrap()`
-$DIR/sdk/compatibility/src/lib.rs:46:5-46:49: `metadata.module_publishing_allowed.unwrap();`
-$DIR/sdk/compatibility/src/lib.rs:46:13-46:48: `.module_publishing_allowed.unwrap()`
-$DIR/sdk/compatibility/src/lib.rs:47:5-47:46: `metadata.dual_attestation_limit.unwrap();`
-$DIR/sdk/compatibility/src/lib.rs:47:13-47:45: `.dual_attestation_limit.unwrap()`
 $DIR/sdk/compatibility/src/lib.rs:56:21-56:30: `.client()`
 $DIR/sdk/compatibility/src/lib.rs:58:33-58:48: `.get_metadata()`
 $DIR/sdk/compatibility/src/lib.rs:58:49-58:62: `.into_inner()`
@@ -10466,7 +10237,6 @@ $DIR/sdk/compatibility/src/lib.rs:176:65-176:76: `.type_tag()`
 $DIR/sdk/compatibility/src/lib.rs:177:67-177:78: `.type_tag()`
 $DIR/sdk/compatibility/src/lib.rs:195:26-195:41: `.get_metadata()`
 $DIR/sdk/compatibility/src/lib.rs:195:50-195:63: `.into_inner()`
-$DIR/sdk/compatibility/src/lib.rs:196:40-196:72: `.script_hash_allow_list.unwrap()`
 $DIR/sdk/compatibility/src/lib.rs:201:49-201:56: `.code()`
 $DIR/sdk/compatibility/src/lib.rs:204:13-204:32: `.split_whitespace()`
 $DIR/sdk/compatibility/src/lib.rs:205:13-205:20: `.next()`
@@ -10491,8 +10261,6 @@ $DIR/sdk/compatibility/src/lib.rs:267:32-267:53: `.authentication_key()`
 $DIR/sdk/compatibility/src/lib.rs:269:30-269:61: `.get_account(account.address())`
 $DIR/sdk/compatibility/src/lib.rs:269:50-269:60: `.address()`
 $DIR/sdk/compatibility/src/lib.rs:269:62-269:75: `.into_inner()`
-$DIR/sdk/compatibility/src/lib.rs:271:9-272:16: `.balances
-        .iter()`
 $DIR/sdk/compatibility/src/lib.rs:273:9-273:42: `.find(|b| b.currency == currency)`
 $DIR/sdk/compatibility/src/lib.rs:284:21-284:30: `.client()`
 $DIR/sdk/compatibility/src/lib.rs:286:22-286:39: `.random_account()`
@@ -10588,9 +10356,7 @@ $DIR/sdk/compatibility/src/lib.rs:399:44-399:57: `.into_inner()`
 $DIR/sdk/compatibility/src/lib.rs:402:27-402:54: `.try_into_get_state_proof()`
 $DIR/sdk/compatibility/src/lib.rs:403:29-403:69: `.try_into_get_account_state_with_proof()`
 $DIR/sdk/compatibility/src/lib.rs:404:27-404:70: `.try_into_get_event_by_version_with_proof()`
-$DIR/sdk/compatibility/src/lib.rs:407:19-407:56: `.ledger_info_with_signatures.as_ref()`
 $DIR/sdk/compatibility/src/lib.rs:409:37-409:51: `.ledger_info()`
-$DIR/sdk/compatibility/src/lib.rs:411:61-411:75: `.blob.as_ref()`
 $DIR/sdk/compatibility/src/lib.rs:412:37-412:63: `.get_diem_block_resource()`
 $DIR/sdk/compatibility/src/lib.rs:412:73-412:82: `.height()`
 $DIR/sdk/compatibility/src/lib.rs:415:5-420:8: `event_proof.verify(
@@ -10606,7 +10372,6 @@ $DIR/sdk/compatibility/src/lib.rs:415:16-420:6: `.verify(
         latest_li.version(),
     )`
 $DIR/sdk/compatibility/src/lib.rs:419:18-419:28: `.version()`
-$DIR/sdk/compatibility/src/lib.rs:424:28-424:54: `.lower_bound_incl.unwrap()`
 $DIR/sdk/compatibility/src/lib.rs:436:21-436:30: `.client()`
 $DIR/sdk/compatibility/src/lib.rs:438:26-438:43: `.random_account()`
 $DIR/sdk/compatibility/src/lib.rs:441:5-442:64: `env.coffer()
@@ -10636,8 +10401,6 @@ $DIR/sdk/compatibility/src/lib.rs:456:11-456:57: `.wait_for_signed_transaction(&
 $DIR/sdk/compatibility/src/lib.rs:459:9-459:46: `.get_account(child_account.address())`
 $DIR/sdk/compatibility/src/lib.rs:459:35-459:45: `.address()`
 $DIR/sdk/compatibility/src/lib.rs:460:9-460:22: `.into_inner()`
-$DIR/sdk/compatibility/src/lib.rs:463:9-464:16: `.balances
-        .iter()`
 $DIR/sdk/compatibility/src/lib.rs:465:9-465:42: `.find(|b| b.currency == currency)`
 $DIR/sdk/compatibility/src/lib.rs:476:21-476:30: `.client()`
 $DIR/sdk/compatibility/src/lib.rs:481:26-481:43: `.random_account()`
@@ -10662,8 +10425,6 @@ $DIR/sdk/compatibility/src/lib.rs:499:11-499:57: `.wait_for_signed_transaction(&
 $DIR/sdk/compatibility/src/lib.rs:502:30-502:61: `.get_account(account.address())`
 $DIR/sdk/compatibility/src/lib.rs:502:50-502:60: `.address()`
 $DIR/sdk/compatibility/src/lib.rs:502:62-502:75: `.into_inner()`
-$DIR/sdk/compatibility/src/lib.rs:504:9-505:16: `.balances
-        .iter()`
 $DIR/sdk/compatibility/src/lib.rs:506:9-506:47: `.find(|b| b.currency == Currency::XDX)`
 $DIR/sdk/compatibility/src/lib.rs:517:21-517:30: `.client()`
 $DIR/sdk/compatibility/src/lib.rs:523:26-523:43: `.random_account()`
@@ -10697,14 +10458,10 @@ $DIR/sdk/compatibility/src/lib.rs:538:11-538:57: `.wait_for_signed_transaction(&
 $DIR/sdk/compatibility/src/lib.rs:540:32-540:63: `.get_account(account.address())`
 $DIR/sdk/compatibility/src/lib.rs:540:52-540:62: `.address()`
 $DIR/sdk/compatibility/src/lib.rs:540:64-540:77: `.into_inner()`
-$DIR/sdk/compatibility/src/lib.rs:542:9-543:16: `.balances
-        .iter()`
 $DIR/sdk/compatibility/src/lib.rs:544:9-544:42: `.find(|b| b.currency == currency)`
 $DIR/sdk/compatibility/src/lib.rs:549:9-549:42: `.get_account(account_2.address())`
 $DIR/sdk/compatibility/src/lib.rs:549:31-549:41: `.address()`
 $DIR/sdk/compatibility/src/lib.rs:550:9-550:22: `.into_inner()`
-$DIR/sdk/compatibility/src/lib.rs:553:9-554:16: `.balances
-        .iter()`
 $DIR/sdk/compatibility/src/lib.rs:555:9-555:42: `.find(|b| b.currency == currency)`
 $DIR/sdk/compatibility/src/lib.rs:566:21-566:30: `.client()`
 $DIR/sdk/compatibility/src/lib.rs:571:26-571:43: `.random_account()`
@@ -10745,8 +10502,6 @@ $DIR/sdk/compatibility/src/lib.rs:605:62-605:75: `.into_inner()`
 $DIR/sdk/compatibility/src/lib.rs:620:21-620:30: `.client()`
 $DIR/sdk/compatibility/src/lib.rs:623:9-623:24: `.get_metadata()`
 $DIR/sdk/compatibility/src/lib.rs:624:9-624:22: `.into_inner()`
-$DIR/sdk/compatibility/src/lib.rs:625:9-626:18: `.dual_attestation_limit
-        .unwrap()`
 $DIR/sdk/compatibility/src/lib.rs:631:26-631:43: `.random_account()`
 $DIR/sdk/compatibility/src/lib.rs:632:5-633:70: `env.coffer()
         .fund(currency, account.authentication_key(), start_amount)?;`
@@ -10821,20 +10576,14 @@ $DIR/sdk/compatibility/src/lib.rs:691:11-691:57: `.wait_for_signed_transaction(&
 $DIR/sdk/compatibility/src/lib.rs:693:32-693:63: `.get_account(account.address())`
 $DIR/sdk/compatibility/src/lib.rs:693:52-693:62: `.address()`
 $DIR/sdk/compatibility/src/lib.rs:693:64-693:77: `.into_inner()`
-$DIR/sdk/compatibility/src/lib.rs:695:9-696:16: `.balances
-        .iter()`
 $DIR/sdk/compatibility/src/lib.rs:697:9-697:42: `.find(|b| b.currency == currency)`
 $DIR/sdk/compatibility/src/lib.rs:702:9-702:42: `.get_account(account_2.address())`
 $DIR/sdk/compatibility/src/lib.rs:702:31-702:41: `.address()`
 $DIR/sdk/compatibility/src/lib.rs:703:9-703:22: `.into_inner()`
-$DIR/sdk/compatibility/src/lib.rs:706:9-707:16: `.balances
-        .iter()`
 $DIR/sdk/compatibility/src/lib.rs:708:9-708:42: `.find(|b| b.currency == currency)`
 $DIR/sdk/compatibility/src/lib.rs:719:21-719:30: `.client()`
 $DIR/sdk/compatibility/src/lib.rs:722:9-722:24: `.get_metadata()`
 $DIR/sdk/compatibility/src/lib.rs:723:9-723:22: `.into_inner()`
-$DIR/sdk/compatibility/src/lib.rs:724:9-725:18: `.dual_attestation_limit
-        .unwrap()`
 $DIR/sdk/compatibility/src/lib.rs:730:26-730:43: `.random_account()`
 $DIR/sdk/compatibility/src/lib.rs:731:5-732:70: `env.coffer()
         .fund(currency, account.authentication_key(), start_amount)?;`
@@ -10879,14 +10628,10 @@ $DIR/sdk/compatibility/src/lib.rs:756:11-756:57: `.wait_for_signed_transaction(&
 $DIR/sdk/compatibility/src/lib.rs:758:32-758:63: `.get_account(account.address())`
 $DIR/sdk/compatibility/src/lib.rs:758:52-758:62: `.address()`
 $DIR/sdk/compatibility/src/lib.rs:758:64-758:77: `.into_inner()`
-$DIR/sdk/compatibility/src/lib.rs:760:9-761:16: `.balances
-        .iter()`
 $DIR/sdk/compatibility/src/lib.rs:762:9-762:42: `.find(|b| b.currency == currency)`
 $DIR/sdk/compatibility/src/lib.rs:767:9-767:46: `.get_account(child_account.address())`
 $DIR/sdk/compatibility/src/lib.rs:767:35-767:45: `.address()`
 $DIR/sdk/compatibility/src/lib.rs:768:9-768:22: `.into_inner()`
-$DIR/sdk/compatibility/src/lib.rs:771:9-772:16: `.balances
-        .iter()`
 $DIR/sdk/compatibility/src/lib.rs:773:9-773:42: `.find(|b| b.currency == currency)`
 $DIR/sdk/offchain/src/identifier.rs:388:9-388:47: `hex_address.push_str(ACCOUNT_ADDRESS);`
 $DIR/sdk/offchain/src/identifier.rs:388:20-388:46: `.push_str(ACCOUNT_ADDRESS)`
@@ -11278,7 +11023,6 @@ $DIR/state-sync/tests/integration_tests.rs:89:26-89:49: `.get_state_sync_peer(0)
 $DIR/state-sync/tests/integration_tests.rs:90:26-90:49: `.get_state_sync_peer(1)`
 $DIR/state-sync/tests/integration_tests.rs:92:5-92:27: `validator_0.commit(1);`
 $DIR/state-sync/tests/integration_tests.rs:92:16-92:26: `.commit(1)`
-$DIR/state-sync/tests/integration_tests.rs:93:16-93:49: `.sync_to(validator_0.latest_li())`
 $DIR/state-sync/tests/integration_tests.rs:93:36-93:48: `.latest_li()`
 $DIR/state-sync/tests/integration_tests.rs:100:5-100:40: `env.start_validator_peer(0, false);`
 $DIR/state-sync/tests/integration_tests.rs:100:8-100:39: `.start_validator_peer(0, false)`
@@ -11452,7 +11196,6 @@ $DIR/state-sync/tests/integration_tests.rs:320:5-320:45: `check_chunk_request(me
 $DIR/state-sync/tests/integration_tests.rs:321:27-321:63: `.deliver_msg(fullnode_1_peer_id_pfn)`
 $DIR/state-sync/tests/integration_tests.rs:322:5-322:50: `check_chunk_response(message, 600, 401, 200);`
 $DIR/state-sync/tests/integration_tests.rs:323:8-323:31: `.get_state_sync_peer(2)`
-$DIR/state-sync/tests/integration_tests.rs:323:31-323:64: `.wait_for_version(600, Some(600))`
 $DIR/state-sync/tests/integration_tests.rs:330:5-330:39: `env.start_validator_peer(0, true);`
 $DIR/state-sync/tests/integration_tests.rs:330:8-330:38: `.start_validator_peer(0, true)`
 $DIR/state-sync/tests/integration_tests.rs:331:5-331:38: `env.start_fullnode_peer(1, true);`
@@ -11722,7 +11465,6 @@ $DIR/storage/backup/backup-cli/src/backup_types/epoch_ending/tests.rs:102:9-102:
 $DIR/storage/backup/backup-cli/src/backup_types/epoch_ending/tests.rs:102:21-102:35: `.ledger_info()`
 $DIR/storage/backup/backup-cli/src/backup_types/epoch_ending/tests.rs:102:35-102:54: `.next_block_epoch()`
 $DIR/storage/backup/backup-cli/src/backup_types/epoch_ending/tests.rs:103:9-103:22: `.unwrap_or(0)`
-$DIR/storage/backup/backup-cli/src/backup_types/epoch_ending/tests.rs:120:7-120:48: `.shutdown_timeout(Duration::from_secs(1))`
 $DIR/storage/backup/backup-cli/src/backup_types/state_snapshot/tests.rs:28:5-28:41: `tgt_db_dir.create_as_dir().unwrap();`
 $DIR/storage/backup/backup-cli/src/backup_types/state_snapshot/tests.rs:28:15-28:31: `.create_as_dir()`
 $DIR/storage/backup/backup-cli/src/backup_types/state_snapshot/tests.rs:30:5-30:41: `backup_dir.create_as_dir().unwrap();`
@@ -11787,7 +11529,6 @@ $DIR/storage/backup/backup-cli/src/backup_types/state_snapshot/tests.rs:57:7-77:
 $DIR/storage/backup/backup-cli/src/backup_types/state_snapshot/tests.rs:65:40-65:47: `.path()`
 $DIR/storage/backup/backup-cli/src/backup_types/state_snapshot/tests.rs:71:13-71:24: `.try_into()`
 $DIR/storage/backup/backup-cli/src/backup_types/state_snapshot/tests.rs:76:9-76:15: `.run()`
-$DIR/storage/backup/backup-cli/src/backup_types/state_snapshot/tests.rs:95:7-95:48: `.shutdown_timeout(Duration::from_secs(1))`
 $DIR/storage/backup/backup-cli/src/backup_types/transaction/tests.rs:28:5-28:41: `tgt_db_dir.create_as_dir().unwrap();`
 $DIR/storage/backup/backup-cli/src/backup_types/transaction/tests.rs:28:15-28:31: `.create_as_dir()`
 $DIR/storage/backup/backup-cli/src/backup_types/transaction/tests.rs:30:5-30:41: `backup_dir.create_as_dir().unwrap();`
@@ -11870,7 +11611,6 @@ $DIR/storage/backup/backup-cli/src/backup_types/transaction/tests.rs:116:9-121:1
             target_version,
             true, /* fetch_events */
         )`
-$DIR/storage/backup/backup-cli/src/backup_types/transaction/tests.rs:146:7-146:48: `.shutdown_timeout(Duration::from_secs(1))`
 $DIR/storage/backup/backup-cli/src/storage/command_adapter/tests.rs:156:5-158:8: `block_on(assert_commands_error(
         "echo okay; exec 1>&-; false; cat > /dev/null",
     ));`
@@ -11885,40 +11625,6 @@ $DIR/storage/backup/backup-cli/src/storage/command_adapter/tests.rs:184:5-186:8:
 $DIR/storage/backup/backup-cli/src/storage/command_adapter/tests.rs:188:5-190:8: `block_on(assert_commands_error(
         "echo okay | (cat; true) | cat; exec 1>&-; cat | (cat; false) | cat > /dev/null",
     ));`
-$DIR/storage/backup/backup-cli/src/utils/read_record_bytes.rs:75:32-108:11: `.block_on(async {
-            let data = b"abc";
-            let size = (data.len() as u32).to_be_bytes();
-
-            let mut good_record = size.to_vec();
-            good_record.extend_from_slice(data);
-
-            assert_eq!(
-                good_record
-                    .as_slice()
-                    .read_record_bytes()
-                    .await
-                    .unwrap()
-                    .unwrap(),
-                &data[..],
-            );
-
-            let mut eof: &[u8] = &[];
-            assert!(eof.read_record_bytes().await.unwrap().is_none());
-
-            let mut empty = &0u32.to_be_bytes()[..];
-            assert_eq!(empty.read_record_bytes().await.unwrap().unwrap(), &[][..]);
-
-            let mut data_missing = &1u32.to_be_bytes()[..];
-            assert!(data_missing.read_record_bytes().await.is_err());
-
-            let mut bad_len = 10u32.to_be_bytes().to_vec();
-            bad_len.pop();
-            assert!(bad_len.as_slice().read_record_bytes().await.is_err());
-
-            let mut bad_data = 10u32.to_be_bytes().to_vec();
-            bad_data.push(0u8);
-            assert!(bad_data.as_slice().read_record_bytes().await.is_err());
-        })`
 $DIR/storage/backup/backup-cli/src/utils/read_record_bytes.rs:77:29-77:35: `.len()`
 $DIR/storage/backup/backup-cli/src/utils/read_record_bytes.rs:77:43-77:57: `.to_be_bytes()`
 $DIR/storage/backup/backup-cli/src/utils/read_record_bytes.rs:80:13-80:49: `good_record.extend_from_slice(data);`
@@ -12565,7 +12271,6 @@ $DIR/testsuite/forge/src/txn_emitter/atomic_histogram.rs:146:9-146:36: `cur_snap
 $DIR/testsuite/forge/src/txn_emitter/atomic_histogram.rs:151:13-151:30: `prev_vec.push(i);`
 $DIR/testsuite/forge/src/txn_emitter/atomic_histogram.rs:151:21-151:29: `.push(i)`
 $DIR/testsuite/forge/src/txn_emitter/atomic_histogram.rs:153:9-153:37: `pre_snap.buckets = prev_vec;`
-$DIR/testsuite/forge/src/txn_emitter/atomic_histogram.rs:155:22-155:37: `.buckets.iter()`
 $DIR/testsuite/forge/src/txn_emitter/atomic_histogram.rs:168:13-168:60: `histogram.record_data_point(i as u64 * 100, 1);`
 $DIR/testsuite/forge/src/txn_emitter/atomic_histogram.rs:168:22-168:59: `.record_data_point(i as u64 * 100, 1)`
 $DIR/testsuite/forge/src/txn_emitter/atomic_histogram.rs:175:39-175:50: `.snapshot()`
@@ -12709,10 +12414,8 @@ $DIR/testsuite/smoke-test/src/consensus.rs:35:9-41:10: `.set_validator_config(
 $DIR/testsuite/smoke-test/src/consensus.rs:47:35-47:72: `.rotate_operator_key(&backend, false)`
 $DIR/testsuite/smoke-test/src/consensus.rs:52:27-52:57: `.get_validator_client(0, None)`
 $DIR/testsuite/smoke-test/src/consensus.rs:54:9-54:74: `.get_sequence_number(&["sequence", &txn_ctx.address.to_string()])`
-$DIR/testsuite/smoke-test/src/consensus.rs:54:52-54:72: `.address.to_string()`
 $DIR/testsuite/smoke-test/src/consensus.rs:56:27-56:57: `.get_validator_client(1, None)`
 $DIR/testsuite/smoke-test/src/consensus.rs:58:9-58:74: `.get_sequence_number(&["sequence", &txn_ctx.address.to_string()])`
-$DIR/testsuite/smoke-test/src/consensus.rs:58:52-58:72: `.address.to_string()`
 $DIR/testsuite/smoke-test/src/consensus.rs:72:9-72:72: `node_config.consensus.safety_rules.export_consensus_key = true;`
 $DIR/testsuite/smoke-test/src/consensus.rs:73:9-73:78: `save_node_config(&mut node_config, &env.validator_swarm, node_index);`
 $DIR/testsuite/smoke-test/src/consensus.rs:77:5-77:34: `env.validator_swarm.launch();`
@@ -12923,10 +12626,8 @@ $DIR/testsuite/smoke-test/src/genesis.rs:76:17-83:18: `match known_round {
                     _ => continue,
                 }`
 $DIR/testsuite/smoke-test/src/genesis.rs:93:9-93:39: `sleep(Duration::from_secs(1));`
-$DIR/testsuite/smoke-test/src/genesis.rs:97:40-97:67: `.validator_network.as_ref()`
 $DIR/testsuite/smoke-test/src/genesis.rs:97:76-97:86: `.peer_id()`
 $DIR/testsuite/smoke-test/src/genesis.rs:101:9-101:63: `.validator_config(validator_address, Some(&diem_root))`
-$DIR/testsuite/smoke-test/src/genesis.rs:103:22-103:38: `.name.as_bytes()`
 $DIR/testsuite/smoke-test/src/genesis.rs:105:24-105:48: `.validator_swarm.nodes()`
 $DIR/testsuite/smoke-test/src/genesis.rs:105:48-105:54: `.len()`
 $DIR/testsuite/smoke-test/src/genesis.rs:106:9-106:46: `env.validator_swarm.kill_node(index);`
@@ -13009,7 +12710,6 @@ $DIR/testsuite/smoke-test/src/genesis.rs:212:11-212:60: `.set_accounts(client_pr
 $DIR/testsuite/smoke-test/src/genesis.rs:212:39-212:59: `.copy_all_accounts()`
 $DIR/testsuite/smoke-test/src/genesis.rs:213:21-213:48: `.create_next_account(false)`
 $DIR/testsuite/smoke-test/src/genesis.rs:215:9-215:75: `.mint_coins(&["mintb", &acc.index.to_string(), "10", "XUS"], true)`
-$DIR/testsuite/smoke-test/src/genesis.rs:215:36-215:54: `.index.to_string()`
 $DIR/testsuite/smoke-test/src/network.rs:24:5-24:27: `env.setup_vfn_swarm();`
 $DIR/testsuite/smoke-test/src/network.rs:24:8-24:26: `.setup_vfn_swarm()`
 $DIR/testsuite/smoke-test/src/network.rs:31:5-41:8: `modify_network_of_node(&env.vfn_swarm().lock(), 0, &NetworkId::Public, |network| {
@@ -13114,8 +12814,6 @@ $DIR/testsuite/smoke-test/src/operational_tooling.rs:115:47-115:85: `.rotate_con
 $DIR/testsuite/smoke-test/src/operational_tooling.rs:119:36-119:73: `.get::<AccountAddress>(OWNER_ACCOUNT)`
 $DIR/testsuite/smoke-test/src/operational_tooling.rs:121:9-121:61: `.validator_config(validator_account, Some(&backend))`
 $DIR/testsuite/smoke-test/src/operational_tooling.rs:128:9-128:64: `.validator_set(Some(validator_account), Some(&backend))`
-$DIR/testsuite/smoke-test/src/operational_tooling.rs:130:9-131:17: `.consensus_public_key
-        .clone()`
 $DIR/testsuite/smoke-test/src/operational_tooling.rs:137:40-137:66: `.rotate_key(CONSENSUS_KEY)`
 $DIR/testsuite/smoke-test/src/operational_tooling.rs:138:47-138:84: `.rotate_consensus_key(&backend, true)`
 $DIR/testsuite/smoke-test/src/operational_tooling.rs:170:5-178:23: `op_tool
@@ -13181,7 +12879,6 @@ $DIR/testsuite/smoke-test/src/operational_tooling.rs:279:35-279:64: `.get_public
 $DIR/testsuite/smoke-test/src/operational_tooling.rs:286:5-286:27: `env.setup_vfn_swarm();`
 $DIR/testsuite/smoke-test/src/operational_tooling.rs:286:8-286:26: `.setup_vfn_swarm()`
 $DIR/testsuite/smoke-test/src/operational_tooling.rs:291:9-291:68: `.extract_peer_from_storage(VALIDATOR_NETWORK_KEY, &backend)`
-$DIR/testsuite/smoke-test/src/operational_tooling.rs:293:32-293:59: `.validator_network.unwrap()`
 $DIR/testsuite/smoke-test/src/operational_tooling.rs:294:42-294:52: `.peer_id()`
 $DIR/testsuite/smoke-test/src/operational_tooling.rs:295:45-295:60: `.identity_key()`
 $DIR/testsuite/smoke-test/src/operational_tooling.rs:295:60-295:73: `.public_key()`
@@ -13189,8 +12886,6 @@ $DIR/testsuite/smoke-test/src/operational_tooling.rs:296:37-296:44: `.next()`
 $DIR/testsuite/smoke-test/src/operational_tooling.rs:301:44-301:56: `.vfn_swarm()`
 $DIR/testsuite/smoke-test/src/operational_tooling.rs:301:56-301:63: `.lock()`
 $DIR/testsuite/smoke-test/src/operational_tooling.rs:303:9-303:67: `.extract_peer_from_storage(FULLNODE_NETWORK_KEY, &backend)`
-$DIR/testsuite/smoke-test/src/operational_tooling.rs:306:9-307:16: `.full_node_networks
-        .iter()`
 $DIR/testsuite/smoke-test/src/operational_tooling.rs:308:9-308:65: `.find(|network| network.network_id == NetworkId::Public)`
 $DIR/testsuite/smoke-test/src/operational_tooling.rs:310:42-310:52: `.peer_id()`
 $DIR/testsuite/smoke-test/src/operational_tooling.rs:311:45-311:60: `.identity_key()`
@@ -13336,14 +13031,12 @@ $DIR/testsuite/smoke-test/src/operational_tooling.rs:771:9-771:57: `.validator_c
 $DIR/testsuite/smoke-test/src/operational_tooling.rs:790:32-790:69: `.get::<AccountAddress>(OWNER_ACCOUNT)`
 $DIR/testsuite/smoke-test/src/operational_tooling.rs:792:9-792:57: `.validator_config(owner_account, Some(&backend))`
 $DIR/testsuite/smoke-test/src/operational_tooling.rs:795:9-795:60: `.validator_set(Some(owner_account), Some(&backend))`
-$DIR/testsuite/smoke-test/src/operational_tooling.rs:802:54-802:88: `.validator_network_address.clone()`
 $DIR/testsuite/smoke-test/src/operational_tooling.rs:807:5-809:19: `storage
         .set(VALIDATOR_NETWORK_ADDRESS_KEYS, "INVALID KEY")
         .unwrap();`
 $DIR/testsuite/smoke-test/src/operational_tooling.rs:808:9-808:60: `.set(VALIDATOR_NETWORK_ADDRESS_KEYS, "INVALID KEY")`
 $DIR/testsuite/smoke-test/src/operational_tooling.rs:814:39-814:81: `.validator_config(owner_account, *backend)`
 $DIR/testsuite/smoke-test/src/operational_tooling.rs:816:13-816:58: `.validator_set(Some(owner_account), *backend)`
-$DIR/testsuite/smoke-test/src/operational_tooling.rs:821:58-821:92: `.validator_network_address.clone()`
 $DIR/testsuite/smoke-test/src/operational_tooling.rs:833:32-833:69: `.get::<AccountAddress>(OWNER_ACCOUNT)`
 $DIR/testsuite/smoke-test/src/operational_tooling.rs:835:9-835:57: `.validator_config(owner_account, Some(&backend))`
 $DIR/testsuite/smoke-test/src/operational_tooling.rs:838:9-838:60: `.validator_set(Some(owner_account), Some(&backend))`
