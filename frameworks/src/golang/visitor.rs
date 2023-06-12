@@ -1,6 +1,6 @@
 use super::{
-    bounded_cursor, is_match, valid_query, Call, GenericVisitor, Golang, Statement, Storage, Test,
-    CALL_EXPRESSION_KIND,
+    bounded_cursor, cursor_matches, process_self_captures, valid_query, Call, GenericVisitor,
+    Golang, Statement, Storage, Test, CALL_EXPRESSION_KIND,
 };
 use anyhow::Result;
 use necessist_core::Span;
@@ -78,7 +78,9 @@ impl<'context, 'config, 'framework, 'ast, 'storage>
     }
 
     fn visit_tree(&mut self, tree: &'ast Tree) -> Result<()> {
-        for query_match in QueryCursor::new().matches(
+        let mut cursor = QueryCursor::new();
+        for query_match in cursor_matches(
+            &mut cursor,
             &TEST_FUNCTION_DECLARATION_QUERY,
             tree.root_node(),
             self.storage.borrow().text.as_bytes(),
@@ -288,12 +290,12 @@ impl<'context, 'config, 'framework, 'ast, 'storage>
 
         match possibility {
             Possibility::Statement
-                if is_match(
+                if process_self_captures(
                     &STATEMENT_QUERY,
                     node,
                     self.storage.borrow().text.as_bytes(),
-                )
-                .is_some() =>
+                    |captures| captures.next().is_some(),
+                ) =>
             {
                 self.visit_statement(cursor, possible_iter)?;
                 Ok(true)

@@ -9,7 +9,7 @@ use std::{
     collections::BTreeMap, convert::Infallible, fs::read_to_string, path::Path, process::Command,
 };
 use tree_sitter::{
-    Node, Parser, Point, Query, QueryCapture, QueryCursor, Range, TextProvider, Tree,
+    Node, Parser, Point, Query, QueryCapture, QueryCursor, QueryMatches, Range, TextProvider, Tree,
 };
 
 mod bounded_cursor;
@@ -273,20 +273,23 @@ impl ParseLow for Golang {
         test: <Self::Types as AbstractTypes>::Test<'ast>,
     ) -> Vec<<Self::Types as AbstractTypes>::Statement<'ast>> {
         assert_eq!(*BLOCK_KIND, test.body.kind_id());
-        collect_matches(
+        process_self_captures(
             &BLOCK_STATEMENTS_QUERY,
             test.body,
             storage.borrow().text.as_bytes(),
+            |captures| {
+                captures
+                    .into_iter()
+                    .map(|captures| {
+                        assert_eq!(2, captures.len());
+                        Statement(NodeWithText {
+                            text: storage.borrow().text,
+                            node: captures[0].node,
+                        })
+                    })
+                    .collect()
+            },
         )
-        .into_iter()
-        .map(|captures| {
-            assert_eq!(2, captures.len());
-            Statement(NodeWithText {
-                text: storage.borrow().text,
-                node: captures[0].node,
-            })
-        })
-        .collect()
     }
 
     fn statement_is_expression<'ast>(
@@ -294,10 +297,11 @@ impl ParseLow for Golang {
         _storage: &std::cell::RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
         statement: <Self::Types as AbstractTypes>::Statement<'ast>,
     ) -> Option<<Self::Types as AbstractTypes>::Expression<'ast>> {
-        if let Some(captures) = is_match(
+        if let Some(captures) = process_self_captures(
             &EXPRESSION_QUERY,
             statement.0.node,
             statement.0.text.as_bytes(),
+            |captures| captures.next(),
         ) {
             assert_eq!(1, captures.len());
             Some(Expression(NodeWithText {
@@ -474,17 +478,19 @@ fn test_file_package_path(context: &LightContext, test_file: &Path) -> Result<St
     Ok(Path::new(".").join(stripped).to_string_lossy().to_string())
 }
 
-fn is_match<'query, 'source, 'tree, T>(
+fn process_self_captures<'query, 'source, 'tree, T, U>(
     query: &'query Query,
     node: Node<'tree>,
     text_provider: T,
-) -> Option<Vec<QueryCapture<'tree>>>
+    f: impl Fn(&mut dyn Iterator<Item = Vec<QueryCapture<'tree>>>) -> U,
+) -> U
 where
+    'source: 'tree,
     T: TextProvider<'source> + 'source,
 {
     // smoelius: `STATEMENT_QUERY` does not match `node` when `node` is a statement and the query
     // starts at `node`. I don't understand why.
-    let (max_start_depth, query_node) = if let Some(parent) = node.parent() {
+    let (_max_start_depth, query_node) = if let Some(parent) = node.parent() {
         (1, parent)
     } else {
         (0, node)
@@ -492,42 +498,35 @@ where
 
     let mut cursor = QueryCursor::new();
 
+    // smoelius: Enable the next call to `set_max_start_depth` once the following is resolved:
+    // https://github.com/tree-sitter/tree-sitter/pull/2278
+    #[cfg(any())]
     cursor.set_max_start_depth(max_start_depth);
 
-    let query_matches = cursor.matches(query, query_node, text_provider);
+    let query_matches = cursor_matches(&mut cursor, query, query_node, text_provider);
 
-    query_matches
+    let mut iter = query_matches
         .map(|query_match| query_match.captures)
-        .find(|captures| captures.iter().any(|capture| capture.node == node))
-        .map(sort_captures)
+        .filter(|captures| captures.iter().any(|capture| capture.node == node))
+        .map(sort_captures);
+
+    f(&mut iter)
 }
 
-fn collect_matches<'query, 'source, 'tree, T>(
+// smoelius: `cursor_matches` is a workaround until the following is resolved:
+// https://github.com/tree-sitter/tree-sitter/pull/2273
+fn cursor_matches<'query, 'source, 'tree, 'cursor, T: TextProvider<'source> + 'source>(
+    cursor: &'cursor mut QueryCursor,
     query: &'query Query,
     node: Node<'tree>,
     text_provider: T,
-) -> Vec<Vec<QueryCapture<'tree>>>
-where
-    T: TextProvider<'source> + 'source,
-{
-    // smoelius: See comment in `is_match` just above.
-    let (max_start_depth, query_node) = if let Some(parent) = node.parent() {
-        (1, parent)
-    } else {
-        (0, node)
+) -> QueryMatches<'source, 'source, T> {
+    let cursor = unsafe {
+        std::mem::transmute::<&'cursor mut QueryCursor, &'source mut QueryCursor>(cursor)
     };
-
-    let mut cursor = QueryCursor::new();
-
-    cursor.set_max_start_depth(max_start_depth);
-
-    let query_matches = cursor.matches(query, query_node, text_provider);
-
-    query_matches
-        .map(|query_match| query_match.captures)
-        .filter(|captures| captures.iter().any(|capture| capture.node == node))
-        .map(sort_captures)
-        .collect()
+    let query = unsafe { std::mem::transmute::<&'query Query, &'source Query>(query) };
+    let node = unsafe { std::mem::transmute::<Node<'tree>, Node<'source>>(node) };
+    cursor.matches(query, node, text_provider)
 }
 
 fn sort_captures<'tree>(captures: &[QueryCapture<'tree>]) -> Vec<QueryCapture<'tree>> {
