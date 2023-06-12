@@ -419,12 +419,6 @@ impl<T: ParseLow> ParseAdapter<T> {
             .unwrap_or_default()
             .iter()
             .map(ToString::to_string)
-            .chain(
-                T::IGNORED_METHODS
-                    .unwrap_or_default()
-                    .iter()
-                    .map(|pattern| format!("*.{pattern}")),
-            )
             .collect::<Vec<_>>();
         let ignored_macros = T::IGNORED_MACROS
             .unwrap_or_default()
