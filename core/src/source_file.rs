@@ -14,12 +14,11 @@ thread_local! {
     static SOURCE_FILES: RefCell<HashMap<PathBuf, SourceFile>> = RefCell::new(HashMap::new());
 }
 
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Eq, PartialEq)]
 pub struct SourceFile {
     inner: Rc<Inner>,
 }
 
-#[derive(Debug)]
 struct Inner {
     root: Rc<PathBuf>,
     path: PathBuf,
@@ -86,6 +85,12 @@ impl SourceFile {
     #[must_use]
     pub fn offset_calculator(&self) -> &RefCell<OffsetCalculator<'static>> {
         &self.inner.offset_calculator
+    }
+}
+
+impl std::fmt::Debug for SourceFile {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        <_ as std::fmt::Debug>::fmt(&self.inner.path, f)
     }
 }
 
