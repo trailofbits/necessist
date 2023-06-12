@@ -19,7 +19,3 @@ libraries = [
     { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/ref_aware_redundant_closure_for_method_calls" },
     { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/suboptimal_pattern" },
 ]
-
-[patch.crates-io]
-# tree-sitter = { git = "https://github.com/tree-sitter/tree-sitter.git", rev = "1e81a1b" }
-tree-sitter = { git = "https://github.com/smoelius/tree-sitter.git", branch = "rework-lifetimes" }
