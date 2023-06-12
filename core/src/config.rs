@@ -107,9 +107,9 @@ impl Toml {
             other: _,
         } = self;
 
-        let ignored_functions = compile_ignored(ignored_functions)?;
-        let ignored_macros = compile_ignored(ignored_macros)?;
-        let ignored_methods = compile_ignored(ignored_methods)?;
+        let ignored_functions = compile_ignored(ignored_functions, false)?;
+        let ignored_macros = compile_ignored(ignored_macros, false)?;
+        let ignored_methods = compile_ignored(ignored_methods, true)?;
 
         Ok(Compiled {
             ignored_functions,
@@ -120,17 +120,21 @@ impl Toml {
     }
 }
 
-fn compile_ignored(ignored: impl IntoIterator<Item = impl AsRef<str>>) -> Result<Vec<Regex>> {
+fn compile_ignored(
+    ignored: impl IntoIterator<Item = impl AsRef<str>>,
+    methods: bool,
+) -> Result<Vec<Regex>> {
     ignored
         .into_iter()
-        .map(|pattern| compile_pattern(pattern.as_ref()))
+        .map(|pattern| compile_pattern(pattern.as_ref(), methods))
         .collect()
 }
 
-fn compile_pattern(pattern: &str) -> Result<Regex> {
+fn compile_pattern(pattern: &str, methods: bool) -> Result<Regex> {
     let escaped = escape(pattern)?;
 
-    Regex::new(&(String::from("^") + &escaped + "$")).map_err(Into::into)
+    Regex::new(&(String::from("^") + if methods { r"([^.]+\.)*" } else { "" } + &escaped + "$"))
+        .map_err(Into::into)
 }
 
 fn escape(pattern: &str) -> Result<String> {
@@ -192,7 +196,7 @@ fn patterns() {
     ];
 
     for (pattern, positive, negative) in EXAMPLES {
-        let re = compile_pattern(pattern).unwrap();
+        let re = compile_pattern(pattern, false).unwrap();
         for text in *positive {
             assert!(re.is_match(text));
         }
