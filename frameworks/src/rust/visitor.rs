@@ -410,8 +410,7 @@ mod test {
             .flat_map(|item| {
                 let elems = if_chain! {
                     if let Item::Const(ItemConst { ident, expr, .. }) = item;
-                    if ["WATCHED_TRAITS", "WATCHED_INHERENTS"]
-                        .contains(&ident.to_string().as_str());
+                    if ["WATCHED_TRAITS", "WATCHED_INHERENTS"].contains(&ident.to_string().as_str());
                     if let Expr::Reference(ExprReference { expr, .. }) = *expr;
                     if let Expr::Array(ExprArray { elems, .. }) = *expr;
                     then {
