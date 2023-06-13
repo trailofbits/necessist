@@ -291,9 +291,7 @@ fn is_prefix_cheatcode(stmt: &Statement) -> bool {
         if let Statement::Expression(_, expr) = stmt;
         if let Some(MethodCall {
             obj,
-            ident: Identifier {
-                name: method, ..
-            },
+            ident: Identifier { name: method, .. },
             ..
         }) = is_method_call(expr);
         if let Expression::Variable(var) = obj;

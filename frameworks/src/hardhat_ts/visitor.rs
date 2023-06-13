@@ -86,7 +86,10 @@ impl<'config, 'framework> Visit for Visitor<'config, 'framework> {
                 let mut span = *span;
                 span.lo = obj.span().hi;
                 assert!(span.lo <= span.hi);
-                self.elevate_span(span.to_internal_span(&self.source_map, &self.source_file), it_message.clone());
+                self.elevate_span(
+                    span.to_internal_span(&self.source_map, &self.source_file),
+                    it_message.clone(),
+                );
             }
         }
     }
@@ -128,9 +131,9 @@ impl<'config, 'framework> Visit for Visitor<'config, 'framework> {
             if !ignored_function_call;
             if !is_method_call_statement(stmt);
             if !matches!(
-                    stmt,
-                    Stmt::Break(_) | Stmt::Continue(_) | Stmt::Decl(_) | Stmt::Return(_)
-                );
+                stmt,
+                Stmt::Break(_) | Stmt::Continue(_) | Stmt::Decl(_) | Stmt::Return(_)
+            );
             then {
                 let span = stmt
                     .span()
@@ -176,7 +179,7 @@ fn is_it_call_expr(expr: &Expr) -> Option<String> {
         if let Expr::Ident(ident) = &**callee;
         if ident.as_ref() == "it";
         if let [arg, ..] = args.as_slice();
-        if let Expr::Lit(Lit::Str(Str{value, ..})) = &*arg.expr;
+        if let Expr::Lit(Lit::Str(Str { value, .. })) = &*arg.expr;
         then {
             Some(value.to_string())
         } else {
