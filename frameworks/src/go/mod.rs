@@ -76,11 +76,11 @@ fn non_zero_kind_id(kind: &str) -> u16 {
 }
 
 #[derive(Debug)]
-pub struct Golang {
+pub struct Go {
     span_test_name_map: BTreeMap<Span, String>,
 }
 
-impl Golang {
+impl Go {
     pub fn applicable(context: &LightContext) -> Result<bool> {
         context.root.join("go.mod").try_exists().map_err(Into::into)
     }
@@ -206,7 +206,7 @@ impl<'ast> MaybeNamed for <Types as AbstractTypes>::Call<'ast> {
     }
 }
 
-impl ParseLow for Golang {
+impl ParseLow for Go {
     type Types = Types;
 
     const IGNORED_FUNCTIONS: Option<&'static [&'static str]> = Some(&["assert.*", "require.*"]);
@@ -417,7 +417,7 @@ impl ParseLow for Golang {
     }
 }
 
-impl RunLow for Golang {
+impl RunLow for Go {
     fn command_to_run_test_file(&self, context: &LightContext, test_file: &Path) -> Command {
         Self::test_command(context, test_file)
     }
@@ -455,7 +455,7 @@ impl RunLow for Golang {
     }
 }
 
-impl Golang {
+impl Go {
     fn test_command(context: &LightContext, test_file: &Path) -> Command {
         #[allow(clippy::expect_used)]
         let package_path = test_file_package_path(context, test_file)

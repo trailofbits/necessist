@@ -1,6 +1,6 @@
 use super::{
-    bounded_cursor, cursor_matches, process_self_captures, valid_query, Call, GenericVisitor,
-    Golang, Statement, Storage, Test, CALL_EXPRESSION_KIND,
+    bounded_cursor, cursor_matches, process_self_captures, valid_query, Call, GenericVisitor, Go,
+    Statement, Storage, Test, CALL_EXPRESSION_KIND,
 };
 use anyhow::Result;
 use necessist_core::Span;
@@ -50,7 +50,7 @@ static STATEMENT_QUERY: Lazy<Query> = Lazy::new(|| valid_query(STATEMENT_SOURCE)
     allow(non_local_effect_before_error_return)
 )]
 pub(super) fn visit<'ast>(
-    generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Golang>,
+    generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Go>,
     storage: &RefCell<Storage<'ast>>,
     tree: &'ast Tree,
 ) -> Result<Vec<Span>> {
@@ -60,7 +60,7 @@ pub(super) fn visit<'ast>(
 }
 
 struct Visitor<'context, 'config, 'framework, 'ast, 'storage> {
-    generic_visitor: GenericVisitor<'context, 'config, 'framework, 'ast, Golang>,
+    generic_visitor: GenericVisitor<'context, 'config, 'framework, 'ast, Go>,
     storage: &'storage RefCell<Storage<'ast>>,
 }
 
@@ -68,7 +68,7 @@ impl<'context, 'config, 'framework, 'ast, 'storage>
     Visitor<'context, 'config, 'framework, 'ast, 'storage>
 {
     fn new(
-        generic_visitor: GenericVisitor<'context, 'config, 'framework, 'ast, Golang>,
+        generic_visitor: GenericVisitor<'context, 'config, 'framework, 'ast, Go>,
         storage: &'storage RefCell<Storage<'ast>>,
     ) -> Self {
         Self {

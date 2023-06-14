@@ -2,7 +2,7 @@
 
 Run tests with statements and method calls removed to help identify broken tests
 
-Necessist currently supports Foundry, Golang, Hardhat TS, and Rust.
+Necessist currently supports Foundry, Go, Hardhat TS, and Rust.
 
 **Contents**
 
@@ -112,7 +112,7 @@ Options:
       --deny <WARNING>         Treat <WARNING> as an error; `--deny all` treats all warnings as errors
       --dump                   Dump sqlite database contents to the console
       --dump-candidates        Dump removal candidates and exit (for debugging)
-      --framework <FRAMEWORK>  Assume testing framework is <FRAMEWORK> [possible values: auto, foundry, golang, hardhat-ts, rust]
+      --framework <FRAMEWORK>  Assume testing framework is <FRAMEWORK> [possible values: auto, foundry, go, hardhat-ts, rust]
       --no-dry-run             Do not perform dry runs
       --no-sqlite              Do not output to an sqlite database
       --quiet                  Do not output to the console
@@ -174,9 +174,9 @@ In addition to the below, the Foundry framework ignores:
 </details>
 
 <details>
-<summary>Golang</summary>
+<summary>Go</summary>
 
-In addition to the below, the Golang framework ignores:
+In addition to the below, the Go framework ignores:
 
 - Anything beginning with `assert.` (e.g., `assert.Equal`)
 - Anything beginning with `require.` (e.g., `require.Equal`)
