@@ -3,11 +3,11 @@
 # set -x
 set -euo pipefail
 
-GOLANG="$(find . -name golang | head -n 1)"
+GO="$(find . -name go | head -n 1)"
 
 SRC=''
 
-cat "$GOLANG"/visitor.rs |
+cat "$GO"/visitor.rs |
 grep -o '\<\(fn \|self\.\)[A-Za-z_]\+(' |
 while read X; do
     DECL="$(echo "$X" | sed -n 's/^fn \([A-Za-z_]\+\)($/\1/;T;p')"

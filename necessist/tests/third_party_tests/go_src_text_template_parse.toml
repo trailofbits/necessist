@@ -1,6 +1,6 @@
 url = "https://github.com/golang/go"
 rev = "go1.20.1"
-framework = "golang"
+framework = "go"
 full = true
 
 subdir = "src/text/template/parse"

@@ -34,7 +34,7 @@ walkdir = "2.3"
 # https://github.com/hyperledger/solang/pull/1213
 solang-parser = "=0.3.0"
 
-# Golang
+# Go
 tree-sitter = "0.20"
 tree-sitter-go = "0.19"
 
