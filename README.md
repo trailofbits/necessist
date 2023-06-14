@@ -28,7 +28,7 @@ sudo apt install pkg-config libsqlite3-dev
 #### Install Necessist from [crates.io]:
 
 ```sh
-cargo install necessist --version=^0.1.0-beta
+cargo install necessist
 ```
 
 #### Install Necessist from [github.com]:
