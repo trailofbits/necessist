@@ -145,9 +145,9 @@ impl ParseLow for Foundry {
         "assert*",
         "vm.expectEmit",
         "vm.expectRevert",
-        "vm.prank",
-        "vm.startPrank",
-        "vm.stopPrank",
+        "vm.expectCall",
+        "vm.label",
+        "vm.getLabel",
     ]);
 
     const IGNORED_MACROS: Option<&'static [&'static str]> = None;
