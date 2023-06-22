@@ -171,7 +171,8 @@ fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementatio
     } else {
         let (sqlite, mut past_removals) = sqlite::init(
             context.root,
-            !context.opts.dump && !context.opts.reset && !context.opts.resume,
+            context.opts.dump,
+            context.opts.resume,
             context.opts.reset,
         )?;
         past_removals.sort_by(|left, right| left.span.cmp(&right.span));

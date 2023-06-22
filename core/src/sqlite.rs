@@ -68,7 +68,8 @@ impl Removal {
 
 pub(crate) fn init(
     root: &Path,
-    must_not_exist: bool,
+    dump: bool,
+    resume: bool,
     reset: bool,
 ) -> Result<(Sqlite, Vec<crate::Removal>)> {
     let root = Rc::new(root.to_path_buf());
@@ -76,6 +77,14 @@ pub(crate) fn init(
 
     let exists = path_buf.try_exists()?;
 
+    if dump && !exists {
+        bail!(
+            "No sqlite database found at {:?}; please remove the --dump flag",
+            path_buf
+        );
+    }
+
+    let must_not_exist = !resume && !reset;
     if must_not_exist && exists {
         bail!(
             "Found an sqlite database at {:?}; please pass either --reset or --resume",
