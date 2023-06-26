@@ -143,12 +143,15 @@ impl ParseLow for Foundry {
 
     const IGNORED_FUNCTIONS: Option<&'static [&'static str]> = Some(&[
         "assert*",
+        "console.log*",
+        "console2.log*",
         "vm.expect*",
         "vm.getLabel",
         "vm.label",
-        // tarunbhm: prank is generally used to call contracts with a privileged account so we want to find tests passing after removing them.
-        // However, in case prank is used to call contracts with less priviledged account then it results in false positivies.
-        // Revisit it later. 
+        // tarunbhm: prank is generally used to call contracts with a privileged account so we want
+        // to find tests passing after removing them. However, in case prank is used to
+        // call contracts with less privileged account then it results in false positives.
+        // Revisit it later.
         // "vm.prank",
         // "vm.startPrank",
         // "vm.stopPrank",

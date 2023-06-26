@@ -946,9 +946,5 @@ $DIR/test/validation/Validation.t.sol:92:26-92:71: `.supportsInterface(type(IERC
 $DIR/test/validation/Validation.t.sol:94:17-94:31: `_testERC721();`
 $DIR/test/validation/Validation.t.sol:96:34-96:80: `.supportsInterface(type(IERC1155).interfaceId)`
 $DIR/test/validation/Validation.t.sol:97:21-97:36: `_testERC1155();`
-$DIR/test/validation/Validation.t.sol:100:21-100:118: `console2.log("ERC165 check returned false for both ERC721 and ERC1155, falling back to ERC721.");`
-$DIR/test/validation/Validation.t.sol:100:29-100:118: `.log("ERC165 check returned false for both ERC721 and ERC1155, falling back to ERC721.");`
 $DIR/test/validation/Validation.t.sol:101:21-101:35: `_testERC721();`
-$DIR/test/validation/Validation.t.sol:106:13-106:76: `console2.log("ERC165 check reverted, falling back to ERC721.");`
-$DIR/test/validation/Validation.t.sol:106:21-106:76: `.log("ERC165 check reverted, falling back to ERC721.");`
 $DIR/test/validation/Validation.t.sol:107:13-107:27: `_testERC721();`
