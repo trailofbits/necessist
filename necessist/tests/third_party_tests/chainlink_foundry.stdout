@@ -1,12 +1,24 @@
-18 candidates in 2 test files
+34 candidates in 2 test files
 $DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol: dry running
 $DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol: mutilating
+$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:38:5-38:20: `vm.stopPrank();` failed
+$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:38:7-38:20: `.stopPrank();` nonbuildable
+$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:39:5-39:38: `vm.startPrank(subscriptionOwner);` failed
+$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:39:7-39:38: `.startPrank(subscriptionOwner);` nonbuildable
 $DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:42:5-42:40: `s_coordinator.createSubscription();` failed
 $DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:42:18-42:40: `.createSubscription();` nonbuildable
+$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:66:5-66:20: `vm.stopPrank();` failed
+$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:66:7-66:20: `.stopPrank();` nonbuildable
+$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:67:5-67:33: `vm.prank(subscriptionOwner);` failed
+$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:67:7-67:33: `.prank(subscriptionOwner);` nonbuildable
 $DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:70:5-70:40: `s_coordinator.createSubscription();` failed
 $DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:70:18-70:40: `.createSubscription();` nonbuildable
 $DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:80:42-80:60: `.balanceOf(OWNER);` nonbuildable
+$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:83:5-83:21: `vm.prank(OWNER);` failed
+$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:83:7-83:21: `.prank(OWNER);` nonbuildable
 $DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:87:5-87:82: `(balance, requestCount, owner, consumers) = s_coordinator.getSubscription(1);` failed
+$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:93:5-93:21: `vm.prank(OWNER);` failed
+$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:93:7-93:21: `.prank(OWNER);` nonbuildable
 $DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:95:41-95:59: `.balanceOf(OWNER);` nonbuildable
 $DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:102:47-106:7: `.calculatePaymentAmountTest(
       gasAfterPaymentCalculation,
@@ -21,7 +33,11 @@ $DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol:39:49-39:68: `.
 $DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol:45:5-45:44: `s_oracle.setDONPublicKey(donPublicKey);` failed
 $DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol:45:13-45:44: `.setDONPublicKey(donPublicKey);` nonbuildable
 $DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol:46:44-46:63: `.getDONPublicKey();` nonbuildable
+$DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol:60:5-60:20: `vm.stopPrank();` failed
+$DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol:60:7-60:20: `.stopPrank();` nonbuildable
 $DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol:77:47-77:62: `.getRegistry();` nonbuildable
 $DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol:81:5-81:43: `s_oracle.setRegistry(registryAddress);` failed
 $DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol:81:13-81:43: `.setRegistry(registryAddress);` nonbuildable
 $DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol:82:42-82:57: `.getRegistry();` nonbuildable
+$DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol:96:5-96:20: `vm.stopPrank();` failed
+$DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol:96:7-96:20: `.stopPrank();` nonbuildable
