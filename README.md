@@ -159,17 +159,15 @@ Also, for some frameworks, certain statements and methods are ignored. Click on 
 
 In addition to the below, the Foundry framework ignores:
 
-- a statement immediately following a use of `vm.prank` or any form of `vm.expect` (e.g., `vm.expectRevert`)
+- a statement immediately following a use of any form of `vm.expect` (e.g., `vm.expectRevert`)
 - an `emit` statement
 
 #### Ignored functions
 
 - Anything beginning with `assert` (e.g., `assertEq`)
-- `vm.expectEmit`
-- `vm.expectRevert`
-- `vm.prank`
-- `vm.startPrank`
-- `vm.stopPrank`
+- Anything beginning with `vm.expect` (e.g., `vm.expectCall`)
+- `vm.getLabel`
+- `vm.label`
 
 </details>
 
