@@ -1386,7 +1386,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4dd7d28ee937e54fe3080c91faa1c3a46c06de6252988a7f4592ba2310ef22a4"
 dependencies = [
  "fixedbitset",
- "indexmap 1.9.2",
+ "indexmap 1.9.3",
 ]
 
 [[package]]
@@ -2159,7 +2159,7 @@ checksum = "ef3d6800cc1500dfb6983cefac6c6dbf0ea8b2af8dcb1d2e25cae01226479744"
 dependencies = [
  "better_scoped_tls",
  "bitflags 2.3.2",
- "indexmap 1.9.2",
+ "indexmap 1.9.3",
  "once_cell",
  "phf 0.10.1",
  "rustc-hash",
@@ -2180,7 +2180,7 @@ version = "0.119.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "452c66399edeb88a97bfdc3bbf11e45db85fdf883bfd4fc8bdd93abb92152b9b"
 dependencies = [
- "indexmap 1.9.2",
+ "indexmap 1.9.3",
  "num_cpus",
  "once_cell",
  "rustc-hash",
