@@ -4,7 +4,7 @@
     allow(inconsistent_qualification)
 )]
 
-use crate::{util, Outcome, Span};
+use crate::{util, warn, LightContext, Outcome, Span, WarnFlags, Warning};
 use anyhow::{bail, Context, Result};
 use diesel::{insert_into, prelude::*, sql_query, sqlite::SqliteConnection};
 use git2::{Oid, Repository, RepositoryOpenFlags};
@@ -67,6 +67,7 @@ impl Removal {
 }
 
 pub(crate) fn init(
+    context: &LightContext,
     root: &Path,
     dump: bool,
     resume: bool,
@@ -77,19 +78,35 @@ pub(crate) fn init(
 
     let exists = path_buf.try_exists()?;
 
-    if dump && !exists {
-        bail!(
-            "No sqlite database found at {:?}; please remove the --dump flag",
-            path_buf
-        );
-    }
+    let nodb_msg = |flag: &str| {
+        format!(
+            "No sqlite database found at {:?} to {}; creating new database",
+            path_buf, flag
+        )
+    };
 
-    let must_not_exist = !resume && !reset;
-    if must_not_exist && exists {
-        bail!(
+    match (exists, dump, resume, reset) {
+        (true, false, false, false) => bail!(
             "Found an sqlite database at {:?}; please pass either --reset or --resume",
             path_buf
-        );
+        ),
+        (false, true, _, _) => bail!(
+            "No sqlite database found at {:?}; please remove the --dump flag",
+            path_buf
+        ),
+        (false, _, true, _) => warn(
+            context,
+            Warning::DatabaseDoesNotExist,
+            &nodb_msg("resume"),
+            WarnFlags::ONCE,
+        )?,
+        (false, _, _, true) => warn(
+            context,
+            Warning::DatabaseDoesNotExist,
+            &nodb_msg("reset"),
+            WarnFlags::ONCE,
+        )?,
+        _ => (),
     }
 
     let database_url = format!("sqlite://{}", path_buf.to_string_lossy());
