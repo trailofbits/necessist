@@ -170,6 +170,7 @@ fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementatio
         (None, Vec::new())
     } else {
         let (sqlite, mut past_removals) = sqlite::init(
+            context,
             context.root,
             context.opts.dump,
             context.opts.resume,
