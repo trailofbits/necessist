@@ -1,0 +1,1 @@
+Error: --dump was passed, but no sqlite database found at "[CWD]/examples/basic/necessist.db"
