@@ -294,7 +294,7 @@ fn clippy_command(cargo_args: &[&str], rustc_args: &[&str]) -> Command {
 }
 
 fn preserves_cleanliness(f: impl FnOnce()) {
-    if cfg!(not(feature = "strict")) && dirty() {
+    if cfg!(not(feature = "strict")) && dirty().is_some() {
         #[allow(clippy::explicit_write)]
         writeln!(stderr(), "Skipping as repository is dirty").unwrap();
         return;
@@ -302,13 +302,20 @@ fn preserves_cleanliness(f: impl FnOnce()) {
 
     f();
 
-    assert!(!dirty());
+    if let Some(stdout) = dirty() {
+        panic!("{}", stdout);
+    }
 }
 
-fn dirty() -> bool {
-    Command::new("git")
+fn dirty() -> Option<String> {
+    let output = Command::new("git")
         .args(["diff", "--exit-code"])
-        .assert()
-        .try_success()
-        .is_err()
+        .output()
+        .unwrap();
+
+    if output.status.success() {
+        None
+    } else {
+        Some(String::from_utf8(output.stdout).unwrap())
+    }
 }
