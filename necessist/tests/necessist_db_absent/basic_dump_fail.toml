@@ -1,0 +1,10 @@
+args = ["--root=examples/basic", "--dump"]
+
+[bin]
+name = "necessist"
+
+[fs]
+cwd = "../../.."
+
+[status]
+code = 1

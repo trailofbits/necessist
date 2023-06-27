@@ -70,40 +70,40 @@ pub(crate) fn init(
     context: &LightContext,
     root: &Path,
     dump: bool,
-    resume: bool,
     reset: bool,
+    resume: bool,
 ) -> Result<(Sqlite, Vec<crate::Removal>)> {
     let root = Rc::new(root.to_path_buf());
     let path_buf = root.join("necessist.db");
 
     let exists = path_buf.try_exists()?;
 
-    let nodb_msg = |flag: &str| {
+    let no_db_msg = |flag: &str| {
         format!(
-            "No sqlite database found at {:?} to {}; creating new database",
-            path_buf, flag
+            "No sqlite database found to {} at {:?}; creating new database",
+            flag, path_buf
         )
     };
 
-    match (exists, dump, resume, reset) {
+    match (exists, dump, reset, resume) {
         (true, false, false, false) => bail!(
             "Found an sqlite database at {:?}; please pass either --reset or --resume",
             path_buf
         ),
         (false, true, _, _) => bail!(
-            "No sqlite database found at {:?}; please remove the --dump flag",
+            "--dump was passed, but no sqlite database found at {:?}",
             path_buf
         ),
         (false, _, true, _) => warn(
             context,
             Warning::DatabaseDoesNotExist,
-            &nodb_msg("resume"),
+            &no_db_msg("reset"),
             WarnFlags::ONCE,
         )?,
         (false, _, _, true) => warn(
             context,
             Warning::DatabaseDoesNotExist,
-            &nodb_msg("reset"),
+            &no_db_msg("resume"),
             WarnFlags::ONCE,
         )?,
         _ => (),

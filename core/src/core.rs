@@ -173,8 +173,8 @@ fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementatio
             context,
             context.root,
             context.opts.dump,
-            context.opts.resume,
             context.opts.reset,
+            context.opts.resume,
         )?;
         past_removals.sort_by(|left, right| left.span.cmp(&right.span));
         (Some(sqlite), past_removals)
