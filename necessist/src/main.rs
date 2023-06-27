@@ -9,7 +9,7 @@ use necessist_core::{cli, framework::Auto, necessist, Necessist};
 use necessist_frameworks::Identifier;
 use std::{
     env::{args, var},
-    fs::{File, OpenOptions},
+    fs::File,
     io::Error,
     path::Path,
 };
@@ -49,13 +49,13 @@ fn enabled(key: &str) -> bool {
 }
 
 fn lock_path(path: &Path) -> Result<File> {
-    let file = OpenOptions::new().read(true).open(path)?;
+    let file = File::open(path)?;
     lock_exclusive(&file)?;
     Ok(file)
 }
 
 fn try_lock_path(path: &Path) -> Result<File> {
-    let file = OpenOptions::new().read(true).open(path)?;
+    let file = File::open(path)?;
     try_lock_exclusive(&file)?;
     Ok(file)
 }
