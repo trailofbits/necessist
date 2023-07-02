@@ -3,3 +3,6 @@ rev = "v1.13.0"
 subdir = "contracts"
 framework = "foundry"
 full = true
+
+[config]
+ignored_functions = ["vm.prank", "vm.startPrank", "vm.stopPrank"]
