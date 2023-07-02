@@ -4,6 +4,7 @@ use cargo_metadata::{MetadataCommand, Package};
 use necessist_core::{util, Span};
 use std::{
     collections::BTreeMap,
+    ffi::OsStr,
     path::{Path, PathBuf},
 };
 use syn::{File, Ident};
@@ -58,39 +59,28 @@ pub(super) fn cached_test_file_fs_module_path<'a>(
                 .parent()
                 .ok_or_else(|| anyhow!("Failed to get parent directory"))?;
 
-            let src_dir = manifest_dir.join("src");
-            let (test_file_relative_path, is_integration_test) =
-                util::strip_prefix(test_file, src_dir.as_std_path())
-                    .map(|path| (path, false))
-                    .or_else(|_| {
-                        let test_dir = manifest_dir.join("tests");
-                        util::strip_prefix(test_file, test_dir.as_std_path())
-                            .map(|path| (path, true))
-                    })?;
+            let test_file_relative_path = (|| {
+                const PREFIXES: [(&str, bool); 3] =
+                    [("src/bin", true), ("src", false), ("tests", true)];
+                for (dir, path_includes_crate_name) in PREFIXES {
+                    if let Ok(suffix) =
+                        util::strip_prefix(test_file, manifest_dir.join(dir).as_std_path())
+                    {
+                        return if path_includes_crate_name {
+                            let mut components = suffix.components();
+                            components.next().map(|_| components.as_path())
+                        } else {
+                            Some(suffix)
+                        };
+                    }
+                }
+                None
+            })()
+            .ok_or(anyhow!(
+                "Failed to determine relative path of test file {test_file:?}"
+            ))?;
 
-            if (test_file_relative_path == Path::new("lib.rs")
-                || test_file_relative_path == Path::new("main.rs"))
-                && !is_integration_test
-            {
-                return Ok(Vec::new());
-            }
-
-            let test_file_relative_path_parent = test_file_relative_path
-                .parent()
-                .ok_or_else(|| anyhow!("Failed to get parent directory"))?;
-            let test_file_relative_path_stem = test_file_relative_path
-                .file_stem()
-                .ok_or_else(|| anyhow!("Failed to get file stem"))?;
-
-            let mut fs_module_path = test_file_relative_path_parent
-                .components()
-                .map(|component| component.as_os_str().to_string_lossy().to_string())
-                .collect::<Vec<_>>();
-            if test_file_relative_path_stem != "mod" && !is_integration_test {
-                fs_module_path.push(test_file_relative_path_stem.to_string_lossy().to_string());
-            }
-
-            Ok(fs_module_path)
+            fs_module_path(test_file_relative_path)
         })
         .map(|value| value as &_)
 }
@@ -139,4 +129,24 @@ pub(super) fn cached_test_file_package<'a>(
             package_near.ok_or_else(|| anyhow!("Failed to determine package"))
         })
         .map(|value| value as &_)
+}
+
+fn fs_module_path(path: &Path) -> Result<Vec<String>> {
+    let Some(path_parent) = path.parent() else {
+        return Ok(Vec::new());
+    };
+
+    let path_stem = path
+        .file_stem()
+        .ok_or_else(|| anyhow!("Failed to get file stem"))?;
+
+    let mut fs_module_path = path_parent
+        .components()
+        .map(|component| component.as_os_str().to_string_lossy().to_string())
+        .collect::<Vec<_>>();
+    if !["lib", "main", "mod"].map(OsStr::new).contains(&path_stem) {
+        fs_module_path.push(path_stem.to_string_lossy().to_string());
+    }
+
+    Ok(fs_module_path)
 }

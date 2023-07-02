@@ -286,18 +286,28 @@ If you do not see a panic message above, check that you passed --nocapture to th
 fn init_tempdir(tempdir: &Path, key: &Key) -> String {
     let mut command = Command::new("git");
     command.args(["clone", "--recursive", &key.url, &tempdir.to_string_lossy()]);
-    if let Some(rev) = &key.rev {
-        command.args(["--branch", rev]);
-    } else {
+    if key.rev.is_none() {
         command.arg("--depth=1");
     }
     let output = command.output().unwrap();
-    assert!(output.status.success());
+    assert!(output.status.success(), "{output:?}");
 
-    let mut output = std::str::from_utf8(&output.stderr).unwrap().to_owned();
-    writeln!(output).unwrap();
+    let mut output_combined = std::str::from_utf8(&output.stderr).unwrap().to_owned();
 
-    output
+    if let Some(rev) = &key.rev {
+        let output = Command::new("git")
+            .args(["checkout", rev])
+            .current_dir(tempdir)
+            .output()
+            .unwrap();
+        assert!(output.status.success(), "{output:?}");
+
+        output_combined += std::str::from_utf8(&output.stderr).unwrap();
+    }
+
+    writeln!(output_combined).unwrap();
+
+    output_combined
 }
 
 fn run_test(tempdir: &Path, path: &Path, test: &Test) -> String {
@@ -402,15 +412,29 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> String {
         if enabled("BLESS") {
             write(path_stdout, stdout_normalized).unwrap();
         } else {
+            // smoelius: Because test files could be traversed in different orders on different
+            // machines, the warnings could appear out of order. So simply verify that
+            // `stdout_expected` and `stdout_actual` contain the same lines.
             assert!(
-                stdout_expected == stdout_normalized,
+                permutation(&stdout_expected, &stdout_normalized),
                 "{}",
                 SimpleDiff::from_str(&stdout_expected, &stdout_normalized, "left", "right")
             );
+            // smoelius: If `stdout_expected` and `stdout_actual` differ, prefer that the
+            // lexicographically smaller one be stored in the repository.
+            assert!(stdout_expected <= stdout_normalized);
         }
     }
 
     output
+}
+
+fn permutation(expected: &str, actual: &str) -> bool {
+    let mut expected_lines = expected.lines().collect::<Vec<_>>();
+    let mut actual_lines = actual.lines().collect::<Vec<_>>();
+    expected_lines.sort_unstable();
+    actual_lines.sort_unstable();
+    expected_lines == actual_lines
 }
 
 #[test]

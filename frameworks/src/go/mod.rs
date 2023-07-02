@@ -262,9 +262,10 @@ impl ParseLow for Go {
         _storage: &std::cell::RefCell<<Self::Types as crate::parsing::AbstractTypes>::Storage<'_>>,
         test_name: &str,
         span: &Span,
-    ) {
+    ) -> bool {
         self.span_test_name_map
             .insert(span.clone(), test_name.to_owned());
+        true
     }
 
     fn test_statements<'ast>(

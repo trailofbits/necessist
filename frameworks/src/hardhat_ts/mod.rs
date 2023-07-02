@@ -239,8 +239,9 @@ impl ParseLow for HardhatTs {
         _storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'_>>,
         test_name: &str,
         span: &Span,
-    ) {
+    ) -> bool {
         self.set_span_it_message(span, test_name.to_owned());
+        true
     }
 
     fn test_statements<'ast>(

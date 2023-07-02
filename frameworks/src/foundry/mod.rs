@@ -200,8 +200,9 @@ impl ParseLow for Foundry {
         _storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'_>>,
         test_name: &str,
         span: &Span,
-    ) {
+    ) -> bool {
         self.set_span_test_name(span, test_name);
+        true
     }
 
     fn test_statements<'ast>(
