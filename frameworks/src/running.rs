@@ -1,5 +1,5 @@
 use super::{ts_utils, RunHigh};
-use anyhow::{anyhow, Error, Result};
+use anyhow::{anyhow, Context, Error, Result};
 use assert_cmd::output::OutputError;
 use bstr::{io::BufReadExt, BStr};
 use log::debug;
@@ -52,7 +52,9 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
 
         debug!("{:?}", command);
 
-        let output = command.output()?;
+        let output = command
+            .output()
+            .with_context(|| format!("Failed to run command: {command:?}"))?;
         if !output.status.success() {
             return Err(OutputError::new(output).into());
         }

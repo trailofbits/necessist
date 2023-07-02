@@ -1,10 +1,11 @@
+use regex::Regex;
 use serde::Deserialize;
 use similar_asserts::SimpleDiff;
 use std::{
     collections::{BTreeMap, HashSet},
     env::{consts, var},
     ffi::OsStr,
-    fmt::{Debug, Write as _},
+    fmt::Write as _,
     fs::{read_dir, read_to_string, remove_file, write},
     io::{stderr, Read, Write},
     panic::{set_hook, take_hook},
@@ -339,7 +340,7 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> String {
         )
         .unwrap();
 
-        let path_stdout = if test.full {
+        let path_stdout = if test.config.is_empty() {
             path.with_extension("stdout")
         } else if config.is_none() {
             path.with_extension("without_config.stdout")
@@ -444,18 +445,20 @@ fn stdout_subsequence() {
     }
 }
 
-fn subsequence<T>(xs: impl Iterator<Item = T>, mut ys: impl Iterator<Item = T>) -> bool
-where
-    T: Debug + Eq,
-{
+fn subsequence<'a, 'b>(
+    xs: impl Iterator<Item = &'a str>,
+    mut ys: impl Iterator<Item = &'b str>,
+) -> bool {
+    let re = Regex::new(r"^(\d+) candidates in (\d+) test file(s)?$").unwrap();
+
     let mut xs = xs.peekable();
 
-    while let Some(x) = xs.peek() {
+    while let Some(&x) = xs.peek() {
         let Some(y) = ys.next() else {
             dbg!(x);
             return false;
         };
-        if *x == y {
+        if x == y || (re.is_match(x) && re.is_match(y)) {
             let _ = xs.next();
         }
     }
