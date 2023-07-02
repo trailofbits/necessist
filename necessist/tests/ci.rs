@@ -279,9 +279,16 @@ fn update() {
 
 fn clippy_command(cargo_args: &[&str], rustc_args: &[&str]) -> Command {
     // smoelius: The next command should match what's in scripts/clippy.sh.
+    // smoelius: Pin Clippy to nightly-2023-06-28 until the following is resolved:
+    // https://github.com/rust-lang/rust/pull/112628#issuecomment-1616750719
     let mut command = Command::new("cargo");
     command
-        .args(["+nightly", "clippy", "--all-features", "--all-targets"])
+        .args([
+            "+nightly-2023-06-28",
+            "clippy",
+            "--all-features",
+            "--all-targets",
+        ])
         .args(cargo_args)
         .args(["--"])
         .args(rustc_args)
