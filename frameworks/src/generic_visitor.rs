@@ -50,16 +50,18 @@ macro_rules! visit_maybe_macro_call {
                     if let Some(statement) = statement {
                         if !$args.is_ignored_as_call {
                             let span = statement.span(&$this.source_file);
-                            $this.framework.on_candidate_found($this.context, $args.storage, &test_name, &span);
-                            $this.spans_visited.push(span);
+                            if $this.framework.on_candidate_found($this.context, $args.storage, &test_name, &span) {
+                                $this.spans_visited.push(span);
+                            }
                         }
                     }
 
                     // smoelius: If the entire call is ignored, then treat the method call as
                     // ignored as well.
                     if !$args.is_ignored_as_call && $args.is_method_call && !$args.is_ignored_as_method_call {
-                        $this.framework.on_candidate_found($this.context, $args.storage, &test_name, &$args.span);
-                        $this.spans_visited.push($args.span.clone());
+                        if $this.framework.on_candidate_found($this.context, $args.storage, &test_name, &$args.span) {
+                            $this.spans_visited.push($args.span.clone());
+                        }
                     }
 
                     // smoelius: Return false (i.e., don't descend into the call arguments) only if
@@ -159,9 +161,12 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
                 && !self.framework.statement_is_declaration(storage, statement)
             {
                 let span = statement.span(&self.source_file);
-                self.framework
-                    .on_candidate_found(self.context, storage, test_name, &span);
-                self.spans_visited.push(span);
+                if self
+                    .framework
+                    .on_candidate_found(self.context, storage, test_name, &span)
+                {
+                    self.spans_visited.push(span);
+                }
             }
         }
     }

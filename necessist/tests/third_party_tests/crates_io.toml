@@ -1,0 +1,5 @@
+# https://stackoverflow.com/a/57838288
+# smoelius: The crates.io source has lots of interesting cases, including: multiple binaries, crates
+# without `src` directories, and `src` directories with `tests` subdirectories.
+url = "https://github.com/rust-lang/crates.io"
+rev = "a76fd56e56178972eb17b790fd6b3cd92f543fea"

@@ -96,13 +96,14 @@ pub trait ParseLow: Sized {
         storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
         file: &'ast <Self::Types as AbstractTypes>::File,
     ) -> Result<Vec<Span>>;
+    #[must_use]
     fn on_candidate_found(
         &mut self,
         context: &LightContext,
         storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'_>>,
         test_name: &str,
         span: &Span,
-    );
+    ) -> bool;
 
     fn test_statements<'ast>(
         &self,
@@ -224,9 +225,9 @@ impl<T: ParseLow> ParseLow for Rc<RefCell<T>> {
         storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'_>>,
         test_name: &str,
         span: &Span,
-    ) {
+    ) -> bool {
         self.borrow_mut()
-            .on_candidate_found(context, storage, test_name, span);
+            .on_candidate_found(context, storage, test_name, span)
     }
     fn test_statements<'ast>(
         &self,

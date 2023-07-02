@@ -11,7 +11,7 @@ use std::{
     collections::BTreeMap,
     ffi::OsStr,
     fs::read_to_string,
-    path::{Path, PathBuf, StripPrefixError},
+    path::{Path, PathBuf},
     process::Command,
 };
 
@@ -329,7 +329,10 @@ impl ParseLow for Rust {
         storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'_>>,
         test_name: &str,
         span: &Span,
-    ) {
+    ) -> bool {
+        // smoelius: If `set_span_test_path(span, test_path)` is not called, `command_to_run_test`
+        // will panic. So if the module path cannot be determined, return false to prevent the span
+        // from being queued.
         #[cfg_attr(
             dylint_lib = "non_local_effect_before_error_return",
             allow(non_local_effect_before_error_return)
@@ -342,24 +345,29 @@ impl ParseLow for Rust {
             let test_path = match storage.borrow_mut().test_path(span, test_name) {
                 Ok(test_path) => test_path,
                 Err(error) => {
-                    if error.downcast_ref::<StripPrefixError>().is_some() {
-                        warn(
-                            context,
-                            Warning::ModulePathUnknown,
-                            &format!("Failed to determine module path: {error}"),
-                            WarnFlags::empty(),
-                        )?;
-                    }
-                    return Ok(());
+                    warn(
+                        context,
+                        Warning::ModulePathUnknown,
+                        &format!("Failed to determine module path: {error}"),
+                        WarnFlags::empty(),
+                    )?;
+                    return Ok(false);
                 }
             };
             self.set_span_test_path(span, test_path);
-            Ok(())
+            Ok(true)
         })();
-        if let Err(error) = result {
-            let mut storage = storage.borrow_mut();
-            storage.error = storage.error.take().or(Some(error));
-        }
+        match result {
+            Ok(true) => {
+                return true;
+            }
+            Err(error) => {
+                let mut storage = storage.borrow_mut();
+                storage.error = storage.error.take().or(Some(error));
+            }
+            _ => {}
+        };
+        false
     }
 
     fn test_statements<'ast>(
@@ -520,11 +528,10 @@ impl RunLow for Rust {
         context: &LightContext,
         span: &Span,
     ) -> (Command, Vec<String>, Option<(ProcessLines, String)>) {
-        #[allow(clippy::expect_used)]
         let test_path = self
             .span_test_path_map
             .get(span)
-            .expect("Test path is not set");
+            .unwrap_or_else(|| panic!("Test path is not set for {span:?}"));
         let test = test_path.join("::");
 
         (
@@ -572,10 +579,18 @@ impl Rust {
                 } else {
                     // smoelius: Failed to find a test target with this file name. Assume it is a
                     // unit test.
+                    let mut bin = false;
+                    let mut lib = false;
                     for kind in package.targets.iter().flat_map(|target| &target.kind) {
                         match kind.as_ref() {
-                            "bin" => flags.push("--bins".to_owned()),
-                            "lib" => flags.push("--lib".to_owned()),
+                            "bin" if !bin => {
+                                flags.push("--bins".to_owned());
+                                bin = true;
+                            }
+                            "lib" if !lib => {
+                                flags.push("--lib".to_owned());
+                                lib = true;
+                            }
                             _ => {}
                         }
                     }
