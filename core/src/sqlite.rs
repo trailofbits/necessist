@@ -8,7 +8,7 @@ use crate::{util, warn, LightContext, Outcome, Span, WarnFlags, Warning};
 use anyhow::{bail, Context, Result};
 use diesel::{insert_into, prelude::*, sql_query, sqlite::SqliteConnection};
 use git2::{Oid, Repository, RepositoryOpenFlags};
-use lazy_static::lazy_static;
+use once_cell::sync::Lazy;
 use regex::Regex;
 use std::{
     ffi::OsStr,
@@ -177,12 +177,10 @@ pub(crate) fn insert(sqlite: &mut Sqlite, removal: &crate::Removal) -> Result<()
     Ok(())
 }
 
-lazy_static! {
-    static ref SSH_RE: Regex = {
-        #[allow(clippy::unwrap_used)]
-        Regex::new(r"^[^@]*@([^:]*):(.*)$").unwrap()
-    };
-}
+static SSH_RE: Lazy<Regex> = Lazy::new(|| {
+    #[allow(clippy::unwrap_used)]
+    Regex::new(r"^[^@]*@([^:]*):(.*)$").unwrap()
+});
 
 fn url_from_span(remote: &Remote, span: &Span) -> String {
     let base_url = remote.url.strip_suffix(".git").unwrap_or(&remote.url);
