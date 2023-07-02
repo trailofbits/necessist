@@ -26,7 +26,6 @@ remain = "0.2"
 strum = "0.25"
 strum_macros = "0.25"
 subprocess = "0.2"
-thiserror = "1.0"
 walkdir = "2.3"
 
 # Foundry

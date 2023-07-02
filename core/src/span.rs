@@ -1,6 +1,6 @@
 use crate::{Backup, Rewriter, SourceFile, ToConsoleString};
 use anyhow::{anyhow, Result};
-use lazy_static::lazy_static;
+use once_cell::sync::Lazy;
 use regex::Regex;
 use std::{fs::OpenOptions, io::Write, path::PathBuf, rc::Rc};
 
@@ -28,12 +28,10 @@ impl ToConsoleString for Span {
     }
 }
 
-lazy_static! {
-    static ref SPAN_RE: Regex = {
-        #[allow(clippy::unwrap_used)]
-        Regex::new(r"^([^:]*):([^:]*):([^-]*)-([^:]*):(.*)$").unwrap()
-    };
-}
+static SPAN_RE: Lazy<Regex> = Lazy::new(|| {
+    #[allow(clippy::unwrap_used)]
+    Regex::new(r"^([^:]*):([^:]*):([^-]*)-([^:]*):(.*)$").unwrap()
+});
 
 impl Span {
     pub fn parse(root: &Rc<PathBuf>, s: &str) -> Result<Self> {
