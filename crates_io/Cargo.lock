@@ -216,9 +216,9 @@ checksum = "bef38d45163c2f1dde094a7dfd33ccf595c92905c8f8f4fdc18d06fb1037718a"
 
 [[package]]
 name = "bitflags"
-version = "2.3.2"
+version = "2.3.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6dbe3c979c178231552ecba20214a8272df4e09f232a87aef4320cf06539aded"
+checksum = "630be753d4e58660abd17930c71b647fe46c27ea6b63cc59e1e3851406972e42"
 
 [[package]]
 name = "bstr"
@@ -1020,7 +1020,7 @@ dependencies = [
  "ansi_term",
  "anyhow",
  "atty",
- "bitflags 2.3.2",
+ "bitflags 2.3.3",
  "cargo_metadata",
  "clap",
  "ctrlc",
@@ -1868,7 +1868,7 @@ version = "0.107.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5693558188efdd5b664e517b69ba8056a7f64c214ca8cd034e3ae8314566b866"
 dependencies = [
- "bitflags 2.3.2",
+ "bitflags 2.3.3",
  "is-macro",
  "num-bigint",
  "scoped-tls",
@@ -1905,7 +1905,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "84594423bc24ec9133265197c314db437c42c2cdbaba275c81e1d3673b8d6beb"
 dependencies = [
  "better_scoped_tls",
- "bitflags 2.3.2",
+ "bitflags 2.3.3",
  "indexmap 1.9.3",
  "once_cell",
  "phf 0.10.1",
