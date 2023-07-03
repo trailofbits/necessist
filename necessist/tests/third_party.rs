@@ -27,26 +27,38 @@ const ERROR_EXIT_CODE: i32 = 101;
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
 struct Test {
+    /// Repo url
     url: String,
 
+    /// Repo revision; `None` (the default) means the head of the default branch
     #[serde(default)]
     rev: Option<String>,
 
+    /// OS on which the test should run; `None` (the default) means all OSes
     #[serde(default)]
     target_os: Option<String>,
 
+    /// Subdirectory of the repo in which Necessist should run; `None` (the default) means the root
+    /// of the repository
     #[serde(default)]
     subdir: Option<String>,
 
+    /// Testing framework to use (i.e., `foundry`, `go`, etc.); `None` (the default) means `auto`
     #[serde(default)]
     framework: Option<String>,
 
+    /// Test files to mutilate
     #[serde(default)]
     test_files: Vec<String>,
 
+    /// [Configuration file] contents
+    ///
+    /// configuration file: https://github.com/trailofbits/necessist#configuration-files
     #[serde(default)]
     config: toml::Table,
 
+    /// If false (the default), Necessist dumps removal candidates and exits (i.e.,
+    /// --dump-candidates is passed to Necessist); if true, Necessist is run with --verbose
     #[serde(default)]
     full: bool,
 }
