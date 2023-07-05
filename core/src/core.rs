@@ -109,7 +109,9 @@ pub fn necessist<Identifier: Applicable + Display + IntoEnumIterator + ToImpleme
         context.println = &println;
     }
 
-    let Some((sqlite, framework, n_spans, test_file_span_map, past_removals)) = prepare(&context, framework)? else {
+    let Some((sqlite, framework, n_spans, test_file_span_map, past_removals)) =
+        prepare(&context, framework)?
+    else {
         return Ok(());
     };
 
@@ -556,6 +558,7 @@ fn timeout(opts: &Necessist) -> Option<Duration> {
     }
 }
 
+#[cfg_attr(dylint_lib = "commented_code", allow(commented_code))]
 fn recursive_kill(pid: u32) -> Result<()> {
     let output = Command::new("pgrep")
         .args(["-P", &pid.to_string()])

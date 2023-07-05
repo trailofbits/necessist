@@ -1,5 +1,3 @@
-use lazy_static::lazy_static;
-use regex::Regex;
 use serde::Deserialize;
 use similar_asserts::SimpleDiff;
 use std::{
@@ -89,10 +87,6 @@ struct Task {
 
     /// The [`Test`] itself
     test: Test,
-}
-
-lazy_static! {
-    static ref LINE_RE: Regex = Regex::new(r"^(\d+) candidates in (\d+) test file(s)?$").unwrap();
 }
 
 #[cfg_attr(

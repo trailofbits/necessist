@@ -260,7 +260,8 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
         storage: &RefCell<<T::Types as AbstractTypes>::Storage<'ast>>,
         statement: <T::Types as AbstractTypes>::Statement<'ast>,
     ) -> bool {
-        let Some(mut expression) = self.framework.statement_is_expression(storage, statement) else {
+        let Some(mut expression) = self.framework.statement_is_expression(storage, statement)
+        else {
             return false;
         };
 
