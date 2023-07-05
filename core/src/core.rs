@@ -558,6 +558,7 @@ fn timeout(opts: &Necessist) -> Option<Duration> {
     }
 }
 
+#[cfg_attr(dylint_lib = "commented_code", allow(commented_code))]
 fn recursive_kill(pid: u32) -> Result<()> {
     let output = Command::new("pgrep")
         .args(["-P", &pid.to_string()])
