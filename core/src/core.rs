@@ -8,6 +8,7 @@ use ansi_term::Style;
 use anyhow::{anyhow, bail, ensure, Result};
 use heck::ToKebabCase;
 use indicatif::ProgressBar;
+use is_terminal::IsTerminal;
 use log::debug;
 use std::{
     collections::BTreeMap,
@@ -129,7 +130,7 @@ pub fn necessist<Identifier: Applicable + Display + IntoEnumIterator + ToImpleme
     }
 
     let progress =
-        if var("RUST_LOG").is_err() && !context.opts.quiet && atty::is(atty::Stream::Stdout) {
+        if var("RUST_LOG").is_err() && !context.opts.quiet && std::io::stdout().is_terminal() {
             Some(ProgressBar::new(n_spans as u64))
         } else {
             None
@@ -539,7 +540,7 @@ fn emit_to_console(context: &LightContext, removal: &Removal) {
             "{}: `{}` {}",
             span.to_console_string(),
             text,
-            if atty::is(atty::Stream::Stdout) {
+            if std::io::stdout().is_terminal() {
                 outcome.style().bold()
             } else {
                 Style::default()
