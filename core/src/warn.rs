@@ -6,6 +6,7 @@ use ansi_term::{
 use anyhow::{bail, Result};
 use bitflags::bitflags;
 use heck::ToKebabCase;
+use is_terminal::IsTerminal;
 use std::{collections::BTreeMap, sync::Mutex};
 
 // smoelius: `Warning` is part of Necessist's public API. Please try to follow the naming convention
@@ -142,7 +143,7 @@ Silence this warning with: --allow {warning}"
             "{}: ",
             source.to_console_string()
         )),
-        if atty::is(atty::Stream::Stdout) {
+        if std::io::stdout().is_terminal() {
             Yellow.bold()
         } else {
             Style::default()
@@ -164,7 +165,7 @@ pub(crate) fn note(context: &LightContext, msg: &str) {
 
     (context.println)(&format!(
         "{}: {}",
-        if atty::is(atty::Stream::Stdout) {
+        if std::io::stdout().is_terminal() {
             Green.bold()
         } else {
             Style::default()
