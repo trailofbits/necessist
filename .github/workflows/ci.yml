@@ -53,10 +53,6 @@ jobs:
           cargo install cargo-license            || true
           cargo install cargo-modules            || true
           cargo install cargo-sort               || true
-          # smoelius: Pin Clippy to nightly-2023-06-28 until the following is resolved:
-          # https://github.com/rust-lang/rust/pull/112628#issuecomment-1616750719
-          rustup toolchain install nightly-2023-06-28
-          rustup +nightly-2023-06-28 component add clippy
 
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
