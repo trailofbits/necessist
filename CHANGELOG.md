@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.2
+
+- Migrate away from `atty` ([#556](https://github.com/trailofbits/necessist/pull/556))
+- Improve Rust test discovery ([#537](https://github.com/trailofbits/necessist/pull/537))
+
 ## 0.1.1
 
 - Improve Foundry support ([#515](https://github.com/trailofbits/necessist/pull/515))
