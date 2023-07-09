@@ -179,7 +179,7 @@ where
         writeln!(file, " => {{")?;
         match fields {
             Fields::Named(fields) => {
-                for field in fields.named.iter() {
+                for field in &fields.named {
                     writeln!(
                         file,
                         "            {}.visit(visitor)?;",
@@ -234,7 +234,7 @@ where
 
     match fields {
         Fields::Named(fields) => {
-            for field in fields.named.iter() {
+            for field in &fields.named {
                 writeln!(
                     file,
                     "    {}.{}.visit(visitor)?;",

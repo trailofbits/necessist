@@ -41,7 +41,7 @@ fn trycmd() {
 
 #[test]
 fn check_stdout() {
-    let re = Regex::new(r#"\b[0-9]+\.[0-9]+s\b"#).unwrap();
+    let re = Regex::new(r"\b[0-9]+\.[0-9]+s\b").unwrap();
 
     let necessist_db_absent = read_dir("tests/necessist_db_absent").unwrap();
     let necessist_db_present = read_dir("tests/necessist_db_present").unwrap();
