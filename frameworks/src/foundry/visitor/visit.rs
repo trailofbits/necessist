@@ -57,7 +57,7 @@ where
     where
         V: Visitor<'ast> + ?Sized,
     {
-        for item in self.iter() {
+        for item in self {
             item.visit(v)?;
         }
         Ok(())
