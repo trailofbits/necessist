@@ -8,14 +8,14 @@ resolver = "2"
 
 [workspace.metadata.dylint]
 libraries = [
-    { git = "https://github.com/trailofbits/dylint", pattern = "examples/general/*" },
-    { git = "https://github.com/trailofbits/dylint", pattern = "examples/supplementary/*" },
-    { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/collapsible_unwrap" },
-    { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/const_path_join" },
-    { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/inconsistent_qualification" },
-    { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/misleading_variable_name" },
+    { git = "https://github.com/trailofbits/dylint", pattern = "examples/general/*", rev = "120f750" },
+    { git = "https://github.com/trailofbits/dylint", pattern = "examples/supplementary/*", rev = "120f750" },
+    { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/collapsible_unwrap", rev = "120f750" },
+    { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/const_path_join", rev = "120f750" },
+    { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/inconsistent_qualification", rev = "120f750" },
+    { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/misleading_variable_name", rev = "120f750" },
     # { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/missing_doc_comment_openai" },
-    { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/question_mark_in_expression" },
-    { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/ref_aware_redundant_closure_for_method_calls" },
-    { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/suboptimal_pattern" },
+    { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/question_mark_in_expression", rev = "120f750" },
+    { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/ref_aware_redundant_closure_for_method_calls", rev = "120f750" },
+    { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/suboptimal_pattern", rev = "120f750" },
 ]
