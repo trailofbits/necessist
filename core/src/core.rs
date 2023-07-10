@@ -5,7 +5,7 @@ use crate::{
     Warning,
 };
 use ansi_term::Style;
-use anyhow::{anyhow, bail, ensure, Result};
+use anyhow::{anyhow, bail, ensure, Context as _, Result};
 use heck::ToKebabCase;
 use indicatif::ProgressBar;
 use is_terminal::IsTerminal;
@@ -372,7 +372,9 @@ fn canonicalize_test_files(context: &LightContext) -> Result<Vec<PathBuf>> {
         .test_files
         .iter()
         .map(|path| {
-            let path_buf = path.canonicalize()?;
+            let path_buf = path
+                .canonicalize()
+                .with_context(|| format!("Failed to canonicalize {path:?}"))?;
             ensure!(
                 path_buf.starts_with(context.root.as_path()),
                 "{:?} is not in {:?}",

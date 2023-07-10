@@ -1,0 +1,5 @@
+url = "https://github.com/nzeh/proptest"
+rev = "7866f6d67afd9790ec6d7ee085db510cefe1a181"
+subdir = "proptest"
+test_files = ["src/sample.rs"]
+full = true
