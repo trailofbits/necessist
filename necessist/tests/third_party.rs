@@ -1,3 +1,4 @@
+use necessist_core::{util, Span};
 use regex::Regex;
 use serde::Deserialize;
 use similar_asserts::SimpleDiff;
@@ -11,6 +12,7 @@ use std::{
     panic::{set_hook, take_hook},
     path::{Path, PathBuf},
     process::{exit, Command},
+    rc::Rc,
     sync::mpsc::channel,
     thread::{available_parallelism, spawn},
     time::Instant,
@@ -21,6 +23,9 @@ use tempfile::{tempdir, TempDir};
 // smoelius: `ERROR_EXIT_CODE` is from:
 // https://github.com/rust-lang/rust/blob/12397e9dd5a97460d76c884d449ca1c2d26da8ed/src/libtest/lib.rs#L94
 const ERROR_EXIT_CODE: i32 = 101;
+
+const PREFIX_HTTPS: &str = "https://github.com/";
+const PREFIX_SSH: &str = "git@github.com:";
 
 // smoelius: The Go packages were chosen because their ratios of "number of tests" to "time required
 // to run the tests" are high.
@@ -62,6 +67,10 @@ struct Test {
     /// --dump-candidates is passed to Necessist); if true, Necessist is run with --verbose
     #[serde(default)]
     full: bool,
+
+    /// Check that the spans and urls written to the database are consistent
+    #[serde(default)]
+    check_sqlite_urls: bool,
 }
 
 #[derive(Clone, Eq, Ord, PartialEq, PartialOrd)]
@@ -130,6 +139,17 @@ fn all_tests() {
         let contents = read_to_string(&path).unwrap();
         let test: Test = toml::from_str(&contents).unwrap();
 
+        if test.url.starts_with(PREFIX_SSH) && !ssh_agent_is_running() {
+            #[allow(clippy::explicit_write)]
+            writeln!(
+                stderr(),
+                "Skipping {path:?} as ssh-agent is not running or has no identities",
+            )
+            .unwrap();
+
+            continue;
+        }
+
         if test
             .target_os
             .as_ref()
@@ -154,6 +174,14 @@ fn all_tests() {
     } else {
         run_tests_concurrently(tests, n_tests);
     }
+}
+
+fn ssh_agent_is_running() -> bool {
+    Command::new("ssh-add")
+        .arg("-l")
+        .status()
+        .unwrap()
+        .success()
 }
 
 fn run_tests_concurrently(mut tests: BTreeMap<Key, Vec<(PathBuf, Test)>>, mut n_tests: usize) {
@@ -385,7 +413,11 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> String {
             exec = exec.arg("--dump-candidates");
         }
         for test_file in &test.test_files {
-            exec = exec.arg(tempdir.join(test_file));
+            exec = exec.arg(
+                tempdir
+                    .join(test.subdir.as_deref().unwrap_or("."))
+                    .join(test_file),
+            );
         }
         exec = exec.stdout(Redirection::Pipe);
         exec = exec.stderr(Redirection::Merge);
@@ -424,9 +456,55 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> String {
             // lexicographically smaller one be stored in the repository.
             assert!(stdout_expected <= stdout_normalized);
         }
+
+        if test.check_sqlite_urls {
+            assert!(test.rev.is_some());
+            assert!(test.full);
+            check_sqlite_urls(tempdir, &root, test);
+        }
     }
 
     output
+}
+
+fn check_sqlite_urls(tempdir: &Path, root: &Path, test: &Test) {
+    let root = Rc::new(root.to_path_buf());
+
+    let necessist_db = root.join("necessist.db");
+
+    let url_https = if let Some(suffix) = test.url.strip_prefix(PREFIX_SSH) {
+        String::from(PREFIX_HTTPS) + suffix
+    } else {
+        test.url.clone()
+    };
+
+    let output = Command::new("sqlite3")
+        .args([
+            &necessist_db.to_string_lossy(),
+            "select span, url from removal",
+        ])
+        .output()
+        .unwrap();
+    assert!(output.status.success());
+    let stdout = String::from_utf8(output.stdout).unwrap();
+
+    for line in stdout.lines() {
+        let (s, url) = line.split_once('|').unwrap();
+        let span = Span::parse(&root, s).unwrap();
+        assert_eq!(
+            &format!(
+                "{}/blob/{}/{}#L{}-L{}",
+                url_https,
+                test.rev.as_ref().unwrap(),
+                util::strip_prefix(&span.source_file, tempdir)
+                    .unwrap()
+                    .to_string_lossy(),
+                span.start.line,
+                span.end.line
+            ),
+            url
+        );
+    }
 }
 
 fn permutation(expected: &str, actual: &str) -> bool {
