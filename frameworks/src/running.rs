@@ -43,7 +43,7 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
     fn dry_run(&self, context: &LightContext, test_file: &Path) -> Result<()> {
         // smoelius: `REQUIRES_NODE_MODULES` is a hack. But at present, I don't know how it should
         // be generalized.
-        if T::REQUIRES_NODE_MODULES {
+        if T::REQUIRES_NODE_MODULES && context.root.join("package.json").try_exists()? {
             ts_utils::install_node_modules(context)?;
         }
 
