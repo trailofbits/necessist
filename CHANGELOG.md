@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.3
+
+- Verify that package.json exists before installing Node modules ([#580](https://github.com/trailofbits/necessist/pull/580))
+
 ## 0.1.2
 
 - Migrate away from `atty` ([#556](https://github.com/trailofbits/necessist/pull/556))
