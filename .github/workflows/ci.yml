@@ -22,7 +22,7 @@ jobs:
       fail-fast: false
       matrix:
         environment: [ubuntu-latest, macos-latest]
-        test: [ci, other, third_party, trycmd]
+        test: [ci, other, third_party_0, third_party_1, trycmd]
         # smoelius: There is no need to run the `ci` test on multiple platforms.
         exclude:
           - environment: macos-latest
