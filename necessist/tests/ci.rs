@@ -78,7 +78,7 @@ fn format() {
 
 #[test]
 fn github() {
-    const EXCEPTIONS: &[&str] = &["ci_is_disabled", "dogfood", "general"];
+    const EXCEPTIONS: &[&str] = &["ci_is_disabled", "dogfood", "general", "third_party_common"];
 
     let metadata = MetadataCommand::new().no_deps().exec().unwrap();
     let package = metadata

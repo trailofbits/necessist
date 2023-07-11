@@ -111,16 +111,11 @@ struct Task {
     test: Test,
 }
 
-#[cfg_attr(
-    dylint_lib = "non_thread_safe_call_in_test",
-    allow(non_thread_safe_call_in_test)
-)]
-#[test]
-fn all_tests() {
+pub fn all_tests_in(path: impl AsRef<Path>) {
     let mut tests = BTreeMap::<_, Vec<_>>::new();
     let mut n_tests = 0;
 
-    for entry in read_dir("tests/third_party_tests").unwrap() {
+    for entry in read_dir(path).unwrap() {
         let entry = entry.unwrap();
         let path = entry.path();
 
@@ -515,9 +510,8 @@ fn permutation(expected: &str, actual: &str) -> bool {
     expected_lines == actual_lines
 }
 
-#[test]
-fn stdout_subsequence() {
-    for entry in read_dir("tests/third_party_tests").unwrap() {
+pub fn stdout_subsequence_in(path: impl AsRef<Path>) {
+    for entry in read_dir(path).unwrap() {
         let entry = entry.unwrap();
         let path = entry.path();
 
