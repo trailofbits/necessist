@@ -26,7 +26,6 @@ pub trait ToImplementation {
 pub trait Interface: Parse + Run {}
 
 pub trait Parse {
-    fn name(&self) -> String;
     fn parse(
         &mut self,
         context: &LightContext,
@@ -56,9 +55,6 @@ pub trait AsRun {
 }
 
 impl<T: AsParse> Parse for T {
-    fn name(&self) -> String {
-        self.as_parse().name()
-    }
     #[cfg_attr(
         dylint_lib = "non_local_effect_before_error_return",
         allow(non_local_effect_before_error_return)
