@@ -318,9 +318,6 @@ impl<T: ParseLow> ParseLow for Rc<RefCell<T>> {
 pub struct ParseAdapter<T>(pub T);
 
 impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
-    fn name(&self) -> String {
-        T::name()
-    }
     fn parse(
         &mut self,
         context: &LightContext,
