@@ -103,7 +103,7 @@ The following criterion (`*`) comes close to describing the statements that Nece
 
 - (`*`) Statement `S`'s [weakest precondition] `P` has the same context (e.g., variables in scope) as `S`'s postcondition `Q`, and `P` does not imply `Q`.
 
-In this section, we motivate (`*`) and explain why it is useful. For concision, we focus on statements, but the remarks in this section apply to method calls as well.
+The notion that (`*`) tries to capture is: a statement that affects a subsequently asserted condition. In this section, we explain and motivate this choice, and briefly discuss alternatives. For concision, we focus on statements, but the remarks in this section apply to method calls as well.
 
 Consider a test through the lens of [predicate transformer semantics]. A test is a function with no inputs or outputs. Thus, an alternative procedure for determining whether a test passes is the following. Starting with `True`, iteratively work backwards through the test's statements, computing the weakest precondition of each. If the precondition arrived at for the test's first statement is `True`, then the test passes. If the precondition is `False`, the test fails.
 
@@ -117,23 +117,35 @@ Conversely, consider a statement `S` that satisfies (`*`). Here is why it might 
 
 The main utility of (`*`) is in helping to select the statements that Necessist ignores. That is, if we imagine a predicate transformer semantics for one of Necessist's supported languages, and a statement `S` in that language, we can ask: would `S` satisfy (`*`)? If not, then then Necessist should likely ignore `S`.
 
-But (`*`) has other nice consequences. For example, the rule that the last statement in a test should not be removed follows from (`*`). To see this, note the such a statement's postcondition `Q` is always `True`. Thus, if the statement doesn't change the context, then its weakest precondition necessarily implies `Q`.
+But (`*`) has other nice consequences. For example, the rule that the last statement in a test should be ignored follows from (`*`). To see this, note the such a statement's postcondition `Q` is always `True`. Thus, if the statement doesn't change the context, then its weakest precondition necessarily implies `Q`.
 
-Having said all this, (`*`) doesn't quite capture what Necessist actually _does_. The next example is due to @2over12. Consider a statement `x.foo();` with a weakest precondition and postcondition as follows:
+Having said all this, (`*`) doesn't quite capture what Necessist actually _does_. Consider a statement like `x -= 1`. Necessist will remove such a statement unconditionally, but (`*`) says maybe Necessist shouldn't. Assuming [overflow checks] are enabled, computing this statement's weakest precondition would look something like the following:
 
-```rust
-{ Q ^ x.y == x.z ^ x.y > 2}
-x.foo();
+```
+{ Q[(x - 1)/x] ^ x >= 1 }
+x -= 1;
 { Q }
 ```
 
-Unless `x.foo` is ignored via a [configuration file], Necessist will remove `x.foo();`. It does so despite the fact the `x.foo();` does not change the context, and `Q ^ x.y == x.z ^ x.y > 2` implies `Q`.
+Note that `x -= 1` does not change the context, and that `Q[(x - 1)/x] ^ x >= 1` could imply `Q`. For example, if `Q` does not contain `x`, then `Q[(x - 1)/x] = Q` and `Q ^ x >= 1` implies `Q`.
 
-However, it's not entirely clear whether Necessist _should_ remove this statement. The condition `x.y == x.z ^ x.y > 2` could be the result of side effects that were unintentional. In that case, knowing whether the enclosing test passes without `x.foo();` could be useful.
+A question one can then ask is: _should_ Necessist remove this statement? Put another way, should Necessist's current behavior be adjusted, or should (`*`) be adjusted?
 
-The question comes down to: what is an "interesting statement" to remove? The (`*`) criterion essentially defines an "interesting statement" as one that affects a subsequently asserted condition. Another possible definition of "interesting statement" (also due to @2over12) could involve [strongest postconditions] and heuristics to determine whether those postconditions contain "interesting clauses." Yet other possibilities could involve frameworks besides [Hoare logic] entirely.
+One way to look at this question is: which statements are worth removing, i.e., which statements are "interesting?" As implied above, (`*`) considers a statement "interesting" if it affects a subsequently asserted condition. Agreeing with this notion and that (`*`) adequately captures it are reasons to keep (`*`) and adjust Necessist's behavior.
 
-For now, (`*`) serves as a useful guide in selecting which statements Necessist should ignore. We leave refinement of (`*`) to future work.
+But there are other possible, useful definitions of "interesting statement" upon which one could base an argument for adjusting (`*`). The following example is due to @2over12. Instead of weakest preconditions, one could consider [strongest postconditions]. For example, computing the strongest postcondition of `x -= 1` would look something like the following:
+
+```
+{ P }
+x -= 1;
+{ (exists x')[P[x'/x] ^ x' >= 1 ^ x = x' - 1] }
+```
+
+One could then consider a statement "interesting" if its strongest postcondition contains "interesting clauses" as determined by heuristics. @2over12 notes that a common source of bugs in tests is unintended side effects (e.g., if `x -= 1` were unintended). As already noted, (`*`) might not catch such bugs, but the just mentioned strongest postcondition scheme might.
+
+Other possible, useful definitions of "interesting statement" could involve frameworks besides [Hoare logic] entirely.
+
+To be clear, Necessist does not apply (`*`) formally, e.g., Necessist does not actually compute weakest preconditions. The current role of (`*`) is to help guide which statements Necessist should ignore, and (`*`) seems to do well in that role. As such, we leave revision of (`*`) to future work.
 
 ## Usage
 
@@ -429,6 +441,7 @@ Necessist is licensed and distributed under the AGPLv3 license. [Contact us](mai
 [crates.io]: https://crates.io/crates/necessist
 [github.com]: https://github.com/trailofbits/necessist
 [Hoare logic]: https://en.wikipedia.org/wiki/Hoare_logic
+[overflow checks]: https://doc.rust-lang.org/rustc/codegen-options/index.html#overflow-checks
 [path]: #paths
 [paths]: #paths
 [patterns]: #patterns
