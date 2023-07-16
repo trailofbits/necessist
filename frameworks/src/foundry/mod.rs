@@ -161,7 +161,7 @@ impl ParseLow for Foundry {
 
     const IGNORED_METHODS: Option<&'static [&'static str]> = Some(&[]);
 
-    fn walk_dir(root: &Path) -> Box<dyn Iterator<Item = WalkDirResult>> {
+    fn walk_dir(&self, root: &Path) -> Box<dyn Iterator<Item = WalkDirResult>> {
         Box::new(
             walkdir::WalkDir::new(root.join("test"))
                 .into_iter()
