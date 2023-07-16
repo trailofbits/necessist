@@ -217,7 +217,7 @@ impl ParseLow for Go {
         "Close", "Error", "Errorf", "Fail", "FailNow", "Fatal", "Fatalf", "Log", "Logf", "Parallel",
     ]);
 
-    fn walk_dir(root: &Path) -> Box<dyn Iterator<Item = WalkDirResult>> {
+    fn walk_dir(&self, root: &Path) -> Box<dyn Iterator<Item = WalkDirResult>> {
         Box::new(
             walkdir::WalkDir::new(root)
                 .into_iter()

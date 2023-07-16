@@ -83,7 +83,7 @@ pub trait ParseLow: Sized {
         let (_, type_name) = type_name::<Self>().rsplit_once("::").unwrap();
         type_name.to_kebab_case()
     }
-    fn walk_dir(root: &Path) -> Box<dyn Iterator<Item = WalkDirResult>>;
+    fn walk_dir(&self, root: &Path) -> Box<dyn Iterator<Item = WalkDirResult>>;
     fn parse_file(&self, test_file: &Path) -> Result<<Self::Types as AbstractTypes>::File>;
     fn storage_from_file<'ast>(
         &self,
@@ -175,8 +175,8 @@ impl<T: ParseLow> ParseLow for Rc<RefCell<T>> {
     const IGNORED_FUNCTIONS: Option<&'static [&'static str]> = T::IGNORED_FUNCTIONS;
     const IGNORED_MACROS: Option<&'static [&'static str]> = T::IGNORED_MACROS;
     const IGNORED_METHODS: Option<&'static [&'static str]> = T::IGNORED_METHODS;
-    fn walk_dir(root: &Path) -> Box<dyn Iterator<Item = WalkDirResult>> {
-        T::walk_dir(root)
+    fn walk_dir(&self, root: &Path) -> Box<dyn Iterator<Item = WalkDirResult>> {
+        self.borrow().walk_dir(root)
     }
     fn parse_file(&self, test_file: &Path) -> Result<<Self::Types as AbstractTypes>::File> {
         self.borrow().parse_file(test_file)
@@ -328,6 +328,8 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
 
         let mut spans = Vec::new();
 
+        let walk_dir_results = self.0.walk_dir(context.root);
+
         let mut visit_test_file = |test_file: &Path| -> Result<()> {
             assert!(test_file.is_absolute());
             assert!(test_file.starts_with(context.root.as_path()));
@@ -364,7 +366,7 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
         };
 
         if test_files.is_empty() {
-            for entry in T::walk_dir(context.root) {
+            for entry in walk_dir_results {
                 let entry = entry?;
                 let path = entry.path();
 
