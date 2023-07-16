@@ -186,7 +186,7 @@ impl ParseLow for HardhatTs {
     type Types = Types;
 
     const IGNORED_FUNCTIONS: Option<&'static [&'static str]> =
-        Some(&["assert", "assert.*", "expect"]);
+        Some(&["assert", "assert.*", "console.*", "expect"]);
 
     const IGNORED_MACROS: Option<&'static [&'static str]> = None;
 
