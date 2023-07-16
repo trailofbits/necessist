@@ -46,8 +46,8 @@ where
 
                 ensure!(
                     applicable_frameworks.len() <= 1,
-                    "Found multiple applicable frameworks: {}; please select one with \
-                     --framework <FRAMEWORK>",
+                    "Found multiple applicable frameworks: {}; please select one with --framework \
+                     <FRAMEWORK>",
                     applicable_frameworks
                         .iter()
                         .map(ToString::to_string)
