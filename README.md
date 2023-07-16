@@ -206,6 +206,7 @@ In addition to the below, the Go framework ignores:
 
 - `assert`
 - Anything beginning with `assert.` (e.g., `assert.equal`)
+- Anything beginning with `console.` (e.g., `console.log`)
 - `expect`
 
 #### Ignored methods

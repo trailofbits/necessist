@@ -7328,9 +7328,6 @@ $DIR/contracts/test/v0.8/VRFSubscriptionBalanceMonitor.test.ts:457:47-460:10: `.
         )`
 $DIR/contracts/test/v0.8/VRFSubscriptionBalanceMonitor.test.ts:461:9-461:28: `await fundTx.wait()`
 $DIR/contracts/test/v0.8/VRFSubscriptionBalanceMonitor.test.ts:461:21-461:28: `.wait()`
-$DIR/contracts/test/v0.8/VRFSubscriptionBalanceMonitor.test.ts:462:9-462:65: `console.log((await lt.balanceOf(bm.address)).toString())`
-$DIR/contracts/test/v0.8/VRFSubscriptionBalanceMonitor.test.ts:462:16-462:65: `.log((await lt.balanceOf(bm.address)).toString())`
-$DIR/contracts/test/v0.8/VRFSubscriptionBalanceMonitor.test.ts:462:30-462:52: `.balanceOf(bm.address)`
 $DIR/contracts/test/v0.8/VRFSubscriptionBalanceMonitor.test.ts:463:9-470:10: `await assertWatchlistBalances(
           zeroLINK,
           zeroLINK,
@@ -12269,29 +12266,6 @@ $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1395:17-1402:18: `
                   performData,
                 )`
 $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1403:41-1403:48: `.wait()`
-$DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1416:19-1425:20: `console.log(
-                    'Gas Benchmarking - sig verification ( f =',
-                    newF,
-                    '): calculated overhead: ',
-                    gasOverhead.toString(),
-                    ' actual overhead: ',
-                    receipt.gasUsed.sub(gasUsed).toString(),
-                    ' margin over gasUsed: ',
-                    gasUsed.add(gasOverhead).sub(receipt.gasUsed).toString(),
-                  )`
-$DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1416:26-1425:20: `.log(
-                    'Gas Benchmarking - sig verification ( f =',
-                    newF,
-                    '): calculated overhead: ',
-                    gasOverhead.toString(),
-                    ' actual overhead: ',
-                    receipt.gasUsed.sub(gasUsed).toString(),
-                    ' margin over gasUsed: ',
-                    gasUsed.add(gasOverhead).sub(receipt.gasUsed).toString(),
-                  )`
-$DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1422:28-1422:49: `.gasUsed.sub(gasUsed)`
-$DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1424:28-1424:45: `.add(gasOverhead)`
-$DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1424:45-1424:66: `.sub(receipt.gasUsed)`
 $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1452:17-1459:88: `assert.isTrue(
                   gasUsed
                     .add(gasOverhead)
@@ -12406,33 +12380,6 @@ $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1712:19-1714:38: `
 $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1713:21-1713:34: `.add(gasUsed)`
 $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1714:21-1714:38: `.add(gasOverhead)`
 $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1718:41-1718:77: `.args.gasOverhead.eq(gasOverheadCap)`
-$DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1727:17-1739:18: `console.log(
-                  'Gas Benchmarking - batching (passedUpkeeps: ',
-                  numPassingUpkeeps,
-                  'failedUpkeeps:',
-                  numFailingUpkeeps,
-                  '): ',
-                  'overheadsGotCapped',
-                  overheadsGotCapped,
-                  'calculated overhead',
-                  upkeepPerformedLogs[0].args.gasOverhead.toString(),
-                  ' margin over gasUsed',
-                  netGasUsedPlusOverhead.sub(receipt.gasUsed).toString(),
-                )`
-$DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1727:24-1739:18: `.log(
-                  'Gas Benchmarking - batching (passedUpkeeps: ',
-                  numPassingUpkeeps,
-                  'failedUpkeeps:',
-                  numFailingUpkeeps,
-                  '): ',
-                  'overheadsGotCapped',
-                  overheadsGotCapped,
-                  'calculated overhead',
-                  upkeepPerformedLogs[0].args.gasOverhead.toString(),
-                  ' margin over gasUsed',
-                  netGasUsedPlusOverhead.sub(receipt.gasUsed).toString(),
-                )`
-$DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1738:41-1738:62: `.sub(receipt.gasUsed)`
 $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1759:40-1759:50: `.from('0')`
 $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1761:11-1761:50: `mock = await upkeepMockFactory.deploy()`
 $DIR/contracts/test/v0.8/automation/KeeperRegistry2_0.test.ts:1761:41-1761:50: `.deploy()`
