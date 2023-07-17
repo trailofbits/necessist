@@ -15,7 +15,7 @@ fn crates_io() {
         .assert()
         .success()
         .stdout(predicate::str::contains(
-            "Assume testing framework is <FRAMEWORK> [possible values: auto, foundry, go, \
-             hardhat-ts, rust]",
+            "Assume testing framework is <FRAMEWORK> [possible values: anchor-ts, auto, foundry, \
+             go, hardhat-ts, rust]",
         ));
 }

@@ -28,6 +28,10 @@ strum_macros = "0.25"
 subprocess = "0.2"
 walkdir = "2.3"
 
+# Anchor TS
+toml_edit = "0.19"
+# Also, swc_core, listed below under Hardhat TS.
+
 # Foundry
 # smoelius: New `solang-parser` releases may contain breaking changes:
 # https://github.com/hyperledger/solang/pull/1213

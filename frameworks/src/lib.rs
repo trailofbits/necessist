@@ -14,6 +14,9 @@ use subprocess::Exec;
 
 // Framework modules
 
+mod anchor_ts;
+use anchor_ts::AnchorTs;
+
 mod foundry;
 use foundry::Foundry;
 
@@ -46,6 +49,7 @@ mod utils;
 #[non_exhaustive]
 #[remain::sorted]
 pub enum Identifier {
+    AnchorTs,
     Foundry,
     Go,
     HardhatTs,
@@ -55,6 +59,7 @@ pub enum Identifier {
 impl Applicable for Identifier {
     fn applicable(&self, context: &LightContext) -> Result<bool> {
         match *self {
+            Self::AnchorTs => AnchorTs::applicable(context),
             Self::Foundry => Foundry::applicable(context),
             Self::Go => Go::applicable(context),
             Self::HardhatTs => HardhatTs::applicable(context),
@@ -64,17 +69,29 @@ impl Applicable for Identifier {
 }
 
 impl ToImplementation for Identifier {
-    fn to_implementation(&self, _context: &LightContext) -> Result<Option<Box<dyn Interface>>> {
-        Ok(Some(match *self {
-            Self::Foundry => implementation_as_interface(ParseRunAdapter::new)(Foundry::new()),
+    // smoelius: `AnchorTs` and `HardhatTs` implement the `ParseLow` interface indirectly through
+    // `ts::Mocha`. They implement the high-level `Run` interface directly.
+    fn to_implementation(&self, context: &LightContext) -> Result<Option<Box<dyn Interface>>> {
+        match *self {
+            Self::AnchorTs => {
+                let anchor = AnchorTs::new(context)?;
+                Ok(Some(Box::new(anchor)))
+            }
 
-            Self::Go => implementation_as_interface(ParseRunAdapter::new)(Go::new()),
+            Self::Foundry => Ok(Some(implementation_as_interface(ParseRunAdapter::new)(
+                Foundry::new(),
+            ))),
 
-            // smoelius: `HardhatTs` implements the high-level `Run` interface directly.
-            Self::HardhatTs => Box::new(HardhatTs::new()),
+            Self::Go => Ok(Some(implementation_as_interface(ParseRunAdapter::new)(
+                Go::new(),
+            ))),
 
-            Self::Rust => implementation_as_interface(ParseRunAdapter::new)(Rust::new()),
-        }))
+            Self::HardhatTs => Ok(Some(Box::new(HardhatTs::new()))),
+
+            Self::Rust => Ok(Some(implementation_as_interface(ParseRunAdapter::new)(
+                Rust::new(),
+            ))),
+        }
     }
 }
 

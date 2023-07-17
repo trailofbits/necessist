@@ -54,6 +54,23 @@ jobs:
           cargo install cargo-modules            || true
           cargo install cargo-sort               || true
 
+      # smoelius: https://docs.solana.com/cli/install-solana-cli-tools
+      - name: Install Solana
+        id: install-solana
+        run: |
+          sh -c "$(curl -sSfL https://release.solana.com/stable/install)"
+          echo "path=$HOME/.local/share/solana/install/active_release/bin:$PATH" >> "$GITHUB_OUTPUT"
+
+      # smoelius: https://www.anchor-lang.com/docs/installation
+      - name: Install Anchor
+        run: |
+          cp frameworks/src/anchor_ts/rfc8032_test_vector.json ~/.config/solana/id.json
+          cargo install --git https://github.com/coral-xyz/anchor avm --locked --force
+          avm install 0.27.0
+          avm use 0.27.0
+        env:
+          PATH: ${{ steps.install-solana.outputs.path }}
+
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
         # smoelius Pin Foundry version until foundry-rs/foundry#4835 is resolved.
@@ -74,6 +91,8 @@ jobs:
             cargo test -p necessist-core
             cargo test -p necessist-frameworks
           fi
+        env:
+          PATH: ${{ steps.install-solana.outputs.path }}
 
   all-checks:
     needs: [test]
