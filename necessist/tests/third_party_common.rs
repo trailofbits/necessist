@@ -1,10 +1,11 @@
+use assert_cmd::output::OutputError;
 use necessist_core::{util, Span};
 use regex::Regex;
 use serde::Deserialize;
 use similar_asserts::SimpleDiff;
 use std::{
     collections::{BTreeMap, HashSet},
-    env::{consts, var},
+    env::{consts, set_var, var},
     ffi::OsStr,
     fmt::Write as _,
     fs::{read_dir, read_to_string, remove_file, write},
@@ -112,6 +113,8 @@ struct Task {
 }
 
 pub fn all_tests_in(path: impl AsRef<Path>) {
+    set_var("CARGO_TERM_COLOR", "never");
+
     let mut tests = BTreeMap::<_, Vec<_>>::new();
     let mut n_tests = 0;
 
@@ -313,7 +316,7 @@ fn init_tempdir(tempdir: &Path, key: &Key) -> String {
         command.arg("--depth=1");
     }
     let output = command.output().unwrap();
-    assert!(output.status.success(), "{output:?}");
+    assert!(output.status.success(), "{}", OutputError::new(output));
 
     let mut output_combined = std::str::from_utf8(&output.stderr).unwrap().to_owned();
 
@@ -323,7 +326,7 @@ fn init_tempdir(tempdir: &Path, key: &Key) -> String {
             .current_dir(tempdir)
             .output()
             .unwrap();
-        assert!(output.status.success(), "{output:?}");
+        assert!(output.status.success(), "{}", OutputError::new(output));
 
         output_combined += std::str::from_utf8(&output.stderr).unwrap();
     }
