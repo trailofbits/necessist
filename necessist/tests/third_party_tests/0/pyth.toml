@@ -1,0 +1,3 @@
+url = "https://github.com/pyth-network/pyth-crosschain"
+subdir = "pythnet/message_buffer"
+framework = "anchor-ts"

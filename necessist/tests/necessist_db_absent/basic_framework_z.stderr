@@ -1,4 +1,4 @@
 error: invalid value 'z' for '--framework <FRAMEWORK>'
-  [possible values: auto, foundry, go, hardhat-ts, rust]
+  [possible values: anchor-ts, auto, foundry, go, hardhat-ts, rust]
 
 For more information, try '--help'.

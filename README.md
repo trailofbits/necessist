@@ -2,7 +2,7 @@
 
 Run tests with statements and method calls removed to help identify broken tests
 
-Necessist currently supports Foundry, Go, Hardhat TS, and Rust.
+Necessist currently supports Anchor TS, Foundry, Go, Hardhat TS, and Rust.
 
 **Contents**
 
@@ -112,7 +112,7 @@ Options:
       --deny <WARNING>         Treat <WARNING> as an error; `--deny all` treats all warnings as errors
       --dump                   Dump sqlite database contents to the console
       --dump-candidates        Dump removal candidates and exit (for debugging)
-      --framework <FRAMEWORK>  Assume testing framework is <FRAMEWORK> [possible values: auto, foundry, go, hardhat-ts, rust]
+      --framework <FRAMEWORK>  Assume testing framework is <FRAMEWORK> [possible values: anchor-ts, auto, foundry, go, hardhat-ts, rust]
       --no-dry-run             Do not perform dry runs
       --no-sqlite              Do not output to an sqlite database
       --quiet                  Do not output to the console
@@ -153,6 +153,23 @@ Similarly, Necessist will not attempt to remove a method call if:
 - It appears in the argument list of an ignored function, method, or macro ([see below](#configuration-files)).
 
 Also, for some frameworks, certain statements and methods are ignored. Click on a framework to see its specifics.
+
+<details>
+<summary>Anchor TS</summary>
+
+#### Ignored functions
+
+- `assert`
+- Anything beginning with `assert.` (e.g., `assert.equal`)
+- Anything beginning with `console.` (e.g., `console.log`)
+- `expect`
+
+#### Ignored methods
+
+- `toNumber`
+- `toString`
+
+</details>
 
 <details>
 <summary>Foundry</summary>
@@ -202,17 +219,7 @@ In addition to the below, the Go framework ignores:
 <details>
 <summary>Hardhat TS</summary>
 
-#### Ignored functions
-
-- `assert`
-- Anything beginning with `assert.` (e.g., `assert.equal`)
-- Anything beginning with `console.` (e.g., `console.log`)
-- `expect`
-
-#### Ignored methods
-
-- `toNumber`
-- `toString`
+The ignored functions and methods are the same as for Anchor TS above.
 
 </details>
 

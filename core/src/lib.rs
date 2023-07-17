@@ -7,6 +7,9 @@ pub use proc_macro2::LineColumn;
 mod backup;
 use backup::Backup;
 
+#[doc(hidden)]
+pub use backup::Backup as __Backup;
+
 #[cfg(feature = "clap")]
 pub mod cli;
 

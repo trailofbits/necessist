@@ -218,6 +218,16 @@ fn noninvasive_siblings() {
 
 #[test]
 fn prettier() {
+    const ARGS: &[&str] = &[
+        "{}/../**/*.json",
+        "{}/../**/*.md",
+        "{}/../**/*.yml",
+        "!{}/../examples/**",
+        "!{}/../frameworks/src/anchor_ts/rfc8032_test_vector.json",
+        "!{}/../target/**",
+        "!{}/../warnings.json",
+    ];
+
     let tempdir = tempdir().unwrap();
 
     Command::new("npm")
@@ -227,16 +237,11 @@ fn prettier() {
         .success();
 
     Command::new("npx")
-        .args([
-            "prettier",
-            "--check",
-            &format!("{}/../**/*.json", env!("CARGO_MANIFEST_DIR")),
-            &format!("{}/../**/*.md", env!("CARGO_MANIFEST_DIR")),
-            &format!("{}/../**/*.yml", env!("CARGO_MANIFEST_DIR")),
-            &format!("!{}/../examples/**", env!("CARGO_MANIFEST_DIR")),
-            &format!("!{}/../target/**", env!("CARGO_MANIFEST_DIR")),
-            &format!("!{}/../warnings.json", env!("CARGO_MANIFEST_DIR")),
-        ])
+        .args(["prettier", "--check"])
+        .args(
+            ARGS.iter()
+                .map(|s| s.replace("{}", env!("CARGO_MANIFEST_DIR"))),
+        )
         .current_dir(&tempdir)
         .assert()
         .success();
