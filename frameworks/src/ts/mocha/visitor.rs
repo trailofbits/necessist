@@ -1,4 +1,4 @@
-use super::{is_it_call_expr, is_it_call_stmt, GenericVisitor, HardhatTs, SourceMapped, Storage};
+use super::{is_it_call_expr, is_it_call_stmt, GenericVisitor, Mocha, SourceMapped, Storage};
 use anyhow::Result;
 use necessist_core::Span;
 use std::cell::RefCell;
@@ -9,7 +9,7 @@ use swc_core::ecma::{
 
 #[allow(clippy::unnecessary_wraps)]
 pub(super) fn visit<'ast>(
-    generic_visitor: GenericVisitor<'_, '_, '_, 'ast, HardhatTs>,
+    generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Mocha>,
     storage: &RefCell<Storage<'ast>>,
     module: &Module,
 ) -> Result<Vec<Span>> {
@@ -19,7 +19,7 @@ pub(super) fn visit<'ast>(
 }
 
 struct Visitor<'context, 'config, 'framework, 'ast, 'storage> {
-    generic_visitor: GenericVisitor<'context, 'config, 'framework, 'ast, HardhatTs>,
+    generic_visitor: GenericVisitor<'context, 'config, 'framework, 'ast, Mocha>,
     storage: &'storage RefCell<Storage<'ast>>,
 }
 
@@ -27,7 +27,7 @@ impl<'context, 'config, 'framework, 'ast, 'storage>
     Visitor<'context, 'config, 'framework, 'ast, 'storage>
 {
     fn new(
-        generic_visitor: GenericVisitor<'context, 'config, 'framework, 'ast, HardhatTs>,
+        generic_visitor: GenericVisitor<'context, 'config, 'framework, 'ast, Mocha>,
         storage: &'storage RefCell<Storage<'ast>>,
     ) -> Self {
         Self {

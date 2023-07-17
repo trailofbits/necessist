@@ -37,7 +37,7 @@ use generic_visitor::GenericVisitor;
 mod running;
 use running::{ProcessLines, RunAdapter, RunLow};
 
-mod ts_utils;
+mod ts;
 
 mod utils;
 
@@ -71,7 +71,7 @@ impl ToImplementation for Identifier {
             Self::Go => implementation_as_interface(ParseRunAdapter::new)(Go::new()),
 
             // smoelius: `HardhatTs` implements the high-level `Run` interface directly.
-            Self::HardhatTs => implementation_as_interface(ParseAdapter)(HardhatTs::new()),
+            Self::HardhatTs => Box::new(HardhatTs::new()),
 
             Self::Rust => implementation_as_interface(ParseRunAdapter::new)(Rust::new()),
         }))
