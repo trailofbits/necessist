@@ -1,4 +1,4 @@
-use super::{ts_utils, utils, RunHigh};
+use super::{ts, utils, RunHigh};
 use anyhow::{anyhow, Context, Error, Result};
 use assert_cmd::output::OutputError;
 use bstr::{io::BufReadExt, BStr};
@@ -44,7 +44,7 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
         // smoelius: `REQUIRES_NODE_MODULES` is a hack. But at present, I don't know how it should
         // be generalized.
         if T::REQUIRES_NODE_MODULES && context.root.join("package.json").try_exists()? {
-            ts_utils::install_node_modules(context)?;
+            ts::utils::install_node_modules(context)?;
         }
 
         let mut command = self.0.command_to_run_test_file(context, test_file);
