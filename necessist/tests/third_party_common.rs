@@ -41,6 +41,11 @@ struct Test {
     #[serde(default)]
     rev: Option<String>,
 
+    /// Command to run after the repository is checked out, but before any tests are run. The
+    /// command is run with `bash -c '...'`.
+    #[serde(default)]
+    init: Option<String>,
+
     /// OS on which the test should run; `None` (the default) means all OSes
     #[serde(default)]
     target_os: Option<String>,
@@ -78,6 +83,7 @@ struct Test {
 struct Key {
     url: String,
     rev: Option<String>,
+    init: Option<String>,
 }
 
 impl Key {
@@ -85,6 +91,7 @@ impl Key {
         Self {
             url: test.url.clone(),
             rev: test.rev.clone(),
+            init: test.init.clone(),
         }
     }
 }
@@ -323,6 +330,17 @@ fn init_tempdir(tempdir: &Path, key: &Key) -> String {
     if let Some(rev) = &key.rev {
         let output = Command::new("git")
             .args(["checkout", rev])
+            .current_dir(tempdir)
+            .output()
+            .unwrap();
+        assert!(output.status.success(), "{}", OutputError::new(output));
+
+        output_combined += std::str::from_utf8(&output.stderr).unwrap();
+    }
+
+    if let Some(init) = &key.init {
+        let output = Command::new("bash")
+            .args(["-c", init])
             .current_dir(tempdir)
             .output()
             .unwrap();
