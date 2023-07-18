@@ -2,7 +2,7 @@
 
 Run tests with statements and method calls removed to help identify broken tests
 
-Necessist currently supports Anchor TS, Foundry, Go, Hardhat TS, and Rust.
+Necessist currently supports Anchor (TS), Foundry, Go, Hardhat (TS), and Rust.
 
 **Contents**
 
@@ -87,6 +87,9 @@ fn verify_untrusted_callback_override_ok() {
 
 ### Comparison to conventional mutation testing
 
+<details>
+<summary>Click to expand</summary>
+
 Conventional mutation testing tries to identify _gaps in test coverage_, whereas Necessist tries to identify _bugs in existing tests_.
 
 Conventional mutation testing tools (such a [`universalmutator`]) randomly inject faults into source code, and see whether the code's tests still pass. If they do, it could mean the code's tests are inadequate.
@@ -97,7 +100,12 @@ By comparison, Necessist's approach of iteratively removing statements and metho
 
 Of course, there is overlap is the sets of problems the two approaches can uncover, e.g., a failure to find an injected fault could indicate a bug in a test. Nonetheless, for the reasons just given, we see the two approaches as complementary, not competing.
 
+</details>
+
 ### Theoretical motivation
+
+<details>
+<summary>Click to expand</summary>
 
 The following criterion (`*`) comes close to describing the statements that Necessist aims to remove:
 
@@ -146,6 +154,8 @@ One could then consider a statement "interesting" if its strongest postcondition
 Other possible, useful definitions of "interesting statement" could involve frameworks besides [Hoare logic] entirely.
 
 To be clear, Necessist does not apply (`*`) formally, e.g., Necessist does not actually compute weakest preconditions. The current role of (`*`) is to help guide which statements Necessist should ignore, and (`*`) seems to do well in that role. As such, we leave revision of (`*`) to future work.
+
+</details>
 
 ## Usage
 
