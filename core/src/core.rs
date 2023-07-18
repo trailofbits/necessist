@@ -86,9 +86,9 @@ pub fn necessist<Identifier: Applicable + Display + IntoEnumIterator + ToImpleme
     opts: &Necessist,
     framework: framework::Auto<Identifier>,
 ) -> Result<()> {
-    let mut opts = opts.clone();
+    let opts = opts.clone();
 
-    process_options(&mut opts)?;
+    process_options(&opts)?;
 
     let root = opts
         .root
@@ -318,7 +318,7 @@ macro_rules! incompatible {
     };
 }
 
-fn process_options(opts: &mut Necessist) -> Result<()> {
+fn process_options(opts: &Necessist) -> Result<()> {
     // smoelius: This list of incompatibilities is not exhaustive.
     incompatible!(opts, dump, quiet);
     incompatible!(opts, dump, reset);
