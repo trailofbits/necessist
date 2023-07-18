@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.0
+
+- Add Anchor framework ([#587](https://github.com/trailofbits/necessist/pull/587))
+
 ## 0.1.3
 
 - Verify that package.json exists before installing Node modules ([#580](https://github.com/trailofbits/necessist/pull/580))
