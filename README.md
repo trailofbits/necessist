@@ -11,8 +11,10 @@ Necessist currently supports Anchor (TS), Foundry, Go, Hardhat (TS), and Rust.
 - [Usage](#usage)
 - [Details](#details)
 - [Configuration files](#configuration-files)
-- [Goals](#goals)
 - [Limitations](#limitations)
+- [Semantic versioning policy](#semantic-versioning-policy)
+- [Goals](#goals)
+- [References](#references)
 - [License](#license)
 
 ## Installation
@@ -419,6 +421,10 @@ By default, Necessist ignores such a path if it matches either an `ignored_funct
 - **Slow.** Modifying tests requires them to be rebuilt. Running Necessist on even moderately sized codebases can take several hours.
 
 - **Triage requires intimate knowledge of the source code.** Generally speaking, Necessist does not produce "obvious" bugs. In our experience, deciding whether a statement/method call should be necessary requires intimate knowledge of the code under test. Necessist is best run on codebases for which one has (or intends to have) such knowledge.
+
+## Semantic versioning policy
+
+We reserve the right to change what syntax Necessist ignores by default, and to consider such changes non-breaking.
 
 ## Goals
 
