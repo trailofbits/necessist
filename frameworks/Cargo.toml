@@ -45,7 +45,7 @@ tree-sitter-go = "0.19"
 swc_core = { version = "0.79", features = ["common", "ecma_ast", "ecma_parser", "ecma_visit"] }
 
 # Rust
-cargo_metadata = "0.15"
+cargo_metadata = "0.17"
 proc-macro2 = "1.0"
 quote = "1.0"
 syn = { version = "2.0", features = ["extra-traits", "full", "visit"] }
@@ -54,7 +54,7 @@ syn = { version = "2.0", features = ["extra-traits", "full", "visit"] }
 curl = "0.4"
 
 [build-dependencies]
-cargo_metadata = "0.15"
+cargo_metadata = "0.17"
 curl = "0.4"
 heck = "0.4"
 syn = "2.0"
