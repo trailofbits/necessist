@@ -39,7 +39,7 @@ solang-parser = "=0.3.1"
 
 # Go
 tree-sitter = "0.20"
-tree-sitter-go = "0.19"
+tree-sitter-go = "0.20"
 
 # Hardhat TS
 swc_core = { version = "0.79", features = ["common", "ecma_ast", "ecma_parser", "ecma_visit"] }
