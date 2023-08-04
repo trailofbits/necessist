@@ -8,7 +8,6 @@ use std::{
     io::{stderr, Write},
     path::Path,
     process::Command,
-    str::from_utf8,
 };
 use tempfile::tempdir;
 use walkdir::WalkDir;
@@ -259,7 +258,7 @@ fn readme_contains_usage() {
         .stdout
         .clone();
 
-    let usage = from_utf8(&stdout).unwrap();
+    let usage = std::str::from_utf8(&stdout).unwrap();
 
     assert!(readme.contains(usage));
 }

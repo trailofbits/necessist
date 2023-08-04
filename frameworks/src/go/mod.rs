@@ -35,12 +35,15 @@ const BLOCK_STATEMENTS_SOURCE: &str = r#"
 ) @block
 "#;
 
-const EXPRESSION_SOURCE: &str = r#"
-(_expression) @expression
+const EXPRESSION_STATEMENT_EXPRESSION_SOURCE: &str = r#"
+(expression_statement
+    (_expression) @expression
+) @expression_statement
 "#;
 
 static BLOCK_STATEMENTS_QUERY: Lazy<Query> = Lazy::new(|| valid_query(BLOCK_STATEMENTS_SOURCE));
-static EXPRESSION_QUERY: Lazy<Query> = Lazy::new(|| valid_query(EXPRESSION_SOURCE));
+static EXPRESSION_STATEMENT_EXPRESSION_QUERY: Lazy<Query> =
+    Lazy::new(|| valid_query(EXPRESSION_STATEMENT_EXPRESSION_SOURCE));
 
 fn valid_query(source: &str) -> Query {
     #[allow(clippy::unwrap_used)]
@@ -249,9 +252,9 @@ impl ParseLow for Go {
     }
 
     fn visit_file<'ast>(
-        generic_visitor: crate::generic_visitor::GenericVisitor<'_, '_, '_, 'ast, Self>,
-        storage: &std::cell::RefCell<<Self::Types as crate::parsing::AbstractTypes>::Storage<'ast>>,
-        file: &'ast <Self::Types as crate::parsing::AbstractTypes>::File,
+        generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Self>,
+        storage: &std::cell::RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
+        file: &'ast <Self::Types as AbstractTypes>::File,
     ) -> Result<Vec<Span>> {
         visit(generic_visitor, storage, &file.1)
     }
@@ -259,7 +262,7 @@ impl ParseLow for Go {
     fn on_candidate_found(
         &mut self,
         _context: &LightContext,
-        _storage: &std::cell::RefCell<<Self::Types as crate::parsing::AbstractTypes>::Storage<'_>>,
+        _storage: &std::cell::RefCell<<Self::Types as AbstractTypes>::Storage<'_>>,
         test_name: &str,
         span: &Span,
     ) -> bool {
@@ -299,12 +302,12 @@ impl ParseLow for Go {
         statement: <Self::Types as AbstractTypes>::Statement<'ast>,
     ) -> Option<<Self::Types as AbstractTypes>::Expression<'ast>> {
         if let Some(captures) = process_self_captures(
-            &EXPRESSION_QUERY,
+            &EXPRESSION_STATEMENT_EXPRESSION_QUERY,
             statement.0.node,
             statement.0.text.as_bytes(),
             |captures| captures.next(),
         ) {
-            assert_eq!(1, captures.len());
+            assert_eq!(2, captures.len());
             Some(Expression(NodeWithText {
                 text: statement.0.text,
                 node: captures[0].node,
