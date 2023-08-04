@@ -188,7 +188,7 @@ impl ParseLow for Foundry {
 
     fn visit_file<'ast>(
         generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Self>,
-        storage: &std::cell::RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
+        storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
         file: &'ast <Self::Types as AbstractTypes>::File,
     ) -> Result<Vec<Span>> {
         visit(generic_visitor, storage, &file.1)
