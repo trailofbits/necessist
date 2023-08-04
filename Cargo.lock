@@ -264,6 +264,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "cargo_metadata"
+version = "0.17.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e7daec1a2a2129eeba1644b220b4647ec537b0b5d4bfd6876fcc5a540056b592"
+dependencies = [
+ "camino",
+ "cargo-platform",
+ "semver",
+ "serde",
+ "serde_json",
+ "thiserror",
+]
+
+[[package]]
 name = "cc"
 version = "1.0.79"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1076,7 +1090,7 @@ version = "0.2.0"
 dependencies = [
  "anyhow",
  "assert_cmd",
- "cargo_metadata",
+ "cargo_metadata 0.15.4",
  "clap",
  "ctor",
  "curl",
@@ -1110,7 +1124,7 @@ dependencies = [
  "anyhow",
  "assert_cmd",
  "bitflags 2.3.3",
- "cargo_metadata",
+ "cargo_metadata 0.17.0",
  "clap",
  "ctrlc",
  "curl",
@@ -1141,7 +1155,7 @@ dependencies = [
  "anyhow",
  "assert_cmd",
  "bstr 1.6.0",
- "cargo_metadata",
+ "cargo_metadata 0.17.0",
  "clap",
  "curl",
  "heck",
