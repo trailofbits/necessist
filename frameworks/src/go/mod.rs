@@ -252,9 +252,9 @@ impl ParseLow for Go {
     }
 
     fn visit_file<'ast>(
-        generic_visitor: crate::generic_visitor::GenericVisitor<'_, '_, '_, 'ast, Self>,
-        storage: &std::cell::RefCell<<Self::Types as crate::parsing::AbstractTypes>::Storage<'ast>>,
-        file: &'ast <Self::Types as crate::parsing::AbstractTypes>::File,
+        generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Self>,
+        storage: &std::cell::RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
+        file: &'ast <Self::Types as AbstractTypes>::File,
     ) -> Result<Vec<Span>> {
         visit(generic_visitor, storage, &file.1)
     }
@@ -262,7 +262,7 @@ impl ParseLow for Go {
     fn on_candidate_found(
         &mut self,
         _context: &LightContext,
-        _storage: &std::cell::RefCell<<Self::Types as crate::parsing::AbstractTypes>::Storage<'_>>,
+        _storage: &std::cell::RefCell<<Self::Types as AbstractTypes>::Storage<'_>>,
         test_name: &str,
         span: &Span,
     ) -> bool {
