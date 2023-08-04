@@ -104,7 +104,7 @@ impl Mocha {
         let mut test_file_it_message_state_map = self.test_file_it_message_state_map.borrow_mut();
         let it_message_state_map = test_file_it_message_state_map
             .entry(test_file.to_path_buf())
-            .or_insert_with(Default::default);
+            .or_default();
 
         let stdout = std::str::from_utf8(&output.stdout)?;
         for line in stdout.lines() {
@@ -138,9 +138,7 @@ impl Mocha {
             .get_mut(span.source_file.as_ref())
             .expect("Source file is not in map");
 
-        let state = it_message_state_map
-            .entry(it_message.clone())
-            .or_insert_with(Default::default);
+        let state = it_message_state_map.entry(it_message.clone()).or_default();
         if *state != ItMessageState::Found {
             if *state == ItMessageState::NotFound {
                 source_warn(
