@@ -20,16 +20,17 @@ jobs:
       fail-fast: false
       matrix:
         environment: [ubuntu-latest, macos-latest]
-        test: [ci, other, third_party_0, third_party_1, trycmd]
+        test: [other, third_party_0, third_party_1, trycmd]
         # smoelius: There is no need to run the `ci` test on multiple platforms.
-        exclude:
-          - environment: macos-latest
+        include:
+          - environment: ubuntu-latest
             test: ci
 
     runs-on: ${{ matrix.environment }}
 
     steps:
       - name: Log github refs
+        if: ${{ matrix.test == 'ci' }}
         run: |
           echo '```' >> "$GITHUB_STEP_SUMMARY"
           echo 'github.sha: ${{ github.sha }}' >> "$GITHUB_STEP_SUMMARY"
