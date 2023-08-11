@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.1
+
+- Fix a bug involving the Foundry framework's handling of trailing semicolons ([#663](https://github.com/trailofbits/necessist/pull/663))
+
 ## 0.2.0
 
 - Add Anchor framework ([#587](https://github.com/trailofbits/necessist/pull/587))
