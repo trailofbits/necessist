@@ -371,7 +371,7 @@ A configuration file allows one to tailor Necessist's behavior with respect to a
 
 - `ignored_path_disambiguation`: One of the strings `Either`, `Function`, or `Method`. For a [path] that could refer to a function or method ([see below](#paths)), this option influences whether the function or method is ignored.
 
-  - `Either` (default): Ignore if the path matches either an `ignored_functions` or `ignored_macros` pattern.
+  - `Either` (default): Ignore if the path matches either an `ignored_functions` or `ignored_methods` pattern.
 
   - `Function`: Ignore only if the path matches an `ignored_functions` pattern.
 
@@ -414,7 +414,7 @@ Note, however, that paths like `operator.connect` are ambiguous:
 - If `operator` refers to package or module, then `operator.connect` refers to a function.
 - If `operator` refers to an object, then `operator.connect` refers to a method.
 
-By default, Necessist ignores such a path if it matches either an `ignored_functions` or `ignored_macros` pattern. Setting the `ignored_path_disambiguation` option above to `Function` or `Method` causes Necessist ignore the path only if it matches an `ignored_functions` or `ignored_macros` pattern (respectively).
+By default, Necessist ignores such a path if it matches either an `ignored_functions` or `ignored_methods` pattern. Setting the `ignored_path_disambiguation` option above to `Function` or `Method` causes Necessist ignore the path only if it matches an `ignored_functions` or `ignored_methods` pattern (respectively).
 
 ## Limitations
 
