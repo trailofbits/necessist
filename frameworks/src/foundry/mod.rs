@@ -54,13 +54,10 @@ pub struct WithContents<'ast, T> {
     value: T,
 }
 
-impl<'ast, T: CodeLocation> Spanned for WithContents<'ast, T> {
+impl<'ast, T: LocWithOptionalSemicolon> Spanned for WithContents<'ast, T> {
     fn span(&self, source_file: &SourceFile) -> Span {
-        // smoelius: Calling `extend_to_semicolon` for things other than statements is hacky
-        // but... ¯\_(ツ)_/¯
         self.value
-            .loc()
-            .extend_to_semicolon(self.contents)
+            .loc_with_optional_semicolon(self.contents)
             .to_internal_span(source_file, self.contents)
     }
 }
@@ -435,26 +432,41 @@ impl Foundry {
     }
 }
 
-trait ExtendToSemicolon {
-    fn extend_to_semicolon(&self, contents: &str) -> Self;
+trait LocWithOptionalSemicolon: CodeLocation {
+    fn loc_with_optional_semicolon(&self, _contents: &str) -> Loc {
+        self.loc()
+    }
 }
 
-impl ExtendToSemicolon for Loc {
-    fn extend_to_semicolon(&self, contents: &str) -> Self {
-        match *self {
-            Self::File(file_no, start, mut end) => {
+impl<T: LocWithOptionalSemicolon> LocWithOptionalSemicolon for &T {
+    fn loc_with_optional_semicolon(&self, contents: &str) -> Loc {
+        (*self).loc_with_optional_semicolon(contents)
+    }
+}
+
+impl LocWithOptionalSemicolon for Expression {}
+
+impl<'ast> LocWithOptionalSemicolon for MemberAccess<'ast> {}
+
+impl<'ast> LocWithOptionalSemicolon for FunctionCall<'ast> {}
+
+impl LocWithOptionalSemicolon for Statement {
+    fn loc_with_optional_semicolon(&self, contents: &str) -> Loc {
+        let loc = self.loc();
+        match loc {
+            Loc::File(file_no, start, mut end) => {
                 let mut chars = contents.chars().skip(end).peekable();
                 while chars.peek().map_or(false, |c| c.is_whitespace()) {
                     end += 1;
                     let _ = chars.next();
                 }
                 if chars.next() == Some(';') {
-                    Self::File(file_no, start, end + 1)
+                    Loc::File(file_no, start, end + 1)
                 } else {
-                    *self
+                    loc
                 }
             }
-            _ => *self,
+            _ => loc,
         }
     }
 }
