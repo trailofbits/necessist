@@ -1,6 +1,6 @@
 [package]
 name = "necessist"
-version = "0.2.0"
+version = "0.2.1"
 edition = "2021"
 
 description = "necessist"
@@ -15,8 +15,8 @@ path = "tests/ci.rs"
 required-features = ["ci"]
 
 [dependencies]
-necessist-core = { version = "=0.2.0", path = "../core", features = ["clap"] }
-necessist-frameworks = { version = "=0.2.0", path = "../frameworks" }
+necessist-core = { version = "=0.2.1", path = "../core", features = ["clap"] }
+necessist-frameworks = { version = "=0.2.1", path = "../frameworks" }
 
 anyhow = { version = "1.0", features = ["backtrace"] }
 clap = { version = "4.3" }
