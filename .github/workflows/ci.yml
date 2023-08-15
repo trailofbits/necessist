@@ -90,6 +90,17 @@ jobs:
           go-version: "^1.20.1"
           cache: false
 
+      # smoelius: The Chainlink Foundry test requires `node` and `pnpm`.
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
       - name: Test
         run: |
           if [[ '${{ matrix.test }}' != 'other' ]]; then
