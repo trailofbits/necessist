@@ -1,43 +1,106 @@
-34 candidates in 2 test files
-$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol: dry running
-$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol: mutilating
-$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:38:5-38:20: `vm.stopPrank();` failed
-$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:38:7-38:19: `.stopPrank()` failed
-$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:39:5-39:38: `vm.startPrank(subscriptionOwner);` failed
-$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:39:7-39:37: `.startPrank(subscriptionOwner)` failed
-$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:42:5-42:40: `s_coordinator.createSubscription();` failed
-$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:42:18-42:39: `.createSubscription()` failed
-$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:66:5-66:20: `vm.stopPrank();` failed
-$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:66:7-66:19: `.stopPrank()` failed
-$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:67:5-67:33: `vm.prank(subscriptionOwner);` failed
-$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:67:7-67:32: `.prank(subscriptionOwner)` failed
-$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:70:5-70:40: `s_coordinator.createSubscription();` failed
-$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:70:18-70:39: `.createSubscription()` failed
-$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:80:42-80:59: `.balanceOf(OWNER)` nonbuildable
-$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:83:5-83:21: `vm.prank(OWNER);` failed
-$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:83:7-83:20: `.prank(OWNER)` failed
-$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:87:5-87:82: `(balance, requestCount, owner, consumers) = s_coordinator.getSubscription(1);` failed
-$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:93:5-93:21: `vm.prank(OWNER);` failed
-$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:93:7-93:20: `.prank(OWNER)` failed
-$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:95:41-95:58: `.balanceOf(OWNER)` nonbuildable
-$DIR/contracts/test/v0.8/foundry/dev/special/NoCancelVRFCoordinatorV2.t.sol:102:47-106:6: `.calculatePaymentAmountTest(
-      gasAfterPaymentCalculation,
-      fulfillmentFlatFeeLinkPPM,
-      weiPerUnitGas
+62 candidates in 1 test file
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: dry running
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: mutilating
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:89:57-93:6: `.calculateSmartContractAccountAddress(
+      END_USER,
+      ENTRY_POINT,
+      address(factory)
     )` nonbuildable
-$DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol: dry running
-$DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol: mutilating
-$DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol:26:22-26:39: `.typeAndVersion()` nonbuildable
-$DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol:36:36-36:53: `.encode("newKey")` nonbuildable
-$DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol:39:49-39:67: `.getDONPublicKey()` nonbuildable
-$DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol:45:5-45:44: `s_oracle.setDONPublicKey(donPublicKey);` failed
-$DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol:45:13-45:43: `.setDONPublicKey(donPublicKey)` failed
-$DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol:46:44-46:62: `.getDONPublicKey()` nonbuildable
-$DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol:60:5-60:20: `vm.stopPrank();` failed
-$DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol:60:7-60:19: `.stopPrank()` failed
-$DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol:77:47-77:61: `.getRegistry()` nonbuildable
-$DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol:81:5-81:43: `s_oracle.setRegistry(registryAddress);` failed
-$DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol:81:13-81:42: `.setRegistry(registryAddress)` failed
-$DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol:82:42-82:56: `.getRegistry()` nonbuildable
-$DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol:96:5-96:20: `vm.stopPrank();` failed
-$DIR/contracts/test/v0.8/foundry/functions/FunctionsOracle.t.sol:96:7-96:19: `.stopPrank()` failed
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:97:65-97:118: `.getSCAInitCodeWithConstructor(END_USER, ENTRY_POINT)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:98:5-98:66: `factory.deploySmartContractAccount(salt, fullInitializeCode);` failed
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:98:12-98:65: `.deploySmartContractAccount(salt, fullInitializeCode)` failed
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:99:5-99:27: `changePrank(END_USER);` passed
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:103:5-105:6: `assembly {
+      contractCodeSize := extcodesize(toDeployAddress)
+    }` failed
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:111:45-111:104: `.concat(Greeter.setGreeting.selector, abi.encode(greeting))` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:111:86-111:103: `.encode(greeting)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:114:59-119:6: `.getFullEndTxEncoding(
+      address(greeter),
+      uint256(0),
+      0,
+      encodedGreetingCall
+    )` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:137:36-137:54: `.getUserOpHash(op)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:138:34-138:81: `.getUserOpFullHash(userOpHash, toDeployAddress)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:140:5-140:51: `op.signature = abi.encodePacked(r, s, v - 27);` failed
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:143:5-143:60: `entryPoint.depositTo{value: 10 ether}(toDeployAddress);` failed
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:147:5-147:24: `operations[0] = op;` failed
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:148:5-148:57: `entryPoint.handleOps(operations, payable(END_USER));` failed
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:148:15-148:56: `.handleOps(operations, payable(END_USER))` failed
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:152:34-152:44: `.s_nonce()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:160:57-164:6: `.calculateSmartContractAccountAddress(
+      END_USER,
+      ENTRY_POINT,
+      address(factory)
+    )` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:167:65-167:118: `.getInitCode(address(factory), END_USER, ENTRY_POINT)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:171:45-171:104: `.concat(Greeter.setGreeting.selector, abi.encode(greeting))` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:171:86-171:103: `.encode(greeting)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:174:59-179:6: `.getFullEndTxEncoding(
+      address(greeter),
+      uint256(0),
+      0,
+      encodedGreetingCall
+    )` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:197:36-197:54: `.getUserOpHash(op)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:198:34-198:81: `.getUserOpFullHash(userOpHash, toDeployAddress)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:200:5-200:51: `op.signature = abi.encodePacked(r, s, v - 27);` failed
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:203:5-203:60: `entryPoint.depositTo{value: 10 ether}(toDeployAddress);` failed
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:207:5-207:24: `operations[0] = op;` failed
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:208:5-208:57: `entryPoint.handleOps(operations, payable(END_USER));` failed
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:208:15-208:56: `.handleOps(operations, payable(END_USER))` failed
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:213:34-213:44: `.i_owner()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:220:57-224:6: `.calculateSmartContractAccountAddress(
+      END_USER,
+      ENTRY_POINT,
+      address(factory)
+    )` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:227:65-227:118: `.getInitCode(address(factory), END_USER, ENTRY_POINT)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:231:45-231:104: `.concat(Greeter.setGreeting.selector, abi.encode(greeting))` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:231:86-231:103: `.encode(greeting)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:234:59-239:6: `.getFullEndTxEncoding(
+      address(greeter),
+      uint256(0),
+      0,
+      encodedGreetingCall
+    )` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:244:5-244:101: `linkToken.transferAndCall(address(paymaster), 1000 ether, abi.encode(address(toDeployAddress)));` failed
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:244:14-244:100: `.transferAndCall(address(paymaster), 1000 ether, abi.encode(address(toDeployAddress)))` failed
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:244:66-244:99: `.encode(address(toDeployAddress))` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:262:36-262:54: `.getUserOpHash(op)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:263:34-263:81: `.getUserOpFullHash(userOpHash, toDeployAddress)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:265:5-265:51: `op.signature = abi.encodePacked(r, s, v - 27);` failed
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:268:5-268:63: `entryPoint.depositTo{value: 10 ether}(address(paymaster));` failed
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:272:5-272:24: `operations[0] = op;` failed
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:273:5-273:57: `entryPoint.handleOps(operations, payable(END_USER));` failed
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:273:15-273:56: `.handleOps(operations, payable(END_USER))` failed
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:277:34-277:44: `.s_nonce()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:284:57-288:6: `.calculateSmartContractAccountAddress(
+      END_USER,
+      ENTRY_POINT,
+      address(factory)
+    )` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:291:65-291:118: `.getInitCode(address(factory), END_USER, ENTRY_POINT)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:296:51-299:6: `.concat(
+      VRFConsumer.doRequestRandomness.selector,
+      abi.encode(keyhash, fee)
+    )` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:298:10-298:31: `.encode(keyhash, fee)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:307:59-312:6: `.getFullEndTxEncoding(
+      address(vrfConsumer), // end-contract
+      uint256(0), // value
+      0, // timeout (seconds)
+      encodedVRFRequestCallData
+    )` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:316:5-316:101: `linkToken.transferAndCall(address(paymaster), 1000 ether, abi.encode(address(toDeployAddress)));` failed
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:316:14-316:100: `.transferAndCall(address(paymaster), 1000 ether, abi.encode(address(toDeployAddress)))` failed
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:316:66-316:99: `.encode(address(toDeployAddress))` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:341:34-341:99: `.getUserOpFullHash(entryPoint.getUserOpHash(op), toDeployAddress)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:341:63-341:81: `.getUserOpHash(op)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:342:5-342:43: `op.signature = getSignature(fullHash);` failed
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:345:5-345:63: `entryPoint.depositTo{value: 10 ether}(address(paymaster));` failed
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:358:5-358:24: `operations[0] = op;` failed
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:361:5-361:57: `entryPoint.handleOps(operations, payable(END_USER));` failed
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:361:15-361:56: `.handleOps(operations, payable(END_USER))` failed
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:362:34-362:44: `.s_nonce()` nonbuildable
