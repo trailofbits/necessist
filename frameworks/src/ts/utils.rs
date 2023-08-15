@@ -8,8 +8,13 @@ pub fn install_node_modules(context: &LightContext) -> Result<()> {
         return Ok(());
     }
 
-    // smoelius: If a `yarn.lock` file exists, use `yarn`. Otherwise, default to `npm install`.
-    let mut command = if context.root.join("yarn.lock").try_exists()? {
+    // smoelius: If a `pnpm-lock.yaml` file exists, use `pnpm install`. If a `yarn.lock` file
+    // exists, use `yarn`. If neither exist, default to `npm install`.
+    let mut command = if context.root.join("pnpm-lock.yaml").try_exists()? {
+        let mut command = Command::new("pnpm");
+        command.arg("install");
+        command
+    } else if context.root.join("yarn.lock").try_exists()? {
         Command::new("yarn")
     } else {
         let mut command = Command::new("npm");
