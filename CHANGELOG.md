@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.2
+
+- Use `pnpm` if a pnpm-lock.yaml file exists ([bfb30b0](https://github.com/trailofbits/necessist/commit/bfb30b03a7002376f3dc4ea7968b68b74c844871))
+
 ## 0.2.1
 
 - Fix a bug involving the Foundry framework's handling of trailing semicolons ([#663](https://github.com/trailofbits/necessist/pull/663))
