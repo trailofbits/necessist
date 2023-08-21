@@ -29,7 +29,7 @@ serde = { version = "1.0", features = ["derive"] }
 strum = "0.25"
 strum_macros = "0.25"
 subprocess = "0.2"
-tempfile = "3.7"
+tempfile = "3.8"
 toml = "0.7"
 
 [dev-dependencies]
