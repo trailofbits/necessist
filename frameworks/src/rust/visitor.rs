@@ -299,7 +299,6 @@ mod test {
                             }
                         }
                     })
-                    .collect::<Vec<_>>()
             })
             .chain(ADDED_METHODS.iter().map(ToString::to_string))
             .collect::<Vec<_>>();
