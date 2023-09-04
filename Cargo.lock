@@ -118,7 +118,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "88903cb14723e4d4003335bb7f8a14f27691649105346a0f0957466c096adfe6"
 dependencies = [
  "anstyle",
- "bstr 1.6.0",
+ "bstr 1.6.2",
  "doc-comment",
  "predicates",
  "predicates-core",
@@ -209,9 +209,9 @@ dependencies = [
 
 [[package]]
 name = "bstr"
-version = "1.6.0"
+version = "1.6.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6798148dccfbff0fae41c7574d2fa8f1ef3492fba0face179de5d8d447d67b05"
+checksum = "4c2f7349907b712260e64b0afe2f84692af14a454be26187d9df565c7f69266a"
 dependencies = [
  "memchr",
  "regex-automata 0.3.7",
@@ -971,9 +971,9 @@ checksum = "b5e6163cb8c49088c2c36f57875e58ccd8c87c7427f7fbd50ea6710b2f3f2e8f"
 
 [[package]]
 name = "memchr"
-version = "2.5.0"
+version = "2.6.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2dffe52ecf27772e601905b7522cb4ef790d2cc203488bbd0e2fe85fcb74566d"
+checksum = "8f232d6ef707e1956a43342693d2a31e72989554d58299d7a88738cc95b0d35c"
 
 [[package]]
 name = "memoffset"
@@ -1063,7 +1063,7 @@ version = "0.2.2"
 dependencies = [
  "anyhow",
  "assert_cmd",
- "bstr 1.6.0",
+ "bstr 1.6.2",
  "cargo_metadata",
  "clap",
  "curl",
