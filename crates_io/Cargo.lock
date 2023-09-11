@@ -1700,9 +1700,9 @@ dependencies = [
 
 [[package]]
 name = "swc_core"
-version = "0.82.11"
+version = "0.83.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3252c42f47d97dbfe54c0bcadcd6c6b7cd3a968ecd0c989f6895f6c907bcf551"
+checksum = "9ed53856d038fbe2db6bb2d1ad161036baf1e95845a0aade8824e27134c107a1"
 dependencies = [
  "swc_atoms",
  "swc_common",
@@ -1731,9 +1731,9 @@ dependencies = [
 
 [[package]]
 name = "swc_ecma_parser"
-version = "0.139.1"
+version = "0.140.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1e2abc67575c5fcc77cfb9b3eaaeb73bac2cac265504a1fc06a04d0ebbc4c53b"
+checksum = "3c968599841fcecfdc2e490188ad93251897a1bb912882547e6889e14a368399"
 dependencies = [
  "either",
  "num-bigint",
@@ -1751,9 +1751,9 @@ dependencies = [
 
 [[package]]
 name = "swc_ecma_transforms_base"
-version = "0.132.4"
+version = "0.133.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "82b9cbdb2be485815eb755a0014b3c2a9008ba0c20634b9ccbdef78a79d76c1e"
+checksum = "bd570349c3be938eff1214bba74f2d4d8dafc2e433eedb69e8ae220d425569d7"
 dependencies = [
  "better_scoped_tls",
  "bitflags 2.4.0",
@@ -1774,9 +1774,9 @@ dependencies = [
 
 [[package]]
 name = "swc_ecma_utils"
-version = "0.122.1"
+version = "0.123.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "47f412679df4b7f28354b81acdf0fbf53816366019f21e5affc1482b868bda1d"
+checksum = "5b6d6b59ebd31b25fe2692ff705c806961e7856de8b7e91fd0942328886cd315"
 dependencies = [
  "indexmap 1.9.3",
  "num_cpus",
@@ -2007,9 +2007,9 @@ dependencies = [
 
 [[package]]
 name = "toml_edit"
-version = "0.19.14"
+version = "0.19.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f8123f27e969974a3dfba720fdb560be359f57b44302d280ba72e76a74480e8a"
+checksum = "1b5bb770da30e5cbfde35a2d7b9b8a2c4b8ef89548a7a6aeab5c9a576e3e7421"
 dependencies = [
  "indexmap 2.0.0",
  "serde",
@@ -2180,9 +2180,9 @@ dependencies = [
 
 [[package]]
 name = "walkdir"
-version = "2.3.3"
+version = "2.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "36df944cda56c7d8d8b7496af378e6b16de9284591917d307c9b4d313c44e698"
+checksum = "d71d857dc86794ca4c280d616f7da00d2dbfd8cd788846559a6813e6aa4b54ee"
 dependencies = [
  "same-file",
  "winapi-util",
