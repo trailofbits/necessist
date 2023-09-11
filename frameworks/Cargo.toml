@@ -26,7 +26,7 @@ remain = "0.2"
 strum = "0.25"
 strum_macros = "0.25"
 subprocess = "0.2"
-walkdir = "2.3"
+walkdir = "2.4"
 
 # Anchor TS
 toml_edit = "0.19"
