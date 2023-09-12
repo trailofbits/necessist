@@ -1,3 +1,5 @@
+#![cfg_attr(dylint_lib = "general", allow(non_local_effect_before_error_return))]
+
 use super::{Foundry, FunctionCall, GenericVisitor, Storage, Test, WithContents};
 use anyhow::Result;
 use if_chain::if_chain;
@@ -183,6 +185,10 @@ mod test {
     use super::Foundry;
     use crate::ParseLow;
 
+    #[cfg_attr(
+        dylint_lib = "assert_eq_arg_misordering",
+        allow(assert_eq_arg_misordering)
+    )]
     #[test]
     fn ignored_functions_are_sorted() {
         assert_eq!(

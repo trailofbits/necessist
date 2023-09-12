@@ -86,10 +86,7 @@ bitflags! {
 
 static WARNING_STATE_MAP: Mutex<BTreeMap<Warning, State>> = Mutex::new(BTreeMap::new());
 
-#[cfg_attr(
-    dylint_lib = "non_local_effect_before_error_return",
-    allow(non_local_effect_before_error_return)
-)]
+#[cfg_attr(dylint_lib = "general", allow(non_local_effect_before_error_return))]
 fn warn_internal(
     context: &LightContext,
     warning: Warning,

@@ -151,10 +151,7 @@ static TEST_RE: Lazy<Regex> = Lazy::new(|| {
     Regex::new(r"^(.* )[^ ]*\.ts\b(.*)$").unwrap()
 });
 
-#[cfg_attr(
-    dylint_lib = "non_local_effect_before_error_return",
-    allow(non_local_effect_before_error_return)
-)]
+#[cfg_attr(dylint_lib = "general", allow(non_local_effect_before_error_return))]
 fn edit_test_script<T>(
     document: &mut Document,
     f: impl FnOnce(&mut Value) -> Result<T>,

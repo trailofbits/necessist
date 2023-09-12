@@ -55,10 +55,7 @@ pub trait AsRun {
 }
 
 impl<T: AsParse> Parse for T {
-    #[cfg_attr(
-        dylint_lib = "non_local_effect_before_error_return",
-        allow(non_local_effect_before_error_return)
-    )]
+    #[cfg_attr(dylint_lib = "general", allow(non_local_effect_before_error_return))]
     fn parse(
         &mut self,
         context: &LightContext,
