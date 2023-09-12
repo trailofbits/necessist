@@ -11,10 +11,7 @@ use syn::{
     StmtMacro,
 };
 
-#[cfg_attr(
-    dylint_lib = "non_local_effect_before_error_return",
-    allow(non_local_effect_before_error_return)
-)]
+#[cfg_attr(dylint_lib = "general", allow(non_local_effect_before_error_return))]
 pub(super) fn visit<'ast>(
     generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Rust>,
     storage: &RefCell<Storage<'ast>>,
@@ -227,6 +224,10 @@ mod test {
         assert!(readme_contains_code_bulleted_list(ADDED_METHODS));
     }
 
+    #[cfg_attr(
+        dylint_lib = "assert_eq_arg_misordering",
+        allow(assert_eq_arg_misordering)
+    )]
     #[test]
     fn ignored_macros_are_sorted() {
         assert_eq!(
@@ -235,6 +236,10 @@ mod test {
         );
     }
 
+    #[cfg_attr(
+        dylint_lib = "assert_eq_arg_misordering",
+        allow(assert_eq_arg_misordering)
+    )]
     #[test]
     fn ignored_methods_are_sorted() {
         assert_eq!(
@@ -243,11 +248,19 @@ mod test {
         );
     }
 
+    #[cfg_attr(
+        dylint_lib = "assert_eq_arg_misordering",
+        allow(assert_eq_arg_misordering)
+    )]
     #[test]
     fn added_methods_are_sorted() {
         assert_eq!(sort(ADDED_METHODS), ADDED_METHODS);
     }
 
+    #[cfg_attr(
+        dylint_lib = "assert_eq_arg_misordering",
+        allow(assert_eq_arg_misordering)
+    )]
     #[test]
     fn ignored_methods_match_unnecessary_conversion_for_trait_watched_methods() {
         let data = get(UNNECESSARY_CONVERSION_FOR_TRAIT_URL).unwrap();

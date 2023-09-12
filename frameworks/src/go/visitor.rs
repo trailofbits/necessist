@@ -1,3 +1,5 @@
+#![cfg_attr(dylint_lib = "general", allow(non_local_effect_before_error_return))]
+
 use super::{
     bounded_cursor, cursor_matches, process_self_captures, valid_query, Call, GenericVisitor, Go,
     Statement, Storage, Test, CALL_EXPRESSION_KIND,
@@ -45,10 +47,6 @@ static TEST_FUNCTION_DECLARATION_QUERY: Lazy<Query> =
     Lazy::new(|| valid_query(TEST_FUNCTION_DECLARATION_SOURCE));
 static STATEMENT_QUERY: Lazy<Query> = Lazy::new(|| valid_query(STATEMENT_SOURCE));
 
-#[cfg_attr(
-    dylint_lib = "non_local_effect_before_error_return",
-    allow(non_local_effect_before_error_return)
-)]
 pub(super) fn visit<'ast>(
     generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Go>,
     storage: &RefCell<Storage<'ast>>,

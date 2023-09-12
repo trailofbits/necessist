@@ -14,10 +14,6 @@ use std::{
 mod storage;
 use storage::Storage;
 
-#[cfg_attr(
-    dylint_lib = "non_local_effect_before_error_return",
-    allow(non_local_effect_before_error_return)
-)]
 mod visitor;
 use visitor::{visit, Statements};
 

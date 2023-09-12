@@ -333,10 +333,7 @@ impl ParseLow for Rust {
         // smoelius: If `set_span_test_path(span, test_path)` is not called, `command_to_run_test`
         // will panic. So if the module path cannot be determined, return false to prevent the span
         // from being queued.
-        #[cfg_attr(
-            dylint_lib = "non_local_effect_before_error_return",
-            allow(non_local_effect_before_error_return)
-        )]
+        #[cfg_attr(dylint_lib = "general", allow(non_local_effect_before_error_return))]
         let result = (|| {
             let _ = self.cached_test_file_flags(
                 &mut storage.borrow_mut().test_file_package_cache,
@@ -555,10 +552,7 @@ impl Rust {
         command
     }
 
-    #[cfg_attr(
-        dylint_lib = "non_local_effect_before_error_return",
-        allow(non_local_effect_before_error_return)
-    )]
+    #[cfg_attr(dylint_lib = "general", allow(non_local_effect_before_error_return))]
     fn cached_test_file_flags(
         &mut self,
         test_file_package_map: &mut BTreeMap<PathBuf, Package>,

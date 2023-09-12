@@ -78,10 +78,7 @@ fn sibling_tempfile(path: &Path) -> Result<NamedTempFile> {
     NamedTempFile::new_in(parent)
 }
 
-#[cfg_attr(
-    dylint_lib = "non_thread_safe_call_in_test",
-    allow(non_thread_safe_call_in_test)
-)]
+#[cfg_attr(dylint_lib = "general", allow(non_thread_safe_call_in_test))]
 #[test]
 fn mtime_is_updated() {
     let tempfile = NamedTempFile::new().unwrap();
@@ -102,10 +99,7 @@ mod test {
     use super::*;
     use std::fs::{read_to_string, write};
 
-    #[cfg_attr(
-        dylint_lib = "non_thread_safe_call_in_test",
-        allow(non_thread_safe_call_in_test)
-    )]
+    #[cfg_attr(dylint_lib = "general", allow(non_thread_safe_call_in_test))]
     #[test]
     fn sanity() {
         let tempfile = NamedTempFile::new().unwrap();
@@ -114,7 +108,7 @@ mod test {
 
         write(&tempfile, "x").unwrap();
 
-        assert_eq!(read_to_string(&tempfile).unwrap(), "x");
+        assert_eq!("x", read_to_string(&tempfile).unwrap());
 
         drop(backup);
 

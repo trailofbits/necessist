@@ -510,10 +510,7 @@ fn attempt_removal(context: &Context, span: &Span) -> Result<(String, Option<Out
     ))
 }
 
-#[cfg_attr(
-    dylint_lib = "non_local_effect_before_error_return",
-    allow(non_local_effect_before_error_return)
-)]
+#[cfg_attr(dylint_lib = "general", allow(non_local_effect_before_error_return))]
 fn emit(context: &mut Context, span: &Span, text: &str, outcome: Outcome) -> Result<()> {
     let removal = Removal {
         span: span.clone(),
@@ -561,7 +558,7 @@ fn timeout(opts: &Necessist) -> Option<Duration> {
     }
 }
 
-#[cfg_attr(dylint_lib = "commented_code", allow(commented_code))]
+#[cfg_attr(dylint_lib = "supplementary", allow(commented_code))]
 fn recursive_kill(pid: u32) -> Result<()> {
     let output = Command::new("pgrep")
         .args(["-P", &pid.to_string()])
