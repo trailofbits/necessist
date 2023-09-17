@@ -10,6 +10,8 @@ use heck::ToKebabCase;
 use indicatif::ProgressBar;
 use is_terminal::IsTerminal;
 use log::debug;
+use once_cell::sync::Lazy;
+use rlimit::{getrlimit, setrlimit, Resource};
 use std::{
     collections::BTreeMap,
     env::{current_dir, var},
@@ -27,6 +29,21 @@ use strum::IntoEnumIterator;
 const DEFAULT_TIMEOUT: Duration = Duration::from_secs(60);
 
 static CTRLC: AtomicBool = AtomicBool::new(false);
+
+#[allow(clippy::unwrap_used)]
+static NPROC_INIT: Lazy<u64> = Lazy::new(|| {
+    let output = Command::new("ps").arg("-eL").output().unwrap();
+    let stdout = std::str::from_utf8(&output.stdout).unwrap();
+    stdout.lines().count().try_into().unwrap()
+});
+
+// smoelius: Limit the number of threads that a test can allocate to approximately 1024 (an
+// arbitrary choice).
+//   The limit is not strict for the following reason. `NPROC_INIT` counts the number of threads
+// *started by any user*. But `setrlimit` (used to enforce the limit) applies to just the current
+// user. So by setting the limit to `NPROC_INIT + NPROC_ALLOWANCE`, the number of threads the test
+// can allocate is actually 1024 plus the number of threads started by other users.
+const NPROC_ALLOWANCE: u64 = 1024;
 
 pub(crate) struct Removal {
     pub span: Span,
@@ -477,12 +494,16 @@ fn attempt_removal(context: &Context, span: &Span) -> Result<(String, Option<Out
 
     debug!("{:?}", exec);
 
+    let nprocs_prev = set_soft_rlimit(Resource::NPROC, *NPROC_INIT + NPROC_ALLOWANCE)?;
+
     let mut popen = exec.popen()?;
     let status = if let Some(dur) = timeout(&context.opts) {
         popen.wait_timeout(dur)?
     } else {
         popen.wait().map(Option::Some)?
     };
+
+    set_soft_rlimit(Resource::NPROC, nprocs_prev)?;
 
     if status.is_some() {
         if let Some(postprocess) = postprocess {
@@ -548,6 +569,12 @@ fn emit_to_console(context: &LightContext, removal: &Removal) {
         );
         (context.println)(&msg);
     }
+}
+
+fn set_soft_rlimit(resource: Resource, limit: u64) -> Result<u64> {
+    let (soft, hard) = getrlimit(resource)?;
+    setrlimit(Resource::NPROC, std::cmp::min(hard, limit), hard)?;
+    Ok(soft)
 }
 
 fn timeout(opts: &Necessist) -> Option<Duration> {
