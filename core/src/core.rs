@@ -513,7 +513,7 @@ fn attempt_removal(context: &Context, span: &Span) -> Result<(String, Option<Out
         }
     } else {
         let pid = popen.pid().ok_or_else(|| anyhow!("Failed to get pid"))?;
-        recursive_kill(pid)?;
+        transitive_kill(pid)?;
         let _ = popen.wait()?;
     }
 
@@ -586,25 +586,29 @@ fn timeout(opts: &Necessist) -> Option<Duration> {
 }
 
 #[cfg_attr(dylint_lib = "supplementary", allow(commented_code))]
-fn recursive_kill(pid: u32) -> Result<()> {
-    let output = Command::new("pgrep")
-        .args(["-P", &pid.to_string()])
-        .output()?;
+fn transitive_kill(pid: u32) -> Result<()> {
+    let mut pids = vec![pid];
 
-    let stdout = String::from_utf8(output.stdout)?;
+    while let Some(pid) = pids.pop() {
+        let output = Command::new("pgrep")
+            .args(["-P", &pid.to_string()])
+            .output()?;
 
-    for line in stdout.lines() {
-        let pid = line.parse::<u32>()?;
-        recursive_kill(pid)?;
+        let stdout = String::from_utf8(output.stdout)?;
+
+        for line in stdout.lines() {
+            let pid = line.parse::<u32>()?;
+            pids.push(pid);
+        }
+
+        let _status = Command::new("kill")
+            .arg(pid.to_string())
+            .stdout(Stdio::null())
+            .stderr(Stdio::null())
+            .status()?;
+        // smoelius: The process may have already exited.
+        // ensure!(status.success());
     }
-
-    let _status = Command::new("kill")
-        .arg(pid.to_string())
-        .stdout(Stdio::null())
-        .stderr(Stdio::null())
-        .status()?;
-    // smoelius: The process may have already exited.
-    // ensure!(status.success());
 
     Ok(())
 }
