@@ -331,6 +331,7 @@ The ignored functions and methods are the same as for Anchor TS above.
 - `into_boxed_slice`
 - `into_boxed_str`
 - `into_bytes`
+- `into_os_str_bytes`
 - `into_os_string`
 - `into_owned`
 - `into_path_buf`
