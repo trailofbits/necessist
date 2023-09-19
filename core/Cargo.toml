@@ -31,7 +31,7 @@ strum = "0.25"
 strum_macros = "0.25"
 subprocess = "0.2"
 tempfile = "3.8"
-toml = "0.7"
+toml = "0.8"
 
 [dev-dependencies]
 assert_cmd = "2.0"
