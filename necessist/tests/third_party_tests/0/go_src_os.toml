@@ -1,0 +1,26 @@
+# smoelius: `TestStatStdin` in os_test.go is a known problematic test. Inifinite fork-and-exec
+# recursion results when the following `Exit(0)` is removed:
+#
+#   https://github.com/golang/go/blob/2c1e5b05fe39fc5e6c730dd60e82946b8e67c6ba/src/os/os_test.go#L2374
+#
+# This, in turn, would cause [`recursive_kill`] to overflow the stack. `recursive_kill` was
+# rewritten for this reason in version 0.2.3.
+#
+# [`recursive_kill`]: https://github.com/trailofbits/necessist/blob/1ded71dc3bbd191535d38e9b6c1467eda7ea42b2/core/src/core.rs#L565
+
+url = "https://github.com/golang/go"
+rev = "go1.21.1"
+init = "cd src && ./make.bash"
+path_prefix = "bin"
+
+# smoelius: On Linux, this test causes the following error:
+#
+#   Error: Process completed with exit code 143.
+#
+# I haven't figured out why. Restrict to macOS until we can come up with a better test.
+target_os = "macos"
+
+subdir = "src/os"
+framework = "go"
+test_files = ["os_test.go"]
+full = true
