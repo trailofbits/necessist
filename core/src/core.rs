@@ -587,27 +587,31 @@ fn timeout(opts: &Necessist) -> Option<Duration> {
 
 #[cfg_attr(dylint_lib = "supplementary", allow(commented_code))]
 fn transitive_kill(pid: u32) -> Result<()> {
-    let mut pids = vec![pid];
+    let mut pids = vec![(pid, false)];
 
-    while let Some(pid) = pids.pop() {
-        let output = Command::new("pgrep")
-            .args(["-P", &pid.to_string()])
-            .output()?;
+    while let Some((pid, visited)) = pids.pop() {
+        if visited {
+            let _status = Command::new("kill")
+                .arg(pid.to_string())
+                .stdout(Stdio::null())
+                .stderr(Stdio::null())
+                .status()?;
+            // smoelius: The process may have already exited.
+            // ensure!(status.success());
+        } else {
+            pids.push((pid, true));
 
-        let stdout = String::from_utf8(output.stdout)?;
+            let output = Command::new("pgrep")
+                .args(["-P", &pid.to_string()])
+                .output()?;
 
-        for line in stdout.lines() {
-            let pid = line.parse::<u32>()?;
-            pids.push(pid);
+            let stdout = String::from_utf8(output.stdout)?;
+
+            for line in stdout.lines() {
+                let pid = line.parse::<u32>()?;
+                pids.push((pid, false));
+            }
         }
-
-        let _status = Command::new("kill")
-            .arg(pid.to_string())
-            .stdout(Stdio::null())
-            .stderr(Stdio::null())
-            .status()?;
-        // smoelius: The process may have already exited.
-        // ensure!(status.success());
     }
 
     Ok(())
