@@ -1,0 +1,713 @@
+490 candidates in 1 test file
+$DIR/src/os/os_test.go: dry running
+$DIR/src/os/os_test.go: mutilating
+$DIR/src/os/os_test.go:32:3-32:29: Warning: Failed to run test `TestMain`
+
+This may indicate a bug in Necessist. Consider opening an issue at: https://github.com/trailofbits/necessist/issues
+
+Silence this warning with: --allow run-test-failed
+$DIR/src/os/os_test.go:32:5-32:29: `.Copy(io.Discard, Stdin)` nonbuildable
+$DIR/src/os/os_test.go:33:3-33:10: Warning: Failed to run test `TestMain`
+$DIR/src/os/os_test.go:36:8-36:14: `.Run()` nonbuildable
+$DIR/src/os/os_test.go:193:23-193:30: `.Name()` nonbuildable
+$DIR/src/os/os_test.go:197:8-197:15: `.Size()` nonbuildable
+$DIR/src/os/os_test.go:218:2-218:28: `testenv.MustHaveSymlink(t)` passed
+$DIR/src/os/os_test.go:218:9-218:28: `.MustHaveSymlink(t)` nonbuildable
+$DIR/src/os/os_test.go:221:2-221:27: `err = Symlink(path, link)` failed
+$DIR/src/os/os_test.go:226:2-226:22: `fi, err = Stat(link)` failed
+$DIR/src/os/os_test.go:239:2-239:28: `testenv.MustHaveSymlink(t)` passed
+$DIR/src/os/os_test.go:239:9-239:28: `.MustHaveSymlink(t)` nonbuildable
+$DIR/src/os/os_test.go:249:2-249:25: `err = Symlink("y", "x")` passed
+$DIR/src/os/os_test.go:255:2-255:20: `_, err = Stat("x")` failed
+$DIR/src/os/os_test.go:270:19-270:26: `.Stat()` nonbuildable
+$DIR/src/os/os_test.go:274:23-274:30: `.Name()` nonbuildable
+$DIR/src/os/os_test.go:278:8-278:15: `.Size()` nonbuildable
+$DIR/src/os/os_test.go:291:23-291:30: `.Name()` nonbuildable
+$DIR/src/os/os_test.go:294:8-294:15: `.Mode()` nonbuildable
+$DIR/src/os/os_test.go:296:9-296:16: `.Size()` nonbuildable
+$DIR/src/os/os_test.go:314:13-314:21: `.Read(b)` nonbuildable
+$DIR/src/os/os_test.go:318:2-318:23: `b = make([]byte, 100)` failed
+$DIR/src/os/os_test.go:319:2-319:20: `n, err = f.Read(b)` failed
+$DIR/src/os/os_test.go:319:12-319:20: `.Read(b)` nonbuildable
+$DIR/src/os/os_test.go:337:2-337:23: `_, err = file.Read(b)` nonbuildable
+$DIR/src/os/os_test.go:337:15-337:23: `.Read(b)` nonbuildable
+$DIR/src/os/os_test.go:477:2-477:40: `t.Run(".", testReaddirnames(".", dot))` passed
+$DIR/src/os/os_test.go:477:3-477:40: `.Run(".", testReaddirnames(".", dot))` nonbuildable
+$DIR/src/os/os_test.go:478:2-478:62: `t.Run("sysdir", testReaddirnames(sysdir.name, sysdir.files))` passed
+$DIR/src/os/os_test.go:478:3-478:62: `.Run("sysdir", testReaddirnames(sysdir.name, sysdir.files))` nonbuildable
+$DIR/src/os/os_test.go:479:37-479:47: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go:485:2-485:35: `t.Run(".", testReaddir(".", dot))` passed
+$DIR/src/os/os_test.go:485:3-485:35: `.Run(".", testReaddir(".", dot))` nonbuildable
+$DIR/src/os/os_test.go:486:2-486:57: `t.Run("sysdir", testReaddir(sysdir.name, sysdir.files))` passed
+$DIR/src/os/os_test.go:486:3-486:57: `.Run("sysdir", testReaddir(sysdir.name, sysdir.files))` nonbuildable
+$DIR/src/os/os_test.go:487:32-487:42: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go:493:2-493:35: `t.Run(".", testReadDir(".", dot))` passed
+$DIR/src/os/os_test.go:493:3-493:35: `.Run(".", testReadDir(".", dot))` nonbuildable
+$DIR/src/os/os_test.go:494:2-494:57: `t.Run("sysdir", testReadDir(sysdir.name, sysdir.files))` passed
+$DIR/src/os/os_test.go:494:3-494:57: `.Run("sysdir", testReadDir(sysdir.name, sysdir.files))` nonbuildable
+$DIR/src/os/os_test.go:495:32-495:42: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go:635:3-635:22: `dir = "/system/bin"` passed
+$DIR/src/os/os_test.go:641:3-641:11: `dir = wd` nonbuildable
+$DIR/src/os/os_test.go:643:3-643:15: `dir = "/bin"` passed
+$DIR/src/os/os_test.go:645:3-645:44: `dir = Getenv("SystemRoot") + "\\system32"` passed
+$DIR/src/os/os_test.go:652:19-652:36: `.Readdirnames(-1)` nonbuildable
+$DIR/src/os/os_test.go:673:12-673:20: `.Short()` nonbuildable
+$DIR/src/os/os_test.go:678:10-678:20: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go:680:28-680:60: `.Join(dir, fmt.Sprintf("%d", i))` nonbuildable
+$DIR/src/os/os_test.go:680:42-680:59: `.Sprintf("%d", i)` nonbuildable
+$DIR/src/os/os_test.go:684:3-684:42: `f.Write([]byte(strings.Repeat("X", i)))` passed
+$DIR/src/os/os_test.go:684:4-684:42: `.Write([]byte(strings.Repeat("X", i)))` nonbuildable
+$DIR/src/os/os_test.go:684:25-684:40: `.Repeat("X", i)` nonbuildable
+$DIR/src/os/os_test.go:691:3-691:21: `d, err = Open(dir)` failed
+$DIR/src/os/os_test.go:698:3-698:13: `t.Helper()` passed
+$DIR/src/os/os_test.go:698:4-698:13: `.Helper()` nonbuildable
+$DIR/src/os/os_test.go:699:15-699:26: `.Readdir(n)` nonbuildable
+$DIR/src/os/os_test.go:709:3-709:13: `t.Helper()` passed
+$DIR/src/os/os_test.go:709:4-709:13: `.Helper()` nonbuildable
+$DIR/src/os/os_test.go:710:15-710:26: `.ReadDir(n)` nonbuildable
+$DIR/src/os/os_test.go:720:3-720:13: `t.Helper()` passed
+$DIR/src/os/os_test.go:720:4-720:13: `.Helper()` nonbuildable
+$DIR/src/os/os_test.go:721:15-721:31: `.Readdirnames(n)` nonbuildable
+$DIR/src/os/os_test.go:732:3-732:12: `openDir()` failed
+$DIR/src/os/os_test.go:733:3-733:18: `fn(0, 105, nil)` failed
+$DIR/src/os/os_test.go:734:3-734:16: `fn(0, 0, nil)` passed
+$DIR/src/os/os_test.go:738:3-738:12: `openDir()` failed
+$DIR/src/os/os_test.go:739:3-739:19: `fn(-1, 105, nil)` failed
+$DIR/src/os/os_test.go:740:3-740:17: `fn(-2, 0, nil)` passed
+$DIR/src/os/os_test.go:741:3-741:16: `fn(0, 0, nil)` passed
+$DIR/src/os/os_test.go:745:3-745:12: `openDir()` failed
+$DIR/src/os/os_test.go:746:3-746:16: `fn(1, 1, nil)` failed
+$DIR/src/os/os_test.go:747:3-747:16: `fn(2, 2, nil)` failed
+$DIR/src/os/os_test.go:748:3-748:20: `fn(105, 102, nil)` failed
+$DIR/src/os/os_test.go:749:3-749:19: `fn(3, 0, io.EOF)` passed
+$DIR/src/os/os_test.go:776:28-776:49: `.HasSuffix(path, "x")` nonbuildable
+$DIR/src/os/os_test.go:781:17-781:32: `*LstatP = Lstat` passed
+$DIR/src/os/os_test.go:783:10-783:20: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go:784:2-784:39: `touch(t, filepath.Join(dir, "good1"))` failed
+$DIR/src/os/os_test.go:784:19-784:38: `.Join(dir, "good1")` nonbuildable
+$DIR/src/os/os_test.go:785:2-785:35: `touch(t, filepath.Join(dir, "x"))` failed
+$DIR/src/os/os_test.go:785:19-785:34: `.Join(dir, "x")` nonbuildable
+$DIR/src/os/os_test.go:786:2-786:39: `touch(t, filepath.Join(dir, "good2"))` failed
+$DIR/src/os/os_test.go:786:19-786:38: `.Join(dir, "good2")` nonbuildable
+$DIR/src/os/os_test.go:793:11-793:23: `.Readdir(-1)` nonbuildable
+$DIR/src/os/os_test.go:805:4-805:20: `s[i] = fi.Name()` nonbuildable
+$DIR/src/os/os_test.go:805:13-805:20: `.Name()` nonbuildable
+$DIR/src/os/os_test.go:807:3-807:18: `sort.Strings(s)` nonbuildable
+$DIR/src/os/os_test.go:807:7-807:18: `.Strings(s)` nonbuildable
+$DIR/src/os/os_test.go:812:44-812:65: `.DeepEqual(got, want)` nonbuildable
+$DIR/src/os/os_test.go:816:2-816:20: `xerr = ErrNotExist` failed
+$DIR/src/os/os_test.go:818:39-818:60: `.DeepEqual(got, want)` nonbuildable
+$DIR/src/os/os_test.go:822:2-822:38: `xerr = errors.New("some real error")` failed
+$DIR/src/os/os_test.go:822:15-822:38: `.New("some real error")` nonbuildable
+$DIR/src/os/os_test.go:832:24-832:34: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go:836:2-836:24: `f.Write([]byte("foo"))` passed
+$DIR/src/os/os_test.go:836:3-836:24: `.Write([]byte("foo"))` nonbuildable
+$DIR/src/os/os_test.go:838:20-838:27: `.Name()` nonbuildable
+$DIR/src/os/os_test.go:844:19-844:36: `.Readdirnames(-1)` nonbuildable
+$DIR/src/os/os_test.go:849:12-849:25: `.As(err, &pe)` nonbuildable
+$DIR/src/os/os_test.go:849:41-849:48: `.Name()` nonbuildable
+$DIR/src/os/os_test.go:858:2-858:25: `testenv.MustHaveLink(t)` passed
+$DIR/src/os/os_test.go:858:9-858:25: `.MustHaveLink(t)` nonbuildable
+$DIR/src/os/os_test.go:869:2-869:22: `err = Link(to, from)` failed
+$DIR/src/os/os_test.go:875:2-875:24: `err = Link(none, none)` failed
+$DIR/src/os/os_test.go:893:2-893:22: `err = Link(to, from)` failed
+$DIR/src/os/os_test.go:938:2-938:28: `testenv.MustHaveSymlink(t)` passed
+$DIR/src/os/os_test.go:938:9-938:28: `.MustHaveSymlink(t)` nonbuildable
+$DIR/src/os/os_test.go:949:2-949:25: `err = Symlink(to, from)` failed
+$DIR/src/os/os_test.go:957:11-957:18: `.Mode()` nonbuildable
+$DIR/src/os/os_test.go:967:2-967:29: `fromstat, err = Lstat(from)` failed
+$DIR/src/os/os_test.go:971:13-971:20: `.Mode()` nonbuildable
+$DIR/src/os/os_test.go:974:2-974:28: `fromstat, err = Stat(from)` failed
+$DIR/src/os/os_test.go:978:13-978:20: `.Name()` nonbuildable
+$DIR/src/os/os_test.go:981:13-981:20: `.Mode()` nonbuildable
+$DIR/src/os/os_test.go:991:2-991:24: `file, err = Open(from)` passed
+$DIR/src/os/os_test.go:999:2-999:28: `testenv.MustHaveSymlink(t)` passed
+$DIR/src/os/os_test.go:999:9-999:28: `.MustHaveSymlink(t)` nonbuildable
+$DIR/src/os/os_test.go:1004:2-1004:63: `s = s + s + s + s + s + s + s + s + s + s + s + s + s + s + s` passed
+$DIR/src/os/os_test.go:1030:2-1030:24: `err = Rename(from, to)` failed
+$DIR/src/os/os_test.go:1034:2-1034:19: `_, err = Stat(to)` passed
+$DIR/src/os/os_test.go:1052:2-1052:39: `err = WriteFile(from, fromData, 0777)` failed
+$DIR/src/os/os_test.go:1056:2-1056:24: `err = Rename(from, to)` failed
+$DIR/src/os/os_test.go:1061:2-1061:21: `_, err = Stat(from)` failed
+$DIR/src/os/os_test.go:1072:9-1072:16: `.Size()` nonbuildable
+$DIR/src/os/os_test.go:1104:2-1104:17: `Mkdir(to, 0777)` passed
+$DIR/src/os/os_test.go:1115:2-1115:19: `Mkdir(from, 0777)` passed
+$DIR/src/os/os_test.go:1116:2-1116:17: `Mkdir(to, 0777)` failed
+$DIR/src/os/os_test.go:1156:3-1194:5: `pt.Run(test.name, func(t *testing.T) {
+			defer chtmpdir(t)()
+
+			if err := test.create(); err != nil {
+				t.Fatalf("failed to create test file: %s", err)
+			}
+
+			if _, err := Stat(to); err != nil {
+				// Sanity check that the underlying filesystem is not case sensitive.
+				if IsNotExist(err) {
+					t.Skipf("case sensitive filesystem")
+				}
+				t.Fatalf("stat %q, got: %q", to, err)
+			}
+
+			if err := Rename(from, to); err != nil {
+				t.Fatalf("unexpected error when renaming from %q to %q: %s", from, to, err)
+			}
+
+			fd, err := Open(".")
+			if err != nil {
+				t.Fatalf("Open .: %s", err)
+			}
+
+			// Stat does not return the real case of the file (it returns what the called asked for)
+			// So we have to use readdir to get the real name of the file.
+			dirNames, err := fd.Readdirnames(-1)
+			if err != nil {
+				t.Fatalf("readdirnames: %s", err)
+			}
+
+			if dirNamesLen := len(dirNames); dirNamesLen != 1 {
+				t.Fatalf("unexpected dirNames len, got %q, want %q", dirNamesLen, 1)
+			}
+
+			if dirNames[0] != to {
+				t.Errorf("unexpected name, got %q, want %q", dirNames[0], to)
+			}
+		})` nonbuildable
+$DIR/src/os/os_test.go:1156:5-1194:5: `.Run(test.name, func(t *testing.T) {
+			defer chtmpdir(t)()
+
+			if err := test.create(); err != nil {
+				t.Fatalf("failed to create test file: %s", err)
+			}
+
+			if _, err := Stat(to); err != nil {
+				// Sanity check that the underlying filesystem is not case sensitive.
+				if IsNotExist(err) {
+					t.Skipf("case sensitive filesystem")
+				}
+				t.Fatalf("stat %q, got: %q", to, err)
+			}
+
+			if err := Rename(from, to); err != nil {
+				t.Fatalf("unexpected error when renaming from %q to %q: %s", from, to, err)
+			}
+
+			fd, err := Open(".")
+			if err != nil {
+				t.Fatalf("Open .: %s", err)
+			}
+
+			// Stat does not return the real case of the file (it returns what the called asked for)
+			// So we have to use readdir to get the real name of the file.
+			dirNames, err := fd.Readdirnames(-1)
+			if err != nil {
+				t.Fatalf("readdirnames: %s", err)
+			}
+
+			if dirNamesLen := len(dirNames); dirNamesLen != 1 {
+				t.Fatalf("unexpected dirNames len, got %q, want %q", dirNamesLen, 1)
+			}
+
+			if dirNames[0] != to {
+				t.Errorf("unexpected name, got %q, want %q", dirNames[0], to)
+			}
+		})` nonbuildable
+$DIR/src/os/os_test.go:1159:18-1159:27: `.create()` nonbuildable
+$DIR/src/os/os_test.go:1182:23-1182:40: `.Readdirnames(-1)` nonbuildable
+$DIR/src/os/os_test.go:1229:2-1229:25: `testenv.MustHaveExec(t)` passed
+$DIR/src/os/os_test.go:1229:9-1229:25: `.MustHaveExec(t)` nonbuildable
+$DIR/src/os/os_test.go:1238:3-1238:26: `cmd = Getenv("COMSPEC")` passed
+$DIR/src/os/os_test.go:1239:3-1239:29: `dir = Getenv("SystemRoot")` passed
+$DIR/src/os/os_test.go:1240:3-1240:30: `args = []string{"/c", "cd"}` passed
+$DIR/src/os/os_test.go:1243:3-1243:34: `cmd, err = exec.LookPath("pwd")` failed
+$DIR/src/os/os_test.go:1243:18-1243:34: `.LookPath("pwd")` nonbuildable
+$DIR/src/os/os_test.go:1247:3-1247:12: `dir = "/"` failed
+$DIR/src/os/os_test.go:1248:3-1248:20: `args = []string{}` passed
+$DIR/src/os/os_test.go:1251:29-1251:40: `.Split(cmd)` nonbuildable
+$DIR/src/os/os_test.go:1252:2-1252:43: `args = append([]string{cmdbase}, args...)` failed
+$DIR/src/os/os_test.go:1253:2-1253:58: `t.Run("absolute", testStartProcess(dir, cmd, args, dir))` nonbuildable
+$DIR/src/os/os_test.go:1253:3-1253:58: `.Run("absolute", testStartProcess(dir, cmd, args, dir))` nonbuildable
+$DIR/src/os/os_test.go:1275:16-1275:23: `.Name()` nonbuildable
+$DIR/src/os/os_test.go:1281:3-1281:22: `fm = FileMode(0444)` passed
+$DIR/src/os/os_test.go:1283:19-1283:26: `.Name()` nonbuildable
+$DIR/src/os/os_test.go:1286:2-1286:28: `checkMode(t, f.Name(), fm)` passed
+$DIR/src/os/os_test.go:1286:16-1286:23: `.Name()` nonbuildable
+$DIR/src/os/os_test.go:1288:2-1288:21: `fm = FileMode(0123)` passed
+$DIR/src/os/os_test.go:1290:3-1290:22: `fm = FileMode(0666)` passed
+$DIR/src/os/os_test.go:1292:13-1292:23: `.Chmod(fm)` nonbuildable
+$DIR/src/os/os_test.go:1295:16-1295:23: `.Name()` nonbuildable
+$DIR/src/os/os_test.go:1313:16-1313:23: `.Name()` nonbuildable
+$DIR/src/os/os_test.go:1316:2-1316:20: `checkSize(t, f, 0)` passed
+$DIR/src/os/os_test.go:1317:2-1317:35: `f.Write([]byte("hello, world\n"))` failed
+$DIR/src/os/os_test.go:1317:3-1317:35: `.Write([]byte("hello, world\n"))` nonbuildable
+$DIR/src/os/os_test.go:1318:2-1318:21: `checkSize(t, f, 13)` passed
+$DIR/src/os/os_test.go:1319:2-1319:16: `f.Truncate(10)` failed
+$DIR/src/os/os_test.go:1319:3-1319:16: `.Truncate(10)` nonbuildable
+$DIR/src/os/os_test.go:1320:2-1320:21: `checkSize(t, f, 10)` passed
+$DIR/src/os/os_test.go:1321:2-1321:18: `f.Truncate(1024)` failed
+$DIR/src/os/os_test.go:1321:3-1321:18: `.Truncate(1024)` nonbuildable
+$DIR/src/os/os_test.go:1322:2-1322:23: `checkSize(t, f, 1024)` passed
+$DIR/src/os/os_test.go:1323:2-1323:15: `f.Truncate(0)` failed
+$DIR/src/os/os_test.go:1323:3-1323:15: `.Truncate(0)` nonbuildable
+$DIR/src/os/os_test.go:1324:2-1324:20: `checkSize(t, f, 0)` passed
+$DIR/src/os/os_test.go:1325:13-1325:40: `.Write([]byte("surprise!"))` nonbuildable
+$DIR/src/os/os_test.go:1327:3-1327:24: `checkSize(t, f, 13+9)` passed
+$DIR/src/os/os_test.go:1335:16-1335:23: `.Name()` nonbuildable
+$DIR/src/os/os_test.go:1338:2-1338:20: `checkSize(t, f, 0)` passed
+$DIR/src/os/os_test.go:1339:2-1339:35: `f.Write([]byte("hello, world\n"))` failed
+$DIR/src/os/os_test.go:1339:3-1339:35: `.Write([]byte("hello, world\n"))` nonbuildable
+$DIR/src/os/os_test.go:1340:2-1340:21: `checkSize(t, f, 13)` passed
+$DIR/src/os/os_test.go:1341:2-1341:24: `Truncate(f.Name(), 10)` failed
+$DIR/src/os/os_test.go:1341:12-1341:19: `.Name()` nonbuildable
+$DIR/src/os/os_test.go:1342:2-1342:21: `checkSize(t, f, 10)` passed
+$DIR/src/os/os_test.go:1343:2-1343:26: `Truncate(f.Name(), 1024)` failed
+$DIR/src/os/os_test.go:1343:12-1343:19: `.Name()` nonbuildable
+$DIR/src/os/os_test.go:1344:2-1344:23: `checkSize(t, f, 1024)` passed
+$DIR/src/os/os_test.go:1345:2-1345:23: `Truncate(f.Name(), 0)` failed
+$DIR/src/os/os_test.go:1345:12-1345:19: `.Name()` nonbuildable
+$DIR/src/os/os_test.go:1346:2-1346:20: `checkSize(t, f, 0)` passed
+$DIR/src/os/os_test.go:1347:13-1347:40: `.Write([]byte("surprise!"))` nonbuildable
+$DIR/src/os/os_test.go:1349:3-1349:24: `checkSize(t, f, 13+9)` passed
+$DIR/src/os/os_test.go:1357:3-1357:13: `t.Helper()` passed
+$DIR/src/os/os_test.go:1357:4-1357:13: `.Helper()` nonbuildable
+$DIR/src/os/os_test.go:1363:18-1363:51: `.Join(t.TempDir(), "nonexistent")` nonbuildable
+$DIR/src/os/os_test.go:1363:25-1363:35: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go:1366:2-1366:31: `assertPathError(t, path, err)` passed
+$DIR/src/os/os_test.go:1369:2-1369:21: `_, err = Stat(path)` passed
+$DIR/src/os/os_test.go:1381:16-1381:23: `.Name()` nonbuildable
+$DIR/src/os/os_test.go:1383:2-1383:35: `f.Write([]byte("hello, world\n"))` passed
+$DIR/src/os/os_test.go:1383:3-1383:35: `.Write([]byte("hello, world\n"))` nonbuildable
+$DIR/src/os/os_test.go:1386:18-1386:25: `.Name()` nonbuildable
+$DIR/src/os/os_test.go:1391:16-1391:48: `.Write([]byte("hello, world\n"))` nonbuildable
+$DIR/src/os/os_test.go:1395:15-1395:22: `.Name()` nonbuildable
+$DIR/src/os/os_test.go:1396:19-1396:26: `.Name()` nonbuildable
+$DIR/src/os/os_test.go:1397:2-1397:20: `err = file.Close()` passed
+$DIR/src/os/os_test.go:1406:18-1406:28: `.ModTime()` nonbuildable
+$DIR/src/os/os_test.go:1409:3-1409:48: `startAtime = startAtime.Truncate(time.Second)` passed
+$DIR/src/os/os_test.go:1409:26-1409:48: `.Truncate(time.Second)` nonbuildable
+$DIR/src/os/os_test.go:1410:3-1410:48: `startMtime = startMtime.Truncate(time.Second)` passed
+$DIR/src/os/os_test.go:1410:26-1410:48: `.Truncate(time.Second)` nonbuildable
+$DIR/src/os/os_test.go:1414:18-1414:40: `.Truncate(time.Second)` passed
+$DIR/src/os/os_test.go:1414:40-1414:59: `.Add(1 * time.Hour)` passed
+$DIR/src/os/os_test.go:1429:17-1429:40: `.Add(200 * time.Second)` failed
+$DIR/src/os/os_test.go:1431:17-1431:40: `.Add(200 * time.Second)` failed
+$DIR/src/os/os_test.go:1436:17-1436:40: `.Add(100 * time.Second)` failed
+$DIR/src/os/os_test.go:1437:17-1437:40: `.Add(200 * time.Second)` failed
+$DIR/src/os/os_test.go:1438:17-1438:40: `.Add(100 * time.Second)` failed
+$DIR/src/os/os_test.go:1441:17-1441:40: `.Add(300 * time.Second)` failed
+$DIR/src/os/os_test.go:1442:17-1442:40: `.Add(100 * time.Second)` failed
+$DIR/src/os/os_test.go:1443:17-1443:40: `.Add(300 * time.Second)` failed
+$DIR/src/os/os_test.go:1444:17-1444:40: `.Add(100 * time.Second)` failed
+$DIR/src/os/os_test.go:1455:3-1455:24: `fs, err = Stat(fName)` failed
+$DIR/src/os/os_test.go:1459:3-1459:18: `at0 = Atime(fs)` failed
+$DIR/src/os/os_test.go:1460:3-1460:21: `mt0 = fs.ModTime()` failed
+$DIR/src/os/os_test.go:1460:11-1460:21: `.ModTime()` nonbuildable
+$DIR/src/os/os_test.go:1462:42-1462:54: `.Equal(want)` nonbuildable
+$DIR/src/os/os_test.go:1463:19-1463:131: `.Sprintf("AccessTime mismatch with values ATime:%q-MTime:%q\ngot:  %q\nwant: %q", tt.aTime, tt.mTime, got, want)` nonbuildable
+$DIR/src/os/os_test.go:1473:44-1473:56: `.Equal(want)` nonbuildable
+$DIR/src/os/os_test.go:1476:7-1476:42: `mounts, err = ReadFile("/etc/mtab")` passed
+$DIR/src/os/os_test.go:1478:16-1478:52: `.Contains(string(mounts), "noatime")` nonbuildable
+$DIR/src/os/os_test.go:1487:18-1487:49: `.Contains(runtime.GOARCH, "64")` nonbuildable
+$DIR/src/os/os_test.go:1498:42-1498:54: `.Equal(want)` nonbuildable
+$DIR/src/os/os_test.go:1499:19-1499:128: `.Sprintf("ModTime mismatch with values ATime:%q-MTime:%q\ngot:  %q\nwant: %q", tt.aTime, tt.mTime, got, want)` nonbuildable
+$DIR/src/os/os_test.go:1573:12-1573:19: `.Name()` nonbuildable
+$DIR/src/os/os_test.go:1575:19-1575:39: `.Write([]byte("hi"))` nonbuildable
+$DIR/src/os/os_test.go:1582:18-1582:29: `.Unix(0, 0)` nonbuildable
+$DIR/src/os/os_test.go:1592:13-1592:23: `.ModTime()` nonbuildable
+$DIR/src/os/os_test.go:1614:14-1614:22: `.Chdir()` nonbuildable
+$DIR/src/os/os_test.go:1638:3-1638:33: `dirs = []string{"/system/bin"}` passed
+$DIR/src/os/os_test.go:1640:3-1640:31: `dirs = []string{"/", "/usr"}` passed
+$DIR/src/os/os_test.go:1642:3-1642:13: `dirs = nil` passed
+$DIR/src/os/os_test.go:1643:33-1643:43: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go:1643:46-1643:56: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go:1645:4-1645:41: `dir, err = filepath.EvalSymlinks(dir)` passed
+$DIR/src/os/os_test.go:1645:23-1645:41: `.EvalSymlinks(dir)` nonbuildable
+$DIR/src/os/os_test.go:1649:4-1649:28: `dirs = append(dirs, dir)` passed
+$DIR/src/os/os_test.go:1656:5-1656:19: `err = Chdir(d)` failed
+$DIR/src/os/os_test.go:1663:5-1663:22: `err = fd1.Chdir()` failed
+$DIR/src/os/os_test.go:1663:14-1663:22: `.Chdir()` nonbuildable
+$DIR/src/os/os_test.go:1667:5-1667:26: `Setenv("PWD", "/tmp")` failed
+$DIR/src/os/os_test.go:1670:4-1670:24: `Setenv("PWD", oldwd)` nonbuildable
+$DIR/src/os/os_test.go:1671:14-1671:22: `.Chdir()` nonbuildable
+$DIR/src/os/os_test.go:1676:5-1676:65: `fmt.Fprintf(Stderr, "fchdir back to dot failed: %s\n", err2)` passed
+$DIR/src/os/os_test.go:1676:8-1676:65: `.Fprintf(Stderr, "fchdir back to dot failed: %s\n", err2)` nonbuildable
+$DIR/src/os/os_test.go:1677:5-1677:12: `Exit(1)` passed
+$DIR/src/os/os_test.go:1698:2-1698:14: `const N = 10` nonbuildable
+$DIR/src/os/os_test.go:1703:8-1703:18: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go:1712:4-1712:14: `panic(err)` passed
+$DIR/src/os/os_test.go:1721:10-1721:17: `.Wait()` nonbuildable
+$DIR/src/os/os_test.go:1725:3-1725:12: `wg.Add(1)` failed
+$DIR/src/os/os_test.go:1725:5-1725:12: `.Add(1)` nonbuildable
+$DIR/src/os/os_test.go:1727:12-1727:19: `.Done()` nonbuildable
+$DIR/src/os/os_test.go:1736:5-1736:27: `runtime.LockOSThread()` passed
+$DIR/src/os/os_test.go:1736:12-1736:27: `.LockOSThread()` nonbuildable
+$DIR/src/os/os_test.go:1774:2-1774:18: `d, err = Getwd()` failed
+$DIR/src/os/os_test.go:1778:2-1778:13: `close(hold)` timed-out
+$DIR/src/os/os_test.go:1786:16-1786:23: `.Name()` nonbuildable
+$DIR/src/os/os_test.go:1789:2-1789:31: `const data = "hello, world\n"` nonbuildable
+$DIR/src/os/os_test.go:1790:2-1790:25: `io.WriteString(f, data)` failed
+$DIR/src/os/os_test.go:1790:4-1790:25: `.WriteString(f, data)` nonbuildable
+$DIR/src/os/os_test.go:1792:2-1796:3: `type test struct {
+		in     int64
+		whence int
+		out    int64
+	}` nonbuildable
+$DIR/src/os/os_test.go:1814:16-1814:39: `.Seek(tt.in, tt.whence)` nonbuildable
+$DIR/src/os/os_test.go:1818:15-1818:52: `.Contains(string(mounts), "reiserfs")` nonbuildable
+$DIR/src/os/os_test.go:1839:2-1839:23: `_, err = r.Seek(0, 0)` nonbuildable
+$DIR/src/os/os_test.go:1839:12-1839:23: `.Seek(0, 0)` nonbuildable
+$DIR/src/os/os_test.go:1846:2-1846:23: `_, err = w.Seek(0, 0)` nonbuildable
+$DIR/src/os/os_test.go:1846:12-1846:23: `.Seek(0, 0)` nonbuildable
+$DIR/src/os/os_test.go:1896:30-1896:72: `.Replace(tt.error.Error(), "file ", "", 1)` nonbuildable
+$DIR/src/os/os_test.go:1897:16-1897:57: `.HasSuffix(syscallErrStr, expectedErrStr)` nonbuildable
+$DIR/src/os/os_test.go:1901:46-1901:95: `.HasSuffix(syscallErrStr, syscall.EACCES.Error())` nonbuildable
+$DIR/src/os/os_test.go:1997:12-1997:39: `.Contains(hostname, "\x00")` nonbuildable
+$DIR/src/os/os_test.go:2008:3-2008:35: `testWindowsHostname(t, hostname)` passed
+$DIR/src/os/os_test.go:2012:2-2012:25: `testenv.MustHaveExec(t)` passed
+$DIR/src/os/os_test.go:2012:9-2012:25: `.MustHaveExec(t)` nonbuildable
+$DIR/src/os/os_test.go:2019:25-2019:44: `.Cut(hostname, ".")` nonbuildable
+$DIR/src/os/os_test.go:2030:16-2030:23: `.Name()` nonbuildable
+$DIR/src/os/os_test.go:2033:2-2033:31: `const data = "hello, world\n"` nonbuildable
+$DIR/src/os/os_test.go:2034:2-2034:25: `io.WriteString(f, data)` failed
+$DIR/src/os/os_test.go:2034:4-2034:25: `.WriteString(f, data)` nonbuildable
+$DIR/src/os/os_test.go:2037:13-2037:26: `.ReadAt(b, 7)` nonbuildable
+$DIR/src/os/os_test.go:2054:16-2054:23: `.Name()` nonbuildable
+$DIR/src/os/os_test.go:2057:2-2057:31: `const data = "hello, world\n"` nonbuildable
+$DIR/src/os/os_test.go:2058:2-2058:25: `io.WriteString(f, data)` failed
+$DIR/src/os/os_test.go:2058:4-2058:25: `.WriteString(f, data)` nonbuildable
+$DIR/src/os/os_test.go:2060:2-2060:14: `f.Seek(0, 0)` failed
+$DIR/src/os/os_test.go:2060:3-2060:14: `.Seek(0, 0)` nonbuildable
+$DIR/src/os/os_test.go:2063:13-2063:26: `.ReadAt(b, 7)` nonbuildable
+$DIR/src/os/os_test.go:2071:2-2071:20: `n, err = f.Read(b)` failed
+$DIR/src/os/os_test.go:2071:12-2071:20: `.Read(b)` nonbuildable
+$DIR/src/os/os_test.go:2085:16-2085:23: `.Name()` nonbuildable
+$DIR/src/os/os_test.go:2088:2-2088:31: `const data = "hello, world\n"` nonbuildable
+$DIR/src/os/os_test.go:2089:2-2089:25: `io.WriteString(f, data)` passed
+$DIR/src/os/os_test.go:2089:4-2089:25: `.WriteString(f, data)` nonbuildable
+$DIR/src/os/os_test.go:2091:2-2091:14: `f.Seek(0, 0)` passed
+$DIR/src/os/os_test.go:2091:3-2091:14: `.Seek(0, 0)` nonbuildable
+$DIR/src/os/os_test.go:2094:13-2094:28: `.ReadAt(b, -10)` nonbuildable
+$DIR/src/os/os_test.go:2096:2-2096:35: `const wantsub = "negative offset"` nonbuildable
+$DIR/src/os/os_test.go:2097:13-2097:48: `.Contains(fmt.Sprint(err), wantsub)` nonbuildable
+$DIR/src/os/os_test.go:2097:26-2097:38: `.Sprint(err)` nonbuildable
+$DIR/src/os/os_test.go:2106:16-2106:23: `.Name()` nonbuildable
+$DIR/src/os/os_test.go:2109:2-2109:31: `const data = "hello, world\n"` nonbuildable
+$DIR/src/os/os_test.go:2110:2-2110:25: `io.WriteString(f, data)` failed
+$DIR/src/os/os_test.go:2110:4-2110:25: `.WriteString(f, data)` nonbuildable
+$DIR/src/os/os_test.go:2112:13-2112:41: `.WriteAt([]byte("WORLD"), 7)` nonbuildable
+$DIR/src/os/os_test.go:2117:22-2117:29: `.Name()` nonbuildable
+$DIR/src/os/os_test.go:2131:16-2131:23: `.Name()` nonbuildable
+$DIR/src/os/os_test.go:2134:13-2134:43: `.WriteAt([]byte("WORLD"), -10)` nonbuildable
+$DIR/src/os/os_test.go:2136:2-2136:35: `const wantsub = "negative offset"` nonbuildable
+$DIR/src/os/os_test.go:2137:13-2137:48: `.Contains(fmt.Sprint(err), wantsub)` nonbuildable
+$DIR/src/os/os_test.go:2137:26-2137:38: `.Sprint(err)` nonbuildable
+$DIR/src/os/os_test.go:2151:2-2151:35: `_, err = f.WriteAt([]byte(""), 1)` failed
+$DIR/src/os/os_test.go:2151:12-2151:35: `.WriteAt([]byte(""), 1)` nonbuildable
+$DIR/src/os/os_test.go:2176:2-2176:24: `const f = "append.txt"` nonbuildable
+$DIR/src/os/os_test.go:2181:2-2181:49: `s = writeFile(t, f, O_APPEND|O_RDWR, "|append")` failed
+$DIR/src/os/os_test.go:2185:2-2185:58: `s = writeFile(t, f, O_CREATE|O_APPEND|O_RDWR, "|append")` failed
+$DIR/src/os/os_test.go:2193:2-2193:61: `s = writeFile(t, f, O_CREATE|O_APPEND|O_RDWR, "new&append")` failed
+$DIR/src/os/os_test.go:2197:2-2197:45: `s = writeFile(t, f, O_CREATE|O_RDWR, "old")` failed
+$DIR/src/os/os_test.go:2201:2-2201:53: `s = writeFile(t, f, O_CREATE|O_TRUNC|O_RDWR, "new")` failed
+$DIR/src/os/os_test.go:2211:11-2211:21: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go:2219:2-2219:13: `path += "/"` passed
+$DIR/src/os/os_test.go:2227:9-2227:18: `.String()` nonbuildable
+$DIR/src/os/os_test.go:2306:2-2306:29: `testDevNullFile(t, DevNull)` passed
+$DIR/src/os/os_test.go:2308:3-2308:30: `testDevNullFile(t, "./nul")` passed
+$DIR/src/os/os_test.go:2309:3-2309:32: `testDevNullFile(t, "//./nul")` passed
+$DIR/src/os/os_test.go:2321:3-2321:13: `b[i] = '.'` nonbuildable
+$DIR/src/os/os_test.go:2323:2-2323:20: `b[len(b)-1] = '\n'` passed
+$DIR/src/os/os_test.go:2324:18-2324:27: `.Write(b)` nonbuildable
+$DIR/src/os/os_test.go:2331:2-2331:26: `n, err = Stderr.Write(b)` passed
+$DIR/src/os/os_test.go:2331:17-2331:26: `.Write(b)` nonbuildable
+$DIR/src/os/os_test.go:2346:2-2346:19: `const mode = 0111` nonbuildable
+$DIR/src/os/os_test.go:2348:11-2348:21: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go:2357:8-2357:15: `.Mode()` nonbuildable
+$DIR/src/os/os_test.go:2369:19-2369:26: `.Stat()` nonbuildable
+$DIR/src/os/os_test.go:2373:3-2373:41: `fmt.Println(st.Mode() & ModeNamedPipe)` nonbuildable
+$DIR/src/os/os_test.go:2373:6-2373:41: `.Println(st.Mode() & ModeNamedPipe)` nonbuildable
+$DIR/src/os/os_test.go:2373:17-2373:24: `.Mode()` nonbuildable
+$DIR/src/os/os_test.go:2374:3-2374:10: `Exit(0)` timed-out
+$DIR/src/os/os_test.go:2377:2-2377:25: `testenv.MustHaveExec(t)` passed
+$DIR/src/os/os_test.go:2377:9-2377:25: `.MustHaveExec(t)` nonbuildable
+$DIR/src/os/os_test.go:2380:18-2380:25: `.Stat()` nonbuildable
+$DIR/src/os/os_test.go:2384:19-2384:26: `.Mode()` nonbuildable
+$DIR/src/os/os_test.go:2393:3-2393:93: `cmd = testenv.Command(t, "cmd", "/c", "echo output | "+Args[0]+" -test.run=TestStatStdin")` passed
+$DIR/src/os/os_test.go:2393:16-2393:93: `.Command(t, "cmd", "/c", "echo output | "+Args[0]+" -test.run=TestStatStdin")` nonbuildable
+$DIR/src/os/os_test.go:2395:3-2395:97: `cmd = testenv.Command(t, "/bin/sh", "-c", "echo output | "+Args[0]+" -test.run=TestStatStdin")` failed
+$DIR/src/os/os_test.go:2395:16-2395:97: `.Command(t, "/bin/sh", "-c", "echo output | "+Args[0]+" -test.run=TestStatStdin")` nonbuildable
+$DIR/src/os/os_test.go:2397:2-2397:57: `cmd.Env = append(Environ(), "GO_WANT_HELPER_PROCESS=1")` timed-out
+$DIR/src/os/os_test.go:2399:20-2399:37: `.CombinedOutput()` nonbuildable
+$DIR/src/os/os_test.go:2411:2-2411:28: `testenv.MustHaveSymlink(t)` passed
+$DIR/src/os/os_test.go:2411:9-2411:28: `.MustHaveSymlink(t)` nonbuildable
+$DIR/src/os/os_test.go:2414:13-2414:23: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go:2415:20-2415:43: `.Join(tmpdir, "target")` nonbuildable
+$DIR/src/os/os_test.go:2422:14-2422:21: `.Stat()` nonbuildable
+$DIR/src/os/os_test.go:2427:18-2427:39: `.Join(tmpdir, "link")` nonbuildable
+$DIR/src/os/os_test.go:2428:2-2428:44: `err = Symlink(filepath.Base(target), link)` failed
+$DIR/src/os/os_test.go:2428:24-2428:37: `.Base(target)` nonbuildable
+$DIR/src/os/os_test.go:2443:3-2443:15: `Remove(link)` passed
+$DIR/src/os/os_test.go:2444:3-2444:65: `err = Symlink(target[len(filepath.VolumeName(target)):], link)` passed
+$DIR/src/os/os_test.go:2444:36-2444:55: `.VolumeName(target)` nonbuildable
+$DIR/src/os/os_test.go:2464:16-2464:23: `.Name()` nonbuildable
+$DIR/src/os/os_test.go:2467:13-2467:41: `.ReadAt(make([]byte, 10), 0)` nonbuildable
+$DIR/src/os/os_test.go:2491:3-2491:26: `tmpdir += "/dir3456789"` timed-out
+$DIR/src/os/os_test.go:2494:3-2548:5: `t.Run(fmt.Sprintf("length=%d", sz), func(t *testing.T) {
+			sizedTempDir := tmpdir[:sz-1] + "x" // Ensure it does not end with a slash.
+
+			// The various sized runs are for this call to trigger the boundary
+			// condition.
+			if err := MkdirAll(sizedTempDir, 0755); err != nil {
+				t.Fatalf("MkdirAll failed: %v", err)
+			}
+			data := []byte("hello world\n")
+			if err := WriteFile(sizedTempDir+"/foo.txt", data, 0644); err != nil {
+				t.Fatalf("os.WriteFile() failed: %v", err)
+			}
+			if err := Rename(sizedTempDir+"/foo.txt", sizedTempDir+"/bar.txt"); err != nil {
+				t.Fatalf("Rename failed: %v", err)
+			}
+			mtime := time.Now().Truncate(time.Minute)
+			if err := Chtimes(sizedTempDir+"/bar.txt", mtime, mtime); err != nil {
+				t.Fatalf("Chtimes failed: %v", err)
+			}
+			names := []string{"bar.txt"}
+			if testenv.HasSymlink() {
+				if err := Symlink(sizedTempDir+"/bar.txt", sizedTempDir+"/symlink.txt"); err != nil {
+					t.Fatalf("Symlink failed: %v", err)
+				}
+				names = append(names, "symlink.txt")
+			}
+			if testenv.HasLink() {
+				if err := Link(sizedTempDir+"/bar.txt", sizedTempDir+"/link.txt"); err != nil {
+					t.Fatalf("Link failed: %v", err)
+				}
+				names = append(names, "link.txt")
+			}
+			for _, wantSize := range []int64{int64(len(data)), 0} {
+				for _, name := range names {
+					path := sizedTempDir + "/" + name
+					dir, err := Stat(path)
+					if err != nil {
+						t.Fatalf("Stat(%q) failed: %v", path, err)
+					}
+					filesize := size(path, t)
+					if dir.Size() != filesize || filesize != wantSize {
+						t.Errorf("Size(%q) is %d, len(ReadFile()) is %d, want %d", path, dir.Size(), filesize, wantSize)
+					}
+					if runtime.GOOS != "wasip1" { // Chmod is not supported on wasip1
+						err = Chmod(path, dir.Mode())
+						if err != nil {
+							t.Fatalf("Chmod(%q) failed: %v", path, err)
+						}
+					}
+				}
+				if err := Truncate(sizedTempDir+"/bar.txt", 0); err != nil {
+					t.Fatalf("Truncate failed: %v", err)
+				}
+			}
+		})` nonbuildable
+$DIR/src/os/os_test.go:2494:4-2548:5: `.Run(fmt.Sprintf("length=%d", sz), func(t *testing.T) {
+			sizedTempDir := tmpdir[:sz-1] + "x" // Ensure it does not end with a slash.
+
+			// The various sized runs are for this call to trigger the boundary
+			// condition.
+			if err := MkdirAll(sizedTempDir, 0755); err != nil {
+				t.Fatalf("MkdirAll failed: %v", err)
+			}
+			data := []byte("hello world\n")
+			if err := WriteFile(sizedTempDir+"/foo.txt", data, 0644); err != nil {
+				t.Fatalf("os.WriteFile() failed: %v", err)
+			}
+			if err := Rename(sizedTempDir+"/foo.txt", sizedTempDir+"/bar.txt"); err != nil {
+				t.Fatalf("Rename failed: %v", err)
+			}
+			mtime := time.Now().Truncate(time.Minute)
+			if err := Chtimes(sizedTempDir+"/bar.txt", mtime, mtime); err != nil {
+				t.Fatalf("Chtimes failed: %v", err)
+			}
+			names := []string{"bar.txt"}
+			if testenv.HasSymlink() {
+				if err := Symlink(sizedTempDir+"/bar.txt", sizedTempDir+"/symlink.txt"); err != nil {
+					t.Fatalf("Symlink failed: %v", err)
+				}
+				names = append(names, "symlink.txt")
+			}
+			if testenv.HasLink() {
+				if err := Link(sizedTempDir+"/bar.txt", sizedTempDir+"/link.txt"); err != nil {
+					t.Fatalf("Link failed: %v", err)
+				}
+				names = append(names, "link.txt")
+			}
+			for _, wantSize := range []int64{int64(len(data)), 0} {
+				for _, name := range names {
+					path := sizedTempDir + "/" + name
+					dir, err := Stat(path)
+					if err != nil {
+						t.Fatalf("Stat(%q) failed: %v", path, err)
+					}
+					filesize := size(path, t)
+					if dir.Size() != filesize || filesize != wantSize {
+						t.Errorf("Size(%q) is %d, len(ReadFile()) is %d, want %d", path, dir.Size(), filesize, wantSize)
+					}
+					if runtime.GOOS != "wasip1" { // Chmod is not supported on wasip1
+						err = Chmod(path, dir.Mode())
+						if err != nil {
+							t.Fatalf("Chmod(%q) failed: %v", path, err)
+						}
+					}
+				}
+				if err := Truncate(sizedTempDir+"/bar.txt", 0); err != nil {
+					t.Fatalf("Truncate failed: %v", err)
+				}
+			}
+		})` nonbuildable
+$DIR/src/os/os_test.go:2494:12-2494:37: `.Sprintf("length=%d", sz)` nonbuildable
+$DIR/src/os/os_test.go:2509:17-2509:23: `.Now()` nonbuildable
+$DIR/src/os/os_test.go:2509:23-2509:45: `.Truncate(time.Minute)` passed
+$DIR/src/os/os_test.go:2514:14-2514:27: `.HasSymlink()` nonbuildable
+$DIR/src/os/os_test.go:2518:5-2518:41: `names = append(names, "symlink.txt")` passed
+$DIR/src/os/os_test.go:2520:14-2520:24: `.HasLink()` nonbuildable
+$DIR/src/os/os_test.go:2524:5-2524:38: `names = append(names, "link.txt")` passed
+$DIR/src/os/os_test.go:2534:12-2534:19: `.Size()` nonbuildable
+$DIR/src/os/os_test.go:2538:7-2538:36: `err = Chmod(path, dir.Mode())` passed
+$DIR/src/os/os_test.go:2538:28-2538:35: `.Mode()` nonbuildable
+$DIR/src/os/os_test.go:2588:11-2588:18: `.Kill()` timed-out
+$DIR/src/os/os_test.go:2602:3-2602:23: `fmt.Print(Getppid())` failed
+$DIR/src/os/os_test.go:2602:6-2602:23: `.Print(Getppid())` nonbuildable
+$DIR/src/os/os_test.go:2603:3-2603:10: `Exit(0)` timed-out
+$DIR/src/os/os_test.go:2606:2-2606:25: `testenv.MustHaveExec(t)` passed
+$DIR/src/os/os_test.go:2606:9-2606:25: `.MustHaveExec(t)` nonbuildable
+$DIR/src/os/os_test.go:2609:16-2609:61: `.Command(t, Args[0], "-test.run=TestGetppid")` nonbuildable
+$DIR/src/os/os_test.go:2610:2-2610:57: `cmd.Env = append(Environ(), "GO_WANT_HELPER_PROCESS=1")` timed-out
+$DIR/src/os/os_test.go:2613:20-2613:37: `.CombinedOutput()` nonbuildable
+$DIR/src/os/os_test.go:2619:15-2619:39: `.Sprintf("%d", Getpid())` nonbuildable
+$DIR/src/os/os_test.go:2631:3-2631:18: `err = p2.Kill()` nonbuildable
+$DIR/src/os/os_test.go:2631:11-2631:18: `.Kill()` nonbuildable
+$DIR/src/os/os_test.go:2665:12-2665:20: `.f(file)` nonbuildable
+$DIR/src/os/os_test.go:2697:3-2697:30: `testenv.SkipFlaky(t, 52301)` passed
+$DIR/src/os/os_test.go:2697:10-2697:30: `.SkipFlaky(t, 52301)` nonbuildable
+$DIR/src/os/os_test.go:2700:14-2700:29: `.GOMAXPROCS(16)` nonbuildable
+$DIR/src/os/os_test.go:2701:15-2701:29: `.GOMAXPROCS(n)` nonbuildable
+$DIR/src/os/os_test.go:2706:2-2706:26: `mkdirTree(t, root, 1, 6)` passed
+$DIR/src/os/os_test.go:2710:3-2710:12: `wg.Add(1)` passed
+$DIR/src/os/os_test.go:2710:5-2710:12: `.Add(1)` nonbuildable
+$DIR/src/os/os_test.go:2712:12-2712:19: `.Done()` nonbuildable
+$DIR/src/os/os_test.go:2713:4-2713:10: `<-hold` passed
+$DIR/src/os/os_test.go:2720:2-2720:13: `close(hold)` timed-out
+$DIR/src/os/os_test.go:2743:3-2743:15: `threads = 50` passed
+$DIR/src/os/os_test.go:2757:3-2757:12: `r[i] = rp` nonbuildable
+$DIR/src/os/os_test.go:2758:3-2758:12: `w[i] = wp` nonbuildable
+$DIR/src/os/os_test.go:2761:13-2761:61: `.SetMaxThreads(debug.SetMaxThreads(threads / 2))` nonbuildable
+$DIR/src/os/os_test.go:2761:33-2761:60: `.SetMaxThreads(threads / 2)` nonbuildable
+$DIR/src/os/os_test.go:2768:4-2768:20: `creading <- true` timed-out
+$DIR/src/os/os_test.go:2769:21-2769:32: `.Read(b[:])` nonbuildable
+$DIR/src/os/os_test.go:2775:4-2775:17: `cdone <- true` timed-out
+$DIR/src/os/os_test.go:2780:3-2780:13: `<-creading` passed
+$DIR/src/os/os_test.go:2787:20-2787:37: `.Write([]byte{0})` nonbuildable
+$DIR/src/os/os_test.go:2793:3-2793:10: `<-cdone` passed
+$DIR/src/os/os_test.go:2822:2-2822:67: `t.Run("file", testDoubleCloseError(filepath.Join(sfdir, sfname)))` passed
+$DIR/src/os/os_test.go:2822:3-2822:67: `.Run("file", testDoubleCloseError(filepath.Join(sfdir, sfname)))` nonbuildable
+$DIR/src/os/os_test.go:2822:45-2822:65: `.Join(sfdir, sfname)` nonbuildable
+$DIR/src/os/os_test.go:2850:8-2850:16: `.IsDir()` nonbuildable
+$DIR/src/os/os_test.go:2866:21-2866:37: `.Readdirnames(0)` nonbuildable
+$DIR/src/os/os_test.go:2871:15-2871:26: `.Seek(0, 0)` nonbuildable
+$DIR/src/os/os_test.go:2879:21-2879:37: `.Readdirnames(0)` nonbuildable
+$DIR/src/os/os_test.go:2905:26-2905:61: `.Join(wd, "testdata", "issue37161")` nonbuildable
+$DIR/src/os/os_test.go:2909:19-2909:35: `.Readdirnames(1)` nonbuildable
+$DIR/src/os/os_test.go:2913:16-2913:27: `.Seek(0, 0)` nonbuildable
+$DIR/src/os/os_test.go:2916:19-2916:35: `.Readdirnames(0)` nonbuildable
+$DIR/src/os/os_test.go:2941:10-2941:20: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go:2942:18-2942:33: `.Join(dir, "x")` nonbuildable
+$DIR/src/os/os_test.go:2950:2-2950:55: `f, err = OpenFile(name, O_WRONLY|O_CREATE|O_TRUNC, 0)` failed
+$DIR/src/os/os_test.go:2954:17-2954:24: `.Stat()` nonbuildable
+$DIR/src/os/os_test.go:2956:14-2956:21: `.Mode()` nonbuildable
+$DIR/src/os/os_test.go:2964:14-2964:21: `.Mode()` nonbuildable
+$DIR/src/os/os_test.go:2975:21-2994:5: `.WalkDir("./testdata/dirfs", func(path string, d fs.DirEntry, err error) error {
+			if err != nil {
+				t.Fatal(err)
+			}
+			info, err := d.Info()
+			if err != nil {
+				t.Fatal(err)
+			}
+			stat, err := Stat(path) // This uses GetFileInformationByHandle internally.
+			if err != nil {
+				t.Fatal(err)
+			}
+			if stat.ModTime() == info.ModTime() {
+				return nil
+			}
+			if err := Chtimes(path, stat.ModTime(), stat.ModTime()); err != nil {
+				t.Log(err) // We only log, not die, in case the test directory is not writable.
+			}
+			return nil
+		})` nonbuildable
+$DIR/src/os/os_test.go:2979:18-2979:25: `.Info()` nonbuildable
+$DIR/src/os/os_test.go:2987:11-2987:21: `.ModTime()` nonbuildable
+$DIR/src/os/os_test.go:2987:29-2987:39: `.ModTime()` nonbuildable
+$DIR/src/os/os_test.go:2990:32-2990:42: `.ModTime()` nonbuildable
+$DIR/src/os/os_test.go:2990:48-2990:58: `.ModTime()` nonbuildable
+$DIR/src/os/os_test.go:2999:18-2999:50: `.TestFS(fsys, "a", "b", "dir/x")` nonbuildable
+$DIR/src/os/os_test.go:3007:19-3007:42: `.ReadDir("nonexistent")` nonbuildable
+$DIR/src/os/os_test.go:3013:2-3013:33: `const nonesuch = "dir/nonesuch"` nonbuildable
+$DIR/src/os/os_test.go:3014:16-3014:31: `.Open(nonesuch)` nonbuildable
+$DIR/src/os/os_test.go:3018:14-3018:46: `.Contains(err.Error(), nonesuch)` nonbuildable
+$DIR/src/os/os_test.go:3021:13-3021:57: `.Contains(err.(*PathError).Path, "testdata")` nonbuildable
+$DIR/src/os/os_test.go:3028:2-3028:35: `_, err = d.Open(`testdata\dirfs`)` passed
+$DIR/src/os/os_test.go:3028:12-3028:35: `.Open(`testdata\dirfs`)` nonbuildable
+$DIR/src/os/os_test.go:3034:2-3034:24: `_, err = d.Open(`NUL`)` passed
+$DIR/src/os/os_test.go:3034:12-3034:24: `.Open(`NUL`)` nonbuildable
+$DIR/src/os/os_test.go:3047:2-3047:43: `cwd = cwd[len(filepath.VolumeName(cwd)):]` passed
+$DIR/src/os/os_test.go:3047:24-3047:40: `.VolumeName(cwd)` nonbuildable
+$DIR/src/os/os_test.go:3048:2-3048:29: `cwd = filepath.ToSlash(cwd)` passed
+$DIR/src/os/os_test.go:3048:16-3048:29: `.ToSlash(cwd)` nonbuildable
+$DIR/src/os/os_test.go:3049:2-3049:36: `cwd = strings.TrimPrefix(cwd, "/")` failed
+$DIR/src/os/os_test.go:3049:15-3049:36: `.TrimPrefix(cwd, "/")` nonbuildable
+$DIR/src/os/os_test.go:3053:13-3053:45: `.Open(cwd + "/testdata/dirfs/a")` nonbuildable
+$DIR/src/os/os_test.go:3067:11-3067:24: `.ToSlash(cwd)` nonbuildable
+$DIR/src/os/os_test.go:3069:14-3069:25: `.Open(path)` nonbuildable
+$DIR/src/os/os_test.go:3082:8-3082:18: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go:3083:30-3083:53: `.Join(d, "control.txt")` nonbuildable
+$DIR/src/os/os_test.go:3086:30-3086:58: `.Join(d, `e:xperi\ment.txt`)` nonbuildable
+$DIR/src/os/os_test.go:3091:11-3098:4: `.WalkDir(fsys, ".", func(path string, e fs.DirEntry, err error) error {
+		if fs.ValidPath(e.Name()) {
+			t.Logf("%q ok", e.Name())
+		} else {
+			t.Errorf("%q INVALID", e.Name())
+		}
+		return nil
+	})` nonbuildable
+$DIR/src/os/os_test.go:3092:8-3092:28: `.ValidPath(e.Name())` nonbuildable
+$DIR/src/os/os_test.go:3092:20-3092:27: `.Name()` nonbuildable
+$DIR/src/os/os_test.go:3130:17-3130:34: `.Stat(fsys, name)` nonbuildable
+$DIR/src/os/os_test.go:3133:17-3133:38: `.ReadFile(fsys, name)` nonbuildable
+$DIR/src/os/os_test.go:3146:8-3146:18: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go:3147:27-3147:53: `.Join(d, "whiteboard.txt")` nonbuildable
+$DIR/src/os/os_test.go:3152:19-3154:4: `.AllocsPerRun(100, func() {
+		f.WriteString("I will not allocate when passed a string longer than 32 bytes.\n")
+	})` nonbuildable
+$DIR/src/os/os_test.go:3153:3-3153:84: `f.WriteString("I will not allocate when passed a string longer than 32 bytes.\n")` passed
+$DIR/src/os/os_test.go:3153:4-3153:84: `.WriteString("I will not allocate when passed a string longer than 32 bytes.\n")` nonbuildable
+$DIR/src/os/os_test.go:3174:2-3174:11: `wg.Add(3)` passed
+$DIR/src/os/os_test.go:3174:4-3174:11: `.Add(3)` nonbuildable
+$DIR/src/os/os_test.go:3177:11-3177:18: `.Done()` nonbuildable
+$DIR/src/os/os_test.go:3179:15-3179:35: `.Write([]byte("hi"))` nonbuildable
+$DIR/src/os/os_test.go:3184:16-3184:35: `.Is(err, ErrClosed)` nonbuildable
+$DIR/src/os/os_test.go:3185:13-3185:50: `.Contains(err.Error(), "broken pipe")` nonbuildable
+$DIR/src/os/os_test.go:3186:13-3186:59: `.Contains(err.Error(), "pipe is being closed")` nonbuildable
+$DIR/src/os/os_test.go:3187:13-3187:53: `.Contains(err.Error(), "hungup channel")` nonbuildable
+$DIR/src/os/os_test.go:3203:11-3203:18: `.Done()` nonbuildable
+$DIR/src/os/os_test.go:3206:15-3206:28: `.Read(buf[:])` nonbuildable
+$DIR/src/os/os_test.go:3208:32-3208:51: `.Is(err, ErrClosed)` nonbuildable
+$DIR/src/os/os_test.go:3220:11-3220:18: `.Done()` nonbuildable
+$DIR/src/os/os_test.go:3225:3-3225:31: `time.Sleep(time.Millisecond)` passed
+$DIR/src/os/os_test.go:3225:7-3225:31: `.Sleep(time.Millisecond)` nonbuildable
+$DIR/src/os/os_test.go:3253:11-3253:18: `.Done()` nonbuildable
+$DIR/src/os/os_test.go:3254:3-3254:17: `c <- r.Close()` nonbuildable
+$DIR/src/os/os_test.go:3255:3-3255:17: `c <- w.Close()` nonbuildable
+$DIR/src/os/os_test.go:3257:2-3257:11: `wg.Add(2)` failed
+$DIR/src/os/os_test.go:3257:4-3257:11: `.Add(2)` nonbuildable
+$DIR/src/os/os_test.go:3258:2-3258:8: `go f()` timed-out
+$DIR/src/os/os_test.go:3259:2-3259:8: `go f()` timed-out
+$DIR/src/os/os_test.go:3264:4-3264:10: `nils++` failed
+$DIR/src/os/os_test.go:3266:4-3266:10: `errs++` failed
