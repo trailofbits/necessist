@@ -5,7 +5,7 @@ use serde::Deserialize;
 use similar_asserts::SimpleDiff;
 use std::{
     collections::{BTreeMap, HashSet},
-    env::{consts, set_var, var},
+    env::{consts, join_paths, set_var, split_paths, var},
     ffi::OsStr,
     fmt::Write as _,
     fs::{read_dir, read_to_string, remove_file, write},
@@ -45,6 +45,11 @@ struct Test {
     /// command is run with `bash -c '...'`.
     #[serde(default)]
     init: Option<String>,
+
+    /// Path to canonicalize and prepend to the `PATH` environment variable after the `init`
+    /// command is run, but before Necessist is run. The path is relative to the repository root.
+    #[serde(default)]
+    path_prefix: Option<String>,
 
     /// OS on which the test should run; `None` (the default) means all OSes
     #[serde(default)]
@@ -354,6 +359,7 @@ fn init_tempdir(tempdir: &Path, key: &Key) -> String {
     output_combined
 }
 
+#[allow(clippy::too_many_lines)]
 fn run_test(tempdir: &Path, path: &Path, test: &Test) -> String {
     let mut output = String::new();
 
@@ -420,6 +426,14 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> String {
 
         let mut exec = Exec::cmd("../target/debug/necessist");
         exec = exec.args(&["--no-sqlite", "--root", &root.to_string_lossy()]);
+        if let Some(prefix) = &test.path_prefix {
+            let prefix_canonicalized = tempdir.join(prefix).canonicalize().unwrap();
+            let path = var("PATH").unwrap();
+            let path_prepended =
+                join_paths(std::iter::once(prefix_canonicalized).chain(split_paths(&path)))
+                    .unwrap();
+            exec = exec.env("PATH", path_prepended);
+        }
         if let Some(framework) = &test.framework {
             exec = exec.args(&["--framework", framework]);
         }
