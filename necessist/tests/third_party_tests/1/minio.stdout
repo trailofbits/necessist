@@ -1,5 +1,3 @@
-$DIR/cmd/admin-handlers-users-race_test.go:46:3-46:30: `t.Skip("windows is clunky")`
-$DIR/cmd/admin-handlers-users-race_test.go:46:4-46:30: `.Skip("windows is clunky")`
 $DIR/cmd/admin-handlers-users-race_test.go:61:3-64:4: `testCases = append(testCases,
 			newTestSuiteIAM(bt, false),
 			newTestSuiteIAM(bt, true),
@@ -19,8 +17,6 @@ $DIR/cmd/admin-handlers-users-race_test.go:71:4-76:4: `.Run(
 		)`
 $DIR/cmd/admin-handlers-users-race_test.go:72:7-72:80: `.Sprintf("Test: %d, ServerType: %s%s", i+1, testCase.serverType, etcdStr)`
 $DIR/cmd/admin-handlers-users-race_test.go:74:5-74:72: `runAllIAMConcurrencyTests(testCase, &check{t, testCase.serverType})`
-$DIR/cmd/admin-handlers-users_test.go:194:3-194:50: `t.Skip("windows is clunky disable these tests")`
-$DIR/cmd/admin-handlers-users_test.go:194:4-194:50: `.Skip("windows is clunky disable these tests")`
 $DIR/cmd/admin-handlers-users_test.go:197:3-214:4: `t.Run(
 			fmt.Sprintf("Test: %d, ServerType: %s", i+1, testCase.ServerTypeDescription),
 			func(t *testing.T) {
@@ -221,7 +217,6 @@ $DIR/cmd/auth-handler_test.go:475:2-475:26: `globalActiveCred = creds`
 $DIR/cmd/background-newdisks-heal-ops_gen_test.go:14:15-14:31: `.MarshalMsg(nil)`
 $DIR/cmd/background-newdisks-heal-ops_gen_test.go:18:16-18:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/background-newdisks-heal-ops_gen_test.go:26:2-26:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/background-newdisks-heal-ops_gen_test.go:26:18-26:28: `.Skip(bts)`
 $DIR/cmd/background-newdisks-heal-ops_gen_test.go:73:2-73:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/background-newdisks-heal-ops_gen_test.go:73:6-73:23: `.Encode(&buf, &v)`
 $DIR/cmd/background-newdisks-heal-ops_gen_test.go:75:8-75:18: `.Msgsize()`
@@ -232,12 +227,9 @@ $DIR/cmd/background-newdisks-heal-ops_gen_test.go:86:5-86:13: `.Reset()`
 $DIR/cmd/background-newdisks-heal-ops_gen_test.go:87:2-87:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/background-newdisks-heal-ops_gen_test.go:87:6-87:23: `.Encode(&buf, &v)`
 $DIR/cmd/background-newdisks-heal-ops_gen_test.go:88:2-88:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/background-newdisks-heal-ops_gen_test.go:88:12-88:28: `.NewReader(&buf)`
-$DIR/cmd/background-newdisks-heal-ops_gen_test.go:88:28-88:35: `.Skip()`
 $DIR/cmd/batch-handlers_gen_test.go:14:15-14:31: `.MarshalMsg(nil)`
 $DIR/cmd/batch-handlers_gen_test.go:18:16-18:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/batch-handlers_gen_test.go:26:2-26:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/batch-handlers_gen_test.go:26:18-26:28: `.Skip(bts)`
 $DIR/cmd/batch-handlers_gen_test.go:73:2-73:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:73:6-73:23: `.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:75:8-75:18: `.Msgsize()`
@@ -248,12 +240,9 @@ $DIR/cmd/batch-handlers_gen_test.go:86:5-86:13: `.Reset()`
 $DIR/cmd/batch-handlers_gen_test.go:87:2-87:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:87:6-87:23: `.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:88:2-88:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/batch-handlers_gen_test.go:88:12-88:28: `.NewReader(&buf)`
-$DIR/cmd/batch-handlers_gen_test.go:88:28-88:35: `.Skip()`
 $DIR/cmd/batch-handlers_gen_test.go:127:15-127:31: `.MarshalMsg(nil)`
 $DIR/cmd/batch-handlers_gen_test.go:131:16-131:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/batch-handlers_gen_test.go:139:2-139:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/batch-handlers_gen_test.go:139:18-139:28: `.Skip(bts)`
 $DIR/cmd/batch-handlers_gen_test.go:186:2-186:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:186:6-186:23: `.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:188:8-188:18: `.Msgsize()`
@@ -264,12 +253,9 @@ $DIR/cmd/batch-handlers_gen_test.go:199:5-199:13: `.Reset()`
 $DIR/cmd/batch-handlers_gen_test.go:200:2-200:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:200:6-200:23: `.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:201:2-201:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/batch-handlers_gen_test.go:201:12-201:28: `.NewReader(&buf)`
-$DIR/cmd/batch-handlers_gen_test.go:201:28-201:35: `.Skip()`
 $DIR/cmd/batch-handlers_gen_test.go:240:15-240:31: `.MarshalMsg(nil)`
 $DIR/cmd/batch-handlers_gen_test.go:244:16-244:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/batch-handlers_gen_test.go:252:2-252:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/batch-handlers_gen_test.go:252:18-252:28: `.Skip(bts)`
 $DIR/cmd/batch-handlers_gen_test.go:299:2-299:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:299:6-299:23: `.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:301:8-301:18: `.Msgsize()`
@@ -280,12 +266,9 @@ $DIR/cmd/batch-handlers_gen_test.go:312:5-312:13: `.Reset()`
 $DIR/cmd/batch-handlers_gen_test.go:313:2-313:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:313:6-313:23: `.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:314:2-314:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/batch-handlers_gen_test.go:314:12-314:28: `.NewReader(&buf)`
-$DIR/cmd/batch-handlers_gen_test.go:314:28-314:35: `.Skip()`
 $DIR/cmd/batch-handlers_gen_test.go:353:15-353:31: `.MarshalMsg(nil)`
 $DIR/cmd/batch-handlers_gen_test.go:357:16-357:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/batch-handlers_gen_test.go:365:2-365:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/batch-handlers_gen_test.go:365:18-365:28: `.Skip(bts)`
 $DIR/cmd/batch-handlers_gen_test.go:412:2-412:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:412:6-412:23: `.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:414:8-414:18: `.Msgsize()`
@@ -296,12 +279,9 @@ $DIR/cmd/batch-handlers_gen_test.go:425:5-425:13: `.Reset()`
 $DIR/cmd/batch-handlers_gen_test.go:426:2-426:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:426:6-426:23: `.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:427:2-427:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/batch-handlers_gen_test.go:427:12-427:28: `.NewReader(&buf)`
-$DIR/cmd/batch-handlers_gen_test.go:427:28-427:35: `.Skip()`
 $DIR/cmd/batch-handlers_gen_test.go:466:15-466:31: `.MarshalMsg(nil)`
 $DIR/cmd/batch-handlers_gen_test.go:470:16-470:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/batch-handlers_gen_test.go:478:2-478:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/batch-handlers_gen_test.go:478:18-478:28: `.Skip(bts)`
 $DIR/cmd/batch-handlers_gen_test.go:525:2-525:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:525:6-525:23: `.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:527:8-527:18: `.Msgsize()`
@@ -312,12 +292,9 @@ $DIR/cmd/batch-handlers_gen_test.go:538:5-538:13: `.Reset()`
 $DIR/cmd/batch-handlers_gen_test.go:539:2-539:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:539:6-539:23: `.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:540:2-540:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/batch-handlers_gen_test.go:540:12-540:28: `.NewReader(&buf)`
-$DIR/cmd/batch-handlers_gen_test.go:540:28-540:35: `.Skip()`
 $DIR/cmd/batch-handlers_gen_test.go:579:15-579:31: `.MarshalMsg(nil)`
 $DIR/cmd/batch-handlers_gen_test.go:583:16-583:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/batch-handlers_gen_test.go:591:2-591:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/batch-handlers_gen_test.go:591:18-591:28: `.Skip(bts)`
 $DIR/cmd/batch-handlers_gen_test.go:638:2-638:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:638:6-638:23: `.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:640:8-640:18: `.Msgsize()`
@@ -328,12 +305,9 @@ $DIR/cmd/batch-handlers_gen_test.go:651:5-651:13: `.Reset()`
 $DIR/cmd/batch-handlers_gen_test.go:652:2-652:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:652:6-652:23: `.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:653:2-653:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/batch-handlers_gen_test.go:653:12-653:28: `.NewReader(&buf)`
-$DIR/cmd/batch-handlers_gen_test.go:653:28-653:35: `.Skip()`
 $DIR/cmd/batch-handlers_gen_test.go:692:15-692:31: `.MarshalMsg(nil)`
 $DIR/cmd/batch-handlers_gen_test.go:696:16-696:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/batch-handlers_gen_test.go:704:2-704:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/batch-handlers_gen_test.go:704:18-704:28: `.Skip(bts)`
 $DIR/cmd/batch-handlers_gen_test.go:751:2-751:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:751:6-751:23: `.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:753:8-753:18: `.Msgsize()`
@@ -344,12 +318,9 @@ $DIR/cmd/batch-handlers_gen_test.go:764:5-764:13: `.Reset()`
 $DIR/cmd/batch-handlers_gen_test.go:765:2-765:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:765:6-765:23: `.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:766:2-766:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/batch-handlers_gen_test.go:766:12-766:28: `.NewReader(&buf)`
-$DIR/cmd/batch-handlers_gen_test.go:766:28-766:35: `.Skip()`
 $DIR/cmd/batch-handlers_gen_test.go:805:15-805:31: `.MarshalMsg(nil)`
 $DIR/cmd/batch-handlers_gen_test.go:809:16-809:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/batch-handlers_gen_test.go:817:2-817:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/batch-handlers_gen_test.go:817:18-817:28: `.Skip(bts)`
 $DIR/cmd/batch-handlers_gen_test.go:864:2-864:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:864:6-864:23: `.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:866:8-866:18: `.Msgsize()`
@@ -360,12 +331,9 @@ $DIR/cmd/batch-handlers_gen_test.go:877:5-877:13: `.Reset()`
 $DIR/cmd/batch-handlers_gen_test.go:878:2-878:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:878:6-878:23: `.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:879:2-879:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/batch-handlers_gen_test.go:879:12-879:28: `.NewReader(&buf)`
-$DIR/cmd/batch-handlers_gen_test.go:879:28-879:35: `.Skip()`
 $DIR/cmd/batch-handlers_gen_test.go:918:15-918:31: `.MarshalMsg(nil)`
 $DIR/cmd/batch-handlers_gen_test.go:922:16-922:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/batch-handlers_gen_test.go:930:2-930:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/batch-handlers_gen_test.go:930:18-930:28: `.Skip(bts)`
 $DIR/cmd/batch-handlers_gen_test.go:977:2-977:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:977:6-977:23: `.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:979:8-979:18: `.Msgsize()`
@@ -376,12 +344,9 @@ $DIR/cmd/batch-handlers_gen_test.go:990:5-990:13: `.Reset()`
 $DIR/cmd/batch-handlers_gen_test.go:991:2-991:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:991:6-991:23: `.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:992:2-992:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/batch-handlers_gen_test.go:992:12-992:28: `.NewReader(&buf)`
-$DIR/cmd/batch-handlers_gen_test.go:992:28-992:35: `.Skip()`
 $DIR/cmd/batch-handlers_gen_test.go:1031:15-1031:31: `.MarshalMsg(nil)`
 $DIR/cmd/batch-handlers_gen_test.go:1035:16-1035:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/batch-handlers_gen_test.go:1043:2-1043:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/batch-handlers_gen_test.go:1043:18-1043:28: `.Skip(bts)`
 $DIR/cmd/batch-handlers_gen_test.go:1090:2-1090:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:1090:6-1090:23: `.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:1092:8-1092:18: `.Msgsize()`
@@ -392,12 +357,9 @@ $DIR/cmd/batch-handlers_gen_test.go:1103:5-1103:13: `.Reset()`
 $DIR/cmd/batch-handlers_gen_test.go:1104:2-1104:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:1104:6-1104:23: `.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:1105:2-1105:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/batch-handlers_gen_test.go:1105:12-1105:28: `.NewReader(&buf)`
-$DIR/cmd/batch-handlers_gen_test.go:1105:28-1105:35: `.Skip()`
 $DIR/cmd/batch-handlers_gen_test.go:1144:15-1144:31: `.MarshalMsg(nil)`
 $DIR/cmd/batch-handlers_gen_test.go:1148:16-1148:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/batch-handlers_gen_test.go:1156:2-1156:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/batch-handlers_gen_test.go:1156:18-1156:28: `.Skip(bts)`
 $DIR/cmd/batch-handlers_gen_test.go:1203:2-1203:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:1203:6-1203:23: `.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:1205:8-1205:18: `.Msgsize()`
@@ -408,8 +370,6 @@ $DIR/cmd/batch-handlers_gen_test.go:1216:5-1216:13: `.Reset()`
 $DIR/cmd/batch-handlers_gen_test.go:1217:2-1217:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:1217:6-1217:23: `.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go:1218:2-1218:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/batch-handlers_gen_test.go:1218:12-1218:28: `.NewReader(&buf)`
-$DIR/cmd/batch-handlers_gen_test.go:1218:28-1218:35: `.Skip()`
 $DIR/cmd/bitrot_test.go:82:3-82:44: `testBitrotReaderWriterAlgo(t, bitrotAlgo)`
 $DIR/cmd/bootstrap-messages_test.go:31:3-31:44: `bsTracer.Record(fmt.Sprintf("msg-%d", i))`
 $DIR/cmd/bootstrap-messages_test.go:31:11-31:44: `.Record(fmt.Sprintf("msg-%d", i))`
@@ -472,7 +432,6 @@ $DIR/cmd/bucket-lifecycle_test.go:242:3-242:35: `err = validateTransitionTier(lc
 $DIR/cmd/bucket-metadata_gen_test.go:14:15-14:31: `.MarshalMsg(nil)`
 $DIR/cmd/bucket-metadata_gen_test.go:18:16-18:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/bucket-metadata_gen_test.go:26:2-26:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/bucket-metadata_gen_test.go:26:18-26:28: `.Skip(bts)`
 $DIR/cmd/bucket-metadata_gen_test.go:73:2-73:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/bucket-metadata_gen_test.go:73:6-73:23: `.Encode(&buf, &v)`
 $DIR/cmd/bucket-metadata_gen_test.go:75:8-75:18: `.Msgsize()`
@@ -483,12 +442,9 @@ $DIR/cmd/bucket-metadata_gen_test.go:86:5-86:13: `.Reset()`
 $DIR/cmd/bucket-metadata_gen_test.go:87:2-87:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/bucket-metadata_gen_test.go:87:6-87:23: `.Encode(&buf, &v)`
 $DIR/cmd/bucket-metadata_gen_test.go:88:2-88:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/bucket-metadata_gen_test.go:88:12-88:28: `.NewReader(&buf)`
-$DIR/cmd/bucket-metadata_gen_test.go:88:28-88:35: `.Skip()`
 $DIR/cmd/bucket-replication-utils_gen_test.go:14:15-14:31: `.MarshalMsg(nil)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:18:16-18:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:26:2-26:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/bucket-replication-utils_gen_test.go:26:18-26:28: `.Skip(bts)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:73:2-73:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:73:6-73:23: `.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:75:8-75:18: `.Msgsize()`
@@ -499,12 +455,9 @@ $DIR/cmd/bucket-replication-utils_gen_test.go:86:5-86:13: `.Reset()`
 $DIR/cmd/bucket-replication-utils_gen_test.go:87:2-87:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:87:6-87:23: `.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:88:2-88:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/bucket-replication-utils_gen_test.go:88:12-88:28: `.NewReader(&buf)`
-$DIR/cmd/bucket-replication-utils_gen_test.go:88:28-88:35: `.Skip()`
 $DIR/cmd/bucket-replication-utils_gen_test.go:127:15-127:31: `.MarshalMsg(nil)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:131:16-131:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:139:2-139:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/bucket-replication-utils_gen_test.go:139:18-139:28: `.Skip(bts)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:186:2-186:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:186:6-186:23: `.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:188:8-188:18: `.Msgsize()`
@@ -515,12 +468,9 @@ $DIR/cmd/bucket-replication-utils_gen_test.go:199:5-199:13: `.Reset()`
 $DIR/cmd/bucket-replication-utils_gen_test.go:200:2-200:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:200:6-200:23: `.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:201:2-201:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/bucket-replication-utils_gen_test.go:201:12-201:28: `.NewReader(&buf)`
-$DIR/cmd/bucket-replication-utils_gen_test.go:201:28-201:35: `.Skip()`
 $DIR/cmd/bucket-replication-utils_gen_test.go:240:15-240:31: `.MarshalMsg(nil)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:244:16-244:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:252:2-252:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/bucket-replication-utils_gen_test.go:252:18-252:28: `.Skip(bts)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:299:2-299:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:299:6-299:23: `.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:301:8-301:18: `.Msgsize()`
@@ -531,12 +481,9 @@ $DIR/cmd/bucket-replication-utils_gen_test.go:312:5-312:13: `.Reset()`
 $DIR/cmd/bucket-replication-utils_gen_test.go:313:2-313:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:313:6-313:23: `.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:314:2-314:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/bucket-replication-utils_gen_test.go:314:12-314:28: `.NewReader(&buf)`
-$DIR/cmd/bucket-replication-utils_gen_test.go:314:28-314:35: `.Skip()`
 $DIR/cmd/bucket-replication-utils_gen_test.go:353:15-353:31: `.MarshalMsg(nil)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:357:16-357:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:365:2-365:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/bucket-replication-utils_gen_test.go:365:18-365:28: `.Skip(bts)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:412:2-412:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:412:6-412:23: `.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:414:8-414:18: `.Msgsize()`
@@ -547,12 +494,9 @@ $DIR/cmd/bucket-replication-utils_gen_test.go:425:5-425:13: `.Reset()`
 $DIR/cmd/bucket-replication-utils_gen_test.go:426:2-426:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:426:6-426:23: `.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:427:2-427:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/bucket-replication-utils_gen_test.go:427:12-427:28: `.NewReader(&buf)`
-$DIR/cmd/bucket-replication-utils_gen_test.go:427:28-427:35: `.Skip()`
 $DIR/cmd/bucket-replication-utils_gen_test.go:466:15-466:31: `.MarshalMsg(nil)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:470:16-470:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:478:2-478:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/bucket-replication-utils_gen_test.go:478:18-478:28: `.Skip(bts)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:525:2-525:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:525:6-525:23: `.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:527:8-527:18: `.Msgsize()`
@@ -563,12 +507,9 @@ $DIR/cmd/bucket-replication-utils_gen_test.go:538:5-538:13: `.Reset()`
 $DIR/cmd/bucket-replication-utils_gen_test.go:539:2-539:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:539:6-539:23: `.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:540:2-540:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/bucket-replication-utils_gen_test.go:540:12-540:28: `.NewReader(&buf)`
-$DIR/cmd/bucket-replication-utils_gen_test.go:540:28-540:35: `.Skip()`
 $DIR/cmd/bucket-replication-utils_gen_test.go:579:15-579:31: `.MarshalMsg(nil)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:583:16-583:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:591:2-591:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/bucket-replication-utils_gen_test.go:591:18-591:28: `.Skip(bts)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:638:2-638:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:638:6-638:23: `.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:640:8-640:18: `.Msgsize()`
@@ -579,12 +520,9 @@ $DIR/cmd/bucket-replication-utils_gen_test.go:651:5-651:13: `.Reset()`
 $DIR/cmd/bucket-replication-utils_gen_test.go:652:2-652:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:652:6-652:23: `.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:653:2-653:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/bucket-replication-utils_gen_test.go:653:12-653:28: `.NewReader(&buf)`
-$DIR/cmd/bucket-replication-utils_gen_test.go:653:28-653:35: `.Skip()`
 $DIR/cmd/bucket-replication-utils_gen_test.go:692:15-692:31: `.MarshalMsg(nil)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:696:16-696:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:704:2-704:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/bucket-replication-utils_gen_test.go:704:18-704:28: `.Skip(bts)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:751:2-751:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:751:6-751:23: `.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:753:8-753:18: `.Msgsize()`
@@ -595,12 +533,9 @@ $DIR/cmd/bucket-replication-utils_gen_test.go:764:5-764:13: `.Reset()`
 $DIR/cmd/bucket-replication-utils_gen_test.go:765:2-765:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:765:6-765:23: `.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:766:2-766:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/bucket-replication-utils_gen_test.go:766:12-766:28: `.NewReader(&buf)`
-$DIR/cmd/bucket-replication-utils_gen_test.go:766:28-766:35: `.Skip()`
 $DIR/cmd/bucket-replication-utils_gen_test.go:805:15-805:31: `.MarshalMsg(nil)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:809:16-809:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:817:2-817:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/bucket-replication-utils_gen_test.go:817:18-817:28: `.Skip(bts)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:864:2-864:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:864:6-864:23: `.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:866:8-866:18: `.Msgsize()`
@@ -611,12 +546,9 @@ $DIR/cmd/bucket-replication-utils_gen_test.go:877:5-877:13: `.Reset()`
 $DIR/cmd/bucket-replication-utils_gen_test.go:878:2-878:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:878:6-878:23: `.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:879:2-879:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/bucket-replication-utils_gen_test.go:879:12-879:28: `.NewReader(&buf)`
-$DIR/cmd/bucket-replication-utils_gen_test.go:879:28-879:35: `.Skip()`
 $DIR/cmd/bucket-replication-utils_gen_test.go:918:15-918:31: `.MarshalMsg(nil)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:922:16-922:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:930:2-930:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/bucket-replication-utils_gen_test.go:930:18-930:28: `.Skip(bts)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:977:2-977:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:977:6-977:23: `.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:979:8-979:18: `.Msgsize()`
@@ -627,12 +559,9 @@ $DIR/cmd/bucket-replication-utils_gen_test.go:990:5-990:13: `.Reset()`
 $DIR/cmd/bucket-replication-utils_gen_test.go:991:2-991:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:991:6-991:23: `.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:992:2-992:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/bucket-replication-utils_gen_test.go:992:12-992:28: `.NewReader(&buf)`
-$DIR/cmd/bucket-replication-utils_gen_test.go:992:28-992:35: `.Skip()`
 $DIR/cmd/bucket-replication-utils_gen_test.go:1031:15-1031:31: `.MarshalMsg(nil)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:1035:16-1035:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:1043:2-1043:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/bucket-replication-utils_gen_test.go:1043:18-1043:28: `.Skip(bts)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:1090:2-1090:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:1090:6-1090:23: `.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:1092:8-1092:18: `.Msgsize()`
@@ -643,8 +572,6 @@ $DIR/cmd/bucket-replication-utils_gen_test.go:1103:5-1103:13: `.Reset()`
 $DIR/cmd/bucket-replication-utils_gen_test.go:1104:2-1104:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:1104:6-1104:23: `.Encode(&buf, &v)`
 $DIR/cmd/bucket-replication-utils_gen_test.go:1105:2-1105:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/bucket-replication-utils_gen_test.go:1105:12-1105:28: `.NewReader(&buf)`
-$DIR/cmd/bucket-replication-utils_gen_test.go:1105:28-1105:35: `.Skip()`
 $DIR/cmd/bucket-replication-utils_test.go:121:26-121:42: `.CompletedSize()`
 $DIR/cmd/bucket-replication-utils_test.go:124:28-124:56: `.ReplicationStatusInternal()`
 $DIR/cmd/bucket-replication-utils_test.go:127:25-127:45: `.ReplicationStatus()`
@@ -659,7 +586,6 @@ $DIR/cmd/bucket-replication_test.go:286:76-286:89: `.mustResync()`
 $DIR/cmd/bucket-stats_gen_test.go:14:15-14:31: `.MarshalMsg(nil)`
 $DIR/cmd/bucket-stats_gen_test.go:18:16-18:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/bucket-stats_gen_test.go:26:2-26:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/bucket-stats_gen_test.go:26:18-26:28: `.Skip(bts)`
 $DIR/cmd/bucket-stats_gen_test.go:73:2-73:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/bucket-stats_gen_test.go:73:6-73:23: `.Encode(&buf, &v)`
 $DIR/cmd/bucket-stats_gen_test.go:75:8-75:18: `.Msgsize()`
@@ -670,12 +596,9 @@ $DIR/cmd/bucket-stats_gen_test.go:86:5-86:13: `.Reset()`
 $DIR/cmd/bucket-stats_gen_test.go:87:2-87:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/bucket-stats_gen_test.go:87:6-87:23: `.Encode(&buf, &v)`
 $DIR/cmd/bucket-stats_gen_test.go:88:2-88:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/bucket-stats_gen_test.go:88:12-88:28: `.NewReader(&buf)`
-$DIR/cmd/bucket-stats_gen_test.go:88:28-88:35: `.Skip()`
 $DIR/cmd/bucket-stats_gen_test.go:127:15-127:31: `.MarshalMsg(nil)`
 $DIR/cmd/bucket-stats_gen_test.go:131:16-131:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/bucket-stats_gen_test.go:139:2-139:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/bucket-stats_gen_test.go:139:18-139:28: `.Skip(bts)`
 $DIR/cmd/bucket-stats_gen_test.go:186:2-186:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/bucket-stats_gen_test.go:186:6-186:23: `.Encode(&buf, &v)`
 $DIR/cmd/bucket-stats_gen_test.go:188:8-188:18: `.Msgsize()`
@@ -686,12 +609,9 @@ $DIR/cmd/bucket-stats_gen_test.go:199:5-199:13: `.Reset()`
 $DIR/cmd/bucket-stats_gen_test.go:200:2-200:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/bucket-stats_gen_test.go:200:6-200:23: `.Encode(&buf, &v)`
 $DIR/cmd/bucket-stats_gen_test.go:201:2-201:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/bucket-stats_gen_test.go:201:12-201:28: `.NewReader(&buf)`
-$DIR/cmd/bucket-stats_gen_test.go:201:28-201:35: `.Skip()`
 $DIR/cmd/bucket-stats_gen_test.go:240:15-240:31: `.MarshalMsg(nil)`
 $DIR/cmd/bucket-stats_gen_test.go:244:16-244:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/bucket-stats_gen_test.go:252:2-252:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/bucket-stats_gen_test.go:252:18-252:28: `.Skip(bts)`
 $DIR/cmd/bucket-stats_gen_test.go:299:2-299:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/bucket-stats_gen_test.go:299:6-299:23: `.Encode(&buf, &v)`
 $DIR/cmd/bucket-stats_gen_test.go:301:8-301:18: `.Msgsize()`
@@ -702,12 +622,9 @@ $DIR/cmd/bucket-stats_gen_test.go:312:5-312:13: `.Reset()`
 $DIR/cmd/bucket-stats_gen_test.go:313:2-313:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/bucket-stats_gen_test.go:313:6-313:23: `.Encode(&buf, &v)`
 $DIR/cmd/bucket-stats_gen_test.go:314:2-314:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/bucket-stats_gen_test.go:314:12-314:28: `.NewReader(&buf)`
-$DIR/cmd/bucket-stats_gen_test.go:314:28-314:35: `.Skip()`
 $DIR/cmd/bucket-stats_gen_test.go:353:15-353:31: `.MarshalMsg(nil)`
 $DIR/cmd/bucket-stats_gen_test.go:357:16-357:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/bucket-stats_gen_test.go:365:2-365:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/bucket-stats_gen_test.go:365:18-365:28: `.Skip(bts)`
 $DIR/cmd/bucket-stats_gen_test.go:412:2-412:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/bucket-stats_gen_test.go:412:6-412:23: `.Encode(&buf, &v)`
 $DIR/cmd/bucket-stats_gen_test.go:414:8-414:18: `.Msgsize()`
@@ -718,12 +635,9 @@ $DIR/cmd/bucket-stats_gen_test.go:425:5-425:13: `.Reset()`
 $DIR/cmd/bucket-stats_gen_test.go:426:2-426:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/bucket-stats_gen_test.go:426:6-426:23: `.Encode(&buf, &v)`
 $DIR/cmd/bucket-stats_gen_test.go:427:2-427:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/bucket-stats_gen_test.go:427:12-427:28: `.NewReader(&buf)`
-$DIR/cmd/bucket-stats_gen_test.go:427:28-427:35: `.Skip()`
 $DIR/cmd/bucket-stats_gen_test.go:466:15-466:31: `.MarshalMsg(nil)`
 $DIR/cmd/bucket-stats_gen_test.go:470:16-470:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/bucket-stats_gen_test.go:478:2-478:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/bucket-stats_gen_test.go:478:18-478:28: `.Skip(bts)`
 $DIR/cmd/bucket-stats_gen_test.go:525:2-525:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/bucket-stats_gen_test.go:525:6-525:23: `.Encode(&buf, &v)`
 $DIR/cmd/bucket-stats_gen_test.go:527:8-527:18: `.Msgsize()`
@@ -734,8 +648,6 @@ $DIR/cmd/bucket-stats_gen_test.go:538:5-538:13: `.Reset()`
 $DIR/cmd/bucket-stats_gen_test.go:539:2-539:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/bucket-stats_gen_test.go:539:6-539:23: `.Encode(&buf, &v)`
 $DIR/cmd/bucket-stats_gen_test.go:540:2-540:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/bucket-stats_gen_test.go:540:12-540:28: `.NewReader(&buf)`
-$DIR/cmd/bucket-stats_gen_test.go:540:28-540:35: `.Skip()`
 $DIR/cmd/common-main_test.go:47:3-66:5: `t.Run("", func(t *testing.T) {
 			tmpfile, err := os.CreateTemp("", "testfile")
 			if err != nil {
@@ -925,7 +837,6 @@ $DIR/cmd/crossdomain-xml-handler_test.go:35:19-35:55: `.Get(srv.URL + crossDomai
 $DIR/cmd/data-usage-cache_gen_test.go:14:15-14:31: `.MarshalMsg(nil)`
 $DIR/cmd/data-usage-cache_gen_test.go:18:16-18:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/data-usage-cache_gen_test.go:26:2-26:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/data-usage-cache_gen_test.go:26:18-26:28: `.Skip(bts)`
 $DIR/cmd/data-usage-cache_gen_test.go:73:2-73:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:73:6-73:23: `.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:75:8-75:18: `.Msgsize()`
@@ -936,16 +847,12 @@ $DIR/cmd/data-usage-cache_gen_test.go:86:5-86:13: `.Reset()`
 $DIR/cmd/data-usage-cache_gen_test.go:87:2-87:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:87:6-87:23: `.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:88:2-88:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/data-usage-cache_gen_test.go:88:12-88:28: `.NewReader(&buf)`
-$DIR/cmd/data-usage-cache_gen_test.go:88:28-88:35: `.Skip()`
 $DIR/cmd/data-usage-cache_gen_test.go:127:15-127:31: `.MarshalMsg(nil)`
 $DIR/cmd/data-usage-cache_gen_test.go:131:16-131:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/data-usage-cache_gen_test.go:139:2-139:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/data-usage-cache_gen_test.go:139:18-139:28: `.Skip(bts)`
 $DIR/cmd/data-usage-cache_gen_test.go:185:15-185:31: `.MarshalMsg(nil)`
 $DIR/cmd/data-usage-cache_gen_test.go:189:16-189:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/data-usage-cache_gen_test.go:197:2-197:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/data-usage-cache_gen_test.go:197:18-197:28: `.Skip(bts)`
 $DIR/cmd/data-usage-cache_gen_test.go:244:2-244:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:244:6-244:23: `.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:246:8-246:18: `.Msgsize()`
@@ -956,12 +863,9 @@ $DIR/cmd/data-usage-cache_gen_test.go:257:5-257:13: `.Reset()`
 $DIR/cmd/data-usage-cache_gen_test.go:258:2-258:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:258:6-258:23: `.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:259:2-259:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/data-usage-cache_gen_test.go:259:12-259:28: `.NewReader(&buf)`
-$DIR/cmd/data-usage-cache_gen_test.go:259:28-259:35: `.Skip()`
 $DIR/cmd/data-usage-cache_gen_test.go:298:15-298:31: `.MarshalMsg(nil)`
 $DIR/cmd/data-usage-cache_gen_test.go:302:16-302:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/data-usage-cache_gen_test.go:310:2-310:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/data-usage-cache_gen_test.go:310:18-310:28: `.Skip(bts)`
 $DIR/cmd/data-usage-cache_gen_test.go:357:2-357:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:357:6-357:23: `.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:359:8-359:18: `.Msgsize()`
@@ -972,12 +876,9 @@ $DIR/cmd/data-usage-cache_gen_test.go:370:5-370:13: `.Reset()`
 $DIR/cmd/data-usage-cache_gen_test.go:371:2-371:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:371:6-371:23: `.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:372:2-372:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/data-usage-cache_gen_test.go:372:12-372:28: `.NewReader(&buf)`
-$DIR/cmd/data-usage-cache_gen_test.go:372:28-372:35: `.Skip()`
 $DIR/cmd/data-usage-cache_gen_test.go:411:15-411:31: `.MarshalMsg(nil)`
 $DIR/cmd/data-usage-cache_gen_test.go:415:16-415:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/data-usage-cache_gen_test.go:423:2-423:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/data-usage-cache_gen_test.go:423:18-423:28: `.Skip(bts)`
 $DIR/cmd/data-usage-cache_gen_test.go:470:2-470:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:470:6-470:23: `.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:472:8-472:18: `.Msgsize()`
@@ -988,12 +889,9 @@ $DIR/cmd/data-usage-cache_gen_test.go:483:5-483:13: `.Reset()`
 $DIR/cmd/data-usage-cache_gen_test.go:484:2-484:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:484:6-484:23: `.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:485:2-485:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/data-usage-cache_gen_test.go:485:12-485:28: `.NewReader(&buf)`
-$DIR/cmd/data-usage-cache_gen_test.go:485:28-485:35: `.Skip()`
 $DIR/cmd/data-usage-cache_gen_test.go:524:15-524:31: `.MarshalMsg(nil)`
 $DIR/cmd/data-usage-cache_gen_test.go:528:16-528:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/data-usage-cache_gen_test.go:536:2-536:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/data-usage-cache_gen_test.go:536:18-536:28: `.Skip(bts)`
 $DIR/cmd/data-usage-cache_gen_test.go:583:2-583:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:583:6-583:23: `.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:585:8-585:18: `.Msgsize()`
@@ -1004,12 +902,9 @@ $DIR/cmd/data-usage-cache_gen_test.go:596:5-596:13: `.Reset()`
 $DIR/cmd/data-usage-cache_gen_test.go:597:2-597:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:597:6-597:23: `.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:598:2-598:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/data-usage-cache_gen_test.go:598:12-598:28: `.NewReader(&buf)`
-$DIR/cmd/data-usage-cache_gen_test.go:598:28-598:35: `.Skip()`
 $DIR/cmd/data-usage-cache_gen_test.go:637:15-637:31: `.MarshalMsg(nil)`
 $DIR/cmd/data-usage-cache_gen_test.go:641:16-641:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/data-usage-cache_gen_test.go:649:2-649:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/data-usage-cache_gen_test.go:649:18-649:28: `.Skip(bts)`
 $DIR/cmd/data-usage-cache_gen_test.go:696:2-696:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:696:6-696:23: `.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:698:8-698:18: `.Msgsize()`
@@ -1020,12 +915,9 @@ $DIR/cmd/data-usage-cache_gen_test.go:709:5-709:13: `.Reset()`
 $DIR/cmd/data-usage-cache_gen_test.go:710:2-710:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:710:6-710:23: `.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:711:2-711:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/data-usage-cache_gen_test.go:711:12-711:28: `.NewReader(&buf)`
-$DIR/cmd/data-usage-cache_gen_test.go:711:28-711:35: `.Skip()`
 $DIR/cmd/data-usage-cache_gen_test.go:750:15-750:31: `.MarshalMsg(nil)`
 $DIR/cmd/data-usage-cache_gen_test.go:754:16-754:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/data-usage-cache_gen_test.go:762:2-762:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/data-usage-cache_gen_test.go:762:18-762:28: `.Skip(bts)`
 $DIR/cmd/data-usage-cache_gen_test.go:809:2-809:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:809:6-809:23: `.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:811:8-811:18: `.Msgsize()`
@@ -1036,12 +928,9 @@ $DIR/cmd/data-usage-cache_gen_test.go:822:5-822:13: `.Reset()`
 $DIR/cmd/data-usage-cache_gen_test.go:823:2-823:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:823:6-823:23: `.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:824:2-824:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/data-usage-cache_gen_test.go:824:12-824:28: `.NewReader(&buf)`
-$DIR/cmd/data-usage-cache_gen_test.go:824:28-824:35: `.Skip()`
 $DIR/cmd/data-usage-cache_gen_test.go:863:15-863:31: `.MarshalMsg(nil)`
 $DIR/cmd/data-usage-cache_gen_test.go:867:16-867:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/data-usage-cache_gen_test.go:875:2-875:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/data-usage-cache_gen_test.go:875:18-875:28: `.Skip(bts)`
 $DIR/cmd/data-usage-cache_gen_test.go:922:2-922:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:922:6-922:23: `.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:924:8-924:18: `.Msgsize()`
@@ -1052,12 +941,9 @@ $DIR/cmd/data-usage-cache_gen_test.go:935:5-935:13: `.Reset()`
 $DIR/cmd/data-usage-cache_gen_test.go:936:2-936:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:936:6-936:23: `.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:937:2-937:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/data-usage-cache_gen_test.go:937:12-937:28: `.NewReader(&buf)`
-$DIR/cmd/data-usage-cache_gen_test.go:937:28-937:35: `.Skip()`
 $DIR/cmd/data-usage-cache_gen_test.go:976:15-976:31: `.MarshalMsg(nil)`
 $DIR/cmd/data-usage-cache_gen_test.go:980:16-980:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/data-usage-cache_gen_test.go:988:2-988:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/data-usage-cache_gen_test.go:988:18-988:28: `.Skip(bts)`
 $DIR/cmd/data-usage-cache_gen_test.go:1035:2-1035:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:1035:6-1035:23: `.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:1037:8-1037:18: `.Msgsize()`
@@ -1068,12 +954,9 @@ $DIR/cmd/data-usage-cache_gen_test.go:1048:5-1048:13: `.Reset()`
 $DIR/cmd/data-usage-cache_gen_test.go:1049:2-1049:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:1049:6-1049:23: `.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:1050:2-1050:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/data-usage-cache_gen_test.go:1050:12-1050:28: `.NewReader(&buf)`
-$DIR/cmd/data-usage-cache_gen_test.go:1050:28-1050:35: `.Skip()`
 $DIR/cmd/data-usage-cache_gen_test.go:1089:15-1089:31: `.MarshalMsg(nil)`
 $DIR/cmd/data-usage-cache_gen_test.go:1093:16-1093:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/data-usage-cache_gen_test.go:1101:2-1101:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/data-usage-cache_gen_test.go:1101:18-1101:28: `.Skip(bts)`
 $DIR/cmd/data-usage-cache_gen_test.go:1148:2-1148:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:1148:6-1148:23: `.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:1150:8-1150:18: `.Msgsize()`
@@ -1084,12 +967,9 @@ $DIR/cmd/data-usage-cache_gen_test.go:1161:5-1161:13: `.Reset()`
 $DIR/cmd/data-usage-cache_gen_test.go:1162:2-1162:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:1162:6-1162:23: `.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:1163:2-1163:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/data-usage-cache_gen_test.go:1163:12-1163:28: `.NewReader(&buf)`
-$DIR/cmd/data-usage-cache_gen_test.go:1163:28-1163:35: `.Skip()`
 $DIR/cmd/data-usage-cache_gen_test.go:1202:15-1202:31: `.MarshalMsg(nil)`
 $DIR/cmd/data-usage-cache_gen_test.go:1206:16-1206:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/data-usage-cache_gen_test.go:1214:2-1214:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/data-usage-cache_gen_test.go:1214:18-1214:28: `.Skip(bts)`
 $DIR/cmd/data-usage-cache_gen_test.go:1261:2-1261:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:1261:6-1261:23: `.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:1263:8-1263:18: `.Msgsize()`
@@ -1100,8 +980,6 @@ $DIR/cmd/data-usage-cache_gen_test.go:1274:5-1274:13: `.Reset()`
 $DIR/cmd/data-usage-cache_gen_test.go:1275:2-1275:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:1275:6-1275:23: `.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go:1276:2-1276:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/data-usage-cache_gen_test.go:1276:12-1276:28: `.NewReader(&buf)`
-$DIR/cmd/data-usage-cache_gen_test.go:1276:28-1276:35: `.Skip()`
 $DIR/cmd/data-usage_test.go:37:11-37:21: `.TempDir()`
 $DIR/cmd/data-usage_test.go:38:2-38:25: `const bucket = "bucket"`
 $DIR/cmd/data-usage_test.go:49:2-49:46: `createUsageTestFiles(t, base, bucket, files)`
@@ -2155,8 +2033,6 @@ $DIR/cmd/erasure-decode_test.go:181:4-181:37: `closeBitrotReaders(bitrotReaders)
 $DIR/cmd/erasure-decode_test.go:189:25-189:33: `.Bytes()`
 $DIR/cmd/erasure-decode_test.go:189:41-189:99: `.Equal(content, data[test.offset:test.offset+test.length])`
 $DIR/cmd/erasure-decode_test.go:201:12-201:20: `.Short()`
-$DIR/cmd/erasure-decode_test.go:202:3-202:11: `t.Skip()`
-$DIR/cmd/erasure-decode_test.go:202:4-202:11: `.Skip()`
 $DIR/cmd/erasure-decode_test.go:214:36-214:49: `.Background()`
 $DIR/cmd/erasure-decode_test.go:221:2-221:26: `_, err = rand.Read(data)`
 $DIR/cmd/erasure-decode_test.go:221:15-221:26: `.Read(data)`
@@ -4073,8 +3949,6 @@ $DIR/cmd/erasure-object_test.go:1108:13-1108:25: `.Copy(h, gr)`
 $DIR/cmd/erasure-object_test.go:1114:2-1114:57: `const expectedHash = "fffb6377948ebea75ad2b8058e849ef5"`
 $DIR/cmd/erasure-object_test.go:1115:18-1115:44: `.Sprintf("%x", h.Sum(nil))`
 $DIR/cmd/erasure-object_test.go:1115:34-1115:43: `.Sum(nil)`
-$DIR/cmd/erasure-object_test.go:1124:3-1124:11: `t.Skip()`
-$DIR/cmd/erasure-object_test.go:1124:4-1124:11: `.Skip()`
 $DIR/cmd/erasure-object_test.go:1127:24-1127:57: `.WithCancel(context.Background())`
 $DIR/cmd/erasure-object_test.go:1127:43-1127:56: `.Background()`
 $DIR/cmd/erasure-object_test.go:1137:11-1137:42: `.Shutdown(context.Background())`
@@ -4122,7 +3996,6 @@ $DIR/cmd/erasure-object_test.go:1213:12-1213:43: `.Equal(foundHash, expectedHash
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:14:15-14:31: `.MarshalMsg(nil)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:18:16-18:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:26:2-26:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/erasure-server-pool-decom_gen_test.go:26:18-26:28: `.Skip(bts)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:73:2-73:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:73:6-73:23: `.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:75:8-75:18: `.Msgsize()`
@@ -4133,12 +4006,9 @@ $DIR/cmd/erasure-server-pool-decom_gen_test.go:86:5-86:13: `.Reset()`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:87:2-87:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:87:6-87:23: `.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:88:2-88:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/erasure-server-pool-decom_gen_test.go:88:12-88:28: `.NewReader(&buf)`
-$DIR/cmd/erasure-server-pool-decom_gen_test.go:88:28-88:35: `.Skip()`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:127:15-127:31: `.MarshalMsg(nil)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:131:16-131:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:139:2-139:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/erasure-server-pool-decom_gen_test.go:139:18-139:28: `.Skip(bts)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:186:2-186:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:186:6-186:23: `.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:188:8-188:18: `.Msgsize()`
@@ -4149,12 +4019,9 @@ $DIR/cmd/erasure-server-pool-decom_gen_test.go:199:5-199:13: `.Reset()`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:200:2-200:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:200:6-200:23: `.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:201:2-201:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/erasure-server-pool-decom_gen_test.go:201:12-201:28: `.NewReader(&buf)`
-$DIR/cmd/erasure-server-pool-decom_gen_test.go:201:28-201:35: `.Skip()`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:240:15-240:31: `.MarshalMsg(nil)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:244:16-244:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:252:2-252:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/erasure-server-pool-decom_gen_test.go:252:18-252:28: `.Skip(bts)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:299:2-299:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:299:6-299:23: `.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:301:8-301:18: `.Msgsize()`
@@ -4165,12 +4032,9 @@ $DIR/cmd/erasure-server-pool-decom_gen_test.go:312:5-312:13: `.Reset()`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:313:2-313:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:313:6-313:23: `.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:314:2-314:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/erasure-server-pool-decom_gen_test.go:314:12-314:28: `.NewReader(&buf)`
-$DIR/cmd/erasure-server-pool-decom_gen_test.go:314:28-314:35: `.Skip()`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:353:15-353:31: `.MarshalMsg(nil)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:357:16-357:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:365:2-365:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/erasure-server-pool-decom_gen_test.go:365:18-365:28: `.Skip(bts)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:412:2-412:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:412:6-412:23: `.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:414:8-414:18: `.Msgsize()`
@@ -4181,12 +4045,9 @@ $DIR/cmd/erasure-server-pool-decom_gen_test.go:425:5-425:13: `.Reset()`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:426:2-426:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:426:6-426:23: `.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:427:2-427:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/erasure-server-pool-decom_gen_test.go:427:12-427:28: `.NewReader(&buf)`
-$DIR/cmd/erasure-server-pool-decom_gen_test.go:427:28-427:35: `.Skip()`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:466:15-466:31: `.MarshalMsg(nil)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:470:16-470:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:478:2-478:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/erasure-server-pool-decom_gen_test.go:478:18-478:28: `.Skip(bts)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:525:2-525:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:525:6-525:23: `.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:527:8-527:18: `.Msgsize()`
@@ -4197,8 +4058,6 @@ $DIR/cmd/erasure-server-pool-decom_gen_test.go:538:5-538:13: `.Reset()`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:539:2-539:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:539:6-539:23: `.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go:540:2-540:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/erasure-server-pool-decom_gen_test.go:540:12-540:28: `.NewReader(&buf)`
-$DIR/cmd/erasure-server-pool-decom_gen_test.go:540:28-540:35: `.Skip()`
 $DIR/cmd/erasure-server-pool-decom_test.go:67:2-67:34: `nmeta1.Version = poolMetaVersion`
 $DIR/cmd/erasure-server-pool-decom_test.go:68:2-68:52: `nmeta1.Pools = append(nmeta1.Pools, meta.Pools...)`
 $DIR/cmd/erasure-server-pool-decom_test.go:71:4-78:5: `nmeta1.Pools[i] = PoolStatus{
@@ -4253,7 +4112,6 @@ $DIR/cmd/erasure-server-pool-decom_test.go:181:27-181:57: `.meta.validate(testCa
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:14:15-14:31: `.MarshalMsg(nil)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:18:16-18:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:26:2-26:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/erasure-server-pool-rebalance_gen_test.go:26:18-26:28: `.Skip(bts)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:73:2-73:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:73:6-73:23: `.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:75:8-75:18: `.Msgsize()`
@@ -4264,12 +4122,9 @@ $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:86:5-86:13: `.Reset()`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:87:2-87:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:87:6-87:23: `.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:88:2-88:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/erasure-server-pool-rebalance_gen_test.go:88:12-88:28: `.NewReader(&buf)`
-$DIR/cmd/erasure-server-pool-rebalance_gen_test.go:88:28-88:35: `.Skip()`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:127:15-127:31: `.MarshalMsg(nil)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:131:16-131:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:139:2-139:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/erasure-server-pool-rebalance_gen_test.go:139:18-139:28: `.Skip(bts)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:186:2-186:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:186:6-186:23: `.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:188:8-188:18: `.Msgsize()`
@@ -4280,12 +4135,9 @@ $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:199:5-199:13: `.Reset()`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:200:2-200:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:200:6-200:23: `.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:201:2-201:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/erasure-server-pool-rebalance_gen_test.go:201:12-201:28: `.NewReader(&buf)`
-$DIR/cmd/erasure-server-pool-rebalance_gen_test.go:201:28-201:35: `.Skip()`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:240:15-240:31: `.MarshalMsg(nil)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:244:16-244:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:252:2-252:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/erasure-server-pool-rebalance_gen_test.go:252:18-252:28: `.Skip(bts)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:299:2-299:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:299:6-299:23: `.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:301:8-301:18: `.Msgsize()`
@@ -4296,12 +4148,9 @@ $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:312:5-312:13: `.Reset()`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:313:2-313:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:313:6-313:23: `.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:314:2-314:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/erasure-server-pool-rebalance_gen_test.go:314:12-314:28: `.NewReader(&buf)`
-$DIR/cmd/erasure-server-pool-rebalance_gen_test.go:314:28-314:35: `.Skip()`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:353:15-353:31: `.MarshalMsg(nil)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:357:16-357:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:365:2-365:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/erasure-server-pool-rebalance_gen_test.go:365:18-365:28: `.Skip(bts)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:412:2-412:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:412:6-412:23: `.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:414:8-414:18: `.Msgsize()`
@@ -4312,12 +4161,9 @@ $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:425:5-425:13: `.Reset()`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:426:2-426:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:426:6-426:23: `.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:427:2-427:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/erasure-server-pool-rebalance_gen_test.go:427:12-427:28: `.NewReader(&buf)`
-$DIR/cmd/erasure-server-pool-rebalance_gen_test.go:427:28-427:35: `.Skip()`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:466:15-466:31: `.MarshalMsg(nil)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:470:16-470:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:478:2-478:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/erasure-server-pool-rebalance_gen_test.go:478:18-478:28: `.Skip(bts)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:525:2-525:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:525:6-525:23: `.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:527:8-527:18: `.Msgsize()`
@@ -4328,8 +4174,6 @@ $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:538:5-538:13: `.Reset()`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:539:2-539:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:539:6-539:23: `.Encode(&buf, &v)`
 $DIR/cmd/erasure-server-pool-rebalance_gen_test.go:540:2-540:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/erasure-server-pool-rebalance_gen_test.go:540:12-540:28: `.NewReader(&buf)`
-$DIR/cmd/erasure-server-pool-rebalance_gen_test.go:540:28-540:35: `.Skip()`
 $DIR/cmd/erasure-sets_test.go:162:24-162:57: `.WithCancel(context.Background())`
 $DIR/cmd/erasure-sets_test.go:162:43-162:56: `.Background()`
 $DIR/cmd/erasure-sets_test.go:171:19-171:65: `.Join(globalTestTmpDir, "minio-"+nextSuffix())`
@@ -4496,7 +4340,6 @@ $DIR/cmd/jwt_test.go:117:10-117:27: `.RemoveAll(fsDir)`
 $DIR/cmd/last-minute_gen_test.go:14:15-14:31: `.MarshalMsg(nil)`
 $DIR/cmd/last-minute_gen_test.go:18:16-18:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/last-minute_gen_test.go:26:2-26:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/last-minute_gen_test.go:26:18-26:28: `.Skip(bts)`
 $DIR/cmd/last-minute_gen_test.go:73:2-73:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/last-minute_gen_test.go:73:6-73:23: `.Encode(&buf, &v)`
 $DIR/cmd/last-minute_gen_test.go:75:8-75:18: `.Msgsize()`
@@ -4507,12 +4350,9 @@ $DIR/cmd/last-minute_gen_test.go:86:5-86:13: `.Reset()`
 $DIR/cmd/last-minute_gen_test.go:87:2-87:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/last-minute_gen_test.go:87:6-87:23: `.Encode(&buf, &v)`
 $DIR/cmd/last-minute_gen_test.go:88:2-88:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/last-minute_gen_test.go:88:12-88:28: `.NewReader(&buf)`
-$DIR/cmd/last-minute_gen_test.go:88:28-88:35: `.Skip()`
 $DIR/cmd/last-minute_gen_test.go:127:15-127:31: `.MarshalMsg(nil)`
 $DIR/cmd/last-minute_gen_test.go:131:16-131:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/last-minute_gen_test.go:139:2-139:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/last-minute_gen_test.go:139:18-139:28: `.Skip(bts)`
 $DIR/cmd/last-minute_gen_test.go:186:2-186:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/last-minute_gen_test.go:186:6-186:23: `.Encode(&buf, &v)`
 $DIR/cmd/last-minute_gen_test.go:188:8-188:18: `.Msgsize()`
@@ -4523,12 +4363,9 @@ $DIR/cmd/last-minute_gen_test.go:199:5-199:13: `.Reset()`
 $DIR/cmd/last-minute_gen_test.go:200:2-200:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/last-minute_gen_test.go:200:6-200:23: `.Encode(&buf, &v)`
 $DIR/cmd/last-minute_gen_test.go:201:2-201:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/last-minute_gen_test.go:201:12-201:28: `.NewReader(&buf)`
-$DIR/cmd/last-minute_gen_test.go:201:28-201:35: `.Skip()`
 $DIR/cmd/last-minute_gen_test.go:240:15-240:31: `.MarshalMsg(nil)`
 $DIR/cmd/last-minute_gen_test.go:244:16-244:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/last-minute_gen_test.go:252:2-252:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/last-minute_gen_test.go:252:18-252:28: `.Skip(bts)`
 $DIR/cmd/last-minute_gen_test.go:299:2-299:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/last-minute_gen_test.go:299:6-299:23: `.Encode(&buf, &v)`
 $DIR/cmd/last-minute_gen_test.go:301:8-301:18: `.Msgsize()`
@@ -4539,8 +4376,6 @@ $DIR/cmd/last-minute_gen_test.go:312:5-312:13: `.Reset()`
 $DIR/cmd/last-minute_gen_test.go:313:2-313:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/last-minute_gen_test.go:313:6-313:23: `.Encode(&buf, &v)`
 $DIR/cmd/last-minute_gen_test.go:314:2-314:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/last-minute_gen_test.go:314:12-314:28: `.NewReader(&buf)`
-$DIR/cmd/last-minute_gen_test.go:314:28-314:35: `.Skip()`
 $DIR/cmd/local-locker_test.go:36:16-36:29: `.Background()`
 $DIR/cmd/local-locker_test.go:41:16-41:23: `.Name()`
 $DIR/cmd/local-locker_test.go:45:15-45:30: `.Lock(ctx, arg)`
@@ -5557,7 +5392,6 @@ $DIR/cmd/metacache-stream_test.go:424:9-424:45: `.skip(len(loadMetacacheSampleNa
 $DIR/cmd/metacache_gen_test.go:14:15-14:31: `.MarshalMsg(nil)`
 $DIR/cmd/metacache_gen_test.go:18:16-18:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/metacache_gen_test.go:26:2-26:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/metacache_gen_test.go:26:18-26:28: `.Skip(bts)`
 $DIR/cmd/metacache_gen_test.go:73:2-73:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/metacache_gen_test.go:73:6-73:23: `.Encode(&buf, &v)`
 $DIR/cmd/metacache_gen_test.go:75:8-75:18: `.Msgsize()`
@@ -5568,8 +5402,6 @@ $DIR/cmd/metacache_gen_test.go:86:5-86:13: `.Reset()`
 $DIR/cmd/metacache_gen_test.go:87:2-87:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/metacache_gen_test.go:87:6-87:23: `.Encode(&buf, &v)`
 $DIR/cmd/metacache_gen_test.go:88:2-88:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/metacache_gen_test.go:88:12-88:28: `.NewReader(&buf)`
-$DIR/cmd/metacache_gen_test.go:88:28-88:35: `.Skip()`
 $DIR/cmd/metacache_test.go:199:3-203:5: `t.Run(tt.name, func(t *testing.T) {
 			if got := baseDirFromPrefix(tt.prefix); got != tt.want {
 				t.Errorf("baseDirFromPrefix() = %v, want %v", got, tt.want)
@@ -5636,8 +5468,6 @@ $DIR/cmd/metacache_test.go:232:4-244:5: `.Run(tt.id, func(t *testing.T) {
 		})`
 $DIR/cmd/metacache_test.go:237:5-237:26: `want = wantResults[i]`
 $DIR/cmd/metacache_test.go:240:13-240:28: `.worthKeeping()`
-$DIR/cmd/namespace-lock_test.go:45:2-45:29: `t.Skip("long test skip it")`
-$DIR/cmd/namespace-lock_test.go:45:3-45:29: `.Skip("long test skip it")`
 $DIR/cmd/namespace-lock_test.go:47:16-47:29: `.Background()`
 $DIR/cmd/namespace-lock_test.go:53:11-53:78: `.lock(ctx, "volume", "path", "source", "opsID", false, time.Second)`
 $DIR/cmd/namespace-lock_test.go:61:4-61:82: `nsLk.lock(ctx, "volume", "path", "source", "opsID", false, 1*time.Millisecond)`
@@ -5737,10 +5567,6 @@ $DIR/cmd/net_test.go:327:4-345:5: `.Run("", func(t *testing.T) {
 				}
 			}
 		})`
-$DIR/cmd/object-api-multipart_test.go:37:3-37:11: `t.Skip()`
-$DIR/cmd/object-api-multipart_test.go:37:4-37:11: `.Skip()`
-$DIR/cmd/object-api-utils_test.go:42:3-42:11: `t.Skip()`
-$DIR/cmd/object-api-utils_test.go:42:4-42:11: `.Skip()`
 $DIR/cmd/object-api-utils_test.go:298:62-298:86: `.DeepEqual(got, tt.want)`
 $DIR/cmd/object-api-utils_test.go:329:49-329:73: `.DeepEqual(got, tt.want)`
 $DIR/cmd/object-api-utils_test.go:364:65-364:89: `.DeepEqual(got, tt.want)`
@@ -6431,7 +6257,6 @@ $DIR/cmd/signature-v4_test.go:301:6-301:18: `.ParseForm()`
 $DIR/cmd/site-replication-utils_gen_test.go:14:15-14:31: `.MarshalMsg(nil)`
 $DIR/cmd/site-replication-utils_gen_test.go:18:16-18:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/site-replication-utils_gen_test.go:26:2-26:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/site-replication-utils_gen_test.go:26:18-26:28: `.Skip(bts)`
 $DIR/cmd/site-replication-utils_gen_test.go:73:2-73:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/site-replication-utils_gen_test.go:73:6-73:23: `.Encode(&buf, &v)`
 $DIR/cmd/site-replication-utils_gen_test.go:75:8-75:18: `.Msgsize()`
@@ -6442,8 +6267,6 @@ $DIR/cmd/site-replication-utils_gen_test.go:86:5-86:13: `.Reset()`
 $DIR/cmd/site-replication-utils_gen_test.go:87:2-87:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/site-replication-utils_gen_test.go:87:6-87:23: `.Encode(&buf, &v)`
 $DIR/cmd/site-replication-utils_gen_test.go:88:2-88:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/site-replication-utils_gen_test.go:88:12-88:28: `.NewReader(&buf)`
-$DIR/cmd/site-replication-utils_gen_test.go:88:28-88:35: `.Skip()`
 $DIR/cmd/site-replication_test.go:42:7-42:47: `.CreateStringSet("dep1", "dep2", "dep3")`
 $DIR/cmd/site-replication_test.go:43:7-43:31: `.CreateStringSet("dep1")`
 $DIR/cmd/site-replication_test.go:49:7-49:47: `.CreateStringSet("dep1", "dep2", "dep3")`
@@ -6453,7 +6276,6 @@ $DIR/cmd/site-replication_test.go:57:7-57:55: `.CreateStringSet("dep1", "dep2", 
 $DIR/cmd/storage-datatypes_gen_test.go:14:15-14:31: `.MarshalMsg(nil)`
 $DIR/cmd/storage-datatypes_gen_test.go:18:16-18:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/storage-datatypes_gen_test.go:26:2-26:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/storage-datatypes_gen_test.go:26:18-26:28: `.Skip(bts)`
 $DIR/cmd/storage-datatypes_gen_test.go:73:2-73:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:73:6-73:23: `.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:75:8-75:18: `.Msgsize()`
@@ -6464,12 +6286,9 @@ $DIR/cmd/storage-datatypes_gen_test.go:86:5-86:13: `.Reset()`
 $DIR/cmd/storage-datatypes_gen_test.go:87:2-87:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:87:6-87:23: `.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:88:2-88:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/storage-datatypes_gen_test.go:88:12-88:28: `.NewReader(&buf)`
-$DIR/cmd/storage-datatypes_gen_test.go:88:28-88:35: `.Skip()`
 $DIR/cmd/storage-datatypes_gen_test.go:127:15-127:31: `.MarshalMsg(nil)`
 $DIR/cmd/storage-datatypes_gen_test.go:131:16-131:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/storage-datatypes_gen_test.go:139:2-139:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/storage-datatypes_gen_test.go:139:18-139:28: `.Skip(bts)`
 $DIR/cmd/storage-datatypes_gen_test.go:186:2-186:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:186:6-186:23: `.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:188:8-188:18: `.Msgsize()`
@@ -6480,12 +6299,9 @@ $DIR/cmd/storage-datatypes_gen_test.go:199:5-199:13: `.Reset()`
 $DIR/cmd/storage-datatypes_gen_test.go:200:2-200:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:200:6-200:23: `.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:201:2-201:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/storage-datatypes_gen_test.go:201:12-201:28: `.NewReader(&buf)`
-$DIR/cmd/storage-datatypes_gen_test.go:201:28-201:35: `.Skip()`
 $DIR/cmd/storage-datatypes_gen_test.go:240:15-240:31: `.MarshalMsg(nil)`
 $DIR/cmd/storage-datatypes_gen_test.go:244:16-244:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/storage-datatypes_gen_test.go:252:2-252:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/storage-datatypes_gen_test.go:252:18-252:28: `.Skip(bts)`
 $DIR/cmd/storage-datatypes_gen_test.go:299:2-299:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:299:6-299:23: `.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:301:8-301:18: `.Msgsize()`
@@ -6496,12 +6312,9 @@ $DIR/cmd/storage-datatypes_gen_test.go:312:5-312:13: `.Reset()`
 $DIR/cmd/storage-datatypes_gen_test.go:313:2-313:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:313:6-313:23: `.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:314:2-314:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/storage-datatypes_gen_test.go:314:12-314:28: `.NewReader(&buf)`
-$DIR/cmd/storage-datatypes_gen_test.go:314:28-314:35: `.Skip()`
 $DIR/cmd/storage-datatypes_gen_test.go:353:15-353:31: `.MarshalMsg(nil)`
 $DIR/cmd/storage-datatypes_gen_test.go:357:16-357:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/storage-datatypes_gen_test.go:365:2-365:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/storage-datatypes_gen_test.go:365:18-365:28: `.Skip(bts)`
 $DIR/cmd/storage-datatypes_gen_test.go:412:2-412:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:412:6-412:23: `.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:414:8-414:18: `.Msgsize()`
@@ -6512,12 +6325,9 @@ $DIR/cmd/storage-datatypes_gen_test.go:425:5-425:13: `.Reset()`
 $DIR/cmd/storage-datatypes_gen_test.go:426:2-426:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:426:6-426:23: `.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:427:2-427:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/storage-datatypes_gen_test.go:427:12-427:28: `.NewReader(&buf)`
-$DIR/cmd/storage-datatypes_gen_test.go:427:28-427:35: `.Skip()`
 $DIR/cmd/storage-datatypes_gen_test.go:466:15-466:31: `.MarshalMsg(nil)`
 $DIR/cmd/storage-datatypes_gen_test.go:470:16-470:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/storage-datatypes_gen_test.go:478:2-478:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/storage-datatypes_gen_test.go:478:18-478:28: `.Skip(bts)`
 $DIR/cmd/storage-datatypes_gen_test.go:525:2-525:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:525:6-525:23: `.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:527:8-527:18: `.Msgsize()`
@@ -6528,12 +6338,9 @@ $DIR/cmd/storage-datatypes_gen_test.go:538:5-538:13: `.Reset()`
 $DIR/cmd/storage-datatypes_gen_test.go:539:2-539:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:539:6-539:23: `.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:540:2-540:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/storage-datatypes_gen_test.go:540:12-540:28: `.NewReader(&buf)`
-$DIR/cmd/storage-datatypes_gen_test.go:540:28-540:35: `.Skip()`
 $DIR/cmd/storage-datatypes_gen_test.go:579:15-579:31: `.MarshalMsg(nil)`
 $DIR/cmd/storage-datatypes_gen_test.go:583:16-583:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/storage-datatypes_gen_test.go:591:2-591:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/storage-datatypes_gen_test.go:591:18-591:28: `.Skip(bts)`
 $DIR/cmd/storage-datatypes_gen_test.go:638:2-638:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:638:6-638:23: `.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:640:8-640:18: `.Msgsize()`
@@ -6544,12 +6351,9 @@ $DIR/cmd/storage-datatypes_gen_test.go:651:5-651:13: `.Reset()`
 $DIR/cmd/storage-datatypes_gen_test.go:652:2-652:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:652:6-652:23: `.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:653:2-653:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/storage-datatypes_gen_test.go:653:12-653:28: `.NewReader(&buf)`
-$DIR/cmd/storage-datatypes_gen_test.go:653:28-653:35: `.Skip()`
 $DIR/cmd/storage-datatypes_gen_test.go:692:15-692:31: `.MarshalMsg(nil)`
 $DIR/cmd/storage-datatypes_gen_test.go:696:16-696:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/storage-datatypes_gen_test.go:704:2-704:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/storage-datatypes_gen_test.go:704:18-704:28: `.Skip(bts)`
 $DIR/cmd/storage-datatypes_gen_test.go:751:2-751:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:751:6-751:23: `.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:753:8-753:18: `.Msgsize()`
@@ -6560,12 +6364,9 @@ $DIR/cmd/storage-datatypes_gen_test.go:764:5-764:13: `.Reset()`
 $DIR/cmd/storage-datatypes_gen_test.go:765:2-765:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:765:6-765:23: `.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:766:2-766:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/storage-datatypes_gen_test.go:766:12-766:28: `.NewReader(&buf)`
-$DIR/cmd/storage-datatypes_gen_test.go:766:28-766:35: `.Skip()`
 $DIR/cmd/storage-datatypes_gen_test.go:805:15-805:31: `.MarshalMsg(nil)`
 $DIR/cmd/storage-datatypes_gen_test.go:809:16-809:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/storage-datatypes_gen_test.go:817:2-817:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/storage-datatypes_gen_test.go:817:18-817:28: `.Skip(bts)`
 $DIR/cmd/storage-datatypes_gen_test.go:864:2-864:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:864:6-864:23: `.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:866:8-866:18: `.Msgsize()`
@@ -6576,12 +6377,9 @@ $DIR/cmd/storage-datatypes_gen_test.go:877:5-877:13: `.Reset()`
 $DIR/cmd/storage-datatypes_gen_test.go:878:2-878:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:878:6-878:23: `.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:879:2-879:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/storage-datatypes_gen_test.go:879:12-879:28: `.NewReader(&buf)`
-$DIR/cmd/storage-datatypes_gen_test.go:879:28-879:35: `.Skip()`
 $DIR/cmd/storage-datatypes_gen_test.go:918:15-918:31: `.MarshalMsg(nil)`
 $DIR/cmd/storage-datatypes_gen_test.go:922:16-922:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/storage-datatypes_gen_test.go:930:2-930:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/storage-datatypes_gen_test.go:930:18-930:28: `.Skip(bts)`
 $DIR/cmd/storage-datatypes_gen_test.go:977:2-977:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:977:6-977:23: `.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:979:8-979:18: `.Msgsize()`
@@ -6592,12 +6390,9 @@ $DIR/cmd/storage-datatypes_gen_test.go:990:5-990:13: `.Reset()`
 $DIR/cmd/storage-datatypes_gen_test.go:991:2-991:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:991:6-991:23: `.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:992:2-992:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/storage-datatypes_gen_test.go:992:12-992:28: `.NewReader(&buf)`
-$DIR/cmd/storage-datatypes_gen_test.go:992:28-992:35: `.Skip()`
 $DIR/cmd/storage-datatypes_gen_test.go:1031:15-1031:31: `.MarshalMsg(nil)`
 $DIR/cmd/storage-datatypes_gen_test.go:1035:16-1035:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/storage-datatypes_gen_test.go:1043:2-1043:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/storage-datatypes_gen_test.go:1043:18-1043:28: `.Skip(bts)`
 $DIR/cmd/storage-datatypes_gen_test.go:1090:2-1090:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:1090:6-1090:23: `.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:1092:8-1092:18: `.Msgsize()`
@@ -6608,8 +6403,6 @@ $DIR/cmd/storage-datatypes_gen_test.go:1103:5-1103:13: `.Reset()`
 $DIR/cmd/storage-datatypes_gen_test.go:1104:2-1104:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:1104:6-1104:23: `.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go:1105:2-1105:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/storage-datatypes_gen_test.go:1105:12-1105:28: `.NewReader(&buf)`
-$DIR/cmd/storage-datatypes_gen_test.go:1105:28-1105:35: `.Skip()`
 $DIR/cmd/streaming-signature-v4_test.go:31:2-36:3: `type testCase struct {
 		reader         *bufio.Reader
 		expectedErr    error
@@ -6711,8 +6504,6 @@ $DIR/cmd/sts-handlers_test.go:668:4-687:4: `.Run(
 		)`
 $DIR/cmd/sts-handlers_test.go:669:7-669:80: `.Sprintf("Test: %d, ServerType: %s", i+1, testCase.ServerTypeDescription)`
 $DIR/cmd/sts-handlers_test.go:674:21-674:47: `.Getenv(EnvTestLDAPServer)`
-$DIR/cmd/sts-handlers_test.go:676:6-676:65: `c.Skip("Skipping LDAP test as no LDAP server is provided.")`
-$DIR/cmd/sts-handlers_test.go:676:7-676:65: `.Skip("Skipping LDAP test as no LDAP server is provided.")`
 $DIR/cmd/sts-handlers_test.go:679:5-679:24: `suite.SetUpSuite(c)`
 $DIR/cmd/sts-handlers_test.go:679:10-679:24: `.SetUpSuite(c)`
 $DIR/cmd/sts-handlers_test.go:680:5-680:35: `suite.SetUpLDAP(c, ldapServer)`
@@ -6767,8 +6558,6 @@ $DIR/cmd/sts-handlers_test.go:1451:4-1469:4: `.Run(
 		)`
 $DIR/cmd/sts-handlers_test.go:1452:7-1452:80: `.Sprintf("Test: %d, ServerType: %s", i+1, testCase.ServerTypeDescription)`
 $DIR/cmd/sts-handlers_test.go:1457:23-1457:51: `.Getenv(EnvTestOpenIDServer)`
-$DIR/cmd/sts-handlers_test.go:1459:6-1459:69: `c.Skip("Skipping OpenID test as no OpenID server is provided.")`
-$DIR/cmd/sts-handlers_test.go:1459:7-1459:69: `.Skip("Skipping OpenID test as no OpenID server is provided.")`
 $DIR/cmd/sts-handlers_test.go:1462:5-1462:24: `suite.SetUpSuite(c)`
 $DIR/cmd/sts-handlers_test.go:1462:10-1462:24: `.SetUpSuite(c)`
 $DIR/cmd/sts-handlers_test.go:1463:5-1463:43: `suite.SetUpOpenID(c, openIDServer, "")`
@@ -6819,8 +6608,6 @@ $DIR/cmd/sts-handlers_test.go:1475:4-1492:4: `.Run(
 		)`
 $DIR/cmd/sts-handlers_test.go:1476:7-1476:80: `.Sprintf("Test: %d, ServerType: %s", i+1, testCase.ServerTypeDescription)`
 $DIR/cmd/sts-handlers_test.go:1481:23-1481:51: `.Getenv(EnvTestOpenIDServer)`
-$DIR/cmd/sts-handlers_test.go:1483:6-1483:69: `c.Skip("Skipping OpenID test as no OpenID server is provided.")`
-$DIR/cmd/sts-handlers_test.go:1483:7-1483:69: `.Skip("Skipping OpenID test as no OpenID server is provided.")`
 $DIR/cmd/sts-handlers_test.go:1486:5-1486:24: `suite.SetUpSuite(c)`
 $DIR/cmd/sts-handlers_test.go:1486:10-1486:24: `.SetUpSuite(c)`
 $DIR/cmd/sts-handlers_test.go:1487:5-1487:52: `suite.SetUpOpenID(c, openIDServer, "readwrite")`
@@ -6867,8 +6654,6 @@ $DIR/cmd/sts-handlers_test.go:1498:4-1514:4: `.Run(
 		)`
 $DIR/cmd/sts-handlers_test.go:1499:7-1499:80: `.Sprintf("Test: %d, ServerType: %s", i+1, testCase.ServerTypeDescription)`
 $DIR/cmd/sts-handlers_test.go:1504:23-1504:51: `.Getenv(EnvTestOpenIDServer)`
-$DIR/cmd/sts-handlers_test.go:1506:6-1506:69: `c.Skip("Skipping OpenID test as no OpenID server is provided.")`
-$DIR/cmd/sts-handlers_test.go:1506:7-1506:69: `.Skip("Skipping OpenID test as no OpenID server is provided.")`
 $DIR/cmd/sts-handlers_test.go:1509:5-1509:24: `suite.SetUpSuite(c)`
 $DIR/cmd/sts-handlers_test.go:1509:10-1509:24: `.SetUpSuite(c)`
 $DIR/cmd/sts-handlers_test.go:1510:5-1510:72: `suite.SetUpOpenID(c, openIDServer, "projecta,projectb,projectaorb")`
@@ -6879,8 +6664,6 @@ $DIR/cmd/sts-handlers_test.go:1512:5-1512:27: `suite.TearDownSuite(c)`
 $DIR/cmd/sts-handlers_test.go:1512:10-1512:27: `.TearDownSuite(c)`
 $DIR/cmd/sts-handlers_test.go:1852:20-1852:48: `.Getenv(EnvTestOpenIDServer)`
 $DIR/cmd/sts-handlers_test.go:1853:21-1853:50: `.Getenv(EnvTestOpenIDServer2)`
-$DIR/cmd/sts-handlers_test.go:1855:3-1855:76: `t.Skip("Skipping OpenID test as enough OpenID servers are not provided.")`
-$DIR/cmd/sts-handlers_test.go:1855:4-1855:76: `.Skip("Skipping OpenID test as enough OpenID servers are not provided.")`
 $DIR/cmd/sts-handlers_test.go:1865:3-1879:4: `t.Run(
 			fmt.Sprintf("Test: %d, ServerType: %s", i+1, testCase.ServerTypeDescription),
 			func(t *testing.T) {
@@ -6918,8 +6701,6 @@ $DIR/cmd/sts-handlers_test.go:1872:16-1872:33: `.TearDownSuite(c)`
 $DIR/cmd/sts-handlers_test.go:1874:17-1874:57: `.SetUpOpenIDs(c, testApps, rolePolicies)`
 $DIR/cmd/sts-handlers_test.go:1884:20-1884:48: `.Getenv(EnvTestOpenIDServer)`
 $DIR/cmd/sts-handlers_test.go:1885:21-1885:50: `.Getenv(EnvTestOpenIDServer2)`
-$DIR/cmd/sts-handlers_test.go:1887:3-1887:76: `t.Skip("Skipping OpenID test as enough OpenID servers are not provided.")`
-$DIR/cmd/sts-handlers_test.go:1887:4-1887:76: `.Skip("Skipping OpenID test as enough OpenID servers are not provided.")`
 $DIR/cmd/sts-handlers_test.go:1897:3-1911:4: `t.Run(
 			fmt.Sprintf("Test: %d, ServerType: %s", i+1, testCase.ServerTypeDescription),
 			func(t *testing.T) {
@@ -6957,8 +6738,6 @@ $DIR/cmd/sts-handlers_test.go:1904:16-1904:33: `.TearDownSuite(c)`
 $DIR/cmd/sts-handlers_test.go:1906:17-1906:57: `.SetUpOpenIDs(c, testApps, rolePolicies)`
 $DIR/cmd/sts-handlers_test.go:1916:20-1916:48: `.Getenv(EnvTestOpenIDServer)`
 $DIR/cmd/sts-handlers_test.go:1917:21-1917:50: `.Getenv(EnvTestOpenIDServer2)`
-$DIR/cmd/sts-handlers_test.go:1919:3-1919:76: `t.Skip("Skipping OpenID test as enough OpenID servers are not provided.")`
-$DIR/cmd/sts-handlers_test.go:1919:4-1919:76: `.Skip("Skipping OpenID test as enough OpenID servers are not provided.")`
 $DIR/cmd/sts-handlers_test.go:1929:3-1945:4: `t.Run(
 			fmt.Sprintf("Test: %d, ServerType: %s", i+1, testCase.ServerTypeDescription),
 			func(t *testing.T) {
@@ -7007,8 +6786,6 @@ $DIR/cmd/sts-handlers_test.go:1943:5-1943:27: `suite.TearDownSuite(c)`
 $DIR/cmd/sts-handlers_test.go:1943:10-1943:27: `.TearDownSuite(c)`
 $DIR/cmd/sts-handlers_test.go:1951:20-1951:48: `.Getenv(EnvTestOpenIDServer)`
 $DIR/cmd/sts-handlers_test.go:1952:21-1952:50: `.Getenv(EnvTestOpenIDServer2)`
-$DIR/cmd/sts-handlers_test.go:1954:3-1954:76: `t.Skip("Skipping OpenID test as enough OpenID servers are not provided.")`
-$DIR/cmd/sts-handlers_test.go:1954:4-1954:76: `.Skip("Skipping OpenID test as enough OpenID servers are not provided.")`
 $DIR/cmd/sts-handlers_test.go:1964:3-1984:4: `t.Run(
 			fmt.Sprintf("Test: %d, ServerType: %s", i+1, testCase.ServerTypeDescription),
 			func(t *testing.T) {
@@ -7089,7 +6866,6 @@ $DIR/cmd/test-utils_test.go:2254:16-2254:29: `.Background()`
 $DIR/cmd/tier-journal_gen_test.go:14:15-14:31: `.MarshalMsg(nil)`
 $DIR/cmd/tier-journal_gen_test.go:18:16-18:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/tier-journal_gen_test.go:26:2-26:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/tier-journal_gen_test.go:26:18-26:28: `.Skip(bts)`
 $DIR/cmd/tier-journal_gen_test.go:73:2-73:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/tier-journal_gen_test.go:73:6-73:23: `.Encode(&buf, &v)`
 $DIR/cmd/tier-journal_gen_test.go:75:8-75:18: `.Msgsize()`
@@ -7100,12 +6876,9 @@ $DIR/cmd/tier-journal_gen_test.go:86:5-86:13: `.Reset()`
 $DIR/cmd/tier-journal_gen_test.go:87:2-87:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/tier-journal_gen_test.go:87:6-87:23: `.Encode(&buf, &v)`
 $DIR/cmd/tier-journal_gen_test.go:88:2-88:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/tier-journal_gen_test.go:88:12-88:28: `.NewReader(&buf)`
-$DIR/cmd/tier-journal_gen_test.go:88:28-88:35: `.Skip()`
 $DIR/cmd/tier-journal_gen_test.go:127:15-127:31: `.MarshalMsg(nil)`
 $DIR/cmd/tier-journal_gen_test.go:131:16-131:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/tier-journal_gen_test.go:139:2-139:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/tier-journal_gen_test.go:139:18-139:28: `.Skip(bts)`
 $DIR/cmd/tier-journal_gen_test.go:186:2-186:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/tier-journal_gen_test.go:186:6-186:23: `.Encode(&buf, &v)`
 $DIR/cmd/tier-journal_gen_test.go:188:8-188:18: `.Msgsize()`
@@ -7116,8 +6889,6 @@ $DIR/cmd/tier-journal_gen_test.go:199:5-199:13: `.Reset()`
 $DIR/cmd/tier-journal_gen_test.go:200:2-200:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/tier-journal_gen_test.go:200:6-200:23: `.Encode(&buf, &v)`
 $DIR/cmd/tier-journal_gen_test.go:201:2-201:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/tier-journal_gen_test.go:201:12-201:28: `.NewReader(&buf)`
-$DIR/cmd/tier-journal_gen_test.go:201:28-201:35: `.Skip()`
 $DIR/cmd/tier-journal_test.go:43:18-43:37: `.je.MarshalMsg(nil)`
 $DIR/cmd/tier-journal_test.go:47:3-47:14: `b.Write(bs)`
 $DIR/cmd/tier-journal_test.go:47:4-47:14: `.Write(bs)`
@@ -7140,7 +6911,6 @@ $DIR/cmd/tier-journal_test.go:115:4-115:52: `expectedJe = newStructVals[i-len(ol
 $DIR/cmd/tier_gen_test.go:14:15-14:31: `.MarshalMsg(nil)`
 $DIR/cmd/tier_gen_test.go:18:16-18:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/tier_gen_test.go:26:2-26:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/tier_gen_test.go:26:18-26:28: `.Skip(bts)`
 $DIR/cmd/tier_gen_test.go:73:2-73:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/tier_gen_test.go:73:6-73:23: `.Encode(&buf, &v)`
 $DIR/cmd/tier_gen_test.go:75:8-75:18: `.Msgsize()`
@@ -7151,8 +6921,6 @@ $DIR/cmd/tier_gen_test.go:86:5-86:13: `.Reset()`
 $DIR/cmd/tier_gen_test.go:87:2-87:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/tier_gen_test.go:87:6-87:23: `.Encode(&buf, &v)`
 $DIR/cmd/tier_gen_test.go:88:2-88:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/tier_gen_test.go:88:12-88:28: `.NewReader(&buf)`
-$DIR/cmd/tier_gen_test.go:88:28-88:35: `.Skip()`
 $DIR/cmd/update-notifier_test.go:74:15-74:85: `.Sprintf("%s %s", plainMsg, color.YellowBold(testCase.expectedSubStr))`
 $DIR/cmd/update-notifier_test.go:74:48-74:84: `.YellowBold(testCase.expectedSubStr)`
 $DIR/cmd/update-notifier_test.go:75:15-75:69: `.Sprintf("Update: %s", color.CyanBold(testCase.dlURL))`
@@ -7469,7 +7237,6 @@ $DIR/cmd/xl-storage-format-utils_test.go:190:21-190:56: `.ModTime.After(versions
 $DIR/cmd/xl-storage-format-v1_gen_test.go:14:15-14:31: `.MarshalMsg(nil)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:18:16-18:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:26:2-26:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/xl-storage-format-v1_gen_test.go:26:18-26:28: `.Skip(bts)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:73:2-73:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:73:6-73:23: `.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:75:8-75:18: `.Msgsize()`
@@ -7480,12 +7247,9 @@ $DIR/cmd/xl-storage-format-v1_gen_test.go:86:5-86:13: `.Reset()`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:87:2-87:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:87:6-87:23: `.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:88:2-88:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/xl-storage-format-v1_gen_test.go:88:12-88:28: `.NewReader(&buf)`
-$DIR/cmd/xl-storage-format-v1_gen_test.go:88:28-88:35: `.Skip()`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:127:15-127:31: `.MarshalMsg(nil)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:131:16-131:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:139:2-139:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/xl-storage-format-v1_gen_test.go:139:18-139:28: `.Skip(bts)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:186:2-186:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:186:6-186:23: `.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:188:8-188:18: `.Msgsize()`
@@ -7496,12 +7260,9 @@ $DIR/cmd/xl-storage-format-v1_gen_test.go:199:5-199:13: `.Reset()`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:200:2-200:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:200:6-200:23: `.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:201:2-201:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/xl-storage-format-v1_gen_test.go:201:12-201:28: `.NewReader(&buf)`
-$DIR/cmd/xl-storage-format-v1_gen_test.go:201:28-201:35: `.Skip()`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:240:15-240:31: `.MarshalMsg(nil)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:244:16-244:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:252:2-252:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/xl-storage-format-v1_gen_test.go:252:18-252:28: `.Skip(bts)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:299:2-299:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:299:6-299:23: `.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:301:8-301:18: `.Msgsize()`
@@ -7512,12 +7273,9 @@ $DIR/cmd/xl-storage-format-v1_gen_test.go:312:5-312:13: `.Reset()`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:313:2-313:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:313:6-313:23: `.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:314:2-314:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/xl-storage-format-v1_gen_test.go:314:12-314:28: `.NewReader(&buf)`
-$DIR/cmd/xl-storage-format-v1_gen_test.go:314:28-314:35: `.Skip()`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:353:15-353:31: `.MarshalMsg(nil)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:357:16-357:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:365:2-365:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/xl-storage-format-v1_gen_test.go:365:18-365:28: `.Skip(bts)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:412:2-412:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:412:6-412:23: `.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:414:8-414:18: `.Msgsize()`
@@ -7528,12 +7286,9 @@ $DIR/cmd/xl-storage-format-v1_gen_test.go:425:5-425:13: `.Reset()`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:426:2-426:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:426:6-426:23: `.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:427:2-427:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/xl-storage-format-v1_gen_test.go:427:12-427:28: `.NewReader(&buf)`
-$DIR/cmd/xl-storage-format-v1_gen_test.go:427:28-427:35: `.Skip()`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:466:15-466:31: `.MarshalMsg(nil)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:470:16-470:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:478:2-478:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/xl-storage-format-v1_gen_test.go:478:18-478:28: `.Skip(bts)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:525:2-525:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:525:6-525:23: `.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:527:8-527:18: `.Msgsize()`
@@ -7544,12 +7299,9 @@ $DIR/cmd/xl-storage-format-v1_gen_test.go:538:5-538:13: `.Reset()`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:539:2-539:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:539:6-539:23: `.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:540:2-540:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/xl-storage-format-v1_gen_test.go:540:12-540:28: `.NewReader(&buf)`
-$DIR/cmd/xl-storage-format-v1_gen_test.go:540:28-540:35: `.Skip()`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:579:15-579:31: `.MarshalMsg(nil)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:583:16-583:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:591:2-591:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/xl-storage-format-v1_gen_test.go:591:18-591:28: `.Skip(bts)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:638:2-638:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:638:6-638:23: `.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:640:8-640:18: `.Msgsize()`
@@ -7560,12 +7312,9 @@ $DIR/cmd/xl-storage-format-v1_gen_test.go:651:5-651:13: `.Reset()`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:652:2-652:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:652:6-652:23: `.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go:653:2-653:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/xl-storage-format-v1_gen_test.go:653:12-653:28: `.NewReader(&buf)`
-$DIR/cmd/xl-storage-format-v1_gen_test.go:653:28-653:35: `.Skip()`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:14:15-14:31: `.MarshalMsg(nil)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:18:16-18:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:26:2-26:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/xl-storage-format-v2_gen_test.go:26:18-26:28: `.Skip(bts)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:73:2-73:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:73:6-73:23: `.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:75:8-75:18: `.Msgsize()`
@@ -7576,12 +7325,9 @@ $DIR/cmd/xl-storage-format-v2_gen_test.go:86:5-86:13: `.Reset()`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:87:2-87:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:87:6-87:23: `.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:88:2-88:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/xl-storage-format-v2_gen_test.go:88:12-88:28: `.NewReader(&buf)`
-$DIR/cmd/xl-storage-format-v2_gen_test.go:88:28-88:35: `.Skip()`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:127:15-127:31: `.MarshalMsg(nil)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:131:16-131:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:139:2-139:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/xl-storage-format-v2_gen_test.go:139:18-139:28: `.Skip(bts)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:186:2-186:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:186:6-186:23: `.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:188:8-188:18: `.Msgsize()`
@@ -7592,12 +7338,9 @@ $DIR/cmd/xl-storage-format-v2_gen_test.go:199:5-199:13: `.Reset()`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:200:2-200:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:200:6-200:23: `.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:201:2-201:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/xl-storage-format-v2_gen_test.go:201:12-201:28: `.NewReader(&buf)`
-$DIR/cmd/xl-storage-format-v2_gen_test.go:201:28-201:35: `.Skip()`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:240:15-240:31: `.MarshalMsg(nil)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:244:16-244:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:252:2-252:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/xl-storage-format-v2_gen_test.go:252:18-252:28: `.Skip(bts)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:299:2-299:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:299:6-299:23: `.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:301:8-301:18: `.Msgsize()`
@@ -7608,12 +7351,9 @@ $DIR/cmd/xl-storage-format-v2_gen_test.go:312:5-312:13: `.Reset()`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:313:2-313:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:313:6-313:23: `.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:314:2-314:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/xl-storage-format-v2_gen_test.go:314:12-314:28: `.NewReader(&buf)`
-$DIR/cmd/xl-storage-format-v2_gen_test.go:314:28-314:35: `.Skip()`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:353:15-353:31: `.MarshalMsg(nil)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:357:16-357:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:365:2-365:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/xl-storage-format-v2_gen_test.go:365:18-365:28: `.Skip(bts)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:412:2-412:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:412:6-412:23: `.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:414:8-414:18: `.Msgsize()`
@@ -7624,12 +7364,9 @@ $DIR/cmd/xl-storage-format-v2_gen_test.go:425:5-425:13: `.Reset()`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:426:2-426:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:426:6-426:23: `.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:427:2-427:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/xl-storage-format-v2_gen_test.go:427:12-427:28: `.NewReader(&buf)`
-$DIR/cmd/xl-storage-format-v2_gen_test.go:427:28-427:35: `.Skip()`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:466:15-466:31: `.MarshalMsg(nil)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:470:16-470:34: `.UnmarshalMsg(bts)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:478:2-478:28: `left, err = msgp.Skip(bts)`
-$DIR/cmd/xl-storage-format-v2_gen_test.go:478:18-478:28: `.Skip(bts)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:525:2-525:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:525:6-525:23: `.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:527:8-527:18: `.Msgsize()`
@@ -7640,8 +7377,6 @@ $DIR/cmd/xl-storage-format-v2_gen_test.go:538:5-538:13: `.Reset()`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:539:2-539:23: `msgp.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:539:6-539:23: `.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go:540:2-540:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/xl-storage-format-v2_gen_test.go:540:12-540:28: `.NewReader(&buf)`
-$DIR/cmd/xl-storage-format-v2_gen_test.go:540:28-540:35: `.Skip()`
 $DIR/cmd/xl-storage-format-v2_test.go:43:14-43:50: `.Open("testdata/xl.meta-corrupt.gz")`
 $DIR/cmd/xl-storage-format-v2_test.go:49:17-49:47: `.NewReader(bufio.NewReader(f))`
 $DIR/cmd/xl-storage-format-v2_test.go:49:33-49:46: `.NewReader(f)`
@@ -8457,8 +8192,6 @@ $DIR/cmd/xl-storage-free-version_test.go:219:13-219:35: `.AddFreeVersion(newfi)`
 $DIR/cmd/xl-storage-free-version_test.go:220:2-220:10: `report()`
 $DIR/cmd/xl-storage-free-version_test.go:223:2-223:75: `freeVersions, err = xl.listFreeVersions(newtierfi.Volume, newtierfi.Name)`
 $DIR/cmd/xl-storage-free-version_test.go:223:24-223:75: `.listFreeVersions(newtierfi.Volume, newtierfi.Name)`
-$DIR/cmd/xl-storage_test.go:39:3-39:11: `t.Skip()`
-$DIR/cmd/xl-storage_test.go:39:4-39:11: `.Skip()`
 $DIR/cmd/xl-storage_test.go:55:3-59:5: `t.Run("", func(t *testing.T) {
 			if gotErr != testCase.expectedErr {
 				t.Errorf("Expected %s, got %s", testCase.expectedErr, gotErr)
@@ -8612,8 +8345,6 @@ $DIR/cmd/xl-storage_test.go:899:31-902:4: `.Delete(context.Background(), "del-vo
 		Force:     false,
 	})`
 $DIR/cmd/xl-storage_test.go:899:46-899:59: `.Background()`
-$DIR/cmd/xl-storage_test.go:911:3-911:11: `t.Skip()`
-$DIR/cmd/xl-storage_test.go:911:4-911:11: `.Skip()`
 $DIR/cmd/xl-storage_test.go:921:20-921:65: `.MakeVol(context.Background(), "success-vol")`
 $DIR/cmd/xl-storage_test.go:921:36-921:49: `.Background()`
 $DIR/cmd/xl-storage_test.go:924:20-924:108: `.AppendFile(context.Background(), "success-vol", "success-file", []byte("Hello, world"))`
@@ -10318,8 +10049,6 @@ $DIR/internal/dsync/dsync_test.go:204:5-204:34: `.Unlock(context.Background())`
 $DIR/internal/dsync/dsync_test.go:204:20-204:33: `.Background()`
 $DIR/internal/dsync/dsync_test.go:205:20-205:33: `.Background()`
 $DIR/internal/dsync/dsync_test.go:210:12-210:20: `.Short()`
-$DIR/internal/dsync/dsync_test.go:211:3-211:41: `t.Skip("skipping test in short mode.")`
-$DIR/internal/dsync/dsync_test.go:211:4-211:41: `.Skip("skipping test in short mode.")`
 $DIR/internal/dsync/dsync_test.go:215:2-215:50: `dm.refreshInterval = testDrwMutexRefreshInterval`
 $DIR/internal/dsync/dsync_test.go:217:24-217:57: `.WithCancel(context.Background())`
 $DIR/internal/dsync/dsync_test.go:217:43-217:56: `.Background()`
@@ -10328,8 +10057,6 @@ $DIR/internal/dsync/dsync_test.go:224:15-224:57: `.NewTimer(testDrwMutexRefreshI
 $DIR/internal/dsync/dsync_test.go:227:12-227:19: `.Done()`
 $DIR/internal/dsync/dsync_test.go:233:19-233:32: `.Background()`
 $DIR/internal/dsync/dsync_test.go:238:12-238:20: `.Short()`
-$DIR/internal/dsync/dsync_test.go:239:3-239:41: `t.Skip("skipping test in short mode.")`
-$DIR/internal/dsync/dsync_test.go:239:4-239:41: `.Skip("skipping test in short mode.")`
 $DIR/internal/dsync/dsync_test.go:244:3-244:40: `lockServers[i].setRefreshReply(false)`
 $DIR/internal/dsync/dsync_test.go:244:17-244:40: `.setRefreshReply(false)`
 $DIR/internal/dsync/dsync_test.go:245:23-245:45: `.setRefreshReply(true)`
@@ -10347,8 +10074,6 @@ $DIR/internal/dsync/dsync_test.go:264:4-264:11: `.Wait()`
 $DIR/internal/dsync/dsync_test.go:265:8-265:14: `.Err()`
 $DIR/internal/dsync/dsync_test.go:270:19-270:32: `.Background()`
 $DIR/internal/dsync/dsync_test.go:275:12-275:20: `.Short()`
-$DIR/internal/dsync/dsync_test.go:276:3-276:41: `t.Skip("skipping test in short mode.")`
-$DIR/internal/dsync/dsync_test.go:276:4-276:41: `.Skip("skipping test in short mode.")`
 $DIR/internal/dsync/dsync_test.go:280:2-280:52: `dm.refreshInterval = testDrwMutexUnlockCallTimeout`
 $DIR/internal/dsync/dsync_test.go:281:8-281:90: `.GetLock(context.Background(), nil, id, source, Options{Timeout: 5 * time.Minute})`
 $DIR/internal/dsync/dsync_test.go:281:24-281:37: `.Background()`
@@ -10369,7 +10094,6 @@ $DIR/internal/dsync/dsync_test.go:330:3-330:6: `<-c`
 $DIR/internal/dsync/lock-args_gen_test.go:14:15-14:31: `.MarshalMsg(nil)`
 $DIR/internal/dsync/lock-args_gen_test.go:18:16-18:34: `.UnmarshalMsg(bts)`
 $DIR/internal/dsync/lock-args_gen_test.go:26:2-26:28: `left, err = msgp.Skip(bts)`
-$DIR/internal/dsync/lock-args_gen_test.go:26:18-26:28: `.Skip(bts)`
 $DIR/internal/dsync/lock-args_gen_test.go:73:2-73:23: `msgp.Encode(&buf, &v)`
 $DIR/internal/dsync/lock-args_gen_test.go:73:6-73:23: `.Encode(&buf, &v)`
 $DIR/internal/dsync/lock-args_gen_test.go:75:8-75:18: `.Msgsize()`
@@ -10380,8 +10104,6 @@ $DIR/internal/dsync/lock-args_gen_test.go:86:5-86:13: `.Reset()`
 $DIR/internal/dsync/lock-args_gen_test.go:87:2-87:23: `msgp.Encode(&buf, &v)`
 $DIR/internal/dsync/lock-args_gen_test.go:87:6-87:23: `.Encode(&buf, &v)`
 $DIR/internal/dsync/lock-args_gen_test.go:88:2-88:35: `err = msgp.NewReader(&buf).Skip()`
-$DIR/internal/dsync/lock-args_gen_test.go:88:12-88:28: `.NewReader(&buf)`
-$DIR/internal/dsync/lock-args_gen_test.go:88:28-88:35: `.Skip()`
 $DIR/internal/etag/etag_test.go:88:12-88:26: `.ETag.String()`
 $DIR/internal/etag/etag_test.go:140:30-140:54: `.NewReader(test.Content)`
 $DIR/internal/etag/etag_test.go:141:18-141:43: `.Copy(io.Discard, reader)`
@@ -11144,24 +10866,18 @@ $DIR/internal/http/listener_test.go:150:47-150:59: `.Duration(0)`
 $DIR/internal/http/listener_test.go:150:65-150:77: `.Duration(0)`
 $DIR/internal/http/listener_test.go:150:83-150:95: `.Duration(0)`
 $DIR/internal/http/listener_test.go:154:43-154:56: `.Background()`
-$DIR/internal/http/listener_test.go:173:3-173:11: `t.Skip()`
-$DIR/internal/http/listener_test.go:173:4-173:11: `.Skip()`
 $DIR/internal/http/listener_test.go:190:43-190:56: `.Background()`
 $DIR/internal/http/listener_test.go:194:14-194:89: `.Contains(err.Error(), "The requested address is not valid in its context")`
 $DIR/internal/http/listener_test.go:198:14-198:68: `.Contains(err.Error(), "bind: address already in use")`
 $DIR/internal/http/listener_test.go:204:38-204:46: `.Addrs()`
 $DIR/internal/http/listener_test.go:205:20-205:53: `.Dial("tcp", serverAddr.String())`
 $DIR/internal/http/listener_test.go:205:43-205:52: `.String()`
-$DIR/internal/http/listener_test.go:218:3-218:11: `t.Skip()`
-$DIR/internal/http/listener_test.go:218:4-218:11: `.Skip()`
 $DIR/internal/http/listener_test.go:224:3-224:47: `casePorts = append(casePorts, getNextPort())`
 $DIR/internal/http/listener_test.go:240:43-240:56: `.Background()`
 $DIR/internal/http/listener_test.go:244:14-244:89: `.Contains(err.Error(), "The requested address is not valid in its context")`
 $DIR/internal/http/listener_test.go:248:14-248:68: `.Contains(err.Error(), "bind: address already in use")`
 $DIR/internal/http/listener_test.go:254:19-254:26: `.Addr()`
 $DIR/internal/http/listener_test.go:255:10-255:19: `.String()`
-$DIR/internal/http/listener_test.go:265:3-265:11: `t.Skip()`
-$DIR/internal/http/listener_test.go:265:4-265:11: `.Skip()`
 $DIR/internal/http/listener_test.go:271:3-271:47: `casePorts = append(casePorts, getNextPort())`
 $DIR/internal/http/listener_test.go:278:46-278:91: `.CreateStringSet("127.0.0.1:" + casePorts[0])`
 $DIR/internal/http/listener_test.go:279:53-279:105: `.CreateStringSet(nonLoopBackIP + ":" + casePorts[1])`
@@ -12139,8 +11855,6 @@ $DIR/internal/s3select/select_test.go:656:4-701:5: `.Run("simd-"+testCase.name, 
 			}
 		})`
 $DIR/internal/s3select/select_test.go:657:16-657:31: `.SupportedCPU()`
-$DIR/internal/s3select/select_test.go:658:5-658:29: `t.Skip("No CPU support")`
-$DIR/internal/s3select/select_test.go:658:6-658:29: `.Skip("No CPU support")`
 $DIR/internal/s3select/select_test.go:663:5-663:53: `xml.EscapeText(&escaped, []byte(testCase.query))`
 $DIR/internal/s3select/select_test.go:663:8-663:53: `.EscapeText(&escaped, []byte(testCase.query))`
 $DIR/internal/s3select/select_test.go:664:5-664:64: `testReq = []byte(fmt.Sprintf(defRequest, escaped.String()))`
@@ -12954,8 +12668,6 @@ $DIR/internal/s3select/select_test.go:1976:18-1976:31: `.ReadAll(res)`
 $DIR/internal/s3select/select_test.go:1981:19-1981:42: `.TrimSpace(string(got))`
 $DIR/internal/s3select/select_test.go:1982:15-1982:52: `.DeepEqual(gotS, testCase.wantResult)`
 $DIR/internal/s3select/simdj/reader_amd64_test.go:65:14-65:29: `.SupportedCPU()`
-$DIR/internal/s3select/simdj/reader_amd64_test.go:66:3-66:28: `t.Skip("Unsupported cpu")`
-$DIR/internal/s3select/simdj/reader_amd64_test.go:66:4-66:28: `.Skip("Unsupported cpu")`
 $DIR/internal/s3select/simdj/reader_amd64_test.go:70:3-174:5: `t.Run(tt.name, func(t *testing.T) {
 			ref := loadCompressed(t, tt.name)
 
