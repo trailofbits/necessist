@@ -213,7 +213,8 @@ impl ParseLow for Go {
     const IGNORED_MACROS: Option<&'static [&'static str]> = None;
 
     const IGNORED_METHODS: Option<&'static [&'static str]> = Some(&[
-        "Close", "Error", "Errorf", "Fail", "FailNow", "Fatal", "Fatalf", "Log", "Logf", "Parallel",
+        "Close", "Error", "Errorf", "Fail", "FailNow", "Fatal", "Fatalf", "Log", "Logf",
+        "Parallel", "Skip",
     ]);
 
     fn walk_dir(&self, root: &Path) -> Box<dyn Iterator<Item = WalkDirResult>> {
