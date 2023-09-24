@@ -274,6 +274,8 @@ In addition to the below, the Go framework ignores:
 - `Logf`
 - `Parallel`
 - `Skip`
+- `Skipf`
+- `SkipNow`
 
 \* This list is based primarily on [`testing.T`]'s methods. However, some methods with commonplace names are omitted to avoid colliding with other types' methods.
 
