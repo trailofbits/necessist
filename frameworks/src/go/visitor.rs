@@ -39,9 +39,9 @@ const TEST_FUNCTION_DECLARATION_SOURCE: &str = r#"
 )
 "#;
 
-const STATEMENT_SOURCE: &str = r#"
+const STATEMENT_SOURCE: &str = r"
 (_statement) @statement
-"#;
+";
 
 static TEST_FUNCTION_DECLARATION_QUERY: Lazy<Query> =
     Lazy::new(|| valid_query(TEST_FUNCTION_DECLARATION_SOURCE));

@@ -79,10 +79,7 @@ pub(crate) fn init(
     let exists = path_buf.try_exists()?;
 
     let no_db_msg = |flag: &str| {
-        format!(
-            "No sqlite database found to {} at {:?}; creating new database",
-            flag, path_buf
-        )
+        format!("No sqlite database found to {flag} at {path_buf:?}; creating new database")
     };
 
     match (exists, dump, reset, resume) {

@@ -31,11 +31,11 @@ const BLOCK_STATEMENTS_SOURCE: &str = r#"
 ) @block
 "#;
 
-const EXPRESSION_STATEMENT_EXPRESSION_SOURCE: &str = r#"
+const EXPRESSION_STATEMENT_EXPRESSION_SOURCE: &str = r"
 (expression_statement
     (_expression) @expression
 ) @expression_statement
-"#;
+";
 
 static BLOCK_STATEMENTS_QUERY: Lazy<Query> = Lazy::new(|| valid_query(BLOCK_STATEMENTS_SOURCE));
 static EXPRESSION_STATEMENT_EXPRESSION_QUERY: Lazy<Query> =
