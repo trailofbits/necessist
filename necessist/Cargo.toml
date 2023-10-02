@@ -22,7 +22,6 @@ anyhow = { version = "1.0", features = ["backtrace"] }
 clap = "4.4"
 env_logger = "0.10"
 heck = "0.4"
-log = "0.4"
 remain = "0.2"
 strum = "0.25"
 strum_macros = "0.25"
@@ -43,9 +42,6 @@ tempfile = "3.8"
 toml = "0.8"
 trycmd = "0.14"
 walkdir = "2.4"
-
-[target.'cfg(unix)'.dependencies]
-libc = "0.2"
 
 [features]
 default = []
