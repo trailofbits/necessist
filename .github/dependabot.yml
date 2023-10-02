@@ -6,7 +6,6 @@ updates:
       interval: weekly
       day: monday
       time: "03:00"
-    open-pull-requests-limit: 10
 
   - package-ecosystem: cargo
     directory: /
@@ -14,7 +13,8 @@ updates:
       interval: weekly
       day: monday
       time: "03:00"
-    open-pull-requests-limit: 10
+    allow:
+      - dependency-type: direct
 
   - package-ecosystem: cargo
     directory: /crates_io
@@ -22,4 +22,5 @@ updates:
       interval: weekly
       day: monday
       time: "03:00"
-    open-pull-requests-limit: 10
+    allow:
+      - dependency-type: direct
