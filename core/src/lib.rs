@@ -19,6 +19,9 @@ mod core;
 use crate::core::Removal;
 pub use crate::core::{necessist, LightContext, Necessist};
 
+#[cfg(all(unix, feature = "lock_root"))]
+mod flock;
+
 pub mod framework;
 
 mod offset_based_rewriter;

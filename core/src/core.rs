@@ -16,7 +16,6 @@ use std::{
     collections::BTreeMap,
     env::{current_dir, var},
     fmt::Display,
-    fs::write,
     iter::Peekable,
     path::{Path, PathBuf},
     process::{Command, Stdio},
@@ -112,6 +111,9 @@ pub fn necessist<Identifier: Applicable + Display + IntoEnumIterator + ToImpleme
         .as_ref()
         .map_or_else(current_dir, |root| root.canonicalize())
         .map(Rc::new)?;
+
+    #[cfg(all(unix, feature = "lock_root"))]
+    let _file = lock_root(&root)?;
 
     let mut context = LightContext {
         opts: &opts,
@@ -348,6 +350,21 @@ fn process_options(opts: &Necessist) -> Result<()> {
     Ok(())
 }
 
+#[cfg(all(unix, feature = "lock_root"))]
+fn lock_root(root: &Path) -> Result<std::fs::File> {
+    if enabled("TRYCMD") {
+        crate::flock::lock_path(root)
+    } else {
+        crate::flock::try_lock_path(root)
+    }
+    .with_context(|| format!("Failed to lock {root:?}"))
+}
+
+#[cfg(all(unix, feature = "lock_root"))]
+fn enabled(key: &str) -> bool {
+    var(key).map_or(false, |value| value != "0")
+}
+
 fn default_config(_context: &LightContext, root: &Path) -> Result<()> {
     let path_buf = root.join("necessist.toml");
 
@@ -357,7 +374,7 @@ fn default_config(_context: &LightContext, root: &Path) -> Result<()> {
 
     let toml = toml::to_string(&config::Toml::default())?;
 
-    write(path_buf, toml).map_err(Into::into)
+    std::fs::write(path_buf, toml).map_err(Into::into)
 }
 
 fn dump(context: &LightContext, removals: &[Removal]) {
