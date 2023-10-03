@@ -66,7 +66,8 @@ jobs:
       - name: Install Solana
         id: install-solana
         run: |
-          sh -c "$(curl -sSfL https://release.solana.com/stable/install)"
+          # smoelius: The latest stable (1.16) seems to cause problems for the xNFT tests.
+          sh -c "$(curl -sSfL https://release.solana.com/v1.14.29/install)"
           echo "path=$HOME/.local/share/solana/install/active_release/bin:$PATH" >> "$GITHUB_OUTPUT"
 
       # smoelius: https://www.anchor-lang.com/docs/installation
