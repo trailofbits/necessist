@@ -1,4 +1,4 @@
-490 candidates in 1 test file
+455 candidates in 1 test file
 $DIR/src/os/os_test.go: dry running
 $DIR/src/os/os_test.go: mutilating
 $DIR/src/os/os_test.go:32:3-32:29: Warning: Failed to run test `TestMain`
@@ -331,17 +331,6 @@ $DIR/src/os/os_test.go:1671:14-1671:22: `.Chdir()` nonbuildable
 $DIR/src/os/os_test.go:1676:5-1676:65: `fmt.Fprintf(Stderr, "fchdir back to dot failed: %s\n", err2)` passed
 $DIR/src/os/os_test.go:1676:8-1676:65: `.Fprintf(Stderr, "fchdir back to dot failed: %s\n", err2)` nonbuildable
 $DIR/src/os/os_test.go:1677:5-1677:12: `Exit(1)` passed
-$DIR/src/os/os_test.go:1698:2-1698:14: `const N = 10` nonbuildable
-$DIR/src/os/os_test.go:1703:8-1703:18: `.TempDir()` nonbuildable
-$DIR/src/os/os_test.go:1712:4-1712:14: `panic(err)` passed
-$DIR/src/os/os_test.go:1721:10-1721:17: `.Wait()` nonbuildable
-$DIR/src/os/os_test.go:1725:3-1725:12: `wg.Add(1)` failed
-$DIR/src/os/os_test.go:1725:5-1725:12: `.Add(1)` nonbuildable
-$DIR/src/os/os_test.go:1727:12-1727:19: `.Done()` nonbuildable
-$DIR/src/os/os_test.go:1736:5-1736:27: `runtime.LockOSThread()` passed
-$DIR/src/os/os_test.go:1736:12-1736:27: `.LockOSThread()` nonbuildable
-$DIR/src/os/os_test.go:1774:2-1774:18: `d, err = Getwd()` failed
-$DIR/src/os/os_test.go:1778:2-1778:13: `close(hold)` timed-out
 $DIR/src/os/os_test.go:1786:16-1786:23: `.Name()` nonbuildable
 $DIR/src/os/os_test.go:1789:2-1789:31: `const data = "hello, world\n"` nonbuildable
 $DIR/src/os/os_test.go:1790:2-1790:25: `io.WriteString(f, data)` failed
@@ -584,16 +573,6 @@ $DIR/src/os/os_test.go:2619:15-2619:39: `.Sprintf("%d", Getpid())` nonbuildable
 $DIR/src/os/os_test.go:2631:3-2631:18: `err = p2.Kill()` nonbuildable
 $DIR/src/os/os_test.go:2631:11-2631:18: `.Kill()` nonbuildable
 $DIR/src/os/os_test.go:2665:12-2665:20: `.f(file)` nonbuildable
-$DIR/src/os/os_test.go:2697:3-2697:30: `testenv.SkipFlaky(t, 52301)` passed
-$DIR/src/os/os_test.go:2697:10-2697:30: `.SkipFlaky(t, 52301)` nonbuildable
-$DIR/src/os/os_test.go:2700:14-2700:29: `.GOMAXPROCS(16)` nonbuildable
-$DIR/src/os/os_test.go:2701:15-2701:29: `.GOMAXPROCS(n)` nonbuildable
-$DIR/src/os/os_test.go:2706:2-2706:26: `mkdirTree(t, root, 1, 6)` passed
-$DIR/src/os/os_test.go:2710:3-2710:12: `wg.Add(1)` passed
-$DIR/src/os/os_test.go:2710:5-2710:12: `.Add(1)` nonbuildable
-$DIR/src/os/os_test.go:2712:12-2712:19: `.Done()` nonbuildable
-$DIR/src/os/os_test.go:2713:4-2713:10: `<-hold` passed
-$DIR/src/os/os_test.go:2720:2-2720:13: `close(hold)` timed-out
 $DIR/src/os/os_test.go:2743:3-2743:15: `threads = 50` passed
 $DIR/src/os/os_test.go:2757:3-2757:12: `r[i] = rp` nonbuildable
 $DIR/src/os/os_test.go:2758:3-2758:12: `w[i] = wp` nonbuildable
@@ -688,20 +667,6 @@ $DIR/src/os/os_test.go:3152:19-3154:4: `.AllocsPerRun(100, func() {
 	})` nonbuildable
 $DIR/src/os/os_test.go:3153:3-3153:84: `f.WriteString("I will not allocate when passed a string longer than 32 bytes.\n")` passed
 $DIR/src/os/os_test.go:3153:4-3153:84: `.WriteString("I will not allocate when passed a string longer than 32 bytes.\n")` nonbuildable
-$DIR/src/os/os_test.go:3174:2-3174:11: `wg.Add(3)` passed
-$DIR/src/os/os_test.go:3174:4-3174:11: `.Add(3)` nonbuildable
-$DIR/src/os/os_test.go:3177:11-3177:18: `.Done()` nonbuildable
-$DIR/src/os/os_test.go:3179:15-3179:35: `.Write([]byte("hi"))` nonbuildable
-$DIR/src/os/os_test.go:3184:16-3184:35: `.Is(err, ErrClosed)` nonbuildable
-$DIR/src/os/os_test.go:3185:13-3185:50: `.Contains(err.Error(), "broken pipe")` nonbuildable
-$DIR/src/os/os_test.go:3186:13-3186:59: `.Contains(err.Error(), "pipe is being closed")` nonbuildable
-$DIR/src/os/os_test.go:3187:13-3187:53: `.Contains(err.Error(), "hungup channel")` nonbuildable
-$DIR/src/os/os_test.go:3203:11-3203:18: `.Done()` nonbuildable
-$DIR/src/os/os_test.go:3206:15-3206:28: `.Read(buf[:])` nonbuildable
-$DIR/src/os/os_test.go:3208:32-3208:51: `.Is(err, ErrClosed)` nonbuildable
-$DIR/src/os/os_test.go:3220:11-3220:18: `.Done()` nonbuildable
-$DIR/src/os/os_test.go:3225:3-3225:31: `time.Sleep(time.Millisecond)` passed
-$DIR/src/os/os_test.go:3225:7-3225:31: `.Sleep(time.Millisecond)` nonbuildable
 $DIR/src/os/os_test.go:3253:11-3253:18: `.Done()` nonbuildable
 $DIR/src/os/os_test.go:3254:3-3254:17: `c <- r.Close()` nonbuildable
 $DIR/src/os/os_test.go:3255:3-3255:17: `c <- w.Close()` nonbuildable
