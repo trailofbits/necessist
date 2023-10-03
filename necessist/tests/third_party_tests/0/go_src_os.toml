@@ -24,3 +24,13 @@ subdir = "src/os"
 framework = "go"
 test_files = ["os_test.go"]
 full = true
+config_mandatory = true
+
+# smoelius: `TestRemoveAllRace` and `TestPipeIOCloseRace` sometimes pass and sometimes fail when the
+# following lines are removed:
+#
+#   https://github.com/golang/go/blob/2c1e5b05fe39fc5e6c730dd60e82946b8e67c6ba/src/os/os_test.go#L2710
+#   https://github.com/golang/go/blob/2c1e5b05fe39fc5e6c730dd60e82946b8e67c6ba/src/os/os_test.go#L3174
+#
+[config]
+ignored_tests = ["TestRemoveAllRace", "TestPipeIOCloseRace"]

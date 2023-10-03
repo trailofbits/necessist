@@ -93,6 +93,11 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
         test: <T::Types as AbstractTypes>::Test<'ast>,
     ) -> bool {
         let name = test.name();
+
+        if self.config.is_ignored_test(&name) {
+            return false;
+        }
+
         assert!(self.test_name.is_none());
         self.test_name = Some(name);
 
@@ -110,6 +115,12 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
         test: <T::Types as AbstractTypes>::Test<'ast>,
     ) {
         self.last_statement_in_test = None;
+
+        // smoelius: Check whether the test was skipped.
+        if self.test_name.is_none() {
+            debug_assert!(self.config.is_ignored_test(&test.name()));
+            return;
+        }
 
         let name = test.name();
         assert!(self.test_name == Some(name));

@@ -16,6 +16,7 @@ pub struct Compiled {
     ignored_macros: Vec<Regex>,
     ignored_methods: Vec<Regex>,
     ignored_path_disambiguation: IgnoredPathDisambiguation,
+    ignored_tests: Vec<String>,
 }
 
 impl Compiled {
@@ -35,6 +36,10 @@ impl Compiled {
     pub fn ignored_path_disambiguation(&self) -> IgnoredPathDisambiguation {
         self.ignored_path_disambiguation
     }
+    #[must_use]
+    pub fn is_ignored_test(&self, name: &str) -> bool {
+        self.ignored_tests.iter().any(|s| name == s)
+    }
 }
 
 #[derive(Default, serde::Deserialize, serde::Serialize)]
@@ -47,6 +52,8 @@ pub struct Toml {
     pub ignored_methods: Vec<String>,
     #[serde(default)]
     pub ignored_path_disambiguation: Option<IgnoredPathDisambiguation>,
+    #[serde(default)]
+    pub ignored_tests: Vec<String>,
     #[serde(flatten)]
     pub other: BTreeMap<String, toml::Value>,
 }
@@ -79,6 +86,7 @@ impl Toml {
             ignored_macros,
             ignored_methods,
             ignored_path_disambiguation,
+            ignored_tests,
             other: _,
         } = other;
 
@@ -93,17 +101,22 @@ impl Toml {
         self.ignored_macros.extend_from_slice(ignored_macros);
         self.ignored_methods.extend_from_slice(ignored_methods);
 
+        // smoelius: The `if` condition above verified that at most one of these is `Some(..)` or
+        // they are equal.
         self.ignored_path_disambiguation = *ignored_path_disambiguation;
+
+        self.ignored_tests.extend_from_slice(ignored_tests);
 
         Some(self)
     }
 
-    pub fn compile(&self) -> Result<Compiled> {
+    pub fn compile(self) -> Result<Compiled> {
         let Toml {
             ignored_functions,
             ignored_macros,
             ignored_methods,
             ignored_path_disambiguation,
+            ignored_tests,
             other: _,
         } = self;
 
@@ -116,6 +129,7 @@ impl Toml {
             ignored_macros,
             ignored_methods,
             ignored_path_disambiguation: ignored_path_disambiguation.unwrap_or_default(),
+            ignored_tests,
         })
     }
 }

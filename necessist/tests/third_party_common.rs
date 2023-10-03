@@ -31,6 +31,7 @@ const PREFIX_SSH: &str = "git@github.com:";
 // smoelius: The Go packages were chosen because their ratios of "number of tests" to "time required
 // to run the tests" are high.
 
+// smoelius: Put `toml::Table`s toward the end.
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
 struct Test {
@@ -68,12 +69,6 @@ struct Test {
     #[serde(default)]
     test_files: Vec<String>,
 
-    /// [Configuration file] contents
-    ///
-    /// configuration file: https://github.com/trailofbits/necessist#configuration-files
-    #[serde(default)]
-    config: toml::Table,
-
     /// If false (the default), Necessist dumps removal candidates and exits (i.e.,
     /// --dump-candidates is passed to Necessist); if true, Necessist is run with --verbose
     #[serde(default)]
@@ -82,6 +77,17 @@ struct Test {
     /// Check that the spans and urls written to the database are consistent
     #[serde(default)]
     check_sqlite_urls: bool,
+
+    /// If false (the default), Necessist performs two runs, one with and one without the config;
+    /// if true, Necessist performs just one run with the config
+    #[serde(default)]
+    config_mandatory: bool,
+
+    /// [Configuration file] contents
+    ///
+    /// configuration file: https://github.com/trailofbits/necessist#configuration-files
+    #[serde(default)]
+    config: toml::Table,
 }
 
 #[derive(Clone, Eq, Ord, PartialEq, PartialOrd)]
@@ -367,6 +373,8 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> String {
 
     let configs = if test.config.is_empty() {
         vec![None]
+    } else if test.config_mandatory {
+        vec![Some(&test.config)]
     } else {
         vec![None, Some(&test.config)]
     };

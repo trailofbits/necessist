@@ -381,6 +381,8 @@ A configuration file allows one to tailor Necessist's behavior with respect to a
 
   - `Method`: Ignore only if the path matches an `ignored_methods` pattern.
 
+- `ignored_tests`: A list of strings. A test whose name exactly matches a string in the list is ignored. For Mocha-based frameworks (i.e., Anchor and Hardhat), the message passed to `it` is treated as the test name.
+
 ### Patterns
 
 A pattern is a string composed of letters, numbers, `.`, `_`, or `*`. Each character, other than `*`, is treated literally and matches itself only. A `*` matches any string, including the empty string.
