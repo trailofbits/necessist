@@ -438,6 +438,8 @@ impl<T: ParseLow> ParseAdapter<T> {
             ..Default::default()
         };
 
-        builtins.merge(config).unwrap().compile()
+        builtins.merge(config).unwrap();
+
+        builtins.compile()
     }
 }
