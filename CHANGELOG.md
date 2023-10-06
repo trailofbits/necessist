@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.0
+
+- Ignore `Skip`, `Skipf`, and `SkipNow` methods in Go framework ([#759](https://github.com/trailofbits/necessist/pull/759) and [#760](https://github.com/trailofbits/necessist/pull/760))
+- [94e81c6](https://github.com/trailofbits/necessist/commit/94e81c6f6343ae4fc4ecce37ee494d914ffa668e) unintentionally removed `recursive_kill`'s post-visit behavior. [381a0ff](https://github.com/trailofbits/necessist/commit/381a0fff77233db5a89edc8f88983d69ebc9a64e) restores the post-visit behavior, but retains the non-recursiveness that [94e81c6](https://github.com/trailofbits/necessist/commit/94e81c6f6343ae4fc4ecce37ee494d914ffa668e) introduced. ([381a0ff](https://github.com/trailofbits/necessist/commit/381a0fff77233db5a89edc8f88983d69ebc9a64e))
+- Add ability to ignore tests ([#798](https://github.com/trailofbits/necessist/pull/798))
+- Lock project's root directory to help protect against concurrent uses of Necessist ([#791](https://github.com/trailofbits/necessist/pull/791))
+
 ## 0.2.3
 
 - Limit the number of threads a test can allocate ([275b097](https://github.com/trailofbits/necessist/commit/275b0977c2d440f695ab0222b8447e8fffed7b9d))
