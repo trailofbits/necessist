@@ -122,6 +122,15 @@ fn github() {
 }
 
 #[test]
+fn hack_feature_powerset() {
+    Command::new("cargo")
+        .env("RUSTFLAGS", "-D warnings")
+        .args(["hack", "--feature-powerset", "check"])
+        .assert()
+        .success();
+}
+
+#[test]
 fn license() {
     let re = Regex::new(r"^[^:]*\b(Apache-2.0|0BSD|BSD-\d-Clause|CC0-1.0|MIT|MPL-2\.0)\b").unwrap();
 
