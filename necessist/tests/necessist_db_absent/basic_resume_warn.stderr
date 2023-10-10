@@ -1,1 +1,1 @@
-Error: No sqlite database found to resume at "[CWD]/examples/basic/necessist.db"; creating new database
+Error: No sqlite database to resume at "[CWD]/examples/basic/necessist.db"; creating new database
