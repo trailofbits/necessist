@@ -10,9 +10,10 @@ use heck::ToKebabCase;
 use indicatif::ProgressBar;
 use is_terminal::IsTerminal;
 use log::debug;
-use once_cell::sync::Lazy;
+use once_cell::sync::{Lazy, OnceCell};
 use rlimit::{getrlimit, setrlimit, Resource};
 use std::{
+    cell::RefCell,
     collections::BTreeMap,
     env::{current_dir, var},
     fmt::Display,
@@ -54,7 +55,6 @@ struct Context<'a> {
     opts: Necessist,
     root: Rc<PathBuf>,
     println: &'a dyn Fn(&dyn AsRef<str>),
-    sqlite: Option<sqlite::Sqlite>,
     framework: Box<dyn framework::Interface>,
     progress: Option<&'a ProgressBar>,
 }
@@ -129,14 +129,11 @@ pub fn necessist<Identifier: Applicable + Display + IntoEnumIterator + ToImpleme
         context.println = &println;
     }
 
-    let Some((sqlite, framework, n_spans, test_file_span_map, past_removals)) =
-        prepare(&context, framework)?
-    else {
+    let Some((framework, n_spans, test_file_span_map)) = prepare(&context, framework)? else {
         return Ok(());
     };
 
     let mut context = Context {
-        sqlite,
         opts,
         root,
         println: &|_| {},
@@ -165,7 +162,7 @@ pub fn necessist<Identifier: Applicable + Display + IntoEnumIterator + ToImpleme
         context.progress = progress.as_ref();
     }
 
-    run(context, test_file_span_map, past_removals)
+    run(context, test_file_span_map)
 }
 
 #[allow(clippy::type_complexity)]
@@ -174,11 +171,9 @@ fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementatio
     framework: framework::Auto<Identifier>,
 ) -> Result<
     Option<(
-        Option<sqlite::Sqlite>,
         Box<dyn framework::Interface>,
         usize,
         BTreeMap<SourceFile, Vec<Span>>,
-        Vec<Removal>,
     )>,
 > {
     if context.opts.default_config {
@@ -188,21 +183,8 @@ fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementatio
 
     let config = config::Toml::read(context, context.root)?;
 
-    let (sqlite, past_removals) = if context.opts.no_sqlite {
-        (None, Vec::new())
-    } else {
-        let (sqlite, mut past_removals) = sqlite::init(
-            context,
-            context.root,
-            context.opts.dump,
-            context.opts.reset,
-            context.opts.resume,
-        )?;
-        past_removals.sort_by(|left, right| left.span.cmp(&right.span));
-        (Some(sqlite), past_removals)
-    };
-
     if context.opts.dump {
+        let past_removals = past_removals_init_lazy(context)?;
         dump(context, &past_removals);
         return Ok(None);
     }
@@ -236,21 +218,13 @@ fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementatio
         )
     });
 
-    Ok(Some((
-        sqlite,
-        framework,
-        n_spans,
-        test_file_span_map,
-        past_removals,
-    )))
+    Ok(Some((framework, n_spans, test_file_span_map)))
 }
 
-fn run(
-    mut context: Context,
-    test_file_span_map: BTreeMap<SourceFile, Vec<Span>>,
-    past_removals: Vec<Removal>,
-) -> Result<()> {
+fn run(mut context: Context, test_file_span_map: BTreeMap<SourceFile, Vec<Span>>) -> Result<()> {
     ctrlc::set_handler(|| CTRLC.store(true, Ordering::SeqCst))?;
+
+    let past_removals = past_removals_init_lazy(&context.light())?;
 
     let mut past_removal_iter = past_removals.into_iter().peekable();
 
@@ -556,7 +530,9 @@ fn emit(context: &mut Context, span: &Span, text: &str, outcome: Outcome) -> Res
         outcome,
     };
 
-    if let Some(sqlite) = context.sqlite.as_mut() {
+    let sqlite = sqlite_init_lazy(&context.light())?;
+
+    if let Some(sqlite) = sqlite.borrow_mut().as_mut() {
         sqlite::insert(sqlite, &removal)?;
     }
 
@@ -586,6 +562,55 @@ fn emit_to_console(context: &LightContext, removal: &Removal) {
         );
         (context.println)(&msg);
     }
+}
+
+fn sqlite_init_lazy(context: &LightContext) -> Result<Rc<RefCell<Option<sqlite::Sqlite>>>> {
+    let (sqlite, _) = sqlite_and_past_removals_init_lazy(context)?;
+    Ok(sqlite)
+}
+
+fn past_removals_init_lazy(context: &LightContext) -> Result<Vec<Removal>> {
+    let (_, past_removals) = sqlite_and_past_removals_init_lazy(context)?;
+    Ok(past_removals.take())
+}
+
+thread_local! {
+    #[allow(clippy::type_complexity)]
+    static SQLITE_AND_PAST_REMOVALS: OnceCell<(Rc<RefCell<Option<sqlite::Sqlite>>>, Rc<RefCell<Vec<Removal>>>)> = OnceCell::new();
+}
+
+#[allow(clippy::type_complexity)]
+fn sqlite_and_past_removals_init_lazy(
+    context: &LightContext,
+) -> Result<(
+    Rc<RefCell<Option<sqlite::Sqlite>>>,
+    Rc<RefCell<Vec<Removal>>>,
+)> {
+    SQLITE_AND_PAST_REMOVALS.with(|sqlite_and_past_removals| {
+        sqlite_and_past_removals
+            .get_or_try_init(|| {
+                if context.opts.no_sqlite {
+                    Ok((
+                        Rc::new(RefCell::new(None)),
+                        Rc::new(RefCell::new(Vec::new())),
+                    ))
+                } else {
+                    let (sqlite, mut past_removals) = sqlite::init(
+                        context,
+                        context.root,
+                        context.opts.dump,
+                        context.opts.reset,
+                        context.opts.resume,
+                    )?;
+                    past_removals.sort_by(|left, right| left.span.cmp(&right.span));
+                    Ok((
+                        Rc::new(RefCell::new(Some(sqlite))),
+                        Rc::new(RefCell::new(past_removals)),
+                    ))
+                }
+            })
+            .map(Clone::clone)
+    })
 }
 
 fn set_soft_rlimit(resource: Resource, limit: u64) -> Result<u64> {
