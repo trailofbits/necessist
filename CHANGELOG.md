@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.1
+
+- Simplify warning message ([20cf99e](https://github.com/trailofbits/necessist/commit/20cf99e0c23b7add56e8c88914d93078bbab0e8f))
+- Initialize Sqlite database lazily ([00e2446](https://github.com/trailofbits/necessist/commit/00e2446648b436269f5d512a07e7a3db45d05b2d))
+
 ## 0.3.0
 
 - Ignore `Skip`, `Skipf`, and `SkipNow` methods in Go framework ([#759](https://github.com/trailofbits/necessist/pull/759) and [#760](https://github.com/trailofbits/necessist/pull/760))
