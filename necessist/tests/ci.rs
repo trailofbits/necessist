@@ -265,15 +265,13 @@ fn prettier() {
 fn readme_contains_usage() {
     let readme = read_to_string("README.md").unwrap();
 
-    let stdout = assert_cmd::Command::cargo_bin("necessist")
+    let assert = assert_cmd::Command::cargo_bin("necessist")
         .unwrap()
         .arg("--help")
-        .assert()
-        .get_output()
-        .stdout
-        .clone();
+        .assert();
+    let stdout = &assert.get_output().stdout;
 
-    let usage = std::str::from_utf8(&stdout).unwrap();
+    let usage = std::str::from_utf8(stdout).unwrap();
 
     assert!(readme.contains(usage));
 }
