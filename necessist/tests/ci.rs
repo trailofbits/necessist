@@ -8,6 +8,7 @@ use std::{
     io::{stderr, Write},
     path::Path,
     process::Command,
+    sync::Mutex,
 };
 use tempfile::tempdir;
 use walkdir::WalkDir;
@@ -314,7 +315,11 @@ fn clippy_command(cargo_args: &[&str], rustc_args: &[&str]) -> Command {
     command
 }
 
+static MUTEX: Mutex<()> = Mutex::new(());
+
 fn preserves_cleanliness(f: impl FnOnce()) {
+    let _lock = MUTEX.lock().unwrap();
+
     if cfg!(not(feature = "strict")) && dirty().is_some() {
         #[allow(clippy::explicit_write)]
         writeln!(stderr(), "Skipping as repository is dirty").unwrap();
