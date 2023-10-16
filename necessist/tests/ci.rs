@@ -68,7 +68,7 @@ fn dylint() {
 
 #[test]
 fn format() {
-    preserves_cleanliness(|| {
+    preserves_cleanliness("format", || {
         Command::new("cargo")
             .args(["+nightly", "fmt"])
             .assert()
@@ -288,7 +288,7 @@ fn sort() {
 
 #[test]
 fn update() {
-    preserves_cleanliness(|| {
+    preserves_cleanliness("update", || {
         Command::new("cargo")
             .args(["update", "--workspace"])
             .assert()
@@ -317,12 +317,16 @@ fn clippy_command(cargo_args: &[&str], rustc_args: &[&str]) -> Command {
 
 static MUTEX: Mutex<()> = Mutex::new(());
 
-fn preserves_cleanliness(f: impl FnOnce()) {
+fn preserves_cleanliness(test_name: &str, f: impl FnOnce()) {
     let _lock = MUTEX.lock().unwrap();
 
     if cfg!(not(feature = "strict")) && dirty().is_some() {
         #[allow(clippy::explicit_write)]
-        writeln!(stderr(), "Skipping as repository is dirty").unwrap();
+        writeln!(
+            stderr(),
+            "Skipping `{test_name}` test as repository is dirty"
+        )
+        .unwrap();
         return;
     }
 
