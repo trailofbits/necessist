@@ -308,13 +308,13 @@ The ignored functions and methods are the same as for Anchor TS above.
 #### Ignored methods\*
 
 - `as_bytes`
+- `as_encoded_bytes`
 - `as_mut`
 - `as_mut_os_str`
 - `as_mut_os_string`
 - `as_mut_slice`
 - `as_mut_str`
 - `as_os_str`
-- `as_os_str_bytes`
 - `as_path`
 - `as_ref`
 - `as_slice`
@@ -334,7 +334,7 @@ The ignored functions and methods are the same as for Anchor TS above.
 - `into_boxed_slice`
 - `into_boxed_str`
 - `into_bytes`
-- `into_os_str_bytes`
+- `into_encoded_bytes`
 - `into_os_string`
 - `into_owned`
 - `into_path_buf`
