@@ -248,13 +248,13 @@ impl ParseLow for Rust {
 
     const IGNORED_METHODS: Option<&'static [&'static str]> = Some(&[
         "as_bytes",
+        "as_encoded_bytes",
         "as_mut",
         "as_mut_os_str",
         "as_mut_os_string",
         "as_mut_slice",
         "as_mut_str",
         "as_os_str",
-        "as_os_str_bytes",
         "as_path",
         "as_ref",
         "as_slice",
@@ -274,7 +274,7 @@ impl ParseLow for Rust {
         "into_boxed_slice",
         "into_boxed_str",
         "into_bytes",
-        "into_os_str_bytes",
+        "into_encoded_bytes",
         "into_os_string",
         "into_owned",
         "into_path_buf",
