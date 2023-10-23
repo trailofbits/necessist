@@ -305,10 +305,7 @@ fn clippy_command(cargo_args: &[&str], rustc_args: &[&str]) -> Command {
         .args([
             "--allow=clippy::missing-errors-doc",
             "--allow=clippy::missing-panics-doc",
-            "--allow=clippy::needless-pass-by-ref-mut",
-            // smoelius: Allow `iter-without-into-iter` until the following issue is resolved:
-            // https://github.com/bitflags/bitflags/issues/379
-            "--allow=clippy::iter-without-into-iter",
+            "--allow=clippy::struct-field-names",
         ]);
     command
 }
