@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.2
+
+- Update list of ignored Rust methods ([51a0ec4](https://github.com/trailofbits/necessist/commit/51a0ec4ef5976cdf90d39704f249e8780f05a9ab))
+
 ## 0.3.1
 
 - Simplify warning message ([20cf99e](https://github.com/trailofbits/necessist/commit/20cf99e0c23b7add56e8c88914d93078bbab0e8f))
