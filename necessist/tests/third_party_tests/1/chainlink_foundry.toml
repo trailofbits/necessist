@@ -1,5 +1,7 @@
 url = "https://github.com/smartcontractkit/chainlink"
 rev = "v2.3.0"
+# smoelius: The next `pnpm up` is needed to get the packages to build on macOS.
+init = "cd contracts && pnpm up ethereumjs-abi"
 subdir = "contracts"
 framework = "foundry"
 full = true
