@@ -105,6 +105,10 @@ jobs:
         with:
           version: 8
 
+      - name: Install Setuptools
+        if: ${{ matrix.environment == 'macos-latest' }}
+        run: pip install setuptools
+
       - name: Test
         run: |
           if [[ '${{ matrix.test }}' != 'other' ]]; then
