@@ -1,3 +1,8 @@
 url = "https://github.com/Uniswap/v3-core"
 test_files = ["test/UniswapV3Factory.spec.ts"]
 full = true
+config_mandatory = true
+
+# smoelius: Some of the tests take close to the time limit on macOS.
+[config]
+ignored_tests = ["pool bytecode size", "fails if caller is not owner"]
