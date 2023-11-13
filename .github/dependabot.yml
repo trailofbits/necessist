@@ -16,11 +16,11 @@ updates:
     allow:
       - dependency-type: direct
 
-  - package-ecosystem: cargo
-    directory: /crates_io
-    schedule:
-      interval: weekly
-      day: monday
-      time: "03:00"
-    allow:
-      - dependency-type: direct
+  # - package-ecosystem: cargo
+  #   directory: /crates_io
+  #   schedule:
+  #     interval: weekly
+  #     day: monday
+  #     time: "03:00"
+  #   allow:
+  #     - dependency-type: direct

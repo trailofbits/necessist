@@ -39,7 +39,7 @@ published() {
 }
 
 # smoelius: Publishing in this order ensures that all dependencies are met.
-DIRS="core frameworks crates_io"
+DIRS="core frameworks necessist"
 
 for DIR in $DIRS; do
     pushd "$DIR"
