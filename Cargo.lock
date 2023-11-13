@@ -1070,7 +1070,7 @@ dependencies = [
  "subprocess",
  "swc_core",
  "syn 2.0.39",
- "toml_edit 0.20.7",
+ "toml_edit 0.21.0",
  "tree-sitter",
  "tree-sitter-go",
  "walkdir",
