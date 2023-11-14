@@ -60,6 +60,7 @@ jobs:
           cargo install cargo-license            || true
           cargo install cargo-modules            || true
           cargo install cargo-sort               || true
+          cargo install cargo-udeps --locked     || true
 
       - name: Install testing tools
         if: ${{ matrix.test != 'ci' }}
