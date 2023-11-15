@@ -21,6 +21,9 @@ use std::{
 use subprocess::{Exec, Redirection};
 use tempfile::{tempdir, TempDir};
 
+mod string_or_vec;
+use string_or_vec::StringOrVec;
+
 // smoelius: `ERROR_EXIT_CODE` is from:
 // https://github.com/rust-lang/rust/blob/12397e9dd5a97460d76c884d449ca1c2d26da8ed/src/libtest/lib.rs#L94
 const ERROR_EXIT_CODE: i32 = 101;
@@ -54,7 +57,7 @@ struct Test {
 
     /// OS on which the test should run; `None` (the default) means all OSes
     #[serde(default)]
-    target_os: Option<String>,
+    target_os: Option<StringOrVec>,
 
     /// Subdirectory of the repo in which Necessist should run; `None` (the default) means the root
     /// of the repository
@@ -166,11 +169,9 @@ pub fn all_tests_in(path: impl AsRef<Path>) {
             continue;
         }
 
-        if test
-            .target_os
-            .as_ref()
-            .map_or(false, |target_os| target_os != consts::OS)
-        {
+        if test.target_os.as_ref().map_or(false, |target_os| {
+            target_os.get().iter().all(|s| s != consts::OS)
+        }) {
             continue;
         }
 
