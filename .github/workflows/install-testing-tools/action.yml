@@ -4,6 +4,7 @@ runs:
   steps:
     # smoelius: https://docs.solana.com/cli/install-solana-cli-tools
     - name: Install Solana
+      if: ${{ runner.os != 'Windows' }}
       run: |
         # smoelius: The latest stable (1.16) seems to cause problems for the xNFT tests. I suspect
         # this is the reason:
@@ -14,6 +15,7 @@ runs:
 
     # smoelius: https://www.anchor-lang.com/docs/installation
     - name: Install Anchor
+      if: ${{ runner.os != 'Windows' }}
       run: |
         cp frameworks/src/anchor_ts/rfc8032_test_vector.json ~/.config/solana/id.json
         if [[ "$(anchor --version)" != 'anchor-cli 0.27.0' ]]; then
