@@ -65,13 +65,12 @@ jobs:
 
       # smoelius: https://docs.solana.com/cli/install-solana-cli-tools
       - name: Install Solana
-        id: install-solana
         run: |
           # smoelius: The latest stable (1.16) seems to cause problems for the xNFT tests. I suspect
           # this is the reason:
           # https://github.com/solana-labs/solana/issues/31960#issuecomment-1668682153
           sh -c "$(curl -sSfL https://release.solana.com/v1.14.29/install)"
-          echo "path=$HOME/.local/share/solana/install/active_release/bin:$PATH" >> "$GITHUB_OUTPUT"
+          echo "$HOME/.local/share/solana/install/active_release/bin" >> "$GITHUB_PATH"
 
       # smoelius: https://www.anchor-lang.com/docs/installation
       - name: Install Anchor
@@ -82,8 +81,6 @@ jobs:
             avm install 0.27.0
             avm use 0.27.0
           fi
-        env:
-          PATH: ${{ steps.install-solana.outputs.path }}
 
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
@@ -118,8 +115,6 @@ jobs:
             cargo test -p necessist-core
             cargo test -p necessist-frameworks
           fi
-        env:
-          PATH: ${{ steps.install-solana.outputs.path }}
 
   all-checks:
     needs: [test]
