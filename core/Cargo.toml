@@ -25,7 +25,6 @@ once_cell = "1.18"
 proc-macro2 = { version = "1.0", features = ["span-locations"] }
 regex = "1.10"
 remain = "0.2"
-rlimit = "0.10"
 serde = { version = "1.0", features = ["derive"] }
 strum = "0.25"
 strum_macros = "0.25"
@@ -35,6 +34,7 @@ toml = "0.8"
 
 [target.'cfg(unix)'.dependencies]
 libc = { version = "0.2", optional = true }
+rlimit = { version = "0.10", optional = true }
 
 [target.'cfg(windows)'.dependencies]
 libsqlite3-sys = { version = "0.27", features = ["bundled"] }
@@ -55,5 +55,6 @@ heck = "0.4"
 syn = "2.0"
 
 [features]
-default = ["lock_root"]
+default = ["limit_threads", "lock_root"]
+limit_threads = ["rlimit"]
 lock_root = ["libc", "windows-sys"]

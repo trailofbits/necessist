@@ -10,8 +10,7 @@ use heck::ToKebabCase;
 use indicatif::ProgressBar;
 use is_terminal::IsTerminal;
 use log::debug;
-use once_cell::sync::{Lazy, OnceCell};
-use rlimit::{getrlimit, setrlimit, Resource};
+use once_cell::sync::OnceCell;
 use std::{
     cell::RefCell,
     collections::BTreeMap,
@@ -29,21 +28,6 @@ use strum::IntoEnumIterator;
 const DEFAULT_TIMEOUT: Duration = Duration::from_secs(60);
 
 static CTRLC: AtomicBool = AtomicBool::new(false);
-
-#[allow(clippy::unwrap_used)]
-static NPROC_INIT: Lazy<u64> = Lazy::new(|| {
-    let output = Command::new("ps").arg("-eL").output().unwrap();
-    let stdout = std::str::from_utf8(&output.stdout).unwrap();
-    stdout.lines().count().try_into().unwrap()
-});
-
-// smoelius: Limit the number of threads that a test can allocate to approximately 1024 (an
-// arbitrary choice).
-//   The limit is not strict for the following reason. `NPROC_INIT` counts the number of threads
-// *started by any user*. But `setrlimit` (used to enforce the limit) applies to just the current
-// user. So by setting the limit to `NPROC_INIT + NPROC_ALLOWANCE`, the number of threads the test
-// can allocate is actually 1024 plus the number of threads started by other users.
-const NPROC_ALLOWANCE: u64 = 1024;
 
 pub(crate) struct Removal {
     pub span: Span,
@@ -485,7 +469,11 @@ fn attempt_removal(context: &Context, span: &Span) -> Result<(String, Option<Out
 
     debug!("{:?}", exec);
 
-    let nprocs_prev = set_soft_rlimit(Resource::NPROC, *NPROC_INIT + NPROC_ALLOWANCE)?;
+    #[cfg(all(feature = "limit_threads", unix))]
+    let nprocs_prev = rlimit::set_soft_rlimit(
+        rlimit::Resource::NPROC,
+        *rlimit::NPROC_INIT + rlimit::NPROC_ALLOWANCE,
+    )?;
 
     let mut popen = exec.popen()?;
     let status = if let Some(dur) = timeout(&context.opts) {
@@ -494,7 +482,8 @@ fn attempt_removal(context: &Context, span: &Span) -> Result<(String, Option<Out
         popen.wait().map(Option::Some)?
     };
 
-    set_soft_rlimit(Resource::NPROC, nprocs_prev)?;
+    #[cfg(all(feature = "limit_threads", unix))]
+    rlimit::set_soft_rlimit(rlimit::Resource::NPROC, nprocs_prev)?;
 
     if status.is_some() {
         if let Some(postprocess) = postprocess {
@@ -613,10 +602,37 @@ fn sqlite_and_past_removals_init_lazy(
     })
 }
 
-fn set_soft_rlimit(resource: Resource, limit: u64) -> Result<u64> {
-    let (soft, hard) = getrlimit(resource)?;
-    setrlimit(Resource::NPROC, std::cmp::min(hard, limit), hard)?;
-    Ok(soft)
+#[allow(clippy::module_name_repetitions)]
+#[cfg(all(feature = "limit_threads", unix))]
+mod rlimit {
+    pub use ::rlimit::Resource;
+    use ::rlimit::{getrlimit, setrlimit};
+    use anyhow::Result;
+    use once_cell::sync::Lazy;
+    use std::process::Command;
+
+    #[allow(clippy::unwrap_used)]
+    pub static NPROC_INIT: Lazy<u64> = Lazy::new(|| {
+        let output = Command::new("ps").arg("-eL").output().unwrap();
+        let stdout = std::str::from_utf8(&output.stdout).unwrap();
+        stdout.lines().count().try_into().unwrap()
+    });
+
+    // smoelius: Limit the number of threads that a test can allocate to approximately 1024 (an
+    // arbitrary choice).
+    //
+    // The limit is not strict for the following reason. `NPROC_INIT` counts the number of threads
+    // *started by any user*. But `setrlimit` (used to enforce the limit) applies to just the
+    // current user. So by setting the limit to `NPROC_INIT + NPROC_ALLOWANCE`, the number of
+    // threads the test can allocate is actually 1024 plus the number of threads started by other
+    // users.
+    pub const NPROC_ALLOWANCE: u64 = 1024;
+
+    pub fn set_soft_rlimit(resource: Resource, limit: u64) -> Result<u64> {
+        let (soft, hard) = getrlimit(resource)?;
+        setrlimit(Resource::NPROC, std::cmp::min(hard, limit), hard)?;
+        Ok(soft)
+    }
 }
 
 fn timeout(opts: &Necessist) -> Option<Duration> {
