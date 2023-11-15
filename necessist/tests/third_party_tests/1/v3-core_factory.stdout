@@ -1,14 +1,20 @@
-18 candidates in 1 test file
+24 candidates in 1 test file
 $DIR/test/UniswapV3Factory.spec.ts: dry running
 $DIR/test/UniswapV3Factory.spec.ts: mutilating
+$DIR/test/UniswapV3Factory.spec.ts:52:5-52:85: `await factory.createPool(TEST_ADDRESSES[0], TEST_ADDRESSES[1], FeeAmount.MEDIUM)` failed
+$DIR/test/UniswapV3Factory.spec.ts:52:18-52:85: `.createPool(TEST_ADDRESSES[0], TEST_ADDRESSES[1], FeeAmount.MEDIUM)` failed
 $DIR/test/UniswapV3Factory.spec.ts:106:27-106:91: `.createPool(TEST_ADDRESSES[0], TEST_ADDRESSES[0], FeeAmount.LOW)` failed
 $DIR/test/UniswapV3Factory.spec.ts:118:27-118:81: `.createPool(TEST_ADDRESSES[0], TEST_ADDRESSES[1], 250)` failed
 $DIR/test/UniswapV3Factory.spec.ts:122:36-122:103: `.createPool(TEST_ADDRESSES[0], TEST_ADDRESSES[1], FeeAmount.MEDIUM)` failed
+$DIR/test/UniswapV3Factory.spec.ts:128:27-128:42: `.connect(other)` failed
+$DIR/test/UniswapV3Factory.spec.ts:128:42-128:67: `.setOwner(wallet.address)` failed
 $DIR/test/UniswapV3Factory.spec.ts:132:7-132:44: `await factory.setOwner(other.address)` failed
 $DIR/test/UniswapV3Factory.spec.ts:132:20-132:44: `.setOwner(other.address)` failed
 $DIR/test/UniswapV3Factory.spec.ts:143:7-143:44: `await factory.setOwner(other.address)` failed
 $DIR/test/UniswapV3Factory.spec.ts:143:20-143:44: `.setOwner(other.address)` failed
 $DIR/test/UniswapV3Factory.spec.ts:144:27-144:52: `.setOwner(wallet.address)` failed
+$DIR/test/UniswapV3Factory.spec.ts:150:27-150:42: `.connect(other)` failed
+$DIR/test/UniswapV3Factory.spec.ts:150:42-150:66: `.enableFeeAmount(100, 2)` failed
 $DIR/test/UniswapV3Factory.spec.ts:153:27-153:56: `.enableFeeAmount(1000000, 10)` failed
 $DIR/test/UniswapV3Factory.spec.ts:156:27-156:51: `.enableFeeAmount(500, 0)` failed
 $DIR/test/UniswapV3Factory.spec.ts:159:27-159:55: `.enableFeeAmount(500, 16834)` failed
