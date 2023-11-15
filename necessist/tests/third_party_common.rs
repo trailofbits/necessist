@@ -485,8 +485,11 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> String {
             // smoelius: Because test files could be traversed in different orders on different
             // machines, the warnings could appear out of order. So simply verify that
             // `stdout_expected` and `stdout_actual` contain the same lines.
+            // smoelius: Also, ignore timeouts. Some of the `v3-core_factory` tests take close to
+            // the time limit on macOS, and trying to ignore the tests individually is like playing
+            // whack-a-mole.
             assert!(
-                permutation(&stdout_expected, &stdout_normalized),
+                permutation_ignoring_timeouts(&stdout_expected, &stdout_normalized),
                 "{}",
                 SimpleDiff::from_str(&stdout_expected, &stdout_normalized, "left", "right")
             );
@@ -545,12 +548,21 @@ fn check_sqlite_urls(tempdir: &Path, root: &Path, test: &Test) {
     }
 }
 
-fn permutation(expected: &str, actual: &str) -> bool {
+fn permutation_ignoring_timeouts(expected: &str, actual: &str) -> bool {
     let mut expected_lines = expected.lines().collect::<Vec<_>>();
     let mut actual_lines = actual.lines().collect::<Vec<_>>();
     expected_lines.sort_unstable();
     actual_lines.sort_unstable();
-    expected_lines == actual_lines
+    expected_lines.len() == actual_lines.len()
+        && expected_lines
+            .into_iter()
+            .zip(actual_lines)
+            .all(|(lhs, rhs)| {
+                lhs == rhs
+                    || lhs
+                        .strip_suffix("timed-out")
+                        .map_or(false, |prefix| rhs.starts_with(prefix))
+            })
 }
 
 pub fn stdout_subsequence_in(path: impl AsRef<Path>) {
