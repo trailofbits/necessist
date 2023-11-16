@@ -374,7 +374,7 @@ impl RunLow for Foundry {
     fn command_to_build_test(&self, context: &LightContext, _span: &Span) -> Command {
         let mut command = Command::new("forge");
         command.current_dir(context.root.as_path());
-        command.arg("build");
+        command.args(["test", "--match-test='^$'"]);
         command
     }
 
