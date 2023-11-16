@@ -557,11 +557,11 @@ fn permutation_ignoring_timeouts(expected: &str, actual: &str) -> bool {
         && expected_lines
             .into_iter()
             .zip(actual_lines)
-            .all(|(lhs, rhs)| {
-                lhs == rhs
-                    || lhs
+            .all(|(expected_line, actual_line)| {
+                expected_line == actual_line
+                    || actual_line
                         .strip_suffix("timed-out")
-                        .map_or(false, |prefix| rhs.starts_with(prefix))
+                        .map_or(false, |prefix| expected_line.starts_with(prefix))
             })
 }
 
