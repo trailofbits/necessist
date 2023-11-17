@@ -1,6 +1,5 @@
-use super::{ts, utils, RunHigh};
+use super::{ts, utils, OutputAccessors, OutputStrippedOfAnsiScapes, RunHigh};
 use anyhow::{anyhow, Context, Error, Result};
-use assert_cmd::output::OutputError;
 use bstr::{io::BufReadExt, BStr};
 use log::debug;
 use necessist_core::{framework::Postprocess, source_warn, LightContext, Span, WarnFlags, Warning};
@@ -53,10 +52,10 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
         debug!("{:?}", command);
 
         let output = command
-            .output()
+            .output_stripped_of_ansi_escapes()
             .with_context(|| format!("Failed to run command: {command:?}"))?;
-        if !output.status.success() {
-            return Err(OutputError::new(output).into());
+        if !output.status().success() {
+            return Err(output.into());
         }
         Ok(())
     }
@@ -72,9 +71,9 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
 
             debug!("{:?}", command);
 
-            let output = command.output()?;
-            if !output.status.success() {
-                debug!("{}", OutputError::new(output));
+            let output = command.output_stripped_of_ansi_escapes()?;
+            if !output.status().success() {
+                debug!("{}", output);
                 return Ok(None);
             }
         }

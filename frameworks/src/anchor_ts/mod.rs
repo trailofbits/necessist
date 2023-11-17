@@ -1,6 +1,5 @@
-use super::{ts, ParseAdapter, ParseHigh, RunHigh};
+use super::{ts, OutputAccessors, OutputStrippedOfAnsiScapes, ParseAdapter, ParseHigh, RunHigh};
 use anyhow::{anyhow, Result};
-use assert_cmd::output::OutputError;
 use log::debug;
 use necessist_core::{
     __Backup as Backup,
@@ -114,9 +113,9 @@ impl AnchorTs {
 
         debug!("{:?}", command);
 
-        let output = command.output()?;
-        if !output.status.success() {
-            return Err(OutputError::new(output).into());
+        let output = command.output_stripped_of_ansi_escapes()?;
+        if !output.status().success() {
+            return Err(output.into());
         };
         Ok(())
     }
