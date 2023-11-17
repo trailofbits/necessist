@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.3
+
+- Fix a bug involving the Foundry framework's handling of extra arguments ([#884](https://github.com/trailofbits/necessist/pull/884))
+
 ## 0.3.2
 
 - Update list of ignored Rust methods ([51a0ec4](https://github.com/trailofbits/necessist/commit/51a0ec4ef5976cdf90d39704f249e8780f05a9ab))
