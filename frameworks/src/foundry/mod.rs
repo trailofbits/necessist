@@ -371,6 +371,10 @@ impl RunLow for Foundry {
         Self::test_command(context, test_file)
     }
 
+    // smoelius: If the user specifies additional arguments to pass to the test command, Necessist
+    // passes them to the build command as well. This causes problems when the test command accepts
+    // arguments that the build command doesn't. A workaround is to use, for the "build" command, a
+    // test command that runs exactly zero tests.
     fn command_to_build_test(&self, context: &LightContext, _span: &Span) -> Command {
         let mut command = Command::new("forge");
         command.current_dir(context.root.as_path());
