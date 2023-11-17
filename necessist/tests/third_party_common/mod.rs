@@ -477,8 +477,7 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> String {
 
         // smoelius: macOS requires the paths to be canonicalized, because `/tmp` is symlinked to
         // `private/tmp`.
-        let stdout_normalized =
-            stdout_actual.replace(&tempdir_canonicalized.to_string_lossy().to_string(), "$DIR");
+        let stdout_normalized = normalize_paths(stdout_actual, &tempdir_canonicalized);
 
         if enabled("BLESS") {
             write(path_stdout, stdout_normalized).unwrap();
@@ -496,7 +495,11 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> String {
             );
             // smoelius: If `stdout_expected` and `stdout_actual` differ, prefer that the
             // lexicographically smaller one be stored in the repository.
-            assert!(stdout_expected <= stdout_normalized);
+            assert!(
+                stdout_expected <= stdout_normalized,
+                "{}",
+                SimpleDiff::from_str(&stdout_expected, &stdout_normalized, "left", "right")
+            );
         }
 
         if test.check_sqlite_urls {
@@ -547,6 +550,23 @@ fn check_sqlite_urls(tempdir: &Path, root: &Path, test: &Test) {
             url
         );
     }
+}
+
+fn normalize_paths(mut s: &str, path: &Path) -> String {
+    let path_str = path.to_string_lossy();
+    let mut buf = String::new();
+    while let Some(i) = s.find(&*path_str) {
+        buf.push_str(&s[..i]);
+        buf.push_str("$DIR");
+        s = &s[i + path_str.len()..];
+        // smoelius: Replace `\` up until the next whitespace.
+        let n = s.find(char::is_whitespace).unwrap_or(s.len());
+        buf.push_str(&s[..n].replace('\\', "/"));
+        s = &s[n..];
+    }
+    // smoelius: Push whatever is remaining.
+    buf.push_str(s);
+    buf
 }
 
 fn permutation_ignoring_timeouts(expected: &str, actual: &str) -> bool {
