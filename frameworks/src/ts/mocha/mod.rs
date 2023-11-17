@@ -1,8 +1,8 @@
 use crate::{
-    utils, AbstractTypes, GenericVisitor, MaybeNamed, Named, ParseLow, Spanned, WalkDirResult,
+    utils, AbstractTypes, GenericVisitor, MaybeNamed, Named, OutputAccessors,
+    OutputStrippedOfAnsiScapes, ParseLow, Spanned, WalkDirResult,
 };
 use anyhow::{anyhow, Result};
-use assert_cmd::output::OutputError;
 use if_chain::if_chain;
 use log::debug;
 use necessist_core::{
@@ -96,9 +96,9 @@ impl Mocha {
     ) -> Result<()> {
         debug!("{:?}", command);
 
-        let output = command.output()?;
-        if !output.status.success() {
-            return Err(OutputError::new(output).into());
+        let output = command.output_stripped_of_ansi_escapes()?;
+        if !output.status().success() {
+            return Err(output.into());
         }
 
         let mut test_file_it_message_state_map = self.test_file_it_message_state_map.borrow_mut();
@@ -106,7 +106,7 @@ impl Mocha {
             .entry(test_file.to_path_buf())
             .or_default();
 
-        let stdout = std::str::from_utf8(&output.stdout)?;
+        let stdout = std::str::from_utf8(output.stdout())?;
         for line in stdout.lines() {
             if let Some(captures) = LINE_WITH_TIME_RE
                 .captures(line)

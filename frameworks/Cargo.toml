@@ -25,6 +25,7 @@ regex = "1.10"
 remain = "0.2"
 strum = "0.25"
 strum_macros = "0.25"
+strip-ansi-escapes = "0.2"
 subprocess = "0.2"
 walkdir = "2.4"
 
@@ -42,7 +43,12 @@ tree-sitter = "0.20"
 tree-sitter-go = "0.20"
 
 # Hardhat TS
-swc_core = { version = "0.86", features = ["common", "ecma_ast", "ecma_parser", "ecma_visit"] }
+swc_core = { version = "0.86", features = [
+    "common",
+    "ecma_ast",
+    "ecma_parser",
+    "ecma_visit",
+] }
 
 # Rust
 cargo_metadata = "0.18"

@@ -1,4 +1,8 @@
-use std::process::Command;
+use assert_cmd::output::OutputError;
+use std::{
+    io::Result,
+    process::{Command, ExitStatus, Output},
+};
 use subprocess::Exec;
 
 pub fn exec_from_command(command: &Command) -> Exec {
@@ -14,4 +18,42 @@ pub fn exec_from_command(command: &Command) -> Exec {
         exec = exec.cwd(path);
     }
     exec
+}
+
+pub trait OutputStrippedOfAnsiScapes {
+    fn output_stripped_of_ansi_escapes(&mut self) -> Result<OutputError>;
+}
+
+impl OutputStrippedOfAnsiScapes for Command {
+    fn output_stripped_of_ansi_escapes(&mut self) -> Result<OutputError> {
+        #[allow(clippy::disallowed_methods)]
+        let Output {
+            status,
+            stdout,
+            stderr,
+        } = self.output()?;
+        Ok(OutputError::new(Output {
+            status,
+            stdout: strip_ansi_escapes::strip(stdout),
+            stderr: strip_ansi_escapes::strip(stderr),
+        }))
+    }
+}
+
+pub trait OutputAccessors {
+    fn status(&self) -> ExitStatus;
+    fn stdout(&self) -> &[u8];
+    fn stderr(&self) -> &[u8];
+}
+
+impl OutputAccessors for OutputError {
+    fn status(&self) -> ExitStatus {
+        self.as_output().unwrap().status
+    }
+    fn stdout(&self) -> &[u8] {
+        &self.as_output().unwrap().stdout
+    }
+    fn stderr(&self) -> &[u8] {
+        &self.as_output().unwrap().stderr
+    }
 }

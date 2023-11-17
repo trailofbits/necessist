@@ -1,6 +1,5 @@
-use super::{ts, ParseAdapter, ParseHigh, RunHigh};
+use super::{ts, OutputAccessors, OutputStrippedOfAnsiScapes, ParseAdapter, ParseHigh, RunHigh};
 use anyhow::Result;
-use assert_cmd::output::OutputError;
 use log::debug;
 use necessist_core::{
     framework::{Interface, Postprocess},
@@ -83,9 +82,9 @@ fn compile(context: &LightContext) -> Result<()> {
 
     debug!("{:?}", command);
 
-    let output = command.output()?;
-    if !output.status.success() {
-        return Err(OutputError::new(output).into());
+    let output = command.output_stripped_of_ansi_escapes()?;
+    if !output.status().success() {
+        return Err(output.into());
     };
     Ok(())
 }
