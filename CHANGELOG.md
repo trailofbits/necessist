@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.4
+
+- Fix link to README.md ([#887](https://github.com/trailofbits/necessist/pull/887))
+- Strip ANSI escapes from build and test command output (a problem affecting `forge`, for example) ([#886](https://github.com/trailofbits/necessist/pull/886))
+
 ## 0.3.3
 
 - Fix a bug involving the Foundry framework's handling of extra arguments ([#884](https://github.com/trailofbits/necessist/pull/884))
