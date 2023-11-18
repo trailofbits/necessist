@@ -1,9 +1,20 @@
-#![cfg(not(feature = "ci"))]
+use std::{
+    env::var,
+    io::{stderr, Write},
+    process::exit,
+};
 
-use std::io::{stderr, Write};
+#[ctor::ctor]
+fn initialize() {
+    // smoelius: Run the CI tests if either the target OS is Linux or we are running locally, i.e.,
+    // `CI` is _not_ set.
+    if cfg!(target_os = "linux") || var("CI").is_err() {
+        exit(0);
+    }
+}
 
 #[test]
 fn warn() {
     #[allow(clippy::explicit_write)]
-    writeln!(stderr(), "Warning: feature `ci` is disabled").unwrap();
+    writeln!(stderr(), "Warning: the CI tests are disabled").unwrap();
 }

@@ -20,11 +20,7 @@ jobs:
       fail-fast: false
       matrix:
         environment: [ubuntu-latest, macos-latest]
-        test: [other, third_party_0, third_party_1, trycmd]
-        # smoelius: There is no need to run the `ci` test on multiple platforms.
-        include:
-          - environment: ubuntu-latest
-            test: ci
+        test: [ci, other, third_party_0, third_party_1, trycmd]
 
     runs-on: ${{ matrix.environment }}
 
@@ -52,64 +48,25 @@ jobs:
             target/dylint/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
-      - name: Install tools
+      - name: Install CI tools
+        if: ${{ matrix.environment == 'ubuntu-latest' && matrix.test == 'ci' }}
         run: |
           rustup update
           rustup +nightly component add clippy rustfmt
           cargo install cargo-dylint dylint-link || true
           cargo install cargo-hack               || true
           cargo install cargo-license            || true
-          # smoelius: Work around: https://github.com/regexident/cargo-modules/issues/196
-          cargo install cargo-modules --locked   || true
+          cargo install cargo-modules            || true
           cargo install cargo-sort               || true
 
-      # smoelius: https://docs.solana.com/cli/install-solana-cli-tools
-      - name: Install Solana
-        run: |
-          # smoelius: The latest stable (1.16) seems to cause problems for the xNFT tests. I suspect
-          # this is the reason:
-          # https://github.com/solana-labs/solana/issues/31960#issuecomment-1668682153
-          sh -c "$(curl -sSfL https://release.solana.com/v1.14.29/install)"
-          echo "$HOME/.local/share/solana/install/active_release/bin" >> "$GITHUB_PATH"
-
-      # smoelius: https://www.anchor-lang.com/docs/installation
-      - name: Install Anchor
-        run: |
-          cp frameworks/src/anchor_ts/rfc8032_test_vector.json ~/.config/solana/id.json
-          if [[ "$(anchor --version)" != 'anchor-cli 0.27.0' ]]; then
-            cargo install --git https://github.com/coral-xyz/anchor avm --locked --force
-            avm install 0.27.0
-            avm use 0.27.0
-          fi
-
-      - name: Install Foundry
-        uses: foundry-rs/foundry-toolchain@v1
-
-      - name: Install Go
-        uses: actions/setup-go@v4
-        with:
-          go-version: "^1.20.1"
-          cache: false
-
-      # smoelius: The Chainlink Foundry test requires `node` and `pnpm`.
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 16
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-
-      - name: Install Setuptools
-        if: ${{ matrix.environment == 'macos-latest' }}
-        run: pip install setuptools
+      - name: Install testing tools
+        if: ${{ matrix.test != 'ci' }}
+        uses: ./.github/workflows/install-testing-tools
 
       - name: Test
         run: |
           if [[ '${{ matrix.test }}' != 'other' ]]; then
-            cargo test -p necessist --test ${{ matrix.test }} --features=ci,strict -- --nocapture
+            cargo test -p necessist --test ${{ matrix.test }} --features=strict -- --nocapture
           else
             cargo test -p necessist --test general
             cargo test -p necessist-core
