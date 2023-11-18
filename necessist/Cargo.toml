@@ -9,11 +9,6 @@ authors = ["Samuel Moelius <sam@moeli.us>"]
 license = "AGPL-3.0"
 repository = "https://github.com/trailofbits/necessist"
 
-[[test]]
-name = "ci"
-path = "tests/ci.rs"
-required-features = ["ci"]
-
 [dependencies]
 necessist-core = { version = "=0.3.4", path = "../core", features = ["clap"] }
 necessist-frameworks = { version = "=0.3.4", path = "../frameworks" }
@@ -45,6 +40,5 @@ walkdir = "2.4"
 
 [features]
 default = []
-ci = []
 dogfood = []
 strict = []

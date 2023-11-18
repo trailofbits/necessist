@@ -1,0 +1,49 @@
+name: Install testing tools
+runs:
+  using: composite
+  steps:
+    # smoelius: https://docs.solana.com/cli/install-solana-cli-tools
+    - name: Install Solana
+      run: |
+        # smoelius: The latest stable (1.16) seems to cause problems for the xNFT tests. I suspect
+        # this is the reason:
+        # https://github.com/solana-labs/solana/issues/31960#issuecomment-1668682153
+        sh -c "$(curl -sSfL https://release.solana.com/v1.14.29/install)"
+        echo "$HOME/.local/share/solana/install/active_release/bin" >> "$GITHUB_PATH"
+      shell: bash
+
+    # smoelius: https://www.anchor-lang.com/docs/installation
+    - name: Install Anchor
+      run: |
+        cp frameworks/src/anchor_ts/rfc8032_test_vector.json ~/.config/solana/id.json
+        if [[ "$(anchor --version)" != 'anchor-cli 0.27.0' ]]; then
+          cargo install --git https://github.com/coral-xyz/anchor avm --locked --force
+          avm install 0.27.0
+          avm use 0.27.0
+        fi
+      shell: bash
+
+    - name: Install Foundry
+      uses: foundry-rs/foundry-toolchain@v1
+
+    - name: Install Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: "^1.20.1"
+        cache: false
+
+    # smoelius: The Chainlink Foundry test requires `node` and `pnpm`.
+    - name: Install Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 16
+
+    - name: Install pnpm
+      uses: pnpm/action-setup@v2
+      with:
+        version: 8
+
+    - name: Install Setuptools
+      if: ${{ runner.os == 'macOS' }}
+      run: pip install setuptools
+      shell: bash

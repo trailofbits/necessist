@@ -2,12 +2,12 @@ use assert_cmd::assert::OutputAssertExt;
 use cargo_metadata::MetadataCommand;
 use regex::Regex;
 use std::{
-    env::{remove_var, set_current_dir},
+    env::{remove_var, set_current_dir, var},
     ffi::OsStr,
     fs::{read_to_string, OpenOptions},
     io::{stderr, Write},
     path::Path,
-    process::Command,
+    process::{exit, Command},
     sync::Mutex,
 };
 use tempfile::tempdir;
@@ -15,6 +15,11 @@ use walkdir::WalkDir;
 
 #[ctor::ctor]
 fn initialize() {
+    // smoelius: Run the CI tests if either the target OS is Linux or we are running locally, i.e.,
+    // `CI` is _not_ set.
+    if cfg!(not(target_os = "linux")) && var("CI").is_ok() {
+        exit(0);
+    }
     remove_var("CARGO_TERM_COLOR");
     set_current_dir("..").unwrap();
 }
@@ -78,13 +83,7 @@ fn format() {
 
 #[test]
 fn github() {
-    const EXCEPTIONS: &[&str] = &[
-        "ci",
-        "ci_is_disabled",
-        "dogfood",
-        "general",
-        "third_party_common",
-    ];
+    const EXCEPTIONS: &[&str] = &["ci_is_disabled", "dogfood", "general", "third_party_common"];
 
     let metadata = MetadataCommand::new().no_deps().exec().unwrap();
     let package = metadata
