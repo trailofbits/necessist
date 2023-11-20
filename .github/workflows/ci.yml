@@ -48,10 +48,12 @@ jobs:
             target/dylint/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
+      - name: Rustup
+        run: rustup update
+
       - name: Install CI tools
         if: ${{ matrix.environment == 'ubuntu-latest' && matrix.test == 'ci' }}
         run: |
-          rustup update
           rustup +nightly component add clippy rustfmt
           cargo install cargo-dylint dylint-link || true
           cargo install cargo-hack               || true
