@@ -93,7 +93,7 @@ pub fn necessist<Identifier: Applicable + Display + IntoEnumIterator + ToImpleme
     let root = opts
         .root
         .as_ref()
-        .map_or_else(current_dir, |root| root.canonicalize())
+        .map_or_else(current_dir, dunce::canonicalize)
         .map(Rc::new)?;
 
     #[cfg(feature = "lock_root")]
@@ -364,8 +364,7 @@ fn canonicalize_test_files(context: &LightContext) -> Result<Vec<PathBuf>> {
         .test_files
         .iter()
         .map(|path| {
-            let path_buf = path
-                .canonicalize()
+            let path_buf = dunce::canonicalize(path)
                 .with_context(|| format!("Failed to canonicalize {path:?}"))?;
             ensure!(
                 path_buf.starts_with(context.root.as_path()),
