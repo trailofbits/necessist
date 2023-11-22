@@ -1,6 +1,5 @@
 use assert_cmd::output::OutputError;
 use necessist_core::{util, Span};
-use necessist_util::{tempdir, TempDir};
 use regex::Regex;
 use serde::Deserialize;
 use similar_asserts::SimpleDiff;
@@ -23,6 +22,10 @@ use subprocess::{Exec, Redirection};
 
 mod string_or_vec;
 use string_or_vec::StringOrVec;
+
+#[path = "../tempfile_util.rs"]
+mod tempfile_util;
+use tempfile_util::{tempdir, TempDir};
 
 // smoelius: `ERROR_EXIT_CODE` is from:
 // https://github.com/rust-lang/rust/blob/12397e9dd5a97460d76c884d449ca1c2d26da8ed/src/libtest/lib.rs#L94
@@ -50,8 +53,8 @@ struct Test {
     #[serde(default)]
     init: Option<String>,
 
-    /// Path to canonicalize and prepend to the `PATH` environment variable after the `init`
-    /// command is run, but before Necessist is run. The path is relative to the repository root.
+    /// Path to prepend to the `PATH` environment variable after the `init` command is run, but
+    /// before Necessist is run. The path is relative to the repository root.
     #[serde(default)]
     path_prefix: Option<String>,
 
@@ -370,8 +373,6 @@ fn init_tempdir(tempdir: &Path, key: &Key) -> String {
 fn run_test(tempdir: &Path, path: &Path, test: &Test) -> String {
     let mut output = String::new();
 
-    let tempdir_canonicalized = tempdir.canonicalize().unwrap();
-
     let configs = if test.config.is_empty() {
         vec![None]
     } else if test.config_mandatory {
@@ -436,11 +437,10 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> String {
         let mut exec = Exec::cmd("../target/debug/necessist");
         exec = exec.args(&["--no-sqlite", "--root", &root.to_string_lossy()]);
         if let Some(prefix) = &test.path_prefix {
-            let prefix_canonicalized = tempdir.join(prefix).canonicalize().unwrap();
+            let prefix_in_tempdir = tempdir.join(prefix);
             let path = var("PATH").unwrap();
             let path_prepended =
-                join_paths(std::iter::once(prefix_canonicalized).chain(split_paths(&path)))
-                    .unwrap();
+                join_paths(std::iter::once(prefix_in_tempdir).chain(split_paths(&path))).unwrap();
             exec = exec.env("PATH", path_prepended);
         }
         if let Some(framework) = &test.framework {
@@ -475,9 +475,7 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> String {
 
         let stdout_actual = std::str::from_utf8(&buf).unwrap();
 
-        // smoelius: macOS requires the paths to be canonicalized, because `/tmp` is symlinked to
-        // `private/tmp`.
-        let stdout_normalized = normalize_paths(stdout_actual, &tempdir_canonicalized);
+        let stdout_normalized = normalize_paths(stdout_actual, tempdir);
 
         if enabled("BLESS") {
             write(path_stdout, stdout_normalized).unwrap();

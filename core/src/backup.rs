@@ -70,6 +70,7 @@ fn manual_copy(from: &Path, to: &Path) -> Result<()> {
 }
 
 fn sibling_tempfile(path: &Path) -> Result<NamedTempFile> {
+    #[allow(clippy::disallowed_methods)]
     let canonical_path = path.canonicalize()?;
     #[allow(clippy::expect_used)]
     let parent = canonical_path

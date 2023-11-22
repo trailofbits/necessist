@@ -1000,6 +1000,7 @@ dependencies = [
  "ctrlc",
  "curl",
  "diesel",
+ "dunce",
  "git2",
  "heck",
  "indicatif",
