@@ -78,17 +78,21 @@ pub(crate) fn init(
 
     let exists = path_buf.try_exists()?;
 
-    let no_db_msg =
-        |flag: &str| format!("No sqlite database to {flag} at {path_buf:?}; creating new database");
+    let no_db_msg = |flag: &str| {
+        format!(
+            r#"No sqlite database to {flag} at "{}"; creating new database"#,
+            path_buf.display()
+        )
+    };
 
     match (exists, dump, reset, resume) {
         (true, false, false, false) => bail!(
-            "Found an sqlite database at {:?}; please pass either --reset or --resume",
-            path_buf
+            r#"Found an sqlite database at "{}"; please pass either --reset or --resume"#,
+            path_buf.display()
         ),
         (false, true, _, _) => bail!(
-            "--dump was passed, but no sqlite database found at {:?}",
-            path_buf
+            r#"--dump was passed, but no sqlite database found at "{}""#,
+            path_buf.display()
         ),
         (false, _, true, _) => warn(
             context,
