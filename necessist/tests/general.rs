@@ -3,7 +3,9 @@ use fs_extra::dir::{copy, CopyOptions};
 use necessist_core::util;
 use predicates::prelude::*;
 use std::{path::PathBuf, process::Command};
-use tempfile::tempdir;
+
+mod tempfile_util;
+use tempfile_util::tempdir;
 
 const ROOT: &str = "../examples/basic";
 const TIMEOUT: &str = "5";

@@ -1,5 +1,6 @@
 use assert_cmd::output::OutputError;
 use necessist_core::{util, Span};
+use necessist_util::{tempdir, TempDir};
 use regex::Regex;
 use serde::Deserialize;
 use similar_asserts::SimpleDiff;
@@ -19,7 +20,6 @@ use std::{
     time::Instant,
 };
 use subprocess::{Exec, Redirection};
-use tempfile::{tempdir, TempDir};
 
 mod string_or_vec;
 use string_or_vec::StringOrVec;
