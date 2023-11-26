@@ -10,8 +10,10 @@ use std::{
     process::{exit, Command},
     sync::Mutex,
 };
-use tempfile::tempdir;
 use walkdir::WalkDir;
+
+mod tempfile_util;
+use tempfile_util::tempdir;
 
 #[ctor::ctor]
 fn initialize() {
@@ -83,7 +85,13 @@ fn format() {
 
 #[test]
 fn github() {
-    const EXCEPTIONS: &[&str] = &["ci_is_disabled", "dogfood", "general", "third_party_common"];
+    const EXCEPTIONS: &[&str] = &[
+        "ci_is_disabled",
+        "dogfood",
+        "general",
+        "tempfile_util",
+        "third_party_common",
+    ];
 
     let metadata = MetadataCommand::new().no_deps().exec().unwrap();
     let package = metadata

@@ -965,6 +965,7 @@ dependencies = [
  "clap",
  "ctor",
  "curl",
+ "dunce",
  "env_logger",
  "fs_extra",
  "heck",
