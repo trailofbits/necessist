@@ -456,7 +456,7 @@ impl LocWithOptionalSemicolon for Statement {
         match loc {
             Loc::File(file_no, start, mut end) => {
                 let mut chars = contents.chars().skip(end).peekable();
-                while chars.peek().map_or(false, |c| c.is_whitespace()) {
+                while chars.peek().copied().map_or(false, char::is_whitespace) {
                     end += 1;
                     let _ = chars.next();
                 }
