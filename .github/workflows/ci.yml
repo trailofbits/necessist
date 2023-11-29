@@ -66,6 +66,10 @@ jobs:
         if: ${{ matrix.test != 'ci' }}
         uses: ./.github/workflows/install-testing-tools
 
+      - name: Enable debug logging
+        if: ${{ runner.debug == 1 }}
+        run: echo 'RUST_LOG=debug' >> "$GITHUB_ENV"
+
       - name: Test
         run: |
           if [[ '${{ matrix.test }}' != 'other' ]]; then
