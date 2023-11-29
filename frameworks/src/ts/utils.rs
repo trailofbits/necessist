@@ -12,11 +12,11 @@ pub fn install_node_modules(context: &LightContext) -> Result<()> {
     // smoelius: If a `pnpm-lock.yaml` file exists, use `pnpm install`. If a `yarn.lock` file
     // exists, use `yarn`. If neither exist, default to `npm install`.
     let mut command = if context.root.join("pnpm-lock.yaml").try_exists()? {
-        let mut command = Command::new("pnpm");
+        let mut command = script("pnpm");
         command.arg("install");
         command
     } else if context.root.join("yarn.lock").try_exists()? {
-        Command::new("yarn")
+        script("yarn")
     } else {
         let mut command = Command::new("npm");
         command.arg("install");
@@ -30,4 +30,16 @@ pub fn install_node_modules(context: &LightContext) -> Result<()> {
     let output = command.output_stripped_of_ansi_escapes()?;
     ensure!(output.status().success(), "{:#?}", output);
     Ok(())
+}
+
+#[cfg(not(windows))]
+pub fn script(program: &str) -> Command {
+    Command::new(program)
+}
+
+#[cfg(windows)]
+pub fn script(program: &str) -> Command {
+    let mut command = Command::new("cmd");
+    command.args(["/c", &format!("{program}.cmd")]);
+    command
 }

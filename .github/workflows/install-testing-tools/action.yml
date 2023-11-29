@@ -40,10 +40,14 @@ runs:
       with:
         node-version: 16
 
+    - name: Install Yarn
+      if: ${{ runner.os == 'Windows' }}
+      run: npm install --global yarn
+      shell: bash
+
     - name: Install pnpm
-      uses: pnpm/action-setup@v2
-      with:
-        version: 8
+      run: npm install --global pnpm
+      shell: bash
 
     - name: Install Setuptools
       if: ${{ runner.os == 'macOS' }}

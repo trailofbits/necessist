@@ -5,7 +5,7 @@ use necessist_core::{
     framework::{Interface, Postprocess},
     LightContext, Span,
 };
-use std::{path::Path, process::Command};
+use std::path::Path;
 use subprocess::Exec;
 
 pub struct HardhatTs {
@@ -47,7 +47,7 @@ impl RunHigh for HardhatTs {
 
         compile(context)?;
 
-        let mut command = Command::new("npx");
+        let mut command = ts::utils::script("npx");
         command.current_dir(context.root.as_path());
         command.args(["hardhat", "test", &test_file.to_string_lossy()]);
         command.args(&context.opts.args);
@@ -65,7 +65,7 @@ impl RunHigh for HardhatTs {
             return Ok(None);
         }
 
-        let mut command = Command::new("npx");
+        let mut command = ts::utils::script("npx");
         command.current_dir(context.root.as_path());
         command.args(["hardhat", "test", &span.source_file.to_string_lossy()]);
         command.args(&context.opts.args);
@@ -75,7 +75,7 @@ impl RunHigh for HardhatTs {
 }
 
 fn compile(context: &LightContext) -> Result<()> {
-    let mut command = Command::new("npx");
+    let mut command = ts::utils::script("npx");
     command.current_dir(context.root.as_path());
     command.args(["hardhat", "compile"]);
     command.args(&context.opts.args);
