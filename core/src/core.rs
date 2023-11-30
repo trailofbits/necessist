@@ -252,7 +252,7 @@ fn run(mut context: Context, test_file_span_map: BTreeMap<SourceFile, Vec<Span>>
                     &context.light(),
                     Warning::DryRunFailed,
                     &test_file,
-                    &format!("dry run failed: {error}"),
+                    &format!("dry run failed: {error:?}"),
                     WarnFlags::empty(),
                 )?;
             }

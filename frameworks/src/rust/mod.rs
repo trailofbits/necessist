@@ -346,7 +346,7 @@ impl ParseLow for Rust {
                     warn(
                         context,
                         Warning::ModulePathUnknown,
-                        &format!("Failed to determine module path: {error}"),
+                        &format!("Failed to determine module path: {error:?}"),
                         WarnFlags::empty(),
                     )?;
                     return Ok(false);
