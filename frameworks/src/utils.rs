@@ -1,8 +1,6 @@
+use anyhow::{Context, Result};
 use assert_cmd::output::OutputError;
-use std::{
-    io::Result,
-    process::{Command, ExitStatus, Output},
-};
+use std::process::{Command, ExitStatus, Output};
 use subprocess::Exec;
 
 pub fn exec_from_command(command: &Command) -> Exec {
@@ -31,7 +29,9 @@ impl OutputStrippedOfAnsiScapes for Command {
             status,
             stdout,
             stderr,
-        } = self.output()?;
+        } = self
+            .output()
+            .with_context(|| format!("Failed to run command: {self:?}"))?;
         Ok(OutputError::new(Output {
             status,
             stdout: strip_ansi_escapes::strip(stdout),
