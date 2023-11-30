@@ -417,7 +417,7 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> String {
         };
 
         let stdout_expected = read_to_string(&path_stdout)
-            .map_err(|error| format!("Failed to read {path_stdout:?}: {error}"))
+            .map_err(|error| format!("Failed to read {path_stdout:?}: {error:?}"))
             .unwrap();
 
         let root = test
