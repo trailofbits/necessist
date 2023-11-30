@@ -648,7 +648,7 @@ fn transitive_kill(pid: u32) -> Result<()> {
 
     while let Some((pid, visited)) = pids.pop() {
         if visited {
-            let _status = Command::new("kill")
+            let _status = kill()
                 .arg(pid.to_string())
                 .stdout(Stdio::null())
                 .stderr(Stdio::null())
@@ -658,18 +658,56 @@ fn transitive_kill(pid: u32) -> Result<()> {
         } else {
             pids.push((pid, true));
 
-            let output = Command::new("pgrep")
-                .args(["-P", &pid.to_string()])
-                .output()?;
-
-            let stdout = String::from_utf8(output.stdout)?;
-
-            for line in stdout.lines() {
-                let pid = line.parse::<u32>()?;
+            for line in child_processes(pid)? {
+                let pid = line
+                    .parse::<u32>()
+                    .with_context(|| format!("failed to parse `{line}`"))?;
                 pids.push((pid, false));
             }
         }
     }
 
     Ok(())
+}
+
+#[cfg(not(windows))]
+fn kill() -> Command {
+    Command::new("kill")
+}
+
+#[cfg(windows)]
+fn kill() -> Command {
+    let mut command = Command::new("taskkill");
+    command.args(["/f", "/pid"]);
+    command
+}
+
+#[cfg(not(windows))]
+fn child_processes(pid: u32) -> Result<Vec<String>> {
+    let output = Command::new("pgrep")
+        .args(["-P", &pid.to_string()])
+        .output()?;
+    let stdout = String::from_utf8(output.stdout)?;
+    Ok(stdout.lines().map(ToOwned::to_owned).collect())
+}
+
+#[cfg(windows)]
+fn child_processes(pid: u32) -> Result<Vec<String>> {
+    let output = Command::new("wmic")
+        .args([
+            "process",
+            "where",
+            &format!("ParentProcessId={pid}"),
+            "get",
+            "ProcessId",
+        ])
+        .output()?;
+    let stdout = String::from_utf8(output.stdout)?;
+    Ok(stdout
+        .lines()
+        .map(str::trim_end)
+        .filter(|line| !line.is_empty())
+        .skip(1)
+        .map(ToOwned::to_owned)
+        .collect())
 }
