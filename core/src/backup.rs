@@ -40,9 +40,9 @@ impl Drop for Backup {
             // this information. A useful relevant article: https://apenwarr.ca/log/20181113
             let before = mtime(&self.path).ok();
             loop {
-                #[cfg(not(target_os = "macos"))]
+                #[cfg(target_os = "linux")]
                 let result = std::fs::copy(&tempfile, &self.path);
-                #[cfg(target_os = "macos")]
+                #[cfg(not(target_os = "linux"))]
                 let result = manual_copy(tempfile.path(), &self.path);
                 if result.is_err() {
                     break;
@@ -63,7 +63,7 @@ fn mtime(path: &Path) -> Result<SystemTime> {
     path.metadata().and_then(|metadata| metadata.modified())
 }
 
-#[cfg(target_os = "macos")]
+#[cfg(not(target_os = "linux"))]
 fn manual_copy(from: &Path, to: &Path) -> Result<()> {
     let contents = std::fs::read(from)?;
     std::fs::write(to, contents)
