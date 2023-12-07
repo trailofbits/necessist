@@ -58,7 +58,7 @@ jobs:
           cargo install cargo-dylint dylint-link || true
           cargo install cargo-hack               || true
           cargo install cargo-license            || true
-          cargo install cargo-modules            || true
+          cargo install cargo-modules --locked --version=^0.11 || true
           cargo install cargo-sort               || true
           cargo install cargo-udeps --locked     || true
 
