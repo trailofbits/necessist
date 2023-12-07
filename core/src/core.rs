@@ -451,7 +451,11 @@ fn dump_candidates(
     for span in test_file_span_map.values().flatten() {
         let text = span.source_text()?;
 
-        (context.println)(&format!("{}: `{}`", span.to_console_string(), text));
+        (context.println)(&format!(
+            "{}: `{}`",
+            span.to_console_string(),
+            text.replace('\r', "")
+        ));
     }
 
     Ok(())
@@ -540,7 +544,7 @@ fn emit_to_console(context: &LightContext, removal: &Removal) {
         let msg = format!(
             "{}: `{}` {}",
             span.to_console_string(),
-            text,
+            text.replace('\r', ""),
             if std::io::stdout().is_terminal() {
                 outcome.style().bold()
             } else {
