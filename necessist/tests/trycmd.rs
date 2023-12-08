@@ -1,5 +1,3 @@
-#![cfg(unix)]
-
 use assert_cmd::prelude::*;
 use necessist_core::util;
 use regex::Regex;
