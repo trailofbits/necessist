@@ -19,10 +19,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        environment: [ubuntu-latest, macos-latest]
+        environment: [ubuntu-latest, macos-latest, windows-latest]
         test: [ci, other, third_party_0, third_party_1, trycmd]
 
     runs-on: ${{ matrix.environment }}
+
+    defaults:
+      run:
+        shell: bash
 
     steps:
       - name: Log github refs

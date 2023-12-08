@@ -36,6 +36,14 @@ toml = "0.8"
 [target.'cfg(unix)'.dependencies]
 libc = { version = "0.2", optional = true }
 
+[target.'cfg(windows)'.dependencies]
+libsqlite3-sys = { version = "0.27", features = ["bundled"] }
+windows-sys = { version = "0.48", features = [
+    "Win32_Storage_FileSystem",
+    "Win32_Foundation",
+    "Win32_System_IO",
+], optional = true }
+
 [dev-dependencies]
 assert_cmd = "2.0"
 predicates = "3.0"
@@ -48,4 +56,4 @@ syn = "2.0"
 
 [features]
 default = ["lock_root"]
-lock_root = ["libc"]
+lock_root = ["libc", "windows-sys"]
