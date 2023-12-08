@@ -112,7 +112,7 @@ pub fn necessist<Identifier: Applicable + Display + IntoEnumIterator + ToImpleme
         .map_or_else(current_dir, |root| root.canonicalize())
         .map(Rc::new)?;
 
-    #[cfg(all(unix, feature = "lock_root"))]
+    #[cfg(feature = "lock_root")]
     let _file = lock_root(&root)?;
 
     let mut context = LightContext {
@@ -324,7 +324,7 @@ fn process_options(opts: &Necessist) -> Result<()> {
     Ok(())
 }
 
-#[cfg(all(unix, feature = "lock_root"))]
+#[cfg(feature = "lock_root")]
 fn lock_root(root: &Path) -> Result<std::fs::File> {
     if enabled("TRYCMD") {
         crate::flock::lock_path(root)
@@ -334,7 +334,7 @@ fn lock_root(root: &Path) -> Result<std::fs::File> {
     .with_context(|| format!("Failed to lock {root:?}"))
 }
 
-#[cfg(all(unix, feature = "lock_root"))]
+#[cfg(feature = "lock_root")]
 fn enabled(key: &str) -> bool {
     var(key).map_or(false, |value| value != "0")
 }
