@@ -74,7 +74,8 @@ pub(super) fn cached_test_file_fs_module_path<'a>(
                 None
             })()
             .ok_or(anyhow!(
-                "Failed to determine relative path of test file {test_file:?}"
+                r#"Failed to determine relative path of test file "{}""#,
+                test_file.display()
             ))?;
 
             fs_module_path(test_file_relative_path)
