@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.0
+
+- Make error messages more informative ([#901](https://github.com/trailofbits/necessist/pull/901) and [#900](https://github.com/trailofbits/necessist/pull/900))
+- FEATURE: Limited Windows support ([#879](https://github.com/trailofbits/necessist/pull/901))
+
 ## 0.3.4
 
 - Fix link to README.md ([#887](https://github.com/trailofbits/necessist/pull/887))
