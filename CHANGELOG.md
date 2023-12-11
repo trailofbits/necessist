@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.1
+
+- Update `windows-sys` to version 0.52.0 ([#911](https://github.com/trailofbits/necessist/pull/911))
+
 ## 0.4.0
 
 - Make error messages more informative ([#901](https://github.com/trailofbits/necessist/pull/901) and [#900](https://github.com/trailofbits/necessist/pull/900))
