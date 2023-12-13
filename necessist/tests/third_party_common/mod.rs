@@ -16,7 +16,7 @@ use std::{
     rc::Rc,
     sync::mpsc::channel,
     thread::{available_parallelism, spawn},
-    time::Instant,
+    time::{Duration, Instant},
 };
 use subprocess::{Exec, Redirection};
 
@@ -96,7 +96,7 @@ struct Test {
     config: toml::Table,
 }
 
-#[derive(Clone, Eq, Ord, PartialEq, PartialOrd)]
+#[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 struct Key {
     url: String,
     rev: Option<String>,
@@ -187,10 +187,13 @@ pub fn all_tests_in(path: impl AsRef<Path>) {
         let (key, mut tests) = tests.pop_first().unwrap();
         let (path, test) = tests.remove(0);
         let tempdir = tempdir().unwrap();
-        let mut output = init_tempdir(tempdir.path(), &key);
-        output += &run_test(tempdir.path(), &path, &test);
+        let mut output_combined = init_tempdir(tempdir.path(), &key);
+        let (output, elapsed) = run_test(tempdir.path(), &path, &test);
+        output_combined += &output;
         #[allow(clippy::explicit_write)]
         write!(stderr(), "{output}").unwrap();
+        #[allow(clippy::explicit_write)]
+        writeln!(stderr(), "elapsed: {elapsed:?}").unwrap();
     } else {
         run_tests_concurrently(tests, n_tests);
     }
@@ -204,6 +207,7 @@ fn ssh_agent_is_running() -> bool {
         .success()
 }
 
+#[allow(clippy::too_many_lines)]
 fn run_tests_concurrently(mut tests: BTreeMap<Key, Vec<(PathBuf, Test)>>, mut n_tests: usize) {
     let hook = take_hook();
     set_hook(Box::new(move |panic_info| {
@@ -218,6 +222,8 @@ If you do not see a panic message above, check that you passed --nocapture to th
         .unwrap();
         exit(ERROR_EXIT_CODE);
     }));
+
+    let mut summary = BTreeMap::<Key, (Vec<(PathBuf, Duration)>, Duration)>::new();
 
     let mut repos = BTreeMap::new();
 
@@ -234,7 +240,7 @@ If you do not see a panic message above, check that you passed --nocapture to th
         );
     }
 
-    let (tx_output, rx_output) = channel::<(Key, usize, String)>();
+    let (tx_output, rx_output) = channel::<(Key, usize, String, PathBuf, Duration)>();
 
     let n_children = available_parallelism().unwrap().get();
     let mut children = Vec::new();
@@ -246,13 +252,16 @@ If you do not see a panic message above, check that you passed --nocapture to th
             tx_task,
             spawn(move || {
                 while let Ok(task) = rx_task.recv() {
-                    let mut output = if task.inited {
+                    let mut output_combined = if task.inited {
                         String::new()
                     } else {
                         init_tempdir(&task.tempdir, &task.key)
                     };
-                    output += &run_test(&task.tempdir, &task.path, &task.test);
-                    tx_output.send((task.key, i, output)).unwrap();
+                    let (output, elapsed) = run_test(&task.tempdir, &task.path, &task.test);
+                    output_combined += &output;
+                    tx_output
+                        .send((task.key, i, output_combined, task.path, elapsed))
+                        .unwrap();
                 }
             }),
         ));
@@ -306,7 +315,7 @@ If you do not see a panic message above, check that you passed --nocapture to th
         }
 
         if children_idle.len() < n_children {
-            let (key, i, output) = rx_output.recv().unwrap();
+            let (key, i, output, path, elapsed) = rx_output.recv().unwrap();
 
             #[allow(clippy::explicit_write)]
             write!(
@@ -321,12 +330,62 @@ If you do not see a panic message above, check that you passed --nocapture to th
             let repo = repos.get_mut(&key).unwrap();
             repo.inited = true;
             repo.busy = false;
+
+            let value = summary.entry(key).or_default();
+            value.0.push((path, elapsed));
+            value.1 += elapsed;
         }
     }
 
     for (tx_task, child) in children {
         drop(tx_task);
         child.join().unwrap();
+    }
+
+    display_summary(summary);
+}
+
+fn display_summary(mut summary: BTreeMap<Key, (Vec<(PathBuf, Duration)>, Duration)>) {
+    summary
+        .values_mut()
+        .for_each(|(pairs, _)| pairs.sort_by_key(|&(_, elapsed)| elapsed));
+
+    let mut summary = summary.into_iter().collect::<Vec<_>>();
+    summary.sort_by_key(|&(_, (_, total))| total);
+
+    let width_path = summary
+        .iter()
+        .flat_map(|(_, (pairs, _))| pairs.iter().map(|(path, _)| path))
+        .fold(0, |width, path| {
+            std::cmp::max(width, path.to_string_lossy().len())
+        });
+
+    let width_elapsed = summary
+        .iter()
+        .flat_map(|(_, (pairs, total))| {
+            pairs
+                .iter()
+                .map(|(_, elapsed)| elapsed)
+                .chain(std::iter::once(total))
+        })
+        .fold(0, |width, elapsed| {
+            std::cmp::max(width, elapsed.as_secs().to_string().len())
+        });
+
+    for (key, (pairs, total)) in summary {
+        println!("{key:?}");
+        for (path, elapsed) in pairs {
+            println!(
+                "    {:width_path$}  {:>width_elapsed$}s",
+                path.to_string_lossy(),
+                elapsed.as_secs(),
+            );
+        }
+        println!(
+            "    {:width_path$}  {:>width_elapsed$}s",
+            "",
+            total.as_secs()
+        );
     }
 }
 
@@ -370,8 +429,9 @@ fn init_tempdir(tempdir: &Path, key: &Key) -> String {
 }
 
 #[allow(clippy::too_many_lines)]
-fn run_test(tempdir: &Path, path: &Path, test: &Test) -> String {
+fn run_test(tempdir: &Path, path: &Path, test: &Test) -> (String, Duration) {
     let mut output = String::new();
+    let mut elapsed = Duration::default();
 
     let configs = if test.config.is_empty() {
         vec![None]
@@ -470,8 +530,7 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> String {
 
         let _ = stdout.read_to_end(&mut buf).unwrap();
 
-        #[allow(clippy::explicit_write)]
-        writeln!(output, "elapsed: {:?}", start.elapsed()).unwrap();
+        elapsed += start.elapsed();
 
         let stdout_actual = std::str::from_utf8(&buf).unwrap();
 
@@ -507,7 +566,7 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> String {
         }
     }
 
-    output
+    (output, elapsed)
 }
 
 fn check_sqlite_urls(tempdir: &Path, root: &Path, test: &Test) {
