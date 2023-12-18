@@ -13,7 +13,7 @@ pub(crate) enum Identifier {}
 
 impl ToImplementation for Identifier {
     fn to_implementation(&self, _context: &LightContext) -> Result<Option<Box<dyn Interface>>> {
-        match *self {}
+        unreachable!()
     }
 }
 
