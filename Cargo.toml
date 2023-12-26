@@ -1,9 +1,5 @@
 [workspace]
-members = [
-    "core",
-    "frameworks",
-    "necessist",
-]
+members = ["core", "frameworks", "necessist"]
 resolver = "2"
 
 [workspace.metadata.dylint]
@@ -20,3 +16,6 @@ libraries = [
     { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/ref_aware_redundant_closure_for_method_calls" },
     { git = "https://github.com/trailofbits/dylint", pattern = "examples/restriction/suboptimal_pattern" },
 ]
+
+[workspace.metadata.unmaintained]
+ignore = ["solang-parser"]

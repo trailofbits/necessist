@@ -299,6 +299,14 @@ fn sort() {
 }
 
 #[test]
+fn unmaintained() {
+    Command::new("cargo")
+        .args(["unmaintained", "--color=never", "--fail-fast"])
+        .assert()
+        .success();
+}
+
+#[test]
 fn update() {
     preserves_cleanliness("update", || {
         Command::new("cargo")
