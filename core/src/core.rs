@@ -29,10 +29,28 @@ const DEFAULT_TIMEOUT: Duration = Duration::from_secs(60);
 
 static CTRLC: AtomicBool = AtomicBool::new(false);
 
+#[derive(Clone)]
 pub(crate) struct Removal {
     pub span: Span,
     pub text: String,
     pub outcome: Outcome,
+}
+
+#[derive(Debug)]
+enum MismatchKind {
+    Missing,
+    Unexpected,
+}
+
+impl Display for MismatchKind {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", format!("{self:?}").to_kebab_case())
+    }
+}
+
+struct Mismatch {
+    kind: MismatchKind,
+    removal: Removal,
 }
 
 struct Context<'a> {
@@ -246,7 +264,8 @@ fn run(mut context: Context, test_file_span_map: BTreeMap<SourceFile, Vec<Span>>
             }
 
             if result.is_err() {
-                update_progress(&context, false, span_iter.count())?;
+                let n = skip_present_spans(&context, span_iter)?;
+                update_progress(&context, None, n)?;
                 continue;
             }
         }
@@ -275,7 +294,7 @@ fn run(mut context: Context, test_file_span_map: BTreeMap<SourceFile, Vec<Span>>
                 emit(&mut context, span, &text, outcome)?;
             }
 
-            update_progress(&context, false, 1)?;
+            update_progress(&context, None, 1)?;
         }
     }
 
@@ -381,12 +400,12 @@ fn canonicalize_test_files(context: &LightContext) -> Result<Vec<PathBuf>> {
 fn skip_past_removals<'a, I, J>(
     span_iter: &mut Peekable<I>,
     removal_iter: &mut Peekable<J>,
-) -> (bool, usize)
+) -> (Option<Mismatch>, usize)
 where
     I: Iterator<Item = &'a Span>,
     J: Iterator<Item = Removal>,
 {
-    let mut mismatch = false;
+    let mut mismatch = None;
     let mut n = 0;
     while let Some(&span) = span_iter.peek() {
         let Some(removal) = removal_iter.peek() else {
@@ -394,7 +413,10 @@ where
         };
         match span.cmp(&removal.span) {
             std::cmp::Ordering::Less => {
-                mismatch = true;
+                mismatch = Some(Mismatch {
+                    kind: MismatchKind::Unexpected,
+                    removal: removal.clone(),
+                });
                 break;
             }
             std::cmp::Ordering::Equal => {
@@ -403,7 +425,12 @@ where
                 n += 1;
             }
             std::cmp::Ordering::Greater => {
-                mismatch = true;
+                if mismatch.is_none() {
+                    mismatch = Some(Mismatch {
+                        kind: MismatchKind::Missing,
+                        removal: removal.clone(),
+                    });
+                }
                 let _removal = removal_iter.next();
             }
         }
@@ -412,12 +439,45 @@ where
     (mismatch, n)
 }
 
-fn update_progress(context: &Context, mismatch: bool, n: usize) -> Result<()> {
-    if mismatch {
+fn skip_present_spans<'a>(
+    context: &Context,
+    span_iter: impl Iterator<Item = &'a Span>,
+) -> Result<usize> {
+    let mut n = 0;
+
+    let sqlite = sqlite_init_lazy(&context.light())?;
+
+    for span in span_iter {
+        if let Some(sqlite) = sqlite.borrow_mut().as_mut() {
+            let text = span.source_text()?;
+            let removal = Removal {
+                span: span.clone(),
+                text,
+                outcome: Outcome::Skipped,
+            };
+            sqlite::insert(sqlite, &removal)?;
+        }
+        n += 1;
+    }
+
+    Ok(n)
+}
+
+fn update_progress(context: &Context, mismatch: Option<Mismatch>, n: usize) -> Result<()> {
+    if let Some(Mismatch {
+        kind,
+        removal: Removal { span, text, .. },
+    }) = mismatch
+    {
         warn(
             &context.light(),
             Warning::FilesChanged,
-            "Configuration or test files have changed since necessist.db was created",
+            &format!("\
+Configuration or test files have changed since necessist.db was created; the following entry is {kind}:
+    {}: `{}`",
+                span.to_console_string(),
+                text.replace('\r', ""),
+            ),
             WarnFlags::ONCE,
         )?;
     }
