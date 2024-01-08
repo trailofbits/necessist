@@ -8,11 +8,18 @@ use std::str::FromStr;
 use strum::IntoEnumIterator;
 use strum_macros::EnumIter;
 
+/// The outcome of running a test with a statement or method call removed.
 #[derive(Clone, Copy, Debug, EnumIter, PartialEq)]
 pub(crate) enum Outcome {
+    // The test(s) were not run (e.g., because a dry run failed).
+    Skipped,
+    /// The test(s) did not build.
     Nonbuildable,
+    /// The test(s) built but failed.
     Failed,
+    /// The test(s) built but timed-out.
     TimedOut,
+    // The test(s) built and passed.
     Passed,
 }
 
@@ -34,6 +41,7 @@ impl FromStr for Outcome {
 impl Outcome {
     pub fn style(self) -> Style {
         match self {
+            Outcome::Skipped => Style::default().dimmed(),
             Outcome::Nonbuildable => Blue.normal(),
             Outcome::Failed => Green.normal(),
             Outcome::TimedOut => Yellow.normal(),
