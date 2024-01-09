@@ -59,7 +59,7 @@ jobs:
         if: ${{ matrix.environment == 'ubuntu-latest' && matrix.test == 'ci' }}
         run: |
           rustup +nightly component add clippy rustfmt
-          cargo install cargo-dylint --git=https://github.com/trailofbits/dylint --no-default-features --features=metadata-cli || true
+          cargo install cargo-dylint --git=https://github.com/trailofbits/dylint --branch=smoelius-patch-1 --no-default-features --features=metadata-cli || true
           cargo install dylint-link              || true
           cargo install cargo-hack               || true
           cargo install cargo-license            || true
