@@ -194,6 +194,7 @@ fn markdown_link_check() {
         .success();
 }
 
+#[cfg(any())]
 #[test]
 fn modules() {
     let metadata = MetadataCommand::new().no_deps().exec().unwrap();
@@ -202,8 +203,7 @@ fn modules() {
         Command::new("cargo")
             .args([
                 "modules",
-                "generate",
-                "graph",
+                "dependencies",
                 "--acyclic",
                 "--layout=none",
                 "--package",

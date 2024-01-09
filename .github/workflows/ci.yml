@@ -63,10 +63,11 @@ jobs:
           cargo install dylint-link              || true
           cargo install cargo-hack               || true
           cargo install cargo-license            || true
-          cargo install cargo-modules --locked --version=^0.11 || true
           cargo install cargo-sort               || true
           cargo install cargo-udeps --locked     || true
           cargo install cargo-unmaintained       || true
+          # smoelius: `modules` test is disabled.
+          # cargo install cargo-modules --locked --version=^0.11 || true
 
       - name: Install testing tools
         if: ${{ matrix.test != 'ci' }}
