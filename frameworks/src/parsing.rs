@@ -1,5 +1,5 @@
 use super::{GenericVisitor, ParseHigh};
-use anyhow::{Context, Result};
+use anyhow::Result;
 use heck::ToKebabCase;
 use necessist_core::{config, util, warn, LightContext, SourceFile, Span, WarnFlags, Warning};
 use paste::paste;
@@ -335,12 +335,25 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
             assert!(test_file.starts_with(context.root.as_path()));
 
             #[allow(clippy::unwrap_used)]
-            let file = self.0.parse_file(test_file).with_context(|| {
-                format!(
-                    "Failed to parse {:?}",
-                    util::strip_prefix(test_file, context.root).unwrap()
-                )
-            })?;
+            let file = match self.0.parse_file(test_file) {
+                Ok(file) => file,
+                Err(error) => {
+                    warn(
+                        context,
+                        Warning::ParsingFailed,
+                        // smoelius: Use `{error}` rather than `{error:?}`. A backtrace seems
+                        // unnecessary.
+                        &format!(
+                            r#"Failed to parse "{}": {error}"#,
+                            util::strip_prefix(test_file, context.root)
+                                .unwrap()
+                                .display(),
+                        ),
+                        WarnFlags::empty(),
+                    )?;
+                    return Ok(());
+                }
+            };
 
             let storage = RefCell::new(self.0.storage_from_file(&file));
 
