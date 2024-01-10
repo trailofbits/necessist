@@ -26,6 +26,7 @@ pub enum Warning {
     ItMessageNotFound,
     ModulePathUnknown,
     OutputInvalid,
+    ParsingFailed,
     RunTestFailed,
 }
 
@@ -182,7 +183,8 @@ fn may_be_bug(warning: Warning) -> bool {
         | Warning::IgnoredMacrosUnsupported
         | Warning::IgnoredMethodsUnsupported
         | Warning::ItMessageNotFound
-        | Warning::OutputInvalid => false,
+        | Warning::OutputInvalid
+        | Warning::ParsingFailed => false,
         Warning::ModulePathUnknown | Warning::RunTestFailed => true,
     }
 }
