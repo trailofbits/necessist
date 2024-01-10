@@ -104,7 +104,7 @@ Of course, there is overlap is the sets of problems the two approaches can uncov
 
 </details>
 
-### Theoretical motivation
+### Possible theoretical foundation
 
 <details>
 <summary>Click to expand</summary>
@@ -113,23 +113,27 @@ The following criterion (`*`) comes close to describing the statements that Nece
 
 - (`*`) Statement `S`'s [weakest precondition] `P` has the same context (e.g., variables in scope) as `S`'s postcondition `Q`, and `P` does not imply `Q`.
 
-The notion that (`*`) tries to capture is: a statement that affects a subsequently asserted condition. In this section, we explain and motivate this choice, and briefly discuss alternatives. For concision, we focus on statements, but the remarks in this section apply to method calls as well.
+The notion that (`*`) tries to capture is: a statement that affects a subsequent assertion. In this section, we explain and motivate this choice. For concision, we focus on statements, but the remarks in this section apply to method calls as well.
 
-Consider a test through the lens of [predicate transformer semantics]. A test is a function with no inputs or outputs. Thus, an alternative procedure for determining whether a test passes is the following. Starting with `True`, iteratively work backwards through the test's statements, computing the weakest precondition of each. If the precondition arrived at for the test's first statement is `True`, then the test passes. If the precondition is `False`, the test fails.
+Recall the two kinds of [predicate transformer semantics]: weakest precondition and strongest postcondition. With the former, one reasons about the weakest precondition that could hold prior to a statement, given a postcondition that holds after the statement. With the latter, one reasons about the strongest postcondition that could hold after a statement, given a precondition that holds prior to the statement. Generally speaking, the former is more common (see [Aldrich 2013] for an explanation), and it is the one we use here.
+
+Consider a test through this lens. A test is a function with no inputs or outputs. Thus, an alternative procedure for determining whether a test passes is the following. Starting with `True`, iteratively work backwards through the test's statements, computing the weakest precondition of each. If the precondition arrived at for the test's first statement is `True`, then the test passes. If the precondition is `False`, the test fails.
 
 Now, imagine we were to apply this procedure, and consider a statement `S` that violates (`*`). We argue that it might not make sense to remove `S`:
 
-- If `S` adds or removes variables from the scope (e.g., `S` is a declaration), or `S` changes a variable's type, then removing `S` would likely result in a compilation failure. (On top of that, since `S`'s precondition and postcondition have different contexts, it's not clear how to compare them.)
+**Case 1**: `S` adds or removes variables from the scope (e.g., `S` is a declaration), or `S` changes a variable's type. Then removing `S` would likely result in a compilation failure. (On top of that, since `S`'s precondition and postcondition have different contexts, it's not clear how to compare them.)
 
-- If `S`'s precondition is stronger than its postcondition (e.g., `S` an `assert`), then `S` imposes constraints on the environments in which it executes. Put another way, `S` _tests_ something. Thus, removing `S` would likely detract from the overarching test's purpose.
+**Case 2**: `S`'s precondition is stronger than its postcondition (e.g., `S` is an assertion). Then `S` imposes constraints on the environments in which it executes. Put another way, `S` _tests_ something. Thus, removing `S` would likely detract from the test's overarching purpose.
 
 Conversely, consider a statement `S` that satisfies (`*`). Here is why it might make sense to remove `S`. Think of `S` as _shifting_ the set of valid environments, rather than constraining them. More precisely, if `S`'s weakest precondition `P` does not imply `Q`, and if `Q` is satisfiable, the there is an assignment to `P` and `Q`'s free variables that satisfies both `P` and `Q`. If such an assignment results from each environment in which `S` is actually executed, then the necessity of `S` is called into question.
 
-The main utility of (`*`) is in helping to select the statements that Necessist ignores. That is, if we imagine a predicate transformer semantics for one of Necessist's supported languages, and a statement `S` in that language, we can ask: would `S` satisfy (`*`)? If not, then then Necessist should likely ignore `S`.
+The main utility of (`*`) is in helping to select the functions, macros, and method calls that Necessist ignores. Necessist ignores certain of these by default. Suppose that, for one of the frameworks, we are considering whether Necessist should ignore some function `foo`. If we imagine a predicate transformer semantics for the framework's testing language, we can ask: if statement `S` were a call to `foo`, would `S` satisfy (`*`)? If the answer is "no," then Necessist should likely ignore `foo`.
 
-But (`*`) has other nice consequences. For example, the rule that the last statement in a test should be ignored follows from (`*`). To see this, note the such a statement's postcondition `Q` is always `True`. Thus, if the statement doesn't change the context, then its weakest precondition necessarily implies `Q`.
+Consider Rust's `clone` method, for example. A call to `clone` can be unnecessary. However, if we imagine a predicate transformer semantics for Rust, a call to `clone` is unlikely to satisfy (`*`). For this reason, Necessist does not attempt to remove `clone` calls.
 
-Having said all this, (`*`) doesn't quite capture what Necessist actually _does_. Consider a statement like `x -= 1`. Necessist will remove such a statement unconditionally, but (`*`) says maybe Necessist shouldn't. Assuming [overflow checks] are enabled, computing this statement's weakest precondition would look something like the following:
+In addition to helping to select the functions, etc. that Necessist ignores, (`*`) has other nice consequences. For example, the rule that the last statement in a test should be ignored follows from (`*`). To see this, note that such a statement's postcondition `Q` is always `True`. Thus, if the statement doesn't change the context, then its weakest precondition necessarily implies `Q`.
+
+Having said all this, (`*`) doesn't quite capture what Necessist actually _does_. Consider a statement like `x -= 1;`. Necessist will remove such a statement unconditionally, but (`*`) says maybe Necessist shouldn't. Assuming [overflow checks] are enabled, computing this statement's weakest precondition would look something like the following:
 
 ```
 { Q[(x - 1)/x] ^ x >= 1 }
@@ -137,25 +141,13 @@ x -= 1;
 { Q }
 ```
 
-Note that `x -= 1` does not change the context, and that `Q[(x - 1)/x] ^ x >= 1` could imply `Q`. For example, if `Q` does not contain `x`, then `Q[(x - 1)/x] = Q` and `Q ^ x >= 1` implies `Q`.
+Note that `x -= 1;` does not change the context, and that `Q[(x - 1)/x] ^ x >= 1` could imply `Q`. For example, if `Q` does not contain `x`, then `Q[(x - 1)/x] = Q` and `Q ^ x >= 1` implies `Q`.
 
-A question one can then ask is: _should_ Necessist remove this statement? Put another way, should Necessist's current behavior be adjusted, or should (`*`) be adjusted?
+Given the discrepancy between (`*`) and Necessist's current behavior, one can ask: which of the two should be adjusted? Put another way, should Necessist remove a statement like `x -= 1;` unconditionally?
 
-One way to look at this question is: which statements are worth removing, i.e., which statements are "interesting?" As implied above, (`*`) considers a statement "interesting" if it affects a subsequently asserted condition. Agreeing with this notion and that (`*`) adequately captures it are reasons to keep (`*`) and adjust Necessist's behavior.
+One way to look at this question is: which statements are worth removing, i.e., which statements are "interesting?" As implied above, (`*`) considers a statement "interesting" if its removal could affect a subsequent assertion. But there are other possible, useful definitions of an "interesting" statement. For example, one could consider strongest postconditions (mentioned above), or [frameworks besides Hoare logic entirely].
 
-But there are other possible, useful definitions of "interesting statement" upon which one could base an argument for adjusting (`*`). The following example is due to @2over12. Instead of weakest preconditions, one could consider [strongest postconditions]. For example, computing the strongest postcondition of `x -= 1` would look something like the following:
-
-```
-{ P }
-x -= 1;
-{ (exists x')[P[x'/x] ^ x' >= 1 ^ x = x' - 1] }
-```
-
-One could then consider a statement "interesting" if its strongest postcondition contains "interesting clauses" as determined by heuristics. @2over12 notes that a common source of bugs in tests is unintended side effects (e.g., if `x -= 1` were unintended). As already noted, (`*`) might not catch such bugs, but the just mentioned strongest postcondition scheme might.
-
-Other possible, useful definitions of "interesting statement" could involve frameworks besides [Hoare logic] entirely.
-
-To be clear, Necessist does not apply (`*`) formally, e.g., Necessist does not actually compute weakest preconditions. The current role of (`*`) is to help guide which statements Necessist should ignore, and (`*`) seems to do well in that role. As such, we leave revision of (`*`) to future work.
+To be clear, Necessist does not apply (`*`) formally, e.g., Necessist does not actually compute weakest preconditions. The current role of (`*`) is to help guide which statements Necessist should ignore, and (`*`) seems to do well in that role. As such, we leave resolving the aforementioned discrepancy to future work.
 
 </details>
 
@@ -444,9 +436,9 @@ We reserve the right to change what syntax Necessist ignores by default, and to 
 
 Necessist is licensed and distributed under the AGPLv3 license. [Contact us](mailto:opensource@trailofbits.com) if you're looking for an exception to the terms.
 
+[Aldrich 2013]: https://www.cs.cmu.edu/~aldrich/courses/15-819O-13sp/resources/hoare-logic.pdf
 [Chainlink]: https://github.com/smartcontractkit/chainlink/blob/a39e54e157b57d5fc3dba0aed6ac9d58382953b2/contracts/test/v0.7/Operator.test.ts#L1725-L1728
 [Configuration files]: #configuration-files
-[Hoare logic]: https://en.wikipedia.org/wiki/Hoare_logic
 [`assert_cmd::assert::Assert::success`]: https://docs.rs/assert_cmd/latest/assert_cmd/assert/struct.Assert.html#method.success
 [`glob`]: https://man7.org/linux/man-pages/man7/glob.7.html
 [`rust-openssl`]: https://github.com/sfackler/rust-openssl
@@ -463,6 +455,7 @@ Necessist is licensed and distributed under the AGPLv3 license. [Contact us](mai
 [`unnecessary_conversion_for_trait`]: https://github.com/trailofbits/dylint/tree/master/examples/supplementary/unnecessary_conversion_for_trait
 [added to the test]: https://github.com/sfackler/rust-openssl/pull/1852
 [crates.io]: https://crates.io/crates/necessist
+[frameworks besides Hoare logic entirely]: https://github.com/trailofbits/necessist/pull/474#discussion_r1230859226
 [github.com]: https://github.com/trailofbits/necessist
 [overflow checks]: https://doc.rust-lang.org/rustc/codegen-options/index.html#overflow-checks
 [path]: #paths
@@ -471,6 +464,5 @@ Necessist is licensed and distributed under the AGPLv3 license. [Contact us](mai
 [predicate transformer semantics]: https://en.wikipedia.org/wiki/Predicate_transformer_semantics
 [preprint]: https://agroce.github.io/asej18.pdf
 [sqlitebrowser]: https://sqlitebrowser.org/
-[strongest postconditions]: https://en.wikipedia.org/wiki/Predicate_transformer_semantics#Strongest_postcondition
 [toml]: https://toml.io/en/
 [weakest precondition]: https://en.wikipedia.org/wiki/Predicate_transformer_semantics#Weakest_preconditions
