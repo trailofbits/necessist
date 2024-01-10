@@ -120,6 +120,7 @@ impl Span {
         }
     }
 
+    /// Returns the spanned text.
     pub fn source_text(&self) -> Result<String> {
         let contents = self.source_file.contents();
 
