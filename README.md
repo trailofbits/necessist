@@ -444,25 +444,26 @@ We reserve the right to change what syntax Necessist ignores by default, and to 
 
 Necessist is licensed and distributed under the AGPLv3 license. [Contact us](mailto:opensource@trailofbits.com) if you're looking for an exception to the terms.
 
-[`assert_cmd::assert::assert::success`]: https://docs.rs/assert_cmd/latest/assert_cmd/assert/struct.Assert.html#method.success
 [Chainlink]: https://github.com/smartcontractkit/chainlink/blob/a39e54e157b57d5fc3dba0aed6ac9d58382953b2/contracts/test/v0.7/Operator.test.ts#L1725-L1728
+[Configuration files]: #configuration-files
+[Hoare logic]: https://en.wikipedia.org/wiki/Hoare_logic
+[`assert_cmd::assert::Assert::success`]: https://docs.rs/assert_cmd/latest/assert_cmd/assert/struct.Assert.html#method.success
 [`glob`]: https://man7.org/linux/man-pages/man7/glob.7.html
 [`rust-openssl`]: https://github.com/sfackler/rust-openssl
-[`std::borrow::cow::into_owned`]: https://doc.rust-lang.org/std/borrow/enum.Cow.html#method.into_owned
-[`std::clone::clone::clone`]: https://doc.rust-lang.org/std/clone/trait.Clone.html#tymethod.clone
-[`std::iter::iterator::cloned`]: https://doc.rust-lang.org/std/iter/trait.Iterator.html#tymethod.cloned
-[`std::iter::iterator::copied`]: https://doc.rust-lang.org/std/iter/trait.Iterator.html#tymethod.copied
-[`std::option::option::expect`]: https://doc.rust-lang.org/std/option/enum.Option.html#method.expect
-[`std::option::option::unwrap`]: https://doc.rust-lang.org/std/option/enum.Option.html#method.unwrap
-[`std::result::result::expect_err`]: https://doc.rust-lang.org/std/result/enum.Result.html#method.expect_err
-[`std::result::result::unwrap_err`]: https://doc.rust-lang.org/std/result/enum.Result.html#method.unwrap_err
-[`testing.t`]: https://pkg.go.dev/testing#T
+[`std::borrow::Cow::into_owned`]: https://doc.rust-lang.org/std/borrow/enum.Cow.html#method.into_owned
+[`std::clone::Clone::clone`]: https://doc.rust-lang.org/std/clone/trait.Clone.html#tymethod.clone
+[`std::iter::Iterator::cloned`]: https://doc.rust-lang.org/std/iter/trait.Iterator.html#tymethod.cloned
+[`std::iter::Iterator::copied`]: https://doc.rust-lang.org/std/iter/trait.Iterator.html#tymethod.copied
+[`std::option::Option::expect`]: https://doc.rust-lang.org/std/option/enum.Option.html#method.expect
+[`std::option::Option::unwrap`]: https://doc.rust-lang.org/std/option/enum.Option.html#method.unwrap
+[`std::result::Result::expect_err`]: https://doc.rust-lang.org/std/result/enum.Result.html#method.expect_err
+[`std::result::Result::unwrap_err`]: https://doc.rust-lang.org/std/result/enum.Result.html#method.unwrap_err
+[`testing.T`]: https://pkg.go.dev/testing#T
+[`universalmutator`]: https://github.com/agroce/universalmutator
 [`unnecessary_conversion_for_trait`]: https://github.com/trailofbits/dylint/tree/master/examples/supplementary/unnecessary_conversion_for_trait
 [added to the test]: https://github.com/sfackler/rust-openssl/pull/1852
-[configuration file]: #configuration-files
 [crates.io]: https://crates.io/crates/necessist
 [github.com]: https://github.com/trailofbits/necessist
-[Hoare logic]: https://en.wikipedia.org/wiki/Hoare_logic
 [overflow checks]: https://doc.rust-lang.org/rustc/codegen-options/index.html#overflow-checks
 [path]: #paths
 [paths]: #paths
@@ -470,7 +471,6 @@ Necessist is licensed and distributed under the AGPLv3 license. [Contact us](mai
 [predicate transformer semantics]: https://en.wikipedia.org/wiki/Predicate_transformer_semantics
 [preprint]: https://agroce.github.io/asej18.pdf
 [sqlitebrowser]: https://sqlitebrowser.org/
-[toml]: https://toml.io/en/
-[`universalmutator`]: https://github.com/agroce/universalmutator
 [strongest postconditions]: https://en.wikipedia.org/wiki/Predicate_transformer_semantics#Strongest_postcondition
+[toml]: https://toml.io/en/
 [weakest precondition]: https://en.wikipedia.org/wiki/Predicate_transformer_semantics#Weakest_preconditions
