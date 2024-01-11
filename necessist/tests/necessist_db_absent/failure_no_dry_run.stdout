@@ -1,4 +1,0 @@
-2 candidates in 2 test files
-examples/failure/tests/a.rs: mutilating
-examples/failure/tests/b.rs: mutilating
-examples/failure/tests/b.rs:4:5-4:12: `n += 1;` passed

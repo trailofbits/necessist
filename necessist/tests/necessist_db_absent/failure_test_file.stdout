@@ -1,4 +1,0 @@
-1 candidates in 1 test file
-examples/failure/tests/b.rs: dry running
-examples/failure/tests/b.rs: mutilating
-examples/failure/tests/b.rs:4:5-4:12: `n += 1;` passed
