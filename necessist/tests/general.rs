@@ -50,7 +50,7 @@ fn necessist_db_can_be_moved() {
 
 #[test]
 fn resume_following_dry_run_failure() {
-    const ROOT: &str = "examples/failure";
+    const ROOT: &str = "examples/dry_run_failure";
 
     let assert = Command::cargo_bin("necessist")
         .unwrap()
@@ -65,8 +65,8 @@ fn resume_following_dry_run_failure() {
         stdout_normalized.starts_with(
             "\
 2 candidates in 2 test files
-examples/failure/tests/a.rs: dry running
-examples/failure/tests/a.rs: Warning: dry run failed: code=101
+examples/dry_run_failure/tests/a.rs: dry running
+examples/dry_run_failure/tests/a.rs: Warning: dry run failed: code=101
 "
         ),
         "{stdout_normalized:?}",

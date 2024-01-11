@@ -1,5 +1,5 @@
 [package]
-name = "failure"
+name = "dry_run_failure"
 version = "0.1.0"
 edition = "2021"
 publish = false

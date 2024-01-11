@@ -1,4 +1,4 @@
-args = ["--no-sqlite", "--root=examples/failure"]
+args = ["--no-sqlite", "--root=examples/dry_run_failure", "--no-dry-run"]
 stderr = ""
 
 [bin]
