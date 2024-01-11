@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.2
+
+- Give an example when "configuration or test files have changed" (fix [#248](https://github.com/trailofbits/necessist/issues/248)) ([#936](https://github.com/trailofbits/necessist/pull/936))
+- Make `--resume` work correctly following a dry run failure (fix [#249](https://github.com/trailofbits/necessist/issues/249)) ([#936](https://github.com/trailofbits/necessist/pull/936))
+- Make parsing failures warnings instead of hard errors (fix [#245](https://github.com/trailofbits/necessist/issues/245)) ([#947](https://github.com/trailofbits/necessist/pull/947))
+
 ## 0.4.1
 
 - Update `windows-sys` to version 0.52.0 ([#911](https://github.com/trailofbits/necessist/pull/911))
