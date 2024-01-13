@@ -10,7 +10,7 @@ use std::{
 };
 
 thread_local! {
-    static ROOT: RefCell<Option<Rc<PathBuf>>> = RefCell::new(None);
+    static ROOT: RefCell<Option<Rc<PathBuf>>> = const { RefCell::new(None) };
     static SOURCE_FILES: RefCell<HashMap<PathBuf, SourceFile>> = RefCell::new(HashMap::new());
 }
 

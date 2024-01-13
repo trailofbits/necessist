@@ -186,6 +186,9 @@ impl<'ast, T> Clone for SourceMapped<'ast, T> {
 impl<'ast, T> Copy for SourceMapped<'ast, T> {}
 
 impl<'ast, T: PartialEq> PartialEq for SourceMapped<'ast, T> {
+    // smoelius: Remove this `#[allow(..)]` once the following pull request appears in nightly:
+    // https://github.com/rust-lang/rust-clippy/pull/12137
+    #[allow(clippy::unconditional_recursion)]
     fn eq(&self, other: &Self) -> bool {
         self.node.eq(other.node)
     }

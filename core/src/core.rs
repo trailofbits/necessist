@@ -630,7 +630,10 @@ fn past_removals_init_lazy(context: &LightContext) -> Result<Vec<Removal>> {
 
 thread_local! {
     #[allow(clippy::type_complexity)]
-    static SQLITE_AND_PAST_REMOVALS: OnceCell<(Rc<RefCell<Option<sqlite::Sqlite>>>, Rc<RefCell<Vec<Removal>>>)> = OnceCell::new();
+    static SQLITE_AND_PAST_REMOVALS: OnceCell<(
+        Rc<RefCell<Option<sqlite::Sqlite>>>,
+        Rc<RefCell<Vec<Removal>>>,
+    )> = const { OnceCell::new() };
 }
 
 #[allow(clippy::type_complexity)]
@@ -663,7 +666,7 @@ fn sqlite_and_past_removals_init_lazy(
                     ))
                 }
             })
-            .map(Clone::clone)
+            .cloned()
     })
 }
 
