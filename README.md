@@ -100,7 +100,7 @@ Notably, conventional mutation testing is about finding deficiencies in the set 
 
 By comparison, Necessist's approach of iteratively removing statements and method calls does target individual tests, and thus can reveal bugs in individual tests.
 
-Of course, there is overlap is the sets of problems the two approaches can uncover, e.g., a failure to find an injected fault could indicate a bug in a test. Nonetheless, for the reasons just given, we see the two approaches as complementary, not competing.
+Of course, there is overlap in the sets of problems the two approaches can uncover, e.g., a failure to find an injected fault could indicate a bug in a test. Nonetheless, for the reasons just given, we see the two approaches as complementary, not competing.
 
 </details>
 
