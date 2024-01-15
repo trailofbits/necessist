@@ -1,13 +1,13 @@
 use crate::{
-    utils, AbstractTypes, GenericVisitor, MaybeNamed, Named, OutputAccessors,
-    OutputStrippedOfAnsiScapes, ParseLow, Spanned, WalkDirResult,
+    AbstractTypes, GenericVisitor, MaybeNamed, Named, OutputAccessors, OutputStrippedOfAnsiScapes,
+    ParseLow, Spanned, WalkDirResult,
 };
 use anyhow::{anyhow, Result};
 use if_chain::if_chain;
 use log::debug;
 use necessist_core::{
-    framework::Postprocess, source_warn, LightContext, LineColumn, SourceFile, Span, WarnFlags,
-    Warning,
+    framework::Postprocess, source_warn, util, LightContext, LineColumn, SourceFile, Span,
+    WarnFlags, Warning,
 };
 use once_cell::sync::Lazy;
 use regex::Regex;
@@ -156,7 +156,7 @@ impl Mocha {
             return Ok(None);
         }
 
-        let mut exec = utils::exec_from_command(command);
+        let mut exec = util::exec_from_command(command);
         exec = exec.stdout(NullFile);
         exec = exec.stderr(NullFile);
 
