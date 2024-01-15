@@ -85,13 +85,16 @@ examples/failure/tests/a.rs: Warning: dry run failed: code=101
         .stdout(predicate::eq("2 candidates in 2 test files\n"));
 }
 
-// smoelius: Apperently, sending a ctrl-c on Windows is non-trivial:
+// smoelius: Apparently, sending a ctrl-c on Windows is non-trivial:
 // https://stackoverflow.com/questions/813086/can-i-send-a-ctrl-c-sigint-to-an-application-on-windows
+// smoelius: Sending a ctrl-c allows the process to clean up after itself, e.g., to undo file
+// rewrites.
 #[cfg(not(windows))]
 #[test]
 fn resume_following_ctrl_c() {
     use similar_asserts::SimpleDiff;
-    use std::{process::Stdio, thread::sleep, time::Duration};
+    use std::io::{BufRead, BufReader, Read};
+    use subprocess::Redirection;
 
     const ROOT: &str = "examples/basic";
 
@@ -105,16 +108,29 @@ fn resume_following_ctrl_c() {
 
     let _lock = BASIC_MUTEX.lock().unwrap();
 
-    let child = command().stderr(Stdio::piped()).spawn().unwrap();
+    let exec = util::exec_from_command(&command())
+        .stdout(Redirection::Pipe)
+        .stderr(Redirection::Pipe);
+    let mut popen = exec.popen().unwrap();
 
-    sleep(Duration::from_secs(1));
+    let stdout = popen.stdout.as_ref().unwrap();
+    let reader = BufReader::new(stdout);
+    let _: String = reader
+        .lines()
+        .map(Result::unwrap)
+        .find(|line| line == "examples/basic/src/lib.rs:4:5-4:12: `n += 1;` passed")
+        .unwrap();
 
-    kill().arg(child.id().to_string()).assert().success();
+    let pid = popen.pid().unwrap();
+    kill().arg(pid.to_string()).assert().success();
 
-    let output = child.wait_with_output().unwrap();
-
-    let stderr = String::from_utf8(output.stderr).unwrap();
+    let mut stderr = popen.stderr.as_ref().unwrap();
+    let mut buf = Vec::new();
+    let _ = stderr.read_to_end(&mut buf).unwrap();
+    let stderr = String::from_utf8(buf).unwrap();
     assert!(stderr.ends_with("Ctrl-C detected\n"), "{stderr:?}");
+
+    let _ = popen.wait().unwrap();
 
     let necessist_db = PathBuf::from("..").join(ROOT).join("necessist.db");
 
