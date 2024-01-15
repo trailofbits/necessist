@@ -1,8 +1,10 @@
-use super::{ts, utils, OutputAccessors, OutputStrippedOfAnsiScapes, RunHigh};
+use super::{ts, OutputAccessors, OutputStrippedOfAnsiScapes, RunHigh};
 use anyhow::{anyhow, Error, Result};
 use bstr::{io::BufReadExt, BStr};
 use log::debug;
-use necessist_core::{framework::Postprocess, source_warn, LightContext, Span, WarnFlags, Warning};
+use necessist_core::{
+    framework::Postprocess, source_warn, util, LightContext, Span, WarnFlags, Warning,
+};
 use std::{cell::RefCell, path::Path, process::Command, rc::Rc};
 use subprocess::{Exec, NullFile, Redirection};
 
@@ -80,7 +82,7 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
         command.args(&context.opts.args);
         command.args(final_args);
 
-        let mut exec = utils::exec_from_command(&command);
+        let mut exec = util::exec_from_command(&command);
         if init_f_test.is_some() {
             exec = exec.stdout(Redirection::Pipe);
         } else {
