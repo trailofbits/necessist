@@ -254,11 +254,12 @@ impl<'context, 'config, 'framework, 'ast, 'storage>
     ) -> Result<bool> {
         trace!(recurse);
 
-        let _ = possible_iter.next().unwrap();
+        let _: Possibility = possible_iter.next().unwrap();
 
         if recurse {
             if possible_iter.peek().is_some() {
-                let _ = self.visit_current_node_and_possibility(cursor, possible_iter, true)?;
+                let _: bool =
+                    self.visit_current_node_and_possibility(cursor, possible_iter, true)?;
             } else {
                 self.walk_nodes(cursor)?;
             }

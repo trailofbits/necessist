@@ -18,12 +18,13 @@ use std::{
     fmt::Display,
     iter::Peekable,
     path::{Path, PathBuf},
-    process::{Command, Stdio},
+    process::{Command, ExitStatus as StdExitStatus, Stdio},
     rc::Rc,
     sync::atomic::{AtomicBool, Ordering},
     time::Duration,
 };
 use strum::IntoEnumIterator;
+use subprocess::ExitStatus;
 
 const DEFAULT_TIMEOUT: Duration = Duration::from_secs(60);
 
@@ -115,7 +116,7 @@ pub fn necessist<Identifier: Applicable + Display + IntoEnumIterator + ToImpleme
         .map(Rc::new)?;
 
     #[cfg(feature = "lock_root")]
-    let _file = lock_root(&root)?;
+    let _file: std::fs::File = lock_root(&root)?;
 
     let mut context = LightContext {
         opts: &opts,
@@ -420,8 +421,8 @@ where
                 break;
             }
             std::cmp::Ordering::Equal => {
-                let _ = span_iter.next();
-                let _removal = removal_iter.next();
+                let _: Option<&Span> = span_iter.next();
+                let _removal: Option<Removal> = removal_iter.next();
                 n += 1;
             }
             std::cmp::Ordering::Greater => {
@@ -431,7 +432,7 @@ where
                         removal: removal.clone(),
                     });
                 }
-                let _removal = removal_iter.next();
+                let _removal: Option<Removal> = removal_iter.next();
             }
         }
     }
@@ -559,7 +560,7 @@ fn attempt_removal(context: &Context, span: &Span) -> Result<(String, Option<Out
     } else {
         let pid = popen.pid().ok_or_else(|| anyhow!("Failed to get pid"))?;
         transitive_kill(pid)?;
-        let _ = popen.wait()?;
+        let _: ExitStatus = popen.wait()?;
     }
 
     let Some(status) = status else {
@@ -717,7 +718,7 @@ fn transitive_kill(pid: u32) -> Result<()> {
 
     while let Some((pid, visited)) = pids.pop() {
         if visited {
-            let _status = kill()
+            let _status: StdExitStatus = kill()
                 .arg(pid.to_string())
                 .stdout(Stdio::null())
                 .stderr(Stdio::null())

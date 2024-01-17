@@ -528,7 +528,7 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> (String, Duration) {
 
         let mut buf = Vec::new();
 
-        let _ = stdout.read_to_end(&mut buf).unwrap();
+        let _: usize = stdout.read_to_end(&mut buf).unwrap();
 
         elapsed += start.elapsed();
 
@@ -688,7 +688,7 @@ fn subsequence<'a, 'b>(
             return false;
         };
         if x == y || (re.is_match(x) && re.is_match(y)) {
-            let _ = xs.next();
+            let _: Option<&str> = xs.next();
         }
     }
 

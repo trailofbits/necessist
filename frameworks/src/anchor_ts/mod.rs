@@ -67,7 +67,7 @@ impl RunHigh for AnchorTs {
 
         self.check(context, test_file)?;
 
-        let _backup = self.patch_anchor_toml(test_file, false)?;
+        let _backup: Backup = self.patch_anchor_toml(test_file, false)?;
 
         let command = command_to_run_test(context);
 
@@ -107,7 +107,7 @@ impl RunHigh for AnchorTs {
 
 impl AnchorTs {
     fn check(&self, context: &LightContext, test_file: &Path) -> Result<()> {
-        let _backup = self.patch_anchor_toml(test_file, true)?;
+        let _backup: Backup = self.patch_anchor_toml(test_file, true)?;
 
         let mut command = command_to_run_test(context);
 

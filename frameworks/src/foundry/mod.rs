@@ -458,7 +458,7 @@ impl LocWithOptionalSemicolon for Statement {
                 let mut chars = contents.chars().skip(end).peekable();
                 while chars.peek().copied().map_or(false, char::is_whitespace) {
                     end += 1;
-                    let _ = chars.next();
+                    let _: Option<char> = chars.next();
                 }
                 if chars.next() == Some(';') {
                     Loc::File(file_no, start, end + 1)
