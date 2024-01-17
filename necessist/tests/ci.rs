@@ -353,6 +353,7 @@ fn clippy_command(cargo_args: &[&str], rustc_args: &[&str]) -> Command {
         .args(["--"])
         .args(rustc_args)
         .args([
+            "--warn=clippy::let-underscore-untyped",
             "--allow=clippy::missing-errors-doc",
             "--allow=clippy::missing-panics-doc",
             "--allow=clippy::struct-field-names",

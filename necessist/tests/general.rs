@@ -3,6 +3,7 @@ use fs_extra::dir::{copy, CopyOptions};
 use necessist_core::util;
 use predicates::prelude::*;
 use std::{path::PathBuf, process::Command, sync::Mutex};
+use subprocess::ExitStatus;
 
 mod tempfile_util;
 use tempfile_util::tempdir;
@@ -126,11 +127,11 @@ fn resume_following_ctrl_c() {
 
     let mut stderr = popen.stderr.as_ref().unwrap();
     let mut buf = Vec::new();
-    let _ = stderr.read_to_end(&mut buf).unwrap();
+    let _: usize = stderr.read_to_end(&mut buf).unwrap();
     let stderr = String::from_utf8(buf).unwrap();
     assert!(stderr.ends_with("Ctrl-C detected\n"), "{stderr:?}");
 
-    let _ = popen.wait().unwrap();
+    let _: ExitStatus = popen.wait().unwrap();
 
     let necessist_db = PathBuf::from("..").join(ROOT).join("necessist.db");
 

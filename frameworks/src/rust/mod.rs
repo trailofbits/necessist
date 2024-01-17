@@ -336,7 +336,7 @@ impl ParseLow for Rust {
         // from being queued.
         #[cfg_attr(dylint_lib = "general", allow(non_local_effect_before_error_return))]
         let result = (|| {
-            let _ = self.cached_test_file_flags(
+            let _: &Vec<String> = self.cached_test_file_flags(
                 &mut storage.borrow_mut().test_file_package_cache,
                 &span.source_file,
             )?;
