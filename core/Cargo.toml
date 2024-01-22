@@ -47,7 +47,7 @@ windows-sys = { version = "0.52", features = [
 
 [dev-dependencies]
 assert_cmd = "2.0"
-predicates = "3.0"
+predicates = "3.1"
 
 [build-dependencies]
 cargo_metadata = "0.18"
