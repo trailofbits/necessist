@@ -1,4 +1,4 @@
-args = ["--root=examples/basic", "--resume", "--deny=database-does-not-exist"]
+args = ["--root=fixtures/basic", "--resume", "--deny=database-does-not-exist"]
 
 [bin]
 name = "necessist"

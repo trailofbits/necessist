@@ -1,6 +1,6 @@
 2 candidates in 2 test files
-examples/dry_run_failure/tests/a.rs: dry running
-examples/dry_run_failure/tests/a.rs: Warning: dry run failed: code=101
+fixtures/dry_run_failure/tests/a.rs: dry running
+fixtures/dry_run_failure/tests/a.rs: Warning: dry run failed: code=101
 stdout=```
 
 running 1 test
@@ -28,6 +28,6 @@ error: test failed, to rerun pass `--test a`
 
 
 Silence this warning with: --allow dry-run-failed
-examples/dry_run_failure/tests/b.rs: dry running
-examples/dry_run_failure/tests/b.rs: mutilating
-examples/dry_run_failure/tests/b.rs:4:5-4:12: `n += 1;` passed
+fixtures/dry_run_failure/tests/b.rs: dry running
+fixtures/dry_run_failure/tests/b.rs: mutilating
+fixtures/dry_run_failure/tests/b.rs:4:5-4:12: `n += 1;` passed

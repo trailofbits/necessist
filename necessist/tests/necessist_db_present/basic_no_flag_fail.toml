@@ -1,4 +1,4 @@
-args = ["--root=examples/basic"]
+args = ["--root=fixtures/basic"]
 
 [bin]
 name = "necessist"

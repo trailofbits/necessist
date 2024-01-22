@@ -1,4 +1,4 @@
-args = ["--no-sqlite", "--root=examples/invalid_utf8"]
+args = ["--no-sqlite", "--root=fixtures/invalid_utf8"]
 stderr = ""
 
 [bin]

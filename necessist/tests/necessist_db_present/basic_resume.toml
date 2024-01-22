@@ -1,4 +1,4 @@
-args = ["--root=examples/basic", "--resume"]
+args = ["--root=fixtures/basic", "--resume"]
 stderr = ""
 
 [bin]

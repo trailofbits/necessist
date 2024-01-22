@@ -250,7 +250,7 @@ fn prettier() {
         "{}/../**/*.json",
         "{}/../**/*.md",
         "{}/../**/*.yml",
-        "!{}/../examples/**",
+        "!{}/../fixtures/**",
         "!{}/../frameworks/src/anchor_ts/rfc8032_test_vector.json",
         "!{}/../target/**",
         "!{}/../warnings.json",

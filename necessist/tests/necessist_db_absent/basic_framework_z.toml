@@ -1,4 +1,4 @@
-args = ["--no-sqlite", "--root=examples/basic", "--framework=z"]
+args = ["--no-sqlite", "--root=fixtures/basic", "--framework=z"]
 
 [bin]
 name = "necessist"

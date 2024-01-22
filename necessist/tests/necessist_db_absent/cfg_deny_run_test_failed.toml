@@ -1,4 +1,4 @@
-args = ["--no-sqlite", "--root=examples/cfg", "--deny=run-test-failed"]
+args = ["--no-sqlite", "--root=fixtures/cfg", "--deny=run-test-failed"]
 
 [bin]
 name = "necessist"

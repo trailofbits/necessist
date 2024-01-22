@@ -1,4 +1,4 @@
-args = ["--no-sqlite", "--root=examples/parsing_failure"]
+args = ["--no-sqlite", "--root=fixtures/parsing_failure"]
 stderr = ""
 
 [bin]

@@ -1,4 +1,4 @@
 2 candidates in 2 test files
-examples/dry_run_failure/tests/a.rs: mutilating
-examples/dry_run_failure/tests/b.rs: mutilating
-examples/dry_run_failure/tests/b.rs:4:5-4:12: `n += 1;` passed
+fixtures/dry_run_failure/tests/a.rs: mutilating
+fixtures/dry_run_failure/tests/b.rs: mutilating
+fixtures/dry_run_failure/tests/b.rs:4:5-4:12: `n += 1;` passed
