@@ -15,7 +15,7 @@ static BASIC_MUTEX: Mutex<()> = Mutex::new(());
 
 #[test]
 fn necessist_db_can_be_moved() {
-    const ROOT: &str = "../examples/basic";
+    const ROOT: &str = "../fixtures/basic";
 
     let _lock = BASIC_MUTEX.lock().unwrap();
 
@@ -51,7 +51,7 @@ fn necessist_db_can_be_moved() {
 
 #[test]
 fn resume_following_dry_run_failure() {
-    const ROOT: &str = "examples/dry_run_failure";
+    const ROOT: &str = "fixtures/dry_run_failure";
 
     let assert = Command::cargo_bin("necessist")
         .unwrap()
@@ -66,8 +66,8 @@ fn resume_following_dry_run_failure() {
         stdout_normalized.starts_with(
             "\
 2 candidates in 2 test files
-examples/dry_run_failure/tests/a.rs: dry running
-examples/dry_run_failure/tests/a.rs: Warning: dry run failed: code=101
+fixtures/dry_run_failure/tests/a.rs: dry running
+fixtures/dry_run_failure/tests/a.rs: Warning: dry run failed: code=101
 "
         ),
         "{stdout_normalized:?}",
@@ -97,7 +97,7 @@ fn resume_following_ctrl_c() {
     use std::io::{BufRead, BufReader, Read};
     use subprocess::Redirection;
 
-    const ROOT: &str = "examples/basic";
+    const ROOT: &str = "fixtures/basic";
 
     fn command() -> Command {
         let mut command = Command::cargo_bin("necessist").unwrap();
@@ -119,7 +119,7 @@ fn resume_following_ctrl_c() {
     let _: String = reader
         .lines()
         .map(Result::unwrap)
-        .find(|line| line == "examples/basic/src/lib.rs:4:5-4:12: `n += 1;` passed")
+        .find(|line| line == "fixtures/basic/src/lib.rs:4:5-4:12: `n += 1;` passed")
         .unwrap();
 
     let pid = popen.pid().unwrap();
@@ -140,14 +140,14 @@ fn resume_following_ctrl_c() {
     let assert = command().arg("--resume").assert().success();
 
     // smoelius: N.B. `stdout_expected` intentionally lacks the following line:
-    //   examples/basic/src/lib.rs:4:5-4:12: `n += 1;` passed
+    //   fixtures/basic/src/lib.rs:4:5-4:12: `n += 1;` passed
     let stdout_expected: &str = "\
 4 candidates in 1 test file
-examples/basic/src/lib.rs: dry running
-examples/basic/src/lib.rs: mutilating
-examples/basic/src/lib.rs:14:9-14:16: `n += 1;` timed-out
-examples/basic/src/lib.rs:21:5-21:12: `n += 1;` failed
-examples/basic/src/lib.rs:28:18-28:27: `.join(\"\")` nonbuildable
+fixtures/basic/src/lib.rs: dry running
+fixtures/basic/src/lib.rs: mutilating
+fixtures/basic/src/lib.rs:14:9-14:16: `n += 1;` timed-out
+fixtures/basic/src/lib.rs:21:5-21:12: `n += 1;` failed
+fixtures/basic/src/lib.rs:28:18-28:27: `.join(\"\")` nonbuildable
 ";
 
     let stdout_actual = std::str::from_utf8(&assert.get_output().stdout).unwrap();

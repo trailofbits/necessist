@@ -10,7 +10,7 @@ use std::{
 };
 use trycmd::TestCases;
 
-const ROOT: &str = "../examples/basic";
+const ROOT: &str = "../fixtures/basic";
 const TIMEOUT: &str = "5";
 
 #[ctor::ctor]
@@ -91,7 +91,7 @@ fn check_toml() {
         let file_stem = &*path.file_stem().unwrap().to_string_lossy();
         let example = args
             .iter()
-            .find_map(|arg| arg.strip_prefix("--root=examples/"))
+            .find_map(|arg| arg.strip_prefix("--root=fixtures/"))
             .unwrap();
         assert!(file_stem.starts_with(example));
 

@@ -1,1 +1,1 @@
-Error: No sqlite database to reset at "[CWD]/examples/basic/necessist.db"; creating new database
+Error: No sqlite database to reset at "[CWD]/fixtures/basic/necessist.db"; creating new database

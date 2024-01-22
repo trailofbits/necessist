@@ -1,7 +1,7 @@
 args = [
     "--no-sqlite",
-    "--root=examples/dry_run_failure",
-    "examples/dry_run_failure/tests/b.rs",
+    "--root=fixtures/dry_run_failure",
+    "fixtures/dry_run_failure/tests/b.rs",
 ]
 stderr = ""
 

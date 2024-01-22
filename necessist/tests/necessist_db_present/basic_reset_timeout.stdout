@@ -1,4 +1,4 @@
 4 candidates in 1 test file
-examples/basic/src/lib.rs: dry running
-examples/basic/src/lib.rs: mutilating
-examples/basic/src/lib.rs:4:5-4:12: `n += 1;` passed
+fixtures/basic/src/lib.rs: dry running
+fixtures/basic/src/lib.rs: mutilating
+fixtures/basic/src/lib.rs:4:5-4:12: `n += 1;` passed

@@ -1,4 +1,4 @@
-args = ["--no-sqlite", "--root=examples/unknown_keys"]
+args = ["--no-sqlite", "--root=fixtures/unknown_keys"]
 
 [bin]
 name = "necessist"
