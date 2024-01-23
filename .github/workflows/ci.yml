@@ -73,19 +73,36 @@ jobs:
         if: ${{ matrix.test != 'ci' }}
         uses: ./.github/workflows/install-testing-tools
 
+      - name: Install group-runner
+        run: cargo install group-runner || true
+
       - name: Enable debug logging
         if: ${{ runner.debug == 1 }}
         run: echo 'RUST_LOG=debug' >> "$GITHUB_ENV"
 
+      - name: Build
+        run: |
+          if [[ '${{ matrix.test }}' != 'other' ]]; then
+            $CARGO_TEST -p necessist --test ${{ matrix.test }}
+          else
+            $CARGO_TEST -p necessist --test general
+            $CARGO_TEST -p necessist-core
+            $CARGO_TEST -p necessist-frameworks
+          fi
+        env:
+          CARGO_TEST: cargo test --no-run
+
       - name: Test
         run: |
           if [[ '${{ matrix.test }}' != 'other' ]]; then
-            cargo test -p necessist --test ${{ matrix.test }} --features=strict -- --nocapture
+            $CARGO_TEST -p necessist --test ${{ matrix.test }} --features=strict -- --nocapture
           else
-            cargo test -p necessist --test general
-            cargo test -p necessist-core
-            cargo test -p necessist-frameworks
+            $CARGO_TEST -p necessist --test general
+            $CARGO_TEST -p necessist-core
+            $CARGO_TEST -p necessist-frameworks
           fi
+        env:
+          CARGO_TEST: cargo test --config target.'cfg(all())'.runner='group-runner'
 
   all-checks:
     needs: [test]
