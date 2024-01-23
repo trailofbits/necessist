@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.3
+
+- Update `swc_core` to version 0.88.1 ([#963](https://github.com/trailofbits/necessist/pull/963))
+- Update `shlex` to version 1.3.0 ([#967](https://github.com/trailofbits/necessist/pull/967))
+- Update `env_logger` to version 0.11.0 ([#969](https://github.com/trailofbits/necessist/pull/969))
+
 ## 0.4.2
 
 - Give an example when "configuration or test files have changed" (fix [#248](https://github.com/trailofbits/necessist/issues/248)) ([#936](https://github.com/trailofbits/necessist/pull/936))
