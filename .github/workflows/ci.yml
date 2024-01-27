@@ -73,6 +73,10 @@ jobs:
         if: ${{ matrix.test != 'ci' }}
         uses: ./.github/workflows/install-testing-tools
 
+      - name: Disable incremental compilation on Windows
+        if: ${{ matrix.environment == 'windows-latest' }}
+        run: echo 'CARGO_INCREMENTAL=0' >> "$GITHUB_ENV"
+
       - name: Enable debug logging
         if: ${{ runner.debug == 1 }}
         run: echo 'RUST_LOG=debug' >> "$GITHUB_ENV"
