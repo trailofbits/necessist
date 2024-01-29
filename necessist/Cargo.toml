@@ -18,7 +18,7 @@ clap = "4.4"
 env_logger = "0.11"
 heck = "0.4"
 remain = "0.2"
-strum = "0.25"
+strum = "0.26"
 strum_macros = "0.26"
 subprocess = "0.2"
 
