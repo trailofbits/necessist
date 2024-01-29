@@ -20,6 +20,7 @@ fn open_lockable_file(path: &Path) -> Result<File> {
     if cfg!(windows) {
         OpenOptions::new()
             .create(true)
+            .truncate(false)
             .write(true)
             .open(path.join("NECESSIST_LOCK"))
     } else {
