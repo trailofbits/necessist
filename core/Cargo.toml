@@ -27,7 +27,7 @@ proc-macro2 = { version = "1.0", features = ["span-locations"] }
 regex = "1.10"
 remain = "0.2"
 serde = { version = "1.0", features = ["derive"] }
-strum = "0.25"
+strum = "0.26"
 strum_macros = "0.26"
 subprocess = "0.2"
 tempfile = "3.9"
