@@ -37,7 +37,7 @@ jobs:
         if: ${{ github.event_name == 'merge_group' }}
         id: expedite
         run: |
-          N="$(expr "${{ github.ref }}" : '^.*-\([0-9]\+\)-[^-]*$')"
+          N="$(expr "${{ github.ref }}" : '.*-\([0-9]\+\)-[^-]*$')"
           HEAD_SHA="$(gh api /repos/${{ github.repository }}/pulls/"$N" | jq -r '.head.sha')"
           if git merge-base --is-ancestor origin/master "$HEAD_SHA"; then
             echo "value=1" >> "$GITHUB_OUTPUT"
