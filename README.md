@@ -428,6 +428,10 @@ We reserve the right to change what syntax Necessist ignores by default, and to 
 
 - If a project uses a supported framework, then `cd`ing into the project's directory and typing `necessist` (with no arguments) should produce meaningful output.
 
+## Anti-goals
+
+- Become a general-purpose mutation testing tool. Good such tools already exist (e.g., [`universalmutator`]).
+
 ## References
 
 - Groce, A., Ahmed, I., Jensen, C., McKenney, P.E., Holmes, J.: How verified (or tested) is my code? Falsification-driven verification and testing. Autom. Softw. Eng. **25**, 917–960 (2018). A [preprint] is available. See Section 2.3.
