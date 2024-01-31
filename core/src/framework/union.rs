@@ -2,10 +2,23 @@ use super::{Interface, ToImplementation};
 use crate::LightContext;
 use anyhow::Result;
 use std::marker::PhantomData;
-use strum::IntoEnumIterator;
 
 #[cfg(feature = "clap")]
 use clap::{builder::PossibleValue, ValueEnum};
+
+pub trait IntoEnumIterator: Sized {
+    type Iterator: Iterator<Item = Self>;
+
+    fn iter() -> Self::Iterator;
+}
+
+impl<T: strum::IntoEnumIterator> IntoEnumIterator for T {
+    type Iterator = <Self as strum::IntoEnumIterator>::Iterator;
+
+    fn iter() -> Self::Iterator {
+        <Self as strum::IntoEnumIterator>::iter()
+    }
+}
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq)]
 pub enum Union<L, R> {
