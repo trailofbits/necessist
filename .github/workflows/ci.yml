@@ -63,14 +63,6 @@ jobs:
         shell: bash
 
     steps:
-      - name: Log github refs
-        if: ${{ matrix.test == 'ci' }}
-        run: |
-          echo '```' >> "$GITHUB_STEP_SUMMARY"
-          echo 'github.ref: ${{ github.ref }}' >> "$GITHUB_STEP_SUMMARY"
-          echo 'github.sha: ${{ github.sha }}' >> "$GITHUB_STEP_SUMMARY"
-          echo '```' >> "$GITHUB_STEP_SUMMARY"
-
       - uses: actions/checkout@v4
 
       - uses: actions/cache@v4
