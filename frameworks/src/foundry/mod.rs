@@ -519,3 +519,71 @@ pub fn offset_to_line_column(contents: &str, loc: usize) -> (usize, usize) {
 
     (line_no + 1, col_no)
 }
+
+#[cfg(test)]
+mod test {
+    use cargo_metadata::{MetadataCommand, Package};
+    use std::{
+        fs::read_to_string,
+        io::{Error, Write},
+        path::{Path, PathBuf},
+        process::{Command, Stdio},
+    };
+    use tempfile::tempdir;
+
+    const PT_RS: &str = "src/pt.rs";
+
+    #[test]
+    fn check_pt_rs() {
+        let tempdir = tempdir().unwrap();
+
+        let metadata = MetadataCommand::new().exec().unwrap();
+        let package = metadata
+            .packages
+            .iter()
+            .find(|package| package.name == "solang-parser")
+            .unwrap();
+        let solang_dir = download_package(tempdir.path(), package).unwrap();
+        let pt_rs = solang_dir.join(PT_RS);
+        let expected = read_to_string(pt_rs).unwrap();
+        let actual = read_to_string("assets/pt.rs").unwrap();
+        assert_eq!(expected, actual);
+    }
+
+    fn download_package(out_dir: &Path, package: &Package) -> Result<PathBuf, Error> {
+        let download = get(&format!(
+            "https://crates.io/api/v1/crates/{}/{}/download",
+            package.name, package.version
+        ))?;
+
+        let mut child = Command::new("tar")
+            .current_dir(out_dir)
+            .args(["xzf", "-"])
+            .stdin(Stdio::piped())
+            .spawn()?;
+        {
+            let child_stdin = child.stdin.as_mut().unwrap();
+            child_stdin.write_all(&download)?;
+        }
+        let output = child.wait_with_output()?;
+        assert!(output.status.success(), "{output:#?}");
+
+        Ok(out_dir.join(format!("{}-{}", package.name, package.version)))
+    }
+
+    fn get(url: &str) -> Result<Vec<u8>, curl::Error> {
+        let mut data = Vec::new();
+        let mut handle = curl::easy::Easy::new();
+        handle.follow_location(true)?;
+        handle.url(url)?;
+        {
+            let mut transfer = handle.transfer();
+            transfer.write_function(|new_data| {
+                data.extend_from_slice(new_data);
+                Ok(new_data.len())
+            })?;
+            transfer.perform()?;
+        }
+        Ok(data)
+    }
+}

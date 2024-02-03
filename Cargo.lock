@@ -1059,6 +1059,7 @@ dependencies = [
  "subprocess",
  "swc_core",
  "syn",
+ "tempfile",
  "toml_edit",
  "tree-sitter",
  "tree-sitter-go",
