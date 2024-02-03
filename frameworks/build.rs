@@ -1,27 +1,15 @@
-use cargo_metadata::{MetadataCommand, Package};
 use std::{
     env::var,
     fs::{read_to_string, File, OpenOptions},
     io::{Error, Write},
-    path::{Path, PathBuf},
-    process::{Command, Stdio},
+    path::Path,
 };
 use syn::{parse_file, Fields, File as SynFile, Ident, Item, ItemEnum, ItemStruct, Variant};
-
-const PT_RS: &str = "src/pt.rs";
 
 fn main() {
     let out_dir = var("OUT_DIR").unwrap();
 
-    let metadata = MetadataCommand::new().exec().unwrap();
-    let package = metadata
-        .packages
-        .iter()
-        .find(|package| package.name == "solang-parser")
-        .unwrap();
-    let solang_dir = download_package(Path::new(&out_dir), package).unwrap();
-    let pt_rs = solang_dir.join(PT_RS);
-    let contents = read_to_string(pt_rs).unwrap();
+    let contents = read_to_string("assets/pt.rs").unwrap();
     let syn_file =
         parse_file(&contents).unwrap_or_else(|_| panic!("Failed to parse: {contents:?}"));
 
@@ -37,6 +25,7 @@ fn main() {
     emit_visit_fns(&mut file, &syn_file).unwrap();
 
     println!("cargo:rerun-if-changed=build.rs");
+    println!("cargo:rerun-if-changed=assets/pt.rs");
 }
 
 fn emit_visitable_impls(file: &mut File, syn_file: &SynFile) -> Result<(), Error> {
@@ -271,41 +260,4 @@ fn unreserved_name(ident: &Ident) -> String {
         "type" => "ty".to_owned(),
         _ => candidate,
     }
-}
-
-fn download_package(out_dir: &Path, package: &Package) -> Result<PathBuf, Error> {
-    let download = get(&format!(
-        "https://crates.io/api/v1/crates/{}/{}/download",
-        package.name, package.version
-    ))?;
-
-    let mut child = Command::new("tar")
-        .current_dir(out_dir)
-        .args(["xzf", "-"])
-        .stdin(Stdio::piped())
-        .spawn()?;
-    {
-        let child_stdin = child.stdin.as_mut().unwrap();
-        child_stdin.write_all(&download)?;
-    }
-    let output = child.wait_with_output()?;
-    assert!(output.status.success(), "{output:#?}");
-
-    Ok(out_dir.join(format!("{}-{}", package.name, package.version)))
-}
-
-fn get(url: &str) -> Result<Vec<u8>, curl::Error> {
-    let mut data = Vec::new();
-    let mut handle = curl::easy::Easy::new();
-    handle.follow_location(true)?;
-    handle.url(url)?;
-    {
-        let mut transfer = handle.transfer();
-        transfer.write_function(|new_data| {
-            data.extend_from_slice(new_data);
-            Ok(new_data.len())
-        })?;
-        transfer.perform()?;
-    }
-    Ok(data)
 }
