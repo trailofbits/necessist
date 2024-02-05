@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.4
+
+- Update `strum_macros` to version 0.26 ([#975](https://github.com/trailofbits/necessist/pull/975))
+- Update `swc_core` to version 0.90 ([#976](https://github.com/trailofbits/necessist/pull/976) and [#992](https://github.com/trailofbits/necessist/pull/992))
+- Update `strum` to version 0.26 ([#978](https://github.com/trailofbits/necessist/pull/978))
+- Include a copy of Solang's pt.rs in the repository, rather than download it when building ([#986](https://github.com/trailofbits/necessist/pull/986))
+
 ## 0.4.3
 
 - Update `swc_core` to version 0.88.1 ([#963](https://github.com/trailofbits/necessist/pull/963))
