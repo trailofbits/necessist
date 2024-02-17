@@ -24,6 +24,8 @@ impl OutputStrippedOfAnsiScapes for Command {
     }
 }
 
+// smoelius: The `stderr` method is currently unused.
+#[allow(dead_code)]
 pub trait OutputAccessors {
     fn status(&self) -> ExitStatus;
     fn stdout(&self) -> &[u8];
