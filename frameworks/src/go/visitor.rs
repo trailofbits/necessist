@@ -7,9 +7,7 @@ use super::{
 use anyhow::Result;
 use necessist_core::Span;
 use once_cell::sync::Lazy;
-use std::{cell::RefCell, iter::Peekable};
-use strum::IntoEnumIterator;
-use strum_macros::EnumIter;
+use std::cell::RefCell;
 use tree_sitter::{Query, QueryCursor, QueryMatch, Tree};
 
 macro_rules! trace {
@@ -20,14 +18,6 @@ macro_rules! trace {
         log::trace!("{}:{}: {:?}", file!(), line!(), $expr)
     };
 }
-
-#[derive(Clone, Copy, Debug, EnumIter, PartialEq, PartialOrd)]
-enum Possibility {
-    Statement,
-    CallExpression,
-}
-
-type PossibleIter = Peekable<PossibilityIter>;
 
 const TEST_FUNCTION_DECLARATION_SOURCE: &str = r#"
 (function_declaration
@@ -116,14 +106,10 @@ impl<'context, 'config, 'framework, 'ast, 'storage>
         Ok(())
     }
 
-    /// Visits `cursor`'s current node, which [`Self::visit_current_node_and_possibility`] has
-    /// already determined to be a statement. Calls [`Self::walk_or_skip`] unconditionally, with
-    /// `walk` set to the value [`GenericVisitor::visit_statement`] returns.
-    fn visit_statement(
-        &mut self,
-        cursor: &mut bounded_cursor::BoundedCursor<'ast>,
-        possible_iter: &mut PossibleIter,
-    ) -> Result<()> {
+    /// Visits `cursor`'s current node, which [`Self::visit_current_node`] has already determined to
+    /// be a statement. Calls [`Self::walk_or_skip`] unconditionally, with `walk` set to the value
+    /// [`GenericVisitor::visit_statement`] returns.
+    fn visit_statement(&mut self, cursor: &mut bounded_cursor::BoundedCursor<'ast>) -> Result<()> {
         let node = cursor.current_node().unwrap();
 
         trace!(node);
@@ -137,7 +123,7 @@ impl<'context, 'config, 'framework, 'ast, 'storage>
             .generic_visitor
             .visit_statement(self.storage, statement);
 
-        self.walk_or_skip(cursor, possible_iter, walk)?;
+        self.walk_or_skip(cursor, walk)?;
 
         self.generic_visitor
             .visit_statement_post(self.storage, statement);
@@ -145,14 +131,10 @@ impl<'context, 'config, 'framework, 'ast, 'storage>
         Ok(())
     }
 
-    /// Visits `cursor`'s current node, which [`Self::visit_current_node_and_possibility`] has
-    /// already determined to be a call. Calls [`Self::walk_or_skip`] unconditionally, with `walk`
-    /// set to the value [`GenericVisitor::visit_call`] returns.
-    fn visit_call(
-        &mut self,
-        cursor: &mut bounded_cursor::BoundedCursor<'ast>,
-        possible_iter: &mut PossibleIter,
-    ) -> Result<()> {
+    /// Visits `cursor`'s current node, which [`Self::visit_current_node`] has already determined to
+    /// be a call. Calls [`Self::walk_or_skip`] unconditionally, with `walk` set to the value
+    /// [`GenericVisitor::visit_call`] returns.
+    fn visit_call(&mut self, cursor: &mut bounded_cursor::BoundedCursor<'ast>) -> Result<()> {
         let node = cursor.current_node().unwrap();
 
         trace!(node);
@@ -164,34 +146,34 @@ impl<'context, 'config, 'framework, 'ast, 'storage>
 
         let walk = self.generic_visitor.visit_call(self.storage, call);
 
-        self.walk_or_skip(cursor, possible_iter, walk)?;
+        self.walk_or_skip(cursor, walk)?;
 
         self.generic_visitor.visit_call_post(self.storage, call);
 
         Ok(())
     }
 
-    /// If `walk` is true, calls [`Self::next_possibility`]; otherwise, skips `cursor`s current node
-    /// and returns.
+    /// If `walk` is true, calls [`Self::walk_nodes`]; otherwise, skips `cursor`s current node and
+    /// returns.
     fn walk_or_skip(
         &mut self,
         cursor: &mut bounded_cursor::BoundedCursor<'ast>,
-        possible_iter: &mut PossibleIter,
         walk: bool,
-    ) -> Result<bool> {
+    ) -> Result<()> {
         trace!(walk);
 
-        if !walk {
+        if walk {
+            self.walk_nodes(cursor)?;
+        } else {
             cursor.skip();
-            return Ok(true);
         }
 
-        self.next_possibility(cursor, possible_iter, true)
+        Ok(())
     }
 
     /// Visits each descendant node in the subtree rooted at `cursor`s current node (unless a
-    /// descendant node is an a subtree that is explicitly skipped by [`GenericVisitor`]). Calls
-    /// [`Self::walk_possibilities`] on each such node.
+    /// descendant node is a subtree that is explicitly skipped by [`GenericVisitor`]). Calls
+    /// [`Self::visit_current_node`] on each such node.
     fn walk_nodes(&mut self, cursor: &mut bounded_cursor::BoundedCursor<'ast>) -> Result<()> {
         trace!();
 
@@ -200,7 +182,7 @@ impl<'context, 'config, 'framework, 'ast, 'storage>
         cursor.goto_next_node();
 
         while let Some(node) = cursor.current_node() {
-            let matched = self.walk_possibilities(cursor)?;
+            let matched = self.visit_current_node(cursor, false)?;
 
             if !matched {
                 cursor.goto_next_node();
@@ -214,98 +196,31 @@ impl<'context, 'config, 'framework, 'ast, 'storage>
         Ok(())
     }
 
-    /// Calls [`Self::visit_current_node_and_possibility`] with `cursor`'s current node and each
-    /// [`Possibility`].
-    fn walk_possibilities(
+    /// Visits `cursor`'s current node. Returns a `bool` wrapped in a `Result`. That `bool`
+    /// indicates whether `cursor`'s current node's subtree need not be considered further by
+    /// [`Self::visit_current_node`]'s caller (which happens to be [`Self::walk_nodes`]).
+    fn visit_current_node(
         &mut self,
         cursor: &mut bounded_cursor::BoundedCursor<'ast>,
-    ) -> Result<bool> {
-        trace!();
-
-        let mut possible_iter = Possibility::iter().peekable();
-
-        while let Some(possibility) = possible_iter.peek().copied() {
-            let matched =
-                self.visit_current_node_and_possibility(cursor, &mut possible_iter, false)?;
-
-            if matched {
-                return Ok(true);
-            }
-
-            assert_ne!(Some(possibility), possible_iter.peek().copied());
-        }
-
-        Ok(false)
-    }
-
-    /// Moves `possible_iter` to the next [`Possibility`] (if any) and does one of the following:
-    /// - If `recurse` is true and `possible_iter` is not exhausted, calls
-    ///   [`Self::visit_current_node_and_possibility`].
-    /// - If `recurse` is true and `possible_iter` is exhausted, calls [`Self::walk_nodes`].
-    /// - If `recurse` is false, returns `Ok(false)` (indicating the node and its subtree were not
-    ///   explored).
-    ///
-    /// **This function is tricky because it may recurse or not, depending on `recurse`.**
-    fn next_possibility(
-        &mut self,
-        cursor: &mut bounded_cursor::BoundedCursor<'ast>,
-        possible_iter: &mut PossibleIter,
-        recurse: bool,
-    ) -> Result<bool> {
-        trace!(recurse);
-
-        let _: Possibility = possible_iter.next().unwrap();
-
-        if recurse {
-            if possible_iter.peek().is_some() {
-                let _: bool =
-                    self.visit_current_node_and_possibility(cursor, possible_iter, true)?;
-            } else {
-                self.walk_nodes(cursor)?;
-            }
-
-            Ok(true)
-        } else {
-            Ok(false)
-        }
-    }
-
-    /// Visits `cursor`'s current node and `possible_iter`'s current possibility. Returns a `bool`
-    /// wrapped in a `Result`. That `bool` indicates whether `cursor`'s current node matched the
-    /// current possibility, and so the node's subtree need not be considered further by
-    /// [`Self::visit_current_node_and_possibility`]'s caller (which happens to be
-    /// [`Self::walk_possibilities`]).
-    fn visit_current_node_and_possibility(
-        &mut self,
-        cursor: &mut bounded_cursor::BoundedCursor<'ast>,
-        possible_iter: &mut PossibleIter,
         recurse: bool,
     ) -> Result<bool> {
         let node = cursor.current_node().unwrap();
 
-        let possibility = *possible_iter.peek().unwrap();
+        trace!((recurse, node));
 
-        trace!((recurse, node, possibility));
-
-        match possibility {
-            Possibility::Statement
-                if process_self_captures(
-                    &STATEMENT_QUERY,
-                    node,
-                    self.storage.borrow().text.as_bytes(),
-                    |captures| captures.next().is_some(),
-                ) =>
-            {
-                self.visit_statement(cursor, possible_iter)?;
-                Ok(true)
-            }
-
-            Possibility::CallExpression if node.kind_id() == *CALL_EXPRESSION_KIND => {
-                self.visit_call(cursor, possible_iter)?;
-                Ok(true)
-            }
-
-            _ => self.next_possibility(cursor, possible_iter, recurse),
+        if process_self_captures(
+            &STATEMENT_QUERY,
+            node,
+            self.storage.borrow().text.as_bytes(),
+            |captures| captures.next().is_some(),
+        ) {
+            self.visit_statement(cursor)?;
+            Ok(true)
+        } else if node.kind_id() == *CALL_EXPRESSION_KIND {
+            self.visit_call(cursor)?;
+            Ok(true)
+        } else {
+            Ok(false)
         }
     }
 }
