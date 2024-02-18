@@ -1,14 +1,14 @@
 digraph {
-    visit_tree -> visit_test_function_declaration
-    visit_test_function_declaration -> walk_nodes
-    visit_statement -> walk_or_skip
-    visit_call -> walk_or_skip
-    walk_or_skip -> next_possibility
-    walk_nodes -> walk_possibilities
-    walk_possibilities -> visit_current_node_and_possibility
-    next_possibility -> visit_current_node_and_possibility
-    next_possibility -> walk_nodes
-    visit_current_node_and_possibility -> visit_statement
-    visit_current_node_and_possibility -> visit_call
-    visit_current_node_and_possibility -> next_possibility
+    visit_tree -> visit_test_function_declaration;
+    visit_test_function_declaration -> walk_nodes;
+    visit_statement -> walk_or_skip;
+    visit_call -> walk_or_skip;
+    walk_or_skip -> next_possibility;
+    walk_nodes -> walk_possibilities;
+    walk_possibilities -> visit_current_node_and_possibility;
+    next_possibility -> visit_current_node_and_possibility;
+    next_possibility -> walk_nodes;
+    visit_current_node_and_possibility -> visit_statement;
+    visit_current_node_and_possibility -> visit_call;
+    visit_current_node_and_possibility -> next_possibility;
 }
