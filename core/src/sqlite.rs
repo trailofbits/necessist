@@ -6,7 +6,7 @@
 
 use crate::{util, warn, LightContext, Outcome, Span, WarnFlags, Warning};
 use anyhow::{bail, Context, Result};
-use diesel::{insert_into, prelude::*, sql_query, sqlite::SqliteConnection};
+use diesel::{insert_into, prelude::*, sql_query};
 use git2::{Oid, Repository, RepositoryOpenFlags};
 use once_cell::sync::Lazy;
 use regex::Regex;
