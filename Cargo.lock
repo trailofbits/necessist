@@ -1012,7 +1012,6 @@ dependencies = [
  "git2",
  "heck",
  "indicatif",
- "is-terminal",
  "libc",
  "libsqlite3-sys",
  "log",

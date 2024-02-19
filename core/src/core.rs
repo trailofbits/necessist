@@ -8,7 +8,6 @@ use ansi_term::Style;
 use anyhow::{anyhow, bail, ensure, Context as _, Result};
 use heck::ToKebabCase;
 use indicatif::ProgressBar;
-use is_terminal::IsTerminal;
 use log::debug;
 use once_cell::sync::OnceCell;
 use std::{
@@ -16,6 +15,7 @@ use std::{
     collections::BTreeMap,
     env::{current_dir, var},
     fmt::Display,
+    io::IsTerminal,
     iter::Peekable,
     path::{Path, PathBuf},
     process::{Command, ExitStatus as StdExitStatus, Stdio},
