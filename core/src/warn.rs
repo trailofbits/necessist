@@ -6,8 +6,7 @@ use ansi_term::{
 use anyhow::{bail, Result};
 use bitflags::bitflags;
 use heck::ToKebabCase;
-use is_terminal::IsTerminal;
-use std::{collections::BTreeMap, sync::Mutex};
+use std::{collections::BTreeMap, io::IsTerminal, sync::Mutex};
 
 // smoelius: `Warning` is part of Necessist's public API. Please try to follow the naming convention
 // of `what` (e.g., `Output`) followed by `why` (e.g., `Invalid`).
