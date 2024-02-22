@@ -14,6 +14,7 @@ Necessist currently supports Anchor (TS), Foundry, Go, Hardhat (TS), and Rust.
 - [Limitations](#limitations)
 - [Semantic versioning policy](#semantic-versioning-policy)
 - [Goals](#goals)
+- [Anti-goals](#anti-goals)
 - [References](#references)
 - [License](#license)
 
