@@ -319,6 +319,22 @@ fn readme_reference_links_are_used() {
 }
 
 #[test]
+fn readme_toc_is_accurate() {
+    let readme = read_to_string("README.md").unwrap();
+    let expected_toc = readme.lines().filter_map(|line| {
+        line.strip_prefix("## ")
+            .map(|suffix| format!("- [{suffix}](#{})", suffix.to_lowercase().replace(' ', "-")))
+    });
+    assert!(readme.contains(
+        &std::iter::once(String::new())
+            .chain(expected_toc)
+            .chain(std::iter::once(String::new()))
+            .map(|s| format!("{s}\n"))
+            .collect::<String>()
+    ));
+}
+
+#[test]
 fn sort() {
     Command::new("cargo")
         .args(["sort", "--check", "--grouped"])
@@ -354,6 +370,7 @@ fn clippy_command(cargo_args: &[&str], rustc_args: &[&str]) -> Command {
         .args(rustc_args)
         .args([
             "--warn=clippy::let-underscore-untyped",
+            "--allow=clippy::format-collect",
             "--allow=clippy::missing-errors-doc",
             "--allow=clippy::missing-panics-doc",
             "--allow=clippy::struct-field-names",
