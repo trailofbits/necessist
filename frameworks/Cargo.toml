@@ -39,7 +39,7 @@ toml_edit = "0.21"
 solang-parser = "=0.3.3"
 
 # Go
-tree-sitter = "0.20"
+tree-sitter = "0.21"
 tree-sitter-go = "0.20"
 
 # Hardhat TS
