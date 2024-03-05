@@ -58,6 +58,9 @@ struct Test {
     #[serde(default)]
     path_prefix: Option<String>,
 
+    // smoelius: Allow `clippy::doc_markdown` until the following appears in nightly:
+    // https://github.com/rust-lang/rust-clippy/pull/12419
+    #[allow(clippy::doc_markdown)]
     /// OS on which the test should run; `None` (the default) means all OSes
     #[serde(default)]
     target_os: Option<StringOrVec>,
@@ -91,7 +94,7 @@ struct Test {
 
     /// [Configuration file] contents
     ///
-    /// configuration file: https://github.com/trailofbits/necessist#configuration-files
+    /// [Configuration file]: https://github.com/trailofbits/necessist#configuration-files
     #[serde(default)]
     config: toml::Table,
 }
