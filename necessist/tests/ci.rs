@@ -28,9 +28,7 @@ fn initialize() {
 
 #[test]
 fn clippy() {
-    clippy_command(&[], &["--deny=warnings", "--warn=clippy::pedantic"])
-        .assert()
-        .success();
+    clippy_command(&[], &["--deny=warnings"]).assert().success();
 }
 
 #[test]
@@ -367,14 +365,7 @@ fn clippy_command(cargo_args: &[&str], rustc_args: &[&str]) -> Command {
         .args(["+nightly", "clippy", "--all-features", "--all-targets"])
         .args(cargo_args)
         .args(["--"])
-        .args(rustc_args)
-        .args([
-            "--warn=clippy::let-underscore-untyped",
-            "--allow=clippy::format-collect",
-            "--allow=clippy::missing-errors-doc",
-            "--allow=clippy::missing-panics-doc",
-            "--allow=clippy::struct-field-names",
-        ]);
+        .args(rustc_args);
     command
 }
 

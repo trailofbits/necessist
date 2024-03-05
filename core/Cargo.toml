@@ -58,3 +58,6 @@ syn = "2.0"
 default = ["limit_threads", "lock_root"]
 limit_threads = ["rlimit"]
 lock_root = ["libc", "windows-sys"]
+
+[lints]
+workspace = true
