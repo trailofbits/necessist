@@ -44,3 +44,6 @@ walkdir = "2.4"
 default = []
 dogfood = []
 strict = []
+
+[lints]
+workspace = true

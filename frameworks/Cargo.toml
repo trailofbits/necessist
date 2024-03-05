@@ -63,3 +63,6 @@ tempfile = "3.10"
 [build-dependencies]
 heck = "0.4"
 syn = "2.0"
+
+[lints]
+workspace = true
