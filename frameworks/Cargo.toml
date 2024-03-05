@@ -27,7 +27,7 @@ strum = "0.26"
 strum_macros = "0.26"
 strip-ansi-escapes = "0.2"
 subprocess = "0.2"
-walkdir = "2.4"
+walkdir = "2.5"
 
 # Anchor TS
 toml_edit = "0.21"
