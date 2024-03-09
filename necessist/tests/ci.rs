@@ -359,7 +359,6 @@ fn update() {
 }
 
 fn clippy_command(cargo_args: &[&str], rustc_args: &[&str]) -> Command {
-    // smoelius: The next command should match what's in scripts/clippy.sh.
     let mut command = Command::new("cargo");
     command
         .args(["+nightly", "clippy", "--all-features", "--all-targets"])
