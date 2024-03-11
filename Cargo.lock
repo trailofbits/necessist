@@ -1059,7 +1059,7 @@ dependencies = [
  "swc_core",
  "syn",
  "tempfile",
- "toml_edit 0.21.1",
+ "toml_edit 0.22.4",
  "tree-sitter",
  "tree-sitter-go",
  "walkdir",
