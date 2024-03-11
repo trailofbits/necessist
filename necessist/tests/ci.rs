@@ -169,8 +169,10 @@ fn license() {
 fn markdown_link_check() {
     let tempdir = tempdir().unwrap();
 
+    // smoelius: Pin `markdown-link-check` to version 3.11 until the following issue is resolved:
+    // https://github.com/tcort/markdown-link-check/issues/304
     Command::new("npm")
-        .args(["install", "markdown-link-check"])
+        .args(["install", "markdown-link-check@3.11"])
         .current_dir(&tempdir)
         .assert()
         .success();
