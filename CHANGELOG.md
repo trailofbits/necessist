@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.5
+
+- Eliminate reliance on `is-terminal` ([#1008](https://github.com/trailofbits/necessist/pull/1008) and [7878f3e](https://github.com/trailofbits/necessist/commit/7878f3e15337f090207823be7153482e44031292))
+- Fix README.md table of contents ([f0c3c7a](https://github.com/trailofbits/necessist/commit/f0c3c7a05d15c614e362a4912fbc35a1dcca26e3))
+- Add readme explaining origin of pt.rs file ([#1015](https://github.com/trailofbits/necessist/pull/1015))
+- Update `toml_edit` to version 0.22 ([#1026](https://github.com/trailofbits/necessist/pull/1026))
+
 ## 0.4.4
 
 - Update `strum_macros` to version 0.26 ([#975](https://github.com/trailofbits/necessist/pull/975))
