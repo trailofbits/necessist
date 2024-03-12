@@ -15,6 +15,8 @@ WORKSPACE="$(realpath "$SCRIPTS"/..)"
 
 cd "$WORKSPACE"
 
+scripts/lint_changelog_commits.sh
+
 find . -name Cargo.toml ! -path './fixtures/*' -exec sed -i "{
 s/^version = \"[^\"]*\"$/$VERSION/
 }" {} \;
