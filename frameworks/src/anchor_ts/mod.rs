@@ -14,12 +14,12 @@ use std::{
     process::Command,
 };
 use subprocess::Exec;
-use toml_edit::{Document, Value};
+use toml_edit::{DocumentMut, Value};
 
 pub struct AnchorTs {
     mocha_adapter: ParseAdapter<ts::mocha::Mocha>,
     anchor_toml: PathBuf,
-    document: Document,
+    document: DocumentMut,
     prefix: String,
     suffix: String,
 }
@@ -36,7 +36,7 @@ impl AnchorTs {
     pub fn new(context: &LightContext) -> Result<Self> {
         let anchor_toml = context.root.join("Anchor.toml");
         let contents = read_to_string(&anchor_toml)?;
-        let mut document = contents.parse::<Document>()?;
+        let mut document = contents.parse::<DocumentMut>()?;
         let (prefix, suffix) = edit_test_script(&mut document, parse_test_value)?;
         Ok(Self {
             mocha_adapter: ParseAdapter(ts::mocha::Mocha::new("tests")),
@@ -152,7 +152,7 @@ static TEST_RE: Lazy<Regex> = Lazy::new(|| {
 
 #[cfg_attr(dylint_lib = "general", allow(non_local_effect_before_error_return))]
 fn edit_test_script<T>(
-    document: &mut Document,
+    document: &mut DocumentMut,
     f: impl FnOnce(&mut Value) -> Result<T>,
 ) -> Result<T> {
     let table = document.as_table_mut();
