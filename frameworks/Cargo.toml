@@ -16,7 +16,7 @@ anyhow = "1.0"
 assert_cmd = "2.0"
 bstr = "1.9"
 clap = { version = "4.5", features = ["derive"] }
-heck = "0.4"
+heck = "0.5"
 if_chain = "1.0"
 log = "0.4"
 once_cell = "1.19"
@@ -61,7 +61,7 @@ curl = "0.4"
 tempfile = "3.10"
 
 [build-dependencies]
-heck = "0.4"
+heck = "0.5"
 syn = "2.0"
 
 [lints]

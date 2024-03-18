@@ -299,7 +299,7 @@ version = "4.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "307bc0538d5f0f83b8248db3087aa92fe504e4691294d0c96c0eabc33f47ba47"
 dependencies = [
- "heck",
+ "heck 0.4.1",
  "proc-macro2",
  "quote",
  "syn",
@@ -679,6 +679,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "95505c38b4572b2d910cecb0281560f54b440a19336cbbcb27bf6ce6adc6f5a8"
 
 [[package]]
+name = "heck"
+version = "0.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2304e00983f87ffb38b55b444b5e3b60a884b5d30c0fca7d82fe33449bbe55ea"
+
+[[package]]
 name = "hermit-abi"
 version = "0.3.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -951,7 +957,7 @@ dependencies = [
  "dunce",
  "env_logger",
  "fs_extra",
- "heck",
+ "heck 0.5.0",
  "necessist-core",
  "necessist-frameworks",
  "once_cell",
@@ -985,7 +991,7 @@ dependencies = [
  "diesel",
  "dunce",
  "git2",
- "heck",
+ "heck 0.5.0",
  "indicatif",
  "libc",
  "libsqlite3-sys",
@@ -1016,7 +1022,7 @@ dependencies = [
  "cargo_metadata",
  "clap",
  "curl",
- "heck",
+ "heck 0.5.0",
  "if_chain",
  "log",
  "necessist-core",
@@ -1753,7 +1759,7 @@ version = "0.26.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c6cf59daf282c0a494ba14fd21610a0325f9f90ec9d1231dea26bcb1d696c946"
 dependencies = [
- "heck",
+ "heck 0.4.1",
  "proc-macro2",
  "quote",
  "rustversion",
