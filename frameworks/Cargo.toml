@@ -1,6 +1,6 @@
 [package]
 name = "necessist-frameworks"
-version = "0.4.5"
+version = "0.4.6"
 edition = "2021"
 
 description = "necessist-frameworks"
@@ -10,7 +10,7 @@ license = "AGPL-3.0"
 repository = "https://github.com/trailofbits/necessist"
 
 [dependencies]
-necessist-core = { version = "=0.4.5", path = "../core" }
+necessist-core = { version = "=0.4.6", path = "../core" }
 
 anyhow = "1.0"
 assert_cmd = "2.0"

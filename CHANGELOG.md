@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.6
+
+- Update `heck` to version 0.5 ([#1034](https://github.com/trailofbits/necessist/pull/1034))
+
 ## 0.4.5
 
 - Eliminate reliance on `is-terminal` ([#1008](https://github.com/trailofbits/necessist/pull/1008) and [7878f3e](https://github.com/trailofbits/necessist/commit/7878f3e15337f090207823be7153482e44031292))
