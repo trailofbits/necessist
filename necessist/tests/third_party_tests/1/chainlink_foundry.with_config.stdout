@@ -1,4 +1,4 @@
-62 candidates in 1 test file
+561 candidates in 9 test files
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: dry running
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: mutilating
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:89:57-93:6: `.calculateSmartContractAccountAddress(
@@ -22,7 +22,7 @@ $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:114:59-119
       encodedGreetingCall
     )` nonbuildable
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:137:36-137:54: `.getUserOpHash(op)` nonbuildable
-$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:138:34-138:81: `.getUserOpFullHash(userOpHash, toDeployAddress)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:138:34-138:82: `._getUserOpFullHash(userOpHash, toDeployAddress)` nonbuildable
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:140:5-140:51: `op.signature = abi.encodePacked(r, s, v - 27);` failed
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:143:5-143:60: `entryPoint.depositTo{value: 10 ether}(toDeployAddress);` failed
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:147:5-147:24: `operations[0] = op;` failed
@@ -44,7 +44,7 @@ $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:174:59-179
       encodedGreetingCall
     )` nonbuildable
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:197:36-197:54: `.getUserOpHash(op)` nonbuildable
-$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:198:34-198:81: `.getUserOpFullHash(userOpHash, toDeployAddress)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:198:34-198:82: `._getUserOpFullHash(userOpHash, toDeployAddress)` nonbuildable
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:200:5-200:51: `op.signature = abi.encodePacked(r, s, v - 27);` failed
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:203:5-203:60: `entryPoint.depositTo{value: 10 ether}(toDeployAddress);` failed
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:207:5-207:24: `operations[0] = op;` failed
@@ -69,7 +69,7 @@ $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:244:5-244:
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:244:14-244:100: `.transferAndCall(address(paymaster), 1000 ether, abi.encode(address(toDeployAddress)))` failed
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:244:66-244:99: `.encode(address(toDeployAddress))` nonbuildable
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:262:36-262:54: `.getUserOpHash(op)` nonbuildable
-$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:263:34-263:81: `.getUserOpFullHash(userOpHash, toDeployAddress)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:263:34-263:82: `._getUserOpFullHash(userOpHash, toDeployAddress)` nonbuildable
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:265:5-265:51: `op.signature = abi.encodePacked(r, s, v - 27);` failed
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:268:5-268:63: `entryPoint.depositTo{value: 10 ether}(address(paymaster));` failed
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:272:5-272:24: `operations[0] = op;` failed
@@ -96,11 +96,574 @@ $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:307:59-312
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:316:5-316:101: `linkToken.transferAndCall(address(paymaster), 1000 ether, abi.encode(address(toDeployAddress)));` failed
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:316:14-316:100: `.transferAndCall(address(paymaster), 1000 ether, abi.encode(address(toDeployAddress)))` failed
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:316:66-316:99: `.encode(address(toDeployAddress))` nonbuildable
-$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:341:34-341:99: `.getUserOpFullHash(entryPoint.getUserOpHash(op), toDeployAddress)` nonbuildable
-$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:341:63-341:81: `.getUserOpHash(op)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:341:34-341:100: `._getUserOpFullHash(entryPoint.getUserOpHash(op), toDeployAddress)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:341:64-341:82: `.getUserOpHash(op)` nonbuildable
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:342:5-342:43: `op.signature = getSignature(fullHash);` failed
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:345:5-345:63: `entryPoint.depositTo{value: 10 ether}(address(paymaster));` failed
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:358:5-358:24: `operations[0] = op;` failed
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:361:5-361:57: `entryPoint.handleOps(operations, payable(END_USER));` failed
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:361:15-361:56: `.handleOps(operations, payable(END_USER))` failed
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol:362:34-362:44: `.s_nonce()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol: dry running
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol: mutilating
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:57:7-57:31: `vm.chainId(chainIds[i]);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:57:9-57:30: `.chainId(chainIds[i])` failed
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:60:7-64:9: `vm.mockCall(
+        ARBSYS_ADDR,
+        abi.encodeWithSelector(ArbSys.arbBlockNumber.selector),
+        abi.encode(expectedBlockNumber + 1)
+      );` failed
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:60:9-64:8: `.mockCall(
+        ARBSYS_ADDR,
+        abi.encodeWithSelector(ArbSys.arbBlockNumber.selector),
+        abi.encode(expectedBlockNumber + 1)
+      )` failed
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:62:12-62:63: `.encodeWithSelector(ArbSys.arbBlockNumber.selector)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:63:12-63:44: `.encode(expectedBlockNumber + 1)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:65:7-69:9: `vm.mockCall(
+        ARBSYS_ADDR,
+        abi.encodeWithSelector(ArbSys.arbBlockHash.selector, expectedBlockNumber),
+        abi.encodePacked(expectedBlockHash)
+      );` failed
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:65:9-69:8: `.mockCall(
+        ARBSYS_ADDR,
+        abi.encodeWithSelector(ArbSys.arbBlockHash.selector, expectedBlockNumber),
+        abi.encodePacked(expectedBlockHash)
+      )` failed
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:67:12-67:82: `.encodeWithSelector(ArbSys.arbBlockHash.selector, expectedBlockNumber)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:68:12-68:44: `.encodePacked(expectedBlockHash)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:70:50-70:93: `._getBlockhash(uint64(expectedBlockNumber))` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:77:48-77:88: `._getBlockhash(uint64(block.number - 1))` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:85:7-85:31: `vm.chainId(chainIds[i]);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:85:9-85:30: `.chainId(chainIds[i])` failed
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:87:7-87:121: `vm.mockCall(ARBSYS_ADDR, abi.encodeWithSelector(ArbSys.arbBlockNumber.selector), abi.encode(expectedBlockNumber));` failed
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:87:9-87:120: `.mockCall(ARBSYS_ADDR, abi.encodeWithSelector(ArbSys.arbBlockNumber.selector), abi.encode(expectedBlockNumber))` failed
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:87:35-87:86: `.encodeWithSelector(ArbSys.arbBlockNumber.selector)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:87:91-87:119: `.encode(expectedBlockNumber)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:88:52-88:70: `._getBlockNumber()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:95:50-95:68: `._getBlockNumber()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:103:7-103:31: `vm.chainId(chainIds[i]);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:103:9-103:30: `.chainId(chainIds[i])` failed
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:105:7-109:9: `vm.mockCall(
+        ARBGAS_ADDR,
+        abi.encodeWithSelector(ArbGasInfo.getCurrentTxL1GasFees.selector),
+        abi.encode(expectedGasFee)
+      );` failed
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:105:9-109:8: `.mockCall(
+        ARBGAS_ADDR,
+        abi.encodeWithSelector(ArbGasInfo.getCurrentTxL1GasFees.selector),
+        abi.encode(expectedGasFee)
+      )` failed
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:107:12-107:74: `.encodeWithSelector(ArbGasInfo.getCurrentTxL1GasFees.selector)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:108:12-108:35: `.encode(expectedGasFee)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:110:47-110:74: `._getCurrentTxL1GasFees("")` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:126:7-126:31: `vm.chainId(chainIds[i]);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:126:9-126:30: `.chainId(chainIds[i])` failed
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:128:38-128:77: `.encode(address(0), "blah", uint256(1))` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:129:7-133:9: `vm.mockCall(
+        OVM_GASPRICEORACLE_ADDR,
+        abi.encodeWithSelector(OVM_GasPriceOracle.getL1Fee.selector, bytes.concat(someCalldata, L1_FEE_DATA_PADDING)),
+        abi.encode(expectedL1Fee)
+      );` failed
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:129:9-133:8: `.mockCall(
+        OVM_GASPRICEORACLE_ADDR,
+        abi.encodeWithSelector(OVM_GasPriceOracle.getL1Fee.selector, bytes.concat(someCalldata, L1_FEE_DATA_PADDING)),
+        abi.encode(expectedL1Fee)
+      )` failed
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:131:12-131:118: `.encodeWithSelector(OVM_GasPriceOracle.getL1Fee.selector, bytes.concat(someCalldata, L1_FEE_DATA_PADDING))` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:131:75-131:117: `.concat(someCalldata, L1_FEE_DATA_PADDING)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:132:12-132:34: `.encode(expectedL1Fee)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:134:46-134:83: `._getCurrentTxL1GasFees(someCalldata)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:142:7-142:31: `vm.chainId(chainIds[i]);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:142:9-142:30: `.chainId(chainIds[i])` failed
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:143:7-147:9: `vm.mockCall(
+        ARBGAS_ADDR,
+        abi.encodeWithSelector(ArbGasInfo.getPricesInWei.selector),
+        abi.encode(0, 10, 0, 0, 0, 0)
+      );` failed
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:143:9-147:8: `.mockCall(
+        ARBGAS_ADDR,
+        abi.encodeWithSelector(ArbGasInfo.getPricesInWei.selector),
+        abi.encode(0, 10, 0, 0, 0, 0)
+      )` failed
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:145:12-145:67: `.encodeWithSelector(ArbGasInfo.getPricesInWei.selector)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:146:12-146:38: `.encode(0, 10, 0, 0, 0, 0)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:151:42-151:68: `._getL1CalldataGasCost(10)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:165:7-165:31: `vm.chainId(chainIds[i]);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:165:9-165:30: `.chainId(chainIds[i])` failed
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:166:7-170:9: `vm.mockCall(
+        OVM_GASPRICEORACLE_ADDR,
+        abi.encodeWithSelector(bytes4(hex"519b4bd3")), // l1BaseFee()
+        abi.encode(10)
+      );` failed
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:166:9-170:8: `.mockCall(
+        OVM_GASPRICEORACLE_ADDR,
+        abi.encodeWithSelector(bytes4(hex"519b4bd3")), // l1BaseFee()
+        abi.encode(10)
+      )` failed
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:168:12-168:54: `.encodeWithSelector(bytes4(hex"519b4bd3"))` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:169:12-169:23: `.encode(10)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:171:7-175:9: `vm.mockCall(
+        OVM_GASPRICEORACLE_ADDR,
+        abi.encodeWithSelector(bytes4(hex"0c18c162")), // overhead()
+        abi.encode(160)
+      );` failed
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:171:9-175:8: `.mockCall(
+        OVM_GASPRICEORACLE_ADDR,
+        abi.encodeWithSelector(bytes4(hex"0c18c162")), // overhead()
+        abi.encode(160)
+      )` failed
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:173:12-173:54: `.encodeWithSelector(bytes4(hex"0c18c162"))` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:174:12-174:24: `.encode(160)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:176:7-180:9: `vm.mockCall(
+        OVM_GASPRICEORACLE_ADDR,
+        abi.encodeWithSelector(bytes4(hex"f45e65d8")), // scalar()
+        abi.encode(500_000)
+      );` failed
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:176:9-180:8: `.mockCall(
+        OVM_GASPRICEORACLE_ADDR,
+        abi.encodeWithSelector(bytes4(hex"f45e65d8")), // scalar()
+        abi.encode(500_000)
+      )` failed
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:178:12-178:54: `.encodeWithSelector(bytes4(hex"f45e65d8"))` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:179:12-179:28: `.encode(500_000)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:181:7-185:9: `vm.mockCall(
+        OVM_GASPRICEORACLE_ADDR,
+        abi.encodeWithSelector(bytes4(hex"313ce567")), // decimals()
+        abi.encode(6)
+      );` failed
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:181:9-185:8: `.mockCall(
+        OVM_GASPRICEORACLE_ADDR,
+        abi.encodeWithSelector(bytes4(hex"313ce567")), // decimals()
+        abi.encode(6)
+      )` failed
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:183:12-183:54: `.encodeWithSelector(bytes4(hex"313ce567"))` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:184:12-184:22: `.encode(6)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/ChainSpecificUtil.t.sol:191:42-191:68: `._getL1CalldataGasCost(10)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/TrustedBlockhashStore.t.sol: dry running
+$DIR/contracts/test/v0.8/foundry/vrf/TrustedBlockhashStore.t.sol: mutilating
+$DIR/contracts/test/v0.8/foundry/vrf/TrustedBlockhashStore.t.sol:34:5-34:28: `bhs.store(blockNumber);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/TrustedBlockhashStore.t.sol:34:8-34:27: `.store(blockNumber)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/TrustedBlockhashStore.t.sol:39:5-39:25: `bhs.storeEarliest();` failed
+$DIR/contracts/test/v0.8/foundry/vrf/TrustedBlockhashStore.t.sol:39:8-39:24: `.storeEarliest()` failed
+$DIR/contracts/test/v0.8/foundry/vrf/TrustedBlockhashStore.t.sol:40:17-40:51: `.getBlockhash(earliestBlockNumber)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/TrustedBlockhashStore.t.sol:53:5-53:37: `blockNums[0] = unreachableBlock;` failed
+$DIR/contracts/test/v0.8/foundry/vrf/TrustedBlockhashStore.t.sol:55:5-55:43: `blockhashes[0] = unreachableBlockhash;` failed
+$DIR/contracts/test/v0.8/foundry/vrf/TrustedBlockhashStore.t.sol:62:5-62:31: `changePrank(LINK_WHALE_2);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/TrustedBlockhashStore.t.sol:69:5-69:29: `changePrank(LINK_WHALE);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/TrustedBlockhashStore.t.sol:74:5-74:95: `bhs.storeTrusted(blockNums, blockhashes, recentBlockNumber, blockhash(recentBlockNumber));` failed
+$DIR/contracts/test/v0.8/foundry/vrf/TrustedBlockhashStore.t.sol:74:8-74:94: `.storeTrusted(blockNums, blockhashes, recentBlockNumber, blockhash(recentBlockNumber))` failed
+$DIR/contracts/test/v0.8/foundry/vrf/TrustedBlockhashStore.t.sol:80:5-80:36: `newWhitelist[0] = LINK_WHALE_2;` failed
+$DIR/contracts/test/v0.8/foundry/vrf/TrustedBlockhashStore.t.sol:81:5-81:36: `bhs.setWhitelist(newWhitelist);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/TrustedBlockhashStore.t.sol:81:8-81:35: `.setWhitelist(newWhitelist)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/TrustedBlockhashStore.t.sol:86:5-86:31: `changePrank(LINK_WHALE_2);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Mock.t.sol: dry running
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Mock.t.sol: Warning: dry run failed: code=1
+stdout=```
+Compiling 1 files with 0.8.6
+Solc 0.8.6 finished in 1.59s
+Compiler run successful!
+
+Ran 14 tests for test/v0.8/foundry/vrf/VRFCoordinatorV2Mock.t.sol:VRFCoordinatorV2MockTest
+[PASS] testAddConsumer() (gas: 114423)
+[PASS] testAddConsumerToInvalidSub() (gas: 16032)
+[PASS] testAddMaxConsumers() (gas: 4504889)
+[PASS] testCancelSubscription() (gas: 55811)
+[PASS] testCreateSubscription() (gas: 93773)
+[PASS] testFundInvalidSubscription() (gas: 16022)
+[PASS] testFundSubscription() (gas: 70767)
+[PASS] testRemoveConsumerAgain() (gas: 94292)
+[PASS] testRemoveConsumerFromInvalidSub() (gas: 15999)
+[PASS] testRemoveConsumerFromSub() (gas: 92327)
+[FAIL. Reason: log != expected log] testRequestRandomWordsHappyPath() (gas: 281495)
+[PASS] testRequestRandomWordsInsufficientFunds() (gas: 159976)
+[PASS] testRequestRandomWordsInvalidConsumer() (gas: 70483)
+[FAIL. Reason: log != expected log] testRequestRandomWordsUserOverride() (gas: 268629)
+Suite result: FAILED. 12 passed; 2 failed; 0 skipped; finished in 9.97ms (11.24ms CPU time)
+
+Ran 1 test suite in 32.73ms (9.97ms CPU time): 12 tests passed, 2 failed, 0 skipped (14 total tests)
+
+Failing tests:
+Encountered 2 failing tests in test/v0.8/foundry/vrf/VRFCoordinatorV2Mock.t.sol:VRFCoordinatorV2MockTest
+[FAIL. Reason: log != expected log] testRequestRandomWordsHappyPath() (gas: 281495)
+[FAIL. Reason: log != expected log] testRequestRandomWordsUserOverride() (gas: 268629)
+
+Encountered a total of 2 failing tests, 12 tests succeeded
+```
+
+stderr=""
+
+Silence this warning with: --allow dry-run-failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol: dry running
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol: mutilating
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:117:5-117:70: `v1Coordinator.deregisterMigratableCoordinator(v2CoordinatorAddr);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:117:18-117:69: `.deregisterMigratableCoordinator(v2CoordinatorAddr)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:125:5-125:68: `v1Coordinator.registerMigratableCoordinator(v2CoordinatorAddr);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:125:18-125:67: `.registerMigratableCoordinator(v2CoordinatorAddr)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:126:5-126:68: `v1Coordinator.registerMigratableCoordinator(v3CoordinatorAddr);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:126:18-126:67: `.registerMigratableCoordinator(v3CoordinatorAddr)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:130:5-130:70: `v1Coordinator.deregisterMigratableCoordinator(v3CoordinatorAddr);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:130:18-130:69: `.deregisterMigratableCoordinator(v3CoordinatorAddr)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:134:5-134:68: `v1Coordinator.registerMigratableCoordinator(v3CoordinatorAddr);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:134:18-134:67: `.registerMigratableCoordinator(v3CoordinatorAddr)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:138:5-138:70: `v1Coordinator.deregisterMigratableCoordinator(v2CoordinatorAddr);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:138:18-138:69: `.deregisterMigratableCoordinator(v2CoordinatorAddr)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:142:5-142:70: `v1Coordinator.deregisterMigratableCoordinator(v3CoordinatorAddr);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:142:18-142:69: `.deregisterMigratableCoordinator(v3CoordinatorAddr)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:144:30-144:76: `.isTargetRegisteredExternal(v3CoordinatorAddr)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:148:5-148:91: `linkToken.transferAndCall(v1CoordinatorAddr, DEFAULT_LINK_FUNDING, abi.encode(subId));` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:148:14-148:90: `.transferAndCall(v1CoordinatorAddr, DEFAULT_LINK_FUNDING, abi.encode(subId))` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:148:75-148:89: `.encode(subId)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:149:5-149:84: `v1Coordinator.fundSubscriptionWithNative{value: DEFAULT_NATIVE_FUNDING}(subId);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:150:5-150:61: `v1Coordinator.addConsumer(subId, address(testConsumer));` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:150:18-150:60: `.addConsumer(subId, address(testConsumer))` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:172:5-172:53: `v1Coordinator.migrate(subId, v2CoordinatorAddr);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:172:18-172:52: `.migrate(subId, v2CoordinatorAddr)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:183:5-183:97: `(balance, nativeBalance, reqCount, owner, consumers) = v2Coordinator.getSubscription(subId);` passed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:200:5-206:7: `testConsumer.requestRandomWords(
+      DEFAULT_CALLBACK_GAS_LIMIT,
+      DEFAULT_REQUEST_CONFIRMATIONS,
+      DEFAULT_NUM_WORDS,
+      KEY_HASH,
+      false
+    );` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:200:17-206:6: `.requestRandomWords(
+      DEFAULT_CALLBACK_GAS_LIMIT,
+      DEFAULT_REQUEST_CONFIRMATIONS,
+      DEFAULT_NUM_WORDS,
+      KEY_HASH,
+      false
+    )` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:209:5-209:72: `v2Coordinator.fulfillRandomWords(testConsumer.s_recentRequestId());` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:209:18-209:71: `.fulfillRandomWords(testConsumer.s_recentRequestId())` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:209:50-209:70: `.s_recentRequestId()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:211:19-211:70: `.getRandomness(testConsumer.s_recentRequestId(), 0)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:211:46-211:66: `.s_recentRequestId()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:217:5-217:98: `v1Coordinator_noLink.fundSubscriptionWithNative{value: DEFAULT_NATIVE_FUNDING}(subId_noLink);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:218:5-218:82: `v1Coordinator_noLink.addConsumer(subId_noLink, address(testConsumer_noLink));` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:218:25-218:81: `.addConsumer(subId_noLink, address(testConsumer_noLink))` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:245:5-245:74: `v1Coordinator_noLink.migrate(subId_noLink, v2CoordinatorAddr_noLink);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:245:25-245:73: `.migrate(subId_noLink, v2CoordinatorAddr_noLink)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:256:5-256:111: `(balance, nativeBalance, reqCount, owner, consumers) = v2Coordinator_noLink.getSubscription(subId_noLink);` passed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:273:5-279:7: `testConsumer_noLink.requestRandomWords(
+      DEFAULT_CALLBACK_GAS_LIMIT,
+      DEFAULT_REQUEST_CONFIRMATIONS,
+      DEFAULT_NUM_WORDS,
+      KEY_HASH,
+      false
+    );` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:273:24-279:6: `.requestRandomWords(
+      DEFAULT_CALLBACK_GAS_LIMIT,
+      DEFAULT_REQUEST_CONFIRMATIONS,
+      DEFAULT_NUM_WORDS,
+      KEY_HASH,
+      false
+    )` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:282:5-282:86: `v2Coordinator_noLink.fulfillRandomWords(testConsumer_noLink.s_recentRequestId());` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:282:25-282:85: `.fulfillRandomWords(testConsumer_noLink.s_recentRequestId())` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:282:64-282:84: `.s_recentRequestId()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:284:26-284:84: `.getRandomness(testConsumer_noLink.s_recentRequestId(), 0)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:284:60-284:80: `.s_recentRequestId()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:299:5-299:44: `changePrank(makeAddr("invalidCaller"));` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:305:5-305:61: `v1Coordinator.addConsumer(subId, address(testConsumer));` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:305:18-305:60: `.addConsumer(subId, address(testConsumer))` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:306:5-306:34: `testConsumer.setSubId(subId);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:306:17-306:33: `.setSubId(subId)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:307:5-313:7: `testConsumer.requestRandomWords(
+      DEFAULT_CALLBACK_GAS_LIMIT,
+      DEFAULT_REQUEST_CONFIRMATIONS,
+      DEFAULT_NUM_WORDS,
+      KEY_HASH,
+      false
+    );` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:307:17-313:6: `.requestRandomWords(
+      DEFAULT_CALLBACK_GAS_LIMIT,
+      DEFAULT_REQUEST_CONFIRMATIONS,
+      DEFAULT_NUM_WORDS,
+      KEY_HASH,
+      false
+    )` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:322:5-322:32: `changePrank(maliciousUser);` passed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:323:43-323:64: `.createSubscription()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:325:5-325:67: `v1Coordinator.addConsumer(maliciousSubId, address(prankster));` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFCoordinatorV2Plus_Migration.t.sol:325:18-325:66: `.addConsumer(maliciousSubId, address(prankster))` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Plus.t.sol: dry running
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Plus.t.sol: Warning: dry run failed: code=1
+stdout=```
+Compiling 1 files with 0.8.6
+Solc 0.8.6 finished in 3.57s
+Compiler run successful!
+
+Ran 7 tests for test/v0.8/foundry/vrf/VRFV2Plus.t.sol:VRFV2Plus
+[PASS] testCancelSubWithNoLink() (gas: 160435)
+[PASS] testCreateSubscription() (gas: 180899)
+[PASS] testGetActiveSubscriptionIds() (gas: 3477832)
+[PASS] testRegisterProvingKey() (gas: 100569)
+[FAIL. Reason: assertion failed: 0x0000000000000000000000000000000000000000000000000000000000000014 != 0x731dc163f73d31d8c68f9917ce4ff967753939f70432973c04fd2c2a48148607] testRequestAndFulfillRandomWordsLINK() (gas: 617458)
+[FAIL. Reason: assertion failed: 0x000000000000000000000000000000000000000000000000000000000000000a != 0x1a192fabce13988b84994d4296e6cdc418d55e2f1d7f942188d4040b94fc57ac] testRequestAndFulfillRandomWordsNative() (gas: 579603)
+[PASS] testSetConfig() (gas: 73655)
+Suite result: FAILED. 5 passed; 2 failed; 0 skipped; finished in 5.30ms (5.58ms CPU time)
+
+Ran 1 test suite in 28.28ms (5.30ms CPU time): 5 tests passed, 2 failed, 0 skipped (7 total tests)
+
+Failing tests:
+Encountered 2 failing tests in test/v0.8/foundry/vrf/VRFV2Plus.t.sol:VRFV2Plus
+[FAIL. Reason: assertion failed: 0x0000000000000000000000000000000000000000000000000000000000000014 != 0x731dc163f73d31d8c68f9917ce4ff967753939f70432973c04fd2c2a48148607] testRequestAndFulfillRandomWordsLINK() (gas: 617458)
+[FAIL. Reason: assertion failed: 0x000000000000000000000000000000000000000000000000000000000000000a != 0x1a192fabce13988b84994d4296e6cdc418d55e2f1d7f942188d4040b94fc57ac] testRequestAndFulfillRandomWordsNative() (gas: 579603)
+
+Encountered a total of 2 failing tests, 5 tests succeeded
+```
+
+stderr=""
+
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol: dry running
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol: mutilating
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:34:31-34:54: `.s_totalNativeBalance()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:40:5-40:70: `s_subscriptionAPI.setLINKAndLINKNativeFeed(link, linkNativeFeed);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:40:22-40:69: `.setLINKAndLINKNativeFeed(link, linkNativeFeed)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:58:5-58:27: `changePrank(subOwner);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:59:43-59:63: `.s_currentSubNonce()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:60:38-60:59: `.createSubscription()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:64:5-64:24: `changePrank(OWNER);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:67:5-67:54: `s_subscriptionAPI.ownerCancelSubscription(subId);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:67:22-67:53: `.ownerCancelSubscription(subId)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:83:5-83:27: `changePrank(subOwner);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:84:43-84:63: `.s_currentSubNonce()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:85:38-85:59: `.createSubscription()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:89:5-89:33: `vm.deal(subOwner, 10 ether);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:89:7-89:32: `.deal(subOwner, 10 ether)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:92:5-92:73: `s_subscriptionAPI.fundSubscriptionWithNative{value: 5 ether}(subId);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:95:5-95:24: `changePrank(OWNER);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:98:5-98:54: `s_subscriptionAPI.ownerCancelSubscription(subId);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:98:22-98:53: `.ownerCancelSubscription(subId)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:116:5-116:80: `s_subscriptionAPI.setLINKAndLINKNativeFeed(address(linkToken), address(0));` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:116:22-116:79: `.setLINKAndLINKNativeFeed(address(linkToken), address(0))` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:121:5-121:27: `changePrank(subOwner);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:122:43-122:63: `.s_currentSubNonce()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:123:38-123:59: `.createSubscription()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:128:5-128:24: `changePrank(OWNER);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:131:29-131:101: `.transferAndCall(address(s_subscriptionAPI), 5 ether, abi.encode(subId))` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:131:86-131:100: `.encode(subId)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:137:5-137:54: `s_subscriptionAPI.ownerCancelSubscription(subId);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:137:22-137:53: `.ownerCancelSubscription(subId)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:145:23-145:43: `.balanceOf(subOwner)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:154:5-154:80: `s_subscriptionAPI.setLINKAndLINKNativeFeed(address(linkToken), address(0));` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:154:22-154:79: `.setLINKAndLINKNativeFeed(address(linkToken), address(0))` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:159:5-159:27: `changePrank(subOwner);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:160:43-160:63: `.s_currentSubNonce()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:161:38-161:59: `.createSubscription()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:165:5-165:24: `changePrank(OWNER);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:168:29-168:101: `.transferAndCall(address(s_subscriptionAPI), 5 ether, abi.encode(subId))` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:168:86-168:100: `.encode(subId)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:172:5-172:33: `vm.deal(subOwner, 10 ether);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:172:7-172:32: `.deal(subOwner, 10 ether)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:173:5-173:27: `changePrank(subOwner);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:176:5-176:73: `s_subscriptionAPI.fundSubscriptionWithNative{value: 5 ether}(subId);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:179:5-179:24: `changePrank(OWNER);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:182:5-182:54: `s_subscriptionAPI.ownerCancelSubscription(subId);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:182:22-182:53: `.ownerCancelSubscription(subId)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:211:5-211:80: `s_subscriptionAPI.setLINKAndLINKNativeFeed(address(linkToken), address(0));` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:211:22-211:79: `.setLINKAndLINKNativeFeed(address(linkToken), address(0))` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:218:5-218:64: `s_subscriptionAPI.setTotalBalanceTestingOnlyXXX(100 ether);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:218:22-218:63: `.setTotalBalanceTestingOnlyXXX(100 ether)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:233:5-233:80: `s_subscriptionAPI.setLINKAndLINKNativeFeed(address(linkToken), address(0));` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:233:22-233:79: `.setLINKAndLINKNativeFeed(address(linkToken), address(0))` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:237:29-237:76: `.transfer(address(s_subscriptionAPI), 10 ether)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:253:5-253:80: `s_subscriptionAPI.setLINKAndLINKNativeFeed(address(linkToken), address(0));` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:253:22-253:79: `.setLINKAndLINKNativeFeed(address(linkToken), address(0))` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:258:5-258:27: `changePrank(subOwner);` passed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:259:43-259:63: `.s_currentSubNonce()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:260:38-260:59: `.createSubscription()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:264:5-264:24: `changePrank(OWNER);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:267:29-267:101: `.transferAndCall(address(s_subscriptionAPI), 5 ether, abi.encode(subId))` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:267:86-267:100: `.encode(subId)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:271:5-271:43: `s_subscriptionAPI.recoverFunds(OWNER);` passed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:271:22-271:42: `.recoverFunds(OWNER)` passed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:272:23-272:61: `.balanceOf(address(s_subscriptionAPI))` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:272:80-272:97: `.s_totalBalance()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:280:5-280:70: `s_subscriptionAPI.setTotalNativeBalanceTestingOnlyXXX(100 ether);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:280:22-280:69: `.setTotalNativeBalanceTestingOnlyXXX(100 ether)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:289:5-289:51: `vm.deal(address(s_subscriptionAPI), 10 ether);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:289:7-289:50: `.deal(address(s_subscriptionAPI), 10 ether)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:300:5-300:27: `changePrank(subOwner);` passed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:301:43-301:63: `.s_currentSubNonce()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:302:38-302:59: `.createSubscription()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:306:5-306:32: `vm.deal(subOwner, 5 ether);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:306:7-306:31: `.deal(subOwner, 5 ether)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:307:5-307:27: `changePrank(subOwner);` passed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:310:5-310:73: `s_subscriptionAPI.fundSubscriptionWithNative{value: 5 ether}(subId);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:313:5-313:24: `changePrank(OWNER);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:314:5-314:58: `s_subscriptionAPI.recoverNativeFunds(payable(OWNER));` passed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:314:22-314:57: `.recoverNativeFunds(payable(OWNER))` passed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:315:67-315:90: `.s_totalNativeBalance()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:328:5-328:80: `s_subscriptionAPI.setLINKAndLINKNativeFeed(address(linkToken), address(0));` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:328:22-328:79: `.setLINKAndLINKNativeFeed(address(linkToken), address(0))` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:340:5-340:80: `s_subscriptionAPI.setLINKAndLINKNativeFeed(address(linkToken), address(0));` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:340:22-340:79: `.setLINKAndLINKNativeFeed(address(linkToken), address(0))` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:344:29-344:76: `.transfer(address(s_subscriptionAPI), 10 ether)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:348:5-348:68: `s_subscriptionAPI.setWithdrawableTokensTestingOnlyXXX(1 ether);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:348:22-348:67: `.setWithdrawableTokensTestingOnlyXXX(1 ether)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:353:5-353:63: `s_subscriptionAPI.setTotalBalanceTestingOnlyXXX(10 ether);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:353:22-353:62: `.setTotalBalanceTestingOnlyXXX(10 ether)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:356:37-356:54: `.balanceOf(OWNER)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:357:5-357:24: `changePrank(OWNER);` passed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:358:5-358:39: `s_subscriptionAPI.withdraw(OWNER);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:358:22-358:38: `.withdraw(OWNER)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:364:31-364:48: `.s_totalBalance()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:372:5-372:24: `changePrank(OWNER);` passed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:379:5-379:33: `changePrank(invalidAddress);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:386:5-386:33: `changePrank(invalidAddress);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:396:5-396:51: `vm.deal(address(s_subscriptionAPI), 10 ether);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:396:7-396:50: `.deal(address(s_subscriptionAPI), 10 ether)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:399:5-399:68: `s_subscriptionAPI.setWithdrawableNativeTestingOnlyXXX(1 ether);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:399:22-399:67: `.setWithdrawableNativeTestingOnlyXXX(1 ether)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:404:5-404:69: `s_subscriptionAPI.setTotalNativeBalanceTestingOnlyXXX(10 ether);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:404:22-404:68: `.setTotalNativeBalanceTestingOnlyXXX(10 ether)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:407:5-407:24: `changePrank(OWNER);` passed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:408:5-408:54: `s_subscriptionAPI.withdrawNative(payable(OWNER));` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:408:22-408:53: `.withdrawNative(payable(OWNER))` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:414:31-414:54: `.s_totalNativeBalance()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:425:5-425:80: `s_subscriptionAPI.setLINKAndLINKNativeFeed(address(linkToken), address(0));` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:425:22-425:79: `.setLINKAndLINKNativeFeed(address(linkToken), address(0))` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:436:5-436:80: `s_subscriptionAPI.setLINKAndLINKNativeFeed(address(linkToken), address(0));` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:436:22-436:79: `.setLINKAndLINKNativeFeed(address(linkToken), address(0))` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:451:5-451:80: `s_subscriptionAPI.setLINKAndLINKNativeFeed(address(linkToken), address(0));` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:451:22-451:79: `.setLINKAndLINKNativeFeed(address(linkToken), address(0))` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:456:5-456:27: `changePrank(subOwner);` passed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:457:43-457:63: `.s_currentSubNonce()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:458:38-458:59: `.createSubscription()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:462:5-462:24: `changePrank(OWNER);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:465:29-465:101: `.transferAndCall(address(s_subscriptionAPI), 5 ether, abi.encode(subId))` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:465:86-465:100: `.encode(subId)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:480:5-480:30: `vm.deal(funder, 5 ether);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:480:7-480:29: `.deal(funder, 5 ether)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:481:5-481:25: `changePrank(funder);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:492:5-492:27: `changePrank(subOwner);` passed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:493:43-493:63: `.s_currentSubNonce()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:494:38-494:59: `.createSubscription()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:498:5-498:32: `vm.deal(subOwner, 5 ether);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:498:7-498:31: `.deal(subOwner, 5 ether)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:499:5-499:27: `changePrank(subOwner);` passed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:502:5-502:73: `s_subscriptionAPI.fundSubscriptionWithNative{value: 5 ether}(subId);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:512:5-512:27: `changePrank(subOwner);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:513:43-513:63: `.s_currentSubNonce()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:514:38-514:59: `.createSubscription()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:526:5-526:27: `changePrank(subOwner);` passed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:527:43-527:63: `.s_currentSubNonce()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:528:39-528:60: `.createSubscription()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:530:39-530:60: `.createSubscription()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:543:5-543:27: `changePrank(oldOwner);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:544:38-544:59: `.createSubscription()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:548:5-548:27: `changePrank(oldOwner);` passed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:551:5-551:73: `s_subscriptionAPI.requestSubscriptionOwnerTransfer(subId, newOwner);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:551:22-551:72: `.requestSubscriptionOwnerTransfer(subId, newOwner)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:554:5-554:27: `changePrank(newOwner);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:557:5-557:62: `s_subscriptionAPI.acceptSubscriptionOwnerTransfer(subId);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:557:22-557:61: `.acceptSubscriptionOwnerTransfer(subId)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:565:5-565:27: `changePrank(subOwner);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:566:38-566:59: `.createSubscription()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:568:42-568:54: `.toString(i)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:571:7-571:54: `s_subscriptionAPI.addConsumer(subId, consumer);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:571:24-571:53: `.addConsumer(subId, consumer)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:576:5-576:27: `changePrank(subOwner);` passed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:587:5-587:27: `changePrank(subOwner);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:588:38-588:59: `.createSubscription()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:590:5-590:27: `changePrank(subOwner);` passed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:593:5-593:52: `s_subscriptionAPI.addConsumer(subId, consumer);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:593:22-593:51: `.addConsumer(subId, consumer)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:598:5-598:27: `changePrank(subOwner);` passed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:599:5-599:52: `s_subscriptionAPI.addConsumer(subId, consumer);` passed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:599:22-599:51: `.addConsumer(subId, consumer)` passed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:609:5-609:27: `changePrank(subOwner);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:610:38-610:59: `.createSubscription()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:612:5-612:27: `changePrank(subOwner);` passed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:615:5-615:52: `s_subscriptionAPI.addConsumer(subId, consumer);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2PlusSubscriptionAPI.t.sol:615:22-615:51: `.addConsumer(subId, consumer)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol: dry running
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol: mutilating
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:112:5-112:43: `wrapper.setLINK(address(s_linkToken));` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:112:12-112:42: `.setLINK(address(s_linkToken))` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:113:5-113:58: `wrapper.setLinkNativeFeed(address(s_linkNativeFeed));` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:113:12-113:57: `.setLinkNativeFeed(address(s_linkNativeFeed))` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:123:5-123:49: `consumer.setLinkToken(address(s_linkToken));` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:123:13-123:48: `.setLinkToken(address(s_linkToken))` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:132:5-132:96: `s_testCoordinator.fundSubscriptionWithNative{value: 10 ether}(s_wrapper.SUBSCRIPTION_ID());` passed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:132:76-132:94: `.SUBSCRIPTION_ID()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:133:5-133:44: `vm.deal(address(s_consumer), 10 ether);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:133:7-133:43: `.deal(address(s_consumer), 10 ether)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:139:5-139:25: `s_wrapper.disable();` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:139:14-139:24: `.disable()` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:142:5-142:24: `s_wrapper.enable();` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:142:14-142:23: `.enable()` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:158:16-158:34: `.SUBSCRIPTION_ID()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:162:22-162:87: `._argsToBytes(VRFV2PlusClient.ExtraArgsV1({nativePayment: true}))` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:165:5-165:70: `requestId = s_consumer.makeRequestNative(callbackGasLimit, 0, 1);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:169:50-169:108: `.estimateRequestPriceNative(callbackGasLimit, tx.gasprice)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:170:47-170:93: `.calculateRequestPriceNative(callbackGasLimit)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:181:5-181:45: `changePrank(address(s_testCoordinator));` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:183:5-183:20: `words[0] = 123;` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:184:5-184:55: `s_wrapper.rawFulfillRandomWords(requestId, words);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:184:14-184:54: `.rawFulfillRandomWords(requestId, words)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:190:5-190:29: `changePrank(LINK_WHALE);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:192:5-192:48: `s_wrapper.withdrawNative(LINK_WHALE, paid);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:192:14-192:47: `.withdrawNative(LINK_WHALE, paid)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:199:5-199:112: `s_linkToken.transferAndCall(address(s_testCoordinator), 10 ether, abi.encode(s_wrapper.SUBSCRIPTION_ID()));` passed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:199:16-199:111: `.transferAndCall(address(s_testCoordinator), 10 ether, abi.encode(s_wrapper.SUBSCRIPTION_ID()))` passed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:199:74-199:110: `.encode(s_wrapper.SUBSCRIPTION_ID())` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:199:91-199:109: `.SUBSCRIPTION_ID()` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:200:5-200:57: `s_linkToken.transfer(address(s_consumer), 10 ether);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:200:16-200:56: `.transfer(address(s_consumer), 10 ether)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:216:16-216:34: `.SUBSCRIPTION_ID()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:220:22-220:88: `._argsToBytes(VRFV2PlusClient.ExtraArgsV1({nativePayment: false}))` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:223:5-223:52: `s_consumer.makeRequest(callbackGasLimit, 0, 1);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:223:15-223:51: `.makeRequest(callbackGasLimit, 0, 1)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:228:44-228:96: `.estimateRequestPrice(callbackGasLimit, tx.gasprice)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:229:47-229:87: `.calculateRequestPrice(callbackGasLimit)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:240:5-240:45: `changePrank(address(s_testCoordinator));` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:242:5-242:20: `words[0] = 456;` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:243:5-243:55: `s_wrapper.rawFulfillRandomWords(requestId, words);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:243:14-243:54: `.rawFulfillRandomWords(requestId, words)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:249:5-249:29: `changePrank(LINK_WHALE);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:250:44-250:66: `.balanceOf(LINK_WHALE)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:251:5-251:42: `s_wrapper.withdraw(LINK_WHALE, paid);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:251:14-251:41: `.withdraw(LINK_WHALE, paid)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper.t.sol:253:25-253:55: `.balanceOf(address(s_wrapper))` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol: dry running
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol: mutilating
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:131:5-131:69: `s_linkToken.transfer(address(s_consumer), DEFAULT_LINK_FUNDING);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:131:16-131:68: `.transfer(address(s_consumer), DEFAULT_LINK_FUNDING)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:133:30-133:48: `.SUBSCRIPTION_ID()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:139:5-139:94: `s_linkToken.transferAndCall(oldCoordinatorAddr, DEFAULT_LINK_FUNDING, abi.encode(subID));` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:139:16-139:93: `.transferAndCall(oldCoordinatorAddr, DEFAULT_LINK_FUNDING, abi.encode(subID))` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:139:78-139:92: `.encode(subID)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:140:5-140:88: `s_testCoordinator.fundSubscriptionWithNative{value: DEFAULT_NATIVE_FUNDING}(subID);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:173:5-173:43: `s_wrapper.migrate(newCoordinatorAddr);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:173:14-173:42: `.migrate(newCoordinatorAddr)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:184:5-184:100: `(balance, nativeBalance, reqCount, owner, consumers) = s_newCoordinator.getSubscription(subID);` passed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:205:35-205:71: `.makeRequest(callbackGasLimit, 0, 1)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:210:44-210:96: `.estimateRequestPrice(callbackGasLimit, tx.gasprice)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:211:47-211:87: `.calculateRequestPrice(callbackGasLimit)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:227:5-227:20: `words[0] = 123;` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:228:5-228:55: `s_wrapper.rawFulfillRandomWords(requestId, words);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:228:14-228:54: `.rawFulfillRandomWords(requestId, words)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:237:44-237:66: `.balanceOf(LINK_WHALE)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:238:5-238:42: `s_wrapper.withdraw(LINK_WHALE, paid);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:238:14-238:41: `.withdraw(LINK_WHALE, paid)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:246:5-246:58: `vm.deal(address(s_consumer), DEFAULT_NATIVE_FUNDING);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:246:7-246:57: `.deal(address(s_consumer), DEFAULT_NATIVE_FUNDING)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:248:30-248:48: `.SUBSCRIPTION_ID()` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:254:5-254:94: `s_linkToken.transferAndCall(oldCoordinatorAddr, DEFAULT_LINK_FUNDING, abi.encode(subID));` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:254:16-254:93: `.transferAndCall(oldCoordinatorAddr, DEFAULT_LINK_FUNDING, abi.encode(subID))` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:254:78-254:92: `.encode(subID)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:255:5-255:88: `s_testCoordinator.fundSubscriptionWithNative{value: DEFAULT_NATIVE_FUNDING}(subID);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:287:5-287:43: `s_wrapper.migrate(newCoordinatorAddr);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:287:14-287:42: `.migrate(newCoordinatorAddr)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:298:5-298:100: `(balance, nativeBalance, reqCount, owner, consumers) = s_newCoordinator.getSubscription(subID);` passed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:319:35-319:77: `.makeRequestNative(callbackGasLimit, 0, 1)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:324:50-324:108: `.estimateRequestPriceNative(callbackGasLimit, tx.gasprice)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:325:47-325:93: `.calculateRequestPriceNative(callbackGasLimit)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:341:5-341:20: `words[0] = 123;` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:342:5-342:55: `s_wrapper.rawFulfillRandomWords(requestId, words);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:342:14-342:54: `.rawFulfillRandomWords(requestId, words)` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:352:5-352:48: `s_wrapper.withdrawNative(LINK_WHALE, paid);` failed
+$DIR/contracts/test/v0.8/foundry/vrf/VRFV2Wrapper_Migration.t.sol:352:14-352:47: `.withdrawNative(LINK_WHALE, paid)` failed
