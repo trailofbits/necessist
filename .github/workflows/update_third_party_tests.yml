@@ -15,17 +15,24 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          submodules: true
+          ssh-key: ${{ secrets.SSH_KEY }}
 
-      - run: |
-          scripts/update_third_party_tests.sh
-          cargo test --test third_party_0 --test third_party_1
+      - name: Update third-party tests
+        run: scripts/update_third_party_tests.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install testing tools
+        uses: ./.github/workflows/install-testing-tools
+
+      - name: Update stdout files
+        run: cargo test --test third_party_0 --test third_party_1 -- --nocapture
         env:
           BLESS: 1
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@v6
         with:
-          title: "Update AFLplusplus"
+          title: "Update third-party tests"
           token: ${{ secrets.REPO_TOKEN }}
           branch-suffix: random
