@@ -1,0 +1,31 @@
+name: Update third-party tests
+
+on:
+  schedule:
+    - cron: "0 3 * * 2" # 2 = Tuesday
+  workflow_dispatch:
+
+concurrency:
+  group: update-third-party-tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - run: |
+          scripts/update_third_party_tests.sh
+          cargo test --test third_party_0 --test third_party_1
+        env:
+          BLESS: 1
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          title: "Update AFLplusplus"
+          token: ${{ secrets.REPO_TOKEN }}
+          branch-suffix: random
