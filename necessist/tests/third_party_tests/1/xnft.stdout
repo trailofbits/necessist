@@ -1,30 +1,30 @@
 17 candidates in 1 test file
 $DIR/tests/collectibles.spec.ts: dry running
 $DIR/tests/collectibles.spec.ts: mutilating
-$DIR/tests/collectibles.spec.ts:39:9-44:12: `await client.createCollectibleXnft({
+$DIR/tests/collectibles.spec.ts: `await client.createCollectibleXnft({
           metadata: invalidNft.metadataAddress,
           mint: invalidNft.mintAddress,
           tag: "none",
           uri: "https://arweave.net/abc123",
         });` failed
-$DIR/tests/collectibles.spec.ts:39:21-44:11: `.createCollectibleXnft({
+$DIR/tests/collectibles.spec.ts: `.createCollectibleXnft({
           metadata: invalidNft.metadataAddress,
           mint: invalidNft.mintAddress,
           tag: "none",
           uri: "https://arweave.net/abc123",
         })` failed
-$DIR/tests/collectibles.spec.ts:54:7-54:56: `[xnft] = deriveXnftAddress(validNft.mintAddress);` failed
-$DIR/tests/collectibles.spec.ts:65:31-65:64: `.program.account.xnft.fetch(xnft)` failed
-$DIR/tests/collectibles.spec.ts:67:29-67:51: `.masterMint.toBase58()` failed
-$DIR/tests/collectibles.spec.ts:67:61-67:84: `.mintAddress.toBase58()` failed
-$DIR/tests/collectibles.spec.ts:72:9-72:63: `await client.install(xnft, client.provider.publicKey);` failed
-$DIR/tests/collectibles.spec.ts:72:21-72:62: `.install(xnft, client.provider.publicKey)` failed
-$DIR/tests/collectibles.spec.ts:81:31-81:55: `.web3.Keypair.generate()` failed
-$DIR/tests/collectibles.spec.ts:84:9-84:70: `await client.transfer(xnft, validNft.mintAddress, recipient);` failed
-$DIR/tests/collectibles.spec.ts:84:21-84:69: `.transfer(xnft, validNft.mintAddress, recipient)` failed
-$DIR/tests/collectibles.spec.ts:99:31-99:72: `.provider.connection.getAccountInfo(xnft)` failed
-$DIR/tests/collectibles.spec.ts:104:31-104:89: `.provider.connection.getAccountInfo(validNft.tokenAddress)` passed
-$DIR/tests/collectibles.spec.ts:131:7-131:52: `[xnft] = deriveXnftAddress(pnft.mintAddress);` failed
-$DIR/tests/collectibles.spec.ts:142:31-142:64: `.program.account.xnft.fetch(xnft)` failed
-$DIR/tests/collectibles.spec.ts:144:29-144:51: `.masterMint.toBase58()` failed
-$DIR/tests/collectibles.spec.ts:144:57-144:80: `.mintAddress.toBase58()` failed
+$DIR/tests/collectibles.spec.ts: `[xnft] = deriveXnftAddress(validNft.mintAddress);` failed
+$DIR/tests/collectibles.spec.ts: `.program.account.xnft.fetch(xnft)` failed
+$DIR/tests/collectibles.spec.ts: `.masterMint.toBase58()` failed
+$DIR/tests/collectibles.spec.ts: `.mintAddress.toBase58()` failed
+$DIR/tests/collectibles.spec.ts: `await client.install(xnft, client.provider.publicKey);` failed
+$DIR/tests/collectibles.spec.ts: `.install(xnft, client.provider.publicKey)` failed
+$DIR/tests/collectibles.spec.ts: `.web3.Keypair.generate()` failed
+$DIR/tests/collectibles.spec.ts: `await client.transfer(xnft, validNft.mintAddress, recipient);` failed
+$DIR/tests/collectibles.spec.ts: `.transfer(xnft, validNft.mintAddress, recipient)` failed
+$DIR/tests/collectibles.spec.ts: `.provider.connection.getAccountInfo(xnft)` failed
+$DIR/tests/collectibles.spec.ts: `.provider.connection.getAccountInfo(validNft.tokenAddress)` passed
+$DIR/tests/collectibles.spec.ts: `[xnft] = deriveXnftAddress(pnft.mintAddress);` failed
+$DIR/tests/collectibles.spec.ts: `.program.account.xnft.fetch(xnft)` failed
+$DIR/tests/collectibles.spec.ts: `.masterMint.toBase58()` failed
+$DIR/tests/collectibles.spec.ts: `.mintAddress.toBase58()` failed

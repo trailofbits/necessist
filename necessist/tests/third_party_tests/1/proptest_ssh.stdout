@@ -1,33 +1,33 @@
 30 candidates in 1 test file
 $DIR/proptest/src/sample.rs: dry running
 $DIR/proptest/src/sample.rs: mutilating
-$DIR/proptest/src/sample.rs:436:30-436:52: `.new_tree(&mut runner)` nonbuildable
-$DIR/proptest/src/sample.rs:436:61-436:71: `.current()` nonbuildable
-$DIR/proptest/src/sample.rs:446:13-446:27: `sorted.sort();` passed
-$DIR/proptest/src/sample.rs:446:19-446:26: `.sort()` nonbuildable
-$DIR/proptest/src/sample.rs:449:13-449:43: `size_counts[value.len()] += 1;` failed
-$DIR/proptest/src/sample.rs:449:30-449:36: `.len()` nonbuildable
-$DIR/proptest/src/sample.rs:452:17-452:42: `value_counts[value] += 1;` failed
-$DIR/proptest/src/sample.rs:465:44-465:56: `.enumerate()` nonbuildable
-$DIR/proptest/src/sample.rs:483:22-483:44: `.new_tree(&mut runner)` nonbuildable
-$DIR/proptest/src/sample.rs:483:53-483:63: `.current()` passed
-$DIR/proptest/src/sample.rs:495:13-495:73: `counts[input.new_tree(&mut runner).unwrap().current()] += 1;` failed
-$DIR/proptest/src/sample.rs:495:25-495:47: `.new_tree(&mut runner)` nonbuildable
-$DIR/proptest/src/sample.rs:495:56-495:66: `.current()` nonbuildable
-$DIR/proptest/src/sample.rs:498:42-498:54: `.enumerate()` nonbuildable
-$DIR/proptest/src/sample.rs:544:33-544:55: `.new_tree(&mut runner)` nonbuildable
-$DIR/proptest/src/sample.rs:545:13-545:52: `seen.insert(*tree.current().get(&col));` failed
-$DIR/proptest/src/sample.rs:545:17-545:51: `.insert(*tree.current().get(&col))` nonbuildable
-$DIR/proptest/src/sample.rs:545:30-545:40: `.current()` nonbuildable
-$DIR/proptest/src/sample.rs:545:40-545:50: `.get(&col)` nonbuildable
-$DIR/proptest/src/sample.rs:547:13-547:37: `while tree.simplify() {}` failed
-$DIR/proptest/src/sample.rs:547:23-547:34: `.simplify()` nonbuildable
-$DIR/proptest/src/sample.rs:560:38-560:50: `.into_iter()` nonbuildable
-$DIR/proptest/src/sample.rs:560:50-560:60: `.collect()` nonbuildable
-$DIR/proptest/src/sample.rs:564:33-564:55: `.new_tree(&mut runner)` nonbuildable
-$DIR/proptest/src/sample.rs:565:13-565:55: `seen.insert(*tree.current().select(&col));` failed
-$DIR/proptest/src/sample.rs:565:17-565:54: `.insert(*tree.current().select(&col))` nonbuildable
-$DIR/proptest/src/sample.rs:565:30-565:40: `.current()` nonbuildable
-$DIR/proptest/src/sample.rs:565:40-565:53: `.select(&col)` nonbuildable
-$DIR/proptest/src/sample.rs:567:13-567:37: `while tree.simplify() {}` failed
-$DIR/proptest/src/sample.rs:567:23-567:34: `.simplify()` nonbuildable
+$DIR/proptest/src/sample.rs: `.new_tree(&mut runner)` nonbuildable
+$DIR/proptest/src/sample.rs: `.current()` nonbuildable
+$DIR/proptest/src/sample.rs: `sorted.sort();` passed
+$DIR/proptest/src/sample.rs: `.sort()` nonbuildable
+$DIR/proptest/src/sample.rs: `size_counts[value.len()] += 1;` failed
+$DIR/proptest/src/sample.rs: `.len()` nonbuildable
+$DIR/proptest/src/sample.rs: `value_counts[value] += 1;` failed
+$DIR/proptest/src/sample.rs: `.enumerate()` nonbuildable
+$DIR/proptest/src/sample.rs: `.new_tree(&mut runner)` nonbuildable
+$DIR/proptest/src/sample.rs: `.current()` passed
+$DIR/proptest/src/sample.rs: `counts[input.new_tree(&mut runner).unwrap().current()] += 1;` failed
+$DIR/proptest/src/sample.rs: `.new_tree(&mut runner)` nonbuildable
+$DIR/proptest/src/sample.rs: `.current()` nonbuildable
+$DIR/proptest/src/sample.rs: `.enumerate()` nonbuildable
+$DIR/proptest/src/sample.rs: `.new_tree(&mut runner)` nonbuildable
+$DIR/proptest/src/sample.rs: `seen.insert(*tree.current().get(&col));` failed
+$DIR/proptest/src/sample.rs: `.insert(*tree.current().get(&col))` nonbuildable
+$DIR/proptest/src/sample.rs: `.current()` nonbuildable
+$DIR/proptest/src/sample.rs: `.get(&col)` nonbuildable
+$DIR/proptest/src/sample.rs: `while tree.simplify() {}` failed
+$DIR/proptest/src/sample.rs: `.simplify()` nonbuildable
+$DIR/proptest/src/sample.rs: `.into_iter()` nonbuildable
+$DIR/proptest/src/sample.rs: `.collect()` nonbuildable
+$DIR/proptest/src/sample.rs: `.new_tree(&mut runner)` nonbuildable
+$DIR/proptest/src/sample.rs: `seen.insert(*tree.current().select(&col));` failed
+$DIR/proptest/src/sample.rs: `.insert(*tree.current().select(&col))` nonbuildable
+$DIR/proptest/src/sample.rs: `.current()` nonbuildable
+$DIR/proptest/src/sample.rs: `.select(&col)` nonbuildable
+$DIR/proptest/src/sample.rs: `while tree.simplify() {}` failed
+$DIR/proptest/src/sample.rs: `.simplify()` nonbuildable

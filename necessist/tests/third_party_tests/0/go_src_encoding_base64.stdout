@@ -1,91 +1,91 @@
 87 candidates in 1 test file
 $DIR/src/encoding/base64/base64_test.go: dry running
 $DIR/src/encoding/base64/base64_test.go: mutilating
-$DIR/src/encoding/base64/base64_test.go:113:13-113:51: `.enc.EncodeToString([]byte(p.decoded))` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:114:4-115:29: `testEqual(t, "Encode(%q) = %q, want %q", p.decoded,
+$DIR/src/encoding/base64/base64_test.go: `.enc.EncodeToString([]byte(p.decoded))` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, "Encode(%q) = %q, want %q", p.decoded,
 				got, tt.conv(p.encoded))` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:115:12-115:28: `.conv(p.encoded)` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:124:3-124:35: `encoder.Write([]byte(p.decoded))` failed
-$DIR/src/encoding/base64/base64_test.go:124:10-124:35: `.Write([]byte(p.decoded))` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:126:3-126:78: `testEqual(t, "Encode(%q) = %q, want %q", p.decoded, bb.String(), p.encoded)` passed
-$DIR/src/encoding/base64/base64_test.go:126:57-126:66: `.String()` failed
-$DIR/src/encoding/base64/base64_test.go:138:5-138:21: `end = len(input)` failed
-$DIR/src/encoding/base64/base64_test.go:140:21-140:43: `.Write(input[pos:end])` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:141:4-141:85: `testEqual(t, "Write(%q) gave error %v, want %v", input[pos:end], err, error(nil))` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:142:4-142:81: `testEqual(t, "Write(%q) gave length %v, want %v", input[pos:end], n, end-pos)` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:145:3-145:64: `testEqual(t, "Close gave error %v, want %v", err, error(nil))` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:146:3-146:101: `testEqual(t, "Encoding/%d of %q = %q, want %q", bs, bigtest.decoded, bb.String(), bigtest.encoded)` passed
-$DIR/src/encoding/base64/base64_test.go:146:74-146:83: `.String()` failed
-$DIR/src/encoding/base64/base64_test.go:153:17-153:33: `.conv(p.encoded)` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:154:27-154:56: `.enc.DecodedLen(len(encoded))` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:155:20-155:54: `.enc.Decode(dbuf, []byte(encoded))` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:156:4-156:76: `testEqual(t, "Decode(%q) = error %v, want %v", encoded, err, error(nil))` passed
-$DIR/src/encoding/base64/base64_test.go:157:4-157:83: `testEqual(t, "Decode(%q) = length %v, want %v", encoded, count, len(p.decoded))` passed
-$DIR/src/encoding/base64/base64_test.go:158:4-158:87: `testEqual(t, "Decode(%q) = %q, want %q", encoded, string(dbuf[0:count]), p.decoded)` passed
-$DIR/src/encoding/base64/base64_test.go:160:4-160:44: `dbuf, err = tt.enc.DecodeString(encoded)` failed
-$DIR/src/encoding/base64/base64_test.go:160:18-160:44: `.enc.DecodeString(encoded)` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:161:4-161:82: `testEqual(t, "DecodeString(%q) = error %v, want %v", encoded, err, error(nil))` passed
-$DIR/src/encoding/base64/base64_test.go:162:4-162:84: `testEqual(t, "DecodeString(%q) = %q, want %q", encoded, string(dbuf), p.decoded)` passed
-$DIR/src/encoding/base64/base64_test.go:169:45-169:66: `.NewReader(p.encoded)` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:170:35-170:62: `.DecodedLen(len(p.encoded))` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:171:24-171:35: `.Read(dbuf)` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:175:3-175:86: `testEqual(t, "Read from %q = length %v, want %v", p.encoded, count, len(p.decoded))` passed
-$DIR/src/encoding/base64/base64_test.go:176:3-176:92: `testEqual(t, "Decoding of %q = %q, want %q", p.encoded, string(dbuf[0:count]), p.decoded)` passed
-$DIR/src/encoding/base64/base64_test.go:178:4-178:31: `_, err = decoder.Read(dbuf)` failed
-$DIR/src/encoding/base64/base64_test.go:178:20-178:31: `.Read(dbuf)` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:180:3-180:69: `testEqual(t, "Read from %q = %v, want %v", p.encoded, err, io.EOF)` passed
-$DIR/src/encoding/base64/base64_test.go:186:45-186:72: `.NewReader(bigtest.encoded)` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:192:4-192:48: `n, err = decoder.Read(buf[total : total+bs])` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:192:20-192:48: `.Read(buf[total : total+bs])` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:193:4-193:14: `total += n` failed
-$DIR/src/encoding/base64/base64_test.go:198:3-198:110: `testEqual(t, "Decoding/%d of %q = %q, want %q", bs, bigtest.encoded, string(buf[0:total]), bigtest.decoded)` passed
-$DIR/src/encoding/base64/base64_test.go:233:35-233:61: `.DecodedLen(len(tc.input))` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:234:24-234:55: `.Decode(dbuf, []byte(tc.input))` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:243:4-243:89: `testEqual(t, "Corruption in %q at offset %v, want %v", tc.input, int(err), tc.offset)` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:252:18-252:41: `.EncodeToString(buf[:])` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:258:23-258:49: `.Decode(buf[:], []byte(s))` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:282:15-282:36: `.enc.EncodedLen(tt.n)` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:303:15-303:36: `.enc.DecodedLen(tt.n)` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:312:2-312:80: `const alpha = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:314:3-314:31: `raw[i] = alpha[i%len(alpha)]` passed
-$DIR/src/encoding/base64/base64_test.go:318:14-318:25: `.Write(raw)` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:322:2-322:17: `err = w.Close()` failed
-$DIR/src/encoding/base64/base64_test.go:326:20-326:62: `.ReadAll(NewDecoder(StdEncoding, encoded))` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:331:11-331:31: `.Equal(raw, decoded)` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:344:2-344:25: `const expected = "sure"` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:359:26-359:42: `.DecodeString(e)` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:395:19-395:35: `.New("my error")` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:396:2-396:26: `next <- nextRead{5, nil}` passed
-$DIR/src/encoding/base64/base64_test.go:397:2-397:31: `next <- nextRead{10, wantErr}` passed
-$DIR/src/encoding/base64/base64_test.go:398:2-398:30: `next <- nextRead{0, wantErr}` passed
-$DIR/src/encoding/base64/base64_test.go:405:15-405:26: `.ReadAll(d)` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:406:3-406:14: `errc <- err` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:413:13-413:36: `.After(5 * time.Second)` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:435:25-435:55: `.ReplaceAll(encoded, "\n", "")` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:437:40-437:59: `.NewReader(encoded)` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:438:17-438:30: `.ReadAll(dec)` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:443:2-443:64: `dec = NewDecoder(StdEncoding, strings.NewReader(encodedShort))` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:443:39-443:63: `.NewReader(encodedShort)` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:445:2-445:29: `res2, err = io.ReadAll(dec)` failed
-$DIR/src/encoding/base64/base64_test.go:445:16-445:29: `.ReadAll(dec)` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:450:11-450:29: `.Equal(res1, res2)` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:456:23-456:51: `.DecodeString("YWJjZA=====")` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:458:13-458:34: `.DeepEqual(want, err)` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:467:23-467:32: `.Strict()` failed
-$DIR/src/encoding/base64/base64_test.go:467:32-467:73: `.DecodeString("WvLTlMrX9NpYDQlEIFlnDB==")` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:469:13-469:34: `.DeepEqual(want, err)` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:472:2-472:72: `_, err = StdEncoding.Strict().DecodeString("WvLTlMrX9NpYDQlEIFlnDA==")` failed
-$DIR/src/encoding/base64/base64_test.go:472:22-472:31: `.Strict()` passed
-$DIR/src/encoding/base64/base64_test.go:472:31-472:72: `.DecodeString("WvLTlMrX9NpYDQlEIFlnDA==")` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:476:2-476:63: `_, err = StdEncoding.DecodeString("WvLTlMrX9NpYDQlEIFlnDB==")` passed
-$DIR/src/encoding/base64/base64_test.go:476:22-476:63: `.DecodeString("WvLTlMrX9NpYDQlEIFlnDB==")` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:522:29-522:50: `.DecodeString(source)` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:523:25-523:43: `.Equal(dec1, want)` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:528:39-528:65: `.NewReader([]byte(source))` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:529:17-529:49: `.ReadAll(io.LimitReader(r, 100))` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:529:28-529:48: `.LimitReader(r, 100)` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:530:25-530:43: `.Equal(dec2, want)` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:535:2-535:67: `r = NewDecoder(URLEncoding, bytes.NewReader([]byte(source+"==")))` failed
-$DIR/src/encoding/base64/base64_test.go:535:35-535:66: `.NewReader([]byte(source+"=="))` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:536:17-536:28: `.ReadAll(r)` nonbuildable
-$DIR/src/encoding/base64/base64_test.go:537:25-537:43: `.Equal(dec3, want)` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `.conv(p.encoded)` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `encoder.Write([]byte(p.decoded))` failed
+$DIR/src/encoding/base64/base64_test.go: `.Write([]byte(p.decoded))` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, "Encode(%q) = %q, want %q", p.decoded, bb.String(), p.encoded)` passed
+$DIR/src/encoding/base64/base64_test.go: `.String()` failed
+$DIR/src/encoding/base64/base64_test.go: `end = len(input)` failed
+$DIR/src/encoding/base64/base64_test.go: `.Write(input[pos:end])` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, "Write(%q) gave error %v, want %v", input[pos:end], err, error(nil))` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, "Write(%q) gave length %v, want %v", input[pos:end], n, end-pos)` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, "Close gave error %v, want %v", err, error(nil))` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, "Encoding/%d of %q = %q, want %q", bs, bigtest.decoded, bb.String(), bigtest.encoded)` passed
+$DIR/src/encoding/base64/base64_test.go: `.String()` failed
+$DIR/src/encoding/base64/base64_test.go: `.conv(p.encoded)` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `.enc.DecodedLen(len(encoded))` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `.enc.Decode(dbuf, []byte(encoded))` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, "Decode(%q) = error %v, want %v", encoded, err, error(nil))` passed
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, "Decode(%q) = length %v, want %v", encoded, count, len(p.decoded))` passed
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, "Decode(%q) = %q, want %q", encoded, string(dbuf[0:count]), p.decoded)` passed
+$DIR/src/encoding/base64/base64_test.go: `dbuf, err = tt.enc.DecodeString(encoded)` failed
+$DIR/src/encoding/base64/base64_test.go: `.enc.DecodeString(encoded)` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, "DecodeString(%q) = error %v, want %v", encoded, err, error(nil))` passed
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, "DecodeString(%q) = %q, want %q", encoded, string(dbuf), p.decoded)` passed
+$DIR/src/encoding/base64/base64_test.go: `.NewReader(p.encoded)` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `.DecodedLen(len(p.encoded))` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `.Read(dbuf)` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, "Read from %q = length %v, want %v", p.encoded, count, len(p.decoded))` passed
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, "Decoding of %q = %q, want %q", p.encoded, string(dbuf[0:count]), p.decoded)` passed
+$DIR/src/encoding/base64/base64_test.go: `_, err = decoder.Read(dbuf)` failed
+$DIR/src/encoding/base64/base64_test.go: `.Read(dbuf)` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, "Read from %q = %v, want %v", p.encoded, err, io.EOF)` passed
+$DIR/src/encoding/base64/base64_test.go: `.NewReader(bigtest.encoded)` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `n, err = decoder.Read(buf[total : total+bs])` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `.Read(buf[total : total+bs])` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `total += n` failed
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, "Decoding/%d of %q = %q, want %q", bs, bigtest.encoded, string(buf[0:total]), bigtest.decoded)` passed
+$DIR/src/encoding/base64/base64_test.go: `.DecodedLen(len(tc.input))` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `.Decode(dbuf, []byte(tc.input))` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, "Corruption in %q at offset %v, want %v", tc.input, int(err), tc.offset)` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `.EncodeToString(buf[:])` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `.Decode(buf[:], []byte(s))` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `.enc.EncodedLen(tt.n)` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `.enc.DecodedLen(tt.n)` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `const alpha = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `raw[i] = alpha[i%len(alpha)]` passed
+$DIR/src/encoding/base64/base64_test.go: `.Write(raw)` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `err = w.Close()` failed
+$DIR/src/encoding/base64/base64_test.go: `.ReadAll(NewDecoder(StdEncoding, encoded))` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `.Equal(raw, decoded)` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `const expected = "sure"` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `.DecodeString(e)` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `.New("my error")` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `next <- nextRead{5, nil}` passed
+$DIR/src/encoding/base64/base64_test.go: `next <- nextRead{10, wantErr}` passed
+$DIR/src/encoding/base64/base64_test.go: `next <- nextRead{0, wantErr}` passed
+$DIR/src/encoding/base64/base64_test.go: `.ReadAll(d)` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `errc <- err` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `.After(5 * time.Second)` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `.ReplaceAll(encoded, "\n", "")` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `.NewReader(encoded)` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `.ReadAll(dec)` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `dec = NewDecoder(StdEncoding, strings.NewReader(encodedShort))` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `.NewReader(encodedShort)` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `res2, err = io.ReadAll(dec)` failed
+$DIR/src/encoding/base64/base64_test.go: `.ReadAll(dec)` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `.Equal(res1, res2)` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `.DecodeString("YWJjZA=====")` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `.DeepEqual(want, err)` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `.Strict()` failed
+$DIR/src/encoding/base64/base64_test.go: `.DecodeString("WvLTlMrX9NpYDQlEIFlnDB==")` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `.DeepEqual(want, err)` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `_, err = StdEncoding.Strict().DecodeString("WvLTlMrX9NpYDQlEIFlnDA==")` failed
+$DIR/src/encoding/base64/base64_test.go: `.Strict()` passed
+$DIR/src/encoding/base64/base64_test.go: `.DecodeString("WvLTlMrX9NpYDQlEIFlnDA==")` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `_, err = StdEncoding.DecodeString("WvLTlMrX9NpYDQlEIFlnDB==")` passed
+$DIR/src/encoding/base64/base64_test.go: `.DecodeString("WvLTlMrX9NpYDQlEIFlnDB==")` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `.DecodeString(source)` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `.Equal(dec1, want)` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `.NewReader([]byte(source))` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `.ReadAll(io.LimitReader(r, 100))` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `.LimitReader(r, 100)` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `.Equal(dec2, want)` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `r = NewDecoder(URLEncoding, bytes.NewReader([]byte(source+"==")))` failed
+$DIR/src/encoding/base64/base64_test.go: `.NewReader([]byte(source+"=="))` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `.ReadAll(r)` nonbuildable
+$DIR/src/encoding/base64/base64_test.go: `.Equal(dec3, want)` nonbuildable

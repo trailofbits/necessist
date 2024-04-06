@@ -1,5 +1,6 @@
 use assert_cmd::output::OutputError;
 use necessist_core::{util, Span};
+use once_cell::sync::Lazy;
 use regex::Regex;
 use serde::Deserialize;
 use similar_asserts::SimpleDiff;
@@ -537,7 +538,8 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> (String, Duration) {
 
         let stdout_actual = std::str::from_utf8(&buf).unwrap();
 
-        let stdout_normalized = normalize_paths(stdout_actual, tempdir);
+        // smoelius: Removing the line-column information makes comparing diffs easier.
+        let stdout_normalized = remove_line_columns(&normalize_paths(stdout_actual, tempdir));
 
         if enabled("BLESS") {
             write(path_stdout, stdout_normalized).unwrap();
@@ -627,6 +629,13 @@ fn normalize_paths(mut s: &str, path: &Path) -> String {
     // smoelius: Push whatever is remaining.
     buf.push_str(s);
     buf
+}
+
+static RE: Lazy<Regex> =
+    Lazy::new(|| Regex::new(r"(?m)^\$DIR/([^:]*):[0-9]+:[0-9]+-[0-9]+:[0-9]+:").unwrap());
+
+fn remove_line_columns(s: &str) -> String {
+    RE.replace_all(s, r"$$DIR/$1:").to_string()
 }
 
 fn permutation_ignoring_timeouts(expected: &str, actual: &str) -> bool {

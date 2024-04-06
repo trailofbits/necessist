@@ -1,136 +1,136 @@
 134 candidates in 3 test files
 $DIR/src/testing/iotest/logger_test.go: dry running
 $DIR/src/testing/iotest/logger_test.go: mutilating
-$DIR/src/testing/iotest/logger_test.go:25:12-25:21: `.Writer()` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:26:12-26:20: `.Flags()` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:27:12-27:21: `.Prefix()` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:31:3-31:20: `log.SetFlags(olf)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:31:6-31:20: `.SetFlags(olf)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:32:3-32:21: `log.SetPrefix(olp)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:32:6-32:21: `.SetPrefix(olp)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:33:3-33:21: `log.SetOutput(olw)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:33:6-33:21: `.SetOutput(olw)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:37:2-37:23: `log.SetPrefix("lw: ")` failed
-$DIR/src/testing/iotest/logger_test.go:37:5-37:23: `.SetPrefix("lw: ")` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:38:2-38:21: `log.SetOutput(lOut)` failed
-$DIR/src/testing/iotest/logger_test.go:38:5-38:21: `.SetOutput(lOut)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:39:2-39:17: `log.SetFlags(0)` failed
-$DIR/src/testing/iotest/logger_test.go:39:5-39:17: `.SetFlags(0)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:43:17-43:48: `.Write([]byte("Hello, World!"))` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:47:15-47:24: `.String()` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:50:23-50:67: `.Sprintf("lw: write: %x\n", "Hello, World!")` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:51:17-51:26: `.String()` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:57:12-57:21: `.Writer()` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:58:12-58:20: `.Flags()` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:59:12-59:21: `.Prefix()` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:63:3-63:20: `log.SetFlags(olf)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:63:6-63:20: `.SetFlags(olf)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:64:3-64:21: `log.SetPrefix(olp)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:64:6-64:21: `.SetPrefix(olp)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:65:3-65:21: `log.SetOutput(olw)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:65:6-65:21: `.SetOutput(olw)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:69:2-69:23: `log.SetPrefix("lw: ")` failed
-$DIR/src/testing/iotest/logger_test.go:69:5-69:23: `.SetPrefix("lw: ")` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:70:2-70:21: `log.SetOutput(lOut)` failed
-$DIR/src/testing/iotest/logger_test.go:70:5-70:21: `.SetOutput(lOut)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:71:2-71:17: `log.SetFlags(0)` failed
-$DIR/src/testing/iotest/logger_test.go:71:5-71:17: `.SetFlags(0)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:73:29-73:49: `.New("Write Error!")` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:75:17-75:48: `.Write([]byte("Hello, World!"))` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:79:23-79:74: `.Sprintf("lw: write: %x: %v\n", "", "Write Error!")` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:80:17-80:26: `.String()` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:86:12-86:21: `.Writer()` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:87:12-87:20: `.Flags()` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:88:12-88:21: `.Prefix()` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:92:3-92:20: `log.SetFlags(olf)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:92:6-92:20: `.SetFlags(olf)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:93:3-93:21: `log.SetPrefix(olp)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:93:6-93:21: `.SetPrefix(olp)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:94:3-94:21: `log.SetOutput(olw)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:94:6-94:21: `.SetOutput(olw)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:98:2-98:23: `log.SetPrefix("lr: ")` failed
-$DIR/src/testing/iotest/logger_test.go:98:5-98:23: `.SetPrefix("lr: ")` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:99:2-99:21: `log.SetOutput(lOut)` failed
-$DIR/src/testing/iotest/logger_test.go:99:5-99:21: `.SetOutput(lOut)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:100:2-100:17: `log.SetFlags(0)` failed
-$DIR/src/testing/iotest/logger_test.go:100:5-100:17: `.SetFlags(0)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:104:13-104:29: `.NewReader(data)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:107:14-107:22: `.Read(p)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:112:32-112:44: `.Equal(g, w)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:116:23-116:66: `.Sprintf("lr: read: %x\n", "Hello, World!")` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:117:17-117:26: `.String()` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:123:12-123:21: `.Writer()` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:124:12-124:20: `.Flags()` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:125:12-125:21: `.Prefix()` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:129:3-129:20: `log.SetFlags(olf)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:129:6-129:20: `.SetFlags(olf)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:130:3-130:21: `log.SetPrefix(olp)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:130:6-130:21: `.SetPrefix(olp)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:131:3-131:21: `log.SetOutput(olw)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:131:6-131:21: `.SetOutput(olw)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:135:2-135:23: `log.SetPrefix("lr: ")` failed
-$DIR/src/testing/iotest/logger_test.go:135:5-135:23: `.SetPrefix("lr: ")` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:136:2-136:21: `log.SetOutput(lOut)` failed
-$DIR/src/testing/iotest/logger_test.go:136:5-136:21: `.SetOutput(lOut)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:137:2-137:17: `log.SetFlags(0)` failed
-$DIR/src/testing/iotest/logger_test.go:137:5-137:17: `.SetFlags(0)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:142:24-142:42: `.New("io failure")` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:144:14-144:22: `.Read(p)` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:149:23-149:67: `.Sprintf("lr: read %x: io failure\n", p[:n])` nonbuildable
-$DIR/src/testing/iotest/logger_test.go:150:17-150:26: `.String()` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.Writer()` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.Flags()` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.Prefix()` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `log.SetFlags(olf)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.SetFlags(olf)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `log.SetPrefix(olp)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.SetPrefix(olp)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `log.SetOutput(olw)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.SetOutput(olw)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `log.SetPrefix("lw: ")` failed
+$DIR/src/testing/iotest/logger_test.go: `.SetPrefix("lw: ")` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `log.SetOutput(lOut)` failed
+$DIR/src/testing/iotest/logger_test.go: `.SetOutput(lOut)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `log.SetFlags(0)` failed
+$DIR/src/testing/iotest/logger_test.go: `.SetFlags(0)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.Write([]byte("Hello, World!"))` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.String()` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.Sprintf("lw: write: %x\n", "Hello, World!")` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.String()` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.Writer()` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.Flags()` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.Prefix()` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `log.SetFlags(olf)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.SetFlags(olf)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `log.SetPrefix(olp)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.SetPrefix(olp)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `log.SetOutput(olw)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.SetOutput(olw)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `log.SetPrefix("lw: ")` failed
+$DIR/src/testing/iotest/logger_test.go: `.SetPrefix("lw: ")` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `log.SetOutput(lOut)` failed
+$DIR/src/testing/iotest/logger_test.go: `.SetOutput(lOut)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `log.SetFlags(0)` failed
+$DIR/src/testing/iotest/logger_test.go: `.SetFlags(0)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.New("Write Error!")` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.Write([]byte("Hello, World!"))` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.Sprintf("lw: write: %x: %v\n", "", "Write Error!")` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.String()` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.Writer()` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.Flags()` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.Prefix()` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `log.SetFlags(olf)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.SetFlags(olf)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `log.SetPrefix(olp)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.SetPrefix(olp)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `log.SetOutput(olw)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.SetOutput(olw)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `log.SetPrefix("lr: ")` failed
+$DIR/src/testing/iotest/logger_test.go: `.SetPrefix("lr: ")` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `log.SetOutput(lOut)` failed
+$DIR/src/testing/iotest/logger_test.go: `.SetOutput(lOut)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `log.SetFlags(0)` failed
+$DIR/src/testing/iotest/logger_test.go: `.SetFlags(0)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.NewReader(data)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.Read(p)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.Equal(g, w)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.Sprintf("lr: read: %x\n", "Hello, World!")` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.String()` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.Writer()` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.Flags()` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.Prefix()` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `log.SetFlags(olf)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.SetFlags(olf)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `log.SetPrefix(olp)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.SetPrefix(olp)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `log.SetOutput(olw)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.SetOutput(olw)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `log.SetPrefix("lr: ")` failed
+$DIR/src/testing/iotest/logger_test.go: `.SetPrefix("lr: ")` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `log.SetOutput(lOut)` failed
+$DIR/src/testing/iotest/logger_test.go: `.SetOutput(lOut)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `log.SetFlags(0)` failed
+$DIR/src/testing/iotest/logger_test.go: `.SetFlags(0)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.New("io failure")` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.Read(p)` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.Sprintf("lr: read %x: io failure\n", p[:n])` nonbuildable
+$DIR/src/testing/iotest/logger_test.go: `.String()` nonbuildable
 $DIR/src/testing/iotest/reader_test.go: dry running
 $DIR/src/testing/iotest/reader_test.go: mutilating
-$DIR/src/testing/iotest/reader_test.go:18:2-18:22: `buf.WriteString(msg)` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:18:5-18:22: `.WriteString(msg)` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:22:15-22:23: `.Read(b)` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:27:2-27:21: `b = make([]byte, 3)` timed-out
-$DIR/src/testing/iotest/reader_test.go:31:3-31:23: `n, err = obr.Read(b)` timed-out
-$DIR/src/testing/iotest/reader_test.go:31:15-31:23: `.Read(b)` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:38:3-38:19: `got.Write(b[:n])` failed
-$DIR/src/testing/iotest/reader_test.go:38:6-38:19: `.Write(b[:n])` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:43:16-43:25: `.String()` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:53:18-53:26: `.Read(b)` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:57:2-57:21: `b = make([]byte, 5)` failed
-$DIR/src/testing/iotest/reader_test.go:58:15-58:23: `.Read(b)` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:70:2-70:22: `buf.WriteString(msg)` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:70:5-70:22: `.WriteString(msg)` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:74:14-74:22: `.Read(b)` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:79:2-79:21: `b = make([]byte, 2)` timed-out
-$DIR/src/testing/iotest/reader_test.go:82:3-82:22: `n, err = hr.Read(b)` timed-out
-$DIR/src/testing/iotest/reader_test.go:82:14-82:22: `.Read(b)` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:89:3-89:19: `got.Write(b[:n])` failed
-$DIR/src/testing/iotest/reader_test.go:89:6-89:19: `.Write(b[:n])` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:94:16-94:25: `.String()` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:104:17-104:25: `.Read(b)` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:108:2-108:21: `b = make([]byte, 5)` failed
-$DIR/src/testing/iotest/reader_test.go:109:14-109:22: `.Read(b)` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:121:2-121:22: `buf.WriteString(msg)` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:121:5-121:22: `.WriteString(msg)` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:125:15-125:23: `.Read(b)` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:130:2-130:22: `n, err = tor.Read(b)` failed
-$DIR/src/testing/iotest/reader_test.go:130:14-130:22: `.Read(b)` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:139:2-139:21: `b = make([]byte, 3)` failed
-$DIR/src/testing/iotest/reader_test.go:140:19-140:27: `.Read(b)` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:144:2-144:23: `n, err = tor2.Read(b)` passed
-$DIR/src/testing/iotest/reader_test.go:144:15-144:23: `.Read(b)` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:158:18-158:26: `.Read(b)` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:162:15-162:23: `.Read(b)` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:171:2-171:21: `b = make([]byte, 5)` failed
-$DIR/src/testing/iotest/reader_test.go:172:19-172:27: `.Read(b)` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:176:2-176:23: `n, err = tor2.Read(b)` passed
-$DIR/src/testing/iotest/reader_test.go:176:15-176:23: `.Read(b)` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:188:2-188:22: `buf.WriteString(msg)` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:188:5-188:22: `.WriteString(msg)` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:197:3-197:23: `n, err = der.Read(b)` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:197:15-197:23: `.Read(b)` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:198:3-198:19: `got.Write(b[:n])` failed
-$DIR/src/testing/iotest/reader_test.go:198:6-198:19: `.Write(b[:n])` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:206:16-206:25: `.String()` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:216:18-216:26: `.Read(b)` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:220:2-220:21: `b = make([]byte, 5)` passed
-$DIR/src/testing/iotest/reader_test.go:221:15-221:23: `.Read(b)` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:236:27-236:45: `.New("io failure")` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:242:3-250:5: `t.Run(tt.name, func(t *testing.T) {
+$DIR/src/testing/iotest/reader_test.go: `buf.WriteString(msg)` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `.WriteString(msg)` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `.Read(b)` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `b = make([]byte, 3)` timed-out
+$DIR/src/testing/iotest/reader_test.go: `n, err = obr.Read(b)` timed-out
+$DIR/src/testing/iotest/reader_test.go: `.Read(b)` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `got.Write(b[:n])` failed
+$DIR/src/testing/iotest/reader_test.go: `.Write(b[:n])` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `.String()` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `.Read(b)` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `b = make([]byte, 5)` failed
+$DIR/src/testing/iotest/reader_test.go: `.Read(b)` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `buf.WriteString(msg)` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `.WriteString(msg)` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `.Read(b)` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `b = make([]byte, 2)` timed-out
+$DIR/src/testing/iotest/reader_test.go: `n, err = hr.Read(b)` timed-out
+$DIR/src/testing/iotest/reader_test.go: `.Read(b)` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `got.Write(b[:n])` failed
+$DIR/src/testing/iotest/reader_test.go: `.Write(b[:n])` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `.String()` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `.Read(b)` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `b = make([]byte, 5)` failed
+$DIR/src/testing/iotest/reader_test.go: `.Read(b)` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `buf.WriteString(msg)` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `.WriteString(msg)` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `.Read(b)` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `n, err = tor.Read(b)` failed
+$DIR/src/testing/iotest/reader_test.go: `.Read(b)` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `b = make([]byte, 3)` failed
+$DIR/src/testing/iotest/reader_test.go: `.Read(b)` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `n, err = tor2.Read(b)` passed
+$DIR/src/testing/iotest/reader_test.go: `.Read(b)` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `.Read(b)` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `.Read(b)` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `b = make([]byte, 5)` failed
+$DIR/src/testing/iotest/reader_test.go: `.Read(b)` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `n, err = tor2.Read(b)` passed
+$DIR/src/testing/iotest/reader_test.go: `.Read(b)` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `buf.WriteString(msg)` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `.WriteString(msg)` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `n, err = der.Read(b)` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `.Read(b)` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `got.Write(b[:n])` failed
+$DIR/src/testing/iotest/reader_test.go: `.Write(b[:n])` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `.String()` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `.Read(b)` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `b = make([]byte, 5)` passed
+$DIR/src/testing/iotest/reader_test.go: `.Read(b)` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `.New("io failure")` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `t.Run(tt.name, func(t *testing.T) {
 			n, err := ErrReader(tt.err).Read(nil)
 			if err != tt.err {
 				t.Fatalf("Error mismatch\nGot:  %v\nWant: %v", err, tt.err)
@@ -139,7 +139,7 @@ $DIR/src/testing/iotest/reader_test.go:242:3-250:5: `t.Run(tt.name, func(t *test
 				t.Fatalf("Byte count mismatch: got %d want 0", n)
 			}
 		})` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:242:4-250:5: `.Run(tt.name, func(t *testing.T) {
+$DIR/src/testing/iotest/reader_test.go: `.Run(tt.name, func(t *testing.T) {
 			n, err := ErrReader(tt.err).Read(nil)
 			if err != tt.err {
 				t.Fatalf("Error mismatch\nGot:  %v\nWant: %v", err, tt.err)
@@ -148,10 +148,10 @@ $DIR/src/testing/iotest/reader_test.go:242:4-250:5: `.Run(tt.name, func(t *testi
 				t.Fatalf("Byte count mismatch: got %d want 0", n)
 			}
 		})` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:243:31-243:41: `.Read(nil)` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:255:2-255:53: `const msg = "Now is the time for all good gophers."` nonbuildable
-$DIR/src/testing/iotest/reader_test.go:257:14-257:29: `.NewReader(msg)` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `.Read(nil)` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `const msg = "Now is the time for all good gophers."` nonbuildable
+$DIR/src/testing/iotest/reader_test.go: `.NewReader(msg)` nonbuildable
 $DIR/src/testing/iotest/writer_test.go: dry running
 $DIR/src/testing/iotest/writer_test.go: mutilating
-$DIR/src/testing/iotest/writer_test.go:28:15-28:36: `.Write([]byte(tt.in))` nonbuildable
-$DIR/src/testing/iotest/writer_test.go:32:17-32:26: `.String()` nonbuildable
+$DIR/src/testing/iotest/writer_test.go: `.Write([]byte(tt.in))` nonbuildable
+$DIR/src/testing/iotest/writer_test.go: `.String()` nonbuildable
