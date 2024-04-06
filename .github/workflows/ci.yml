@@ -97,7 +97,7 @@ jobs:
 
       - name: Install testing tools
         if: ${{ matrix.test != 'ci' }}
-        uses: ./.github/workflows/install-testing-tools
+        uses: ./.github/actions/install-testing-tools
 
       - name: Disable incremental compilation on Windows
         if: ${{ matrix.environment == 'windows-latest' }}
