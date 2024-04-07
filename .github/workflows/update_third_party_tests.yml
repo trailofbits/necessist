@@ -23,7 +23,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install testing tools
-        uses: ./.github/workflows/install-testing-tools
+        uses: ./.github/actions/install-testing-tools
 
       - name: Update stdout files
         run: cargo test --test third_party_0 --test third_party_1 -- --nocapture
