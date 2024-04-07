@@ -539,7 +539,10 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> (String, Duration) {
         let stdout_actual = std::str::from_utf8(&buf).unwrap();
 
         // smoelius: Removing the line-column information makes comparing diffs easier.
-        let stdout_normalized = remove_line_columns(&normalize_paths(stdout_actual, tempdir));
+        let stdout_normalized = remove_millis(&remove_line_columns(&normalize_paths(
+            stdout_actual,
+            tempdir,
+        )));
 
         if enabled("BLESS") {
             write(path_stdout, stdout_normalized).unwrap();
@@ -631,11 +634,17 @@ fn normalize_paths(mut s: &str, path: &Path) -> String {
     buf
 }
 
-static RE: Lazy<Regex> =
+static LINE_COLUMN_RE: Lazy<Regex> =
     Lazy::new(|| Regex::new(r"(?m)^\$DIR/([^:]*):[0-9]+:[0-9]+-[0-9]+:[0-9]+:").unwrap());
 
 fn remove_line_columns(s: &str) -> String {
-    RE.replace_all(s, r"$$DIR/$1:").to_string()
+    LINE_COLUMN_RE.replace_all(s, r"$$DIR/$1:").to_string()
+}
+
+static MILLI_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r"\b[0-9]+\.[0-9]+ms\b").unwrap());
+
+fn remove_millis(s: &str) -> String {
+    MILLI_RE.replace_all(s, "[..]ms]").to_string()
 }
 
 fn permutation_ignoring_timeouts(expected: &str, actual: &str) -> bool {
