@@ -43,7 +43,7 @@ static EXPRESSION_STATEMENT_EXPRESSION_QUERY: Lazy<Query> =
 
 fn valid_query(source: &str) -> Query {
     #[allow(clippy::unwrap_used)]
-    Query::new(tree_sitter_go::language(), source).unwrap()
+    Query::new(&tree_sitter_go::language(), source).unwrap()
 }
 
 static FIELD_FIELD: Lazy<u16> = Lazy::new(|| valid_field_id("field"));
@@ -54,6 +54,7 @@ fn valid_field_id(field_name: &str) -> u16 {
     tree_sitter_go::language()
         .field_id_for_name(field_name)
         .unwrap()
+        .into()
 }
 
 static BLOCK_KIND: Lazy<u16> = Lazy::new(|| non_zero_kind_id("block"));
@@ -232,7 +233,7 @@ impl ParseLow for Go {
         let text = read_to_string(test_file)?;
         let mut parser = Parser::new();
         parser
-            .set_language(tree_sitter_go::language())
+            .set_language(&tree_sitter_go::language())
             .with_context(|| "Failed to load Go grammar")?;
         // smoelius: https://github.com/tree-sitter/tree-sitter/issues/255
         parser
@@ -487,7 +488,7 @@ fn process_self_captures<'query, 'source, 'tree, T, U>(
 ) -> U
 where
     'source: 'tree,
-    T: TextProvider<'source> + 'source,
+    T: TextProvider<&'source [u8]> + 'source,
 {
     // smoelius: `STATEMENT_QUERY` does not match `node` when `node` is a statement and the query
     // starts at `node`. I don't understand why.
@@ -516,12 +517,12 @@ where
 
 // smoelius: `cursor_matches` is a workaround until the following is resolved:
 // https://github.com/tree-sitter/tree-sitter/pull/2273
-fn cursor_matches<'query, 'source, 'tree, 'cursor, T: TextProvider<'source> + 'source>(
+fn cursor_matches<'query, 'source, 'tree, 'cursor, T: TextProvider<&'source [u8]> + 'source>(
     cursor: &'cursor mut QueryCursor,
     query: &'query Query,
     node: Node<'tree>,
     text_provider: T,
-) -> QueryMatches<'source, 'source, T> {
+) -> QueryMatches<'source, 'source, T, &'source [u8]> {
     let cursor = unsafe {
         std::mem::transmute::<&'cursor mut QueryCursor, &'source mut QueryCursor>(cursor)
     };
