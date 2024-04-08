@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.7
+
+- Update `libsqlite3-sys` to version 0.28 ([#1048](https://github.com/trailofbits/necessist/pull/1048))
+- Update `tree-sitter` to version 0.22 ([674f1ff](https://github.com/trailofbits/necessist/commit/674f1ff9ed9bf6ee00856d308674fc1eb0464cdb))
+- Update `tree-sitter-go` to version 0.21 ([48f716f](https://github.com/trailofbits/necessist/commit/48f716f4ed2cd66e73d0d2984c80115e71635e1c))
+
 ## 0.4.6
 
 - Update `heck` to version 0.5 ([#1034](https://github.com/trailofbits/necessist/pull/1034))
