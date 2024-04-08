@@ -40,7 +40,7 @@ solang-parser = "=0.3.3"
 
 # Go
 tree-sitter = "0.22"
-tree-sitter-go = "0.20"
+tree-sitter-go = "0.21"
 
 # Hardhat TS
 swc_core = { version = "0.90", features = [
