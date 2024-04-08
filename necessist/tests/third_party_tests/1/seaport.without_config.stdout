@@ -220,16 +220,18 @@ $DIR/test/advanced.spec.ts: `await checkExpectedEvents(
 $DIR/test/advanced.spec.ts: `await set1155ApprovalForAll(seller, offererContract.address, true);`
 $DIR/test/advanced.spec.ts: `.mul(1000)`
 $DIR/test/advanced.spec.ts: `.mul(1000)`
-$DIR/test/advanced.spec.ts: `offer[0].itemType = 5;`
-$DIR/test/advanced.spec.ts: `offer[0].identifier = offer[0].identifierOrCriteria;`
+$DIR/test/advanced.spec.ts: `offer[0].itemType = 3;`
+$DIR/test/advanced.spec.ts: `offer[0].identifier = nftId;`
 $DIR/test/advanced.spec.ts: `offer[0].amount = offer[0].endAmount;`
 $DIR/test/advanced.spec.ts: `consideration[0].identifier = consideration[0].identifierOrCriteria;`
 $DIR/test/advanced.spec.ts: `consideration[0].amount = consideration[0].endAmount;`
 $DIR/test/advanced.spec.ts: `await offererContract
         .connect(seller)
-        .activateWithCriteria(offer[0], consideration[0], nftId);`
+        .activate(offer[0], consideration[0]);`
 $DIR/test/advanced.spec.ts: `.connect(seller)`
-$DIR/test/advanced.spec.ts: `.activateWithCriteria(offer[0], consideration[0], nftId)`
+$DIR/test/advanced.spec.ts: `.activate(offer[0], consideration[0])`
+$DIR/test/advanced.spec.ts: `offer[0].itemType = 5;`
+$DIR/test/advanced.spec.ts: `offer[0].identifier = offer[0].identifierOrCriteria;`
 $DIR/test/advanced.spec.ts: `.getContractOffererNonce(
           offererContract.address
         )`
@@ -574,34 +576,6 @@ $DIR/test/advanced.spec.ts: `.mul(1000)`
 $DIR/test/advanced.spec.ts: `.mul(1000)`
 $DIR/test/advanced.spec.ts: `offer[0].identifier = offer[0].identifierOrCriteria;`
 $DIR/test/advanced.spec.ts: `offer[0].amount = offer[0].endAmount;`
-$DIR/test/advanced.spec.ts: `offer[0].startAmount = offer[0].endAmount.add(1);`
-$DIR/test/advanced.spec.ts: `.endAmount.add(1)`
-$DIR/test/advanced.spec.ts: `consideration[0].identifier = consideration[0].identifierOrCriteria;`
-$DIR/test/advanced.spec.ts: `consideration[0].amount = consideration[0].endAmount;`
-$DIR/test/advanced.spec.ts: `await offererContract
-        .connect(seller)
-        .activate(offer[0], consideration[0]);`
-$DIR/test/advanced.spec.ts: `.connect(seller)`
-$DIR/test/advanced.spec.ts: `.activate(offer[0], consideration[0])`
-$DIR/test/advanced.spec.ts: `.getContractOffererNonce(
-          offererContract.address
-        )`
-$DIR/test/advanced.spec.ts: `.address.toLowerCase()`
-$DIR/test/advanced.spec.ts: `.toHexString()`
-$DIR/test/advanced.spec.ts: `.slice(2)`
-$DIR/test/advanced.spec.ts: `.padStart(24, "0")`
-$DIR/test/advanced.spec.ts: `.getOrderStatus(orderHash)`
-$DIR/test/advanced.spec.ts: `order.parameters.offerer = offererContract.address;`
-$DIR/test/advanced.spec.ts: `order.numerator = 1;`
-$DIR/test/advanced.spec.ts: `order.denominator = 1;`
-$DIR/test/advanced.spec.ts: `order.signature = "0x";`
-$DIR/test/advanced.spec.ts: `await set1155ApprovalForAll(seller, offererContract.address, true);`
-$DIR/test/advanced.spec.ts: `.mul(10)`
-$DIR/test/advanced.spec.ts: `.mul(10)`
-$DIR/test/advanced.spec.ts: `.mul(1000)`
-$DIR/test/advanced.spec.ts: `.mul(1000)`
-$DIR/test/advanced.spec.ts: `offer[0].identifier = offer[0].identifierOrCriteria;`
-$DIR/test/advanced.spec.ts: `offer[0].amount = offer[0].endAmount;`
 $DIR/test/advanced.spec.ts: `offer[0].endAmount = offer[0].amount.add(1);`
 $DIR/test/advanced.spec.ts: `.amount.add(1)`
 $DIR/test/advanced.spec.ts: `offer[0].startAmount = offer[0].endAmount;`
@@ -707,34 +681,6 @@ $DIR/test/advanced.spec.ts: `order.signature = "0x";`
 $DIR/test/advanced.spec.ts: `order.parameters.offer[0].identifierOrCriteria =
         offer[0].identifier.add(1);`
 $DIR/test/advanced.spec.ts: `.identifier.add(1)`
-$DIR/test/advanced.spec.ts: `await set1155ApprovalForAll(seller, offererContract.address, true);`
-$DIR/test/advanced.spec.ts: `.mul(10)`
-$DIR/test/advanced.spec.ts: `.mul(10)`
-$DIR/test/advanced.spec.ts: `.mul(1000)`
-$DIR/test/advanced.spec.ts: `.mul(1000)`
-$DIR/test/advanced.spec.ts: `offer[0].identifier = offer[0].identifierOrCriteria;`
-$DIR/test/advanced.spec.ts: `offer[0].amount = offer[0].endAmount;`
-$DIR/test/advanced.spec.ts: `consideration[0].identifier = consideration[0].identifierOrCriteria;`
-$DIR/test/advanced.spec.ts: `consideration[0].amount = consideration[0].endAmount;`
-$DIR/test/advanced.spec.ts: `consideration[0].startAmount = consideration[0].endAmount.add(1);`
-$DIR/test/advanced.spec.ts: `.endAmount.add(1)`
-$DIR/test/advanced.spec.ts: `await offererContract
-        .connect(seller)
-        .activate(offer[0], consideration[0]);`
-$DIR/test/advanced.spec.ts: `.connect(seller)`
-$DIR/test/advanced.spec.ts: `.activate(offer[0], consideration[0])`
-$DIR/test/advanced.spec.ts: `.getContractOffererNonce(
-          offererContract.address
-        )`
-$DIR/test/advanced.spec.ts: `.address.toLowerCase()`
-$DIR/test/advanced.spec.ts: `.toHexString()`
-$DIR/test/advanced.spec.ts: `.slice(2)`
-$DIR/test/advanced.spec.ts: `.padStart(24, "0")`
-$DIR/test/advanced.spec.ts: `.getOrderStatus(orderHash)`
-$DIR/test/advanced.spec.ts: `order.parameters.offerer = offererContract.address;`
-$DIR/test/advanced.spec.ts: `order.numerator = 1;`
-$DIR/test/advanced.spec.ts: `order.denominator = 1;`
-$DIR/test/advanced.spec.ts: `order.signature = "0x";`
 $DIR/test/advanced.spec.ts: `await set1155ApprovalForAll(seller, offererContract.address, true);`
 $DIR/test/advanced.spec.ts: `.mul(10)`
 $DIR/test/advanced.spec.ts: `.mul(10)`
@@ -1125,6 +1071,10 @@ $DIR/test/advanced.spec.ts: `order.parameters.offerer = invalidContractOfferer.a
 $DIR/test/advanced.spec.ts: `order.numerator = 1;`
 $DIR/test/advanced.spec.ts: `order.denominator = 1;`
 $DIR/test/advanced.spec.ts: `order.signature = "0x";`
+$DIR/test/advanced.spec.ts: `.connect(buyer)`
+$DIR/test/advanced.spec.ts: `.fulfillAdvancedOrder(order, [], toKey(0), buyer.address, {
+            value,
+          })`
 $DIR/test/advanced.spec.ts: `await set1155ApprovalForAll(seller, offererContract.address, true);`
 $DIR/test/advanced.spec.ts: `.mul(10)`
 $DIR/test/advanced.spec.ts: `.mul(10)`
@@ -1953,8 +1903,8 @@ $DIR/test/advanced.spec.ts: `await checkExpectedEvents(
       );`
 $DIR/test/advanced.spec.ts: `orderStatus = await marketplaceContract.getOrderStatus(orderHash);`
 $DIR/test/advanced.spec.ts: `.getOrderStatus(orderHash)`
-$DIR/test/advanced.spec.ts: `.pow(100)`
-$DIR/test/advanced.spec.ts: `.pow(101)`
+$DIR/test/advanced.spec.ts: `.pow(50)`
+$DIR/test/advanced.spec.ts: `.pow(51)`
 $DIR/test/advanced.spec.ts: `.pow(20)`
 $DIR/test/advanced.spec.ts: `.pow(22)`
 $DIR/test/advanced.spec.ts: `await mintAndApproveERC20(buyer, marketplaceContract.address, amt);`
@@ -2745,42 +2695,6 @@ $DIR/test/advanced.spec.ts: `.wait()`
 $DIR/test/advanced.spec.ts: `.map(([offerArr, considerationArr]) =>
         toFulfillment(offerArr, considerationArr)
       )`
-$DIR/test/advanced.spec.ts: `.connect(owner)`
-$DIR/test/advanced.spec.ts: `.matchAdvancedOrders(
-          [orderOne, orderTwo, orderThree],
-          [],
-          fulfillments,
-          ethers.constants.AddressZero,
-          {
-            value: 0,
-          }
-        )`
-$DIR/test/advanced.spec.ts: `.wait()`
-$DIR/test/advanced.spec.ts: `await checkExpectedEvents(
-        tx,
-        receipt,
-        [
-          {
-            order: orderOne,
-            orderHash: orderHashOne,
-            fulfiller: owner.address,
-          },
-          {
-            order: orderTwo,
-            orderHash: orderHashTwo,
-            fulfiller: owner.address,
-          },
-          {
-            order: orderThree,
-            orderHash: orderHashThree,
-            fulfiller: owner.address,
-          },
-        ],
-        executions
-      );`
-$DIR/test/advanced.spec.ts: `.map(([offerArr, considerationArr]) =>
-        toFulfillment(offerArr, considerationArr)
-      )`
 $DIR/test/advanced.spec.ts: `await set1155ApprovalForAll(seller, marketplaceContract.address, true);`
 $DIR/test/advanced.spec.ts: `await mintAndApproveERC20(
         buyer,
@@ -3026,8 +2940,15 @@ $DIR/test/advanced.spec.ts: `await checkExpectedEvents(
             fulfiller: owner.address,
           },
         ],
-        executions
+        executions.filter((execution: any) =>
+          BigNumber.from(execution.item.amount).gt(0)
+        )
       );`
+$DIR/test/advanced.spec.ts: `.filter((execution: any) =>
+          BigNumber.from(execution.item.amount).gt(0)
+        )`
+$DIR/test/advanced.spec.ts: `.from(execution.item.amount)`
+$DIR/test/advanced.spec.ts: `.gt(0)`
 $DIR/test/advanced.spec.ts: `.map(([offerArr, considerationArr]) =>
         toFulfillment(offerArr, considerationArr)
       )`
@@ -3051,8 +2972,15 @@ $DIR/test/advanced.spec.ts: `await checkExpectedEvents(
             fulfiller: owner.address,
           },
         ],
-        executions
+        executions.filter((execution: any) =>
+          BigNumber.from(execution.item.amount).gt(0)
+        )
       );`
+$DIR/test/advanced.spec.ts: `.filter((execution: any) =>
+          BigNumber.from(execution.item.amount).gt(0)
+        )`
+$DIR/test/advanced.spec.ts: `.from(execution.item.amount)`
+$DIR/test/advanced.spec.ts: `.gt(0)`
 $DIR/test/advanced.spec.ts: `.map(([offerArr, considerationArr]) =>
         toFulfillment(offerArr, considerationArr)
       )`
@@ -7704,26 +7632,6 @@ $DIR/test/revert.spec.ts: `order.parameters.offerer = offererContract.address;`
 $DIR/test/revert.spec.ts: `order.numerator = 1;`
 $DIR/test/revert.spec.ts: `order.denominator = 1;`
 $DIR/test/revert.spec.ts: `order.signature = "0x";`
-$DIR/test/revert.spec.ts: `await mintAndApproveERC20(
-        buyer,
-        marketplaceContract.address,
-        tokenAmount
-      );`
-$DIR/test/revert.spec.ts: `.sub(100)`
-$DIR/test/revert.spec.ts: `.sub(100)`
-$DIR/test/revert.spec.ts: `.entries(obj ?? {})`
-$DIR/test/revert.spec.ts: `obj[key] = typeof value === "bigint" ? BigInt(1) : 1;`
-$DIR/test/revert.spec.ts: `recurse(obj[key]);`
-$DIR/test/revert.spec.ts: `recurse(
-          hreProvider._wrapped._wrapped._wrapped?._node?._vm ??
-            // When running coverage, there was an additional layer of wrapping
-            hreProvider._wrapped._wrapped._wrapped._wrapped._node._vm
-        );`
-$DIR/test/revert.spec.ts: `changeChainId();`
-$DIR/test/revert.spec.ts: `.connect(buyer)`
-$DIR/test/revert.spec.ts: `.populateTransaction.fulfillBasicOrder(basicOrderParameters)`
-$DIR/test/revert.spec.ts: `tx.chainId = 1;`
-$DIR/test/revert.spec.ts: `.call(tx)`
 $DIR/test/router.spec.ts: `await router.connect(buyer).fulfillAvailableAdvancedOrders(params, {
         value,
       });`
@@ -8401,7 +8309,6 @@ $DIR/test/zone.spec.ts: `.getContractFactory(
 $DIR/test/zone.spec.ts: `.deploy(
       owner.address
     )`
-$DIR/test/zone.spec.ts: `pausableZoneController.pause(zoneAddr);`
 $DIR/test/zone.spec.ts: `.pause(zoneAddr)`
 $DIR/test/zone.spec.ts: `.getContractFactory(
       "PausableZoneController",
