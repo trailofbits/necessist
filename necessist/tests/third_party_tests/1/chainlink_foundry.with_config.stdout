@@ -22,7 +22,7 @@ $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: `.getFull
       encodedGreetingCall
     )` nonbuildable
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: `.getUserOpHash(op)` nonbuildable
-$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: `.getUserOpFullHash(userOpHash, toDeployAddress)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: `._getUserOpFullHash(userOpHash, toDeployAddress)` nonbuildable
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: `op.signature = abi.encodePacked(r, s, v - 27);` failed
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: `entryPoint.depositTo{value: 10 ether}(toDeployAddress);` failed
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: `operations[0] = op;` failed
@@ -44,7 +44,7 @@ $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: `.getFull
       encodedGreetingCall
     )` nonbuildable
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: `.getUserOpHash(op)` nonbuildable
-$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: `.getUserOpFullHash(userOpHash, toDeployAddress)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: `._getUserOpFullHash(userOpHash, toDeployAddress)` nonbuildable
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: `op.signature = abi.encodePacked(r, s, v - 27);` failed
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: `entryPoint.depositTo{value: 10 ether}(toDeployAddress);` failed
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: `operations[0] = op;` failed
@@ -69,7 +69,7 @@ $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: `linkToke
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: `.transferAndCall(address(paymaster), 1000 ether, abi.encode(address(toDeployAddress)))` failed
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: `.encode(address(toDeployAddress))` nonbuildable
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: `.getUserOpHash(op)` nonbuildable
-$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: `.getUserOpFullHash(userOpHash, toDeployAddress)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: `._getUserOpFullHash(userOpHash, toDeployAddress)` nonbuildable
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: `op.signature = abi.encodePacked(r, s, v - 27);` failed
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: `entryPoint.depositTo{value: 10 ether}(address(paymaster));` failed
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: `operations[0] = op;` failed
@@ -96,7 +96,7 @@ $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: `.getFull
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: `linkToken.transferAndCall(address(paymaster), 1000 ether, abi.encode(address(toDeployAddress)));` failed
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: `.transferAndCall(address(paymaster), 1000 ether, abi.encode(address(toDeployAddress)))` failed
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: `.encode(address(toDeployAddress))` nonbuildable
-$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: `.getUserOpFullHash(entryPoint.getUserOpHash(op), toDeployAddress)` nonbuildable
+$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: `._getUserOpFullHash(entryPoint.getUserOpHash(op), toDeployAddress)` nonbuildable
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: `.getUserOpHash(op)` nonbuildable
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: `op.signature = getSignature(fullHash);` failed
 $DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol: `entryPoint.depositTo{value: 10 ether}(address(paymaster));` failed
