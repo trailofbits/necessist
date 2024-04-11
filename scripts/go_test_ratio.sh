@@ -1,5 +1,8 @@
 #! /bin/bash
 
+# smoelius: This script outputs the number of tests executed per second for each Go test file under
+# the current directory. The purpose is to estimate the "bang for your buck" of each Go test file.
+
 rm -rf ~/.cache/go-build
 
 grep -l -r -w defer --include=*_test.go |
