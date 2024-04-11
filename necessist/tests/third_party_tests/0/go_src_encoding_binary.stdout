@@ -1,4 +1,4 @@
-106 candidates in 2 test files
+112 candidates in 2 test files
 $DIR/src/encoding/binary/binary_test.go: dry running
 $DIR/src/encoding/binary/binary_test.go: mutilating
 $DIR/src/encoding/binary/binary_test.go: `.NewReader(src)` nonbuildable
@@ -106,6 +106,16 @@ $DIR/src/encoding/binary/binary_test.go: `buf = order.AppendUint64(buf[:offset],
 $DIR/src/encoding/binary/binary_test.go: `.AppendUint64(buf[:offset], want64)` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Uint64(buf[offset:])` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `testReadInvalidDestination(t, BigEndian)` passed
+$DIR/src/encoding/binary/binary_test.go: `type Person struct {
+		Age    int
+		Weight float64
+		Height float64
+	}` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `const val = 0x12345678` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.Slice((*byte)(unsafe.Pointer(&i)), unsafe.Sizeof(i))` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.Pointer(&i)` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.Sizeof(i)` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.Uint32(s)` nonbuildable
 $DIR/src/encoding/binary/varint_test.go: dry running
 $DIR/src/encoding/binary/varint_test.go: mutilating
 $DIR/src/encoding/binary/varint_test.go: `testConstant(t, 16, MaxVarintLen16)` passed
@@ -138,5 +148,5 @@ $DIR/src/encoding/binary/varint_test.go: `.Run(tt.name, func(t *testing.T) {
 				t.Errorf("value=%d, want=%d", g, w)
 			}
 		})` nonbuildable
-$DIR/src/encoding/binary/varint_test.go: `testOverflow(t, []byte{0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x2}, 0, -10, overflow)` passed
-$DIR/src/encoding/binary/varint_test.go: `testOverflow(t, []byte{0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x1, 0, 0}, 0, -11, overflow)` passed
+$DIR/src/encoding/binary/varint_test.go: `testOverflow(t, []byte{0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x2}, 0, -10, errOverflow)` passed
+$DIR/src/encoding/binary/varint_test.go: `testOverflow(t, []byte{0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x1, 0, 0}, 0, -11, errOverflow)` passed

@@ -1,4 +1,4 @@
-299 candidates in 9 test files
+338 candidates in 9 test files
 $DIR/src/mime/encodedword_test.go: dry running
 $DIR/src/mime/encodedword_test.go: mutilating
 $DIR/src/mime/encodedword_test.go: `.Repeat("é", 10),` nonbuildable
