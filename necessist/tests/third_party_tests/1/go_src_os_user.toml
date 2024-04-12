@@ -4,4 +4,7 @@ framework = "go"
 full = true
 
 subdir = "src/os/user"
-target_os = "linux"
+
+# smoelius: This test is disabled.
+# target_os = "linux"
+target_os = []

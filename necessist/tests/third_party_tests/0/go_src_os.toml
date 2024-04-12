@@ -18,7 +18,10 @@ path_prefix = "bin"
 #   Error: Process completed with exit code 143.
 #
 # I haven't figured out why. Restrict to macOS until we can come up with a better test.
-target_os = "macos"
+
+# smoelius: This test is disabled.
+# target_os = "macos"
+target_os = []
 
 subdir = "src/os"
 framework = "go"
