@@ -41,7 +41,7 @@ runs:
     - name: Install Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: 16
+        node-version: 18
 
     - name: Install Yarn
       if: ${{ runner.os == 'Windows' }}
