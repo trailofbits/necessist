@@ -49,7 +49,7 @@ runs:
       shell: bash
 
     - name: Install pnpm
-      run: npm install --global pnpm
+      run: npm install --global pnpm@^8.0.0
       shell: bash
 
     - name: Install Setuptools
