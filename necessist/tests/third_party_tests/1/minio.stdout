@@ -4658,14 +4658,6 @@ $DIR/cmd/format-erasure_test.go: `format.Erasure.DistributionAlgo = formatErasur
 $DIR/cmd/format-erasure_test.go: `.Clone()`
 $DIR/cmd/format-erasure_test.go: `newFormat.Erasure.This = format.Erasure.Sets[i][j]`
 $DIR/cmd/format-erasure_test.go: `formats[i*setDriveCount+j] = newFormat`
-$DIR/cmd/format-erasure_test.go: `formats[0] = nil`
-$DIR/cmd/format-erasure_test.go: `formats[1].Erasure.Sets[0][0] = "bad-uuid"`
-$DIR/cmd/format-erasure_test.go: `formats[2].ID = "bad-id"`
-$DIR/cmd/format-erasure_test.go: `.Is(err, errCorruptedFormat)`
-$DIR/cmd/format-erasure_test.go: `format.Erasure.DistributionAlgo = formatErasureVersionV2DistributionAlgoV1`
-$DIR/cmd/format-erasure_test.go: `.Clone()`
-$DIR/cmd/format-erasure_test.go: `newFormat.Erasure.This = format.Erasure.Sets[i][j]`
-$DIR/cmd/format-erasure_test.go: `formats[i*setDriveCount+j] = newFormat`
 $DIR/cmd/format-erasure_test.go: `errs[15] = errUnformattedDisk`
 $DIR/cmd/generic-handlers_test.go: `.Parse("http://localhost:9000/minio/lock")`
 $DIR/cmd/generic-handlers_test.go: `r = &http.Request{
@@ -7546,6 +7538,72 @@ $DIR/cmd/sts-handlers_test.go: `suite.SetUpLDAP(c, ldapServer)`
 $DIR/cmd/sts-handlers_test.go: `.SetUpLDAP(c, ldapServer)`
 $DIR/cmd/sts-handlers_test.go: `suite.TestIAMImport(c, exportedContent, caseNum, content)`
 $DIR/cmd/sts-handlers_test.go: `.TestIAMImport(c, exportedContent, caseNum, content)`
+$DIR/cmd/sts-handlers_test.go: `suite.TearDownSuite(c)`
+$DIR/cmd/sts-handlers_test.go: `.TearDownSuite(c)`
+$DIR/cmd/sts-handlers_test.go: `.WithTimeout(context.Background(), testDefaultTimeout)`
+$DIR/cmd/sts-handlers_test.go: `.Background()`
+$DIR/cmd/sts-handlers_test.go: `exportContent[k] = []byte(v)`
+$DIR/cmd/sts-handlers_test.go: `.NewWriter(&b)`
+$DIR/cmd/sts-handlers_test.go: `.FileInfoHeader(dummyFileInfo{
+				name:    filename,
+				size:    int64(sz),
+				mode:    0o600,
+				modTime: time.Now(),
+				isDir:   false,
+				sys:     nil,
+			})`
+$DIR/cmd/sts-handlers_test.go: `.Now()`
+$DIR/cmd/sts-handlers_test.go: `adminLogIf(ctx, zerr)`
+$DIR/cmd/sts-handlers_test.go: `header.Method = zip.Deflate`
+$DIR/cmd/sts-handlers_test.go: `.CreateHeader(header)`
+$DIR/cmd/sts-handlers_test.go: `adminLogIf(ctx, zerr)`
+$DIR/cmd/sts-handlers_test.go: `.Copy(zwriter, r)`
+$DIR/cmd/sts-handlers_test.go: `adminLogIf(ctx, err)`
+$DIR/cmd/sts-handlers_test.go: `.NewReader(fileContent)`
+$DIR/cmd/sts-handlers_test.go: `importContent = b.Bytes()`
+$DIR/cmd/sts-handlers_test.go: `.Bytes()`
+$DIR/cmd/sts-handlers_test.go: `t.Run(
+			fmt.Sprintf("Test: %d, ServerType: %s", i+1, testCase.ServerTypeDescription),
+			func(t *testing.T) {
+				c := &check{t, testCase.serverType}
+				suite := testCase
+
+				ldapServer := os.Getenv(EnvTestLDAPServer)
+				if ldapServer == "" {
+					c.Skipf("Skipping LDAP test as no LDAP server is provided via %s", EnvTestLDAPServer)
+				}
+
+				suite.SetUpSuite(c)
+				suite.SetUpLDAP(c, ldapServer)
+				suite.TestIAMImportAssetContent(c, importContent)
+				suite.TearDownSuite(c)
+			},
+		)`
+$DIR/cmd/sts-handlers_test.go: `.Run(
+			fmt.Sprintf("Test: %d, ServerType: %s", i+1, testCase.ServerTypeDescription),
+			func(t *testing.T) {
+				c := &check{t, testCase.serverType}
+				suite := testCase
+
+				ldapServer := os.Getenv(EnvTestLDAPServer)
+				if ldapServer == "" {
+					c.Skipf("Skipping LDAP test as no LDAP server is provided via %s", EnvTestLDAPServer)
+				}
+
+				suite.SetUpSuite(c)
+				suite.SetUpLDAP(c, ldapServer)
+				suite.TestIAMImportAssetContent(c, importContent)
+				suite.TearDownSuite(c)
+			},
+		)`
+$DIR/cmd/sts-handlers_test.go: `.Sprintf("Test: %d, ServerType: %s", i+1, testCase.ServerTypeDescription)`
+$DIR/cmd/sts-handlers_test.go: `.Getenv(EnvTestLDAPServer)`
+$DIR/cmd/sts-handlers_test.go: `suite.SetUpSuite(c)`
+$DIR/cmd/sts-handlers_test.go: `.SetUpSuite(c)`
+$DIR/cmd/sts-handlers_test.go: `suite.SetUpLDAP(c, ldapServer)`
+$DIR/cmd/sts-handlers_test.go: `.SetUpLDAP(c, ldapServer)`
+$DIR/cmd/sts-handlers_test.go: `suite.TestIAMImportAssetContent(c, importContent)`
+$DIR/cmd/sts-handlers_test.go: `.TestIAMImportAssetContent(c, importContent)`
 $DIR/cmd/sts-handlers_test.go: `suite.TearDownSuite(c)`
 $DIR/cmd/sts-handlers_test.go: `.TearDownSuite(c)`
 $DIR/cmd/sts-handlers_test.go: `t.Run(
