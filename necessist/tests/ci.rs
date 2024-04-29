@@ -195,28 +195,7 @@ fn markdown_link_check() {
         .success();
 }
 
-#[cfg(any())]
-#[test]
-fn modules() {
-    let metadata = MetadataCommand::new().no_deps().exec().unwrap();
-
-    for package in metadata.workspace_packages() {
-        Command::new("cargo")
-            .args([
-                "modules",
-                "dependencies",
-                "--acyclic",
-                "--layout=none",
-                "--package",
-                &package.name,
-            ])
-            .assert()
-            .success();
-    }
-}
-
-/// `noninvasive_siblings` helps to expose circular module dependencies. See the [`modules`] test
-/// within this file.
+/// `noninvasive_siblings` helps to expose circular module dependencies.
 #[test]
 fn noninvasive_siblings() {
     let re = Regex::new(r"use super::\{([^}]|\}[^;])*::").unwrap();

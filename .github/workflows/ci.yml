@@ -95,8 +95,6 @@ jobs:
           cargo install cargo-sort               || true
           cargo install cargo-udeps --locked     || true
           cargo install cargo-unmaintained       || true
-          # smoelius: `modules` test is disabled.
-          # cargo install cargo-modules --locked --version=^0.11 || true
 
       - name: Install testing tools
         if: ${{ matrix.test != 'ci' }}
