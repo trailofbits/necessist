@@ -84,6 +84,7 @@ fn format() {
 #[test]
 fn github() {
     const EXCEPTIONS: &[&str] = &[
+        "ci",
         "ci_is_disabled",
         "dogfood",
         "general",

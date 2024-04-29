@@ -54,7 +54,10 @@ jobs:
       fail-fast: ${{ github.event_name == 'merge_group' }}
       matrix:
         environment: [ubuntu-latest, macos-13, windows-latest]
-        test: [ci, other, third_party_0, third_party_1, trycmd]
+        test: [other, third_party_0, third_party_1, trycmd]
+        include:
+          - environment: ubuntu-latest
+            test: ci
 
     runs-on: ${{ matrix.environment }}
 
@@ -82,7 +85,7 @@ jobs:
         run: rustup update
 
       - name: Install CI tools
-        if: ${{ matrix.environment == 'ubuntu-latest' && matrix.test == 'ci' }}
+        if: ${{ matrix.test == 'ci' }}
         run: |
           rustup +nightly component add clippy rustfmt
           cargo install cargo-dylint --git=https://github.com/trailofbits/dylint --no-default-features --features=cargo-cli || true
