@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.8
+
+- Update `swc_core` to version 0.91 ([#1085](https://github.com/trailofbits/necessist/pull/1085))
+
 ## 0.4.7
 
 - Update `libsqlite3-sys` to version 0.28 ([#1048](https://github.com/trailofbits/necessist/pull/1048))
