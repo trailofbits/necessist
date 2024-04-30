@@ -3901,7 +3901,9 @@ $DIR/cmd/erasure-metadata_test.go: `.Unix(1603863445, 0)`
 $DIR/cmd/erasure-metadata_test.go: `.Unix(1603863445, 0)`
 $DIR/cmd/erasure-metadata_test.go: `t.Run("", func(t *testing.T) {
 			fi, err := findFileInfoInQuorum(context.Background(), test.fis, test.modTime, "", test.expectedQuorum)
-			if err != test.expectedErr {
+			_, ok1 := err.(InsufficientReadQuorum)
+			_, ok2 := test.expectedErr.(InsufficientReadQuorum)
+			if ok1 != ok2 {
 				t.Errorf("Expected %s, got %s", test.expectedErr, err)
 			}
 			if test.succmodTimes != nil {
@@ -3915,7 +3917,9 @@ $DIR/cmd/erasure-metadata_test.go: `t.Run("", func(t *testing.T) {
 		})`
 $DIR/cmd/erasure-metadata_test.go: `.Run("", func(t *testing.T) {
 			fi, err := findFileInfoInQuorum(context.Background(), test.fis, test.modTime, "", test.expectedQuorum)
-			if err != test.expectedErr {
+			_, ok1 := err.(InsufficientReadQuorum)
+			_, ok2 := test.expectedErr.(InsufficientReadQuorum)
+			if ok1 != ok2 {
 				t.Errorf("Expected %s, got %s", test.expectedErr, err)
 			}
 			if test.succmodTimes != nil {
@@ -5970,9 +5974,9 @@ $DIR/cmd/net_test.go: `.CreateStringSet("127.0.0.1")`
 $DIR/cmd/net_test.go: `.expectedIPList.Intersection(ipList)`
 $DIR/cmd/net_test.go: `.IsEmpty()`
 $DIR/cmd/net_test.go: `.CreateStringSet("127.0.0.1")`
-$DIR/cmd/net_test.go: `.CreateStringSet("93.184.216.34")`
-$DIR/cmd/net_test.go: `.expectedIPList.Intersection(ipList)`
-$DIR/cmd/net_test.go: `.IsEmpty()`
+$DIR/cmd/net_test.go: `.ToSlice()`
+$DIR/cmd/net_test.go: `.expectedIPList.Contains(ip)`
+$DIR/cmd/net_test.go: `found = true`
 $DIR/cmd/net_test.go: `globalMinioHost, globalMinioPort = host, port`
 $DIR/cmd/net_test.go: `globalMinioHost, globalMinioPort = testCase.host, testCase.port`
 $DIR/cmd/net_test.go: `.CreateStringSet(apiEndpoints...)`
