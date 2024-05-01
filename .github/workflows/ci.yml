@@ -81,9 +81,6 @@ jobs:
             target/dylint/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
-      - name: Rustup
-        run: rustup update
-
       - name: Install CI tools
         if: ${{ matrix.test == 'ci' }}
         run: |
