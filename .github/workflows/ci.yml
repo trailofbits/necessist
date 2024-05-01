@@ -53,7 +53,7 @@ jobs:
     strategy:
       fail-fast: ${{ github.event_name == 'merge_group' }}
       matrix:
-        environment: [ubuntu-latest, macos-13, windows-latest]
+        environment: [ubuntu-latest, macos-latest, windows-latest]
         test: [other, third_party_0, third_party_1, trycmd]
         include:
           - environment: ubuntu-latest
