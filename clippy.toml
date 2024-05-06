@@ -7,3 +7,4 @@ disallowed-methods = [
     { path = "tree_sitter::Node::child_by_field_name", reason = "use `child_by_field_id`" },
     { path = "tree_sitter::Node::kind", reason = "use `kind_id`" },
 ]
+ignore-interior-mutability = ["necessist_core::source_file::SourceFile"]
