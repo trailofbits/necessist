@@ -250,9 +250,13 @@ In addition to the below, the Foundry framework ignores:
 
 In addition to the below, the Go framework ignores:
 
+- `defer` statements
+
+#### Ignored functions
+
 - Anything beginning with `assert.` (e.g., `assert.Equal`)
 - Anything beginning with `require.` (e.g., `require.Equal`)
-- `defer` statements
+- `panic`
 
 #### Ignored methods\*
 

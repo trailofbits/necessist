@@ -209,7 +209,8 @@ impl<'ast> MaybeNamed for <Types as AbstractTypes>::Call<'ast> {
 impl ParseLow for Go {
     type Types = Types;
 
-    const IGNORED_FUNCTIONS: Option<&'static [&'static str]> = Some(&["assert.*", "require.*"]);
+    const IGNORED_FUNCTIONS: Option<&'static [&'static str]> =
+        Some(&["assert.*", "panic", "require.*"]);
 
     const IGNORED_MACROS: Option<&'static [&'static str]> = None;
 
