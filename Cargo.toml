@@ -2,6 +2,9 @@
 members = ["core", "frameworks", "necessist"]
 resolver = "2"
 
+[workspace.lints.rust]
+unexpected-cfgs = "allow"
+
 [workspace.lints.clippy]
 pedantic = { level = "warn", priority = -1 }
 let-underscore-untyped = "warn"
