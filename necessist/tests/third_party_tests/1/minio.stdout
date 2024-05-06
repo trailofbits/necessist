@@ -1914,7 +1914,6 @@ $DIR/cmd/dynamic-timeouts_test.go: `.LogSuccess(time.Duration(float64(time.Secon
 $DIR/cmd/dynamic-timeouts_test.go: `.Duration(float64(time.Second) * rng.Float64())`
 $DIR/cmd/dynamic-timeouts_test.go: `.Float64()`
 $DIR/cmd/dynamic-timeouts_test.go: `.Timeout()`
-$DIR/cmd/dynamic-timeouts_test.go: `panic(to)`
 $DIR/cmd/dynamic-timeouts_test.go: `const minimum = 30 * time.Second`
 $DIR/cmd/dynamic-timeouts_test.go: `.Timeout()`
 $DIR/cmd/dynamic-timeouts_test.go: `const successTimeout = 20 * time.Second`
@@ -11502,7 +11501,6 @@ $DIR/internal/event/config_test.go: `.DeepEqual(result, testCase.expectedResult)
 $DIR/internal/event/config_test.go: `.filterRuleList.Pattern()`
 $DIR/internal/event/config_test.go: `.Unmarshal(testCase.data, &Queue{})`
 $DIR/internal/event/config_test.go: `.Unmarshal(data, queue1)`
-$DIR/internal/event/config_test.go: `panic(err)`
 $DIR/internal/event/config_test.go: `data = []byte(`
 <QueueConfiguration>
    <Id>1</Id>
@@ -11522,7 +11520,6 @@ $DIR/internal/event/config_test.go: `data = []byte(`
    <Event>s3:ObjectCreated:Put</Event>
 </QueueConfiguration>`)`
 $DIR/internal/event/config_test.go: `.Unmarshal(data, queue2)`
-$DIR/internal/event/config_test.go: `panic(err)`
 $DIR/internal/event/config_test.go: `data = []byte(`
 <QueueConfiguration>
    <Id>1</Id>
@@ -11533,14 +11530,11 @@ $DIR/internal/event/config_test.go: `data = []byte(`
    <Event>s3:ObjectRemoved:*</Event>
 </QueueConfiguration>`)`
 $DIR/internal/event/config_test.go: `.Unmarshal(data, queue3)`
-$DIR/internal/event/config_test.go: `panic(err)`
 $DIR/internal/event/config_test.go: `.Background()`
 $DIR/internal/event/config_test.go: `.Background()`
 $DIR/internal/event/config_test.go: `.Add(&ExampleTarget{TargetID{"1", "webhook"}, false, false})`
-$DIR/internal/event/config_test.go: `panic(err)`
 $DIR/internal/event/config_test.go: `.queue.Validate(testCase.region, testCase.targetList)`
 $DIR/internal/event/config_test.go: `.Unmarshal(data, queue1)`
-$DIR/internal/event/config_test.go: `panic(err)`
 $DIR/internal/event/config_test.go: `data = []byte(`
 <QueueConfiguration>
    <Id>1</Id>
@@ -11560,12 +11554,10 @@ $DIR/internal/event/config_test.go: `data = []byte(`
    <Event>s3:ObjectCreated:Put</Event>
 </QueueConfiguration>`)`
 $DIR/internal/event/config_test.go: `.Unmarshal(data, queue2)`
-$DIR/internal/event/config_test.go: `panic(err)`
 $DIR/internal/event/config_test.go: `testCase.queue.SetRegion(testCase.region)`
 $DIR/internal/event/config_test.go: `.queue.SetRegion(testCase.region)`
 $DIR/internal/event/config_test.go: `.DeepEqual(result, testCase.expectedResult)`
 $DIR/internal/event/config_test.go: `.Unmarshal(data, queueCase1)`
-$DIR/internal/event/config_test.go: `panic(err)`
 $DIR/internal/event/config_test.go: `data = []byte(`
 <QueueConfiguration>
    <Id>1</Id>
@@ -11585,12 +11577,10 @@ $DIR/internal/event/config_test.go: `data = []byte(`
    <Event>s3:ObjectCreated:Put</Event>
 </QueueConfiguration>`)`
 $DIR/internal/event/config_test.go: `.Unmarshal(data, queueCase2)`
-$DIR/internal/event/config_test.go: `panic(err)`
 $DIR/internal/event/config_test.go: `.queue.ToRulesMap()`
 $DIR/internal/event/config_test.go: `.DeepEqual(result, testCase.expectedResult)`
 $DIR/internal/event/config_test.go: `.Unmarshal(testCase.data, &Config{})`
 $DIR/internal/event/config_test.go: `.Unmarshal(data, config1)`
-$DIR/internal/event/config_test.go: `panic(err)`
 $DIR/internal/event/config_test.go: `data = []byte(`
 <NotificationConfiguration  xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
    <QueueConfiguration>
@@ -11613,7 +11603,6 @@ $DIR/internal/event/config_test.go: `data = []byte(`
 </NotificationConfiguration>
 `)`
 $DIR/internal/event/config_test.go: `.Unmarshal(data, config2)`
-$DIR/internal/event/config_test.go: `panic(err)`
 $DIR/internal/event/config_test.go: `data = []byte(`
 <NotificationConfiguration  xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
    <QueueConfiguration>
@@ -11644,14 +11633,11 @@ $DIR/internal/event/config_test.go: `data = []byte(`
 </NotificationConfiguration>
 `)`
 $DIR/internal/event/config_test.go: `.Unmarshal(data, config3)`
-$DIR/internal/event/config_test.go: `panic(err)`
 $DIR/internal/event/config_test.go: `.Background()`
 $DIR/internal/event/config_test.go: `.Background()`
 $DIR/internal/event/config_test.go: `.Add(&ExampleTarget{TargetID{"1", "webhook"}, false, false})`
-$DIR/internal/event/config_test.go: `panic(err)`
 $DIR/internal/event/config_test.go: `.config.Validate(testCase.region, testCase.targetList)`
 $DIR/internal/event/config_test.go: `.Unmarshal(data, config1)`
-$DIR/internal/event/config_test.go: `panic(err)`
 $DIR/internal/event/config_test.go: `data = []byte(`
 <NotificationConfiguration  xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
    <QueueConfiguration>
@@ -11674,7 +11660,6 @@ $DIR/internal/event/config_test.go: `data = []byte(`
 </NotificationConfiguration>
 `)`
 $DIR/internal/event/config_test.go: `.Unmarshal(data, config2)`
-$DIR/internal/event/config_test.go: `panic(err)`
 $DIR/internal/event/config_test.go: `data = []byte(`
 <NotificationConfiguration  xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
    <QueueConfiguration>
@@ -11705,13 +11690,11 @@ $DIR/internal/event/config_test.go: `data = []byte(`
 </NotificationConfiguration>
 `)`
 $DIR/internal/event/config_test.go: `.Unmarshal(data, config3)`
-$DIR/internal/event/config_test.go: `panic(err)`
 $DIR/internal/event/config_test.go: `testCase.config.SetRegion(testCase.region)`
 $DIR/internal/event/config_test.go: `.config.SetRegion(testCase.region)`
 $DIR/internal/event/config_test.go: `result = append(result, queue.ARN)`
 $DIR/internal/event/config_test.go: `.DeepEqual(result, testCase.expectedResult)`
 $DIR/internal/event/config_test.go: `.Unmarshal(data, config1)`
-$DIR/internal/event/config_test.go: `panic(err)`
 $DIR/internal/event/config_test.go: `data = []byte(`
 <NotificationConfiguration  xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
    <QueueConfiguration>
@@ -11734,7 +11717,6 @@ $DIR/internal/event/config_test.go: `data = []byte(`
 </NotificationConfiguration>
 `)`
 $DIR/internal/event/config_test.go: `.Unmarshal(data, config2)`
-$DIR/internal/event/config_test.go: `panic(err)`
 $DIR/internal/event/config_test.go: `data = []byte(`
 <NotificationConfiguration  xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
    <QueueConfiguration>
@@ -11765,7 +11747,6 @@ $DIR/internal/event/config_test.go: `data = []byte(`
 </NotificationConfiguration>
 `)`
 $DIR/internal/event/config_test.go: `.Unmarshal(data, config3)`
-$DIR/internal/event/config_test.go: `panic(err)`
 $DIR/internal/event/config_test.go: `rulesMapCase3.add([]Name{ObjectCreatedPut}, "images/*jpg", TargetID{"2", "amqp"})`
 $DIR/internal/event/config_test.go: `.add([]Name{ObjectCreatedPut}, "images/*jpg", TargetID{"2", "amqp"})`
 $DIR/internal/event/config_test.go: `.config.ToRulesMap()`
@@ -11864,9 +11845,7 @@ $DIR/internal/event/config_test.go: `.NewReader(`
 $DIR/internal/event/config_test.go: `.Background()`
 $DIR/internal/event/config_test.go: `.Background()`
 $DIR/internal/event/config_test.go: `.Add(&ExampleTarget{TargetID{"1", "webhook"}, false, false})`
-$DIR/internal/event/config_test.go: `panic(err)`
 $DIR/internal/event/config_test.go: `.reader.Seek(0, 0)`
-$DIR/internal/event/config_test.go: `panic(err)`
 $DIR/internal/event/name_test.go: `.name.Expand()`
 $DIR/internal/event/name_test.go: `.DeepEqual(result, testCase.expectedResult)`
 $DIR/internal/event/name_test.go: `.name.String()`
@@ -12084,10 +12063,8 @@ $DIR/internal/event/targetidset_test.go: `.DeepEqual(testCase.expectedResult, re
 $DIR/internal/event/targetlist_test.go: `.Background()`
 $DIR/internal/event/targetlist_test.go: `.Background()`
 $DIR/internal/event/targetlist_test.go: `.Add(&ExampleTarget{TargetID{"2", "testcase"}, false, false})`
-$DIR/internal/event/targetlist_test.go: `panic(err)`
 $DIR/internal/event/targetlist_test.go: `.Background()`
 $DIR/internal/event/targetlist_test.go: `.Add(&ExampleTarget{TargetID{"3", "testcase"}, false, false})`
-$DIR/internal/event/targetlist_test.go: `panic(err)`
 $DIR/internal/event/targetlist_test.go: `.targetList.Add(testCase.target)`
 $DIR/internal/event/targetlist_test.go: `.targetList.List()`
 $DIR/internal/event/targetlist_test.go: `.DeepEqual(targetID1, targetID2)`
@@ -12095,20 +12072,15 @@ $DIR/internal/event/targetlist_test.go: `found = true`
 $DIR/internal/event/targetlist_test.go: `.Background()`
 $DIR/internal/event/targetlist_test.go: `.Background()`
 $DIR/internal/event/targetlist_test.go: `.Add(&ExampleTarget{TargetID{"2", "testcase"}, false, false})`
-$DIR/internal/event/targetlist_test.go: `panic(err)`
 $DIR/internal/event/targetlist_test.go: `.Background()`
 $DIR/internal/event/targetlist_test.go: `.Add(&ExampleTarget{TargetID{"3", "testcase"}, false, false})`
-$DIR/internal/event/targetlist_test.go: `panic(err)`
 $DIR/internal/event/targetlist_test.go: `.targetList.Exists(testCase.targetID)`
 $DIR/internal/event/targetlist_test.go: `.Background()`
 $DIR/internal/event/targetlist_test.go: `.Background()`
 $DIR/internal/event/targetlist_test.go: `.Add(&ExampleTarget{TargetID{"2", "testcase"}, false, false})`
-$DIR/internal/event/targetlist_test.go: `panic(err)`
 $DIR/internal/event/targetlist_test.go: `.Background()`
 $DIR/internal/event/targetlist_test.go: `.Add(&ExampleTarget{TargetID{"3", "testcase"}, false, false})`
-$DIR/internal/event/targetlist_test.go: `panic(err)`
 $DIR/internal/event/targetlist_test.go: `.Add(&ExampleTarget{TargetID{"1", "webhook"}, false, false})`
-$DIR/internal/event/targetlist_test.go: `panic(err)`
 $DIR/internal/event/targetlist_test.go: `.targetList.List()`
 $DIR/internal/event/targetlist_test.go: `.DeepEqual(targetID1, targetID2)`
 $DIR/internal/event/targetlist_test.go: `found = true`
@@ -12160,7 +12132,6 @@ $DIR/internal/grid/connection_test.go: `<-cleanReqs`
 $DIR/internal/grid/connection_test.go: `gotCall <- struct{}{}`
 $DIR/internal/grid/connection_test.go: `.Done()`
 $DIR/internal/grid/connection_test.go: `gotCall <- struct{}{}`
-$DIR/internal/grid/connection_test.go: `panic("should not be called")`
 $DIR/internal/grid/connection_test.go: `errFatal(remote.RegisterSingleHandler(handlerTest, h1))`
 $DIR/internal/grid/connection_test.go: `.RegisterSingleHandler(handlerTest, h1)`
 $DIR/internal/grid/connection_test.go: `errFatal(remote.RegisterStreamingHandler(handlerTest2, h2))`

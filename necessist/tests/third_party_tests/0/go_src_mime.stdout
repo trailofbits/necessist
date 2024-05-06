@@ -1,4 +1,4 @@
-338 candidates in 9 test files
+337 candidates in 9 test files
 $DIR/src/mime/encodedword_test.go: dry running
 $DIR/src/mime/encodedword_test.go: mutilating
 $DIR/src/mime/encodedword_test.go: `.Repeat("é", 10),` nonbuildable
@@ -173,7 +173,6 @@ $DIR/src/mime/quotedprintable/reader_test.go: `.Command("qprint", "-d")` nonbuil
 $DIR/src/mime/quotedprintable/reader_test.go: `cmd.Stdin = strings.NewReader(s)` passed
 $DIR/src/mime/quotedprintable/reader_test.go: `.NewReader(s)` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go: `.StderrPipe()` nonbuildable
-$DIR/src/mime/quotedprintable/reader_test.go: `panic(err)` passed
 $DIR/src/mime/quotedprintable/reader_test.go: `.NewReader(stderr)` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go: `.ReadString('\n')` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go: `qpres <- errors.New(s)` nonbuildable
