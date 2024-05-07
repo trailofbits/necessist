@@ -1,4 +1,106 @@
-Error: Failed to canonicalize "$DIR/contracts/test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol"
-
-Caused by:
-    No such file or directory (os error 2)
+62 candidates in 1 test file
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: dry running
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: mutilating
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.calculateSmartContractAccountAddress(
+      END_USER,
+      ENTRY_POINT,
+      address(factory)
+    )` nonbuildable
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.getSCAInitCodeWithConstructor(END_USER, ENTRY_POINT)` nonbuildable
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `factory.deploySmartContractAccount(salt, fullInitializeCode);` failed
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.deploySmartContractAccount(salt, fullInitializeCode)` failed
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `changePrank(END_USER);` passed
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `assembly {
+      contractCodeSize := extcodesize(toDeployAddress)
+    }` failed
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.concat(Greeter.setGreeting.selector, abi.encode(greeting))` nonbuildable
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.encode(greeting)` nonbuildable
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.getFullEndTxEncoding(
+      address(greeter),
+      uint256(0),
+      0,
+      encodedGreetingCall
+    )` nonbuildable
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.getUserOpHash(op)` nonbuildable
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `._getUserOpFullHash(userOpHash, toDeployAddress)` nonbuildable
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `op.signature = abi.encodePacked(r, s, v - 27);` failed
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `entryPoint.depositTo{value: 10 ether}(toDeployAddress);` failed
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `operations[0] = op;` failed
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `entryPoint.handleOps(operations, payable(END_USER));` failed
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.handleOps(operations, payable(END_USER))` failed
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.s_nonce()` nonbuildable
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.calculateSmartContractAccountAddress(
+      END_USER,
+      ENTRY_POINT,
+      address(factory)
+    )` nonbuildable
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.getInitCode(address(factory), END_USER, ENTRY_POINT)` nonbuildable
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.concat(Greeter.setGreeting.selector, abi.encode(greeting))` nonbuildable
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.encode(greeting)` nonbuildable
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.getFullEndTxEncoding(
+      address(greeter),
+      uint256(0),
+      0,
+      encodedGreetingCall
+    )` nonbuildable
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.getUserOpHash(op)` nonbuildable
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `._getUserOpFullHash(userOpHash, toDeployAddress)` nonbuildable
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `op.signature = abi.encodePacked(r, s, v - 27);` failed
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `entryPoint.depositTo{value: 10 ether}(toDeployAddress);` failed
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `operations[0] = op;` failed
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `entryPoint.handleOps(operations, payable(END_USER));` failed
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.handleOps(operations, payable(END_USER))` failed
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.i_owner()` nonbuildable
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.calculateSmartContractAccountAddress(
+      END_USER,
+      ENTRY_POINT,
+      address(factory)
+    )` nonbuildable
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.getInitCode(address(factory), END_USER, ENTRY_POINT)` nonbuildable
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.concat(Greeter.setGreeting.selector, abi.encode(greeting))` nonbuildable
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.encode(greeting)` nonbuildable
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.getFullEndTxEncoding(
+      address(greeter),
+      uint256(0),
+      0,
+      encodedGreetingCall
+    )` nonbuildable
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `linkToken.transferAndCall(address(paymaster), 1000 ether, abi.encode(address(toDeployAddress)));` failed
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.transferAndCall(address(paymaster), 1000 ether, abi.encode(address(toDeployAddress)))` failed
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.encode(address(toDeployAddress))` nonbuildable
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.getUserOpHash(op)` nonbuildable
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `._getUserOpFullHash(userOpHash, toDeployAddress)` nonbuildable
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `op.signature = abi.encodePacked(r, s, v - 27);` failed
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `entryPoint.depositTo{value: 10 ether}(address(paymaster));` failed
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `operations[0] = op;` failed
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `entryPoint.handleOps(operations, payable(END_USER));` failed
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.handleOps(operations, payable(END_USER))` failed
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.s_nonce()` nonbuildable
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.calculateSmartContractAccountAddress(
+      END_USER,
+      ENTRY_POINT,
+      address(factory)
+    )` nonbuildable
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.getInitCode(address(factory), END_USER, ENTRY_POINT)` nonbuildable
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.concat(
+      VRFConsumer.doRequestRandomness.selector,
+      abi.encode(keyhash, fee)
+    )` nonbuildable
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.encode(keyhash, fee)` nonbuildable
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.getFullEndTxEncoding(
+      address(vrfConsumer), // end-contract
+      uint256(0), // value
+      0, // timeout (seconds)
+      encodedVRFRequestCallData
+    )` nonbuildable
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `linkToken.transferAndCall(address(paymaster), 1000 ether, abi.encode(address(toDeployAddress)));` failed
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.transferAndCall(address(paymaster), 1000 ether, abi.encode(address(toDeployAddress)))` failed
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.encode(address(toDeployAddress))` nonbuildable
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `._getUserOpFullHash(entryPoint.getUserOpHash(op), toDeployAddress)` nonbuildable
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.getUserOpHash(op)` nonbuildable
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `op.signature = getSignature(fullHash);` failed
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `entryPoint.depositTo{value: 10 ether}(address(paymaster));` failed
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `operations[0] = op;` failed
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `entryPoint.handleOps(operations, payable(END_USER));` failed
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.handleOps(operations, payable(END_USER))` failed
+$DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.s_nonce()` nonbuildable
