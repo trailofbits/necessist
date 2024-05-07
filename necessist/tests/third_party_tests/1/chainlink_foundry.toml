@@ -2,7 +2,7 @@ url = "https://github.com/smartcontractkit/chainlink"
 rev = "v2.11.0"
 subdir = "contracts"
 framework = "foundry"
-test_files = ["test/v0.8/foundry/transmission/EIP_712_1014_4337.t.sol"]
+test_files = ["src/v0.8/transmission/test/EIP_712_1014_4337.t.sol"]
 full = true
 
 [config]
