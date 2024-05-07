@@ -9997,6 +9997,51 @@ $DIR/internal/bucket/encryption/bucket-sse-config_test.go: `.NewReader([]byte(tc
 $DIR/internal/bucket/encryption/bucket-sse-config_test.go: `.KeyID()`
 $DIR/internal/bucket/encryption/bucket-sse-config_test.go: `.Marshal(tc.expectedConfig)`
 $DIR/internal/bucket/encryption/bucket-sse-config_test.go: `.Equal(expectedXML, []byte(tc.inputXML))`
+$DIR/internal/bucket/lifecycle/delmarker-expiration_test.go: `t.Run(fmt.Sprintf("TestDelMarker-%d", i), func(t *testing.T) {
+			var dexp DelMarkerExpiration
+			var fail bool
+			err := xml.Unmarshal([]byte(test.xml), &dexp)
+			if test.err == nil {
+				if err != nil {
+					fail = true
+				}
+			} else {
+				if err == nil {
+					fail = true
+				}
+				if test.err.Error() != err.Error() {
+					fail = true
+				}
+			}
+			if fail {
+				t.Fatalf("Expected %v but got %v", test.err, err)
+			}
+		})`
+$DIR/internal/bucket/lifecycle/delmarker-expiration_test.go: `.Run(fmt.Sprintf("TestDelMarker-%d", i), func(t *testing.T) {
+			var dexp DelMarkerExpiration
+			var fail bool
+			err := xml.Unmarshal([]byte(test.xml), &dexp)
+			if test.err == nil {
+				if err != nil {
+					fail = true
+				}
+			} else {
+				if err == nil {
+					fail = true
+				}
+				if test.err.Error() != err.Error() {
+					fail = true
+				}
+			}
+			if fail {
+				t.Fatalf("Expected %v but got %v", test.err, err)
+			}
+		})`
+$DIR/internal/bucket/lifecycle/delmarker-expiration_test.go: `.Sprintf("TestDelMarker-%d", i)`
+$DIR/internal/bucket/lifecycle/delmarker-expiration_test.go: `.Unmarshal([]byte(test.xml), &dexp)`
+$DIR/internal/bucket/lifecycle/delmarker-expiration_test.go: `fail = true`
+$DIR/internal/bucket/lifecycle/delmarker-expiration_test.go: `fail = true`
+$DIR/internal/bucket/lifecycle/delmarker-expiration_test.go: `fail = true`
 $DIR/internal/bucket/lifecycle/expiration_test.go: `t.Run(fmt.Sprintf("Test %d", i+1), func(t *testing.T) {
 			var expiration Expiration
 			err := xml.Unmarshal([]byte(tc.inputXML), &expiration)
@@ -10299,6 +10344,12 @@ $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.UTC()`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Add(-10 * 24 * time.Hour)`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Now()`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.UTC()`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Add(-10 * 24 * time.Hour)`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Now()`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.UTC()`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Add(-11 * 24 * time.Hour)`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Now()`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.UTC()`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Add(-12 * time.Hour)`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Now()`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.UTC()`
@@ -10343,21 +10394,40 @@ $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Add(-90 * 24 * time.Hour)`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Now()`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.UTC()`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Add(-90 * 24 * time.Hour)`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Now()`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.UTC()`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Add(-90 * 24 * time.Hour)`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Now()`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.UTC()`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Add(-50 * 24 * time.Hour)`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Now()`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.UTC()`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Add(-90 * 24 * time.Hour)`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Now()`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.UTC()`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Add(-90 * 24 * time.Hour)`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Now()`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.UTC()`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Add(-60 * 24 * time.Hour)`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `t.Run("", func(t *testing.T) {
 			lc, err := ParseLifecycleConfig(bytes.NewReader([]byte(tc.inputConfig)))
 			if err != nil {
 				t.Fatalf("Got unexpected error: %v", err)
 			}
-			if res := lc.Eval(ObjectOpts{
+			opts := ObjectOpts{
 				Name:             tc.objectName,
 				UserTags:         tc.objectTags,
 				ModTime:          tc.objectModTime,
-				DeleteMarker:     tc.isExpiredDelMarker,
-				NumVersions:      1,
+				DeleteMarker:     tc.isDelMarker,
 				IsLatest:         !tc.isNoncurrent,
 				SuccessorModTime: tc.objectSuccessorModTime,
 				VersionID:        tc.versionID,
-			}); res.Action != tc.expectedAction {
+			}
+			opts.NumVersions = 1
+			if tc.hasManyVersions {
+				opts.NumVersions = 2 // at least one noncurrent version
+			}
+			if res := lc.Eval(opts); res.Action != tc.expectedAction {
 				t.Fatalf("Expected action: `%v`, got: `%v`", tc.expectedAction, res.Action)
 			}
 		})`
@@ -10366,30 +10436,27 @@ $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Run("", func(t *testing.T) {
 			if err != nil {
 				t.Fatalf("Got unexpected error: %v", err)
 			}
-			if res := lc.Eval(ObjectOpts{
+			opts := ObjectOpts{
 				Name:             tc.objectName,
 				UserTags:         tc.objectTags,
 				ModTime:          tc.objectModTime,
-				DeleteMarker:     tc.isExpiredDelMarker,
-				NumVersions:      1,
+				DeleteMarker:     tc.isDelMarker,
 				IsLatest:         !tc.isNoncurrent,
 				SuccessorModTime: tc.objectSuccessorModTime,
 				VersionID:        tc.versionID,
-			}); res.Action != tc.expectedAction {
+			}
+			opts.NumVersions = 1
+			if tc.hasManyVersions {
+				opts.NumVersions = 2 // at least one noncurrent version
+			}
+			if res := lc.Eval(opts); res.Action != tc.expectedAction {
 				t.Fatalf("Expected action: `%v`, got: `%v`", tc.expectedAction, res.Action)
 			}
 		})`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.NewReader([]byte(tc.inputConfig))`
-$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Eval(ObjectOpts{
-				Name:             tc.objectName,
-				UserTags:         tc.objectTags,
-				ModTime:          tc.objectModTime,
-				DeleteMarker:     tc.isExpiredDelMarker,
-				NumVersions:      1,
-				IsLatest:         !tc.isNoncurrent,
-				SuccessorModTime: tc.objectSuccessorModTime,
-				VersionID:        tc.versionID,
-			})`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `opts.NumVersions = 1`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `opts.NumVersions = 2`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Eval(opts)`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `t.Run(fmt.Sprintf("Test_%d", i+1), func(t *testing.T) {
 			lc, err := ParseLifecycleConfig(bytes.NewReader([]byte(tc.inputConfig)))
 			if err != nil {
@@ -10546,6 +10613,46 @@ $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Run(fmt.Sprintf("test-%d", i
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Sprintf("test-%d", i+1)`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.lc.Validate()`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.lc.FilterRules(tc.opts)`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Now()`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.UTC()`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Add(-10 * 24 * time.Hour)`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.New()`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.String()`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.eval(opts, time.Time{})`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `lc = Lifecycle{
+		Rules: []Rule{
+			{
+				ID:     "delmarker-exp-20",
+				Status: "Enabled",
+				DelMarkerExpiration: DelMarkerExpiration{
+					Days: 20,
+				},
+			},
+			{
+				ID:     "delmarker-exp-10",
+				Status: "Enabled",
+				DelMarkerExpiration: DelMarkerExpiration{
+					Days: 10,
+				},
+			},
+		},
+	}`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `opts = ObjectOpts{
+		Name:         "foo.txt",
+		ModTime:      time.Now().UTC().Add(-10 * 24 * time.Hour), // created 10 days ago
+		Size:         0,
+		VersionID:    uuid.New().String(),
+		IsLatest:     true,
+		DeleteMarker: true,
+		NumVersions:  4,
+	}`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Now()`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.UTC()`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Add(-10 * 24 * time.Hour)`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.New()`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.String()`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `event = lc.eval(opts, time.Time{})`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.eval(opts, time.Time{})`
 $DIR/internal/bucket/lifecycle/noncurrentversion_test.go: `.n.Validate()`
 $DIR/internal/bucket/lifecycle/rule_test.go: `t.Run(fmt.Sprintf("Test %d", i+1), func(t *testing.T) {
 			var rule Rule
