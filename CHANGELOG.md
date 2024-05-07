@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.9
+
+- Add `panic` to list of ignored Go functions ([#1093](https://github.com/trailofbits/necessist/pull/1093))
+- Update `swc_core` to version 0.92 ([#1099](https://github.com/trailofbits/necessist/pull/1099))
+
 ## 0.4.8
 
 - Update `swc_core` to version 0.91 ([#1085](https://github.com/trailofbits/necessist/pull/1085))
