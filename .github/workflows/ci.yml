@@ -123,7 +123,7 @@ jobs:
       - name: Test
         run: |
           if [[ '${{ matrix.test }}' != 'other' ]]; then
-            cargo test -p necessist --test ${{ matrix.test }} --features=strict -- --nocapture
+            cargo test -p necessist --test ${{ matrix.test }} -- --nocapture
           else
             cargo test -p necessist --test general
             cargo test -p necessist-core

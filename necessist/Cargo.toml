@@ -43,7 +43,6 @@ walkdir = "2.5"
 [features]
 default = []
 dogfood = []
-strict = []
 
 [lints]
 workspace = true

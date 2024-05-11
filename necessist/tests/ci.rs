@@ -355,7 +355,7 @@ static MUTEX: Mutex<()> = Mutex::new(());
 fn preserves_cleanliness(test_name: &str, f: impl FnOnce()) {
     let _lock = MUTEX.lock().unwrap();
 
-    if cfg!(not(feature = "strict")) && dirty().is_some() {
+    if var("CI").is_err() && dirty().is_some() {
         #[allow(clippy::explicit_write)]
         writeln!(
             stderr(),
