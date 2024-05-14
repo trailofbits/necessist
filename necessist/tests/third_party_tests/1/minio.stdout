@@ -1205,6 +1205,30 @@ $DIR/cmd/data-scanner_test.go: `.Wait()`
 $DIR/cmd/data-scanner_test.go: `.String()`
 $DIR/cmd/data-scanner_test.go: `.String()`
 $DIR/cmd/data-scanner_test.go: `.String()`
+$DIR/cmd/data-scanner_test.go: `.Now()`
+$DIR/cmd/data-scanner_test.go: `.Add(-31 * 24 * time.Hour)`
+$DIR/cmd/data-scanner_test.go: `.New()`
+$DIR/cmd/data-scanner_test.go: `.String()`
+$DIR/cmd/data-scanner_test.go: `.Now()`
+$DIR/cmd/data-scanner_test.go: `.Add(-61 * 24 * time.Hour)`
+$DIR/cmd/data-scanner_test.go: `.New()`
+$DIR/cmd/data-scanner_test.go: `.String()`
+$DIR/cmd/data-scanner_test.go: `.ParseLifecycleConfig(strings.NewReader(deleteAllILM))`
+$DIR/cmd/data-scanner_test.go: `.NewReader(deleteAllILM)`
+$DIR/cmd/data-scanner_test.go: `.ParseLifecycleConfig(strings.NewReader(delMarkerILM))`
+$DIR/cmd/data-scanner_test.go: `.NewReader(delMarkerILM)`
+$DIR/cmd/data-scanner_test.go: `t.Run(fmt.Sprintf("TestEvalAction-%d", i), func(t *testing.T) {
+			if got := evalActionFromLifecycle(context.TODO(), test.ilm, test.retention, nil, test.obj); got.Action != test.want {
+				t.Fatalf("Expected %v but got %v", test.want, got)
+			}
+		})`
+$DIR/cmd/data-scanner_test.go: `.Run(fmt.Sprintf("TestEvalAction-%d", i), func(t *testing.T) {
+			if got := evalActionFromLifecycle(context.TODO(), test.ilm, test.retention, nil, test.obj); got.Action != test.want {
+				t.Fatalf("Expected %v but got %v", test.want, got)
+			}
+		})`
+$DIR/cmd/data-scanner_test.go: `.Sprintf("TestEvalAction-%d", i)`
+$DIR/cmd/data-scanner_test.go: `.TODO()`
 $DIR/cmd/data-usage-cache_gen_test.go: `.MarshalMsg(nil)`
 $DIR/cmd/data-usage-cache_gen_test.go: `.UnmarshalMsg(bts)`
 $DIR/cmd/data-usage-cache_gen_test.go: `left, err = msgp.Skip(bts)`
@@ -3514,7 +3538,11 @@ $DIR/cmd/erasure-healing_test.go: `.Background()`
 $DIR/cmd/erasure-healing_test.go: `.getDisks()`
 $DIR/cmd/erasure-healing_test.go: `z.serverPools[0].erasureDisksMu.Lock()`
 $DIR/cmd/erasure-healing_test.go: `.erasureDisksMu.Lock()`
-$DIR/cmd/erasure-healing_test.go: `erasureDisks[i] = nil`
+$DIR/cmd/erasure-healing_test.go: `.Delete(context.Background(), bucket, object, DeleteOptions{
+				Recursive: true,
+				Immediate: false,
+			})`
+$DIR/cmd/erasure-healing_test.go: `.Background()`
 $DIR/cmd/erasure-healing_test.go: `z.serverPools[0].erasureDisksMu.Unlock()`
 $DIR/cmd/erasure-healing_test.go: `.erasureDisksMu.Unlock()`
 $DIR/cmd/erasure-healing_test.go: `_, err = obj.HealObject(ctx, bucket, object, "", madmin.HealOpts{
@@ -7950,7 +7978,7 @@ $DIR/cmd/test-utils_test.go: `globalIsDistErasure = false`
 $DIR/cmd/test-utils_test.go: `color.Output = io.Discard`
 $DIR/cmd/test-utils_test.go: `logger.DisableErrorLog = true`
 $DIR/cmd/test-utils_test.go: `setMaxResources(nil)`
-$DIR/cmd/test-utils_test.go: `globalConsoleSys = NewConsoleLogger(context.Background())`
+$DIR/cmd/test-utils_test.go: `globalConsoleSys = NewConsoleLogger(context.Background(), io.Discard)`
 $DIR/cmd/test-utils_test.go: `.Background()`
 $DIR/cmd/test-utils_test.go: `globalInternodeTransport = NewInternodeHTTPTransport(0)()`
 $DIR/cmd/test-utils_test.go: `initHelp()`
@@ -10867,12 +10895,38 @@ $DIR/internal/bucket/versioning/versioning_test.go: `.PrefixSuspended(prefix)`
 $DIR/internal/bucket/versioning/versioning_test.go: `.Validate()`
 $DIR/internal/bucket/versioning/versioning_test.go: `.PrefixSuspended(test.prefix)`
 $DIR/internal/cachevalue/cache_test.go: `cache.InitOnce(2*time.Second, Opts{},
-		func() (time.Time, error) {
+		func(ctx context.Context) (time.Time, error) {
+			return time.Now(), slowCaller(ctx)
+		},
+	)`
+$DIR/internal/cachevalue/cache_test.go: `.InitOnce(2*time.Second, Opts{},
+		func(ctx context.Context) (time.Time, error) {
+			return time.Now(), slowCaller(ctx)
+		},
+	)`
+$DIR/internal/cachevalue/cache_test.go: `.Now()`
+$DIR/internal/cachevalue/cache_test.go: `.WithCancel(context.Background())`
+$DIR/internal/cachevalue/cache_test.go: `.Background()`
+$DIR/internal/cachevalue/cache_test.go: `cancel()`
+$DIR/internal/cachevalue/cache_test.go: `.GetWithCtx(ctx)`
+$DIR/internal/cachevalue/cache_test.go: `.Is(err, context.Canceled)`
+$DIR/internal/cachevalue/cache_test.go: `ctx, cancel = context.WithCancel(context.Background())`
+$DIR/internal/cachevalue/cache_test.go: `.WithCancel(context.Background())`
+$DIR/internal/cachevalue/cache_test.go: `.Background()`
+$DIR/internal/cachevalue/cache_test.go: `.GetWithCtx(ctx)`
+$DIR/internal/cachevalue/cache_test.go: `.GetWithCtx(ctx)`
+$DIR/internal/cachevalue/cache_test.go: `.Equal(t2)`
+$DIR/internal/cachevalue/cache_test.go: `time.Sleep(3 * time.Second)`
+$DIR/internal/cachevalue/cache_test.go: `.Sleep(3 * time.Second)`
+$DIR/internal/cachevalue/cache_test.go: `.GetWithCtx(ctx)`
+$DIR/internal/cachevalue/cache_test.go: `.Equal(t3)`
+$DIR/internal/cachevalue/cache_test.go: `cache.InitOnce(2*time.Second, Opts{},
+		func(ctx context.Context) (time.Time, error) {
 			return time.Now(), nil
 		},
 	)`
 $DIR/internal/cachevalue/cache_test.go: `.InitOnce(2*time.Second, Opts{},
-		func() (time.Time, error) {
+		func(ctx context.Context) (time.Time, error) {
 			return time.Now(), nil
 		},
 	)`
@@ -11003,7 +11057,7 @@ $DIR/internal/config/config_test.go: `.Run(test.name, func(t *testing.T) {
 		})`
 $DIR/internal/config/config_test.go: `.MatchString(test.name)`
 $DIR/internal/config/crypto_test.go: `.DecodeString("ddedadb867afa3f73bd33c25499a723ed7f9f51172ee7b1b679e08dc795debcc")`
-$DIR/internal/config/crypto_test.go: `.New("my-key", key)`
+$DIR/internal/config/crypto_test.go: `.NewBuiltin("my-key", key)`
 $DIR/internal/config/crypto_test.go: `.NewReader(test.Data)`
 $DIR/internal/config/crypto_test.go: `.ReadAll(ciphertext)`
 $DIR/internal/config/crypto_test.go: `.NewReader(data)`
@@ -13023,17 +13077,29 @@ $DIR/internal/jwt/parser_test.go: `data.tokenString = mapClaimsToken(claims)`
 $DIR/internal/jwt/parser_test.go: `err = ParseWithClaims(data.tokenString, &MapClaims{}, data.keyfunc)`
 $DIR/internal/jwt/parser_test.go: `data.tokenString = standardClaimsToken(claims)`
 $DIR/internal/jwt/parser_test.go: `err = ParseWithStandardClaims(data.tokenString, &StandardClaims{}, []byte("HelloSecret"))`
+$DIR/internal/kms/config_test.go: `os.Clearenv()`
+$DIR/internal/kms/config_test.go: `.Clearenv()`
+$DIR/internal/kms/config_test.go: `os.Setenv(k, v)`
+$DIR/internal/kms/config_test.go: `.Setenv(k, v)`
 $DIR/internal/kms/dek_test.go: `.Key.MarshalText()`
 $DIR/internal/kms/dek_test.go: `.UnmarshalText(text)`
 $DIR/internal/kms/dek_test.go: `.Equal(key.Ciphertext, test.Key.Ciphertext)`
-$DIR/internal/kms/single-key_test.go: `.GenerateKey(context.Background(), "my-key", Context{})`
-$DIR/internal/kms/single-key_test.go: `.Background()`
-$DIR/internal/kms/single-key_test.go: `.DecryptKey(key.KeyID, key.Ciphertext, Context{})`
-$DIR/internal/kms/single-key_test.go: `.Equal(key.Plaintext, plaintext)`
-$DIR/internal/kms/single-key_test.go: `.StdEncoding.DecodeString(test.Plaintext)`
-$DIR/internal/kms/single-key_test.go: `.StdEncoding.DecodeString(test.Ciphertext)`
-$DIR/internal/kms/single-key_test.go: `.DecryptKey(test.KeyID, ciphertext, test.Context)`
-$DIR/internal/kms/single-key_test.go: `.Equal(plaintext, dataKey)`
+$DIR/internal/kms/secret-key_test.go: `.GenerateKey(context.Background(), &GenerateKeyRequest{Name: "my-key"})`
+$DIR/internal/kms/secret-key_test.go: `.Background()`
+$DIR/internal/kms/secret-key_test.go: `.Decrypt(context.TODO(), &DecryptRequest{
+		Name:       key.KeyID,
+		Ciphertext: key.Ciphertext,
+	})`
+$DIR/internal/kms/secret-key_test.go: `.TODO()`
+$DIR/internal/kms/secret-key_test.go: `.Equal(key.Plaintext, plaintext)`
+$DIR/internal/kms/secret-key_test.go: `.StdEncoding.DecodeString(test.Plaintext)`
+$DIR/internal/kms/secret-key_test.go: `.Decrypt(context.TODO(), &DecryptRequest{
+			Name:           test.KeyID,
+			Ciphertext:     []byte(test.Ciphertext),
+			AssociatedData: test.Context,
+		})`
+$DIR/internal/kms/secret-key_test.go: `.TODO()`
+$DIR/internal/kms/secret-key_test.go: `.Equal(plaintext, dataKey)`
 $DIR/internal/lock/lock_test.go: `.CreateTemp("", "lock")`
 $DIR/internal/lock/lock_test.go: `err = os.Remove(f.Name())`
 $DIR/internal/lock/lock_test.go: `.Remove(f.Name())`
