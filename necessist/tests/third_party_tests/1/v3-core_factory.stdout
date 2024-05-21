@@ -1,27 +1,20 @@
 24 candidates in 1 test file
 $DIR/test/UniswapV3Factory.spec.ts: dry running
-$DIR/test/UniswapV3Factory.spec.ts: mutilating
-$DIR/test/UniswapV3Factory.spec.ts: `await factory.createPool(TEST_ADDRESSES[0], TEST_ADDRESSES[1], FeeAmount.MEDIUM)` failed
-$DIR/test/UniswapV3Factory.spec.ts: `.createPool(TEST_ADDRESSES[0], TEST_ADDRESSES[1], FeeAmount.MEDIUM)` failed
-$DIR/test/UniswapV3Factory.spec.ts: `.createPool(TEST_ADDRESSES[0], TEST_ADDRESSES[0], FeeAmount.LOW)` failed
-$DIR/test/UniswapV3Factory.spec.ts: `.createPool(TEST_ADDRESSES[0], TEST_ADDRESSES[1], 250)` failed
-$DIR/test/UniswapV3Factory.spec.ts: `.createPool(TEST_ADDRESSES[0], TEST_ADDRESSES[1], FeeAmount.MEDIUM)` failed
-$DIR/test/UniswapV3Factory.spec.ts: `.connect(other)` failed
-$DIR/test/UniswapV3Factory.spec.ts: `.setOwner(wallet.address)` failed
-$DIR/test/UniswapV3Factory.spec.ts: `await factory.setOwner(other.address)` failed
-$DIR/test/UniswapV3Factory.spec.ts: `.setOwner(other.address)` failed
-$DIR/test/UniswapV3Factory.spec.ts: `await factory.setOwner(other.address)` failed
-$DIR/test/UniswapV3Factory.spec.ts: `.setOwner(other.address)` failed
-$DIR/test/UniswapV3Factory.spec.ts: `.setOwner(wallet.address)` failed
-$DIR/test/UniswapV3Factory.spec.ts: `.connect(other)` failed
-$DIR/test/UniswapV3Factory.spec.ts: `.enableFeeAmount(100, 2)` failed
-$DIR/test/UniswapV3Factory.spec.ts: `.enableFeeAmount(1000000, 10)` failed
-$DIR/test/UniswapV3Factory.spec.ts: `.enableFeeAmount(500, 0)` failed
-$DIR/test/UniswapV3Factory.spec.ts: `.enableFeeAmount(500, 16834)` failed
-$DIR/test/UniswapV3Factory.spec.ts: `await factory.enableFeeAmount(100, 5)` failed
-$DIR/test/UniswapV3Factory.spec.ts: `.enableFeeAmount(100, 5)` failed
-$DIR/test/UniswapV3Factory.spec.ts: `.enableFeeAmount(100, 10)` failed
-$DIR/test/UniswapV3Factory.spec.ts: `await factory.enableFeeAmount(100, 5)` failed
-$DIR/test/UniswapV3Factory.spec.ts: `.enableFeeAmount(100, 5)` failed
-$DIR/test/UniswapV3Factory.spec.ts: `await factory.enableFeeAmount(250, 15)` failed
-$DIR/test/UniswapV3Factory.spec.ts: `.enableFeeAmount(250, 15)` failed
+$DIR/test/UniswapV3Factory.spec.ts: Warning: dry run failed: OutputError {
+    cmd: None,
+    stdin: None,
+    cause: Expected(
+        Output {
+            output: Output {
+                status: ExitStatus(
+                    unix_wait_status(
+                        256,
+                    ),
+                ),
+                stdout: "yarn install v1.22.22\n[1/5] Validating package.json...\n[2/5] Resolving packages...\n[3/5] Fetching packages...\ninfo Visit https://yarnpkg.com/en/docs/cli/install for documentation about this command.\n",
+                stderr: "warning package.json: License should be a valid SPDX license expression\nwarning @uniswap/v3-core@1.0.1: License should be a valid SPDX license expression\nwarning @uniswap/v3-core@1.0.1: License should be a valid SPDX license expression\nerror Error: https://registry.yarnpkg.com/object-inspect/-/object-inspect-1.9.0.tgz: Request failed \"500 Internal Server Error\"\n    at ResponseError.ExtendableBuiltin (/usr/local/lib/node_modules/yarn/lib/cli.js:696:66)\n    at new ResponseError (/usr/local/lib/node_modules/yarn/lib/cli.js:802:124)\n    at Request.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:66750:16)\n    at Request.emit (node:events:513:28)\n    at Request.module.exports.Request.onRequestResponse (/usr/local/lib/node_modules/yarn/lib/cli.js:142287:10)\n    at ClientRequest.emit (node:events:513:28)\n    at HTTPParser.parserOnIncomingClient (node:_http_client:693:27)\n    at HTTPParser.parserOnHeadersComplete (node:_http_common:128:17)\n    at TLSSocket.socketOnData (node:_http_client:534:22)\n    at TLSSocket.emit (node:events:513:28)\n",
+            },
+        },
+    ),
+}
+Silence this warning with: --allow dry-run-failed
