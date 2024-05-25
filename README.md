@@ -4,6 +4,8 @@ Run tests with statements and method calls removed to help identify broken tests
 
 Necessist currently supports Anchor (TS), Foundry, Go, Hardhat (TS), and Rust.
 
+A paper on Necessist ([Test Harness Mutilation]) will appear in Mutation 2024. ([preprint])
+
 **Contents**
 
 - [Installation](#installation)
@@ -439,7 +441,7 @@ We reserve the right to change what syntax Necessist ignores by default, and to 
 
 ## References
 
-- Groce, A., Ahmed, I., Jensen, C., McKenney, P.E., Holmes, J.: How verified (or tested) is my code? Falsification-driven verification and testing. Autom. Softw. Eng. **25**, 917–960 (2018). A [preprint] is available. See Section 2.3.
+- Groce, A., Ahmed, I., Jensen, C., McKenney, P.E., Holmes, J.: How verified (or tested) is my code? Falsification-driven verification and testing. Autom. Softw. Eng. **25**, 917–960 (2018). A [preprint is available]. See Section 2.3.
 
 ## License
 
@@ -448,6 +450,7 @@ Necessist is licensed and distributed under the AGPLv3 license. [Contact us](mai
 [Aldrich 2013]: https://www.cs.cmu.edu/~aldrich/courses/15-819O-13sp/resources/hoare-logic.pdf
 [Chainlink]: https://github.com/smartcontractkit/chainlink/blob/a39e54e157b57d5fc3dba0aed6ac9d58382953b2/contracts/test/v0.7/Operator.test.ts#L1725-L1728
 [Configuration files]: #configuration-files
+[Test Harness Mutilation]: https://conf.researchr.org/details/icst-2024/mutation-2024-papers/4/Test-Harness-Mutilation
 [`assert_cmd::assert::Assert::success`]: https://docs.rs/assert_cmd/latest/assert_cmd/assert/struct.Assert.html#method.success
 [`glob`]: https://man7.org/linux/man-pages/man7/glob.7.html
 [`rust-openssl`]: https://github.com/sfackler/rust-openssl
@@ -471,7 +474,8 @@ Necessist is licensed and distributed under the AGPLv3 license. [Contact us](mai
 [paths]: #paths
 [patterns]: #patterns
 [predicate transformer semantics]: https://en.wikipedia.org/wiki/Predicate_transformer_semantics
-[preprint]: https://agroce.github.io/asej18.pdf
+[preprint is available]: https://agroce.github.io/asej18.pdf
+[preprint]: docs/test_harness_mutilation.pdf
 [sqlitebrowser]: https://sqlitebrowser.org/
 [toml]: https://toml.io/en/
 [weakest precondition]: https://en.wikipedia.org/wiki/Predicate_transformer_semantics#Weakest_preconditions
