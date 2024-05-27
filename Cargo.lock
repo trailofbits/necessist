@@ -146,6 +146,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0c4b4d0bd25bd0b74681c0ad21497610ce1b7c91b1022cd21c80c6fbdd9476b0"
 
 [[package]]
+name = "automod"
+version = "1.0.14"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "edf3ee19dbc0a46d740f6f0926bde8c50f02bdbc7b536842da28f6ac56513a8b"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
 name = "backtrace"
 version = "0.3.71"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1652,9 +1663,9 @@ dependencies = [
 
 [[package]]
 name = "snapbox"
-version = "0.5.9"
+version = "0.6.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8ac441e1ecf678f68423d47f376d53fabce1afba92c8f68e31508eb27df8562a"
+checksum = "a324e0f697e58f2ce2d7adc252625d5831e61545bbe523f2bebb1b7f796b768e"
 dependencies = [
  "anstream",
  "anstyle",
@@ -1674,9 +1685,9 @@ dependencies = [
 
 [[package]]
 name = "snapbox-macros"
-version = "0.3.8"
+version = "0.3.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e1c4b838b05d15ab22754068cb73500b2f3b07bf09d310e15b27f88160f1de40"
+checksum = "b1f4c14672714436c09254801c934b203196a51182a5107fb76591c7cc56424d"
 dependencies = [
  "anstream",
 ]
@@ -2202,10 +2213,11 @@ dependencies = [
 
 [[package]]
 name = "trycmd"
-version = "0.15.1"
+version = "0.15.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d14c6930faf7c6c4942ce17daa6f38d659d2ebf2b579a56b6926707038eb37b0"
+checksum = "59709bd8eccada6a3fded26d22a7f2dcee406c18d3bd7ad2605ca3eeb8f6f6ec"
 dependencies = [
+ "automod",
  "glob",
  "humantime",
  "humantime-serde",
