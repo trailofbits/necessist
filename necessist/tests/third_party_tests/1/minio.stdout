@@ -232,12 +232,14 @@ $DIR/cmd/auth-handler_test.go: `.Init(ctx, objLayer, globalEtcdClient, 2*time.Se
 $DIR/cmd/auth-handler_test.go: `.NewReader([]byte("hello"))`
 $DIR/cmd/auth-handler_test.go: `.NewReader([]byte("hello"))`
 $DIR/cmd/auth-handler_test.go: `.NewReader([]byte("hello"))`
+$DIR/cmd/auth-handler_test.go: `.Region()`
 $DIR/cmd/auth-handler_test.go: `.ReadAll(testCase.req.Body)`
 $DIR/cmd/auth-handler_test.go: `.WithCancel(context.Background())`
 $DIR/cmd/auth-handler_test.go: `.Background()`
 $DIR/cmd/auth-handler_test.go: `.RemoveAll(fsDir)`
 $DIR/cmd/auth-handler_test.go: `.CreateCredentials("myuser", "mypassword")`
 $DIR/cmd/auth-handler_test.go: `globalActiveCred = creds`
+$DIR/cmd/auth-handler_test.go: `.Region()`
 $DIR/cmd/auth-handler_test.go: `.WithCancel(context.Background())`
 $DIR/cmd/auth-handler_test.go: `.Background()`
 $DIR/cmd/auth-handler_test.go: `.RemoveAll(fsDir)`
@@ -1112,12 +1114,14 @@ $DIR/cmd/common-main_test.go: `.DeepEqual(ekvs, testCase.expectedEkvs)`
 $DIR/cmd/config-current_test.go: `.WithCancel(context.Background())`
 $DIR/cmd/config-current_test.go: `.Background()`
 $DIR/cmd/config-current_test.go: `.RemoveAll(fsDir)`
+$DIR/cmd/config-current_test.go: `.Region()`
 $DIR/cmd/config-current_test.go: `config.SetRegion(globalServerConfig, "us-west-1")`
 $DIR/cmd/config-current_test.go: `.SetRegion(globalServerConfig, "us-west-1")`
 $DIR/cmd/config-current_test.go: `.LookupSite(
 		globalServerConfig[config.SiteSubSys][config.Default],
 		globalServerConfig[config.RegionSubSys][config.Default],
 	)`
+$DIR/cmd/config-current_test.go: `.Region()`
 $DIR/cmd/config-current_test.go: `.Background()`
 $DIR/cmd/config-encrypted_test.go: `.EncryptData(cred1.String(), data)`
 $DIR/cmd/config-encrypted_test.go: `.String()`
@@ -3917,10 +3921,15 @@ $DIR/cmd/erasure-metadata_test.go: `fis[i].Erasure.Index = i + 1`
 $DIR/cmd/erasure-metadata_test.go: `fis[i].SuccessorModTime = succModTimes[i]`
 $DIR/cmd/erasure-metadata_test.go: `fis[i].IsLatest = succModTimes[i].IsZero()`
 $DIR/cmd/erasure-metadata_test.go: `.IsZero()`
+$DIR/cmd/erasure-metadata_test.go: `fis[i].NumVersions = numVersions[i]`
 $DIR/cmd/erasure-metadata_test.go: `quorum--`
 $DIR/cmd/erasure-metadata_test.go: `.Date(2023, time.August, 25, 0, 0, 0, 0, time.UTC)`
 $DIR/cmd/erasure-metadata_test.go: `succModTimesInQuorum[i] = commonSuccModTime`
+$DIR/cmd/erasure-metadata_test.go: `numVersionsInQuorum[i] = commonNumVersions`
 $DIR/cmd/erasure-metadata_test.go: `succModTimesNoQuorum[i] = commonSuccModTime`
+$DIR/cmd/erasure-metadata_test.go: `numVersionsNoQuorum[i] = commonNumVersions`
+$DIR/cmd/erasure-metadata_test.go: `.Unix(1603863445, 0)`
+$DIR/cmd/erasure-metadata_test.go: `.Unix(1603863445, 0)`
 $DIR/cmd/erasure-metadata_test.go: `.Unix(1603863445, 0)`
 $DIR/cmd/erasure-metadata_test.go: `.Unix(1603863445, 0)`
 $DIR/cmd/erasure-metadata_test.go: `.Unix(1603863445, 0)`
@@ -3941,6 +3950,11 @@ $DIR/cmd/erasure-metadata_test.go: `t.Run("", func(t *testing.T) {
 					t.Errorf("Expected IsLatest to be %v but got %v", test.expectedIsLatest, fi.IsLatest)
 				}
 			}
+			if test.numVersions != nil && test.expectedNumVersions > 0 {
+				if test.expectedNumVersions != fi.NumVersions {
+					t.Errorf("Expected Numversions to be %d but got %d", test.expectedNumVersions, fi.NumVersions)
+				}
+			}
 		})`
 $DIR/cmd/erasure-metadata_test.go: `.Run("", func(t *testing.T) {
 			fi, err := findFileInfoInQuorum(context.Background(), test.fis, test.modTime, "", test.expectedQuorum)
@@ -3955,6 +3969,11 @@ $DIR/cmd/erasure-metadata_test.go: `.Run("", func(t *testing.T) {
 				}
 				if test.expectedIsLatest != fi.IsLatest {
 					t.Errorf("Expected IsLatest to be %v but got %v", test.expectedIsLatest, fi.IsLatest)
+				}
+			}
+			if test.numVersions != nil && test.expectedNumVersions > 0 {
+				if test.expectedNumVersions != fi.NumVersions {
+					t.Errorf("Expected Numversions to be %d but got %d", test.expectedNumVersions, fi.NumVersions)
 				}
 			}
 		})`
@@ -6779,6 +6798,7 @@ $DIR/cmd/signature-v4_test.go: `.Format(iso8601Format)`
 $DIR/cmd/signature-v4_test.go: `.WithCancel(context.Background())`
 $DIR/cmd/signature-v4_test.go: `.Background()`
 $DIR/cmd/signature-v4_test.go: `.RemoveAll(fsDir)`
+$DIR/cmd/signature-v4_test.go: `.Region()`
 $DIR/cmd/signature-v4_test.go: `.Format(iso8601Format)`
 $DIR/cmd/signature-v4_test.go: `.Sprintf(credentialTemplate, "Z7IXGOO6BZ0REAN1Q26I", now.Format(yyyymmdd), "us-west-1")`
 $DIR/cmd/signature-v4_test.go: `.Format(yyyymmdd)`
@@ -7374,6 +7394,8 @@ $DIR/cmd/sts-handlers_test.go: `t.Run(
 				suite.TestLDAPSTSServiceAccounts(c)
 				suite.TestLDAPSTSServiceAccountsWithUsername(c)
 				suite.TestLDAPSTSServiceAccountsWithGroups(c)
+				suite.TestLDAPAttributesLookup(c)
+				suite.TestLDAPCyrillicUser(c)
 				suite.TearDownSuite(c)
 			},
 		)`
@@ -7395,6 +7417,8 @@ $DIR/cmd/sts-handlers_test.go: `.Run(
 				suite.TestLDAPSTSServiceAccounts(c)
 				suite.TestLDAPSTSServiceAccountsWithUsername(c)
 				suite.TestLDAPSTSServiceAccountsWithGroups(c)
+				suite.TestLDAPAttributesLookup(c)
+				suite.TestLDAPCyrillicUser(c)
 				suite.TearDownSuite(c)
 			},
 		)`
@@ -7414,6 +7438,10 @@ $DIR/cmd/sts-handlers_test.go: `suite.TestLDAPSTSServiceAccountsWithUsername(c)`
 $DIR/cmd/sts-handlers_test.go: `.TestLDAPSTSServiceAccountsWithUsername(c)`
 $DIR/cmd/sts-handlers_test.go: `suite.TestLDAPSTSServiceAccountsWithGroups(c)`
 $DIR/cmd/sts-handlers_test.go: `.TestLDAPSTSServiceAccountsWithGroups(c)`
+$DIR/cmd/sts-handlers_test.go: `suite.TestLDAPAttributesLookup(c)`
+$DIR/cmd/sts-handlers_test.go: `.TestLDAPAttributesLookup(c)`
+$DIR/cmd/sts-handlers_test.go: `suite.TestLDAPCyrillicUser(c)`
+$DIR/cmd/sts-handlers_test.go: `.TestLDAPCyrillicUser(c)`
 $DIR/cmd/sts-handlers_test.go: `suite.TearDownSuite(c)`
 $DIR/cmd/sts-handlers_test.go: `.TearDownSuite(c)`
 $DIR/cmd/sts-handlers_test.go: `t.Run(
@@ -10191,7 +10219,7 @@ $DIR/internal/bucket/lifecycle/lifecycle_test.go: `t.Run(fmt.Sprintf("Test %d", 
 				// no need to continue this test.
 				return
 			}
-			err = lc.Validate()
+			err = lc.Validate(tc.lr)
 			if err != tc.expectedValidationErr {
 				t.Fatalf("%d: Expected %v during validation but got %v", i+1, tc.expectedValidationErr, err)
 			}
@@ -10206,15 +10234,15 @@ $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Run(fmt.Sprintf("Test %d", i
 				// no need to continue this test.
 				return
 			}
-			err = lc.Validate()
+			err = lc.Validate(tc.lr)
 			if err != tc.expectedValidationErr {
 				t.Fatalf("%d: Expected %v during validation but got %v", i+1, tc.expectedValidationErr, err)
 			}
 		})`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Sprintf("Test %d", i+1)`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.NewReader([]byte(tc.inputConfig))`
-$DIR/internal/bucket/lifecycle/lifecycle_test.go: `err = lc.Validate()`
-$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Validate()`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `err = lc.Validate(tc.lr)`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Validate(tc.lr)`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Date(2019, time.April, 20, 0, 0, 0, 0, time.UTC)`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.MarshalIndent(&lc, "", "\t")`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `err = xml.Unmarshal(b, &lc1)`
@@ -10491,7 +10519,7 @@ $DIR/internal/bucket/lifecycle/lifecycle_test.go: `t.Run(fmt.Sprintf("Test_%d", 
 				t.Fatalf("Got unexpected error: %v", err)
 			}
 			// To ensure input lifecycle configurations are valid
-			if err := lc.Validate(); err != nil {
+			if err := lc.Validate(lock.Retention{}); err != nil {
 				t.Fatalf("Invalid test case: %d %v", i+1, err)
 			}
 			if got := lc.HasActiveRules(tc.prefix); got != tc.want {
@@ -10504,7 +10532,7 @@ $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Run(fmt.Sprintf("Test_%d", i
 				t.Fatalf("Got unexpected error: %v", err)
 			}
 			// To ensure input lifecycle configurations are valid
-			if err := lc.Validate(); err != nil {
+			if err := lc.Validate(lock.Retention{}); err != nil {
 				t.Fatalf("Invalid test case: %d %v", i+1, err)
 			}
 			if got := lc.HasActiveRules(tc.prefix); got != tc.want {
@@ -10513,7 +10541,7 @@ $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Run(fmt.Sprintf("Test_%d", i
 		})`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Sprintf("Test_%d", i+1)`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.NewReader([]byte(tc.inputConfig))`
-$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Validate()`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Validate(lock.Retention{})`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.HasActiveRules(tc.prefix)`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.NewRecorder()`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `lc.SetPredictionHeaders(w, tc.obj)`
@@ -10615,7 +10643,7 @@ $DIR/internal/bucket/lifecycle/lifecycle_test.go: `tc.lc.SetPredictionHeaders(w,
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.lc.SetPredictionHeaders(w, tc.opts)`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Header()`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `t.Run(fmt.Sprintf("test-%d", i+1), func(t *testing.T) {
-			if err := tc.lc.Validate(); err != nil {
+			if err := tc.lc.Validate(lock.Retention{}); err != nil {
 				t.Fatalf("Lifecycle validation failed - %v", err)
 			}
 			rules := tc.lc.FilterRules(tc.opts)
@@ -10627,7 +10655,7 @@ $DIR/internal/bucket/lifecycle/lifecycle_test.go: `t.Run(fmt.Sprintf("test-%d", 
 			}
 		})`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Run(fmt.Sprintf("test-%d", i+1), func(t *testing.T) {
-			if err := tc.lc.Validate(); err != nil {
+			if err := tc.lc.Validate(lock.Retention{}); err != nil {
 				t.Fatalf("Lifecycle validation failed - %v", err)
 			}
 			rules := tc.lc.FilterRules(tc.opts)
@@ -10639,7 +10667,7 @@ $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Run(fmt.Sprintf("test-%d", i
 			}
 		})`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Sprintf("test-%d", i+1)`
-$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.lc.Validate()`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.lc.Validate(lock.Retention{})`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.lc.FilterRules(tc.opts)`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Now()`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.UTC()`
@@ -12950,6 +12978,18 @@ $DIR/internal/http/server_test.go: `.UseTLSConfig(&tls.Config{
 				GetCertificate:           testCase.certFn,
 			})`
 $DIR/internal/http/server_test.go: `.DeepEqual(server.Addrs, testCase.addrs)`
+$DIR/internal/ioutil/ioutil_test.go: `.Run(func() error {
+		time.Sleep(600 * time.Millisecond)
+		return nil
+	})`
+$DIR/internal/ioutil/ioutil_test.go: `time.Sleep(600 * time.Millisecond)`
+$DIR/internal/ioutil/ioutil_test.go: `.Sleep(600 * time.Millisecond)`
+$DIR/internal/ioutil/ioutil_test.go: `.Run(func() error {
+		time.Sleep(450 * time.Millisecond)
+		return nil
+	})`
+$DIR/internal/ioutil/ioutil_test.go: `time.Sleep(450 * time.Millisecond)`
+$DIR/internal/ioutil/ioutil_test.go: `.Sleep(450 * time.Millisecond)`
 $DIR/internal/ioutil/ioutil_test.go: `.Write([]byte("1"))`
 $DIR/internal/ioutil/ioutil_test.go: `_, err = w.Write([]byte("1"))`
 $DIR/internal/ioutil/ioutil_test.go: `.Write([]byte("1"))`
@@ -13279,6 +13319,504 @@ $DIR/internal/rest/client_test.go: `.Run(tt.name, func(t *testing.T) {
 		})`
 $DIR/internal/rest/client_test.go: `.As(n, &netErrInterface)`
 $DIR/internal/rest/client_test.go: `.As(n, &tt.target)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.IsEmpty()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.IsFull()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Length()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Free()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write([]byte(strings.Repeat("abcd", 4)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Repeat("abcd", 4)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Length()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Free()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Equal(rb.Bytes(nil), []byte(strings.Repeat("abcd", 4)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Bytes(nil)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Repeat("abcd", 4)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.IsEmpty()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.IsFull()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `n, err = rb.Write([]byte(strings.Repeat("abcd", 12)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write([]byte(strings.Repeat("abcd", 12)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Repeat("abcd", 12)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Length()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Free()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Equal(rb.Bytes(nil), []byte(strings.Repeat("abcd", 16)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Bytes(nil)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Repeat("abcd", 16)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.IsEmpty()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.IsFull()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `n, err = rb.Write([]byte(strings.Repeat("abcd", 1)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write([]byte(strings.Repeat("abcd", 1)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Repeat("abcd", 1)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Length()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Free()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.IsEmpty()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.IsFull()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `rb.Reset()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Reset()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `n, err = rb.Write([]byte(strings.Repeat("abcd", 20)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write([]byte(strings.Repeat("abcd", 20)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Repeat("abcd", 20)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Length()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Free()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.IsEmpty()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.IsFull()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Equal(rb.Bytes(nil), []byte(strings.Repeat("abcd", 16)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Bytes(nil)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Repeat("abcd", 16)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `rb.Reset()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Reset()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `n, err = rb.Write([]byte(strings.Repeat("abcd", 2)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write([]byte(strings.Repeat("abcd", 2)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Repeat("abcd", 2)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Length()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Free()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `rb.Read(buf)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Read(buf)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Length()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `rb.Write([]byte(strings.Repeat("abcd", 15)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write([]byte(strings.Repeat("abcd", 15)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Repeat("abcd", 15)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Equal(rb.Bytes(nil), []byte("bcd"+strings.Repeat("abcd", 15)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Bytes(nil)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Repeat("abcd", 15)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `rb.Reset()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Reset()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `n, err = rb.Write([]byte(strings.Repeat("abcd", 16)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write([]byte(strings.Repeat("abcd", 16)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Repeat("abcd", 16)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Free()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `buf = make([]byte, 16)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `rb.Read(buf)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Read(buf)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `n, err = rb.Write([]byte(strings.Repeat("1234", 4)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write([]byte(strings.Repeat("1234", 4)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Repeat("1234", 4)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Free()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Equal(append(buf, rb.Bytes(nil)...), []byte(strings.Repeat("abcd", 16)+strings.Repeat("1234", 4)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Bytes(nil)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Repeat("abcd", 16)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Repeat("1234", 4)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.SetBlocking(true)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.IsEmpty()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.IsFull()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Length()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Free()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write([]byte(strings.Repeat("abcd", 4)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Repeat("abcd", 4)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Length()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Free()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Equal(rb.Bytes(nil), []byte(strings.Repeat("abcd", 4)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Bytes(nil)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Repeat("abcd", 4)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.IsEmpty()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.IsFull()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `n, err = rb.Write([]byte(strings.Repeat("abcd", 12)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write([]byte(strings.Repeat("abcd", 12)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Repeat("abcd", 12)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Length()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Free()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Equal(rb.Bytes(nil), []byte(strings.Repeat("abcd", 16)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Bytes(nil)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Repeat("abcd", 16)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.IsEmpty()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.IsFull()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `rb.Reset()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Reset()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `n, err = rb.Write([]byte(strings.Repeat("abcd", 2)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write([]byte(strings.Repeat("abcd", 2)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Repeat("abcd", 2)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Length()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Free()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `rb.Read(buf)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Read(buf)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Length()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `rb.Write([]byte(strings.Repeat("abcd", 15)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write([]byte(strings.Repeat("abcd", 15)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Repeat("abcd", 15)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Equal(rb.Bytes(nil), []byte("bcd"+strings.Repeat("abcd", 15)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Bytes(nil)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Repeat("abcd", 15)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `rb.Reset()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Reset()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `n, err = rb.Write([]byte(strings.Repeat("abcd", 16)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write([]byte(strings.Repeat("abcd", 16)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Repeat("abcd", 16)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Free()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `buf = make([]byte, 16)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `rb.Read(buf)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Read(buf)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `n, err = rb.Write([]byte(strings.Repeat("1234", 4)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write([]byte(strings.Repeat("1234", 4)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Repeat("1234", 4)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Free()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Equal(append(buf, rb.Bytes(nil)...), []byte(strings.Repeat("abcd", 16)+strings.Repeat("1234", 4)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Bytes(nil)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Repeat("abcd", 16)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Repeat("1234", 4)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.IsEmpty()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.IsFull()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Length()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Free()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Read(buf)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Length()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Free()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `rb.Write([]byte(strings.Repeat("abcd", 4)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write([]byte(strings.Repeat("abcd", 4)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Repeat("abcd", 4)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `n, err = rb.Read(buf)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Read(buf)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Length()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Free()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `rb.Write([]byte(strings.Repeat("abcd", 20)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write([]byte(strings.Repeat("abcd", 20)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Repeat("abcd", 20)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `n, err = rb.Read(buf)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Read(buf)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Length()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Free()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `const debug = false`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.NewIEEE()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.NewIEEE()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Writer(readHash)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Writer(wroteHash)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `read = io.MultiWriter(read, &readBuf)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.MultiWriter(read, &readBuf)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `wrote = io.MultiWriter(wrote, &wroteBuf)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.MultiWriter(wrote, &wroteBuf)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `fmt.Println(args...)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Println(args...)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `const maxSleep = int(1 * time.Millisecond)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Short()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.SetBlocking(true)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `wg.Add(1)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Add(1)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.New(rand.NewSource(1))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.NewSource(1)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Done()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.CloseWithError(readErr)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Read(buf[:readRng.Intn(len(buf))])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Intn(len(buf))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `readBytes += n`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `read.Write(buf[:n])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write(buf[:n])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `debugln("READ 1\t", n, readBytes)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `readErr = err`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.ReadByte()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `readErr = err`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `readBytes++`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `read.Write([]byte{b})`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write([]byte{b})`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `debugln("READ 2\t", 1, readBytes)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `n, err = rb.TryRead(buf[:readRng.Intn(len(buf))])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.TryRead(buf[:readRng.Intn(len(buf))])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Intn(len(buf))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `readBytes += n`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `read.Write(buf[:n])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write(buf[:n])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `debugln("READ 3\t", n, readBytes)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `readErr = err`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Intn(20)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `time.Sleep(time.Duration(readRng.Intn(maxSleep)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Sleep(time.Duration(readRng.Intn(maxSleep)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Duration(readRng.Intn(maxSleep))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Intn(maxSleep)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.New(rand.NewSource(2))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.NewSource(2)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `writeRng.Read(buf)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Read(buf)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write(buf[:writeRng.Intn(len(buf))])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Intn(len(buf))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `wroteBytes += n`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `wrote.Write(buf[:n])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write(buf[:n])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `debugln("WRITE 1\t", n, wroteBytes)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `n, err = rb.WriteString(string(buf[:writeRng.Intn(len(buf))]))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.WriteString(string(buf[:writeRng.Intn(len(buf))]))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Intn(len(buf))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `wroteBytes += n`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `wrote.Write(buf[:n])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write(buf[:n])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `debugln("WRITE 2\t", writeRng.Intn(len(buf)), wroteBytes)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Intn(len(buf))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `err = rb.WriteByte(buf[0])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.WriteByte(buf[0])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `wroteBytes++`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `wrote.Write(buf[:1])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write(buf[:1])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `debugln("WRITE 3\t", 1, wroteBytes)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `n, err = rb.TryWrite(buf[:writeRng.Intn(len(buf))])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.TryWrite(buf[:writeRng.Intn(len(buf))])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Intn(len(buf))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `wroteBytes += n`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `wrote.Write(buf[:n])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write(buf[:n])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `debugln("WRITE 4\t", n, wroteBytes)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `err = rb.TryWriteByte(buf[0])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.TryWriteByte(buf[0])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `wroteBytes++`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `wrote.Write(buf[:1])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write(buf[:1])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `debugln("WRITE 5\t", 1, wroteBytes)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Intn(10)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `time.Sleep(time.Duration(writeRng.Intn(maxSleep)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Sleep(time.Duration(writeRng.Intn(maxSleep)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Duration(writeRng.Intn(maxSleep))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Intn(maxSleep)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Flush()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `rb.CloseWriter()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.CloseWriter()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `wg.Wait()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Wait()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Is(readErr, io.EOF)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Bytes()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Bytes()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Equal(a, b)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `common = i`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `a, b = a[common:], b[common:]`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `a = a[:64]`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `b = b[:64]`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Sum32()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Sum32()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `const debug = false`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.NewIEEE()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.NewIEEE()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Writer(readHash)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Writer(wroteHash)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `read = io.MultiWriter(read, &readBuf)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.MultiWriter(read, &readBuf)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `wrote = io.MultiWriter(wrote, &wroteBuf)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.MultiWriter(wrote, &wroteBuf)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `fmt.Println(args...)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Println(args...)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `const maxSleep = int(1 * time.Millisecond)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Short()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.SetBlocking(true)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `wg.Add(1)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Add(1)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Done()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.CloseWithError(readErr)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.New(rand.NewSource(1))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.NewSource(1)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Read(buf[:readRng.Intn(len(buf))])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Intn(len(buf))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `readBytes += n`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `read.Write(buf[:n])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write(buf[:n])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `readErr = err`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `debugln("READ 1\t", n, readBytes)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.ReadByte()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `readErr = err`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `readBytes++`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `read.Write([]byte{b})`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write([]byte{b})`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `debugln("READ 2\t", 1, readBytes)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `n, err = rb.TryRead(buf[:readRng.Intn(len(buf))])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.TryRead(buf[:readRng.Intn(len(buf))])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Intn(len(buf))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `readBytes += n`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `read.Write(buf[:n])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write(buf[:n])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `readErr = err`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `debugln("READ 3\t", n, readBytes)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Intn(20)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `time.Sleep(time.Duration(readRng.Intn(maxSleep)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Sleep(time.Duration(readRng.Intn(maxSleep)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Duration(readRng.Intn(maxSleep))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Intn(maxSleep)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.New(rand.NewSource(2))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.NewSource(2)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `writeRng.Read(buf)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Read(buf)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write(buf[:writeRng.Intn(len(buf))])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Intn(len(buf))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `wroteBytes += n`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `wrote.Write(buf[:n])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write(buf[:n])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `debugln("WRITE 1\t", n, wroteBytes)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `n, err = rb.WriteString(string(buf[:writeRng.Intn(len(buf))]))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.WriteString(string(buf[:writeRng.Intn(len(buf))]))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Intn(len(buf))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `wroteBytes += n`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `wrote.Write(buf[:n])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write(buf[:n])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `debugln("WRITE 2\t", writeRng.Intn(len(buf)), wroteBytes)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Intn(len(buf))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `err = rb.WriteByte(buf[0])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.WriteByte(buf[0])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `wroteBytes++`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `wrote.Write(buf[:1])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write(buf[:1])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `debugln("WRITE 3\t", 1, wroteBytes)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `n, err = rb.TryWrite(buf[:writeRng.Intn(len(buf))])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.TryWrite(buf[:writeRng.Intn(len(buf))])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Intn(len(buf))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `wroteBytes += n`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `wrote.Write(buf[:n])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write(buf[:n])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `debugln("WRITE 4\t", n, wroteBytes)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `err = rb.TryWriteByte(buf[0])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.TryWriteByte(buf[0])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `wroteBytes++`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `wrote.Write(buf[:1])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write(buf[:1])`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `debugln("WRITE 5\t", 1, wroteBytes)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Intn(10)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `time.Sleep(time.Duration(writeRng.Intn(maxSleep)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Sleep(time.Duration(writeRng.Intn(maxSleep)))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Duration(writeRng.Intn(maxSleep))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Intn(maxSleep)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Flush()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `rb.CloseWriter()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.CloseWriter()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `wg.Wait()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Wait()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Is(readErr, io.EOF)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Bytes()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Bytes()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Equal(a, b)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `common = i`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `a, b = a[common:], b[common:]`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `a = a[:64]`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `b = b[:64]`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Sum32()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Sum32()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.WriteByte('a')`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Length()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Free()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Equal(rb.Bytes(nil), []byte{'a'})`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Bytes(nil)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.IsEmpty()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.IsFull()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `err = rb.WriteByte('b')`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.WriteByte('b')`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Length()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Free()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Equal(rb.Bytes(nil), []byte{'a', 'b'})`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Bytes(nil)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.IsEmpty()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.IsFull()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `err = rb.WriteByte('c')`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.WriteByte('c')`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Length()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Free()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Equal(rb.Bytes(nil), []byte{'a', 'b'})`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Bytes(nil)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.IsEmpty()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.IsFull()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.ReadByte()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Length()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Free()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Equal(rb.Bytes(nil), []byte{'b'})`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Bytes(nil)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.IsEmpty()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.IsFull()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `b, err = rb.ReadByte()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.ReadByte()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Length()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Free()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.IsEmpty()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.IsFull()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `_, err = rb.ReadByte()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.ReadByte()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Length()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Free()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.IsEmpty()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.IsFull()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `type testError1 struct{ error }`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `type testError2 struct{ error }`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `rb.CloseWithError(testError1{})`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.CloseWithError(testError1{})`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write(nil)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write([]byte{1})`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.WriteByte(0)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.TryWrite(nil)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.TryWrite([]byte{1})`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.TryWriteByte(0)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Flush()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `rb.CloseWithError(testError2{})`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.CloseWithError(testError2{})`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write(nil)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `rb.Reset()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Reset()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `rb.CloseWithError(testError1{})`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.CloseWithError(testError1{})`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Read(nil)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Read([]byte{0})`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.ReadByte()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.TryRead(nil)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.TryRead([]byte{0})`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `rb.CloseWithError(testError2{})`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.CloseWithError(testError2{})`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Read(nil)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Read([]byte{0})`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.ReadByte()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.TryRead(nil)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.TryRead([]byte{0})`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `const sz = 100`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.SetBlocking(true)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `t.Helper()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Helper()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `rb.Reset()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Reset()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `time.Sleep(10 * time.Millisecond)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Sleep(10 * time.Millisecond)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `fn()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `rb.CloseWithError(errors.New("test error"))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.CloseWithError(errors.New("test error"))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.New("test error")`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `<-done`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `rb.Reset()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Reset()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `done = make(chan struct{})`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `fn()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `time.Sleep(10 * time.Millisecond)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Sleep(10 * time.Millisecond)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `rb.CloseWithError(errors.New("test error"))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.CloseWithError(errors.New("test error"))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.New("test error")`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `<-done`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `testCancel(func() {
+		rb.Write([]byte{sz + 5: 1})
+	})`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `rb.Write([]byte{sz + 5: 1})`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write([]byte{sz + 5: 1})`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `testCancel(func() {
+		rb.Write(make([]byte, sz))
+		rb.WriteByte(0)
+	})`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `rb.Write(make([]byte, sz))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write(make([]byte, sz))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `rb.WriteByte(0)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.WriteByte(0)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `testCancel(func() {
+		rb.Read([]byte{10: 1})
+	})`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `rb.Read([]byte{10: 1})`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Read([]byte{10: 1})`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `testCancel(func() {
+		rb.ReadByte()
+	})`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `rb.ReadByte()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.ReadByte()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `rb.Write(make([]byte, sz))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write(make([]byte, sz))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `rb.Flush()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Flush()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.SetBlocking(true)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write([]byte("hello"))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `rb.CloseWriter()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.CloseWriter()`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `_, err = rb.Write([]byte("world"))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Write([]byte("world"))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `done <- err`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `err = rb.WriteByte(0)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.WriteByte(0)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `done <- err`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `_, err = rb.TryWrite([]byte("world"))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.TryWrite([]byte("world"))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `done <- err`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `err = rb.TryWriteByte(0)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.TryWriteByte(0)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `done <- err`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.ReadFull(rb, buf)`
 $DIR/internal/s3select/csv/reader_contrib_test.go: `.NopCloser(strings.NewReader(c.content))`
 $DIR/internal/s3select/csv/reader_contrib_test.go: `.NewReader(c.content)`
 $DIR/internal/s3select/csv/reader_contrib_test.go: `record, err = r.Read(record)`
