@@ -4,7 +4,7 @@ Run tests with statements and method calls removed to help identify broken tests
 
 Necessist currently supports Anchor (TS), Foundry, Go, Hardhat (TS), and Rust.
 
-A paper on Necessist ([Test Harness Mutilation]) will appear in Mutation 2024. ([preprint])
+A paper on Necessist ([Test Harness Mutilation]) will appear in Mutation 2024. ([slides], [preprint])
 
 **Contents**
 
@@ -476,6 +476,7 @@ Necessist is licensed and distributed under the AGPLv3 license. [Contact us](mai
 [predicate transformer semantics]: https://en.wikipedia.org/wiki/Predicate_transformer_semantics
 [preprint is available]: https://agroce.github.io/asej18.pdf
 [preprint]: docs/test_harness_mutilation.pdf
+[slides]: docs/Necessist%20Mutation%202024.pdf
 [sqlitebrowser]: https://sqlitebrowser.org/
 [toml]: https://toml.io/en/
 [weakest precondition]: https://en.wikipedia.org/wiki/Predicate_transformer_semantics#Weakest_preconditions
