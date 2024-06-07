@@ -6,8 +6,8 @@ use anyhow::{anyhow, Result};
 use if_chain::if_chain;
 use log::debug;
 use necessist_core::{
-    framework::Postprocess, source_warn, util, LightContext, LineColumn, SourceFile, Span,
-    WarnFlags, Warning,
+    framework::{Postprocess, TestSpanMap},
+    source_warn, util, LightContext, LineColumn, SourceFile, Span, WarnFlags, Warning,
 };
 use once_cell::sync::Lazy;
 use regex::Regex;
@@ -74,7 +74,6 @@ static LINE_WITHOUT_TIME_RE: Lazy<Regex> = Lazy::new(|| {
 pub struct Mocha {
     subdir: PathBuf,
     source_map: Rc<SourceMap>,
-    span_it_message_map: BTreeMap<Span, String>,
     test_file_it_message_state_map: RefCell<BTreeMap<PathBuf, BTreeMap<String, ItMessageState>>>,
 }
 
@@ -83,7 +82,6 @@ impl Mocha {
         Self {
             subdir: subdir.as_ref().to_path_buf(),
             source_map: Rc::default(),
-            span_it_message_map: BTreeMap::new(),
             test_file_it_message_state_map: RefCell::new(BTreeMap::new()),
         }
     }
@@ -123,29 +121,27 @@ impl Mocha {
     pub fn exec(
         &self,
         context: &LightContext,
+        test_name: &str,
         span: &Span,
         command: &Command,
     ) -> Result<Option<(Exec, Option<Box<Postprocess>>)>> {
-        #[allow(clippy::expect_used)]
-        let it_message = self
-            .span_it_message_map
-            .get(span)
-            .expect("`it` message is not set");
-
         let mut test_file_it_message_state_map = self.test_file_it_message_state_map.borrow_mut();
         #[allow(clippy::expect_used)]
         let it_message_state_map = test_file_it_message_state_map
             .get_mut(span.source_file.as_ref())
             .expect("Source file is not in map");
 
-        let state = it_message_state_map.entry(it_message.clone()).or_default();
+        // smoelius: For Mocha-based frameworks, `test_name` is the `it` message.
+        let state = it_message_state_map
+            .entry(test_name.to_owned())
+            .or_default();
         if *state != ItMessageState::Found {
             if *state == ItMessageState::NotFound {
                 source_warn(
                     context,
                     Warning::ItMessageNotFound,
                     span,
-                    &format!("`it` message {it_message:?} was not found during dry run"),
+                    &format!("`it` message {test_name:?} was not found during dry run"),
                     WarnFlags::empty(),
                 )?;
                 *state = ItMessageState::WarningEmitted;
@@ -303,19 +299,8 @@ impl ParseLow for Mocha {
         generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Self>,
         storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
         file: &'ast <Self::Types as AbstractTypes>::File,
-    ) -> Result<Vec<Span>> {
+    ) -> Result<TestSpanMap> {
         visit(generic_visitor, storage, &file.1)
-    }
-
-    fn on_candidate_found(
-        &mut self,
-        _context: &LightContext,
-        _storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'_>>,
-        test_name: &str,
-        span: &Span,
-    ) -> bool {
-        self.set_span_it_message(span, test_name.to_owned());
-        true
     }
 
     fn test_statements<'ast>(
@@ -494,12 +479,6 @@ fn is_it_call_expr(expr: &Expr) -> Option<Test<'_>> {
         } else {
             None
         }
-    }
-}
-
-impl Mocha {
-    fn set_span_it_message(&mut self, span: &Span, it_message: String) {
-        self.span_it_message_map.insert(span.clone(), it_message);
     }
 }
 

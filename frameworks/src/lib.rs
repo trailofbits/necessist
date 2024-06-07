@@ -4,7 +4,7 @@ use heck::ToKebabCase;
 use necessist_core::{
     framework::{
         Applicable, AsParse, AsRun, Interface, Parse as ParseHigh, Postprocess, Run as RunHigh,
-        ToImplementation,
+        TestSpanMap, ToImplementation,
     },
     LightContext, Span,
 };
@@ -116,9 +116,10 @@ impl<T: RunHigh> RunHigh for ParseAdapter<T> {
     fn exec(
         &self,
         context: &LightContext,
+        test_name: &str,
         span: &Span,
     ) -> Result<Option<(Exec, Option<Box<Postprocess>>)>> {
-        self.0.exec(context, span)
+        self.0.exec(context, test_name, span)
     }
 }
 

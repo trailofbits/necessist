@@ -1,6 +1,10 @@
-use crate::{config, LightContext, Span};
+use crate::{config, LightContext, SourceFile, Span};
 use anyhow::Result;
-use std::path::Path;
+use indexmap::IndexMap;
+use std::{
+    collections::{BTreeMap, BTreeSet},
+    path::Path,
+};
 use subprocess::{Exec, Popen};
 
 mod auto;
@@ -25,13 +29,17 @@ pub trait ToImplementation {
 
 pub trait Interface: Parse + Run {}
 
+pub type TestFileTestSpanMap = BTreeMap<SourceFile, TestSpanMap>;
+
+pub type TestSpanMap = IndexMap<String, BTreeSet<Span>>;
+
 pub trait Parse {
     fn parse(
         &mut self,
         context: &LightContext,
         config: &config::Toml,
         test_files: &[&Path],
-    ) -> Result<Vec<Span>>;
+    ) -> Result<TestFileTestSpanMap>;
 }
 
 pub type Postprocess = dyn Fn(&LightContext, Popen) -> Result<bool>;
@@ -41,6 +49,7 @@ pub trait Run {
     fn exec(
         &self,
         context: &LightContext,
+        test_name: &str,
         span: &Span,
     ) -> Result<Option<(Exec, Option<Box<Postprocess>>)>>;
 }
@@ -61,7 +70,7 @@ impl<T: AsParse> Parse for T {
         context: &LightContext,
         config: &config::Toml,
         test_files: &[&Path],
-    ) -> Result<Vec<Span>> {
+    ) -> Result<TestFileTestSpanMap> {
         self.as_parse_mut().parse(context, config, test_files)
     }
 }
@@ -73,8 +82,9 @@ impl<T: AsRun> Run for T {
     fn exec(
         &self,
         context: &LightContext,
+        test_name: &str,
         span: &Span,
     ) -> Result<Option<(Exec, Option<Box<Postprocess>>)>> {
-        self.as_run().exec(context, span)
+        self.as_run().exec(context, test_name, span)
     }
 }

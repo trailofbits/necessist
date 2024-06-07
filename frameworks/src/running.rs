@@ -13,12 +13,18 @@ pub type ProcessLines = (bool, Box<dyn Fn(&str) -> bool>);
 pub trait RunLow {
     const REQUIRES_NODE_MODULES: bool = false;
     fn command_to_run_test_file(&self, context: &LightContext, test_file: &Path) -> Command;
-    fn command_to_build_test(&self, context: &LightContext, span: &Span) -> Command;
+    fn command_to_build_test(
+        &self,
+        context: &LightContext,
+        test_name: &str,
+        span: &Span,
+    ) -> Command;
     fn command_to_run_test(
         &self,
         context: &LightContext,
+        test_name: &str,
         span: &Span,
-    ) -> (Command, Vec<String>, Option<(ProcessLines, String)>);
+    ) -> (Command, Vec<String>, Option<ProcessLines>);
 }
 
 impl<T: RunLow> RunLow for Rc<RefCell<T>> {
@@ -26,15 +32,22 @@ impl<T: RunLow> RunLow for Rc<RefCell<T>> {
     fn command_to_run_test_file(&self, context: &LightContext, test_file: &Path) -> Command {
         self.borrow().command_to_run_test_file(context, test_file)
     }
-    fn command_to_build_test(&self, context: &LightContext, span: &Span) -> Command {
-        self.borrow().command_to_build_test(context, span)
+    fn command_to_build_test(
+        &self,
+        context: &LightContext,
+        test_name: &str,
+        span: &Span,
+    ) -> Command {
+        self.borrow()
+            .command_to_build_test(context, test_name, span)
     }
     fn command_to_run_test(
         &self,
         context: &LightContext,
+        test_name: &str,
         span: &Span,
-    ) -> (Command, Vec<String>, Option<(ProcessLines, String)>) {
-        self.borrow().command_to_run_test(context, span)
+    ) -> (Command, Vec<String>, Option<ProcessLines>) {
+        self.borrow().command_to_run_test(context, test_name, span)
     }
 }
 
@@ -63,10 +76,11 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
     fn exec(
         &self,
         context: &LightContext,
+        test_name: &str,
         span: &Span,
     ) -> Result<Option<(Exec, Option<Box<Postprocess>>)>> {
         {
-            let mut command = self.0.command_to_build_test(context, span);
+            let mut command = self.0.command_to_build_test(context, test_name, span);
             command.args(&context.opts.args);
 
             debug!("{:?}", command);
@@ -78,7 +92,8 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
             }
         }
 
-        let (mut command, final_args, init_f_test) = self.0.command_to_run_test(context, span);
+        let (mut command, final_args, init_f_test) =
+            self.0.command_to_run_test(context, test_name, span);
         command.args(&context.opts.args);
         command.args(final_args);
 
@@ -90,11 +105,12 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
         }
         exec = exec.stderr(NullFile);
 
+        let test_name = test_name.to_owned();
         let span = span.clone();
 
         Ok(Some((
             exec,
-            init_f_test.map(|((init, f), test)| -> Box<Postprocess> {
+            init_f_test.map(|(init, f)| -> Box<Postprocess> {
                 Box::new(move |context: &LightContext, popen| {
                     let stdout = popen
                         .stdout
@@ -126,7 +142,7 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
                         context,
                         Warning::RunTestFailed,
                         &span,
-                        &format!("Failed to run test `{test}`"),
+                        &format!("Failed to run test `{test_name}`"),
                         WarnFlags::empty(),
                     )?;
                     Ok(false)

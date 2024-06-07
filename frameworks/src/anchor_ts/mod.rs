@@ -3,7 +3,7 @@ use anyhow::{anyhow, Result};
 use log::debug;
 use necessist_core::{
     __Backup as Backup,
-    framework::{Interface, Postprocess},
+    framework::{Interface, Postprocess, TestFileTestSpanMap},
     LightContext, Span,
 };
 use once_cell::sync::Lazy;
@@ -56,7 +56,7 @@ impl ParseHigh for AnchorTs {
         context: &LightContext,
         config: &necessist_core::config::Toml,
         test_files: &[&Path],
-    ) -> Result<Vec<Span>> {
+    ) -> Result<TestFileTestSpanMap> {
         self.mocha_adapter.parse(context, config, test_files)
     }
 }
@@ -77,6 +77,7 @@ impl RunHigh for AnchorTs {
     fn exec(
         &self,
         context: &LightContext,
+        test_name: &str,
         span: &Span,
     ) -> Result<Option<(Exec, Option<Box<Postprocess>>)>> {
         if let Err(error) = self.check(context, &span.source_file) {
@@ -88,7 +89,10 @@ impl RunHigh for AnchorTs {
 
         let command = command_to_run_test(context);
 
-        let exec_and_postprocess = self.mocha_adapter.0.exec(context, span, &command)?;
+        let exec_and_postprocess = self
+            .mocha_adapter
+            .0
+            .exec(context, test_name, span, &command)?;
 
         Ok(exec_and_postprocess.map(|(exec, postprocess)| {
             let postprocess: Box<Postprocess> = Box::new(move |context, popen| {

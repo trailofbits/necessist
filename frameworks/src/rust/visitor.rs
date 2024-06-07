@@ -1,6 +1,7 @@
-use super::{Call, GenericVisitor, MacroCall, Rust, Storage};
+use super::{Call, GenericVisitor, MacroCall, Rust, Storage, Test, TestSpanMap};
 use anyhow::Result;
-use necessist_core::Span;
+use necessist_core::{warn, WarnFlags, Warning};
+
 use std::cell::RefCell;
 use syn::{
     visit::{
@@ -16,14 +17,25 @@ pub(super) fn visit<'ast>(
     generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Rust>,
     storage: &RefCell<Storage<'ast>>,
     file: &'ast File,
-) -> Result<Vec<Span>> {
+) -> Result<TestSpanMap> {
     let mut visitor = Visitor::new(generic_visitor, storage);
     visitor.visit_file(file);
-    if let Some(error) = storage.borrow_mut().error.take() {
-        Err(error)
-    } else {
-        Ok(visitor.generic_visitor.spans_visited())
+    for (test_name, error) in &storage.borrow().tests_needing_warnings {
+        warn(
+            visitor.generic_visitor.context,
+            Warning::ModulePathUnknown,
+            &format!("Failed to determine module path for test `{test_name}`: {error:?}"),
+            WarnFlags::empty(),
+        )?;
     }
+    if let Some(error) = storage.borrow_mut().error.take() {
+        return Err(error);
+    }
+    let _: &Vec<String> = visitor.generic_visitor.framework.cached_test_file_flags(
+        &mut storage.borrow_mut().test_file_package_cache,
+        &visitor.generic_visitor.source_file,
+    )?;
+    Ok(visitor.generic_visitor.test_span_map())
 }
 
 struct Visitor<'context, 'config, 'framework, 'ast, 'storage> {
@@ -70,13 +82,15 @@ impl<'context, 'config, 'framework, 'ast, 'storage> Visit<'ast>
             assert!(self.test_ident.is_none());
             self.test_ident = Some(ident);
 
-            let walk = self.generic_visitor.visit_test(self.storage, item);
+            if let Some(test) = Test::new(self.storage, &self.generic_visitor.source_file, item) {
+                let walk = self.generic_visitor.visit_test(self.storage, test);
 
-            if walk {
-                visit_item_fn(self, item);
+                if walk {
+                    visit_item_fn(self, item);
+                }
+
+                self.generic_visitor.visit_test_post(self.storage, test);
             }
-
-            self.generic_visitor.visit_test_post(self.storage, item);
 
             assert!(self.test_ident == Some(ident));
             self.test_ident = None;

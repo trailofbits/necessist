@@ -1,7 +1,11 @@
 use super::{GenericVisitor, ParseHigh};
 use anyhow::Result;
 use heck::ToKebabCase;
-use necessist_core::{config, util, warn, LightContext, SourceFile, Span, WarnFlags, Warning};
+use necessist_core::{
+    config,
+    framework::{TestFileTestSpanMap, TestSpanMap},
+    util, warn, LightContext, SourceFile, Span, WarnFlags, Warning,
+};
 use paste::paste;
 use std::{any::type_name, cell::RefCell, convert::Infallible, path::Path, rc::Rc};
 
@@ -10,7 +14,8 @@ use std::{any::type_name, cell::RefCell, convert::Infallible, path::Path, rc::Rc
 // - `File`: framework-specific abstract abstract syntax tree representing a file
 //
 // - `Storage`: framework-specific "scratch space." `Storage` is allowed to hold references to parts
-//   of the `File`. `Storage` is wrapped in a `RefCell`.
+//   of the `File`. The lifetime of a `Storage` is only what it takes to parse the `File`. `Storage`
+//   is wrapped in a `RefCell`.
 //
 // - framework: Rust, HardhatTs, etc. Implements the `ParseLow` trait, i.e., contains callbacks such
 //   `statement_is_call`, which are used by the `GenericVisitor` (below). Most callbacks are passed
@@ -95,15 +100,7 @@ pub trait ParseLow: Sized {
         generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Self>,
         storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
         file: &'ast <Self::Types as AbstractTypes>::File,
-    ) -> Result<Vec<Span>>;
-    #[must_use]
-    fn on_candidate_found(
-        &mut self,
-        context: &LightContext,
-        storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'_>>,
-        test_name: &str,
-        span: &Span,
-    ) -> bool;
+    ) -> Result<TestSpanMap>;
 
     fn test_statements<'ast>(
         &self,
@@ -191,7 +188,7 @@ impl<T: ParseLow> ParseLow for Rc<RefCell<T>> {
         generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Self>,
         storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
         file: &'ast <Self::Types as AbstractTypes>::File,
-    ) -> Result<Vec<Span>> {
+    ) -> Result<TestSpanMap> {
         let GenericVisitor {
             context,
             config,
@@ -202,7 +199,7 @@ impl<T: ParseLow> ParseLow for Rc<RefCell<T>> {
             n_before,
             n_statement_leaves_visited,
             call_statement,
-            spans_visited,
+            test_span_map,
         } = generic_visitor;
         let mut framework = framework.borrow_mut();
         let generic_visitor = GenericVisitor::<'_, '_, '_, 'ast, T> {
@@ -215,19 +212,9 @@ impl<T: ParseLow> ParseLow for Rc<RefCell<T>> {
             n_before,
             n_statement_leaves_visited,
             call_statement,
-            spans_visited,
+            test_span_map,
         };
         T::visit_file(generic_visitor, storage, file)
-    }
-    fn on_candidate_found(
-        &mut self,
-        context: &LightContext,
-        storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'_>>,
-        test_name: &str,
-        span: &Span,
-    ) -> bool {
-        self.borrow_mut()
-            .on_candidate_found(context, storage, test_name, span)
     }
     fn test_statements<'ast>(
         &self,
@@ -323,10 +310,10 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
         context: &LightContext,
         config: &config::Toml,
         test_files: &[&Path],
-    ) -> Result<Vec<Span>> {
+    ) -> Result<TestFileTestSpanMap> {
         let config = Self::compile_config(context, config)?;
 
-        let mut spans = Vec::new();
+        let mut test_file_test_span_map = TestFileTestSpanMap::new();
 
         let walk_dir_results = self.0.walk_dir(context.root);
 
@@ -363,17 +350,17 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
                 context,
                 config: &config,
                 framework: &mut self.0,
-                source_file,
+                source_file: source_file.clone(),
                 test_name: None,
                 last_statement_in_test: None,
                 n_statement_leaves_visited: 0,
                 n_before: Vec::new(),
                 call_statement: None,
-                spans_visited: Vec::new(),
+                test_span_map: TestSpanMap::new(),
             };
 
-            let spans_visited = T::visit_file(generic_visitor, &storage, &file)?;
-            spans.extend(spans_visited);
+            let test_span_map = T::visit_file(generic_visitor, &storage, &file)?;
+            extend(&mut test_file_test_span_map, source_file, test_span_map);
 
             Ok(())
         };
@@ -395,7 +382,19 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
             }
         }
 
-        Ok(spans)
+        Ok(test_file_test_span_map)
+    }
+}
+
+fn extend(
+    test_file_test_span_map: &mut TestFileTestSpanMap,
+    test_file: SourceFile,
+    test_span_map_incoming: TestSpanMap,
+) {
+    let test_span_map = test_file_test_span_map.entry(test_file).or_default();
+    for (test_name, spans_incoming) in test_span_map_incoming {
+        let spans = test_span_map.entry(test_name).or_default();
+        spans.extend(spans_incoming);
     }
 }
 

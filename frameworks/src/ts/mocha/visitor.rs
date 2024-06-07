@@ -1,6 +1,6 @@
 use super::{is_it_call_expr, is_it_call_stmt, GenericVisitor, Mocha, SourceMapped, Storage};
 use anyhow::Result;
-use necessist_core::Span;
+use necessist_core::framework::TestSpanMap;
 use std::cell::RefCell;
 use swc_core::ecma::{
     ast::{Expr, Module, Stmt},
@@ -12,10 +12,10 @@ pub(super) fn visit<'ast>(
     generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Mocha>,
     storage: &RefCell<Storage<'ast>>,
     module: &Module,
-) -> Result<Vec<Span>> {
+) -> Result<TestSpanMap> {
     let mut visitor = Visitor::new(generic_visitor, storage);
     visitor.visit_module(module);
-    Ok(visitor.generic_visitor.spans_visited())
+    Ok(visitor.generic_visitor.test_span_map())
 }
 
 struct Visitor<'context, 'config, 'framework, 'ast, 'storage> {

@@ -4,15 +4,17 @@ use super::{
 };
 use anyhow::Result;
 use cargo_metadata::Package;
-use necessist_core::{warn, LightContext, SourceFile, Span, ToInternalSpan, WarnFlags, Warning};
+use necessist_core::{framework::TestSpanMap, LightContext, SourceFile, Span, ToInternalSpan};
+use once_cell::sync::Lazy;
 use quote::ToTokens;
 use std::{
     cell::RefCell,
-    collections::BTreeMap,
+    collections::{BTreeMap, HashMap},
     ffi::OsStr,
     fs::read_to_string,
     path::{Path, PathBuf},
     process::Command,
+    sync::RwLock,
 };
 
 mod storage;
@@ -27,7 +29,6 @@ use visitor::visit;
 #[derive(Debug)]
 pub struct Rust {
     test_file_flags_cache: BTreeMap<PathBuf, Vec<String>>,
-    span_test_path_map: BTreeMap<Span, Vec<String>>,
 }
 
 impl Rust {
@@ -42,8 +43,60 @@ impl Rust {
     pub fn new() -> Self {
         Self {
             test_file_flags_cache: BTreeMap::new(),
-            span_test_path_map: BTreeMap::new(),
         }
+    }
+}
+
+#[derive(Clone, Copy)]
+pub struct Test<'ast> {
+    test_path_id: usize,
+    item_fn: &'ast syn::ItemFn,
+}
+
+impl<'ast> Test<'ast> {
+    fn new(
+        storage: &RefCell<Storage>,
+        source_file: &SourceFile,
+        item_fn: &'ast syn::ItemFn,
+    ) -> Option<Self> {
+        // smoelius: If the module path cannot be determined, return `None` to prevent the
+        // `GenericVisitor` from walking the test.
+        let test_name = item_fn.sig.ident.to_string();
+        let result = storage.borrow_mut().test_path(source_file, &test_name);
+        let test_path = match result {
+            Ok(test_path) => test_path,
+            Err(error) => {
+                storage
+                    .borrow_mut()
+                    .tests_needing_warnings
+                    .push((test_name, error));
+                return None;
+            }
+        };
+        let test_path_id = reserve_test_path_id(test_path);
+        Some(Self {
+            test_path_id,
+            item_fn,
+        })
+    }
+}
+
+// smoelius: `TEST_PATH_ID_MAP` and `TEST_PATHS` cannot go in `Storage` because they are used by
+// `Test`'s implementation of `Named`.
+static TEST_PATH_ID_MAP: RwLock<Lazy<HashMap<Vec<String>, usize>>> =
+    RwLock::new(Lazy::new(HashMap::new));
+static TEST_PATHS: RwLock<Vec<Vec<String>>> = RwLock::new(Vec::new());
+
+fn reserve_test_path_id(test_path: Vec<String>) -> usize {
+    let test_path_id_map = TEST_PATH_ID_MAP.read().unwrap();
+    let test_path_id = test_path_id_map.get(&test_path).copied();
+    drop(test_path_id_map);
+    if let Some(test_path_id) = test_path_id {
+        test_path_id
+    } else {
+        let mut test_paths = TEST_PATHS.write().unwrap();
+        test_paths.push(test_path);
+        test_paths.len() - 1
     }
 }
 
@@ -103,7 +156,7 @@ pub struct Types;
 impl AbstractTypes for Types {
     type Storage<'ast> = Storage<'ast>;
     type File = syn::File;
-    type Test<'ast> = &'ast syn::ItemFn;
+    type Test<'ast> = Test<'ast>;
     type Statement<'ast> = &'ast syn::Stmt;
     type Expression<'ast> = Expression<'ast>;
     type Await<'ast> = &'ast syn::ExprAwait;
@@ -112,9 +165,11 @@ impl AbstractTypes for Types {
     type MacroCall<'ast> = MacroCall<'ast>;
 }
 
-impl<'ast> Named for <Types as AbstractTypes>::Test<'ast> {
+// smoelius: See note above re `TEST_PATH_ID_MAP` and `TEST_PATHS`.
+impl<'ast> Named for Test<'ast> {
     fn name(&self) -> String {
-        self.sig.ident.to_string()
+        let test_paths = TEST_PATHS.read().unwrap();
+        test_paths[self.test_path_id].join("::")
     }
 }
 
@@ -320,52 +375,8 @@ impl ParseLow for Rust {
         generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Self>,
         storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
         file: &'ast <Self::Types as AbstractTypes>::File,
-    ) -> Result<Vec<Span>> {
+    ) -> Result<TestSpanMap> {
         visit(generic_visitor, storage, file)
-    }
-
-    fn on_candidate_found(
-        &mut self,
-        context: &LightContext,
-        storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'_>>,
-        test_name: &str,
-        span: &Span,
-    ) -> bool {
-        // smoelius: If `set_span_test_path(span, test_path)` is not called, `command_to_run_test`
-        // will panic. So if the module path cannot be determined, return false to prevent the span
-        // from being queued.
-        #[cfg_attr(dylint_lib = "general", allow(non_local_effect_before_error_return))]
-        let result = (|| {
-            let _: &Vec<String> = self.cached_test_file_flags(
-                &mut storage.borrow_mut().test_file_package_cache,
-                &span.source_file,
-            )?;
-            let test_path = match storage.borrow_mut().test_path(span, test_name) {
-                Ok(test_path) => test_path,
-                Err(error) => {
-                    warn(
-                        context,
-                        Warning::ModulePathUnknown,
-                        &format!("Failed to determine module path: {error:?}"),
-                        WarnFlags::empty(),
-                    )?;
-                    return Ok(false);
-                }
-            };
-            self.set_span_test_path(span, test_path);
-            Ok(true)
-        })();
-        match result {
-            Ok(true) => {
-                return true;
-            }
-            Err(error) => {
-                let mut storage = storage.borrow_mut();
-                storage.error = storage.error.take().or(Some(error));
-            }
-            _ => {}
-        };
-        false
     }
 
     fn test_statements<'ast>(
@@ -373,7 +384,8 @@ impl ParseLow for Rust {
         _storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
         test: <Self::Types as AbstractTypes>::Test<'ast>,
     ) -> Vec<<Self::Types as AbstractTypes>::Statement<'ast>> {
-        test.block
+        test.item_fn
+            .block
             .stmts
             .iter()
             .map(|stmt| stmt as _)
@@ -515,7 +527,12 @@ impl RunLow for Rust {
         self.test_command(context, test_file)
     }
 
-    fn command_to_build_test(&self, context: &LightContext, span: &Span) -> Command {
+    fn command_to_build_test(
+        &self,
+        context: &LightContext,
+        _test_name: &str,
+        span: &Span,
+    ) -> Command {
         let mut command = self.test_command(context, &span.source_file);
         command.arg("--no-run");
         command
@@ -524,18 +541,13 @@ impl RunLow for Rust {
     fn command_to_run_test(
         &self,
         context: &LightContext,
+        test_name: &str,
         span: &Span,
-    ) -> (Command, Vec<String>, Option<(ProcessLines, String)>) {
-        let test_path = self
-            .span_test_path_map
-            .get(span)
-            .unwrap_or_else(|| panic!("Test path is not set for {span:?}"));
-        let test = test_path.join("::");
-
+    ) -> (Command, Vec<String>, Option<ProcessLines>) {
         (
             self.test_command(context, &span.source_file),
-            vec!["--".to_owned(), "--exact".to_owned(), test.clone()],
-            Some(((false, Box::new(|line| line == "running 1 test")), test)),
+            vec!["--".to_owned(), "--exact".to_owned(), test_name.to_owned()],
+            Some((false, Box::new(|line| line == "running 1 test"))),
         )
     }
 }
@@ -594,10 +606,6 @@ impl Rust {
                 Ok(flags)
             })
             .map(|value| value as &_)
-    }
-
-    fn set_span_test_path(&mut self, span: &Span, test_path: Vec<String>) {
-        self.span_test_path_map.insert(span.clone(), test_path);
     }
 }
 
