@@ -1,10 +1,10 @@
 337 candidates in 9 test files
 $DIR/src/mime/encodedword_test.go: dry running
 $DIR/src/mime/encodedword_test.go: mutilating
-$DIR/src/mime/encodedword_test.go: `.Repeat("é", 10),` nonbuildable
-$DIR/src/mime/encodedword_test.go: `Repeat("=C3=A9", 10) ` nonbuildable
-$DIR/src/mime/encodedword_test.go: `.Repeat("é", 11),` nonbuildable
-$DIR/src/mime/encodedword_test.go: `Repeat("=C3=A9", 10) ` nonbuildable
+$DIR/src/mime/encodedword_test.go: `.Repeat("é", 10)` nonbuildable
+$DIR/src/mime/encodedword_test.go: `.Repeat("=C3=A9", 10)` nonbuildable
+$DIR/src/mime/encodedword_test.go: `.Repeat("é", 11)` nonbuildable
+$DIR/src/mime/encodedword_test.go: `.Repeat("=C3=A9", 10)` nonbuildable
 $DIR/src/mime/encodedword_test.go: `.Repeat("\xe9", 22)` nonbuildable
 $DIR/src/mime/encodedword_test.go: `.Repeat("=E9", 22)` nonbuildable
 $DIR/src/mime/encodedword_test.go: `.Repeat("\x80", 22)` nonbuildable
@@ -14,10 +14,10 @@ $DIR/src/mime/encodedword_test.go: `.Repeat("6enp", 15)` nonbuildable
 $DIR/src/mime/encodedword_test.go: `.Repeat("\x80", 48)` nonbuildable
 $DIR/src/mime/encodedword_test.go: `.Repeat("gICA", 15)` nonbuildable
 $DIR/src/mime/encodedword_test.go: `.enc.Encode(test.charset, test.src)` nonbuildable
-$DIR/src/mime/encodedword_test.go: `.Repeat("à", 30)}` nonbuildable
-$DIR/src/mime/encodedword_test.go: `.Repeat("é", 60)}` nonbuildable
-$DIR/src/mime/encodedword_test.go: `.Repeat("ï", 25)}` nonbuildable
-$DIR/src/mime/encodedword_test.go: `.Repeat("ô", 37)}` nonbuildable
+$DIR/src/mime/encodedword_test.go: `.Repeat("à", 30)` nonbuildable
+$DIR/src/mime/encodedword_test.go: `.Repeat("é", 60)` nonbuildable
+$DIR/src/mime/encodedword_test.go: `.Repeat("ï", 25)` nonbuildable
+$DIR/src/mime/encodedword_test.go: `.Repeat("ô", 37)` nonbuildable
 $DIR/src/mime/encodedword_test.go: `.Repeat("\x80", 50)` nonbuildable
 $DIR/src/mime/encodedword_test.go: `.enc.Encode("utf-8", test.src)` nonbuildable
 $DIR/src/mime/encodedword_test.go: `wordLen = 0` timed-out
