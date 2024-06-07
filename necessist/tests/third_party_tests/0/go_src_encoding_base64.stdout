@@ -1,4 +1,4 @@
-106 candidates in 1 test file
+106 candidates in 17 tests in 2 test files
 $DIR/src/encoding/base64/base64_test.go: dry running
 $DIR/src/encoding/base64/base64_test.go: mutilating
 $DIR/src/encoding/base64/base64_test.go: `.enc.EncodeToString([]byte(p.decoded))` nonbuildable

@@ -1,4 +1,4 @@
-20 candidates in 1 test file
+20 candidates in 1 test in 1 test file
 fixtures/valid_pattern/src/lib.rs: dry running
 fixtures/valid_pattern/src/lib.rs: mutilating
 fixtures/valid_pattern/src/lib.rs:49:5-49:20: `foo().method();` passed

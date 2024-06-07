@@ -1,4 +1,4 @@
-4 candidates in 1 test file
+4 candidates in 4 tests in 1 test file
 fixtures/cfg/src/lib.rs: dry running
 fixtures/cfg/src/lib.rs: mutilating
 fixtures/cfg/src/lib.rs:5:5-5:12: Warning: Failed to run test `passed`
