@@ -1,8 +1,7 @@
 use crate::{
     config,
-    framework::{self, Applicable, ToImplementation},
-    note, source_warn, sqlite, util, warn, Outcome, SourceFile, Span, ToConsoleString, WarnFlags,
-    Warning,
+    framework::{self, Applicable, TestFileTestSpanMap, ToImplementation},
+    note, source_warn, sqlite, util, warn, Outcome, Span, ToConsoleString, WarnFlags, Warning,
 };
 use ansi_term::Style;
 use anyhow::{anyhow, bail, ensure, Context as _, Result};
@@ -12,7 +11,7 @@ use log::debug;
 use once_cell::sync::OnceCell;
 use std::{
     cell::RefCell,
-    collections::BTreeMap,
+    collections::BTreeSet,
     env::{current_dir, var},
     fmt::Display,
     io::IsTerminal,
@@ -132,7 +131,7 @@ pub fn necessist<Identifier: Applicable + Display + IntoEnumIterator + ToImpleme
         context.println = &println;
     }
 
-    let Some((framework, n_spans, test_file_span_map)) = prepare(&context, framework)? else {
+    let Some((framework, n_spans, test_file_test_span_map)) = prepare(&context, framework)? else {
         return Ok(());
     };
 
@@ -165,20 +164,14 @@ pub fn necessist<Identifier: Applicable + Display + IntoEnumIterator + ToImpleme
         context.progress = progress.as_ref();
     }
 
-    run(context, test_file_span_map)
+    run(context, test_file_test_span_map)
 }
 
 #[allow(clippy::type_complexity)]
 fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementation>(
     context: &LightContext,
     framework: framework::Auto<Identifier>,
-) -> Result<
-    Option<(
-        Box<dyn framework::Interface>,
-        usize,
-        BTreeMap<SourceFile, Vec<Span>>,
-    )>,
-> {
+) -> Result<Option<(Box<dyn framework::Interface>, usize, TestFileTestSpanMap)>> {
     if context.opts.default_config {
         default_config(context, context.root)?;
         return Ok(None);
@@ -196,49 +189,59 @@ fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementatio
 
     let paths = canonicalize_test_files(context)?;
 
-    let spans = framework.parse(
+    let test_file_test_span_map = framework.parse(
         context,
         &config,
         &paths.iter().map(AsRef::as_ref).collect::<Vec<_>>(),
     )?;
 
-    let n_spans = spans.len();
-
-    let test_file_span_map = build_test_file_span_map(spans);
+    let n_spans = test_file_test_span_map
+        .values()
+        .flat_map(|test_span_map| test_span_map.values().map(BTreeSet::len))
+        .sum();
 
     if context.opts.dump_candidates {
-        dump_candidates(context, &test_file_span_map)?;
+        dump_candidates(context, &test_file_test_span_map)?;
         return Ok(None);
     }
 
     (context.println)({
-        let n_test_files = test_file_span_map.keys().len();
+        let n_tests = test_file_test_span_map
+            .values()
+            .map(|test_span_map| test_span_map.keys().len())
+            .sum::<usize>();
+        let n_test_files = test_file_test_span_map.keys().len();
         &format!(
-            "{} candidates in {} test file{}",
+            "{} candidates in {} test{} in {} test file{}",
             n_spans,
+            n_tests,
+            if n_tests == 1 { "" } else { "s" },
             n_test_files,
             if n_test_files == 1 { "" } else { "s" }
         )
     });
 
-    Ok(Some((framework, n_spans, test_file_span_map)))
+    Ok(Some((framework, n_spans, test_file_test_span_map)))
 }
 
-fn run(mut context: Context, test_file_span_map: BTreeMap<SourceFile, Vec<Span>>) -> Result<()> {
+fn run(mut context: Context, test_file_test_span_map: TestFileTestSpanMap) -> Result<()> {
     ctrlc::set_handler(|| CTRLC.store(true, Ordering::SeqCst))?;
 
     let past_removals = past_removals_init_lazy(&context.light())?;
 
     let mut past_removal_iter = past_removals.into_iter().peekable();
 
-    for (test_file, spans) in test_file_span_map {
-        let mut span_iter = spans.iter().peekable();
+    for (test_file, test_span_map) in test_file_test_span_map {
+        let mut test_span_iter = test_span_map
+            .iter()
+            .flat_map(|(test_name, spans)| spans.iter().map(|span| (test_name.as_str(), span)))
+            .peekable();
 
-        let (mismatch, n) = skip_past_removals(&mut span_iter, &mut past_removal_iter);
+        let (mismatch, n) = skip_past_removals(&mut test_span_iter, &mut past_removal_iter);
 
         update_progress(&context, mismatch, n)?;
 
-        if span_iter.peek().is_none() {
+        if test_span_iter.peek().is_none() {
             continue;
         }
 
@@ -265,7 +268,7 @@ fn run(mut context: Context, test_file_span_map: BTreeMap<SourceFile, Vec<Span>>
             }
 
             if result.is_err() {
-                let n = skip_present_spans(&context, span_iter)?;
+                let n = skip_present_spans(&context, test_span_iter)?;
                 update_progress(&context, None, n)?;
                 continue;
             }
@@ -277,15 +280,15 @@ fn run(mut context: Context, test_file_span_map: BTreeMap<SourceFile, Vec<Span>>
         ));
 
         loop {
-            let (mismatch, n) = skip_past_removals(&mut span_iter, &mut past_removal_iter);
+            let (mismatch, n) = skip_past_removals(&mut test_span_iter, &mut past_removal_iter);
 
             update_progress(&context, mismatch, n)?;
 
-            let Some(span) = span_iter.next() else {
+            let Some((test_name, span)) = test_span_iter.next() else {
                 break;
             };
 
-            let (text, outcome) = attempt_removal(&context, span)?;
+            let (text, outcome) = attempt_removal(&context, test_name, span)?;
 
             if CTRLC.load(Ordering::SeqCst) {
                 bail!("Ctrl-C detected");
@@ -399,16 +402,16 @@ fn canonicalize_test_files(context: &LightContext) -> Result<Vec<PathBuf>> {
 
 #[must_use]
 fn skip_past_removals<'a, I, J>(
-    span_iter: &mut Peekable<I>,
+    test_span_iter: &mut Peekable<I>,
     removal_iter: &mut Peekable<J>,
 ) -> (Option<Mismatch>, usize)
 where
-    I: Iterator<Item = &'a Span>,
+    I: Iterator<Item = (&'a str, &'a Span)>,
     J: Iterator<Item = Removal>,
 {
     let mut mismatch = None;
     let mut n = 0;
-    while let Some(&span) = span_iter.peek() {
+    while let Some(&(_, span)) = test_span_iter.peek() {
         let Some(removal) = removal_iter.peek() else {
             break;
         };
@@ -421,7 +424,7 @@ where
                 break;
             }
             std::cmp::Ordering::Equal => {
-                let _: Option<&Span> = span_iter.next();
+                let _: Option<(&str, &Span)> = test_span_iter.next();
                 let _removal: Option<Removal> = removal_iter.next();
                 n += 1;
             }
@@ -442,13 +445,13 @@ where
 
 fn skip_present_spans<'a>(
     context: &Context,
-    span_iter: impl Iterator<Item = &'a Span>,
+    test_span_iter: impl Iterator<Item = (&'a str, &'a Span)>,
 ) -> Result<usize> {
     let mut n = 0;
 
     let sqlite = sqlite_init_lazy(&context.light())?;
 
-    for span in span_iter {
+    for (_, span) in test_span_iter {
         if let Some(sqlite) = sqlite.borrow_mut().as_mut() {
             let text = span.source_text()?;
             let removal = Removal {
@@ -492,26 +495,15 @@ Configuration or test files have changed since necessist.db was created; the fol
     Ok(())
 }
 
-fn build_test_file_span_map(mut spans: Vec<Span>) -> BTreeMap<SourceFile, Vec<Span>> {
-    let mut test_file_span_map = BTreeMap::new();
-
-    spans.sort();
-
-    for span in spans {
-        let test_file_spans = test_file_span_map
-            .entry(span.source_file.clone())
-            .or_insert_with(Vec::default);
-        test_file_spans.push(span);
-    }
-
-    test_file_span_map
-}
-
 fn dump_candidates(
     context: &LightContext,
-    test_file_span_map: &BTreeMap<SourceFile, Vec<Span>>,
+    test_file_test_span_map: &TestFileTestSpanMap,
 ) -> Result<()> {
-    for span in test_file_span_map.values().flatten() {
+    for span in test_file_test_span_map
+        .values()
+        .flat_map(|test_span_map| test_span_map.values())
+        .flatten()
+    {
         let text = span.source_text()?;
 
         (context.println)(&format!(
@@ -524,10 +516,14 @@ fn dump_candidates(
     Ok(())
 }
 
-fn attempt_removal(context: &Context, span: &Span) -> Result<(String, Option<Outcome>)> {
+fn attempt_removal(
+    context: &Context,
+    test_name: &str,
+    span: &Span,
+) -> Result<(String, Option<Outcome>)> {
     let (text, _backup) = span.remove()?;
 
-    let exec = context.framework.exec(&context.light(), span)?;
+    let exec = context.framework.exec(&context.light(), test_name, span)?;
 
     let Some((exec, postprocess)) = exec else {
         return Ok((text, Some(Outcome::Nonbuildable)));

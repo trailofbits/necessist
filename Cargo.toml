@@ -11,6 +11,7 @@ let-underscore-untyped = "warn"
 format-collect = "allow"
 missing-errors-doc = "allow"
 missing-panics-doc = "allow"
+mutable-key-type = "allow"
 struct-field-names = "allow"
 
 [workspace.metadata.dylint]

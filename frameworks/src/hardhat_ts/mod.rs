@@ -2,7 +2,7 @@ use super::{ts, OutputAccessors, OutputStrippedOfAnsiScapes, ParseAdapter, Parse
 use anyhow::Result;
 use log::debug;
 use necessist_core::{
-    framework::{Interface, Postprocess},
+    framework::{Interface, Postprocess, TestFileTestSpanMap},
     LightContext, Span,
 };
 use std::path::Path;
@@ -36,7 +36,7 @@ impl ParseHigh for HardhatTs {
         context: &LightContext,
         config: &necessist_core::config::Toml,
         test_files: &[&Path],
-    ) -> Result<Vec<Span>> {
+    ) -> Result<TestFileTestSpanMap> {
         self.mocha_adapter.parse(context, config, test_files)
     }
 }
@@ -58,6 +58,7 @@ impl RunHigh for HardhatTs {
     fn exec(
         &self,
         context: &LightContext,
+        test_name: &str,
         span: &Span,
     ) -> Result<Option<(Exec, Option<Box<Postprocess>>)>> {
         if let Err(error) = compile(context) {
@@ -70,7 +71,9 @@ impl RunHigh for HardhatTs {
         command.args(["hardhat", "test", &span.source_file.to_string_lossy()]);
         command.args(&context.opts.args);
 
-        self.mocha_adapter.0.exec(context, span, &command)
+        self.mocha_adapter
+            .0
+            .exec(context, test_name, span, &command)
     }
 }
 

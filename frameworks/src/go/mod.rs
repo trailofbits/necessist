@@ -3,11 +3,12 @@ use super::{
     WalkDirResult,
 };
 use anyhow::{anyhow, Context, Result};
-use necessist_core::{util, LightContext, LineColumn, SourceFile, Span, __Rewriter as Rewriter};
-use once_cell::sync::Lazy;
-use std::{
-    collections::BTreeMap, convert::Infallible, fs::read_to_string, path::Path, process::Command,
+use necessist_core::{
+    framework::TestSpanMap, util, LightContext, LineColumn, SourceFile, Span,
+    __Rewriter as Rewriter,
 };
+use once_cell::sync::Lazy;
+use std::{convert::Infallible, fs::read_to_string, path::Path, process::Command};
 use tree_sitter::{
     Node, Parser, Point, Query, QueryCapture, QueryCursor, QueryMatches, Range, TextProvider, Tree,
 };
@@ -76,9 +77,7 @@ fn non_zero_kind_id(kind: &str) -> u16 {
 }
 
 #[derive(Debug)]
-pub struct Go {
-    span_test_name_map: BTreeMap<Span, String>,
-}
+pub struct Go;
 
 impl Go {
     pub fn applicable(context: &LightContext) -> Result<bool> {
@@ -86,9 +85,7 @@ impl Go {
     }
 
     pub fn new() -> Self {
-        Self {
-            span_test_name_map: BTreeMap::new(),
-        }
+        Self
     }
 }
 
@@ -254,20 +251,8 @@ impl ParseLow for Go {
         generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Self>,
         storage: &std::cell::RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
         file: &'ast <Self::Types as AbstractTypes>::File,
-    ) -> Result<Vec<Span>> {
+    ) -> Result<TestSpanMap> {
         visit(generic_visitor, storage, &file.1)
-    }
-
-    fn on_candidate_found(
-        &mut self,
-        _context: &LightContext,
-        _storage: &std::cell::RefCell<<Self::Types as AbstractTypes>::Storage<'_>>,
-        test_name: &str,
-        span: &Span,
-    ) -> bool {
-        self.span_test_name_map
-            .insert(span.clone(), test_name.to_owned());
-        true
     }
 
     fn test_statements<'ast>(
@@ -425,7 +410,12 @@ impl RunLow for Go {
         Self::test_command(context, test_file)
     }
 
-    fn command_to_build_test(&self, context: &LightContext, span: &Span) -> Command {
+    fn command_to_build_test(
+        &self,
+        context: &LightContext,
+        _test_name: &str,
+        span: &Span,
+    ) -> Command {
         let mut command = Self::test_command(context, &span.source_file);
         command.arg("-run=^$");
         command
@@ -434,14 +424,9 @@ impl RunLow for Go {
     fn command_to_run_test(
         &self,
         context: &LightContext,
+        test_name: &str,
         span: &Span,
-    ) -> (Command, Vec<String>, Option<(ProcessLines, String)>) {
-        #[allow(clippy::expect_used)]
-        let test_name = self
-            .span_test_name_map
-            .get(span)
-            .expect("Test name is not set");
-
+    ) -> (Command, Vec<String>, Option<ProcessLines>) {
         let mut command = Self::test_command(context, &span.source_file);
         command.args([format!("-run=^{test_name}$").as_ref(), "-v"]);
 
@@ -450,10 +435,7 @@ impl RunLow for Go {
         (
             command,
             Vec::new(),
-            Some((
-                (false, Box::new(move |line| line == needle)),
-                test_name.clone(),
-            )),
+            Some((false, Box::new(move |line| line == needle))),
         )
     }
 }

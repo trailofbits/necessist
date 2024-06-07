@@ -1,7 +1,7 @@
 use super::TryInsert;
 use anyhow::{anyhow, Error, Result};
 use cargo_metadata::{MetadataCommand, Package};
-use necessist_core::{util, Span};
+use necessist_core::{util, SourceFile};
 use std::{
     collections::BTreeMap,
     ffi::OsStr,
@@ -14,6 +14,7 @@ pub struct Storage<'ast> {
     pub module_path: Vec<&'ast Ident>,
     pub test_file_fs_module_path_cache: BTreeMap<PathBuf, Vec<String>>,
     pub test_file_package_cache: BTreeMap<PathBuf, Package>,
+    pub tests_needing_warnings: Vec<(String, Error)>,
     pub error: Option<Error>,
 }
 
@@ -23,15 +24,16 @@ impl<'ast> Storage<'ast> {
             module_path: Vec::new(),
             test_file_fs_module_path_cache: BTreeMap::new(),
             test_file_package_cache: BTreeMap::new(),
+            tests_needing_warnings: Vec::new(),
             error: None,
         }
     }
 
-    pub fn test_path(&mut self, span: &Span, name: &str) -> Result<Vec<String>> {
+    pub fn test_path(&mut self, source_file: &SourceFile, name: &str) -> Result<Vec<String>> {
         let mut test_path = cached_test_file_fs_module_path(
             &mut self.test_file_fs_module_path_cache,
             &mut self.test_file_package_cache,
-            &span.source_file,
+            source_file,
         )
         .cloned()?;
         test_path.extend(self.module_path.iter().map(ToString::to_string));

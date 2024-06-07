@@ -1,8 +1,8 @@
-use super::{AbstractTypes, MaybeNamed, Named, ParseLow, Spanned};
+use super::{AbstractTypes, MaybeNamed, Named, ParseLow, Spanned, TestSpanMap};
 use if_chain::if_chain;
 use necessist_core::{config, LightContext, SourceFile, Span};
 use paste::paste;
-use std::cell::RefCell;
+use std::{cell::RefCell, collections::BTreeSet};
 
 pub struct GenericVisitor<'context, 'config, 'framework, 'ast, T: ParseLow + ?Sized> {
     pub context: &'context LightContext<'context>,
@@ -14,7 +14,7 @@ pub struct GenericVisitor<'context, 'config, 'framework, 'ast, T: ParseLow + ?Si
     pub n_statement_leaves_visited: usize,
     pub n_before: Vec<usize>,
     pub call_statement: Option<<T::Types as AbstractTypes>::Statement<'ast>>,
-    pub spans_visited: Vec<Span>,
+    pub test_span_map: TestSpanMap,
 }
 
 /// `call_info` return values. See that method for details.
@@ -26,7 +26,8 @@ struct CallInfo {
 }
 
 struct VisitMaybeMacroCallArgs<'ast, 'storage, 'span, T: ParseLow> {
-    storage: &'storage RefCell<<T::Types as AbstractTypes>::Storage<'ast>>,
+    // smoelius: Maybe remove this `storage` field?
+    _storage: &'storage RefCell<<T::Types as AbstractTypes>::Storage<'ast>>,
     span: &'span Span,
     is_ignored_as_call: bool,
     is_method_call: bool,
@@ -44,24 +45,20 @@ macro_rules! visit_maybe_macro_call {
             let statement = $this.call_statement.take();
 
             if_chain! {
-                if let Some(test_name) = $this.test_name.as_ref();
+                if let Some(test_name) = $this.test_name.clone();
                 if statement.map_or(true, |statement| !$this.is_last_statement_in_test(statement));
                 then {
                     if let Some(statement) = statement {
                         if !$args.is_ignored_as_call {
                             let span = statement.span(&$this.source_file);
-                            if $this.framework.on_candidate_found($this.context, $args.storage, &test_name, &span) {
-                                $this.spans_visited.push(span);
-                            }
+                            $this.register_span(span, &test_name);
                         }
                     }
 
                     // smoelius: If the entire call is ignored, then treat the method call as
                     // ignored as well.
                     if !$args.is_ignored_as_call && $args.is_method_call && !$args.is_ignored_as_method_call {
-                        if $this.framework.on_candidate_found($this.context, $args.storage, &test_name, &$args.span) {
-                            $this.spans_visited.push($args.span.clone());
-                        }
+                        $this.register_span($args.span.clone(), &test_name);
                     }
 
                     // smoelius: Return false (i.e., don't descend into the call arguments) only if
@@ -82,8 +79,8 @@ macro_rules! visit_call_post {
 impl<'context, 'config, 'framework, 'ast, T: ParseLow>
     GenericVisitor<'context, 'config, 'framework, 'ast, T>
 {
-    pub fn spans_visited(self) -> Vec<Span> {
-        self.spans_visited
+    pub fn test_span_map(self) -> TestSpanMap {
+        self.test_span_map
     }
 
     #[allow(clippy::unnecessary_wraps)]
@@ -97,6 +94,8 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
         if self.config.is_ignored_test(&name) {
             return false;
         }
+
+        self.register_test(&name);
 
         assert!(self.test_name.is_none());
         self.test_name = Some(name);
@@ -172,12 +171,7 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
                 && !self.framework.statement_is_declaration(storage, statement)
             {
                 let span = statement.span(&self.source_file);
-                if self
-                    .framework
-                    .on_candidate_found(self.context, storage, test_name, &span)
-                {
-                    self.spans_visited.push(span);
-                }
+                self.register_span(span, &test_name.clone());
             }
         }
     }
@@ -197,7 +191,7 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
             visit_maybe_macro_call! {
                 self,
                 (VisitMaybeMacroCallArgs::<'_, '_, '_, T> {
-                    storage,
+                    _storage: storage,
                     span: &call_info.span,
                     is_ignored_as_call: (!inner_most_call_info.is_method && inner_most_call_info.is_ignored)
                         || (!inner_most_call_info.is_nested && call_info.is_ignored),
@@ -212,7 +206,7 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
             visit_maybe_macro_call! {
                 self,
                 (VisitMaybeMacroCallArgs::<'_, '_, '_, T> {
-                    storage,
+                    _storage: storage,
                     span: &call_span,
                     is_ignored_as_call,
                     is_method_call: false,
@@ -243,7 +237,7 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
         visit_maybe_macro_call! {
             self,
             (VisitMaybeMacroCallArgs::<'_, '_, '_, T> {
-                storage,
+                _storage: storage,
                 span: &macro_call.span(&self.source_file),
                 is_ignored_as_call: self.config.is_ignored_macro(&name),
                 is_method_call: false,
@@ -301,6 +295,21 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
                 return false;
             }
         }
+    }
+
+    fn register_test(&mut self, test_name: &str) {
+        if !self.test_span_map.contains_key(test_name) {
+            self.test_span_map
+                .insert(test_name.to_owned(), BTreeSet::new());
+        }
+    }
+
+    fn register_span(&mut self, span: Span, test_name: &str) {
+        let spans = self
+            .test_span_map
+            .get_mut(test_name)
+            .unwrap_or_else(|| panic!("Test `{test_name}` is not registered"));
+        spans.insert(span);
     }
 
     /// Serves two functions that would require similar implementations:

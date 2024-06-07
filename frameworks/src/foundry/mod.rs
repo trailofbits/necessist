@@ -4,12 +4,9 @@ use super::{
 };
 use anyhow::{anyhow, Result};
 use if_chain::if_chain;
-use necessist_core::{util, LightContext, LineColumn, SourceFile, Span};
+use necessist_core::{framework::TestSpanMap, util, LightContext, LineColumn, SourceFile, Span};
 use solang_parser::pt::{CodeLocation, Expression, Identifier, Loc, SourceUnit, Statement};
-use std::{
-    cell::RefCell, collections::BTreeMap, convert::Infallible, fs::read_to_string, path::Path,
-    process::Command,
-};
+use std::{cell::RefCell, convert::Infallible, fs::read_to_string, path::Path, process::Command};
 
 mod storage;
 use storage::Storage;
@@ -18,9 +15,7 @@ mod visitor;
 use visitor::{visit, Statements};
 
 #[derive(Debug)]
-pub struct Foundry {
-    span_test_name_map: BTreeMap<Span, String>,
-}
+pub struct Foundry;
 
 impl Foundry {
     pub fn applicable(context: &LightContext) -> Result<bool> {
@@ -32,9 +27,7 @@ impl Foundry {
     }
 
     pub fn new() -> Self {
-        Self {
-            span_test_name_map: BTreeMap::new(),
-        }
+        Self
     }
 }
 
@@ -183,19 +176,8 @@ impl ParseLow for Foundry {
         generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Self>,
         storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
         file: &'ast <Self::Types as AbstractTypes>::File,
-    ) -> Result<Vec<Span>> {
+    ) -> Result<TestSpanMap> {
         visit(generic_visitor, storage, &file.1)
-    }
-
-    fn on_candidate_found(
-        &mut self,
-        _context: &LightContext,
-        _storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'_>>,
-        test_name: &str,
-        span: &Span,
-    ) -> bool {
-        self.set_span_test_name(span, test_name);
-        true
     }
 
     fn test_statements<'ast>(
@@ -375,7 +357,12 @@ impl RunLow for Foundry {
     // passes them to the build command as well. This causes problems when the test command accepts
     // arguments that the build command doesn't. A workaround is to use, for the "build" command, a
     // test command that runs exactly zero tests.
-    fn command_to_build_test(&self, context: &LightContext, _span: &Span) -> Command {
+    fn command_to_build_test(
+        &self,
+        context: &LightContext,
+        _test_name: &str,
+        _span: &Span,
+    ) -> Command {
         let mut command = Command::new("forge");
         command.current_dir(context.root.as_path());
         command.args(["test", "--match-test='^$'"]);
@@ -385,27 +372,18 @@ impl RunLow for Foundry {
     fn command_to_run_test(
         &self,
         context: &LightContext,
+        test_name: &str,
         span: &Span,
-    ) -> (Command, Vec<String>, Option<(ProcessLines, String)>) {
-        #[allow(clippy::expect_used)]
-        let test_name = self
-            .span_test_name_map
-            .get(span)
-            .cloned()
-            .expect("Test ident is not set");
-
+    ) -> (Command, Vec<String>, Option<ProcessLines>) {
         let mut command = Self::test_command(context, &span.source_file);
-        command.args(["--match-test", &test_name]);
+        command.args(["--match-test", test_name]);
 
         (
             command,
             Vec::new(),
             Some((
-                (
-                    true,
-                    Box::new(|line| !line.starts_with("No tests match the provided pattern")),
-                ),
-                test_name,
+                true,
+                Box::new(|line| !line.starts_with("No tests match the provided pattern")),
             )),
         )
     }
@@ -424,11 +402,6 @@ impl Foundry {
                 .to_string_lossy(),
         ]);
         command
-    }
-
-    fn set_span_test_name(&mut self, span: &Span, name: &str) {
-        self.span_test_name_map
-            .insert(span.clone(), name.to_owned());
     }
 }
 
