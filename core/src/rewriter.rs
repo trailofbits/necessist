@@ -9,7 +9,7 @@ use crate::{
 use std::cell::RefCell;
 
 #[derive(Debug)]
-pub(crate) struct Rewriter<'original, 'oc> {
+pub struct Rewriter<'original, 'oc> {
     line_column: LineColumn,
     offset_calculator: &'oc RefCell<OffsetCalculator<'original>>,
     offset_based_rewriter: OffsetBasedRewriter<'original>,
@@ -27,6 +27,7 @@ impl<'original, 'oc> Rewriter<'original, 'oc> {
         }
     }
 
+    #[must_use]
     pub fn contents(self) -> String {
         use offset_based_rewriter::Interface;
 
@@ -54,6 +55,7 @@ impl<'original, 'oc> Rewriter<'original, 'oc> {
     }
 
     // smoelius: `pub` to facilitate `Span::source_text` (among other things).
+    #[must_use]
     pub fn offsets_from_span(&self, span: &Span) -> (usize, usize) {
         use offset_calculator::Interface;
 

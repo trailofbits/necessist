@@ -3,7 +3,7 @@ use super::{
     WalkDirResult,
 };
 use anyhow::{anyhow, Context, Result};
-use necessist_core::{util, LightContext, LineColumn, SourceFile, Span};
+use necessist_core::{util, LightContext, LineColumn, SourceFile, Span, __Rewriter as Rewriter};
 use once_cell::sync::Lazy;
 use std::{
     collections::BTreeMap, convert::Infallible, fs::read_to_string, path::Path, process::Command,
@@ -544,23 +544,41 @@ trait ToInternalSpan {
 
 impl ToInternalSpan for Range {
     fn to_internal_span(&self, source_file: &SourceFile) -> Span {
+        let contents = source_file.contents();
+        let rewriter = Rewriter::new(contents, source_file.offset_calculator());
         Span {
             source_file: source_file.clone(),
-            start: self.start_point.to_line_column(),
-            end: self.end_point.to_line_column(),
+            start: self.start_point.to_line_column(source_file, &rewriter),
+            end: self.end_point.to_line_column(source_file, &rewriter),
         }
     }
 }
 
 trait ToLineColumn {
-    fn to_line_column(&self) -> LineColumn;
+    fn to_line_column(&self, source_file: &SourceFile, rewriter: &Rewriter) -> LineColumn;
 }
 
+// smoelius: `Point`'s `column` field counts bytes, not chars. See:
+// https://github.com/tree-sitter/tree-sitter/issues/397#issuecomment-515115012
 impl ToLineColumn for Point {
-    fn to_line_column(&self) -> LineColumn {
+    fn to_line_column(&self, source_file: &SourceFile, rewriter: &Rewriter) -> LineColumn {
+        let line_column = LineColumn {
+            line: self.row + 1,
+            column: 0,
+        };
+        let (line_offset, _) = rewriter.offsets_from_span(&Span {
+            source_file: source_file.clone(),
+            start: line_column,
+            end: line_column,
+        });
+        let suffix = &source_file.contents()[line_offset..];
+        let column = suffix
+            .char_indices()
+            .position(|(offset, _)| self.column == offset)
+            .unwrap();
         LineColumn {
             line: self.row + 1,
-            column: self.column,
+            column,
         }
     }
 }

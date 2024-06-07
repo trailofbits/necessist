@@ -9723,8 +9723,8 @@ $DIR/cmd/xl-storage_unix_test.go: `.AppendFile(context.Background(), testCase.vo
 $DIR/cmd/xl-storage_unix_test.go: `.Background()`
 $DIR/cmd/xl-storage_unix_test.go: `.StatInfoFile(context.Background(), testCase.volName, "hello-world.txt/"+xlStorageFormatFile, false)`
 $DIR/cmd/xl-storage_unix_test.go: `.Background()`
-$DIR/cmd/xl-storage_windows_test.go: `.Repeat([]byte("界"), 85)),`
-$DIR/cmd/xl-storage_windows_test.go: `.Repeat([]byte("界"), 280)),`
+$DIR/cmd/xl-storage_windows_test.go: `.Repeat([]byte("界"), 85)`
+$DIR/cmd/xl-storage_windows_test.go: `.Repeat([]byte("界"), 280)`
 $DIR/cmd/xl-storage_windows_test.go: `.TempDir()`
 $DIR/cmd/xl-storage_windows_test.go: `err = fs.MakeVol(context.Background(), "voldir")`
 $DIR/cmd/xl-storage_windows_test.go: `.MakeVol(context.Background(), "voldir")`
