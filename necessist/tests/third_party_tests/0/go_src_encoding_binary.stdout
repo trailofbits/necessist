@@ -1,4 +1,4 @@
-112 candidates in 2 test files
+112 candidates in 30 tests in 3 test files
 $DIR/src/encoding/binary/binary_test.go: dry running
 $DIR/src/encoding/binary/binary_test.go: mutilating
 $DIR/src/encoding/binary/binary_test.go: `.NewReader(src)` nonbuildable

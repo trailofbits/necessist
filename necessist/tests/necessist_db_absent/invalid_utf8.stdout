@@ -1,4 +1,4 @@
-3 candidates in 1 test file
+3 candidates in 1 test in 1 test file
 fixtures/invalid_utf8/src/lib.rs: dry running
 fixtures/invalid_utf8/src/lib.rs: mutilating
 fixtures/invalid_utf8/src/lib.rs:8:5-8:19: Warning: invalid utf-8 sequence of 1 bytes from index 0: "/xFE"`

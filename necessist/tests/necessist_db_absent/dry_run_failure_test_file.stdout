@@ -1,4 +1,4 @@
-1 candidates in 1 test file
+1 candidates in 1 test in 1 test file
 fixtures/dry_run_failure/tests/b.rs: dry running
 fixtures/dry_run_failure/tests/b.rs: mutilating
 fixtures/dry_run_failure/tests/b.rs:4:5-4:12: `n += 1;` passed

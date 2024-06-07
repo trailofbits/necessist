@@ -1,4 +1,4 @@
-62 candidates in 1 test file
+62 candidates in 4 tests in 1 test file
 $DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: dry running
 $DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: mutilating
 $DIR/contracts/src/v0.8/transmission/test/EIP_712_1014_4337.t.sol: `.calculateSmartContractAccountAddress(

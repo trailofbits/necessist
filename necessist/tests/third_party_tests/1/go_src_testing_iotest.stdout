@@ -1,4 +1,4 @@
-134 candidates in 3 test files
+134 candidates in 15 tests in 4 test files
 $DIR/src/testing/iotest/logger_test.go: dry running
 $DIR/src/testing/iotest/logger_test.go: mutilating
 $DIR/src/testing/iotest/logger_test.go: `.Writer()` nonbuildable

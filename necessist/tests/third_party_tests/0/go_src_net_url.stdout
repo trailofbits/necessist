@@ -1,4 +1,4 @@
-74 candidates in 1 test file
+74 candidates in 25 tests in 2 test files
 $DIR/src/net/url/url_test.go: dry running
 $DIR/src/net/url/url_test.go: mutilating
 $DIR/src/net/url/url_test.go: `.DeepEqual(u, tt.out)` nonbuildable

@@ -1,4 +1,4 @@
-30 candidates in 1 test file
+30 candidates in 9 tests in 1 test file
 $DIR/proptest/src/sample.rs: dry running
 $DIR/proptest/src/sample.rs: mutilating
 $DIR/proptest/src/sample.rs: `.new_tree(&mut runner)` nonbuildable

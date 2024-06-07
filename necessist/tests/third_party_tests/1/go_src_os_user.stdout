@@ -1,4 +1,4 @@
-18 candidates in 3 test files
+18 candidates in 13 tests in 5 test files
 $DIR/src/os/user/listgroups_unix_test.go: dry running
 $DIR/src/os/user/listgroups_unix_test.go: mutilating
 $DIR/src/os/user/listgroups_unix_test.go: Warning: Failed to run test `TestListGroups`
