@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.0
+
+- Fix mishandling of multibyte characters in the Go framework ([#1127](https://github.com/trailofbits/necessist/pull/1127))
+- FEATURE: More informative summaries, e.g., "k removal candidates in m tests in n test files". Also, tests and test files are counted even if they contain no removal candidates. (fixes [#850](https://github.com/trailofbits/necessist/issues/850)) ([#1128](https://github.com/trailofbits/necessist/pull/1128))
+
 ## 0.4.9
 
 - Add `panic` to list of ignored Go functions ([#1093](https://github.com/trailofbits/necessist/pull/1093))
