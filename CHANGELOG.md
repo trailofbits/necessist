@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.1
+
+- Update `solang-parser` to version 0.3.4 ([#1132](https://github.com/trailofbits/necessist/pull/1132))
+
 ## 0.5.0
 
 - Fix mishandling of multibyte characters in the Go framework ([#1127](https://github.com/trailofbits/necessist/pull/1127))
