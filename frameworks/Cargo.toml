@@ -37,7 +37,7 @@ toml_edit = "0.22"
 # Foundry
 # smoelius: New `solang-parser` releases may contain breaking changes:
 # https://github.com/hyperledger/solang/pull/1213
-solang-parser = "=0.3.3"
+solang-parser = "=0.3.4"
 
 # Go
 tree-sitter = "0.22"
