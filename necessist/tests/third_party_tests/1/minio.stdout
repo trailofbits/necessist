@@ -6552,6 +6552,96 @@ $DIR/cmd/server_test.go: `.Run(fmt.Sprintf("Test: %d, ServerType: %s", i+1, test
 		})`
 $DIR/cmd/server_test.go: `.Sprintf("Test: %d, ServerType: %s", i+1, testCase.serverType)`
 $DIR/cmd/server_test.go: `runAllTests(testCase, &check{t, testCase.serverType})`
+$DIR/cmd/sftp-server_test.go: `t.Run(
+			fmt.Sprintf("Test: %d, ServerType: %s", i+1, testCase.ServerTypeDescription),
+			func(t *testing.T) {
+				c := &check{t, testCase.serverType}
+				suite := testCase
+
+				suite.SetUpSuite(c)
+
+				suite.SFTPServiceAccountLogin(c)
+				suite.SFTPInvalidServiceAccountPassword(c)
+
+				// LDAP tests
+				ldapServer := os.Getenv(EnvTestLDAPServer)
+				if ldapServer == "" {
+					c.Skipf("Skipping LDAP test as no LDAP server is provided via %s", EnvTestLDAPServer)
+				}
+
+				suite.SetUpLDAP(c, ldapServer)
+
+				suite.SFTPFailedAuthDueToMissingPolicy(c)
+				suite.SFTPFailedAuthDueToInvalidUser(c)
+				suite.SFTPFailedForcedServiceAccountAuthOnLDAPUser(c)
+				suite.SFTPFailedAuthDueToInvalidPassword(c)
+
+				suite.SFTPValidLDAPLoginWithPassword(c)
+
+				suite.SFTPPublicKeyAuthentication(c)
+				suite.SFTPFailedPublicKeyAuthenticationInvalidKey(c)
+
+				suite.TearDownSuite(c)
+			},
+		)`
+$DIR/cmd/sftp-server_test.go: `.Run(
+			fmt.Sprintf("Test: %d, ServerType: %s", i+1, testCase.ServerTypeDescription),
+			func(t *testing.T) {
+				c := &check{t, testCase.serverType}
+				suite := testCase
+
+				suite.SetUpSuite(c)
+
+				suite.SFTPServiceAccountLogin(c)
+				suite.SFTPInvalidServiceAccountPassword(c)
+
+				// LDAP tests
+				ldapServer := os.Getenv(EnvTestLDAPServer)
+				if ldapServer == "" {
+					c.Skipf("Skipping LDAP test as no LDAP server is provided via %s", EnvTestLDAPServer)
+				}
+
+				suite.SetUpLDAP(c, ldapServer)
+
+				suite.SFTPFailedAuthDueToMissingPolicy(c)
+				suite.SFTPFailedAuthDueToInvalidUser(c)
+				suite.SFTPFailedForcedServiceAccountAuthOnLDAPUser(c)
+				suite.SFTPFailedAuthDueToInvalidPassword(c)
+
+				suite.SFTPValidLDAPLoginWithPassword(c)
+
+				suite.SFTPPublicKeyAuthentication(c)
+				suite.SFTPFailedPublicKeyAuthenticationInvalidKey(c)
+
+				suite.TearDownSuite(c)
+			},
+		)`
+$DIR/cmd/sftp-server_test.go: `.Sprintf("Test: %d, ServerType: %s", i+1, testCase.ServerTypeDescription)`
+$DIR/cmd/sftp-server_test.go: `suite.SetUpSuite(c)`
+$DIR/cmd/sftp-server_test.go: `.SetUpSuite(c)`
+$DIR/cmd/sftp-server_test.go: `suite.SFTPServiceAccountLogin(c)`
+$DIR/cmd/sftp-server_test.go: `.SFTPServiceAccountLogin(c)`
+$DIR/cmd/sftp-server_test.go: `suite.SFTPInvalidServiceAccountPassword(c)`
+$DIR/cmd/sftp-server_test.go: `.SFTPInvalidServiceAccountPassword(c)`
+$DIR/cmd/sftp-server_test.go: `.Getenv(EnvTestLDAPServer)`
+$DIR/cmd/sftp-server_test.go: `suite.SetUpLDAP(c, ldapServer)`
+$DIR/cmd/sftp-server_test.go: `.SetUpLDAP(c, ldapServer)`
+$DIR/cmd/sftp-server_test.go: `suite.SFTPFailedAuthDueToMissingPolicy(c)`
+$DIR/cmd/sftp-server_test.go: `.SFTPFailedAuthDueToMissingPolicy(c)`
+$DIR/cmd/sftp-server_test.go: `suite.SFTPFailedAuthDueToInvalidUser(c)`
+$DIR/cmd/sftp-server_test.go: `.SFTPFailedAuthDueToInvalidUser(c)`
+$DIR/cmd/sftp-server_test.go: `suite.SFTPFailedForcedServiceAccountAuthOnLDAPUser(c)`
+$DIR/cmd/sftp-server_test.go: `.SFTPFailedForcedServiceAccountAuthOnLDAPUser(c)`
+$DIR/cmd/sftp-server_test.go: `suite.SFTPFailedAuthDueToInvalidPassword(c)`
+$DIR/cmd/sftp-server_test.go: `.SFTPFailedAuthDueToInvalidPassword(c)`
+$DIR/cmd/sftp-server_test.go: `suite.SFTPValidLDAPLoginWithPassword(c)`
+$DIR/cmd/sftp-server_test.go: `.SFTPValidLDAPLoginWithPassword(c)`
+$DIR/cmd/sftp-server_test.go: `suite.SFTPPublicKeyAuthentication(c)`
+$DIR/cmd/sftp-server_test.go: `.SFTPPublicKeyAuthentication(c)`
+$DIR/cmd/sftp-server_test.go: `suite.SFTPFailedPublicKeyAuthenticationInvalidKey(c)`
+$DIR/cmd/sftp-server_test.go: `.SFTPFailedPublicKeyAuthenticationInvalidKey(c)`
+$DIR/cmd/sftp-server_test.go: `suite.TearDownSuite(c)`
+$DIR/cmd/sftp-server_test.go: `.TearDownSuite(c)`
 $DIR/cmd/signature-v2_test.go: `copy(sortedResourceList, resourceList)`
 $DIR/cmd/signature-v2_test.go: `sort.Strings(sortedResourceList)`
 $DIR/cmd/signature-v2_test.go: `.Strings(sortedResourceList)`
@@ -8005,7 +8095,7 @@ $DIR/cmd/test-utils_test.go: `.Unsetenv(env)`
 $DIR/cmd/test-utils_test.go: `globalIsDistErasure = false`
 $DIR/cmd/test-utils_test.go: `color.Output = io.Discard`
 $DIR/cmd/test-utils_test.go: `logger.DisableErrorLog = true`
-$DIR/cmd/test-utils_test.go: `setMaxResources(nil)`
+$DIR/cmd/test-utils_test.go: `setMaxResources(serverCtxt{})`
 $DIR/cmd/test-utils_test.go: `globalConsoleSys = NewConsoleLogger(context.Background(), io.Discard)`
 $DIR/cmd/test-utils_test.go: `.Background()`
 $DIR/cmd/test-utils_test.go: `globalInternodeTransport = NewInternodeHTTPTransport(0)()`
