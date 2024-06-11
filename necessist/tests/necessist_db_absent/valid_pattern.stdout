@@ -2,17 +2,17 @@
 fixtures/valid_pattern/src/lib.rs: dry running
 fixtures/valid_pattern/src/lib.rs: mutilating
 fixtures/valid_pattern/src/lib.rs:49:5-49:20: `foo().method();` passed
-fixtures/valid_pattern/src/lib.rs:49:10-49:19: `.method()` passed
 fixtures/valid_pattern/src/lib.rs:50:5-50:26: `foo().method().baz();` passed
-fixtures/valid_pattern/src/lib.rs:50:19-50:25: `.baz()` passed
 fixtures/valid_pattern/src/lib.rs:51:5-51:28: `foo().ignored_method();` passed
 fixtures/valid_pattern/src/lib.rs:52:5-52:34: `foo().ignored_method().baz();` passed
-fixtures/valid_pattern/src/lib.rs:52:27-52:33: `.baz()` passed
 fixtures/valid_pattern/src/lib.rs:54:5-54:18: `bar.method();` passed
 fixtures/valid_pattern/src/lib.rs:55:5-55:24: `bar.method().baz();` passed
-fixtures/valid_pattern/src/lib.rs:55:17-55:23: `.baz()` passed
 fixtures/valid_pattern/src/lib.rs:57:5-57:32: `bar.ignored_method().baz();` passed
-fixtures/valid_pattern/src/lib.rs:57:25-57:31: `.baz()` passed
 fixtures/valid_pattern/src/lib.rs:59:5-59:24: `bar.field.method();` passed
 fixtures/valid_pattern/src/lib.rs:60:5-60:30: `bar.field.method().baz();` passed
+fixtures/valid_pattern/src/lib.rs:49:10-49:19: `.method()` passed
+fixtures/valid_pattern/src/lib.rs:50:19-50:25: `.baz()` passed
+fixtures/valid_pattern/src/lib.rs:52:27-52:33: `.baz()` passed
+fixtures/valid_pattern/src/lib.rs:55:17-55:23: `.baz()` passed
+fixtures/valid_pattern/src/lib.rs:57:25-57:31: `.baz()` passed
 fixtures/valid_pattern/src/lib.rs:60:23-60:29: `.baz()` passed

@@ -24,15 +24,15 @@ $DIR/integration_tests/tests/clouddirectory.rs: `.list_directories(request)`
 $DIR/integration_tests/tests/cloudformation.rs: `.list_stacks(request)`
 $DIR/integration_tests/tests/cloudformation.rs: `.list_stacks(request)`
 $DIR/integration_tests/tests/cloudfront.rs: `.list_distributions(request)`
+$DIR/integration_tests/tests/cloudhsm.rs: `()`
+$DIR/integration_tests/tests/cloudhsm.rs: `()`
+$DIR/integration_tests/tests/cloudhsm.rs: `()`
 $DIR/integration_tests/tests/cloudhsm.rs: `.list_hapgs(request)`
 $DIR/integration_tests/tests/cloudhsm.rs: `.contains("This service is unavailable.")`
-$DIR/integration_tests/tests/cloudhsm.rs: `()`
 $DIR/integration_tests/tests/cloudhsm.rs: `.list_hsms(request)`
 $DIR/integration_tests/tests/cloudhsm.rs: `.contains("This service is unavailable.")`
-$DIR/integration_tests/tests/cloudhsm.rs: `()`
 $DIR/integration_tests/tests/cloudhsm.rs: `.list_luna_clients(request)`
 $DIR/integration_tests/tests/cloudhsm.rs: `.contains("This service is unavailable.")`
-$DIR/integration_tests/tests/cloudhsm.rs: `()`
 $DIR/integration_tests/tests/cloudhsmv2.rs: `.describe_clusters(request)`
 $DIR/integration_tests/tests/cloudsearch.rs: `.describe_domains(request)`
 $DIR/integration_tests/tests/cloudtrail.rs: `.describe_trails(request)`
@@ -45,9 +45,13 @@ $DIR/integration_tests/tests/codestar.rs: `.list_projects(request)`
 $DIR/integration_tests/tests/cognito-idp.rs: `.list_user_pools(request)`
 $DIR/integration_tests/tests/cognito-sync.rs: `.list_identity_pool_usage(request)`
 $DIR/integration_tests/tests/cognitoidentity.rs: `request.max_results = 10;`
-$DIR/integration_tests/tests/cognitoidentity.rs: `.list_identity_pools(request)`
 $DIR/integration_tests/tests/cognitoidentity.rs: `request.max_results = 10;`
 $DIR/integration_tests/tests/cognitoidentity.rs: `request.identity_pool_id = "invalid".to_string();`
+$DIR/integration_tests/tests/cognitoidentity.rs: `roles.insert("authenticated".to_string(), role.arn.clone());`
+$DIR/integration_tests/tests/cognitoidentity.rs: `roles.insert("unauthenticated".to_string(), role.arn.clone());`
+$DIR/integration_tests/tests/cognitoidentity.rs: `logins.insert(developper_provider_name.to_string(), login.to_string());`
+$DIR/integration_tests/tests/cognitoidentity.rs: `sleep(Duration::from_secs(10)).await;`
+$DIR/integration_tests/tests/cognitoidentity.rs: `.list_identity_pools(request)`
 $DIR/integration_tests/tests/cognitoidentity.rs: `.list_identities(request)`
 $DIR/integration_tests/tests/cognitoidentity.rs: `.nanosecond()`
 $DIR/integration_tests/tests/cognitoidentity.rs: `.create_identity_pool(create_identity_input)`
@@ -55,15 +59,11 @@ $DIR/integration_tests/tests/cognitoidentity.rs: `.replace("'", "\"")`
 $DIR/integration_tests/tests/cognitoidentity.rs: `.create_role(input_create_role)`
 $DIR/integration_tests/tests/cognitoidentity.rs: `.replace("'", "\"")`
 $DIR/integration_tests/tests/cognitoidentity.rs: `.put_role_policy(role_policy_input)`
-$DIR/integration_tests/tests/cognitoidentity.rs: `roles.insert("authenticated".to_string(), role.arn.clone());`
 $DIR/integration_tests/tests/cognitoidentity.rs: `.insert("authenticated".to_string(), role.arn.clone())`
-$DIR/integration_tests/tests/cognitoidentity.rs: `roles.insert("unauthenticated".to_string(), role.arn.clone());`
 $DIR/integration_tests/tests/cognitoidentity.rs: `.insert("unauthenticated".to_string(), role.arn.clone())`
 $DIR/integration_tests/tests/cognitoidentity.rs: `.set_identity_pool_roles(roles_input)`
-$DIR/integration_tests/tests/cognitoidentity.rs: `logins.insert(developper_provider_name.to_string(), login.to_string());`
 $DIR/integration_tests/tests/cognitoidentity.rs: `.insert(developper_provider_name.to_string(), login.to_string())`
 $DIR/integration_tests/tests/cognitoidentity.rs: `.get_open_id_token_for_developer_identity(register_input)`
-$DIR/integration_tests/tests/cognitoidentity.rs: `sleep(Duration::from_secs(10)).await;`
 $DIR/integration_tests/tests/cognitoidentity.rs: `.identity_id(response.identity_id.unwrap())`
 $DIR/integration_tests/tests/cognitoidentity.rs: `.region(region.clone())`
 $DIR/integration_tests/tests/cognitoidentity.rs: `.login("cognito-identity.amazonaws.com".to_string(), response.token.unwrap())`
@@ -76,31 +76,31 @@ $DIR/integration_tests/tests/comprehend.rs: `.detect_sentiment(request)`
 $DIR/integration_tests/tests/comprehendmedical.rs: `.detect_phi(request)`
 $DIR/integration_tests/tests/config.rs: `.describe_config_rules(request)`
 $DIR/integration_tests/tests/config.rs: `.describe_delivery_channels(request)`
-$DIR/integration_tests/tests/core.rs: `.credentials()`
 $DIR/integration_tests/tests/core.rs: `params.put("Action", "GetCallerIdentity");`
-$DIR/integration_tests/tests/core.rs: `.put("Action", "GetCallerIdentity")`
 $DIR/integration_tests/tests/core.rs: `params.put("Version", "2011-06-15");`
-$DIR/integration_tests/tests/core.rs: `.put("Version", "2011-06-15")`
 $DIR/integration_tests/tests/core.rs: `request.set_params(params);`
-$DIR/integration_tests/tests/core.rs: `.set_params(params)`
 $DIR/integration_tests/tests/core.rs: `request.add_header("x-test-header", "foobar");`
+$DIR/integration_tests/tests/core.rs: `params.put("Action", "GetCallerIdentity");`
+$DIR/integration_tests/tests/core.rs: `params.put("Version", "2011-06-15");`
+$DIR/integration_tests/tests/core.rs: `request.set_params(params);`
+$DIR/integration_tests/tests/core.rs: `params.put("Action", "GetCallerIdentity");`
+$DIR/integration_tests/tests/core.rs: `params.put("Version", "2011-06-15");`
+$DIR/integration_tests/tests/core.rs: `request.set_params(params);`
+$DIR/integration_tests/tests/core.rs: `.credentials()`
+$DIR/integration_tests/tests/core.rs: `.put("Action", "GetCallerIdentity")`
+$DIR/integration_tests/tests/core.rs: `.put("Version", "2011-06-15")`
+$DIR/integration_tests/tests/core.rs: `.set_params(params)`
 $DIR/integration_tests/tests/core.rs: `.add_header("x-test-header", "foobar")`
 $DIR/integration_tests/tests/core.rs: `.generate_presigned_url(&credentials, &std::time::Duration::from_secs(60), true)`
 $DIR/integration_tests/tests/core.rs: `.get(&url)`
 $DIR/integration_tests/tests/core.rs: `.header("x-test-header", "foobar")`
 $DIR/integration_tests/tests/core.rs: `.send()`
-$DIR/integration_tests/tests/core.rs: `params.put("Action", "GetCallerIdentity");`
 $DIR/integration_tests/tests/core.rs: `.put("Action", "GetCallerIdentity")`
-$DIR/integration_tests/tests/core.rs: `params.put("Version", "2011-06-15");`
 $DIR/integration_tests/tests/core.rs: `.put("Version", "2011-06-15")`
-$DIR/integration_tests/tests/core.rs: `request.set_params(params);`
 $DIR/integration_tests/tests/core.rs: `.set_params(params)`
 $DIR/integration_tests/tests/core.rs: `.sign_and_dispatch(request)`
-$DIR/integration_tests/tests/core.rs: `params.put("Action", "GetCallerIdentity");`
 $DIR/integration_tests/tests/core.rs: `.put("Action", "GetCallerIdentity")`
-$DIR/integration_tests/tests/core.rs: `params.put("Version", "2011-06-15");`
 $DIR/integration_tests/tests/core.rs: `.put("Version", "2011-06-15")`
-$DIR/integration_tests/tests/core.rs: `request.set_params(params);`
 $DIR/integration_tests/tests/core.rs: `.set_params(params)`
 $DIR/integration_tests/tests/core.rs: `.sign_and_dispatch(request)`
 $DIR/integration_tests/tests/cur.rs: `.describe_report_definitions(request)`
@@ -115,11 +115,11 @@ $DIR/integration_tests/tests/discovery.rs: `.describe_tags(request)`
 $DIR/integration_tests/tests/discovery.rs: `.list_configurations(request)`
 $DIR/integration_tests/tests/dms.rs: `.describe_endpoints(request)`
 $DIR/integration_tests/tests/docdb.rs: `.describe_db_clusters(request)`
+$DIR/integration_tests/tests/ds.rs: `request.directory_id = "d-11111aaaaa".to_string();`
+$DIR/integration_tests/tests/ds.rs: `request.directory_id = "d-11111aaaaa".to_string();`
 $DIR/integration_tests/tests/ds.rs: `.describe_trusts(request)`
 $DIR/integration_tests/tests/ds.rs: `.describe_directories(request)`
-$DIR/integration_tests/tests/ds.rs: `request.directory_id = "d-11111aaaaa".to_string();`
 $DIR/integration_tests/tests/ds.rs: `.describe_conditional_forwarders(request)`
-$DIR/integration_tests/tests/ds.rs: `request.directory_id = "d-11111aaaaa".to_string();`
 $DIR/integration_tests/tests/ds.rs: `.describe_domain_controllers(request)`
 $DIR/integration_tests/tests/ds.rs: `.describe_event_topics(request)`
 $DIR/integration_tests/tests/dynamodb.rs: `.list_tables(request)`
@@ -149,37 +149,37 @@ $DIR/integration_tests/tests/eks.rs: `.list_clusters(request)`
 $DIR/integration_tests/tests/elasticache.rs: `.describe_cache_clusters(request)`
 $DIR/integration_tests/tests/elasticbeanstalk.rs: `.describe_applications(request)`
 $DIR/integration_tests/tests/elastictranscoder.rs: `initialize().await;`
+$DIR/integration_tests/tests/elastictranscoder.rs: `client.delete_bucket(&s3_client, &input_bucket).await;`
+$DIR/integration_tests/tests/elastictranscoder.rs: `initialize().await;`
+$DIR/integration_tests/tests/elastictranscoder.rs: `info!("Created preset with id: {:?}", &id);`
+$DIR/integration_tests/tests/elastictranscoder.rs: `initialize().await;`
+$DIR/integration_tests/tests/elastictranscoder.rs: `tokio::time::sleep(std::time::Duration::from_secs(2)).await;`
+$DIR/integration_tests/tests/elastictranscoder.rs: `initialize().await;`
+$DIR/integration_tests/tests/elastictranscoder.rs: `initialize().await;`
+$DIR/integration_tests/tests/elastictranscoder.rs: `initialize().await;`
+$DIR/integration_tests/tests/elastictranscoder.rs: `info!("Got list of presets.");`
+$DIR/integration_tests/tests/elastictranscoder.rs: `info!("Preset: {:?}", preset.name);`
+$DIR/integration_tests/tests/elastictranscoder.rs: `web_preset.unwrap().clone()`
+$DIR/integration_tests/tests/elastictranscoder.rs: `initialize().await;`
+$DIR/integration_tests/tests/elastictranscoder.rs: `info!("Got preset: {:?}", preset.name);`
 $DIR/integration_tests/tests/elastictranscoder.rs: `.create_s3_client()`
 $DIR/integration_tests/tests/elastictranscoder.rs: `.create_bucket(&s3_client)`
 $DIR/integration_tests/tests/elastictranscoder.rs: `.create_bucket(&s3_client)`
 $DIR/integration_tests/tests/elastictranscoder.rs: `.create_pipeline(request)`
-$DIR/integration_tests/tests/elastictranscoder.rs: `client.delete_bucket(&s3_client, &input_bucket).await;`
 $DIR/integration_tests/tests/elastictranscoder.rs: `.delete_bucket(&s3_client, &input_bucket)`
-$DIR/integration_tests/tests/elastictranscoder.rs: `initialize().await;`
 $DIR/integration_tests/tests/elastictranscoder.rs: `.create_preset(request)`
-$DIR/integration_tests/tests/elastictranscoder.rs: `info!("Created preset with id: {:?}", &id);`
 $DIR/integration_tests/tests/elastictranscoder.rs: `.delete_preset(request)`
-$DIR/integration_tests/tests/elastictranscoder.rs: `initialize().await;`
 $DIR/integration_tests/tests/elastictranscoder.rs: `.create_preset(request)`
-$DIR/integration_tests/tests/elastictranscoder.rs: `tokio::time::sleep(std::time::Duration::from_secs(2)).await;`
 $DIR/integration_tests/tests/elastictranscoder.rs: `.delete_preset(request)`
-$DIR/integration_tests/tests/elastictranscoder.rs: `initialize().await;`
 $DIR/integration_tests/tests/elastictranscoder.rs: `.list_jobs_by_status(request)`
-$DIR/integration_tests/tests/elastictranscoder.rs: `initialize().await;`
 $DIR/integration_tests/tests/elastictranscoder.rs: `.list_pipelines(request)`
-$DIR/integration_tests/tests/elastictranscoder.rs: `initialize().await;`
 $DIR/integration_tests/tests/elastictranscoder.rs: `.list_presets(request)`
-$DIR/integration_tests/tests/elastictranscoder.rs: `info!("Got list of presets.");`
-$DIR/integration_tests/tests/elastictranscoder.rs: `info!("Preset: {:?}", preset.name);`
 $DIR/integration_tests/tests/elastictranscoder.rs: `.filter(|x| x.id == Some(AWS_ETS_WEB_PRESET_ID.to_owned()))`
 $DIR/integration_tests/tests/elastictranscoder.rs: `.next()`
 $DIR/integration_tests/tests/elastictranscoder.rs: `.list_presets(page_two_request)`
 $DIR/integration_tests/tests/elastictranscoder.rs: `.filter(|x| x.id == Some(AWS_ETS_WEB_PRESET_ID.to_owned()))`
 $DIR/integration_tests/tests/elastictranscoder.rs: `.next()`
-$DIR/integration_tests/tests/elastictranscoder.rs: `web_preset.unwrap().clone()`
-$DIR/integration_tests/tests/elastictranscoder.rs: `initialize().await;`
 $DIR/integration_tests/tests/elastictranscoder.rs: `.read_preset(request)`
-$DIR/integration_tests/tests/elastictranscoder.rs: `info!("Got preset: {:?}", preset.name);`
 $DIR/integration_tests/tests/elb.rs: `.describe_load_balancers(request)`
 $DIR/integration_tests/tests/elbv2.rs: `.describe_load_balancers(request)`
 $DIR/integration_tests/tests/emr.rs: `.list_clusters(request)`
@@ -199,7 +199,6 @@ $DIR/integration_tests/tests/importexport.rs: `.list_jobs(request)`
 $DIR/integration_tests/tests/inspector.rs: `.list_assessment_runs(request)`
 $DIR/integration_tests/tests/iot.rs: `.list_things(request)`
 $DIR/integration_tests/tests/kafka.rs: `.list_clusters(request)`
-$DIR/integration_tests/tests/kinesis.rs: `.list_streams(request)`
 $DIR/integration_tests/tests/kinesis.rs: `ensure_cleanup(&test_stream, || async {
         let stream = test_stream.borrow();
 
@@ -320,18 +319,21 @@ $DIR/integration_tests/tests/kinesis.rs: `ensure_cleanup(&test_stream, || async 
         println!("Events: {:?}", events);
         assert_eq!(events.len(), 5);
     }).await;`
+$DIR/integration_tests/tests/kinesis.rs: `sleep(std::time::Duration::from_secs(2)).await;`
+$DIR/integration_tests/tests/kinesis.rs: `tokio::time::sleep(Duration::from_secs(10)).await;`
+$DIR/integration_tests/tests/kinesis.rs: `sleep(std::time::Duration::from_secs(2)).await;`
+$DIR/integration_tests/tests/kinesis.rs: `events.extend(e.records);`
+$DIR/integration_tests/tests/kinesis.rs: `.list_streams(request)`
 $DIR/integration_tests/tests/kinesis.rs: `.describe_stream(rusoto_kinesis::DescribeStreamInput {
                 stream_name: stream.name.clone(),
 
                 ..Default::default()
             })`
-$DIR/integration_tests/tests/kinesis.rs: `sleep(std::time::Duration::from_secs(2)).await;`
 $DIR/integration_tests/tests/kinesis.rs: `.start_stream_encryption(rusoto_kinesis::StartStreamEncryptionInput {
                 encryption_type: "KMS".to_string(),
                 key_id: kms_id,
                 stream_name: stream.name.clone(),
             })`
-$DIR/integration_tests/tests/kinesis.rs: `tokio::time::sleep(Duration::from_secs(10)).await;`
 $DIR/integration_tests/tests/kinesis.rs: `.register_stream_consumer(rusoto_kinesis::RegisterStreamConsumerInput {
                 consumer_name: "test-consumer".to_string(),
                 stream_arn: stream.arn.clone(),
@@ -342,7 +344,6 @@ $DIR/integration_tests/tests/kinesis.rs: `.describe_stream_consumer(rusoto_kines
 
                 ..Default::default()
             })`
-$DIR/integration_tests/tests/kinesis.rs: `sleep(std::time::Duration::from_secs(2)).await;`
 $DIR/integration_tests/tests/kinesis.rs: `.list_shards(rusoto_kinesis::ListShardsInput {
                 stream_name: Some(stream.name.clone()),
 
@@ -365,7 +366,6 @@ $DIR/integration_tests/tests/kinesis.rs: `.put_record(rusoto_kinesis::PutRecordI
                 ..Default::default()
             })`
 $DIR/integration_tests/tests/kinesis.rs: `.next()`
-$DIR/integration_tests/tests/kinesis.rs: `events.extend(e.records);`
 $DIR/integration_tests/tests/kinesis.rs: `.extend(e.records)`
 $DIR/integration_tests/tests/kinesisanalytics.rs: `.list_applications(request)`
 $DIR/integration_tests/tests/kinesisvideo.rs: `.list_streams(request)`
@@ -384,7 +384,6 @@ $DIR/integration_tests/tests/medialive.rs: `.list_channels(request)`
 $DIR/integration_tests/tests/mediapackage.rs: `.list_origin_endpoints(request)`
 $DIR/integration_tests/tests/mgh.rs: `.list_migration_tasks(request)`
 $DIR/integration_tests/tests/mq.rs: `.list_brokers(request)`
-$DIR/integration_tests/tests/mturk.rs: `.list_hi_ts(request)`
 $DIR/integration_tests/tests/mturk.rs: `match e {
                 RusotoError::Unknown(ref e) => assert!(
                     str::from_utf8(&e.body).unwrap().contains(
@@ -395,6 +394,7 @@ $DIR/integration_tests/tests/mturk.rs: `match e {
                 RusotoError::Service(ListHITsError::RequestError(_)) => (), // request doesn't work without a linked mturk account, this is ok
                 _ => panic!("Should have a typed error from MTurk, got {:?}", e),
             }`
+$DIR/integration_tests/tests/mturk.rs: `.list_hi_ts(request)`
 $DIR/integration_tests/tests/neptune.rs: `.describe_db_clusters(request)`
 $DIR/integration_tests/tests/opsworks.rs: `.describe_stacks(request)`
 $DIR/integration_tests/tests/opsworks.rs: `.describe_my_user_profile()`
@@ -407,8 +407,8 @@ $DIR/integration_tests/tests/ram.rs: `.list_resources(ListResourcesRequest {
             ..ListResourcesRequest::default()
         })`
 $DIR/integration_tests/tests/ram.rs: `.into()`
-$DIR/integration_tests/tests/rds.rs: `.describe_db_clusters(request)`
 $DIR/integration_tests/tests/rds.rs: `tags.push(tag);`
+$DIR/integration_tests/tests/rds.rs: `.describe_db_clusters(request)`
 $DIR/integration_tests/tests/rds.rs: `.push(tag)`
 $DIR/integration_tests/tests/rds.rs: `.create_option_group(create_opt_group_request)`
 $DIR/integration_tests/tests/rds.rs: `.delete_option_group(delete_opt_group_req)`
@@ -419,15 +419,11 @@ $DIR/integration_tests/tests/resourcegroupstagging.rs: `.get_resources(request)`
 $DIR/integration_tests/tests/route53.rs: `.list_hosted_zones(request)`
 $DIR/integration_tests/tests/route53domains.rs: `.list_operations(request)`
 $DIR/integration_tests/tests/s3.rs: `init_logging();`
-$DIR/integration_tests/tests/s3.rs: `.s3.create_bucket(create_bucket_req)`
-$DIR/integration_tests/tests/s3.rs: `.s3.list_buckets()`
 $DIR/integration_tests/tests/s3.rs: `bucket_found = true;`
-$DIR/integration_tests/tests/s3.rs: `.s3.list_objects_v2(list_obj_req)`
 $DIR/integration_tests/tests/s3.rs: `test_delete_bucket(&test_client.s3, &bucket_name).await;`
 $DIR/integration_tests/tests/s3.rs: `test_client.bucket_deleted = true;`
 $DIR/integration_tests/tests/s3.rs: `init_logging();`
 $DIR/integration_tests/tests/s3.rs: `test_client.create_test_bucket_with_acl(bucket_name.clone(), Some("public-read".to_owned())).await;`
-$DIR/integration_tests/tests/s3.rs: `.create_test_bucket_with_acl(bucket_name.clone(), Some("public-read".to_owned()))`
 $DIR/integration_tests/tests/s3.rs: `test_put_bucket_cors(&test_client.s3, &test_client.bucket_name).await;`
 $DIR/integration_tests/tests/s3.rs: `test_get_object_no_such_object(&test_client.s3, &test_client.bucket_name, &filename).await;`
 $DIR/integration_tests/tests/s3.rs: `test_put_object_with_filename_and_acl(
@@ -443,22 +439,18 @@ $DIR/integration_tests/tests/s3.rs: `test_put_object_with_filename(
         &filename2,
         &"tests/sample-data/no_credentials",
     ).await;`
-$DIR/integration_tests/tests/s3.rs: `.create_anonymous_client()`
 $DIR/integration_tests/tests/s3.rs: `test_head_object(&ro_s3client, &test_client.bucket_name, &filename).await;`
 $DIR/integration_tests/tests/s3.rs: `test_head_object(&test_client.s3, &test_client.bucket_name, &filename2).await;`
 $DIR/integration_tests/tests/s3.rs: `test_get_object(&ro_s3client, &test_client.bucket_name, &filename).await;`
 $DIR/integration_tests/tests/s3.rs: `test_get_object_range(&ro_s3client, &test_client.bucket_name, &filename).await;`
 $DIR/integration_tests/tests/s3.rs: `test_client.put_test_object(format!("test_object_{}", i)).await;`
-$DIR/integration_tests/tests/s3.rs: `.put_test_object(format!("test_object_{}", i))`
 $DIR/integration_tests/tests/s3.rs: `list_items_in_bucket_paged_v1(&ro_s3client, &test_client.bucket_name).await;`
 $DIR/integration_tests/tests/s3.rs: `list_items_in_bucket_paged_v2(&ro_s3client, &test_client.bucket_name).await;`
 $DIR/integration_tests/tests/s3.rs: `test_copy_object(&test_client.s3, &test_client.bucket_name, &filename).await;`
 $DIR/integration_tests/tests/s3.rs: `test_delete_object(&test_client.s3, &test_client.bucket_name, &filename).await;`
 $DIR/integration_tests/tests/s3.rs: `test_client.delete_object(format!("test_object_{}", i)).await;`
-$DIR/integration_tests/tests/s3.rs: `.delete_object(format!("test_object_{}", i))`
 $DIR/integration_tests/tests/s3.rs: `init_logging();`
 $DIR/integration_tests/tests/s3.rs: `test_client.create_test_bucket(bucket_name.clone()).await;`
-$DIR/integration_tests/tests/s3.rs: `.create_test_bucket(bucket_name.clone())`
 $DIR/integration_tests/tests/s3.rs: `test_put_object_with_filename(
         &test_client.s3,
         &test_client.bucket_name,
@@ -469,7 +461,6 @@ $DIR/integration_tests/tests/s3.rs: `test_copy_object_utf8(&test_client.s3, &tes
 $DIR/integration_tests/tests/s3.rs: `test_delete_object(&test_client.s3, &test_client.bucket_name, &utf8_filename).await;`
 $DIR/integration_tests/tests/s3.rs: `init_logging();`
 $DIR/integration_tests/tests/s3.rs: `test_client.create_test_bucket(bucket_name.clone()).await;`
-$DIR/integration_tests/tests/s3.rs: `.create_test_bucket(bucket_name.clone())`
 $DIR/integration_tests/tests/s3.rs: `test_put_object_with_filename(
         &test_client.s3,
         &test_client.bucket_name,
@@ -481,17 +472,11 @@ $DIR/integration_tests/tests/s3.rs: `test_get_object_async_read(&test_client.s3,
 $DIR/integration_tests/tests/s3.rs: `test_delete_object(&test_client.s3, &test_client.bucket_name, &binary_filename).await;`
 $DIR/integration_tests/tests/s3.rs: `init_logging();`
 $DIR/integration_tests/tests/s3.rs: `test_client.create_test_bucket(bucket_name.clone()).await;`
-$DIR/integration_tests/tests/s3.rs: `.create_test_bucket(bucket_name.clone())`
 $DIR/integration_tests/tests/s3.rs: `metadata.insert(
         "rusoto-metadata-some".to_string(),
         "some-test-value".to_string(),
     );`
-$DIR/integration_tests/tests/s3.rs: `.insert(
-        "rusoto-metadata-some".to_string(),
-        "some-test-value".to_string(),
-    )`
 $DIR/integration_tests/tests/s3.rs: `metadata.insert("rusoto-metadata-none".to_string(), "".to_string());`
-$DIR/integration_tests/tests/s3.rs: `.insert("rusoto-metadata-none".to_string(), "".to_string())`
 $DIR/integration_tests/tests/s3.rs: `test_put_object_with_metadata(
         &test_client.s3,
         &test_client.bucket_name,
@@ -518,14 +503,12 @@ $DIR/integration_tests/tests/s3.rs: `test_delete_object(
     ).await;`
 $DIR/integration_tests/tests/s3.rs: `init_logging();`
 $DIR/integration_tests/tests/s3.rs: `test_client.create_test_bucket(bucket_name.clone()).await;`
-$DIR/integration_tests/tests/s3.rs: `.create_test_bucket(bucket_name.clone())`
 $DIR/integration_tests/tests/s3.rs: `test_put_object_with_filename(
         &test_client.s3,
         &test_client.bucket_name,
         &filename,
         &"tests/sample-data/no_credentials",
     ).await;`
-$DIR/integration_tests/tests/s3.rs: `.credentials()`
 $DIR/integration_tests/tests/s3.rs: `test_get_object_with_presigned_url(
         &test_client.region,
         &credentials,
@@ -582,8 +565,6 @@ $DIR/integration_tests/tests/s3.rs: `test_delete_object_with_presigned_url(
     ).await;`
 $DIR/integration_tests/tests/s3.rs: `init_logging();`
 $DIR/integration_tests/tests/s3.rs: `test_client.create_test_bucket(bucket_name.clone()).await;`
-$DIR/integration_tests/tests/s3.rs: `.create_test_bucket(bucket_name.clone())`
-$DIR/integration_tests/tests/s3.rs: `.credentials()`
 $DIR/integration_tests/tests/s3.rs: `test_multipart_upload(
         &test_client.s3,
         &test_client.region,
@@ -609,22 +590,41 @@ $DIR/integration_tests/tests/s3.rs: `test_delete_object(
     ).await;`
 $DIR/integration_tests/tests/s3.rs: `init_logging();`
 $DIR/integration_tests/tests/s3.rs: `test_client.create_test_bucket(bucket_name.clone()).await;`
-$DIR/integration_tests/tests/s3.rs: `.create_test_bucket(bucket_name.clone())`
 $DIR/integration_tests/tests/s3.rs: `test_client.put_test_object(filename.clone()).await;`
+$DIR/integration_tests/tests/s3.rs: `test_delete_object(&test_client.s3, &bucket_name, &key).await;`
+$DIR/integration_tests/tests/s3.rs: `init_logging();`
+$DIR/integration_tests/tests/s3.rs: `test_client.create_test_bucket(bucket_name.clone()).await;`
+$DIR/integration_tests/tests/s3.rs: `test_client.put_test_object(filename_spaces.clone()).await;`
+$DIR/integration_tests/tests/s3.rs: `test_delete_object(&test_client.s3, &bucket_name, &filename_spaces).await;`
+$DIR/integration_tests/tests/s3.rs: `.s3.create_bucket(create_bucket_req)`
+$DIR/integration_tests/tests/s3.rs: `.s3.list_buckets()`
+$DIR/integration_tests/tests/s3.rs: `.s3.list_objects_v2(list_obj_req)`
+$DIR/integration_tests/tests/s3.rs: `.create_test_bucket_with_acl(bucket_name.clone(), Some("public-read".to_owned()))`
+$DIR/integration_tests/tests/s3.rs: `.create_anonymous_client()`
+$DIR/integration_tests/tests/s3.rs: `.put_test_object(format!("test_object_{}", i))`
+$DIR/integration_tests/tests/s3.rs: `.delete_object(format!("test_object_{}", i))`
+$DIR/integration_tests/tests/s3.rs: `.create_test_bucket(bucket_name.clone())`
+$DIR/integration_tests/tests/s3.rs: `.create_test_bucket(bucket_name.clone())`
+$DIR/integration_tests/tests/s3.rs: `.create_test_bucket(bucket_name.clone())`
+$DIR/integration_tests/tests/s3.rs: `.insert(
+        "rusoto-metadata-some".to_string(),
+        "some-test-value".to_string(),
+    )`
+$DIR/integration_tests/tests/s3.rs: `.insert("rusoto-metadata-none".to_string(), "".to_string())`
+$DIR/integration_tests/tests/s3.rs: `.create_test_bucket(bucket_name.clone())`
+$DIR/integration_tests/tests/s3.rs: `.credentials()`
+$DIR/integration_tests/tests/s3.rs: `.create_test_bucket(bucket_name.clone())`
+$DIR/integration_tests/tests/s3.rs: `.credentials()`
+$DIR/integration_tests/tests/s3.rs: `.create_test_bucket(bucket_name.clone())`
 $DIR/integration_tests/tests/s3.rs: `.put_test_object(filename.clone())`
 $DIR/integration_tests/tests/s3.rs: `.s3
         .list_objects(list_obj_req_v1)`
 $DIR/integration_tests/tests/s3.rs: `.s3
         .list_objects_v2(list_obj_req_v2)`
-$DIR/integration_tests/tests/s3.rs: `test_delete_object(&test_client.s3, &bucket_name, &key).await;`
-$DIR/integration_tests/tests/s3.rs: `init_logging();`
-$DIR/integration_tests/tests/s3.rs: `test_client.create_test_bucket(bucket_name.clone()).await;`
 $DIR/integration_tests/tests/s3.rs: `.create_test_bucket(bucket_name.clone())`
-$DIR/integration_tests/tests/s3.rs: `test_client.put_test_object(filename_spaces.clone()).await;`
 $DIR/integration_tests/tests/s3.rs: `.put_test_object(filename_spaces.clone())`
 $DIR/integration_tests/tests/s3.rs: `.s3
         .list_objects_v2(req)`
-$DIR/integration_tests/tests/s3.rs: `test_delete_object(&test_client.s3, &bucket_name, &filename_spaces).await;`
 $DIR/integration_tests/tests/sagemaker.rs: `.list_models(req)`
 $DIR/integration_tests/tests/sdb.rs: `.list_domains(request)`
 $DIR/integration_tests/tests/sdb.rs: `.create_domain(create_domain_req)`
@@ -640,24 +640,14 @@ $DIR/integration_tests/tests/shield.rs: `.list_attacks(request)`
 $DIR/integration_tests/tests/sms.rs: `.get_servers(GetServersRequest::default())`
 $DIR/integration_tests/tests/snowball.rs: `.describe_addresses(request)`
 $DIR/integration_tests/tests/sns.rs: `.list_topics(request)`
-$DIR/integration_tests/tests/sqs.rs: `.list_queues(request)`
 $DIR/integration_tests/tests/sqs.rs: `attrs.insert(
         String::from("ReceiveMessageWaitTimeSeconds"),
         String::from("1"),
     );`
-$DIR/integration_tests/tests/sqs.rs: `.insert(
-        String::from("ReceiveMessageWaitTimeSeconds"),
-        String::from("1"),
-    )`
-$DIR/integration_tests/tests/sqs.rs: `.create_queue(q_creation_req)`
-$DIR/integration_tests/tests/sqs.rs: `.get_queue_url(get_q_by_name_request)`
 $DIR/integration_tests/tests/sqs.rs: `match sqs.get_queue_attributes(queue_attributes_req).await {
         Ok(result) => println!("Queue attributes: {:?}", result),
         Err(e) => panic!("Error getting queue attributes: {:?}", e),
     }`
-$DIR/integration_tests/tests/sqs.rs: `.get_queue_attributes(queue_attributes_req)`
-$DIR/integration_tests/tests/sqs.rs: `.send_message(send_msg_request)`
-$DIR/integration_tests/tests/sqs.rs: `.receive_message(receive_request)`
 $DIR/integration_tests/tests/sqs.rs: `match sqs.delete_message(delete_message_request).await {
             Ok(_) => println!(
                 "Deleted message via receipt handle {:?}",
@@ -665,49 +655,63 @@ $DIR/integration_tests/tests/sqs.rs: `match sqs.delete_message(delete_message_re
             ),
             Err(e) => panic!("Couldn't delete message: {:?}", e),
         }`
-$DIR/integration_tests/tests/sqs.rs: `.delete_message(delete_message_request)`
 $DIR/integration_tests/tests/sqs.rs: `match sqs.delete_queue(queue_deletion_req).await {
         Ok(_) => (),
         Err(e) => panic!("Couldn't delete queue: {:?}", e),
     }`
-$DIR/integration_tests/tests/sqs.rs: `.delete_queue(queue_deletion_req)`
-$DIR/integration_tests/tests/sqs.rs: `.create_queue(q_creation_req)`
-$DIR/integration_tests/tests/sqs.rs: `.receive_message(receive_request)`
 $DIR/integration_tests/tests/sqs.rs: `result.err().expect("receive did not fail as expected");`
-$DIR/integration_tests/tests/sqs.rs: `.err()`
-$DIR/integration_tests/tests/sqs.rs: `.delete_queue(queue_deletion_req)`
-$DIR/integration_tests/tests/sqs.rs: `.create_queue(q_creation_req)`
-$DIR/integration_tests/tests/sqs.rs: `.get_queue_url(get_q_by_name_request)`
 $DIR/integration_tests/tests/sqs.rs: `match sqs.get_queue_attributes(queue_attributes_req).await {
         Ok(result) => println!("Queue attributes: {:?}", result),
         Err(e) => panic!("Error getting queue attributes: {:?}", e),
     }`
-$DIR/integration_tests/tests/sqs.rs: `.get_queue_attributes(queue_attributes_req)`
-$DIR/integration_tests/tests/sqs.rs: `.send_message_batch(send_msg_request)`
-$DIR/integration_tests/tests/sqs.rs: `.receive_message(receive_request)`
 $DIR/integration_tests/tests/sqs.rs: `delete_entries.push(DeleteMessageBatchRequestEntry {
             receipt_handle: msg.receipt_handle.clone().unwrap(),
             id: msg.message_id.clone().unwrap(),
         });`
-$DIR/integration_tests/tests/sqs.rs: `.push(DeleteMessageBatchRequestEntry {
-            receipt_handle: msg.receipt_handle.clone().unwrap(),
-            id: msg.message_id.clone().unwrap(),
-        })`
 $DIR/integration_tests/tests/sqs.rs: `match sqs.delete_message_batch(delete_message_request).await {
         Ok(_) => println!("Deleted messages via receipt handle {:?}", delete_entries),
         Err(e) => panic!("Couldn't delete message: {:?}", e),
     }`
-$DIR/integration_tests/tests/sqs.rs: `.delete_message_batch(delete_message_request)`
 $DIR/integration_tests/tests/sqs.rs: `match sqs.delete_queue(queue_deletion_req).await {
         Ok(_) => (),
         Err(e) => panic!("Couldn't delete queue: {:?}", e),
     }`
+$DIR/integration_tests/tests/sqs.rs: `.list_queues(request)`
+$DIR/integration_tests/tests/sqs.rs: `.insert(
+        String::from("ReceiveMessageWaitTimeSeconds"),
+        String::from("1"),
+    )`
+$DIR/integration_tests/tests/sqs.rs: `.create_queue(q_creation_req)`
+$DIR/integration_tests/tests/sqs.rs: `.get_queue_url(get_q_by_name_request)`
+$DIR/integration_tests/tests/sqs.rs: `.get_queue_attributes(queue_attributes_req)`
+$DIR/integration_tests/tests/sqs.rs: `.send_message(send_msg_request)`
+$DIR/integration_tests/tests/sqs.rs: `.receive_message(receive_request)`
+$DIR/integration_tests/tests/sqs.rs: `.delete_message(delete_message_request)`
+$DIR/integration_tests/tests/sqs.rs: `.delete_queue(queue_deletion_req)`
+$DIR/integration_tests/tests/sqs.rs: `.create_queue(q_creation_req)`
+$DIR/integration_tests/tests/sqs.rs: `.receive_message(receive_request)`
+$DIR/integration_tests/tests/sqs.rs: `.err()`
+$DIR/integration_tests/tests/sqs.rs: `.delete_queue(queue_deletion_req)`
+$DIR/integration_tests/tests/sqs.rs: `.create_queue(q_creation_req)`
+$DIR/integration_tests/tests/sqs.rs: `.get_queue_url(get_q_by_name_request)`
+$DIR/integration_tests/tests/sqs.rs: `.get_queue_attributes(queue_attributes_req)`
+$DIR/integration_tests/tests/sqs.rs: `.send_message_batch(send_msg_request)`
+$DIR/integration_tests/tests/sqs.rs: `.receive_message(receive_request)`
+$DIR/integration_tests/tests/sqs.rs: `.push(DeleteMessageBatchRequestEntry {
+            receipt_handle: msg.receipt_handle.clone().unwrap(),
+            id: msg.message_id.clone().unwrap(),
+        })`
+$DIR/integration_tests/tests/sqs.rs: `.delete_message_batch(delete_message_request)`
 $DIR/integration_tests/tests/sqs.rs: `.delete_queue(queue_deletion_req)`
 $DIR/integration_tests/tests/ssm.rs: `.list_documents(request)`
 $DIR/integration_tests/tests/ssm.rs: `.list_commands(request)`
 $DIR/integration_tests/tests/ssm.rs: `.list_command_invocations(request)`
 $DIR/integration_tests/tests/stepfunctions.rs: `.list_state_machines(request)`
 $DIR/integration_tests/tests/storagegateway.rs: `.list_gateways(request)`
+$DIR/integration_tests/tests/sts.rs: `match sts_creds_provider.credentials().await {
+        Err(e) => panic!("sts credentials provider error: {:?}", e),
+        Ok(r) => println!("sts credentials provider result: {:?}", r),
+    }`
 $DIR/integration_tests/tests/sts.rs: `.assume_role(AssumeRoleRequest {
             role_arn: "bogus".to_owned(),
             role_session_name: "rusoto_test_session".to_owned(),
@@ -718,10 +722,6 @@ $DIR/integration_tests/tests/sts.rs: `.get_session_token(GetSessionTokenRequest 
             serial_number: Some("123456789".to_owned()),
             ..Default::default()
         })`
-$DIR/integration_tests/tests/sts.rs: `match sts_creds_provider.credentials().await {
-        Err(e) => panic!("sts credentials provider error: {:?}", e),
-        Ok(r) => println!("sts credentials provider result: {:?}", r),
-    }`
 $DIR/integration_tests/tests/sts.rs: `.credentials()`
 $DIR/integration_tests/tests/swf.rs: `request.maximum_page_size = Some(10);`
 $DIR/integration_tests/tests/swf.rs: `request.registration_status = "REGISTERED".to_string();`
@@ -733,53 +733,52 @@ $DIR/integration_tests/tests/xray.rs: `.unix_timestamp()`
 $DIR/integration_tests/tests/xray.rs: `.get_service_graph(request)`
 $DIR/rusoto/core/src/proto/json/error.rs: `.into()`
 $DIR/rusoto/core/src/proto/json/error.rs: `.into()`
-$DIR/rusoto/core/src/proto/xml/util.rs: `.read_to_string(&mut body)`
-$DIR/rusoto/core/src/proto/xml/util.rs: `.into_iter()`
-$DIR/rusoto/core/src/proto/xml/util.rs: `.peekable()`
 $DIR/rusoto/core/src/proto/xml/util.rs: `reader.next();`
-$DIR/rusoto/core/src/proto/xml/util.rs: `.next()`
-$DIR/rusoto/core/src/proto/xml/util.rs: `.read_to_string(&mut body)`
-$DIR/rusoto/core/src/proto/xml/util.rs: `.into_iter()`
-$DIR/rusoto/core/src/proto/xml/util.rs: `.peekable()`
 $DIR/rusoto/core/src/proto/xml/util.rs: `reader.next();`
-$DIR/rusoto/core/src/proto/xml/util.rs: `.next()`
 $DIR/rusoto/core/src/proto/xml/util.rs: `reader.next();`
-$DIR/rusoto/core/src/proto/xml/util.rs: `.next()`
-$DIR/rusoto/core/src/proto/xml/util.rs: `.read_to_string(&mut body)`
-$DIR/rusoto/core/src/proto/xml/util.rs: `.into_iter()`
-$DIR/rusoto/core/src/proto/xml/util.rs: `.peekable()`
 $DIR/rusoto/core/src/proto/xml/util.rs: `reader.next();`
-$DIR/rusoto/core/src/proto/xml/util.rs: `.next()`
 $DIR/rusoto/core/src/proto/xml/util.rs: `reader.next();`
-$DIR/rusoto/core/src/proto/xml/util.rs: `.next()`
 $DIR/rusoto/core/src/proto/xml/util.rs: `reader.next();`
-$DIR/rusoto/core/src/proto/xml/util.rs: `.next()`
-$DIR/rusoto/core/src/proto/xml/util.rs: `.read_to_string(&mut body)`
-$DIR/rusoto/core/src/proto/xml/util.rs: `.into_iter()`
-$DIR/rusoto/core/src/proto/xml/util.rs: `.peekable()`
 $DIR/rusoto/core/src/proto/xml/util.rs: `reader.next();`
-$DIR/rusoto/core/src/proto/xml/util.rs: `.next()`
 $DIR/rusoto/core/src/proto/xml/util.rs: `reader.next();`
-$DIR/rusoto/core/src/proto/xml/util.rs: `.next()`
 $DIR/rusoto/core/src/proto/xml/util.rs: `reader.next();`
-$DIR/rusoto/core/src/proto/xml/util.rs: `.next()`
 $DIR/rusoto/core/src/proto/xml/util.rs: `reader.next();`
-$DIR/rusoto/core/src/proto/xml/util.rs: `.next()`
 $DIR/rusoto/core/src/proto/xml/util.rs: `reader.next();`
-$DIR/rusoto/core/src/proto/xml/util.rs: `.next()`
 $DIR/rusoto/core/src/proto/xml/util.rs: `reader.next();`
-$DIR/rusoto/core/src/proto/xml/util.rs: `.next()`
-$DIR/rusoto/core/src/proto/xml/util.rs: `.into_iter()`
-$DIR/rusoto/core/src/proto/xml/util.rs: `.peekable()`
 $DIR/rusoto/core/src/proto/xml/util.rs: `find_start_element(&mut reader);`
 $DIR/rusoto/core/src/proto/xml/util.rs: `find_start_element(&mut reader);`
+$DIR/rusoto/core/src/proto/xml/util.rs: `.read_to_string(&mut body)`
+$DIR/rusoto/core/src/proto/xml/util.rs: `.into_iter()`
+$DIR/rusoto/core/src/proto/xml/util.rs: `.peekable()`
+$DIR/rusoto/core/src/proto/xml/util.rs: `.next()`
+$DIR/rusoto/core/src/proto/xml/util.rs: `.read_to_string(&mut body)`
+$DIR/rusoto/core/src/proto/xml/util.rs: `.into_iter()`
+$DIR/rusoto/core/src/proto/xml/util.rs: `.peekable()`
+$DIR/rusoto/core/src/proto/xml/util.rs: `.next()`
+$DIR/rusoto/core/src/proto/xml/util.rs: `.next()`
+$DIR/rusoto/core/src/proto/xml/util.rs: `.read_to_string(&mut body)`
+$DIR/rusoto/core/src/proto/xml/util.rs: `.into_iter()`
+$DIR/rusoto/core/src/proto/xml/util.rs: `.peekable()`
+$DIR/rusoto/core/src/proto/xml/util.rs: `.next()`
+$DIR/rusoto/core/src/proto/xml/util.rs: `.next()`
+$DIR/rusoto/core/src/proto/xml/util.rs: `.next()`
+$DIR/rusoto/core/src/proto/xml/util.rs: `.read_to_string(&mut body)`
+$DIR/rusoto/core/src/proto/xml/util.rs: `.into_iter()`
+$DIR/rusoto/core/src/proto/xml/util.rs: `.peekable()`
+$DIR/rusoto/core/src/proto/xml/util.rs: `.next()`
+$DIR/rusoto/core/src/proto/xml/util.rs: `.next()`
+$DIR/rusoto/core/src/proto/xml/util.rs: `.next()`
+$DIR/rusoto/core/src/proto/xml/util.rs: `.next()`
+$DIR/rusoto/core/src/proto/xml/util.rs: `.next()`
+$DIR/rusoto/core/src/proto/xml/util.rs: `.next()`
+$DIR/rusoto/core/src/proto/xml/util.rs: `.into_iter()`
+$DIR/rusoto/core/src/proto/xml/util.rs: `.peekable()`
 $DIR/rusoto/credential/src/container.rs: `env::set_var(AWS_CONTAINER_CREDENTIALS_RELATIVE_URI, path);`
 $DIR/rusoto/credential/src/container.rs: `env::set_var(AWS_CONTAINER_CREDENTIALS_FULL_URI, "dummy");`
 $DIR/rusoto/credential/src/container.rs: `env::set_var(AWS_CONTAINER_AUTHORIZATION_TOKEN, "dummy");`
 $DIR/rusoto/credential/src/container.rs: `env::remove_var(AWS_CONTAINER_CREDENTIALS_RELATIVE_URI);`
 $DIR/rusoto/credential/src/container.rs: `env::remove_var(AWS_CONTAINER_CREDENTIALS_FULL_URI);`
 $DIR/rusoto/credential/src/container.rs: `env::remove_var(AWS_CONTAINER_AUTHORIZATION_TOKEN);`
-$DIR/rusoto/credential/src/container.rs: `.ok()`
 $DIR/rusoto/credential/src/container.rs: `env::remove_var(AWS_CONTAINER_CREDENTIALS_RELATIVE_URI);`
 $DIR/rusoto/credential/src/container.rs: `env::remove_var(AWS_CONTAINER_CREDENTIALS_FULL_URI);`
 $DIR/rusoto/credential/src/container.rs: `env::set_var(AWS_CONTAINER_CREDENTIALS_RELATIVE_URI, "");`
@@ -793,146 +792,147 @@ $DIR/rusoto/credential/src/container.rs: `env::set_var(AWS_CONTAINER_CREDENTIALS
 $DIR/rusoto/credential/src/container.rs: `env::set_var(AWS_CONTAINER_AUTHORIZATION_TOKEN, "dummy");`
 $DIR/rusoto/credential/src/container.rs: `env::remove_var(AWS_CONTAINER_CREDENTIALS_FULL_URI);`
 $DIR/rusoto/credential/src/container.rs: `env::remove_var(AWS_CONTAINER_AUTHORIZATION_TOKEN);`
-$DIR/rusoto/credential/src/container.rs: `.ok()`
 $DIR/rusoto/credential/src/container.rs: `env::remove_var(AWS_CONTAINER_CREDENTIALS_RELATIVE_URI);`
 $DIR/rusoto/credential/src/container.rs: `env::set_var(AWS_CONTAINER_CREDENTIALS_FULL_URI, url);`
 $DIR/rusoto/credential/src/container.rs: `env::remove_var(AWS_CONTAINER_AUTHORIZATION_TOKEN);`
 $DIR/rusoto/credential/src/container.rs: `env::remove_var(AWS_CONTAINER_CREDENTIALS_FULL_URI);`
-$DIR/rusoto/credential/src/container.rs: `.ok()`
 $DIR/rusoto/credential/src/container.rs: `env::remove_var(AWS_CONTAINER_CREDENTIALS_RELATIVE_URI);`
 $DIR/rusoto/credential/src/container.rs: `env::set_var(AWS_CONTAINER_CREDENTIALS_FULL_URI, url);`
 $DIR/rusoto/credential/src/container.rs: `env::set_var(AWS_CONTAINER_AUTHORIZATION_TOKEN, "");`
 $DIR/rusoto/credential/src/container.rs: `env::remove_var(AWS_CONTAINER_CREDENTIALS_FULL_URI);`
 $DIR/rusoto/credential/src/container.rs: `env::remove_var(AWS_CONTAINER_AUTHORIZATION_TOKEN);`
 $DIR/rusoto/credential/src/container.rs: `.ok()`
+$DIR/rusoto/credential/src/container.rs: `.ok()`
+$DIR/rusoto/credential/src/container.rs: `.ok()`
+$DIR/rusoto/credential/src/container.rs: `.ok()`
 $DIR/rusoto/credential/src/environment.rs: `env::set_var(AWS_ACCESS_KEY_ID, "id");`
 $DIR/rusoto/credential/src/environment.rs: `env::set_var(AWS_SECRET_ACCESS_KEY, "secret");`
 $DIR/rusoto/credential/src/environment.rs: `env::set_var(AWS_SESSION_TOKEN, "token");`
-$DIR/rusoto/credential/src/environment.rs: `.credentials()`
 $DIR/rusoto/credential/src/environment.rs: `env::remove_var(AWS_ACCESS_KEY_ID);`
 $DIR/rusoto/credential/src/environment.rs: `env::remove_var(AWS_SECRET_ACCESS_KEY);`
 $DIR/rusoto/credential/src/environment.rs: `env::remove_var(AWS_SESSION_TOKEN);`
-$DIR/rusoto/credential/src/environment.rs: `.ok()`
 $DIR/rusoto/credential/src/environment.rs: `env::set_var(AWS_ACCESS_KEY_ID, "id");`
 $DIR/rusoto/credential/src/environment.rs: `env::set_var(AWS_SECRET_ACCESS_KEY, "secret");`
 $DIR/rusoto/credential/src/environment.rs: `env::remove_var(AWS_SESSION_TOKEN);`
-$DIR/rusoto/credential/src/environment.rs: `.credentials()`
 $DIR/rusoto/credential/src/environment.rs: `env::remove_var(AWS_ACCESS_KEY_ID);`
 $DIR/rusoto/credential/src/environment.rs: `env::remove_var(AWS_SECRET_ACCESS_KEY);`
-$DIR/rusoto/credential/src/environment.rs: `.ok()`
 $DIR/rusoto/credential/src/environment.rs: `env::remove_var(AWS_ACCESS_KEY_ID);`
 $DIR/rusoto/credential/src/environment.rs: `env::set_var(AWS_SECRET_ACCESS_KEY, "secret");`
 $DIR/rusoto/credential/src/environment.rs: `env::remove_var(AWS_SESSION_TOKEN);`
-$DIR/rusoto/credential/src/environment.rs: `.credentials()`
 $DIR/rusoto/credential/src/environment.rs: `env::remove_var(AWS_SECRET_ACCESS_KEY);`
 $DIR/rusoto/credential/src/environment.rs: `env::remove_var(AWS_SECRET_ACCESS_KEY);`
 $DIR/rusoto/credential/src/environment.rs: `env::set_var(AWS_ACCESS_KEY_ID, "id");`
 $DIR/rusoto/credential/src/environment.rs: `env::remove_var(AWS_SESSION_TOKEN);`
-$DIR/rusoto/credential/src/environment.rs: `.credentials()`
 $DIR/rusoto/credential/src/environment.rs: `env::remove_var(AWS_ACCESS_KEY_ID);`
 $DIR/rusoto/credential/src/environment.rs: `env::remove_var(AWS_SECRET_ACCESS_KEY);`
 $DIR/rusoto/credential/src/environment.rs: `env::remove_var(AWS_ACCESS_KEY_ID);`
 $DIR/rusoto/credential/src/environment.rs: `env::remove_var(AWS_SESSION_TOKEN);`
-$DIR/rusoto/credential/src/environment.rs: `.credentials()`
 $DIR/rusoto/credential/src/environment.rs: `env::set_var(AWS_ACCESS_KEY_ID, "id");`
 $DIR/rusoto/credential/src/environment.rs: `env::set_var(AWS_SECRET_ACCESS_KEY, "secret");`
 $DIR/rusoto/credential/src/environment.rs: `env::set_var(AWS_SESSION_TOKEN, "token");`
 $DIR/rusoto/credential/src/environment.rs: `env::set_var(AWS_CREDENTIAL_EXPIRATION, "lore ipsum");`
-$DIR/rusoto/credential/src/environment.rs: `.credentials()`
 $DIR/rusoto/credential/src/environment.rs: `env::remove_var(AWS_ACCESS_KEY_ID);`
 $DIR/rusoto/credential/src/environment.rs: `env::remove_var(AWS_SECRET_ACCESS_KEY);`
 $DIR/rusoto/credential/src/environment.rs: `env::remove_var(AWS_SESSION_TOKEN);`
 $DIR/rusoto/credential/src/environment.rs: `env::remove_var(AWS_CREDENTIAL_EXPIRATION);`
-$DIR/rusoto/credential/src/environment.rs: `.to_rfc3339()`
 $DIR/rusoto/credential/src/environment.rs: `env::set_var(AWS_ACCESS_KEY_ID, "id");`
 $DIR/rusoto/credential/src/environment.rs: `env::set_var(AWS_SECRET_ACCESS_KEY, "secret");`
 $DIR/rusoto/credential/src/environment.rs: `env::set_var(AWS_SESSION_TOKEN, "token");`
 $DIR/rusoto/credential/src/environment.rs: `env::set_var(AWS_CREDENTIAL_EXPIRATION, now_str);`
-$DIR/rusoto/credential/src/environment.rs: `.credentials()`
 $DIR/rusoto/credential/src/environment.rs: `env::remove_var(AWS_ACCESS_KEY_ID);`
 $DIR/rusoto/credential/src/environment.rs: `env::remove_var(AWS_SECRET_ACCESS_KEY);`
 $DIR/rusoto/credential/src/environment.rs: `env::remove_var(AWS_SESSION_TOKEN);`
 $DIR/rusoto/credential/src/environment.rs: `env::remove_var(AWS_CREDENTIAL_EXPIRATION);`
-$DIR/rusoto/credential/src/environment.rs: `.ok()`
 $DIR/rusoto/credential/src/environment.rs: `env::set_var(AWS_CREDENTIAL_EXPIRATION, "1996-12-19t16:39:57-08:00");`
 $DIR/rusoto/credential/src/environment.rs: `env::set_var(AWS_ACCESS_KEY_ID, "id");`
 $DIR/rusoto/credential/src/environment.rs: `env::set_var(AWS_SECRET_ACCESS_KEY, "secret");`
-$DIR/rusoto/credential/src/environment.rs: `.credentials()`
 $DIR/rusoto/credential/src/environment.rs: `env::remove_var(AWS_CREDENTIAL_EXPIRATION);`
 $DIR/rusoto/credential/src/environment.rs: `env::remove_var(AWS_ACCESS_KEY_ID);`
 $DIR/rusoto/credential/src/environment.rs: `env::remove_var(AWS_SECRET_ACCESS_KEY);`
-$DIR/rusoto/credential/src/environment.rs: `.to_rfc3339()`
 $DIR/rusoto/credential/src/environment.rs: `env::set_var("MYAPP_ACCESS_KEY_ID", "id");`
 $DIR/rusoto/credential/src/environment.rs: `env::set_var("MYAPP_SECRET_ACCESS_KEY", "secret");`
 $DIR/rusoto/credential/src/environment.rs: `env::set_var("MYAPP_SESSION_TOKEN", "token");`
 $DIR/rusoto/credential/src/environment.rs: `env::set_var("MYAPP_CREDENTIAL_EXPIRATION", now_str);`
-$DIR/rusoto/credential/src/environment.rs: `.credentials()`
 $DIR/rusoto/credential/src/environment.rs: `env::remove_var("MYAPP_ACCESS_KEY_ID");`
 $DIR/rusoto/credential/src/environment.rs: `env::remove_var("MYAPP_SECRET_ACCESS_KEY");`
 $DIR/rusoto/credential/src/environment.rs: `env::remove_var("MYAPP_SESSION_TOKEN");`
 $DIR/rusoto/credential/src/environment.rs: `env::remove_var("MYAPP_CREDENTIAL_EXPIRATION");`
+$DIR/rusoto/credential/src/environment.rs: `.credentials()`
+$DIR/rusoto/credential/src/environment.rs: `.ok()`
+$DIR/rusoto/credential/src/environment.rs: `.credentials()`
+$DIR/rusoto/credential/src/environment.rs: `.ok()`
+$DIR/rusoto/credential/src/environment.rs: `.credentials()`
+$DIR/rusoto/credential/src/environment.rs: `.credentials()`
+$DIR/rusoto/credential/src/environment.rs: `.credentials()`
+$DIR/rusoto/credential/src/environment.rs: `.credentials()`
+$DIR/rusoto/credential/src/environment.rs: `.to_rfc3339()`
+$DIR/rusoto/credential/src/environment.rs: `.credentials()`
+$DIR/rusoto/credential/src/environment.rs: `.ok()`
+$DIR/rusoto/credential/src/environment.rs: `.credentials()`
+$DIR/rusoto/credential/src/environment.rs: `.to_rfc3339()`
+$DIR/rusoto/credential/src/environment.rs: `.credentials()`
 $DIR/rusoto/credential/src/environment.rs: `.ok()`
 $DIR/rusoto/credential/src/lib.rs: `is_send_and_sync::<ChainProvider>();`
 $DIR/rusoto/credential/src/lib.rs: `is_send_and_sync::<AutoRefreshingProvider<ChainProvider>>();`
 $DIR/rusoto/credential/src/lib.rs: `.credentials()`
-$DIR/rusoto/credential/src/profile.rs: `.get(DEFAULT)`
-$DIR/rusoto/credential/src/profile.rs: `.get("foo")`
-$DIR/rusoto/credential/src/profile.rs: `.get("bar")`
-$DIR/rusoto/credential/src/profile.rs: `.get(DEFAULT)`
-$DIR/rusoto/credential/src/profile.rs: `.ok()`
-$DIR/rusoto/credential/src/profile.rs: `.get(DEFAULT)`
-$DIR/rusoto/credential/src/profile.rs: `.ok()`
-$DIR/rusoto/credential/src/profile.rs: `.get("foo")`
-$DIR/rusoto/credential/src/profile.rs: `.get("bar")`
-$DIR/rusoto/credential/src/profile.rs: `.ok()`
-$DIR/rusoto/credential/src/profile.rs: `.get(DEFAULT)`
-$DIR/rusoto/credential/src/profile.rs: `.credentials()`
-$DIR/rusoto/credential/src/profile.rs: `.ok()`
 $DIR/rusoto/credential/src/profile.rs: `env::set_var(AWS_SHARED_CREDENTIALS_FILE, credentials_path);`
 $DIR/rusoto/credential/src/profile.rs: `env::set_var(AWS_SHARED_CREDENTIALS_FILE, credentials_path);`
 $DIR/rusoto/credential/src/profile.rs: `env::set_var(AWS_PROFILE, "bar");`
-$DIR/rusoto/credential/src/profile.rs: `.credentials()`
 $DIR/rusoto/credential/src/profile.rs: `env::remove_var(AWS_SHARED_CREDENTIALS_FILE);`
-$DIR/rusoto/credential/src/profile.rs: `.credentials()`
 $DIR/rusoto/credential/src/profile.rs: `env::set_var(
             AWS_CONFIG_FILE,
             "tests/sample-data/credential_process_config",
         );`
-$DIR/rusoto/credential/src/profile.rs: `.credentials()`
-$DIR/rusoto/credential/src/profile.rs: `.ok()`
 $DIR/rusoto/credential/src/profile.rs: `provider.set_profile("foo");`
-$DIR/rusoto/credential/src/profile.rs: `.set_profile("foo")`
-$DIR/rusoto/credential/src/profile.rs: `.ok()`
-$DIR/rusoto/credential/src/profile.rs: `.get(DEFAULT)`
 $DIR/rusoto/credential/src/profile.rs: `env::set_var(AWS_PROFILE, "bar");`
 $DIR/rusoto/credential/src/profile.rs: `env::set_var(AWS_PROFILE, "");`
 $DIR/rusoto/credential/src/profile.rs: `env::remove_var(AWS_PROFILE);`
 $DIR/rusoto/credential/src/profile.rs: `env::set_var(AWS_SHARED_CREDENTIALS_FILE, "bar");`
 $DIR/rusoto/credential/src/profile.rs: `env::set_var(AWS_SHARED_CREDENTIALS_FILE, "");`
 $DIR/rusoto/credential/src/profile.rs: `env::remove_var(AWS_SHARED_CREDENTIALS_FILE);`
+$DIR/rusoto/credential/src/profile.rs: `.get(DEFAULT)`
+$DIR/rusoto/credential/src/profile.rs: `.get("foo")`
+$DIR/rusoto/credential/src/profile.rs: `.get("bar")`
+$DIR/rusoto/credential/src/profile.rs: `.get(DEFAULT)`
+$DIR/rusoto/credential/src/profile.rs: `.ok()`
+$DIR/rusoto/credential/src/profile.rs: `.get(DEFAULT)`
+$DIR/rusoto/credential/src/profile.rs: `.ok()`
+$DIR/rusoto/credential/src/profile.rs: `.get("foo")`
+$DIR/rusoto/credential/src/profile.rs: `.get("bar")`
+$DIR/rusoto/credential/src/profile.rs: `.ok()`
+$DIR/rusoto/credential/src/profile.rs: `.get(DEFAULT)`
+$DIR/rusoto/credential/src/profile.rs: `.credentials()`
+$DIR/rusoto/credential/src/profile.rs: `.ok()`
+$DIR/rusoto/credential/src/profile.rs: `.credentials()`
+$DIR/rusoto/credential/src/profile.rs: `.credentials()`
+$DIR/rusoto/credential/src/profile.rs: `.credentials()`
+$DIR/rusoto/credential/src/profile.rs: `.ok()`
+$DIR/rusoto/credential/src/profile.rs: `.set_profile("foo")`
+$DIR/rusoto/credential/src/profile.rs: `.ok()`
+$DIR/rusoto/credential/src/profile.rs: `.get(DEFAULT)`
 $DIR/rusoto/credential/src/profile.rs: `.region_from_profile()`
 $DIR/rusoto/credential/src/profile.rs: `.region_from_profile()`
+$DIR/rusoto/credential/src/static_provider.rs: `thread::sleep(time::Duration::from_secs(1));`
 $DIR/rusoto/credential/src/static_provider.rs: `.credentials()`
 $DIR/rusoto/credential/src/static_provider.rs: `.credentials()`
 $DIR/rusoto/credential/src/static_provider.rs: `.credentials()`
 $DIR/rusoto/credential/src/static_provider.rs: `.expires_at()`
 $DIR/rusoto/credential/src/static_provider.rs: `.credentials()`
-$DIR/rusoto/credential/src/static_provider.rs: `thread::sleep(time::Duration::from_secs(1));`
 $DIR/rusoto/credential/src/static_provider.rs: `.credentials()`
-$DIR/rusoto/credential/src/variable.rs: `.into()`
-$DIR/rusoto/credential/src/variable.rs: `.into()`
-$DIR/rusoto/credential/src/variable.rs: `.into()`
 $DIR/rusoto/credential/src/variable.rs: `std::env::set_var(VALUE, VALUE);`
 $DIR/rusoto/credential/src/variable.rs: `std::env::remove_var(VALUE);`
 $DIR/rusoto/credential/src/variable.rs: `std::env::set_var(VALUE, "");`
 $DIR/rusoto/credential/src/variable.rs: `writeln!(file, "{}", VALUE)?;`
-$DIR/rusoto/credential/src/variable.rs: `.path()`
 $DIR/rusoto/credential/src/variable.rs: `file.write(VALUE)?;`
+$DIR/rusoto/credential/src/variable.rs: `.into()`
+$DIR/rusoto/credential/src/variable.rs: `.into()`
+$DIR/rusoto/credential/src/variable.rs: `.into()`
+$DIR/rusoto/credential/src/variable.rs: `.path()`
 $DIR/rusoto/credential/src/variable.rs: `.write(VALUE)`
 $DIR/rusoto/credential/src/variable.rs: `.path()`
 $DIR/rusoto/credential/tests/instance-profile-test.rs: `provider.set_timeout(Duration::from_secs(5));`
-$DIR/rusoto/credential/tests/instance-profile-test.rs: `.set_timeout(Duration::from_secs(5))`
 $DIR/rusoto/credential/tests/instance-profile-test.rs: `provider.set_ip_addr_with_port("127.0.0.1", "8080");`
+$DIR/rusoto/credential/tests/instance-profile-test.rs: `.set_timeout(Duration::from_secs(5))`
 $DIR/rusoto/credential/tests/instance-profile-test.rs: `.set_ip_addr_with_port("127.0.0.1", "8080")`
 $DIR/rusoto/credential/tests/instance-profile-test.rs: `.credentials()`
 $DIR/rusoto/credential/tests/instance-profile-test.rs: `.expires_at()`
@@ -1359,10 +1359,10 @@ $DIR/rusoto/services/lambda/src/custom/custom_tests.rs: `.with_request_checker(|
         })`
 $DIR/rusoto/services/lambda/src/custom/custom_tests.rs: `.into()`
 $DIR/rusoto/services/lambda/src/custom/custom_tests.rs: `.invoke(request)`
-$DIR/rusoto/services/lex-runtime/src/custom/custom_tests.rs: `.with_body(mock_resp_body)`
 $DIR/rusoto/services/lex-runtime/src/custom/custom_tests.rs: `slots.insert("CarType".to_owned(), None);`
-$DIR/rusoto/services/lex-runtime/src/custom/custom_tests.rs: `.insert("CarType".to_owned(), None)`
 $DIR/rusoto/services/lex-runtime/src/custom/custom_tests.rs: `slots.insert("PickUpCity".to_owned(), Some("Boston".to_owned()));`
+$DIR/rusoto/services/lex-runtime/src/custom/custom_tests.rs: `.with_body(mock_resp_body)`
+$DIR/rusoto/services/lex-runtime/src/custom/custom_tests.rs: `.insert("CarType".to_owned(), None)`
 $DIR/rusoto/services/lex-runtime/src/custom/custom_tests.rs: `.insert("PickUpCity".to_owned(), Some("Boston".to_owned()))`
 $DIR/rusoto/services/lex-runtime/src/custom/custom_tests.rs: `.post_text(post_text_req)`
 $DIR/rusoto/services/rds/src/generated.rs: `.with_body(&mock_response)`
@@ -1462,6 +1462,12 @@ $DIR/rusoto/services/route53/src/custom/custom_tests.rs: `.list_resource_record_
 $DIR/rusoto/services/route53/src/custom/custom_tests.rs: `.err()`
 $DIR/rusoto/services/route53/src/generated.rs: `.with_body(&mock_response)`
 $DIR/rusoto/services/route53/src/generated.rs: `.get_hosted_zone(request)`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs: `req.bucket = "rusoto1440826511".to_owned();`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs: `req.key = "testfile.zip".to_owned();`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs: `req.bucket = "test-bucket".to_owned();`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs: `assert_clone::<GetObjectRequest>();`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs: `request = HeadObjectRequest::default();`
+$DIR/rusoto/services/s3/src/custom/custom_tests.rs: `result = client.head_object(request).await.unwrap();`
 $DIR/rusoto/services/s3/src/custom/custom_tests.rs: `.with_body(
         r#"<?xml version="1.0" encoding="UTF-8"?>
             <CopyPartResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
@@ -1543,8 +1549,6 @@ $DIR/rusoto/services/s3/src/custom/custom_tests.rs: `.with_request_checker(|requ
             assert_eq!(request.path, "/rusoto1440826511/testfile.zip");
             assert!(request.payload.is_none());
         })`
-$DIR/rusoto/services/s3/src/custom/custom_tests.rs: `req.bucket = "rusoto1440826511".to_owned();`
-$DIR/rusoto/services/s3/src/custom/custom_tests.rs: `req.key = "testfile.zip".to_owned();`
 $DIR/rusoto/services/s3/src/custom/custom_tests.rs: `.list_parts(req)`
 $DIR/rusoto/services/s3/src/custom/custom_tests.rs: `.with_body(
         r#"
@@ -1560,7 +1564,6 @@ $DIR/rusoto/services/s3/src/custom/custom_tests.rs: `.with_body(
         </ListMultipartUploadsResult>
     "#,
     )`
-$DIR/rusoto/services/s3/src/custom/custom_tests.rs: `req.bucket = "test-bucket".to_owned();`
 $DIR/rusoto/services/s3/src/custom/custom_tests.rs: `.list_multipart_uploads(req)`
 $DIR/rusoto/services/s3/src/custom/custom_tests.rs: `.with_body(
             r#"
@@ -1618,7 +1621,6 @@ $DIR/rusoto/services/s3/src/custom/custom_tests.rs: `.get_bucket_location(GetBuc
 $DIR/rusoto/services/s3/src/custom/custom_tests.rs: `.into()`
 $DIR/rusoto/services/s3/src/custom/custom_tests.rs: `.map_ok(|b| BytesMut::from(&b[..]))`
 $DIR/rusoto/services/s3/src/custom/custom_tests.rs: `.try_concat()`
-$DIR/rusoto/services/s3/src/custom/custom_tests.rs: `assert_clone::<GetObjectRequest>();`
 $DIR/rusoto/services/s3/src/custom/custom_tests.rs: `.with_body(
         r#"<?xml version="1.0" encoding="UTF-8"?>
         <Error>
@@ -1630,8 +1632,6 @@ $DIR/rusoto/services/s3/src/custom/custom_tests.rs: `.with_body(
 $DIR/rusoto/services/s3/src/custom/custom_tests.rs: `.list_objects_v2(request)`
 $DIR/rusoto/services/s3/src/custom/custom_tests.rs: `.err()`
 $DIR/rusoto/services/s3/src/custom/custom_tests.rs: `.head_object(request)`
-$DIR/rusoto/services/s3/src/custom/custom_tests.rs: `request = HeadObjectRequest::default();`
-$DIR/rusoto/services/s3/src/custom/custom_tests.rs: `result = client.head_object(request).await.unwrap();`
 $DIR/rusoto/services/s3/src/custom/custom_tests.rs: `.head_object(request)`
 $DIR/rusoto/services/s3/src/generated.rs: `.with_body(&mock_response)`
 $DIR/rusoto/services/s3/src/generated.rs: `.create_bucket(request)`
@@ -1679,6 +1679,21 @@ $DIR/rusoto/services/ses/src/generated.rs: `.with_body(&mock_response)`
 $DIR/rusoto/services/ses/src/generated.rs: `.verify_domain_dkim(request)`
 $DIR/rusoto/services/ses/src/generated.rs: `.with_body(&mock_response)`
 $DIR/rusoto/services/ses/src/generated.rs: `.verify_domain_identity(request)`
+$DIR/rusoto/services/sns/src/custom/custom_tests.rs: `sns_input_attrib.insert(
+        "PlatformCredential".to_string(),
+        "YOUR_PLATFORM_CREDENTIAL".to_string(),
+    );`
+$DIR/rusoto/services/sns/src/custom/custom_tests.rs: `sns_input_attrib.insert(
+        "PlatformPrincipal".to_string(),
+        "YOUR_PLATFORM_PRINCIPAL".to_string(),
+    );`
+$DIR/rusoto/services/sns/src/custom/custom_tests.rs: `sns_input_attrib.insert("Enabled".to_string(), "false".to_string());`
+$DIR/rusoto/services/sns/src/custom/custom_tests.rs: `sns_input_attrib.insert(
+        "PlatformCredential".to_string(),
+        "YOUR_PLATFORM_CREDENTIAL".to_string(),
+    );`
+$DIR/rusoto/services/sns/src/custom/custom_tests.rs: `sns_input_attrib.insert("Enabled".to_string(), "false".to_string());`
+$DIR/rusoto/services/sns/src/custom/custom_tests.rs: `sns_input_attrib.insert("DefaultSMSType".to_string(), "Promotional".to_string());`
 $DIR/rusoto/services/sns/src/custom/custom_tests.rs: `.with_request_checker(|request: &SignedRequest| {
             assert_eq!("POST", request.method);
 
@@ -1707,18 +1722,10 @@ $DIR/rusoto/services/sns/src/custom/custom_tests.rs: `.with_request_checker(|req
             }
         })`
 $DIR/rusoto/services/sns/src/custom/custom_tests.rs: `.get(format!("Attributes.entry.{}.key", idx).as_str())`
-$DIR/rusoto/services/sns/src/custom/custom_tests.rs: `sns_input_attrib.insert(
-        "PlatformCredential".to_string(),
-        "YOUR_PLATFORM_CREDENTIAL".to_string(),
-    );`
 $DIR/rusoto/services/sns/src/custom/custom_tests.rs: `.insert(
         "PlatformCredential".to_string(),
         "YOUR_PLATFORM_CREDENTIAL".to_string(),
     )`
-$DIR/rusoto/services/sns/src/custom/custom_tests.rs: `sns_input_attrib.insert(
-        "PlatformPrincipal".to_string(),
-        "YOUR_PLATFORM_PRINCIPAL".to_string(),
-    );`
 $DIR/rusoto/services/sns/src/custom/custom_tests.rs: `.insert(
         "PlatformPrincipal".to_string(),
         "YOUR_PLATFORM_PRINCIPAL".to_string(),
@@ -1741,7 +1748,6 @@ $DIR/rusoto/services/sns/src/custom/custom_tests.rs: `.with_request_checker(|req
                 panic!("Unexpected request.payload: {:?}", request.payload);
             }
         })`
-$DIR/rusoto/services/sns/src/custom/custom_tests.rs: `sns_input_attrib.insert("Enabled".to_string(), "false".to_string());`
 $DIR/rusoto/services/sns/src/custom/custom_tests.rs: `.insert("Enabled".to_string(), "false".to_string())`
 $DIR/rusoto/services/sns/src/custom/custom_tests.rs: `.create_platform_endpoint(sns_input)`
 $DIR/rusoto/services/sns/src/custom/custom_tests.rs: `.with_request_checker(|request: &SignedRequest| {
@@ -1761,10 +1767,6 @@ $DIR/rusoto/services/sns/src/custom/custom_tests.rs: `.with_request_checker(|req
                 panic!("Unexpected request.payload: {:?}", request.payload);
             }
         })`
-$DIR/rusoto/services/sns/src/custom/custom_tests.rs: `sns_input_attrib.insert(
-        "PlatformCredential".to_string(),
-        "YOUR_PLATFORM_CREDENTIAL".to_string(),
-    );`
 $DIR/rusoto/services/sns/src/custom/custom_tests.rs: `.insert(
         "PlatformCredential".to_string(),
         "YOUR_PLATFORM_CREDENTIAL".to_string(),
@@ -1787,7 +1789,6 @@ $DIR/rusoto/services/sns/src/custom/custom_tests.rs: `.with_request_checker(|req
                 panic!("Unexpected request.payload: {:?}", request.payload);
             }
         })`
-$DIR/rusoto/services/sns/src/custom/custom_tests.rs: `sns_input_attrib.insert("Enabled".to_string(), "false".to_string());`
 $DIR/rusoto/services/sns/src/custom/custom_tests.rs: `.insert("Enabled".to_string(), "false".to_string())`
 $DIR/rusoto/services/sns/src/custom/custom_tests.rs: `.set_endpoint_attributes(sns_input)`
 $DIR/rusoto/services/sns/src/custom/custom_tests.rs: `.with_body(
@@ -1823,7 +1824,6 @@ $DIR/rusoto/services/sns/src/custom/custom_tests.rs: `.with_request_checker(|req
                 panic!("Unexpected request.payload: {:?}", request.payload);
             }
         })`
-$DIR/rusoto/services/sns/src/custom/custom_tests.rs: `sns_input_attrib.insert("DefaultSMSType".to_string(), "Promotional".to_string());`
 $DIR/rusoto/services/sns/src/custom/custom_tests.rs: `.insert("DefaultSMSType".to_string(), "Promotional".to_string())`
 $DIR/rusoto/services/sns/src/custom/custom_tests.rs: `.set_sms_attributes(sns_input)`
 $DIR/rusoto/services/sns/src/custom/custom_tests.rs: `.with_body(
@@ -1872,6 +1872,22 @@ $DIR/rusoto/services/sns/src/generated.rs: `.with_body(&mock_response)`
 $DIR/rusoto/services/sns/src/generated.rs: `.publish(request)`
 $DIR/rusoto/services/sns/src/generated.rs: `.with_body(&mock_response)`
 $DIR/rusoto/services/sns/src/generated.rs: `.subscribe(request)`
+$DIR/rusoto/services/sqs/src/custom/custom_tests.rs: `message_attributes.insert(
+        "test_attribute_name".to_owned(),
+        MessageAttributeValue {
+            string_value: Some("test_attribute_value".to_owned()),
+            data_type: "String".to_owned(),
+            ..Default::default()
+        },
+    );`
+$DIR/rusoto/services/sqs/src/custom/custom_tests.rs: `message_attributes.insert(
+        "test_attribute_name".to_owned(),
+        MessageAttributeValue {
+            string_value: Some("test_attribute_value".to_owned()),
+            data_type: "String".to_owned(),
+            ..Default::default()
+        },
+    );`
 $DIR/rusoto/services/sqs/src/custom/custom_tests.rs: `.with_body(
             r#"<?xml version="1.0" encoding="UTF-8"?>
         <SendMessageResponse>
@@ -1916,14 +1932,6 @@ $DIR/rusoto/services/sqs/src/custom/custom_tests.rs: `.with_request_checker(|req
                 panic!("Unexpected request.payload: {:?}", request.payload);
             }
         })`
-$DIR/rusoto/services/sqs/src/custom/custom_tests.rs: `message_attributes.insert(
-        "test_attribute_name".to_owned(),
-        MessageAttributeValue {
-            string_value: Some("test_attribute_value".to_owned()),
-            data_type: "String".to_owned(),
-            ..Default::default()
-        },
-    );`
 $DIR/rusoto/services/sqs/src/custom/custom_tests.rs: `.insert(
         "test_attribute_name".to_owned(),
         MessageAttributeValue {
@@ -2033,14 +2041,6 @@ $DIR/rusoto/services/sqs/src/custom/custom_tests.rs: `.with_body(
         )`
 $DIR/rusoto/services/sqs/src/custom/custom_tests.rs: `.receive_message(request)`
 $DIR/rusoto/services/sqs/src/custom/custom_tests.rs: `.pop()`
-$DIR/rusoto/services/sqs/src/custom/custom_tests.rs: `message_attributes.insert(
-        "test_attribute_name".to_owned(),
-        MessageAttributeValue {
-            string_value: Some("test_attribute_value".to_owned()),
-            data_type: "String".to_owned(),
-            ..Default::default()
-        },
-    );`
 $DIR/rusoto/services/sqs/src/custom/custom_tests.rs: `.insert(
         "test_attribute_name".to_owned(),
         MessageAttributeValue {
@@ -2122,25 +2122,12 @@ $DIR/rusoto/signature/src/signature.rs: `request.sign(&AwsCredentials::new(
             None,
             None,
         ));`
-$DIR/rusoto/signature/src/signature.rs: `.sign(&AwsCredentials::new(
-            "foo_access_key",
-            "foo_secret_key",
-            None,
-            None,
-        ))`
-$DIR/rusoto/signature/src/signature.rs: `.try_into()`
 $DIR/rusoto/signature/src/signature.rs: `request.sign(&AwsCredentials::new(
             "foo_access_key",
             "foo_secret_key",
             None,
             None,
         ));`
-$DIR/rusoto/signature/src/signature.rs: `.sign(&AwsCredentials::new(
-            "foo_access_key",
-            "foo_secret_key",
-            None,
-            None,
-        ))`
 $DIR/rusoto/signature/src/signature.rs: `query_encoding_escaped_chars_range(0u8, 45u8);`
 $DIR/rusoto/signature/src/signature.rs: `query_encoding_escaped_chars_range(47u8, 48u8);`
 $DIR/rusoto/signature/src/signature.rs: `query_encoding_escaped_chars_range(58u8, 65u8);`
@@ -2148,47 +2135,60 @@ $DIR/rusoto/signature/src/signature.rs: `query_encoding_escaped_chars_range(91u8
 $DIR/rusoto/signature/src/signature.rs: `query_encoding_escaped_chars_range(96u8, 97u8);`
 $DIR/rusoto/signature/src/signature.rs: `query_encoding_escaped_chars_range(123u8, 126u8);`
 $DIR/rusoto/signature/src/signature.rs: `request.add_param("arg1%7B", "arg1%7B");`
-$DIR/rusoto/signature/src/signature.rs: `.add_param("arg1%7B", "arg1%7B")`
 $DIR/rusoto/signature/src/signature.rs: `request.add_param("arg2%7B+%2B", "+%2B");`
-$DIR/rusoto/signature/src/signature.rs: `.add_param("arg2%7B+%2B", "+%2B")`
 $DIR/rusoto/signature/src/signature.rs: `request.add_param(
             "key:with@funny&characters",
             "value with/funny%characters/Рускии",
         );`
-$DIR/rusoto/signature/src/signature.rs: `.add_param(
-            "key:with@funny&characters",
-            "value with/funny%characters/Рускии",
-        )`
 $DIR/rusoto/signature/src/signature.rs: `params.insert("key".into(), Some("val+ue".into()));`
-$DIR/rusoto/signature/src/signature.rs: `.insert("key".into(), Some("val+ue".into()))`
-$DIR/rusoto/signature/src/signature.rs: `.into()`
-$DIR/rusoto/signature/src/signature.rs: `.into()`
 $DIR/rusoto/signature/src/signature.rs: `headers.insert("content-length".to_owned(), vec![vec![]]);`
-$DIR/rusoto/signature/src/signature.rs: `.insert("content-length".to_owned(), vec![vec![]])`
 $DIR/rusoto/signature/src/signature.rs: `headers.insert("content-type".to_owned(), vec![vec![]]);`
-$DIR/rusoto/signature/src/signature.rs: `.insert("content-type".to_owned(), vec![vec![]])`
 $DIR/rusoto/signature/src/signature.rs: `headers.insert("x-amz-date".to_owned(), vec![vec![]]);`
-$DIR/rusoto/signature/src/signature.rs: `.insert("x-amz-date".to_owned(), vec![vec![]])`
 $DIR/rusoto/signature/src/signature.rs: `headers.insert("cache-control".to_owned(), vec![vec![]]);`
-$DIR/rusoto/signature/src/signature.rs: `.insert("cache-control".to_owned(), vec![vec![]])`
 $DIR/rusoto/signature/src/signature.rs: `headers.insert("content-length".to_owned(), vec![vec![]]);`
-$DIR/rusoto/signature/src/signature.rs: `.insert("content-length".to_owned(), vec![vec![]])`
 $DIR/rusoto/signature/src/signature.rs: `headers.insert("content-type".to_owned(), vec![vec![]]);`
-$DIR/rusoto/signature/src/signature.rs: `.insert("content-type".to_owned(), vec![vec![]])`
 $DIR/rusoto/signature/src/signature.rs: `headers.insert("host".to_owned(), vec![vec![]]);`
-$DIR/rusoto/signature/src/signature.rs: `.insert("host".to_owned(), vec![vec![]])`
 $DIR/rusoto/signature/src/signature.rs: `headers.insert("x-amz-date".to_owned(), vec![vec![]]);`
-$DIR/rusoto/signature/src/signature.rs: `.insert("x-amz-date".to_owned(), vec![vec![]])`
 $DIR/rusoto/signature/src/signature.rs: `headers.insert("cache-control".to_owned(), vec![vec![]]);`
-$DIR/rusoto/signature/src/signature.rs: `.insert("cache-control".to_owned(), vec![vec![]])`
 $DIR/rusoto/signature/src/signature.rs: `headers.insert("content-length".to_owned(), vec![vec![]]);`
-$DIR/rusoto/signature/src/signature.rs: `.insert("content-length".to_owned(), vec![vec![]])`
 $DIR/rusoto/signature/src/signature.rs: `request.sign(&AwsCredentials::new(
             "foo_access_key",
             "foo_secret_key",
             None,
             None,
         ));`
+$DIR/rusoto/signature/src/signature.rs: `.sign(&AwsCredentials::new(
+            "foo_access_key",
+            "foo_secret_key",
+            None,
+            None,
+        ))`
+$DIR/rusoto/signature/src/signature.rs: `.try_into()`
+$DIR/rusoto/signature/src/signature.rs: `.sign(&AwsCredentials::new(
+            "foo_access_key",
+            "foo_secret_key",
+            None,
+            None,
+        ))`
+$DIR/rusoto/signature/src/signature.rs: `.add_param("arg1%7B", "arg1%7B")`
+$DIR/rusoto/signature/src/signature.rs: `.add_param("arg2%7B+%2B", "+%2B")`
+$DIR/rusoto/signature/src/signature.rs: `.add_param(
+            "key:with@funny&characters",
+            "value with/funny%characters/Рускии",
+        )`
+$DIR/rusoto/signature/src/signature.rs: `.insert("key".into(), Some("val+ue".into()))`
+$DIR/rusoto/signature/src/signature.rs: `.into()`
+$DIR/rusoto/signature/src/signature.rs: `.into()`
+$DIR/rusoto/signature/src/signature.rs: `.insert("content-length".to_owned(), vec![vec![]])`
+$DIR/rusoto/signature/src/signature.rs: `.insert("content-type".to_owned(), vec![vec![]])`
+$DIR/rusoto/signature/src/signature.rs: `.insert("x-amz-date".to_owned(), vec![vec![]])`
+$DIR/rusoto/signature/src/signature.rs: `.insert("cache-control".to_owned(), vec![vec![]])`
+$DIR/rusoto/signature/src/signature.rs: `.insert("content-length".to_owned(), vec![vec![]])`
+$DIR/rusoto/signature/src/signature.rs: `.insert("content-type".to_owned(), vec![vec![]])`
+$DIR/rusoto/signature/src/signature.rs: `.insert("host".to_owned(), vec![vec![]])`
+$DIR/rusoto/signature/src/signature.rs: `.insert("x-amz-date".to_owned(), vec![vec![]])`
+$DIR/rusoto/signature/src/signature.rs: `.insert("cache-control".to_owned(), vec![vec![]])`
+$DIR/rusoto/signature/src/signature.rs: `.insert("content-length".to_owned(), vec![vec![]])`
 $DIR/rusoto/signature/src/signature.rs: `.sign(&AwsCredentials::new(
             "foo_access_key",
             "foo_secret_key",

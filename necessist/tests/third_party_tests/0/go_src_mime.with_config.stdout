@@ -1,6 +1,9 @@
-331 candidates in 56 tests in 12 test files
+329 candidates in 56 tests in 12 test files
 $DIR/src/mime/encodedword_test.go: dry running
 $DIR/src/mime/encodedword_test.go: mutilating
+$DIR/src/mime/encodedword_test.go: `wordLen = 0` timed-out
+$DIR/src/mime/encodedword_test.go: `wordLen++` passed
+$DIR/src/mime/encodedword_test.go: `i++` failed
 $DIR/src/mime/encodedword_test.go: `.Repeat("é", 10)` nonbuildable
 $DIR/src/mime/encodedword_test.go: `.Repeat("=C3=A9", 10)` nonbuildable
 $DIR/src/mime/encodedword_test.go: `.Repeat("é", 11)` nonbuildable
@@ -20,12 +23,9 @@ $DIR/src/mime/encodedword_test.go: `.Repeat("ï", 25)` nonbuildable
 $DIR/src/mime/encodedword_test.go: `.Repeat("ô", 37)` nonbuildable
 $DIR/src/mime/encodedword_test.go: `.Repeat("\x80", 50)` nonbuildable
 $DIR/src/mime/encodedword_test.go: `.enc.Encode("utf-8", test.src)` nonbuildable
-$DIR/src/mime/encodedword_test.go: `wordLen = 0` timed-out
-$DIR/src/mime/encodedword_test.go: `wordLen++` passed
 $DIR/src/mime/encodedword_test.go: `.Decode(test.src)` nonbuildable
 $DIR/src/mime/encodedword_test.go: `.DecodeHeader(test.src)` nonbuildable
 $DIR/src/mime/encodedword_test.go: `.ReadAll(input)` nonbuildable
-$DIR/src/mime/encodedword_test.go: `i++` failed
 $DIR/src/mime/encodedword_test.go: `.NewReader(got)` nonbuildable
 $DIR/src/mime/encodedword_test.go: `.DecodeHeader(test.src)` nonbuildable
 $DIR/src/mime/encodedword_test.go: `.New("Test error")` nonbuildable
@@ -33,9 +33,9 @@ $DIR/src/mime/encodedword_test.go: `.DecodeHeader("=?charset?Q?foo?=")` nonbuild
 $DIR/src/mime/mediatype_test.go: dry running
 $DIR/src/mime/mediatype_test.go: mutilating
 $DIR/src/mime/mediatype_test.go: `sm[s[i]] = s[i+1]` failed
+$DIR/src/mime/mediatype_test.go: `k = strings.ToLower(k)` failed
 $DIR/src/mime/mediatype_test.go: `.DeepEqual(params, test.p)` nonbuildable
 $DIR/src/mime/mediatype_test.go: `.ToLower(tt.typ)` nonbuildable
-$DIR/src/mime/mediatype_test.go: `k = strings.ToLower(k)` failed
 $DIR/src/mime/mediatype_test.go: `.ToLower(k)` nonbuildable
 $DIR/src/mime/multipart/formdata_test.go: dry running
 $DIR/src/mime/multipart/formdata_test.go: Warning: dry run failed: code=1
@@ -67,12 +67,6 @@ multipart/formdata.go:10:2: use of internal package internal/godebug not allowed
 
 $DIR/src/mime/quotedprintable/reader_test.go: dry running
 $DIR/src/mime/quotedprintable/reader_test.go: mutilating
-$DIR/src/mime/quotedprintable/reader_test.go: `.Copy(&buf, NewReader(strings.NewReader(tt.in)))` nonbuildable
-$DIR/src/mime/quotedprintable/reader_test.go: `.NewReader(tt.in)` nonbuildable
-$DIR/src/mime/quotedprintable/reader_test.go: `.String()` nonbuildable
-$DIR/src/mime/quotedprintable/reader_test.go: `.Sprint(err)` nonbuildable
-$DIR/src/mime/quotedprintable/reader_test.go: `.LookPath("qprint")` nonbuildable
-$DIR/src/mime/quotedprintable/reader_test.go: `.Short()` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go: `n = 4` passed
 $DIR/src/mime/quotedprintable/reader_test.go: `everySequence("", "0A \r\n=", n, func(s string) {
 		if strings.HasSuffix(s, "=") || strings.Contains(s, "==") {
@@ -147,16 +141,32 @@ $DIR/src/mime/quotedprintable/reader_test.go: `everySequence("", "0A \r\n=", n, 
 			}
 		}
 		res["OK"]++
-	})` nonbuildable
+	})` failed
+$DIR/src/mime/quotedprintable/reader_test.go: `buf.Reset()` passed
+$DIR/src/mime/quotedprintable/reader_test.go: `errStr = "invalid bytes after ="` timed-out
+$DIR/src/mime/quotedprintable/reader_test.go: `res[errStr]++` failed
+$DIR/src/mime/quotedprintable/reader_test.go: `cmd.Stdin = strings.NewReader(s)` passed
+$DIR/src/mime/quotedprintable/reader_test.go: `qpres <- errors.New(s)` passed
+$DIR/src/mime/quotedprintable/reader_test.go: `cmd.Process.Kill()` passed
+$DIR/src/mime/quotedprintable/reader_test.go: `qpres <- want` passed
+$DIR/src/mime/quotedprintable/reader_test.go: `res["OK"]++` failed
+$DIR/src/mime/quotedprintable/reader_test.go: `outcomes = append(outcomes, fmt.Sprintf("%v: %d", k, v))` failed
+$DIR/src/mime/quotedprintable/reader_test.go: `want = `OK: 896
+invalid bytes after =: 100
+quotedprintable: invalid hex byte 0x0d: 26
+unexpected EOF: 3`` passed
+$DIR/src/mime/quotedprintable/reader_test.go: `.Copy(&buf, NewReader(strings.NewReader(tt.in)))` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go: `.NewReader(tt.in)` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go: `.String()` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go: `.Sprint(err)` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go: `.LookPath("qprint")` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go: `.Short()` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go: `.HasSuffix(s, "=")` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go: `.Contains(s, "==")` nonbuildable
-$DIR/src/mime/quotedprintable/reader_test.go: `buf.Reset()` passed
 $DIR/src/mime/quotedprintable/reader_test.go: `.Reset()` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go: `.Copy(&buf, NewReader(strings.NewReader(s)))` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go: `.NewReader(s)` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go: `.Contains(errStr, "invalid bytes after =:")` nonbuildable
-$DIR/src/mime/quotedprintable/reader_test.go: `errStr = "invalid bytes after ="` timed-out
-$DIR/src/mime/quotedprintable/reader_test.go: `res[errStr]++` failed
 $DIR/src/mime/quotedprintable/reader_test.go: `.Contains(errStr, "invalid hex byte ")` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go: `.HasSuffix(errStr, "0x20")` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go: `.Contains(s, "=0 ")` nonbuildable
@@ -170,30 +180,18 @@ $DIR/src/mime/quotedprintable/reader_test.go: `.HasSuffix(errStr, "0x0d")` nonbu
 $DIR/src/mime/quotedprintable/reader_test.go: `.Contains(errStr, "unexpected EOF")` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go: `.MatchString(s)` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go: `.Command("qprint", "-d")` nonbuildable
-$DIR/src/mime/quotedprintable/reader_test.go: `cmd.Stdin = strings.NewReader(s)` passed
 $DIR/src/mime/quotedprintable/reader_test.go: `.NewReader(s)` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go: `.StderrPipe()` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go: `.NewReader(stderr)` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go: `.ReadString('\n')` nonbuildable
-$DIR/src/mime/quotedprintable/reader_test.go: `qpres <- errors.New(s)` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go: `.New(s)` nonbuildable
-$DIR/src/mime/quotedprintable/reader_test.go: `cmd.Process.Kill()` passed
 $DIR/src/mime/quotedprintable/reader_test.go: `.Process.Kill()` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go: `.Output()` nonbuildable
-$DIR/src/mime/quotedprintable/reader_test.go: `qpres <- want` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go: `.String()` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go: `.After(5 * time.Second)` nonbuildable
-$DIR/src/mime/quotedprintable/reader_test.go: `res["OK"]++` failed
-$DIR/src/mime/quotedprintable/reader_test.go: `outcomes = append(outcomes, fmt.Sprintf("%v: %d", k, v))` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go: `.Sprintf("%v: %d", k, v)` nonbuildable
-$DIR/src/mime/quotedprintable/reader_test.go: `sort.Strings(outcomes)` nonbuildable
-$DIR/src/mime/quotedprintable/reader_test.go: `.Strings(outcomes)` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go: `.Join(outcomes, "\n")` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go: `.Short()` nonbuildable
-$DIR/src/mime/quotedprintable/reader_test.go: `want = `OK: 896
-invalid bytes after =: 100
-quotedprintable: invalid hex byte 0x0d: 26
-unexpected EOF: 3`` passed
 $DIR/src/mime/quotedprintable/writer_test.go: dry running
 $DIR/src/mime/quotedprintable/writer_test.go: mutilating
 $DIR/src/mime/quotedprintable/writer_test.go: `.Write(testMsg)` nonbuildable
@@ -214,16 +212,16 @@ $DIR/src/mime/type_test.go: `setType(".a", "foo/letter")` failed
 $DIR/src/mime/type_test.go: `setType(".b", "foo/letter")` passed
 $DIR/src/mime/type_test.go: `setType(".B", "foo/letter")` passed
 $DIR/src/mime/type_test.go: `setType(".PNG", "image/png")` failed
+$DIR/src/mime/type_test.go: `TypeByExtension(".html")` passed
+$DIR/src/mime/type_test.go: `TypeByExtension(".HtML")` passed
+$DIR/src/mime/type_test.go: `clearMimeTypes()` passed
+$DIR/src/mime/type_test.go: `setMimeTypes(builtinTypesLower, builtinTypesLower)` failed
 $DIR/src/mime/type_test.go: `.Contains(err.Error(), tt.wantErr)` nonbuildable
 $DIR/src/mime/type_test.go: `.DeepEqual(got, tt.want)` nonbuildable
 $DIR/src/mime/type_test.go: `.AllocsPerRun(10000, func() {
 		TypeByExtension(".html")
 		TypeByExtension(".HtML")
 	})` nonbuildable
-$DIR/src/mime/type_test.go: `TypeByExtension(".html")` passed
-$DIR/src/mime/type_test.go: `TypeByExtension(".HtML")` passed
-$DIR/src/mime/type_test.go: `clearMimeTypes()` passed
-$DIR/src/mime/type_test.go: `setMimeTypes(builtinTypesLower, builtinTypesLower)` failed
 $DIR/src/mime/type_test.go: `.DeepEqual(got, tt.want)` nonbuildable
 $DIR/src/mime/type_unix_test.go: dry running
 $DIR/src/mime/type_unix_test.go: mutilating
