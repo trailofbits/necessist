@@ -852,6 +852,12 @@ $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `example2
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.initialize(address(registry), DEFAULT_SUBSCRIPTION, true)`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `vm.startPrank(address(filteredAddress));`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.startPrank(address(filteredAddress))`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `vm.startPrank(filteredAddress);`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.startPrank(filteredAddress)`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `vm.stopPrank();`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.stopPrank()`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `vm.startPrank(filteredCodeHashAddress);`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.startPrank(filteredCodeHashAddress)`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `example.mint(alice, 1);`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.mint(alice, 1)`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `vm.prank(DEFAULT_SUBSCRIPTION);`
@@ -882,12 +888,6 @@ $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `vm.prank
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.prank(DEFAULT_SUBSCRIPTION)`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `vm.startPrank(bob);`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.startPrank(bob)`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `vm.startPrank(filteredAddress);`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.startPrank(filteredAddress)`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `vm.stopPrank();`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.stopPrank()`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `vm.startPrank(filteredCodeHashAddress);`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.startPrank(filteredCodeHashAddress)`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `vm.recordLogs();`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.recordLogs()`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `filterer2.initialize(address(registry), address(0), false);`
