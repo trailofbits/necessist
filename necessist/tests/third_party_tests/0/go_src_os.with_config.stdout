@@ -1,4 +1,4 @@
-466 candidates in 78 tests in 1 test file
+455 candidates in 78 tests in 1 test file
 $DIR/src/os/os_test.go: dry running
 $DIR/src/os/os_test.go: mutilating
 $DIR/src/os/os_test.go: Warning: Failed to run test `TestMain`
@@ -337,14 +337,8 @@ $DIR/src/os/os_test.go: `fmt.Fprintf(Stderr, "fchdir back to dot failed: %s\n", 
 $DIR/src/os/os_test.go: `.Fprintf(Stderr, "fchdir back to dot failed: %s\n", err2)` nonbuildable
 $DIR/src/os/os_test.go: `Exit(1)` passed
 $DIR/src/os/os_test.go: `.Name()` nonbuildable
-$DIR/src/os/os_test.go: `const data = "hello, world\n"` nonbuildable
 $DIR/src/os/os_test.go: `io.WriteString(f, data)` failed
 $DIR/src/os/os_test.go: `.WriteString(f, data)` nonbuildable
-$DIR/src/os/os_test.go: `type test struct {
-		in     int64
-		whence int
-		out    int64
-	}` nonbuildable
 $DIR/src/os/os_test.go: `.Seek(tt.in, tt.whence)` nonbuildable
 $DIR/src/os/os_test.go: `.Contains(string(mounts), "reiserfs")` nonbuildable
 $DIR/src/os/os_test.go: `_, err = r.Seek(0, 0)` nonbuildable
@@ -360,12 +354,10 @@ $DIR/src/os/os_test.go: `testenv.MustHaveExec(t)` passed
 $DIR/src/os/os_test.go: `.MustHaveExec(t)` nonbuildable
 $DIR/src/os/os_test.go: `.Cut(hostname, ".")` nonbuildable
 $DIR/src/os/os_test.go: `.Name()` nonbuildable
-$DIR/src/os/os_test.go: `const data = "hello, world\n"` nonbuildable
 $DIR/src/os/os_test.go: `io.WriteString(f, data)` failed
 $DIR/src/os/os_test.go: `.WriteString(f, data)` nonbuildable
 $DIR/src/os/os_test.go: `.ReadAt(b, 7)` nonbuildable
 $DIR/src/os/os_test.go: `.Name()` nonbuildable
-$DIR/src/os/os_test.go: `const data = "hello, world\n"` nonbuildable
 $DIR/src/os/os_test.go: `io.WriteString(f, data)` failed
 $DIR/src/os/os_test.go: `.WriteString(f, data)` nonbuildable
 $DIR/src/os/os_test.go: `f.Seek(0, 0)` failed
@@ -374,29 +366,24 @@ $DIR/src/os/os_test.go: `.ReadAt(b, 7)` nonbuildable
 $DIR/src/os/os_test.go: `n, err = f.Read(b)` failed
 $DIR/src/os/os_test.go: `.Read(b)` nonbuildable
 $DIR/src/os/os_test.go: `.Name()` nonbuildable
-$DIR/src/os/os_test.go: `const data = "hello, world\n"` nonbuildable
 $DIR/src/os/os_test.go: `io.WriteString(f, data)` passed
 $DIR/src/os/os_test.go: `.WriteString(f, data)` nonbuildable
 $DIR/src/os/os_test.go: `f.Seek(0, 0)` passed
 $DIR/src/os/os_test.go: `.Seek(0, 0)` nonbuildable
 $DIR/src/os/os_test.go: `.ReadAt(b, -10)` nonbuildable
-$DIR/src/os/os_test.go: `const wantsub = "negative offset"` nonbuildable
 $DIR/src/os/os_test.go: `.Contains(fmt.Sprint(err), wantsub)` nonbuildable
 $DIR/src/os/os_test.go: `.Sprint(err)` nonbuildable
 $DIR/src/os/os_test.go: `.Name()` nonbuildable
-$DIR/src/os/os_test.go: `const data = "hello, world\n"` nonbuildable
 $DIR/src/os/os_test.go: `io.WriteString(f, data)` failed
 $DIR/src/os/os_test.go: `.WriteString(f, data)` nonbuildable
 $DIR/src/os/os_test.go: `.WriteAt([]byte("WORLD"), 7)` nonbuildable
 $DIR/src/os/os_test.go: `.Name()` nonbuildable
 $DIR/src/os/os_test.go: `.Name()` nonbuildable
 $DIR/src/os/os_test.go: `.WriteAt([]byte("WORLD"), -10)` nonbuildable
-$DIR/src/os/os_test.go: `const wantsub = "negative offset"` nonbuildable
 $DIR/src/os/os_test.go: `.Contains(fmt.Sprint(err), wantsub)` nonbuildable
 $DIR/src/os/os_test.go: `.Sprint(err)` nonbuildable
 $DIR/src/os/os_test.go: `_, err = f.WriteAt([]byte(""), 1)` failed
 $DIR/src/os/os_test.go: `.WriteAt([]byte(""), 1)` nonbuildable
-$DIR/src/os/os_test.go: `const f = "append.txt"` nonbuildable
 $DIR/src/os/os_test.go: `s = writeFile(t, f, O_APPEND|O_RDWR, "|append")` failed
 $DIR/src/os/os_test.go: `s = writeFile(t, f, O_CREATE|O_APPEND|O_RDWR, "|append")` failed
 $DIR/src/os/os_test.go: `s = writeFile(t, f, O_CREATE|O_APPEND|O_RDWR, "new&append")` failed
@@ -413,7 +400,6 @@ $DIR/src/os/os_test.go: `b[len(b)-1] = '\n'` passed
 $DIR/src/os/os_test.go: `.Write(b)` nonbuildable
 $DIR/src/os/os_test.go: `n, err = Stderr.Write(b)` passed
 $DIR/src/os/os_test.go: `.Write(b)` nonbuildable
-$DIR/src/os/os_test.go: `const mode = 0111` nonbuildable
 $DIR/src/os/os_test.go: `.TempDir()` nonbuildable
 $DIR/src/os/os_test.go: `.Mode()` nonbuildable
 $DIR/src/os/os_test.go: `.Stat()` nonbuildable
@@ -636,7 +622,6 @@ $DIR/src/os/os_test.go: `.ModTime()` nonbuildable
 $DIR/src/os/os_test.go: `.ModTime()` nonbuildable
 $DIR/src/os/os_test.go: `.TestFS(fsys, "a", "b", "dir/x")` nonbuildable
 $DIR/src/os/os_test.go: `.ReadDir("nonexistent")` nonbuildable
-$DIR/src/os/os_test.go: `const nonesuch = "dir/nonesuch"` nonbuildable
 $DIR/src/os/os_test.go: `.Open(nonesuch)` nonbuildable
 $DIR/src/os/os_test.go: `.Contains(err.Error(), nonesuch)` nonbuildable
 $DIR/src/os/os_test.go: `.Contains(err.(*PathError).Path, "testdata")` nonbuildable

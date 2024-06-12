@@ -1,4 +1,4 @@
-112 candidates in 30 tests in 3 test files
+105 candidates in 30 tests in 3 test files
 $DIR/src/encoding/binary/binary_test.go: dry running
 $DIR/src/encoding/binary/binary_test.go: mutilating
 $DIR/src/encoding/binary/binary_test.go: `.NewReader(src)` nonbuildable
@@ -62,29 +62,15 @@ $DIR/src/encoding/binary/binary_test.go: `.Range(func(_, _ any) bool {
 		})` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `i++` failed
 $DIR/src/encoding/binary/binary_test.go: `total += delta` failed
-$DIR/src/encoding/binary/binary_test.go: `type foo struct {
-		A uint32
-	}` nonbuildable
-$DIR/src/encoding/binary/binary_test.go: `type bar struct {
-		A Struct
-		B foo
-		C Struct
-	}` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.TypeOf(data)` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.String()` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `read(0)` passed
 $DIR/src/encoding/binary/binary_test.go: `read(&s)` passed
-$DIR/src/encoding/binary/binary_test.go: `const data = "0123456789abcdef"` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `errWant = io.EOF` failed
 $DIR/src/encoding/binary/binary_test.go: `errWant = nil` passed
 $DIR/src/encoding/binary/binary_test.go: `errWant = io.ErrUnexpectedEOF` failed
 $DIR/src/encoding/binary/binary_test.go: `.NewReader(data[:i])` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.NewReader(data[:i])` nonbuildable
-$DIR/src/encoding/binary/binary_test.go: `type byteOrder interface {
-		ByteOrder
-		AppendByteOrder
-	}` nonbuildable
-$DIR/src/encoding/binary/binary_test.go: `const offset = 3` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Float64bits(math.Pi)` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Float64bits(math.E)` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `order.PutUint16(buf[:2], want16)` failed
@@ -106,12 +92,6 @@ $DIR/src/encoding/binary/binary_test.go: `buf = order.AppendUint64(buf[:offset],
 $DIR/src/encoding/binary/binary_test.go: `.AppendUint64(buf[:offset], want64)` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Uint64(buf[offset:])` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `testReadInvalidDestination(t, BigEndian)` passed
-$DIR/src/encoding/binary/binary_test.go: `type Person struct {
-		Age    int
-		Weight float64
-		Height float64
-	}` nonbuildable
-$DIR/src/encoding/binary/binary_test.go: `const val = 0x12345678` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Slice((*byte)(unsafe.Pointer(&i)), unsafe.Sizeof(i))` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Pointer(&i)` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Sizeof(i)` nonbuildable

@@ -1,4 +1,4 @@
-106 candidates in 17 tests in 2 test files
+102 candidates in 17 tests in 2 test files
 $DIR/src/encoding/base64/base64_test.go: dry running
 $DIR/src/encoding/base64/base64_test.go: mutilating
 $DIR/src/encoding/base64/base64_test.go: `.enc.EncodeToString([]byte(p.decoded))` nonbuildable
@@ -52,33 +52,21 @@ $DIR/src/encoding/base64/base64_test.go: `.Decode(dbuf, []byte(tc.input))` nonbu
 $DIR/src/encoding/base64/base64_test.go: `testEqual(t, "Corruption in %q at offset %v, want %v", tc.input, int(err), tc.offset)` nonbuildable
 $DIR/src/encoding/base64/base64_test.go: `.EncodeToString(buf[:])` nonbuildable
 $DIR/src/encoding/base64/base64_test.go: `.Decode(buf[:], []byte(s))` nonbuildable
-$DIR/src/encoding/base64/base64_test.go: `type test struct {
-		enc  *Encoding
-		n    int
-		want int64
-	}` nonbuildable
 $DIR/src/encoding/base64/base64_test.go: `tests = append(tests, test{RawStdEncoding, (math.MaxInt-5)/8 + 1, 357913942})` passed
 $DIR/src/encoding/base64/base64_test.go: `tests = append(tests, test{RawStdEncoding, math.MaxInt/4*3 + 2, math.MaxInt})` passed
 $DIR/src/encoding/base64/base64_test.go: `tests = append(tests, test{RawStdEncoding, (math.MaxInt-5)/8 + 1, 1537228672809129302})` passed
 $DIR/src/encoding/base64/base64_test.go: `tests = append(tests, test{RawStdEncoding, math.MaxInt/4*3 + 2, math.MaxInt})` passed
 $DIR/src/encoding/base64/base64_test.go: `.enc.EncodedLen(tt.n)` nonbuildable
-$DIR/src/encoding/base64/base64_test.go: `type test struct {
-		enc  *Encoding
-		n    int
-		want int64
-	}` nonbuildable
 $DIR/src/encoding/base64/base64_test.go: `tests = append(tests, test{RawStdEncoding, math.MaxInt/6 + 1, 268435456})` passed
 $DIR/src/encoding/base64/base64_test.go: `tests = append(tests, test{RawStdEncoding, math.MaxInt, 1610612735})` passed
 $DIR/src/encoding/base64/base64_test.go: `tests = append(tests, test{RawStdEncoding, math.MaxInt/6 + 1, 1152921504606846976})` passed
 $DIR/src/encoding/base64/base64_test.go: `tests = append(tests, test{RawStdEncoding, math.MaxInt, 6917529027641081855})` passed
 $DIR/src/encoding/base64/base64_test.go: `.enc.DecodedLen(tt.n)` nonbuildable
-$DIR/src/encoding/base64/base64_test.go: `const alpha = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"` nonbuildable
 $DIR/src/encoding/base64/base64_test.go: `raw[i] = alpha[i%len(alpha)]` passed
 $DIR/src/encoding/base64/base64_test.go: `.Write(raw)` nonbuildable
 $DIR/src/encoding/base64/base64_test.go: `err = w.Close()` failed
 $DIR/src/encoding/base64/base64_test.go: `.ReadAll(NewDecoder(StdEncoding, encoded))` nonbuildable
 $DIR/src/encoding/base64/base64_test.go: `.Equal(raw, decoded)` nonbuildable
-$DIR/src/encoding/base64/base64_test.go: `const expected = "sure"` nonbuildable
 $DIR/src/encoding/base64/base64_test.go: `.DecodeString(e)` nonbuildable
 $DIR/src/encoding/base64/base64_test.go: `.New("my error")` nonbuildable
 $DIR/src/encoding/base64/base64_test.go: `next <- nextRead{5, nil}` passed

@@ -1,4 +1,4 @@
-74 candidates in 25 tests in 2 test files
+72 candidates in 25 tests in 2 test files
 $DIR/src/net/url/url_test.go: dry running
 $DIR/src/net/url/url_test.go: mutilating
 $DIR/src/net/url/url_test.go: `.DeepEqual(u, tt.out)` nonbuildable
@@ -105,7 +105,6 @@ $DIR/src/net/url/url_test.go: `.Run(test.query, func(t *testing.T) {
 		})` nonbuildable
 $DIR/src/net/url/url_test.go: `want = "<nil>"` passed
 $DIR/src/net/url/url_test.go: `.url.RequestURI()` nonbuildable
-$DIR/src/net/url/url_test.go: `const url = "%gh&%ij"` nonbuildable
 $DIR/src/net/url/url_test.go: `.Sprint(err)` nonbuildable
 $DIR/src/net/url/url_test.go: `.Contains(errStr, "%gh")` nonbuildable
 $DIR/src/net/url/url_test.go: `.RequestURI()` nonbuildable
@@ -131,7 +130,6 @@ $DIR/src/net/url/url_test.go: `.User.Password()` nonbuildable
 $DIR/src/net/url/url_test.go: `.User.String()` nonbuildable
 $DIR/src/net/url/url_test.go: `.Sprint(err)` nonbuildable
 $DIR/src/net/url/url_test.go: `.Contains(got, wantsub)` nonbuildable
-$DIR/src/net/url/url_test.go: `const wantSub = "net/url: invalid control character in URL"` nonbuildable
 $DIR/src/net/url/url_test.go: `.Sprint(err)` nonbuildable
 $DIR/src/net/url/url_test.go: `.Contains(got, wantSub)` nonbuildable
 $DIR/src/net/url/url_test.go: `wantErr = "non-nil error"` passed
