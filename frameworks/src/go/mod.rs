@@ -672,3 +672,23 @@ impl ToLineColumn for Point {
         }
     }
 }
+
+#[cfg(test)]
+mod test {
+    #[test]
+    fn imports_os() {
+        const TESTS: &[(&str, Option<&str>)] = &[
+            ("", None),
+            (r#"import "fmt""#, None),
+            (r#"import "os""#, Some("os")),
+            (r#"import . "os""#, Some(".")),
+            (r#"import x "os""#, Some("x")),
+            (r#"import ( "os" )"#, Some("os")),
+            (r#"import ( . "os" )"#, Some(".")),
+            (r#"import ( x "os" )"#, Some("x")),
+        ];
+        for &(contents, expected) in TESTS {
+            assert_eq!(expected, super::imports_os(contents), "{contents:?}");
+        }
+    }
+}
