@@ -1,4 +1,4 @@
-134 candidates in 15 tests in 4 test files
+133 candidates in 15 tests in 4 test files
 $DIR/src/testing/iotest/logger_test.go: dry running
 $DIR/src/testing/iotest/logger_test.go: mutilating
 $DIR/src/testing/iotest/logger_test.go: `.Writer()` nonbuildable
@@ -149,7 +149,6 @@ $DIR/src/testing/iotest/reader_test.go: `.Run(tt.name, func(t *testing.T) {
 			}
 		})` nonbuildable
 $DIR/src/testing/iotest/reader_test.go: `.Read(nil)` nonbuildable
-$DIR/src/testing/iotest/reader_test.go: `const msg = "Now is the time for all good gophers."` nonbuildable
 $DIR/src/testing/iotest/reader_test.go: `.NewReader(msg)` nonbuildable
 $DIR/src/testing/iotest/writer_test.go: dry running
 $DIR/src/testing/iotest/writer_test.go: mutilating

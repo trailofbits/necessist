@@ -1,4 +1,4 @@
-337 candidates in 56 tests in 12 test files
+331 candidates in 56 tests in 12 test files
 $DIR/src/mime/encodedword_test.go: dry running
 $DIR/src/mime/encodedword_test.go: mutilating
 $DIR/src/mime/encodedword_test.go: `.Repeat("é", 10)` nonbuildable
@@ -205,8 +205,6 @@ $DIR/src/mime/type_test.go: `clearMimeTypes()` passed
 $DIR/src/mime/type_test.go: `setType(".foo", "x/foo")` failed
 $DIR/src/mime/type_test.go: `setType(".bar", "x/bar")` failed
 $DIR/src/mime/type_test.go: `setType(".Bar", "x/bar; capital=1")` failed
-$DIR/src/mime/type_test.go: `const custom = "test/test; charset=iso-8859-1"` nonbuildable
-$DIR/src/mime/type_test.go: `const caps = "test/test; WAS=ALLCAPS"` nonbuildable
 $DIR/src/mime/type_test.go: `clearMimeTypes()` passed
 $DIR/src/mime/type_test.go: `setType(".TEST", caps)` failed
 $DIR/src/mime/type_test.go: `setType(".tesT", custom)` failed

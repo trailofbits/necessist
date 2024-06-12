@@ -61,6 +61,7 @@ fn valid_field_id(field_name: &str) -> u16 {
 static BLOCK_KIND: Lazy<u16> = Lazy::new(|| non_zero_kind_id("block"));
 static BREAK_STATEMENT_KIND: Lazy<u16> = Lazy::new(|| non_zero_kind_id("break_statement"));
 static CALL_EXPRESSION_KIND: Lazy<u16> = Lazy::new(|| non_zero_kind_id("call_expression"));
+static CONST_DECLARATION_KIND: Lazy<u16> = Lazy::new(|| non_zero_kind_id("const_declaration"));
 static CONTINUE_STATEMENT_KIND: Lazy<u16> = Lazy::new(|| non_zero_kind_id("continue_statement"));
 static DEFER_STATEMENT_KIND: Lazy<u16> = Lazy::new(|| non_zero_kind_id("defer_statement"));
 static IDENTIFIER_KIND: Lazy<u16> = Lazy::new(|| non_zero_kind_id("identifier"));
@@ -68,6 +69,7 @@ static RETURN_STATEMENT_KIND: Lazy<u16> = Lazy::new(|| non_zero_kind_id("return_
 static SELECTOR_EXPRESSION_KIND: Lazy<u16> = Lazy::new(|| non_zero_kind_id("selector_expression"));
 static SHORT_VAR_DECLARATION_KIND: Lazy<u16> =
     Lazy::new(|| non_zero_kind_id("short_var_declaration"));
+static TYPE_DECLARATION_KIND: Lazy<u16> = Lazy::new(|| non_zero_kind_id("type_declaration"));
 static VAR_DECLARATION_KIND: Lazy<u16> = Lazy::new(|| non_zero_kind_id("var_declaration"));
 
 fn non_zero_kind_id(kind: &str) -> u16 {
@@ -320,7 +322,9 @@ impl ParseLow for Go {
         _storage: &std::cell::RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
         statement: <Self::Types as AbstractTypes>::Statement<'ast>,
     ) -> bool {
-        statement.0.node.kind_id() == *SHORT_VAR_DECLARATION_KIND
+        statement.0.node.kind_id() == *CONST_DECLARATION_KIND
+            || statement.0.node.kind_id() == *SHORT_VAR_DECLARATION_KIND
+            || statement.0.node.kind_id() == *TYPE_DECLARATION_KIND
             || statement.0.node.kind_id() == *VAR_DECLARATION_KIND
     }
 

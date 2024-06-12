@@ -1,4 +1,4 @@
-38 candidates in 16 tests in 2 test files
+36 candidates in 16 tests in 2 test files
 $DIR/src/text/template/parse/parse_test.go: dry running
 $DIR/src/text/template/parse/parse_test.go: mutilating
 $DIR/src/text/template/parse/parse_test.go: `typ = itemCharConstant` failed
@@ -68,14 +68,8 @@ $DIR/src/text/template/parse/parse_test.go: `.Run(test.name, func(t *testing.T) 
 		})` nonbuildable
 $DIR/src/text/template/parse/parse_test.go: `.Parse(test.input, "", "", make(map[string]*Tree))` nonbuildable
 $DIR/src/text/template/parse/parse_test.go: `.Contains(err.Error(), test.result)` nonbuildable
-$DIR/src/text/template/parse/parse_test.go: `const (
-		input = `a{{block "inner" .}}bar{{.}}baz{{end}}b`
-		outer = `a{{template "inner" .}}b`
-		inner = `bar{{.}}baz`
-	)` nonbuildable
 $DIR/src/text/template/parse/parse_test.go: `.Parse(input, "", "", treeSet, nil)` nonbuildable
 $DIR/src/text/template/parse/parse_test.go: `.Root.String()` nonbuildable
 $DIR/src/text/template/parse/parse_test.go: `.Root.String()` nonbuildable
-$DIR/src/text/template/parse/parse_test.go: `const count = 3` nonbuildable
 $DIR/src/text/template/parse/parse_test.go: `.Repeat("{{printf 1234}}\n", count)` nonbuildable
 $DIR/src/text/template/parse/parse_test.go: `.Parse(text, "", "", make(map[string]*Tree), builtins)` nonbuildable
