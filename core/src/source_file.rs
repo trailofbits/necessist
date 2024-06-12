@@ -119,8 +119,8 @@ impl PartialOrd for SourceFile {
     }
 }
 
-impl AsRef<PathBuf> for SourceFile {
-    fn as_ref(&self) -> &PathBuf {
+impl AsRef<Path> for SourceFile {
+    fn as_ref(&self) -> &Path {
         &self.inner.path
     }
 }
