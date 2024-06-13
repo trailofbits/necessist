@@ -7,7 +7,7 @@ use cargo_metadata::Package;
 use necessist_core::{
     framework::TestSpanMaps, LightContext, SourceFile, Span, ToInternalSpan, __Rewriter as Rewriter,
 };
-use once_cell::sync::Lazy;
+use once_cell::sync::{Lazy, OnceCell};
 use quote::ToTokens;
 use std::{
     cell::RefCell,
@@ -655,4 +655,41 @@ fn test_file_test<'a>(package: &'a Package, test_file: &Path) -> Option<&'a Stri
     } else {
         None
     }
+}
+
+type MtimeMap = BTreeMap<PathBuf, std::time::SystemTime>;
+
+// smoelius: `check_mtimes` exists only for testing.
+pub(crate) fn check_mtimes(context: &LightContext) -> Result<()> {
+    use cargo_metadata::{Metadata, MetadataCommand};
+    static METADATA: OnceCell<Metadata> = OnceCell::new();
+    static MTIME_MAP: OnceCell<MtimeMap> = OnceCell::new();
+    let metadata = METADATA.get_or_try_init(|| {
+        MetadataCommand::new()
+            .current_dir(context.root.as_path())
+            .no_deps()
+            .exec()
+    })?;
+    let mtime_map = mtime_map(metadata.target_directory.as_std_path())?;
+    let existing = MTIME_MAP.get_or_init(|| mtime_map.clone());
+    for (path, mtime) in existing {
+        assert_eq!(Some(mtime), mtime_map.get(path), "failed for {path:?}");
+    }
+    // smoelius: Verify no new paths were created.
+    for path in mtime_map.keys() {
+        assert!(existing.contains_key(path), "failed for {path:?}");
+    }
+    Ok(())
+}
+
+fn mtime_map(target_directory: &Path) -> Result<MtimeMap> {
+    let mut mtime_map = MtimeMap::new();
+    for result in walkdir::WalkDir::new(target_directory) {
+        let entry = result?;
+        let path = entry.path();
+        let metadata = path.metadata()?;
+        let mtime = metadata.modified()?;
+        mtime_map.insert(path.to_path_buf(), mtime);
+    }
+    Ok(mtime_map)
 }

@@ -10,7 +10,7 @@ use tempfile_util::tempdir;
 
 const TIMEOUT: &str = "5";
 
-// smoelius: Two tests use the `basic` fixture, but only one can run at a time.
+// smoelius: Three tests use the `basic` fixture, but only one can run at a time.
 static BASIC_MUTEX: Mutex<()> = Mutex::new(());
 
 #[test]
@@ -165,4 +165,18 @@ fn kill() -> Command {
     let mut command = Command::new("kill");
     command.arg("-INT");
     command
+}
+
+#[test]
+fn tests_are_not_rebuilt() {
+    const ROOT: &str = "../fixtures/basic";
+
+    let _lock = BASIC_MUTEX.lock().unwrap();
+
+    Command::cargo_bin("necessist")
+        .unwrap()
+        .args(["--root", ROOT, "--timeout", TIMEOUT])
+        .env("NECESSIST_CHECK_MTIMES", "1")
+        .assert()
+        .success();
 }
