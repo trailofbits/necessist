@@ -1,4 +1,4 @@
-use super::{ts, OutputAccessors, OutputStrippedOfAnsiScapes, RunHigh};
+use super::{rust, ts, OutputAccessors, OutputStrippedOfAnsiScapes, RunHigh};
 use anyhow::{anyhow, Error, Result};
 use bstr::{io::BufReadExt, BStr};
 use log::debug;
@@ -6,7 +6,7 @@ use necessist_core::{
     framework::Postprocess, source_warn, util, LightContext, SourceFile, Span, WarnFlags, Warning,
     __Rewriter as Rewriter,
 };
-use std::{cell::RefCell, path::Path, process::Command, rc::Rc};
+use std::{cell::RefCell, env::var, path::Path, process::Command, rc::Rc};
 use subprocess::{Exec, NullFile, Redirection};
 
 pub type ProcessLines = (bool, Box<dyn Fn(&str) -> bool>);
@@ -189,6 +189,9 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
                         let x = f(line);
                         Ok::<_, Error>(if init { prev && x } else { prev || x })
                     })?;
+                    if enabled("NECESSIST_CHECK_MTIMES") {
+                        rust::check_mtimes(context).unwrap();
+                    }
                     if run {
                         return Ok(true);
                     }
@@ -204,4 +207,8 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
             }),
         )))
     }
+}
+
+fn enabled(key: &str) -> bool {
+    var(key).map_or(false, |value| value != "0")
 }
