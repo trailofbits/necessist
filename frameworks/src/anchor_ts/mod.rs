@@ -2,9 +2,8 @@ use super::{ts, OutputAccessors, OutputStrippedOfAnsiScapes, ParseAdapter, Parse
 use anyhow::{anyhow, Result};
 use log::debug;
 use necessist_core::{
-    __Backup as Backup,
     framework::{Interface, Postprocess, TestFileTestSpanMap},
-    LightContext, Span,
+    LightContext, Span, __Backup as Backup,
 };
 use once_cell::sync::Lazy;
 use regex::Regex;
