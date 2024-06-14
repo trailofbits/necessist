@@ -429,7 +429,14 @@ By default, Necessist ignores such a path if it matches either an `ignored_funct
 
 ## Semantic versioning policy
 
-We reserve the right to change what syntax Necessist ignores by default, and to consider such changes non-breaking.
+We reserve the right to change the following, and to consider such changes non-breaking:
+
+- the syntax that Necessist ignores by default
+
+Changes to the following will be accompanied by a bump of at least Necessist's minor version:
+
+- the order in which removal candidates are output
+- the order in which records are stored in necessist.db
 
 ## Goals
 

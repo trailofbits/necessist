@@ -3,7 +3,7 @@ use anyhow::{anyhow, Result};
 use log::debug;
 use necessist_core::{
     framework::{Interface, Postprocess, TestFileTestSpanMap},
-    LightContext, Span, __Backup as Backup,
+    LightContext, SourceFile, Span, __Backup as Backup, __Rewriter as Rewriter,
 };
 use once_cell::sync::Lazy;
 use regex::Regex;
@@ -71,6 +71,32 @@ impl RunHigh for AnchorTs {
         let command = command_to_run_test(context);
 
         self.mocha_adapter.0.dry_run(context, test_file, command)
+    }
+
+    fn instrument_file(
+        &self,
+        _context: &LightContext,
+        _rewriter: &mut Rewriter,
+        _source_file: &SourceFile,
+        _n_instrumentable_statements: usize,
+    ) -> Result<()> {
+        Ok(())
+    }
+
+    fn statement_prefix_and_suffix(&self, span: &Span) -> Result<(String, String)> {
+        self.mocha_adapter.0.statement_prefix_and_suffix(span)
+    }
+
+    fn build_file(&self, context: &LightContext, _source_file: &Path) -> Result<()> {
+        let mut command = command_to_build_file(context);
+
+        debug!("{:?}", command);
+
+        let output = command.output_stripped_of_ansi_escapes()?;
+        if !output.status().success() {
+            return Err(output.into());
+        }
+        Ok(())
     }
 
     fn exec(
@@ -183,6 +209,15 @@ fn parse_test_value(test_value: &mut Value) -> Result<(String, String)> {
         .ok_or_else(|| anyhow!("Failed to parse `test` string: {test_str:?}"))?;
     assert_eq!(3, captures.len());
     Ok((captures[1].to_string(), captures[2].to_string()))
+}
+
+fn command_to_build_file(context: &LightContext) -> Command {
+    let mut command = Command::new("anchor");
+    command.arg("build");
+    command.args(&context.opts.args);
+    command.current_dir(context.root.as_path());
+
+    command
 }
 
 fn command_to_run_test(context: &LightContext) -> Command {

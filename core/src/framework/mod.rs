@@ -1,4 +1,4 @@
-use crate::{config, LightContext, SourceFile, Span};
+use crate::{config, rewriter::Rewriter, LightContext, SourceFile, Span};
 use anyhow::Result;
 use indexmap::IndexMap;
 use std::{
@@ -29,9 +29,40 @@ pub trait ToImplementation {
 
 pub trait Interface: Parse + Run {}
 
-pub type TestFileTestSpanMap = BTreeMap<SourceFile, TestSpanMap>;
+pub type TestFileTestSpanMap = BTreeMap<SourceFile, TestSpanMaps>;
+
+// smoelius: The `statement` and `method_call` maps are expected to have the same sets of keys. This
+// is a little ugly, but it simplifies the implementation of `necessist_core`.
+#[derive(Default)]
+pub struct TestSpanMaps {
+    pub statement: TestSpanMap,
+    pub method_call: TestSpanMap,
+}
+
+impl TestSpanMaps {
+    pub fn iter(&self) -> impl Iterator<Item = (&str, &Span, SpanKind)> {
+        self.statement
+            .iter()
+            .flat_map(|(test_name, spans)| {
+                spans
+                    .iter()
+                    .map(|span| (test_name.as_str(), span, SpanKind::Statement))
+            })
+            .chain(self.method_call.iter().flat_map(|(test_name, spans)| {
+                spans
+                    .iter()
+                    .map(|span| (test_name.as_str(), span, SpanKind::MethodCall))
+            }))
+    }
+}
 
 pub type TestSpanMap = IndexMap<String, BTreeSet<Span>>;
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum SpanKind {
+    Statement,
+    MethodCall,
+}
 
 pub trait Parse {
     fn parse(
@@ -46,6 +77,15 @@ pub type Postprocess = dyn Fn(&LightContext, Popen) -> Result<bool>;
 
 pub trait Run {
     fn dry_run(&self, context: &LightContext, test_file: &Path) -> Result<()>;
+    fn instrument_file(
+        &self,
+        context: &LightContext,
+        rewriter: &mut Rewriter,
+        source_file: &SourceFile,
+        n_instrumentable_statements: usize,
+    ) -> Result<()>;
+    fn statement_prefix_and_suffix(&self, span: &Span) -> Result<(String, String)>;
+    fn build_file(&self, context: &LightContext, source_file: &Path) -> Result<()>;
     fn exec(
         &self,
         context: &LightContext,
@@ -78,6 +118,22 @@ impl<T: AsParse> Parse for T {
 impl<T: AsRun> Run for T {
     fn dry_run(&self, context: &LightContext, test_file: &Path) -> Result<()> {
         self.as_run().dry_run(context, test_file)
+    }
+    fn instrument_file(
+        &self,
+        context: &LightContext,
+        rewriter: &mut Rewriter,
+        source_file: &SourceFile,
+        n_instrumentable_statements: usize,
+    ) -> Result<()> {
+        self.as_run()
+            .instrument_file(context, rewriter, source_file, n_instrumentable_statements)
+    }
+    fn statement_prefix_and_suffix(&self, span: &Span) -> Result<(String, String)> {
+        self.as_run().statement_prefix_and_suffix(span)
+    }
+    fn build_file(&self, context: &LightContext, source_file: &Path) -> Result<()> {
+        self.as_run().build_file(context, source_file)
     }
     fn exec(
         &self,

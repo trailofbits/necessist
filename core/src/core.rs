@@ -1,20 +1,22 @@
 use crate::{
     config,
-    framework::{self, Applicable, TestFileTestSpanMap, ToImplementation},
-    note, source_warn, sqlite, util, warn, Outcome, Span, ToConsoleString, WarnFlags, Warning,
+    framework::{self, Applicable, Postprocess, SpanKind, TestFileTestSpanMap, ToImplementation},
+    note, source_warn, sqlite, util, warn, Backup, Outcome, Rewriter, SourceFile, Span,
+    ToConsoleString, WarnFlags, Warning,
 };
 use ansi_term::Style;
 use anyhow::{anyhow, bail, ensure, Context as _, Result};
 use heck::ToKebabCase;
 use indicatif::ProgressBar;
+use itertools::{peek_nth, PeekNth};
 use log::debug;
 use once_cell::sync::OnceCell;
 use std::{
     cell::RefCell,
-    collections::BTreeSet,
+    collections::{BTreeMap, BTreeSet},
     env::{current_dir, var},
     fmt::Display,
-    io::IsTerminal,
+    io::{IsTerminal, Write},
     iter::Peekable,
     path::{Path, PathBuf},
     process::{Command, ExitStatus as StdExitStatus, Stdio},
@@ -23,7 +25,7 @@ use std::{
     time::Duration,
 };
 use strum::IntoEnumIterator;
-use subprocess::ExitStatus;
+use subprocess::{Exec, ExitStatus};
 
 const DEFAULT_TIMEOUT: Duration = Duration::from_secs(60);
 
@@ -197,7 +199,18 @@ fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementatio
 
     let n_spans = test_file_test_span_map
         .values()
-        .flat_map(|test_span_map| test_span_map.values().map(BTreeSet::len))
+        .map(|test_span_maps| {
+            test_span_maps
+                .statement
+                .values()
+                .map(BTreeSet::len)
+                .sum::<usize>()
+                + test_span_maps
+                    .method_call
+                    .values()
+                    .map(BTreeSet::len)
+                    .sum::<usize>()
+        })
         .sum();
 
     if context.opts.dump_candidates {
@@ -208,7 +221,13 @@ fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementatio
     (context.println)({
         let n_tests = test_file_test_span_map
             .values()
-            .map(|test_span_map| test_span_map.keys().len())
+            .map(|test_span_maps| {
+                assert_eq!(
+                    test_span_maps.statement.keys().len(),
+                    test_span_maps.method_call.keys().len()
+                );
+                test_span_maps.statement.keys().len()
+            })
             .sum::<usize>();
         let n_test_files = test_file_test_span_map.keys().len();
         &format!(
@@ -231,11 +250,8 @@ fn run(mut context: Context, test_file_test_span_map: TestFileTestSpanMap) -> Re
 
     let mut past_removal_iter = past_removals.into_iter().peekable();
 
-    for (test_file, test_span_map) in test_file_test_span_map {
-        let mut test_span_iter = test_span_map
-            .iter()
-            .flat_map(|(test_name, spans)| spans.iter().map(|span| (test_name.as_str(), span)))
-            .peekable();
+    for (test_file, test_span_maps) in test_file_test_span_map {
+        let mut test_span_iter = peek_nth(test_span_maps.iter());
 
         let (mismatch, n) = skip_past_removals(&mut test_span_iter, &mut past_removal_iter);
 
@@ -279,16 +295,50 @@ fn run(mut context: Context, test_file_test_span_map: TestFileTestSpanMap) -> Re
             util::strip_current_dir(&test_file).to_string_lossy()
         ));
 
+        let mut instrumentation_backup =
+            instrument_statements(&context, &test_file, &mut test_span_iter)?;
+
         loop {
             let (mismatch, n) = skip_past_removals(&mut test_span_iter, &mut past_removal_iter);
 
             update_progress(&context, mismatch, n)?;
 
-            let Some((test_name, span)) = test_span_iter.next() else {
+            let Some((test_name, span, span_kind)) = test_span_iter.next() else {
                 break;
             };
 
-            let (text, outcome) = attempt_removal(&context, test_name, span)?;
+            if span_kind != SpanKind::Statement {
+                drop(instrumentation_backup.take());
+            }
+
+            let text = span.source_text()?;
+
+            let explicit_removal =
+                instrumentation_backup.is_none() || span_kind != SpanKind::Statement;
+
+            let _explicit_backup = if explicit_removal {
+                let (_, explicit_backup) = span.remove()?;
+                Some(explicit_backup)
+            } else {
+                None
+            };
+
+            let outcome = if let Some((exec, postprocess)) =
+                context.framework.exec(&context.light(), test_name, span)?
+            {
+                // smoelius: Even if the removal is explicit (i.e., not with instrumentation), it
+                // doesn't hurt to set `NECESSIST_REMOVAL`.
+                let exec = exec.env("NECESSIST_REMOVAL", span.id());
+
+                perform_exec(&context, exec, postprocess)?
+            } else {
+                assert!(
+                    explicit_removal,
+                    "Instrumentation failed to build after it was verified to"
+                );
+
+                Some(Outcome::Nonbuildable)
+            };
 
             if CTRLC.load(Ordering::SeqCst) {
                 bail!("Ctrl-C detected");
@@ -402,16 +452,16 @@ fn canonicalize_test_files(context: &LightContext) -> Result<Vec<PathBuf>> {
 
 #[must_use]
 fn skip_past_removals<'a, I, J>(
-    test_span_iter: &mut Peekable<I>,
+    test_span_iter: &mut PeekNth<I>,
     removal_iter: &mut Peekable<J>,
 ) -> (Option<Mismatch>, usize)
 where
-    I: Iterator<Item = (&'a str, &'a Span)>,
+    I: Iterator<Item = (&'a str, &'a Span, SpanKind)>,
     J: Iterator<Item = Removal>,
 {
     let mut mismatch = None;
     let mut n = 0;
-    while let Some(&(_, span)) = test_span_iter.peek() {
+    while let Some(&(_, span, _)) = test_span_iter.peek() {
         let Some(removal) = removal_iter.peek() else {
             break;
         };
@@ -424,7 +474,7 @@ where
                 break;
             }
             std::cmp::Ordering::Equal => {
-                let _: Option<(&str, &Span)> = test_span_iter.next();
+                let _: Option<(&str, &Span, _)> = test_span_iter.next();
                 let _removal: Option<Removal> = removal_iter.next();
                 n += 1;
             }
@@ -445,13 +495,13 @@ where
 
 fn skip_present_spans<'a>(
     context: &Context,
-    test_span_iter: impl Iterator<Item = (&'a str, &'a Span)>,
+    test_span_iter: impl Iterator<Item = (&'a str, &'a Span, SpanKind)>,
 ) -> Result<usize> {
     let mut n = 0;
 
     let sqlite = sqlite_init_lazy(&context.light())?;
 
-    for (_, span) in test_span_iter {
+    for (_, span, _) in test_span_iter {
         if let Some(sqlite) = sqlite.borrow_mut().as_mut() {
             let text = span.source_text()?;
             let removal = Removal {
@@ -501,7 +551,12 @@ fn dump_candidates(
 ) -> Result<()> {
     for span in test_file_test_span_map
         .values()
-        .flat_map(|test_span_map| test_span_map.values())
+        .flat_map(|test_span_maps| {
+            test_span_maps
+                .statement
+                .values()
+                .chain(test_span_maps.method_call.values())
+        })
         .flatten()
     {
         let text = span.source_text()?;
@@ -516,19 +571,91 @@ fn dump_candidates(
     Ok(())
 }
 
-fn attempt_removal(
+fn instrument_statements<'a, I>(
     context: &Context,
-    test_name: &str,
-    span: &Span,
-) -> Result<(String, Option<Outcome>)> {
-    let (text, _backup) = span.remove()?;
+    source_file: &SourceFile,
+    test_span_iter: &mut PeekNth<I>,
+) -> Result<Option<Backup>>
+where
+    I: Iterator<Item = (&'a str, &'a Span, SpanKind)>,
+{
+    let backup = Backup::new(source_file)?;
 
-    let exec = context.framework.exec(&context.light(), test_name, span)?;
+    let mut rewriter = Rewriter::new(source_file.contents(), source_file.offset_calculator());
 
-    let Some((exec, postprocess)) = exec else {
-        return Ok((text, Some(Outcome::Nonbuildable)));
-    };
+    let n_instrumentable_statements = count_instrumentable_statements(test_span_iter);
 
+    context.framework.instrument_file(
+        &context.light(),
+        &mut rewriter,
+        source_file,
+        n_instrumentable_statements,
+    )?;
+
+    let mut i_span = 0;
+    let mut insertion_map = BTreeMap::<_, Vec<_>>::new();
+    // smoelius: Do not advance the underlying iterator while instrumenting. This way, if a
+    // statement cannot be removed with instrumentation, it will be removed explicitly.
+    while let Some((_, span, SpanKind::Statement)) = test_span_iter.peek_nth(i_span) {
+        let (prefix, suffix) = context.framework.statement_prefix_and_suffix(span)?;
+        let insertions = insertion_map.entry(span.start()).or_default();
+        insertions.push(prefix);
+        let insertions = insertion_map.entry(span.end()).or_default();
+        insertions.push(suffix);
+        i_span += 1;
+    }
+
+    assert_eq!(n_instrumentable_statements, i_span);
+
+    for (line_column, insertions) in insertion_map {
+        for insertion in insertions {
+            rewriter.insert(source_file, line_column, &insertion);
+        }
+    }
+
+    let mut file = std::fs::OpenOptions::new()
+        .truncate(true)
+        .write(true)
+        .open(source_file)?;
+    file.write_all(rewriter.contents().as_bytes())?;
+    drop(file);
+
+    let result = context.framework.build_file(&context.light(), source_file);
+    if let Err(error) = result {
+        warn(
+            &context.light(),
+            Warning::InstrumentationNonbuildable,
+            &format!(
+                "Instrumentation caused `{}` to be nonbuildable: {error:?}",
+                source_file.to_console_string(),
+            ),
+            WarnFlags::empty(),
+        )?;
+        return Ok(None);
+    }
+
+    Ok(Some(backup))
+}
+
+fn count_instrumentable_statements<'a, I>(test_span_iter: &mut PeekNth<I>) -> usize
+where
+    I: Iterator<Item = (&'a str, &'a Span, SpanKind)>,
+{
+    let mut n_instrumentable_statements = 0;
+    while matches!(
+        test_span_iter.peek_nth(n_instrumentable_statements),
+        Some((_, _, SpanKind::Statement))
+    ) {
+        n_instrumentable_statements += 1;
+    }
+    n_instrumentable_statements
+}
+
+fn perform_exec(
+    context: &Context,
+    exec: Exec,
+    postprocess: Option<Box<Postprocess>>,
+) -> Result<Option<Outcome>> {
     debug!("{:?}", exec);
 
     #[cfg(all(feature = "limit_threads", unix))]
@@ -550,7 +677,7 @@ fn attempt_removal(
     if status.is_some() {
         if let Some(postprocess) = postprocess {
             if !postprocess(&context.light(), popen)? {
-                return Ok((text, None));
+                return Ok(None);
             }
         }
     } else {
@@ -560,17 +687,14 @@ fn attempt_removal(
     }
 
     let Some(status) = status else {
-        return Ok((text, Some(Outcome::TimedOut)));
+        return Ok(Some(Outcome::TimedOut));
     };
 
-    Ok((
-        text,
-        Some(if status.success() {
-            Outcome::Passed
-        } else {
-            Outcome::Failed
-        }),
-    ))
+    Ok(Some(if status.success() {
+        Outcome::Passed
+    } else {
+        Outcome::Failed
+    }))
 }
 
 #[cfg_attr(dylint_lib = "general", allow(non_local_effect_before_error_return))]

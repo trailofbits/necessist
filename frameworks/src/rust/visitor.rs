@@ -1,6 +1,6 @@
-use super::{Call, GenericVisitor, MacroCall, Rust, Storage, Test, TestSpanMap};
+use super::{Call, GenericVisitor, MacroCall, Rust, Storage, Test};
 use anyhow::Result;
-use necessist_core::{warn, WarnFlags, Warning};
+use necessist_core::{framework::TestSpanMaps, warn, WarnFlags, Warning};
 
 use std::cell::RefCell;
 use syn::{
@@ -17,7 +17,7 @@ pub(super) fn visit<'ast>(
     generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Rust>,
     storage: &RefCell<Storage<'ast>>,
     file: &'ast File,
-) -> Result<TestSpanMap> {
+) -> Result<TestSpanMaps> {
     let mut visitor = Visitor::new(generic_visitor, storage);
     visitor.visit_file(file);
     for (test_name, error) in &storage.borrow().tests_needing_warnings {
@@ -35,7 +35,7 @@ pub(super) fn visit<'ast>(
         &mut storage.borrow_mut().test_file_package_cache,
         &visitor.generic_visitor.source_file,
     )?;
-    Ok(visitor.generic_visitor.test_span_map())
+    Ok(visitor.generic_visitor.test_span_maps())
 }
 
 struct Visitor<'context, 'config, 'framework, 'ast, 'storage> {

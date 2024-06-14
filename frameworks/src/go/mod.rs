@@ -2,13 +2,16 @@ use super::{
     AbstractTypes, GenericVisitor, MaybeNamed, Named, ParseLow, ProcessLines, RunLow, Spanned,
     WalkDirResult,
 };
-use anyhow::{anyhow, Context, Result};
+use anyhow::{anyhow, bail, Context, Result};
 use necessist_core::{
-    framework::TestSpanMap, util, LightContext, LineColumn, SourceFile, Span,
+    framework::TestSpanMaps, util, LightContext, LineColumn, SourceFile, Span,
     __Rewriter as Rewriter,
 };
 use once_cell::sync::Lazy;
-use std::{convert::Infallible, fs::read_to_string, path::Path, process::Command};
+use regex::Regex;
+use std::{
+    collections::BTreeMap, convert::Infallible, fs::read_to_string, path::Path, process::Command,
+};
 use tree_sitter::{
     Node, Parser, Point, Query, QueryCapture, QueryCursor, QueryMatches, Range, TextProvider, Tree,
 };
@@ -79,7 +82,9 @@ fn non_zero_kind_id(kind: &str) -> u16 {
 }
 
 #[derive(Debug)]
-pub struct Go;
+pub struct Go {
+    os_name_map: std::cell::RefCell<BTreeMap<SourceFile, String>>,
+}
 
 impl Go {
     pub fn applicable(context: &LightContext) -> Result<bool> {
@@ -87,7 +92,9 @@ impl Go {
     }
 
     pub fn new() -> Self {
-        Self
+        Self {
+            os_name_map: std::cell::RefCell::new(BTreeMap::new()),
+        }
     }
 }
 
@@ -253,7 +260,7 @@ impl ParseLow for Go {
         generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Self>,
         storage: &std::cell::RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
         file: &'ast <Self::Types as AbstractTypes>::File,
-    ) -> Result<TestSpanMap> {
+    ) -> Result<TestSpanMaps> {
         visit(generic_visitor, storage, &file.1)
     }
 
@@ -414,6 +421,60 @@ impl RunLow for Go {
         Self::test_command(context, test_file)
     }
 
+    fn instrument_file(
+        &self,
+        _context: &LightContext,
+        rewriter: &mut Rewriter,
+        source_file: &SourceFile,
+        n_instrumentable_statements: usize,
+    ) -> Result<()> {
+        let mut os_name_map = self.os_name_map.borrow_mut();
+
+        // smoelius: `n_instrumentable_statements == 0` to avoid an "unused imports" error.
+        if os_name_map.contains_key(source_file) || n_instrumentable_statements == 0 {
+            return Ok(());
+        }
+
+        if let Some(os_name) = imports_os(source_file.contents()) {
+            os_name_map.insert(source_file.clone(), os_name.to_owned());
+            return Ok(());
+        }
+
+        let Some(package_line) = package_line(source_file.contents()) else {
+            bail!("Failed to find line starting with `package`");
+        };
+        let line_column = LineColumn {
+            line: package_line + 1,
+            column: 0,
+        };
+        rewriter.insert(source_file, line_column, "import \"os\"\n");
+        os_name_map.insert(source_file.clone(), "os".to_owned());
+        Ok(())
+    }
+
+    fn statement_prefix_and_suffix(&self, span: &Span) -> Result<(String, String)> {
+        let os_name_map = self.os_name_map.borrow();
+        let os_name = os_name_map.get(&span.source_file).unwrap();
+        let os_prefix = if os_name == "." {
+            String::new()
+        } else {
+            format!("{os_name}.")
+        };
+        Ok((
+            format!(
+                r#"if {os_prefix}Getenv("NECESSIST_REMOVAL") != "{}" {{ "#,
+                span.id()
+            ),
+            " }".to_owned(),
+        ))
+    }
+
+    fn command_to_build_file(&self, context: &LightContext, source_file: &Path) -> Command {
+        let mut command = Self::test_command(context, source_file);
+        command.arg("-run=^$");
+        command
+    }
+
     fn command_to_build_test(
         &self,
         context: &LightContext,
@@ -442,6 +503,49 @@ impl RunLow for Go {
             Some((false, Box::new(move |line| line == needle))),
         )
     }
+}
+
+const PREFIX: &str = r"\([^)]*";
+const NAME: &str = r"(\.|[A-Za-z_][0-9A-Za-z_]*)( )?";
+const SUFFIX: &str = r"[^)]*\)";
+
+static IMPORT_NAMED_OS_RE: Lazy<Regex> =
+    Lazy::new(|| Regex::new(&import_os_re("", NAME, "")).unwrap());
+static IMPORT_UNNAMED_OS_RE: Lazy<Regex> =
+    Lazy::new(|| Regex::new(&import_os_re("", "", "")).unwrap());
+static PARENTHESIZED_IMPORT_NAMED_OS_RE: Lazy<Regex> =
+    Lazy::new(|| Regex::new(&import_os_re(PREFIX, NAME, SUFFIX)).unwrap());
+static PARENTHESIZED_IMPORT_UNNAMED_OS_RE: Lazy<Regex> =
+    Lazy::new(|| Regex::new(&import_os_re(PREFIX, "", SUFFIX)).unwrap());
+
+fn import_os_re(prefix: &str, name: &str, suffix: &str) -> String {
+    format!(r#"\bimport {prefix}{name}"os"{suffix}"#)
+}
+
+fn imports_os(contents: &str) -> Option<&str> {
+    if let Some(captures) = IMPORT_NAMED_OS_RE.captures(contents) {
+        assert_eq!(3, captures.len());
+        Some(captures.get(1).unwrap().as_str())
+    } else if let Some(captures) = IMPORT_UNNAMED_OS_RE.captures(contents) {
+        assert_eq!(1, captures.len());
+        Some("os")
+    } else if let Some(captures) = PARENTHESIZED_IMPORT_NAMED_OS_RE.captures(contents) {
+        assert_eq!(3, captures.len());
+        Some(captures.get(1).unwrap().as_str())
+    } else if let Some(captures) = PARENTHESIZED_IMPORT_UNNAMED_OS_RE.captures(contents) {
+        assert_eq!(1, captures.len());
+        Some("os")
+    } else {
+        None
+    }
+}
+
+fn package_line(contents: &str) -> Option<usize> {
+    // smoelius: `+ 1` because `LineColumn` `line`s are one-based.
+    contents
+        .lines()
+        .position(|line| line.starts_with("package "))
+        .map(|i| i + 1)
 }
 
 impl Go {

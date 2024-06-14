@@ -3,7 +3,7 @@ use anyhow::Result;
 use log::debug;
 use necessist_core::{
     framework::{Interface, Postprocess, TestFileTestSpanMap},
-    LightContext, Span,
+    LightContext, SourceFile, Span, __Rewriter as Rewriter,
 };
 use std::path::Path;
 use subprocess::Exec;
@@ -53,6 +53,24 @@ impl RunHigh for HardhatTs {
         command.args(&context.opts.args);
 
         self.mocha_adapter.0.dry_run(context, test_file, command)
+    }
+
+    fn instrument_file(
+        &self,
+        _context: &LightContext,
+        _rewriter: &mut Rewriter,
+        _source_file: &SourceFile,
+        _n_instrumentable_statements: usize,
+    ) -> Result<()> {
+        Ok(())
+    }
+
+    fn statement_prefix_and_suffix(&self, span: &Span) -> Result<(String, String)> {
+        self.mocha_adapter.0.statement_prefix_and_suffix(span)
+    }
+
+    fn build_file(&self, context: &LightContext, _source_file: &Path) -> Result<()> {
+        compile(context)
     }
 
     fn exec(
