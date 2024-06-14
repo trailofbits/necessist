@@ -76,7 +76,7 @@ pub(super) fn cached_source_file_fs_module_path<'a>(
                 None
             })()
             .ok_or(anyhow!(
-                r#"Failed to determine relative path of test file "{}""#,
+                r#"Failed to determine relative path of source file "{}""#,
                 source_file.display()
             ))?;
 
@@ -102,7 +102,7 @@ pub(super) fn cached_source_file_package<'a>(
                 .no_deps()
                 .exec()?;
 
-            // smoelius: Use the package whose manifest directory is nearest to the test file.
+            // smoelius: Use the package whose manifest directory is nearest to the source file.
             let mut package_near: Option<Package> = None;
             for package_curr in metadata.packages {
                 let manifest_dir = package_curr

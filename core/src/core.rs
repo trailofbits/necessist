@@ -232,7 +232,7 @@ fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementatio
             .sum::<usize>();
         let n_source_files = source_file_test_span_map.keys().len();
         &format!(
-            "{} candidates in {} test{} in {} test file{}",
+            "{} candidates in {} test{} in {} source file{}",
             n_spans,
             n_tests,
             if n_tests == 1 { "" } else { "s" },
@@ -529,7 +529,7 @@ fn update_progress(context: &Context, mismatch: Option<Mismatch>, n: usize) -> R
             Warning::FilesChanged,
             &format!(
                 "\
-Configuration or test files have changed since necessist.db was created; the following entry is \
+Configuration or source files have changed since necessist.db was created; the following entry is \
                  {kind}:
     {}: `{}`",
                 span.to_console_string(),

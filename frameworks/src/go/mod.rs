@@ -555,7 +555,7 @@ impl Go {
     fn test_command(context: &LightContext, source_file: &Path) -> Command {
         #[allow(clippy::expect_used)]
         let package_path = source_file_package_path(context, source_file)
-            .expect("Failed to get test file package path");
+            .expect("Failed to get source file package path");
         let mut command = Command::new("go");
         command.current_dir(context.root.as_path());
         command.arg("test");
