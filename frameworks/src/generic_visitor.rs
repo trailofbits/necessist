@@ -8,7 +8,7 @@ use necessist_core::{
 use paste::paste;
 use std::{cell::RefCell, collections::BTreeSet};
 
-pub struct GenericVisitor<'context, 'config, 'framework, 'ast, T: ParseLow + ?Sized> {
+pub struct GenericVisitor<'context, 'config, 'framework, 'ast, T: ParseLow> {
     pub context: &'context LightContext<'context>,
     pub config: &'config config::Compiled,
     pub framework: &'framework mut T,
