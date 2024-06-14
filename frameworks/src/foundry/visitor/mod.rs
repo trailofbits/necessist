@@ -3,7 +3,7 @@
 use super::{Foundry, FunctionCall, GenericVisitor, Storage, Test, WithContents};
 use anyhow::Result;
 use if_chain::if_chain;
-use necessist_core::framework::TestSpanMap;
+use necessist_core::framework::TestSpanMaps;
 use solang_parser::pt::{Expression, FunctionDefinition, Identifier, Loc, SourceUnit, Statement};
 use std::{cell::RefCell, convert::Infallible};
 
@@ -28,10 +28,10 @@ pub(super) fn visit<'ast>(
     generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Foundry>,
     storage: &RefCell<Storage<'ast>>,
     source_unit: &'ast SourceUnit,
-) -> Result<TestSpanMap> {
+) -> Result<TestSpanMaps> {
     let mut visitor = Visitor::new(generic_visitor, storage);
     visitor.visit_source_unit(source_unit)?;
-    Ok(visitor.generic_visitor.test_span_map())
+    Ok(visitor.generic_visitor.test_span_maps())
 }
 
 struct Visitor<'context, 'config, 'framework, 'ast, 'storage> {

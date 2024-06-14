@@ -1,6 +1,10 @@
-use super::{AbstractTypes, MaybeNamed, Named, ParseLow, Spanned, TestSpanMap};
+use super::{AbstractTypes, MaybeNamed, Named, ParseLow, Spanned};
 use if_chain::if_chain;
-use necessist_core::{config, LightContext, SourceFile, Span};
+use necessist_core::{
+    config,
+    framework::{SpanKind, TestSpanMaps},
+    LightContext, SourceFile, Span,
+};
 use paste::paste;
 use std::{cell::RefCell, collections::BTreeSet};
 
@@ -14,7 +18,7 @@ pub struct GenericVisitor<'context, 'config, 'framework, 'ast, T: ParseLow + ?Si
     pub n_statement_leaves_visited: usize,
     pub n_before: Vec<usize>,
     pub call_statement: Option<<T::Types as AbstractTypes>::Statement<'ast>>,
-    pub test_span_map: TestSpanMap,
+    pub test_span_maps: TestSpanMaps,
 }
 
 /// `call_info` return values. See that method for details.
@@ -51,14 +55,14 @@ macro_rules! visit_maybe_macro_call {
                     if let Some(statement) = statement {
                         if !$args.is_ignored_as_call {
                             let span = statement.span(&$this.source_file);
-                            $this.register_span(span, &test_name);
+                            $this.register_span(span, &test_name, SpanKind::Statement);
                         }
                     }
 
                     // smoelius: If the entire call is ignored, then treat the method call as
                     // ignored as well.
                     if !$args.is_ignored_as_call && $args.is_method_call && !$args.is_ignored_as_method_call {
-                        $this.register_span($args.span.clone(), &test_name);
+                        $this.register_span($args.span.clone(), &test_name, SpanKind::MethodCall);
                     }
 
                     // smoelius: Return false (i.e., don't descend into the call arguments) only if
@@ -79,8 +83,8 @@ macro_rules! visit_call_post {
 impl<'context, 'config, 'framework, 'ast, T: ParseLow>
     GenericVisitor<'context, 'config, 'framework, 'ast, T>
 {
-    pub fn test_span_map(self) -> TestSpanMap {
-        self.test_span_map
+    pub fn test_span_maps(self) -> TestSpanMaps {
+        self.test_span_maps
     }
 
     #[allow(clippy::unnecessary_wraps)]
@@ -171,7 +175,7 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
                 && !self.framework.statement_is_declaration(storage, statement)
             {
                 let span = statement.span(&self.source_file);
-                self.register_span(span, &test_name.clone());
+                self.register_span(span, &test_name.clone(), SpanKind::Statement);
             }
         }
     }
@@ -298,15 +302,25 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
     }
 
     fn register_test(&mut self, test_name: &str) {
-        if !self.test_span_map.contains_key(test_name) {
-            self.test_span_map
+        if self.test_span_maps.statement.contains_key(test_name) {
+            assert!(self.test_span_maps.method_call.contains_key(test_name));
+        } else {
+            assert!(!self.test_span_maps.method_call.contains_key(test_name));
+            self.test_span_maps
+                .statement
+                .insert(test_name.to_owned(), BTreeSet::new());
+            self.test_span_maps
+                .method_call
                 .insert(test_name.to_owned(), BTreeSet::new());
         }
     }
 
-    fn register_span(&mut self, span: Span, test_name: &str) {
-        let spans = self
-            .test_span_map
+    fn register_span(&mut self, span: Span, test_name: &str, kind: SpanKind) {
+        let test_span_map = match kind {
+            SpanKind::Statement => &mut self.test_span_maps.statement,
+            SpanKind::MethodCall => &mut self.test_span_maps.method_call,
+        };
+        let spans = test_span_map
             .get_mut(test_name)
             .unwrap_or_else(|| panic!("Test `{test_name}` is not registered"));
         spans.insert(span);

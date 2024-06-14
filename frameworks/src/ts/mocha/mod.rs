@@ -6,7 +6,7 @@ use anyhow::{anyhow, Result};
 use if_chain::if_chain;
 use log::debug;
 use necessist_core::{
-    framework::{Postprocess, TestSpanMap},
+    framework::{Postprocess, TestSpanMaps},
     source_warn, util, LightContext, LineColumn, SourceFile, Span, WarnFlags, Warning,
 };
 use once_cell::sync::Lazy;
@@ -116,6 +116,17 @@ impl Mocha {
         }
 
         Ok(())
+    }
+
+    #[allow(clippy::unnecessary_wraps, clippy::unused_self)]
+    pub fn statement_prefix_and_suffix(&self, span: &Span) -> Result<(String, String)> {
+        Ok((
+            format!(
+                r#"if (process.env.NECESSIST_REMOVAL != "{}") {{ "#,
+                span.id()
+            ),
+            " }".to_owned(),
+        ))
     }
 
     pub fn exec(
@@ -299,7 +310,7 @@ impl ParseLow for Mocha {
         generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Self>,
         storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
         file: &'ast <Self::Types as AbstractTypes>::File,
-    ) -> Result<TestSpanMap> {
+    ) -> Result<TestSpanMaps> {
         visit(generic_visitor, storage, &file.1)
     }
 

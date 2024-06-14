@@ -4,7 +4,9 @@ use super::{
 };
 use anyhow::Result;
 use cargo_metadata::Package;
-use necessist_core::{framework::TestSpanMap, LightContext, SourceFile, Span, ToInternalSpan};
+use necessist_core::{
+    framework::TestSpanMaps, LightContext, SourceFile, Span, ToInternalSpan, __Rewriter as Rewriter,
+};
 use once_cell::sync::Lazy;
 use quote::ToTokens;
 use std::{
@@ -375,7 +377,7 @@ impl ParseLow for Rust {
         generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Self>,
         storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
         file: &'ast <Self::Types as AbstractTypes>::File,
-    ) -> Result<TestSpanMap> {
+    ) -> Result<TestSpanMaps> {
         visit(generic_visitor, storage, file)
     }
 
@@ -525,6 +527,32 @@ impl ParseLow for Rust {
 impl RunLow for Rust {
     fn command_to_run_test_file(&self, context: &LightContext, test_file: &Path) -> Command {
         self.test_command(context, test_file)
+    }
+
+    fn instrument_file(
+        &self,
+        _context: &LightContext,
+        _rewriter: &mut Rewriter,
+        _source_file: &SourceFile,
+        _n_instrumentable_statements: usize,
+    ) -> Result<()> {
+        Ok(())
+    }
+
+    fn statement_prefix_and_suffix(&self, span: &Span) -> Result<(String, String)> {
+        Ok((
+            format!(
+                r#"if std::env::var("NECESSIST_REMOVAL").unwrap() != "{}" {{ "#,
+                span.id()
+            ),
+            " }".to_owned(),
+        ))
+    }
+
+    fn command_to_build_file(&self, context: &LightContext, source_file: &Path) -> Command {
+        let mut command = self.test_command(context, source_file);
+        command.arg("--no-run");
+        command
     }
 
     fn command_to_build_test(

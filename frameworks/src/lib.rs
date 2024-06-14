@@ -4,9 +4,9 @@ use heck::ToKebabCase;
 use necessist_core::{
     framework::{
         Applicable, AsParse, AsRun, Interface, Parse as ParseHigh, Postprocess, Run as RunHigh,
-        TestSpanMap, ToImplementation,
+        ToImplementation,
     },
-    LightContext, Span,
+    LightContext, SourceFile, Span, __Rewriter as Rewriter,
 };
 use std::{cell::RefCell, path::Path, rc::Rc};
 use strum_macros::EnumIter;
@@ -112,6 +112,22 @@ fn implementation_as_interface<T, U: Interface + 'static>(
 impl<T: RunHigh> RunHigh for ParseAdapter<T> {
     fn dry_run(&self, context: &LightContext, test_file: &Path) -> Result<()> {
         self.0.dry_run(context, test_file)
+    }
+    fn instrument_file(
+        &self,
+        context: &LightContext,
+        rewriter: &mut Rewriter,
+        source_file: &SourceFile,
+        n_instrumentable_statements: usize,
+    ) -> Result<()> {
+        self.0
+            .instrument_file(context, rewriter, source_file, n_instrumentable_statements)
+    }
+    fn statement_prefix_and_suffix(&self, span: &Span) -> Result<(String, String)> {
+        self.0.statement_prefix_and_suffix(span)
+    }
+    fn build_file(&self, context: &LightContext, source_file: &Path) -> Result<()> {
+        self.0.build_file(context, source_file)
     }
     fn exec(
         &self,

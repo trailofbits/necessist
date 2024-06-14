@@ -3,7 +3,8 @@ use anyhow::{anyhow, Error, Result};
 use bstr::{io::BufReadExt, BStr};
 use log::debug;
 use necessist_core::{
-    framework::Postprocess, source_warn, util, LightContext, Span, WarnFlags, Warning,
+    framework::Postprocess, source_warn, util, LightContext, SourceFile, Span, WarnFlags, Warning,
+    __Rewriter as Rewriter,
 };
 use std::{cell::RefCell, path::Path, process::Command, rc::Rc};
 use subprocess::{Exec, NullFile, Redirection};
@@ -13,6 +14,15 @@ pub type ProcessLines = (bool, Box<dyn Fn(&str) -> bool>);
 pub trait RunLow {
     const REQUIRES_NODE_MODULES: bool = false;
     fn command_to_run_test_file(&self, context: &LightContext, test_file: &Path) -> Command;
+    fn instrument_file(
+        &self,
+        context: &LightContext,
+        rewriter: &mut Rewriter,
+        source_file: &SourceFile,
+        n_instrumentable_statements: usize,
+    ) -> Result<()>;
+    fn statement_prefix_and_suffix(&self, span: &Span) -> Result<(String, String)>;
+    fn command_to_build_file(&self, context: &LightContext, source_file: &Path) -> Command;
     fn command_to_build_test(
         &self,
         context: &LightContext,
@@ -31,6 +41,22 @@ impl<T: RunLow> RunLow for Rc<RefCell<T>> {
     const REQUIRES_NODE_MODULES: bool = T::REQUIRES_NODE_MODULES;
     fn command_to_run_test_file(&self, context: &LightContext, test_file: &Path) -> Command {
         self.borrow().command_to_run_test_file(context, test_file)
+    }
+    fn instrument_file(
+        &self,
+        context: &LightContext,
+        rewriter: &mut Rewriter,
+        source_file: &SourceFile,
+        n_instrumentable_statements: usize,
+    ) -> Result<()> {
+        self.borrow()
+            .instrument_file(context, rewriter, source_file, n_instrumentable_statements)
+    }
+    fn statement_prefix_and_suffix(&self, span: &Span) -> Result<(String, String)> {
+        self.borrow().statement_prefix_and_suffix(span)
+    }
+    fn command_to_build_file(&self, context: &LightContext, source_file: &Path) -> Command {
+        self.borrow().command_to_build_file(context, source_file)
     }
     fn command_to_build_test(
         &self,
@@ -62,6 +88,34 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
         }
 
         let mut command = self.0.command_to_run_test_file(context, test_file);
+        command.args(&context.opts.args);
+
+        debug!("{:?}", command);
+
+        let output = command.output_stripped_of_ansi_escapes()?;
+        if !output.status().success() {
+            return Err(output.into());
+        }
+        Ok(())
+    }
+
+    fn instrument_file(
+        &self,
+        context: &LightContext,
+        rewriter: &mut Rewriter,
+        source_file: &SourceFile,
+        n_instrumentable_statements: usize,
+    ) -> Result<()> {
+        self.0
+            .instrument_file(context, rewriter, source_file, n_instrumentable_statements)
+    }
+
+    fn statement_prefix_and_suffix(&self, span: &Span) -> Result<(String, String)> {
+        self.0.statement_prefix_and_suffix(span)
+    }
+
+    fn build_file(&self, context: &LightContext, source_file: &Path) -> Result<()> {
+        let mut command = self.0.command_to_build_file(context, source_file);
         command.args(&context.opts.args);
 
         debug!("{:?}", command);

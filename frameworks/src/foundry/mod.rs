@@ -4,7 +4,10 @@ use super::{
 };
 use anyhow::{anyhow, Result};
 use if_chain::if_chain;
-use necessist_core::{framework::TestSpanMap, util, LightContext, LineColumn, SourceFile, Span};
+use necessist_core::{
+    framework::TestSpanMaps, util, LightContext, LineColumn, SourceFile, Span,
+    __Rewriter as Rewriter,
+};
 use solang_parser::pt::{CodeLocation, Expression, Identifier, Loc, SourceUnit, Statement};
 use std::{cell::RefCell, convert::Infallible, fs::read_to_string, path::Path, process::Command};
 
@@ -176,7 +179,7 @@ impl ParseLow for Foundry {
         generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Self>,
         storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
         file: &'ast <Self::Types as AbstractTypes>::File,
-    ) -> Result<TestSpanMap> {
+    ) -> Result<TestSpanMaps> {
         visit(generic_visitor, storage, &file.1)
     }
 
@@ -351,6 +354,33 @@ impl RunLow for Foundry {
 
     fn command_to_run_test_file(&self, context: &LightContext, test_file: &Path) -> Command {
         Self::test_command(context, test_file)
+    }
+
+    fn instrument_file(
+        &self,
+        _context: &LightContext,
+        _rewriter: &mut Rewriter,
+        _source_file: &SourceFile,
+        _n_instrumentable_statements: usize,
+    ) -> Result<()> {
+        Ok(())
+    }
+
+    fn statement_prefix_and_suffix(&self, span: &Span) -> Result<(String, String)> {
+        Ok((
+            format!(
+                r#"if (bytes8(vm.envBytes("NECESSIST_REMOVAL")) != bytes8(hex"{}")) {{ "#,
+                span.id()
+            ),
+            " }".to_owned(),
+        ))
+    }
+
+    fn command_to_build_file(&self, context: &LightContext, _source_file: &Path) -> Command {
+        let mut command = Command::new("forge");
+        command.current_dir(context.root.as_path());
+        command.arg("build");
+        command
     }
 
     // smoelius: If the user specifies additional arguments to pass to the test command, Necessist

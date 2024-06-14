@@ -2,6 +2,7 @@ use crate::{Backup, Rewriter, SourceFile, ToConsoleString};
 use anyhow::{anyhow, Result};
 use once_cell::sync::Lazy;
 use regex::Regex;
+use sha2::{Digest, Sha256};
 use std::{fs::OpenOptions, io::Write, path::PathBuf, rc::Rc};
 
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
@@ -34,6 +35,15 @@ static SPAN_RE: Lazy<Regex> = Lazy::new(|| {
 });
 
 impl Span {
+    #[must_use]
+    pub fn id(&self) -> String {
+        const ID_LEN: usize = 16;
+        let mut hasher = Sha256::new();
+        hasher.update(self.to_string());
+        let digest = hasher.finalize();
+        hex::encode(digest)[..ID_LEN].to_owned()
+    }
+
     pub fn parse(root: &Rc<PathBuf>, s: &str) -> Result<Self> {
         let (source_file, start_line, start_column, end_line, end_column) = SPAN_RE
             .captures(s)
