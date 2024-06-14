@@ -22,7 +22,7 @@ target_os = "macos"
 
 subdir = "src/os"
 framework = "go"
-test_files = ["os_test.go"]
+source_files = ["os_test.go"]
 full = true
 config_mandatory = true
 

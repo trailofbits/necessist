@@ -547,7 +547,7 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> (String, Duration) {
         if enabled("BLESS") {
             write(path_stdout, stdout_normalized).unwrap();
         } else {
-            // smoelius: Because test files could be traversed in different orders on different
+            // smoelius: Because source files could be traversed in different orders on different
             // machines, the warnings could appear out of order. So simply verify that
             // `stdout_expected` and `stdout_actual` contain the same lines.
             // smoelius: Also, ignore timeouts. Some of the `v3-core_factory` tests take close to
@@ -699,7 +699,7 @@ fn subsequence<'a, 'b>(
     xs: impl Iterator<Item = &'a str>,
     mut ys: impl Iterator<Item = &'b str>,
 ) -> bool {
-    let re = Regex::new(r"^(\d+) candidates in (\d+) test file(s)?$").unwrap();
+    let re = Regex::new(r"^(\d+) candidates in (\d+) source file(s)?$").unwrap();
 
     let mut xs = xs.peekable();
 

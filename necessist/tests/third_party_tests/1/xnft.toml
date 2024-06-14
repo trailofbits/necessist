@@ -4,5 +4,5 @@ init = "make dependencies"
 # something to do with the firewall.
 target_os = "linux"
 framework = "anchor-ts"
-test_files = ["tests/collectibles.spec.ts"]
+source_files = ["tests/collectibles.spec.ts"]
 full = true
