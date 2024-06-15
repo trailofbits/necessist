@@ -1,4 +1,4 @@
-105 candidates in 30 tests in 3 test files
+105 candidates in 30 tests in 3 source files
 $DIR/src/encoding/binary/binary_test.go: dry running
 $DIR/src/encoding/binary/binary_test.go: mutilating
 $DIR/src/encoding/binary/binary_test.go: `err = Read(bytes.NewReader([]byte{0}), BigEndian, &res)` passed

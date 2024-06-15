@@ -43,7 +43,7 @@ fn necessist_db_can_be_moved() {
             .args(["--root", &tempdir.path().to_string_lossy(), "--resume"])
             .assert()
             .success()
-            .stdout(predicate::eq("4 candidates in 4 tests in 1 test file\n"));
+            .stdout(predicate::eq("4 candidates in 4 tests in 1 source file\n"));
     });
 }
 
@@ -66,7 +66,7 @@ fn resume_following_dry_run_failure() {
     assert!(
         stdout_normalized.starts_with(
             "\
-2 candidates in 2 tests in 3 test files
+2 candidates in 2 tests in 3 source files
 fixtures/dry_run_failure/tests/a.rs: dry running
 fixtures/dry_run_failure/tests/a.rs: Warning: dry run failed: code=101
 "
@@ -79,7 +79,7 @@ fixtures/dry_run_failure/tests/a.rs: Warning: dry run failed: code=101
         .args(["--root", DRF_ROOT, "--resume"])
         .assert()
         .success()
-        .stdout(predicate::eq("2 candidates in 2 tests in 3 test files\n"));
+        .stdout(predicate::eq("2 candidates in 2 tests in 3 source files\n"));
 }
 
 // smoelius: Apparently, sending a ctrl-c on Windows is non-trivial:
@@ -129,7 +129,7 @@ fn resume_following_ctrl_c() {
         // smoelius: N.B. `stdout_expected` intentionally lacks the following line:
         //   fixtures/basic/src/lib.rs:4:5-4:12: `n += 1;` passed
         let stdout_expected: &str = "\
-4 candidates in 4 tests in 1 test file
+4 candidates in 4 tests in 1 source file
 fixtures/basic/src/lib.rs: dry running
 fixtures/basic/src/lib.rs: mutilating
 fixtures/basic/src/lib.rs:14:9-14:16: `n += 1;` timed-out
