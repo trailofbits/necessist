@@ -113,7 +113,7 @@ impl<T: RunHigh> RunHigh for ParseAdapter<T> {
     fn dry_run(&self, context: &LightContext, source_file: &Path) -> Result<()> {
         self.0.dry_run(context, source_file)
     }
-    fn instrument_file(
+    fn instrument_source_file(
         &self,
         context: &LightContext,
         rewriter: &mut Rewriter,
@@ -121,13 +121,13 @@ impl<T: RunHigh> RunHigh for ParseAdapter<T> {
         n_instrumentable_statements: usize,
     ) -> Result<()> {
         self.0
-            .instrument_file(context, rewriter, source_file, n_instrumentable_statements)
+            .instrument_source_file(context, rewriter, source_file, n_instrumentable_statements)
     }
     fn statement_prefix_and_suffix(&self, span: &Span) -> Result<(String, String)> {
         self.0.statement_prefix_and_suffix(span)
     }
-    fn build_file(&self, context: &LightContext, source_file: &Path) -> Result<()> {
-        self.0.build_file(context, source_file)
+    fn build_source_file(&self, context: &LightContext, source_file: &Path) -> Result<()> {
+        self.0.build_source_file(context, source_file)
     }
     fn exec(
         &self,

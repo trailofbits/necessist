@@ -14,7 +14,7 @@ pub type ProcessLines = (bool, Box<dyn Fn(&str) -> bool>);
 pub trait RunLow {
     const REQUIRES_NODE_MODULES: bool = false;
     fn command_to_run_source_file(&self, context: &LightContext, source_file: &Path) -> Command;
-    fn instrument_file(
+    fn instrument_source_file(
         &self,
         context: &LightContext,
         rewriter: &mut Rewriter,
@@ -22,7 +22,7 @@ pub trait RunLow {
         n_instrumentable_statements: usize,
     ) -> Result<()>;
     fn statement_prefix_and_suffix(&self, span: &Span) -> Result<(String, String)>;
-    fn command_to_build_file(&self, context: &LightContext, source_file: &Path) -> Command;
+    fn command_to_build_source_file(&self, context: &LightContext, source_file: &Path) -> Command;
     fn command_to_build_test(
         &self,
         context: &LightContext,
@@ -43,21 +43,26 @@ impl<T: RunLow> RunLow for Rc<RefCell<T>> {
         self.borrow()
             .command_to_run_source_file(context, source_file)
     }
-    fn instrument_file(
+    fn instrument_source_file(
         &self,
         context: &LightContext,
         rewriter: &mut Rewriter,
         source_file: &SourceFile,
         n_instrumentable_statements: usize,
     ) -> Result<()> {
-        self.borrow()
-            .instrument_file(context, rewriter, source_file, n_instrumentable_statements)
+        self.borrow().instrument_source_file(
+            context,
+            rewriter,
+            source_file,
+            n_instrumentable_statements,
+        )
     }
     fn statement_prefix_and_suffix(&self, span: &Span) -> Result<(String, String)> {
         self.borrow().statement_prefix_and_suffix(span)
     }
-    fn command_to_build_file(&self, context: &LightContext, source_file: &Path) -> Command {
-        self.borrow().command_to_build_file(context, source_file)
+    fn command_to_build_source_file(&self, context: &LightContext, source_file: &Path) -> Command {
+        self.borrow()
+            .command_to_build_source_file(context, source_file)
     }
     fn command_to_build_test(
         &self,
@@ -100,7 +105,7 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
         Ok(())
     }
 
-    fn instrument_file(
+    fn instrument_source_file(
         &self,
         context: &LightContext,
         rewriter: &mut Rewriter,
@@ -108,15 +113,15 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
         n_instrumentable_statements: usize,
     ) -> Result<()> {
         self.0
-            .instrument_file(context, rewriter, source_file, n_instrumentable_statements)
+            .instrument_source_file(context, rewriter, source_file, n_instrumentable_statements)
     }
 
     fn statement_prefix_and_suffix(&self, span: &Span) -> Result<(String, String)> {
         self.0.statement_prefix_and_suffix(span)
     }
 
-    fn build_file(&self, context: &LightContext, source_file: &Path) -> Result<()> {
-        let mut command = self.0.command_to_build_file(context, source_file);
+    fn build_source_file(&self, context: &LightContext, source_file: &Path) -> Result<()> {
+        let mut command = self.0.command_to_build_source_file(context, source_file);
         command.args(&context.opts.args);
 
         debug!("{:?}", command);

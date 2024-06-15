@@ -55,7 +55,7 @@ impl RunHigh for HardhatTs {
         self.mocha_adapter.0.dry_run(context, source_file, command)
     }
 
-    fn instrument_file(
+    fn instrument_source_file(
         &self,
         _context: &LightContext,
         _rewriter: &mut Rewriter,
@@ -69,7 +69,7 @@ impl RunHigh for HardhatTs {
         self.mocha_adapter.0.statement_prefix_and_suffix(span)
     }
 
-    fn build_file(&self, context: &LightContext, _source_file: &Path) -> Result<()> {
+    fn build_source_file(&self, context: &LightContext, _source_file: &Path) -> Result<()> {
         compile(context)
     }
 

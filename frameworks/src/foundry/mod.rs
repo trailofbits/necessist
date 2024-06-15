@@ -161,7 +161,10 @@ impl ParseLow for Foundry {
         )
     }
 
-    fn parse_file(&self, source_file: &Path) -> Result<<Self::Types as AbstractTypes>::File> {
+    fn parse_source_file(
+        &self,
+        source_file: &Path,
+    ) -> Result<<Self::Types as AbstractTypes>::File> {
         let contents = read_to_string(source_file)?;
         solang_parser::parse(&contents, 0)
             .map(|(source_unit, _)| (contents, source_unit))
@@ -356,7 +359,7 @@ impl RunLow for Foundry {
         Self::test_command(context, source_file)
     }
 
-    fn instrument_file(
+    fn instrument_source_file(
         &self,
         _context: &LightContext,
         _rewriter: &mut Rewriter,
@@ -376,7 +379,7 @@ impl RunLow for Foundry {
         ))
     }
 
-    fn command_to_build_file(&self, context: &LightContext, _source_file: &Path) -> Command {
+    fn command_to_build_source_file(&self, context: &LightContext, _source_file: &Path) -> Command {
         let mut command = Command::new("forge");
         command.current_dir(context.root.as_path());
         command.arg("build");

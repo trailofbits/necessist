@@ -89,7 +89,8 @@ pub trait ParseLow: Sized {
         type_name.to_kebab_case()
     }
     fn walk_dir(&self, root: &Path) -> Box<dyn Iterator<Item = WalkDirResult>>;
-    fn parse_file(&self, source_file: &Path) -> Result<<Self::Types as AbstractTypes>::File>;
+    fn parse_source_file(&self, source_file: &Path)
+        -> Result<<Self::Types as AbstractTypes>::File>;
     fn storage_from_file<'ast>(
         &self,
         file: &'ast <Self::Types as AbstractTypes>::File,
@@ -175,8 +176,11 @@ impl<T: ParseLow> ParseLow for Rc<RefCell<T>> {
     fn walk_dir(&self, root: &Path) -> Box<dyn Iterator<Item = WalkDirResult>> {
         self.borrow().walk_dir(root)
     }
-    fn parse_file(&self, source_file: &Path) -> Result<<Self::Types as AbstractTypes>::File> {
-        self.borrow().parse_file(source_file)
+    fn parse_source_file(
+        &self,
+        source_file: &Path,
+    ) -> Result<<Self::Types as AbstractTypes>::File> {
+        self.borrow().parse_source_file(source_file)
     }
     fn storage_from_file<'ast>(
         &self,
@@ -322,7 +326,7 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
             assert!(source_file.starts_with(context.root.as_path()));
 
             #[allow(clippy::unwrap_used)]
-            let file = match self.0.parse_file(source_file) {
+            let file = match self.0.parse_source_file(source_file) {
                 Ok(file) => file,
                 Err(error) => {
                     warn(
