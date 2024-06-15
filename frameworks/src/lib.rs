@@ -110,8 +110,8 @@ fn implementation_as_interface<T, U: Interface + 'static>(
 }
 
 impl<T: RunHigh> RunHigh for ParseAdapter<T> {
-    fn dry_run(&self, context: &LightContext, test_file: &Path) -> Result<()> {
-        self.0.dry_run(context, test_file)
+    fn dry_run(&self, context: &LightContext, source_file: &Path) -> Result<()> {
+        self.0.dry_run(context, source_file)
     }
     fn instrument_file(
         &self,

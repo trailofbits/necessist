@@ -74,7 +74,7 @@ static LINE_WITHOUT_TIME_RE: Lazy<Regex> = Lazy::new(|| {
 pub struct Mocha {
     subdir: PathBuf,
     source_map: Rc<SourceMap>,
-    test_file_it_message_state_map: RefCell<BTreeMap<PathBuf, BTreeMap<String, ItMessageState>>>,
+    source_file_it_message_state_map: RefCell<BTreeMap<PathBuf, BTreeMap<String, ItMessageState>>>,
 }
 
 impl Mocha {
@@ -82,14 +82,14 @@ impl Mocha {
         Self {
             subdir: subdir.as_ref().to_path_buf(),
             source_map: Rc::default(),
-            test_file_it_message_state_map: RefCell::new(BTreeMap::new()),
+            source_file_it_message_state_map: RefCell::new(BTreeMap::new()),
         }
     }
 
     pub fn dry_run(
         &self,
         _context: &LightContext,
-        test_file: &Path,
+        source_file: &Path,
         mut command: Command,
     ) -> Result<()> {
         debug!("{:?}", command);
@@ -99,9 +99,10 @@ impl Mocha {
             return Err(output.into());
         }
 
-        let mut test_file_it_message_state_map = self.test_file_it_message_state_map.borrow_mut();
-        let it_message_state_map = test_file_it_message_state_map
-            .entry(test_file.to_path_buf())
+        let mut source_file_it_message_state_map =
+            self.source_file_it_message_state_map.borrow_mut();
+        let it_message_state_map = source_file_it_message_state_map
+            .entry(source_file.to_path_buf())
             .or_default();
 
         let stdout = std::str::from_utf8(output.stdout())?;
@@ -136,9 +137,10 @@ impl Mocha {
         span: &Span,
         command: &Command,
     ) -> Result<Option<(Exec, Option<Box<Postprocess>>)>> {
-        let mut test_file_it_message_state_map = self.test_file_it_message_state_map.borrow_mut();
+        let mut source_file_it_message_state_map =
+            self.source_file_it_message_state_map.borrow_mut();
         #[allow(clippy::expect_used)]
-        let it_message_state_map = test_file_it_message_state_map
+        let it_message_state_map = source_file_it_message_state_map
             .get_mut(span.source_file.as_ref())
             .expect("Source file is not in map");
 
@@ -284,8 +286,8 @@ impl ParseLow for Mocha {
         )
     }
 
-    fn parse_file(&self, test_file: &Path) -> Result<<Self::Types as AbstractTypes>::File> {
-        let source_file = self.source_map.load_file(test_file)?;
+    fn parse_file(&self, source_file: &Path) -> Result<<Self::Types as AbstractTypes>::File> {
+        let source_file = self.source_map.load_file(source_file)?;
         let lexer = Lexer::new(
             Syntax::Typescript(TsConfig::default()),
             EsVersion::default(),

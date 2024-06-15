@@ -13,7 +13,7 @@ pub type ProcessLines = (bool, Box<dyn Fn(&str) -> bool>);
 
 pub trait RunLow {
     const REQUIRES_NODE_MODULES: bool = false;
-    fn command_to_run_test_file(&self, context: &LightContext, test_file: &Path) -> Command;
+    fn command_to_run_source_file(&self, context: &LightContext, source_file: &Path) -> Command;
     fn instrument_file(
         &self,
         context: &LightContext,
@@ -39,8 +39,9 @@ pub trait RunLow {
 
 impl<T: RunLow> RunLow for Rc<RefCell<T>> {
     const REQUIRES_NODE_MODULES: bool = T::REQUIRES_NODE_MODULES;
-    fn command_to_run_test_file(&self, context: &LightContext, test_file: &Path) -> Command {
-        self.borrow().command_to_run_test_file(context, test_file)
+    fn command_to_run_source_file(&self, context: &LightContext, source_file: &Path) -> Command {
+        self.borrow()
+            .command_to_run_source_file(context, source_file)
     }
     fn instrument_file(
         &self,
@@ -80,14 +81,14 @@ impl<T: RunLow> RunLow for Rc<RefCell<T>> {
 pub struct RunAdapter<T>(pub T);
 
 impl<T: RunLow> RunHigh for RunAdapter<T> {
-    fn dry_run(&self, context: &LightContext, test_file: &Path) -> Result<()> {
+    fn dry_run(&self, context: &LightContext, source_file: &Path) -> Result<()> {
         // smoelius: `REQUIRES_NODE_MODULES` is a hack. But at present, I don't know how it should
         // be generalized.
         if T::REQUIRES_NODE_MODULES && context.root.join("package.json").try_exists()? {
             ts::utils::install_node_modules(context)?;
         }
 
-        let mut command = self.0.command_to_run_test_file(context, test_file);
+        let mut command = self.0.command_to_run_source_file(context, source_file);
         command.args(&context.opts.args);
 
         debug!("{:?}", command);

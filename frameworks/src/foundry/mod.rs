@@ -161,8 +161,8 @@ impl ParseLow for Foundry {
         )
     }
 
-    fn parse_file(&self, test_file: &Path) -> Result<<Self::Types as AbstractTypes>::File> {
-        let contents = read_to_string(test_file)?;
+    fn parse_file(&self, source_file: &Path) -> Result<<Self::Types as AbstractTypes>::File> {
+        let contents = read_to_string(source_file)?;
         solang_parser::parse(&contents, 0)
             .map(|(source_unit, _)| (contents, source_unit))
             .map_err(|error| anyhow!(format!("{error:?}")))
@@ -352,8 +352,8 @@ impl ParseLow for Foundry {
 impl RunLow for Foundry {
     const REQUIRES_NODE_MODULES: bool = true;
 
-    fn command_to_run_test_file(&self, context: &LightContext, test_file: &Path) -> Command {
-        Self::test_command(context, test_file)
+    fn command_to_run_source_file(&self, context: &LightContext, source_file: &Path) -> Command {
+        Self::test_command(context, source_file)
     }
 
     fn instrument_file(
@@ -420,14 +420,14 @@ impl RunLow for Foundry {
 }
 
 impl Foundry {
-    fn test_command(context: &LightContext, test_file: &Path) -> Command {
+    fn test_command(context: &LightContext, source_file: &Path) -> Command {
         let mut command = Command::new("forge");
         command.current_dir(context.root.as_path());
         command.env("FOUNDRY_FUZZ_RUNS", "1");
         command.args([
             "test",
             "--match-path",
-            &util::strip_prefix(test_file, context.root)
+            &util::strip_prefix(source_file, context.root)
                 .unwrap()
                 .to_string_lossy(),
         ]);

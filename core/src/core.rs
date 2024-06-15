@@ -1,6 +1,6 @@
 use crate::{
     config,
-    framework::{self, Applicable, Postprocess, SpanKind, TestFileTestSpanMap, ToImplementation},
+    framework::{self, Applicable, Postprocess, SourceFileTestSpanMap, SpanKind, ToImplementation},
     note, source_warn, sqlite, util, warn, Backup, Outcome, Rewriter, SourceFile, Span,
     ToConsoleString, WarnFlags, Warning,
 };
@@ -95,7 +95,7 @@ pub struct Necessist {
     pub root: Option<PathBuf>,
     pub timeout: Option<u64>,
     pub verbose: bool,
-    pub test_files: Vec<PathBuf>,
+    pub source_files: Vec<PathBuf>,
     pub args: Vec<String>,
 }
 
@@ -133,7 +133,8 @@ pub fn necessist<Identifier: Applicable + Display + IntoEnumIterator + ToImpleme
         context.println = &println;
     }
 
-    let Some((framework, n_spans, test_file_test_span_map)) = prepare(&context, framework)? else {
+    let Some((framework, n_spans, source_file_test_span_map)) = prepare(&context, framework)?
+    else {
         return Ok(());
     };
 
@@ -166,14 +167,14 @@ pub fn necessist<Identifier: Applicable + Display + IntoEnumIterator + ToImpleme
         context.progress = progress.as_ref();
     }
 
-    run(context, test_file_test_span_map)
+    run(context, source_file_test_span_map)
 }
 
 #[allow(clippy::type_complexity)]
 fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementation>(
     context: &LightContext,
     framework: framework::Auto<Identifier>,
-) -> Result<Option<(Box<dyn framework::Interface>, usize, TestFileTestSpanMap)>> {
+) -> Result<Option<(Box<dyn framework::Interface>, usize, SourceFileTestSpanMap)>> {
     if context.opts.default_config {
         default_config(context, context.root)?;
         return Ok(None);
@@ -189,15 +190,15 @@ fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementatio
 
     let mut framework = find_framework(context, framework)?;
 
-    let paths = canonicalize_test_files(context)?;
+    let paths = canonicalize_source_files(context)?;
 
-    let test_file_test_span_map = framework.parse(
+    let source_file_test_span_map = framework.parse(
         context,
         &config,
         &paths.iter().map(AsRef::as_ref).collect::<Vec<_>>(),
     )?;
 
-    let n_spans = test_file_test_span_map
+    let n_spans = source_file_test_span_map
         .values()
         .map(|test_span_maps| {
             test_span_maps
@@ -214,12 +215,12 @@ fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementatio
         .sum();
 
     if context.opts.dump_candidates {
-        dump_candidates(context, &test_file_test_span_map)?;
+        dump_candidates(context, &source_file_test_span_map)?;
         return Ok(None);
     }
 
     (context.println)({
-        let n_tests = test_file_test_span_map
+        let n_tests = source_file_test_span_map
             .values()
             .map(|test_span_maps| {
                 assert_eq!(
@@ -229,28 +230,28 @@ fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementatio
                 test_span_maps.statement.keys().len()
             })
             .sum::<usize>();
-        let n_test_files = test_file_test_span_map.keys().len();
+        let n_source_files = source_file_test_span_map.keys().len();
         &format!(
             "{} candidates in {} test{} in {} test file{}",
             n_spans,
             n_tests,
             if n_tests == 1 { "" } else { "s" },
-            n_test_files,
-            if n_test_files == 1 { "" } else { "s" }
+            n_source_files,
+            if n_source_files == 1 { "" } else { "s" }
         )
     });
 
-    Ok(Some((framework, n_spans, test_file_test_span_map)))
+    Ok(Some((framework, n_spans, source_file_test_span_map)))
 }
 
-fn run(mut context: Context, test_file_test_span_map: TestFileTestSpanMap) -> Result<()> {
+fn run(mut context: Context, source_file_test_span_map: SourceFileTestSpanMap) -> Result<()> {
     ctrlc::set_handler(|| CTRLC.store(true, Ordering::SeqCst))?;
 
     let past_removals = past_removals_init_lazy(&context.light())?;
 
     let mut past_removal_iter = past_removals.into_iter().peekable();
 
-    for (test_file, test_span_maps) in test_file_test_span_map {
+    for (source_file, test_span_maps) in source_file_test_span_map {
         let mut test_span_iter = peek_nth(test_span_maps.iter());
 
         let (mismatch, n) = skip_past_removals(&mut test_span_iter, &mut past_removal_iter);
@@ -264,16 +265,16 @@ fn run(mut context: Context, test_file_test_span_map: TestFileTestSpanMap) -> Re
         if !context.opts.no_dry_run {
             (context.println)(&format!(
                 "{}: dry running",
-                util::strip_current_dir(&test_file).to_string_lossy()
+                util::strip_current_dir(&source_file).to_string_lossy()
             ));
 
-            let result = context.framework.dry_run(&context.light(), &test_file);
+            let result = context.framework.dry_run(&context.light(), &source_file);
 
             if let Err(error) = &result {
                 source_warn(
                     &context.light(),
                     Warning::DryRunFailed,
-                    &test_file,
+                    &source_file,
                     &format!("dry run failed: {error:?}"),
                     WarnFlags::empty(),
                 )?;
@@ -292,11 +293,11 @@ fn run(mut context: Context, test_file_test_span_map: TestFileTestSpanMap) -> Re
 
         (context.println)(&format!(
             "{}: mutilating",
-            util::strip_current_dir(&test_file).to_string_lossy()
+            util::strip_current_dir(&source_file).to_string_lossy()
         ));
 
         let mut instrumentation_backup =
-            instrument_statements(&context, &test_file, &mut test_span_iter)?;
+            instrument_statements(&context, &source_file, &mut test_span_iter)?;
 
         loop {
             let (mismatch, n) = skip_past_removals(&mut test_span_iter, &mut past_removal_iter);
@@ -431,10 +432,10 @@ fn find_framework<Identifier: Applicable + Display + IntoEnumIterator + ToImplem
     implementation.ok_or_else(|| anyhow!("Found no applicable frameworks"))
 }
 
-fn canonicalize_test_files(context: &LightContext) -> Result<Vec<PathBuf>> {
+fn canonicalize_source_files(context: &LightContext) -> Result<Vec<PathBuf>> {
     context
         .opts
-        .test_files
+        .source_files
         .iter()
         .map(|path| {
             let path_buf = dunce::canonicalize(path)
@@ -547,9 +548,9 @@ Configuration or test files have changed since necessist.db was created; the fol
 
 fn dump_candidates(
     context: &LightContext,
-    test_file_test_span_map: &TestFileTestSpanMap,
+    source_file_test_span_map: &SourceFileTestSpanMap,
 ) -> Result<()> {
-    for span in test_file_test_span_map
+    for span in source_file_test_span_map
         .values()
         .flat_map(|test_span_maps| {
             test_span_maps

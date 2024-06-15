@@ -3,7 +3,7 @@ use anyhow::Result;
 use heck::ToKebabCase;
 use necessist_core::{
     config,
-    framework::{TestFileTestSpanMap, TestSpanMaps},
+    framework::{SourceFileTestSpanMap, TestSpanMaps},
     util, warn, LightContext, SourceFile, Span, WarnFlags, Warning,
 };
 use paste::paste;
@@ -89,7 +89,7 @@ pub trait ParseLow: Sized {
         type_name.to_kebab_case()
     }
     fn walk_dir(&self, root: &Path) -> Box<dyn Iterator<Item = WalkDirResult>>;
-    fn parse_file(&self, test_file: &Path) -> Result<<Self::Types as AbstractTypes>::File>;
+    fn parse_file(&self, source_file: &Path) -> Result<<Self::Types as AbstractTypes>::File>;
     fn storage_from_file<'ast>(
         &self,
         file: &'ast <Self::Types as AbstractTypes>::File,
@@ -175,8 +175,8 @@ impl<T: ParseLow> ParseLow for Rc<RefCell<T>> {
     fn walk_dir(&self, root: &Path) -> Box<dyn Iterator<Item = WalkDirResult>> {
         self.borrow().walk_dir(root)
     }
-    fn parse_file(&self, test_file: &Path) -> Result<<Self::Types as AbstractTypes>::File> {
-        self.borrow().parse_file(test_file)
+    fn parse_file(&self, source_file: &Path) -> Result<<Self::Types as AbstractTypes>::File> {
+        self.borrow().parse_file(source_file)
     }
     fn storage_from_file<'ast>(
         &self,
@@ -309,20 +309,20 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
         &mut self,
         context: &LightContext,
         config: &config::Toml,
-        test_files: &[&Path],
-    ) -> Result<TestFileTestSpanMap> {
+        source_files: &[&Path],
+    ) -> Result<SourceFileTestSpanMap> {
         let config = Self::compile_config(context, config)?;
 
-        let mut test_file_test_span_map = TestFileTestSpanMap::new();
+        let mut source_file_test_span_map = SourceFileTestSpanMap::new();
 
         let walk_dir_results = self.0.walk_dir(context.root);
 
-        let mut visit_test_file = |test_file: &Path| -> Result<()> {
-            assert!(test_file.is_absolute());
-            assert!(test_file.starts_with(context.root.as_path()));
+        let mut visit_source_file = |source_file: &Path| -> Result<()> {
+            assert!(source_file.is_absolute());
+            assert!(source_file.starts_with(context.root.as_path()));
 
             #[allow(clippy::unwrap_used)]
-            let file = match self.0.parse_file(test_file) {
+            let file = match self.0.parse_file(source_file) {
                 Ok(file) => file,
                 Err(error) => {
                     warn(
@@ -332,7 +332,7 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
                         // unnecessary.
                         &format!(
                             r#"Failed to parse "{}": {error}"#,
-                            util::strip_prefix(test_file, context.root)
+                            util::strip_prefix(source_file, context.root)
                                 .unwrap()
                                 .display(),
                         ),
@@ -344,7 +344,7 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
 
             let storage = RefCell::new(self.0.storage_from_file(&file));
 
-            let source_file = SourceFile::new(context.root.clone(), test_file.to_path_buf())?;
+            let source_file = SourceFile::new(context.root.clone(), source_file.to_path_buf())?;
 
             let generic_visitor = GenericVisitor {
                 context,
@@ -360,12 +360,12 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
             };
 
             let test_span_map = T::visit_file(generic_visitor, &storage, &file)?;
-            extend(&mut test_file_test_span_map, source_file, test_span_map);
+            extend(&mut source_file_test_span_map, source_file, test_span_map);
 
             Ok(())
         };
 
-        if test_files.is_empty() {
+        if source_files.is_empty() {
             for entry in walk_dir_results {
                 let entry = entry?;
                 let path = entry.path();
@@ -374,24 +374,24 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
                     continue;
                 }
 
-                visit_test_file(path)?;
+                visit_source_file(path)?;
             }
         } else {
-            for path in test_files {
-                visit_test_file(path)?;
+            for path in source_files {
+                visit_source_file(path)?;
             }
         }
 
-        Ok(test_file_test_span_map)
+        Ok(source_file_test_span_map)
     }
 }
 
 fn extend(
-    test_file_test_span_map: &mut TestFileTestSpanMap,
-    test_file: SourceFile,
+    source_file_test_span_map: &mut SourceFileTestSpanMap,
+    source_file: SourceFile,
     test_span_maps_incoming: TestSpanMaps,
 ) {
-    let test_span_maps = test_file_test_span_map.entry(test_file).or_default();
+    let test_span_maps = source_file_test_span_map.entry(source_file).or_default();
     for (test_name, spans_incoming) in test_span_maps_incoming.statement {
         let spans = test_span_maps.statement.entry(test_name).or_default();
         spans.extend(spans_incoming);

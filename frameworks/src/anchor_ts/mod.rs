@@ -2,7 +2,7 @@ use super::{ts, OutputAccessors, OutputStrippedOfAnsiScapes, ParseAdapter, Parse
 use anyhow::{anyhow, Result};
 use log::debug;
 use necessist_core::{
-    framework::{Interface, Postprocess, TestFileTestSpanMap},
+    framework::{Interface, Postprocess, SourceFileTestSpanMap},
     LightContext, SourceFile, Span, __Backup as Backup, __Rewriter as Rewriter,
 };
 use once_cell::sync::Lazy;
@@ -54,23 +54,23 @@ impl ParseHigh for AnchorTs {
         &mut self,
         context: &LightContext,
         config: &necessist_core::config::Toml,
-        test_files: &[&Path],
-    ) -> Result<TestFileTestSpanMap> {
-        self.mocha_adapter.parse(context, config, test_files)
+        source_files: &[&Path],
+    ) -> Result<SourceFileTestSpanMap> {
+        self.mocha_adapter.parse(context, config, source_files)
     }
 }
 
 impl RunHigh for AnchorTs {
-    fn dry_run(&self, context: &LightContext, test_file: &Path) -> Result<()> {
+    fn dry_run(&self, context: &LightContext, source_file: &Path) -> Result<()> {
         ts::utils::install_node_modules(context)?;
 
-        self.check(context, test_file)?;
+        self.check(context, source_file)?;
 
-        let _backup: Backup = self.patch_anchor_toml(test_file, false)?;
+        let _backup: Backup = self.patch_anchor_toml(source_file, false)?;
 
         let command = command_to_run_test(context);
 
-        self.mocha_adapter.0.dry_run(context, test_file, command)
+        self.mocha_adapter.0.dry_run(context, source_file, command)
     }
 
     fn instrument_file(
@@ -135,8 +135,8 @@ impl RunHigh for AnchorTs {
 }
 
 impl AnchorTs {
-    fn check(&self, context: &LightContext, test_file: &Path) -> Result<()> {
-        let _backup: Backup = self.patch_anchor_toml(test_file, true)?;
+    fn check(&self, context: &LightContext, source_file: &Path) -> Result<()> {
+        let _backup: Backup = self.patch_anchor_toml(source_file, true)?;
 
         let mut command = command_to_run_test(context);
 
@@ -149,7 +149,7 @@ impl AnchorTs {
         Ok(())
     }
 
-    fn patch_anchor_toml(&self, test_file: &Path, check: bool) -> Result<Backup> {
+    fn patch_anchor_toml(&self, source_file: &Path, check: bool) -> Result<Backup> {
         let backup = Backup::new(&self.anchor_toml)?;
 
         let mut document = self.document.clone();
@@ -158,7 +158,7 @@ impl AnchorTs {
             *test = Value::from(format!(
                 "{}{}{}{}",
                 self.prefix,
-                test_file.to_string_lossy(),
+                source_file.to_string_lossy(),
                 self.suffix,
                 if check { " --dry-run" } else { "" }
             ));

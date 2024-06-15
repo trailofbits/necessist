@@ -2,7 +2,7 @@ use super::{ts, OutputAccessors, OutputStrippedOfAnsiScapes, ParseAdapter, Parse
 use anyhow::Result;
 use log::debug;
 use necessist_core::{
-    framework::{Interface, Postprocess, TestFileTestSpanMap},
+    framework::{Interface, Postprocess, SourceFileTestSpanMap},
     LightContext, SourceFile, Span, __Rewriter as Rewriter,
 };
 use std::path::Path;
@@ -35,24 +35,24 @@ impl ParseHigh for HardhatTs {
         &mut self,
         context: &LightContext,
         config: &necessist_core::config::Toml,
-        test_files: &[&Path],
-    ) -> Result<TestFileTestSpanMap> {
-        self.mocha_adapter.parse(context, config, test_files)
+        source_files: &[&Path],
+    ) -> Result<SourceFileTestSpanMap> {
+        self.mocha_adapter.parse(context, config, source_files)
     }
 }
 
 impl RunHigh for HardhatTs {
-    fn dry_run(&self, context: &LightContext, test_file: &Path) -> Result<()> {
+    fn dry_run(&self, context: &LightContext, source_file: &Path) -> Result<()> {
         ts::utils::install_node_modules(context)?;
 
         compile(context)?;
 
         let mut command = ts::utils::script("npx");
         command.current_dir(context.root.as_path());
-        command.args(["hardhat", "test", &test_file.to_string_lossy()]);
+        command.args(["hardhat", "test", &source_file.to_string_lossy()]);
         command.args(&context.opts.args);
 
-        self.mocha_adapter.0.dry_run(context, test_file, command)
+        self.mocha_adapter.0.dry_run(context, source_file, command)
     }
 
     fn instrument_file(
