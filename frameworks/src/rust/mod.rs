@@ -20,7 +20,7 @@ use std::{
 };
 
 mod storage;
-use storage::{cached_test_file_package, Storage};
+use storage::{cached_source_file_package, Storage};
 
 mod try_insert;
 use try_insert::TryInsert;
@@ -30,7 +30,7 @@ use visitor::visit;
 
 #[derive(Debug)]
 pub struct Rust {
-    test_file_flags_cache: BTreeMap<PathBuf, Vec<String>>,
+    source_file_flags_cache: BTreeMap<PathBuf, Vec<String>>,
 }
 
 impl Rust {
@@ -44,7 +44,7 @@ impl Rust {
 
     pub fn new() -> Self {
         Self {
-            test_file_flags_cache: BTreeMap::new(),
+            source_file_flags_cache: BTreeMap::new(),
         }
     }
 }
@@ -361,8 +361,8 @@ impl ParseLow for Rust {
         )
     }
 
-    fn parse_file(&self, test_file: &Path) -> Result<<Self::Types as AbstractTypes>::File> {
-        let content = read_to_string(test_file)?;
+    fn parse_file(&self, source_file: &Path) -> Result<<Self::Types as AbstractTypes>::File> {
+        let content = read_to_string(source_file)?;
         syn::parse_file(&content).map_err(Into::into)
     }
 
@@ -525,8 +525,8 @@ impl ParseLow for Rust {
 }
 
 impl RunLow for Rust {
-    fn command_to_run_test_file(&self, context: &LightContext, test_file: &Path) -> Command {
-        self.test_command(context, test_file)
+    fn command_to_run_source_file(&self, context: &LightContext, source_file: &Path) -> Command {
+        self.test_command(context, source_file)
     }
 
     fn instrument_file(
@@ -581,11 +581,11 @@ impl RunLow for Rust {
 }
 
 impl Rust {
-    fn test_command(&self, _context: &LightContext, test_file: &Path) -> Command {
+    fn test_command(&self, _context: &LightContext, source_file: &Path) -> Command {
         #[allow(clippy::expect_used)]
         let flags = self
-            .test_file_flags_cache
-            .get(test_file)
+            .source_file_flags_cache
+            .get(source_file)
             .expect("Flags are not cached");
         let mut command = Command::new("cargo");
         command.arg("test");
@@ -594,22 +594,22 @@ impl Rust {
     }
 
     #[cfg_attr(dylint_lib = "general", allow(non_local_effect_before_error_return))]
-    fn cached_test_file_flags(
+    fn cached_source_file_flags(
         &mut self,
-        test_file_package_map: &mut BTreeMap<PathBuf, Package>,
-        test_file: &Path,
+        source_file_package_map: &mut BTreeMap<PathBuf, Package>,
+        source_file: &Path,
     ) -> Result<&Vec<String>> {
-        self.test_file_flags_cache
-            .entry(test_file.to_path_buf())
+        self.source_file_flags_cache
+            .entry(source_file.to_path_buf())
             .or_try_insert_with(|| {
-                let package = cached_test_file_package(test_file_package_map, test_file)?;
+                let package = cached_source_file_package(source_file_package_map, source_file)?;
 
                 let mut flags = vec![
                     "--manifest-path".to_owned(),
                     package.manifest_path.as_str().to_owned(),
                 ];
 
-                if let Some(name) = test_file_test(package, test_file) {
+                if let Some(name) = source_file_test(package, source_file) {
                     flags.extend(["--test".to_owned(), name.clone()]);
                 } else {
                     // smoelius: Failed to find a test target with this file name. Assume it is a
@@ -637,12 +637,12 @@ impl Rust {
     }
 }
 
-fn test_file_test<'a>(package: &'a Package, test_file: &Path) -> Option<&'a String> {
+fn source_file_test<'a>(package: &'a Package, source_file: &Path) -> Option<&'a String> {
     if let &[name] = package
         .targets
         .iter()
         .filter_map(|target| {
-            if target.kind == ["test"] && target.src_path == test_file {
+            if target.kind == ["test"] && target.src_path == source_file {
                 Some(&target.name)
             } else {
                 None

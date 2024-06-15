@@ -54,7 +54,7 @@ pub struct Opts<Identifier: Clone + Send + Sync + ValueEnum + 'static> {
     #[clap(long, help = "Show test outcomes besides `passed`")]
     verbose: bool,
     #[clap(value_name = "TEST_FILES", help = "Test files to mutilate (optional)")]
-    ztest_files: Vec<String>,
+    zsource_files: Vec<String>,
     #[clap(
         last = true,
         name = "ARGS",
@@ -82,12 +82,12 @@ impl<Identifier: Clone + Send + Sync + ValueEnum> From<Opts<Identifier>>
             root,
             timeout,
             verbose,
-            ztest_files,
+            zsource_files,
             zzargs,
         } = opts;
         let framework = framework.unwrap_or_default();
         let root = root.map(PathBuf::from);
-        let test_files = ztest_files.iter().map(PathBuf::from).collect::<Vec<_>>();
+        let source_files = zsource_files.iter().map(PathBuf::from).collect::<Vec<_>>();
         let args = zzargs;
         (
             Necessist {
@@ -104,7 +104,7 @@ impl<Identifier: Clone + Send + Sync + ValueEnum> From<Opts<Identifier>>
                 root,
                 timeout,
                 verbose,
-                test_files,
+                source_files,
                 args,
             },
             framework,

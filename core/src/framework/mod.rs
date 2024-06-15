@@ -29,7 +29,7 @@ pub trait ToImplementation {
 
 pub trait Interface: Parse + Run {}
 
-pub type TestFileTestSpanMap = BTreeMap<SourceFile, TestSpanMaps>;
+pub type SourceFileTestSpanMap = BTreeMap<SourceFile, TestSpanMaps>;
 
 // smoelius: The `statement` and `method_call` maps are expected to have the same sets of keys. This
 // is a little ugly, but it simplifies the implementation of `necessist_core`.
@@ -69,14 +69,14 @@ pub trait Parse {
         &mut self,
         context: &LightContext,
         config: &config::Toml,
-        test_files: &[&Path],
-    ) -> Result<TestFileTestSpanMap>;
+        source_files: &[&Path],
+    ) -> Result<SourceFileTestSpanMap>;
 }
 
 pub type Postprocess = dyn Fn(&LightContext, Popen) -> Result<bool>;
 
 pub trait Run {
-    fn dry_run(&self, context: &LightContext, test_file: &Path) -> Result<()>;
+    fn dry_run(&self, context: &LightContext, source_file: &Path) -> Result<()>;
     fn instrument_file(
         &self,
         context: &LightContext,
@@ -109,15 +109,15 @@ impl<T: AsParse> Parse for T {
         &mut self,
         context: &LightContext,
         config: &config::Toml,
-        test_files: &[&Path],
-    ) -> Result<TestFileTestSpanMap> {
-        self.as_parse_mut().parse(context, config, test_files)
+        source_files: &[&Path],
+    ) -> Result<SourceFileTestSpanMap> {
+        self.as_parse_mut().parse(context, config, source_files)
     }
 }
 
 impl<T: AsRun> Run for T {
-    fn dry_run(&self, context: &LightContext, test_file: &Path) -> Result<()> {
-        self.as_run().dry_run(context, test_file)
+    fn dry_run(&self, context: &LightContext, source_file: &Path) -> Result<()> {
+        self.as_run().dry_run(context, source_file)
     }
     fn instrument_file(
         &self,

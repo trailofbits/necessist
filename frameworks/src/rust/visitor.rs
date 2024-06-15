@@ -31,8 +31,8 @@ pub(super) fn visit<'ast>(
     if let Some(error) = storage.borrow_mut().error.take() {
         return Err(error);
     }
-    let _: &Vec<String> = visitor.generic_visitor.framework.cached_test_file_flags(
-        &mut storage.borrow_mut().test_file_package_cache,
+    let _: &Vec<String> = visitor.generic_visitor.framework.cached_source_file_flags(
+        &mut storage.borrow_mut().source_file_package_cache,
         &visitor.generic_visitor.source_file,
     )?;
     Ok(visitor.generic_visitor.test_span_maps())

@@ -236,8 +236,8 @@ impl ParseLow for Go {
         )
     }
 
-    fn parse_file(&self, test_file: &Path) -> Result<<Self::Types as AbstractTypes>::File> {
-        let text = read_to_string(test_file)?;
+    fn parse_file(&self, source_file: &Path) -> Result<<Self::Types as AbstractTypes>::File> {
+        let text = read_to_string(source_file)?;
         let mut parser = Parser::new();
         parser
             .set_language(&tree_sitter_go::language())
@@ -417,8 +417,8 @@ impl ParseLow for Go {
 }
 
 impl RunLow for Go {
-    fn command_to_run_test_file(&self, context: &LightContext, test_file: &Path) -> Command {
-        Self::test_command(context, test_file)
+    fn command_to_run_source_file(&self, context: &LightContext, source_file: &Path) -> Command {
+        Self::test_command(context, source_file)
     }
 
     fn instrument_file(
@@ -549,9 +549,9 @@ fn package_line(contents: &str) -> Option<usize> {
 }
 
 impl Go {
-    fn test_command(context: &LightContext, test_file: &Path) -> Command {
+    fn test_command(context: &LightContext, source_file: &Path) -> Command {
         #[allow(clippy::expect_used)]
-        let package_path = test_file_package_path(context, test_file)
+        let package_path = source_file_package_path(context, source_file)
             .expect("Failed to get test file package path");
         let mut command = Command::new("go");
         command.current_dir(context.root.as_path());
@@ -561,8 +561,8 @@ impl Go {
     }
 }
 
-fn test_file_package_path(context: &LightContext, test_file: &Path) -> Result<String> {
-    let dir = test_file
+fn source_file_package_path(context: &LightContext, source_file: &Path) -> Result<String> {
+    let dir = source_file
         .parent()
         .ok_or_else(|| anyhow!("Failed to get parent"))?;
 

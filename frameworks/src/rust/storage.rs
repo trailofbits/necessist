@@ -12,8 +12,8 @@ use syn::{File, Ident};
 /// Structures needed during parsing but not after.
 pub struct Storage<'ast> {
     pub module_path: Vec<&'ast Ident>,
-    pub test_file_fs_module_path_cache: BTreeMap<PathBuf, Vec<String>>,
-    pub test_file_package_cache: BTreeMap<PathBuf, Package>,
+    pub source_file_fs_module_path_cache: BTreeMap<PathBuf, Vec<String>>,
+    pub source_file_package_cache: BTreeMap<PathBuf, Package>,
     pub tests_needing_warnings: Vec<(String, Error)>,
     pub error: Option<Error>,
 }
@@ -22,17 +22,17 @@ impl<'ast> Storage<'ast> {
     pub fn new(_file: &'ast File) -> Self {
         Self {
             module_path: Vec::new(),
-            test_file_fs_module_path_cache: BTreeMap::new(),
-            test_file_package_cache: BTreeMap::new(),
+            source_file_fs_module_path_cache: BTreeMap::new(),
+            source_file_package_cache: BTreeMap::new(),
             tests_needing_warnings: Vec::new(),
             error: None,
         }
     }
 
     pub fn test_path(&mut self, source_file: &SourceFile, name: &str) -> Result<Vec<String>> {
-        let mut test_path = cached_test_file_fs_module_path(
-            &mut self.test_file_fs_module_path_cache,
-            &mut self.test_file_package_cache,
+        let mut test_path = cached_source_file_fs_module_path(
+            &mut self.source_file_fs_module_path_cache,
+            &mut self.source_file_package_cache,
             source_file,
         )
         .cloned()?;
@@ -43,27 +43,27 @@ impl<'ast> Storage<'ast> {
 }
 
 #[cfg_attr(dylint_lib = "general", allow(non_local_effect_before_error_return))]
-pub(super) fn cached_test_file_fs_module_path<'a>(
-    test_file_fs_module_path_map: &'a mut BTreeMap<PathBuf, Vec<String>>,
-    test_file_package_map: &mut BTreeMap<PathBuf, Package>,
-    test_file: &Path,
+pub(super) fn cached_source_file_fs_module_path<'a>(
+    source_file_fs_module_path_map: &'a mut BTreeMap<PathBuf, Vec<String>>,
+    source_file_package_map: &mut BTreeMap<PathBuf, Package>,
+    source_file: &Path,
 ) -> Result<&'a Vec<String>> {
-    test_file_fs_module_path_map
-        .entry(test_file.to_path_buf())
+    source_file_fs_module_path_map
+        .entry(source_file.to_path_buf())
         .or_try_insert_with(|| {
-            let package = cached_test_file_package(test_file_package_map, test_file)?;
+            let package = cached_source_file_package(source_file_package_map, source_file)?;
 
             let manifest_dir = package
                 .manifest_path
                 .parent()
                 .ok_or_else(|| anyhow!("Failed to get parent directory"))?;
 
-            let test_file_relative_path = (|| {
+            let source_file_relative_path = (|| {
                 const PREFIXES: [(&str, bool); 3] =
                     [("src/bin", true), ("src", false), ("tests", true)];
                 for (dir, path_includes_crate_name) in PREFIXES {
                     if let Ok(suffix) =
-                        util::strip_prefix(test_file, manifest_dir.join(dir).as_std_path())
+                        util::strip_prefix(source_file, manifest_dir.join(dir).as_std_path())
                     {
                         return if path_includes_crate_name {
                             let mut components = suffix.components();
@@ -77,23 +77,23 @@ pub(super) fn cached_test_file_fs_module_path<'a>(
             })()
             .ok_or(anyhow!(
                 r#"Failed to determine relative path of test file "{}""#,
-                test_file.display()
+                source_file.display()
             ))?;
 
-            fs_module_path(test_file_relative_path)
+            fs_module_path(source_file_relative_path)
         })
         .map(|value| value as &_)
 }
 
 #[cfg_attr(dylint_lib = "general", allow(non_local_effect_before_error_return))]
-pub(super) fn cached_test_file_package<'a>(
-    test_file_package_map: &'a mut BTreeMap<PathBuf, Package>,
-    test_file: &Path,
+pub(super) fn cached_source_file_package<'a>(
+    source_file_package_map: &'a mut BTreeMap<PathBuf, Package>,
+    source_file: &Path,
 ) -> Result<&'a Package> {
-    test_file_package_map
-        .entry(test_file.to_path_buf())
+    source_file_package_map
+        .entry(source_file.to_path_buf())
         .or_try_insert_with(|| {
-            let parent = test_file
+            let parent = source_file
                 .parent()
                 .ok_or_else(|| anyhow!("Failed to get parent directory"))?;
 
@@ -109,7 +109,7 @@ pub(super) fn cached_test_file_package<'a>(
                     .manifest_path
                     .parent()
                     .ok_or_else(|| anyhow!("Failed to get parent directory"))?;
-                if !test_file.starts_with(manifest_dir) {
+                if !source_file.starts_with(manifest_dir) {
                     continue;
                 }
                 if let Some(package_prev) = &package_near {

@@ -77,7 +77,7 @@ struct Test {
 
     /// Test files to mutilate
     #[serde(default)]
-    test_files: Vec<String>,
+    source_files: Vec<String>,
 
     /// If false (the default), Necessist dumps removal candidates and exits (i.e.,
     /// --dump-candidates is passed to Necessist); if true, Necessist is run with --verbose
@@ -515,11 +515,11 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> (String, Duration) {
         } else {
             exec = exec.arg("--dump-candidates");
         }
-        for test_file in &test.test_files {
+        for source_file in &test.source_files {
             exec = exec.arg(
                 tempdir
                     .join(test.subdir.as_deref().unwrap_or("."))
-                    .join(test_file),
+                    .join(source_file),
             );
         }
         exec = exec.stdout(Redirection::Pipe);
