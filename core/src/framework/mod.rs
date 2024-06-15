@@ -77,7 +77,7 @@ pub type Postprocess = dyn Fn(&LightContext, Popen) -> Result<bool>;
 
 pub trait Run {
     fn dry_run(&self, context: &LightContext, source_file: &Path) -> Result<()>;
-    fn instrument_file(
+    fn instrument_source_file(
         &self,
         context: &LightContext,
         rewriter: &mut Rewriter,
@@ -85,7 +85,7 @@ pub trait Run {
         n_instrumentable_statements: usize,
     ) -> Result<()>;
     fn statement_prefix_and_suffix(&self, span: &Span) -> Result<(String, String)>;
-    fn build_file(&self, context: &LightContext, source_file: &Path) -> Result<()>;
+    fn build_source_file(&self, context: &LightContext, source_file: &Path) -> Result<()>;
     fn exec(
         &self,
         context: &LightContext,
@@ -119,21 +119,25 @@ impl<T: AsRun> Run for T {
     fn dry_run(&self, context: &LightContext, source_file: &Path) -> Result<()> {
         self.as_run().dry_run(context, source_file)
     }
-    fn instrument_file(
+    fn instrument_source_file(
         &self,
         context: &LightContext,
         rewriter: &mut Rewriter,
         source_file: &SourceFile,
         n_instrumentable_statements: usize,
     ) -> Result<()> {
-        self.as_run()
-            .instrument_file(context, rewriter, source_file, n_instrumentable_statements)
+        self.as_run().instrument_source_file(
+            context,
+            rewriter,
+            source_file,
+            n_instrumentable_statements,
+        )
     }
     fn statement_prefix_and_suffix(&self, span: &Span) -> Result<(String, String)> {
         self.as_run().statement_prefix_and_suffix(span)
     }
-    fn build_file(&self, context: &LightContext, source_file: &Path) -> Result<()> {
-        self.as_run().build_file(context, source_file)
+    fn build_source_file(&self, context: &LightContext, source_file: &Path) -> Result<()> {
+        self.as_run().build_source_file(context, source_file)
     }
     fn exec(
         &self,

@@ -586,7 +586,7 @@ where
 
     let n_instrumentable_statements = count_instrumentable_statements(test_span_iter);
 
-    context.framework.instrument_file(
+    context.framework.instrument_source_file(
         &context.light(),
         &mut rewriter,
         source_file,
@@ -621,7 +621,9 @@ where
     file.write_all(rewriter.contents().as_bytes())?;
     drop(file);
 
-    let result = context.framework.build_file(&context.light(), source_file);
+    let result = context
+        .framework
+        .build_source_file(&context.light(), source_file);
     if let Err(error) = result {
         warn(
             &context.light(),

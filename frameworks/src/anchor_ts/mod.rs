@@ -73,7 +73,7 @@ impl RunHigh for AnchorTs {
         self.mocha_adapter.0.dry_run(context, source_file, command)
     }
 
-    fn instrument_file(
+    fn instrument_source_file(
         &self,
         _context: &LightContext,
         _rewriter: &mut Rewriter,
@@ -87,8 +87,8 @@ impl RunHigh for AnchorTs {
         self.mocha_adapter.0.statement_prefix_and_suffix(span)
     }
 
-    fn build_file(&self, context: &LightContext, _source_file: &Path) -> Result<()> {
-        let mut command = command_to_build_file(context);
+    fn build_source_file(&self, context: &LightContext, _source_file: &Path) -> Result<()> {
+        let mut command = command_to_build_source_file(context);
 
         debug!("{:?}", command);
 
@@ -211,7 +211,7 @@ fn parse_test_value(test_value: &mut Value) -> Result<(String, String)> {
     Ok((captures[1].to_string(), captures[2].to_string()))
 }
 
-fn command_to_build_file(context: &LightContext) -> Command {
+fn command_to_build_source_file(context: &LightContext) -> Command {
     let mut command = Command::new("anchor");
     command.arg("build");
     command.args(&context.opts.args);

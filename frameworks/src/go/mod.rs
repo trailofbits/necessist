@@ -236,7 +236,10 @@ impl ParseLow for Go {
         )
     }
 
-    fn parse_file(&self, source_file: &Path) -> Result<<Self::Types as AbstractTypes>::File> {
+    fn parse_source_file(
+        &self,
+        source_file: &Path,
+    ) -> Result<<Self::Types as AbstractTypes>::File> {
         let text = read_to_string(source_file)?;
         let mut parser = Parser::new();
         parser
@@ -421,7 +424,7 @@ impl RunLow for Go {
         Self::test_command(context, source_file)
     }
 
-    fn instrument_file(
+    fn instrument_source_file(
         &self,
         _context: &LightContext,
         rewriter: &mut Rewriter,
@@ -469,7 +472,7 @@ impl RunLow for Go {
         ))
     }
 
-    fn command_to_build_file(&self, context: &LightContext, source_file: &Path) -> Command {
+    fn command_to_build_source_file(&self, context: &LightContext, source_file: &Path) -> Command {
         let mut command = Self::test_command(context, source_file);
         command.arg("-run=^$");
         command

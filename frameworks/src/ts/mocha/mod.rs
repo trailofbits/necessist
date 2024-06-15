@@ -286,7 +286,10 @@ impl ParseLow for Mocha {
         )
     }
 
-    fn parse_file(&self, source_file: &Path) -> Result<<Self::Types as AbstractTypes>::File> {
+    fn parse_source_file(
+        &self,
+        source_file: &Path,
+    ) -> Result<<Self::Types as AbstractTypes>::File> {
         let source_file = self.source_map.load_file(source_file)?;
         let lexer = Lexer::new(
             Syntax::Typescript(TsConfig::default()),

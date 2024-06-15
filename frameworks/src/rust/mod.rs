@@ -361,7 +361,10 @@ impl ParseLow for Rust {
         )
     }
 
-    fn parse_file(&self, source_file: &Path) -> Result<<Self::Types as AbstractTypes>::File> {
+    fn parse_source_file(
+        &self,
+        source_file: &Path,
+    ) -> Result<<Self::Types as AbstractTypes>::File> {
         let content = read_to_string(source_file)?;
         syn::parse_file(&content).map_err(Into::into)
     }
@@ -529,7 +532,7 @@ impl RunLow for Rust {
         self.test_command(context, source_file)
     }
 
-    fn instrument_file(
+    fn instrument_source_file(
         &self,
         _context: &LightContext,
         _rewriter: &mut Rewriter,
@@ -549,7 +552,7 @@ impl RunLow for Rust {
         ))
     }
 
-    fn command_to_build_file(&self, context: &LightContext, source_file: &Path) -> Command {
+    fn command_to_build_source_file(&self, context: &LightContext, source_file: &Path) -> Command {
         let mut command = self.test_command(context, source_file);
         command.arg("--no-run");
         command
