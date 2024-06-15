@@ -1,4 +1,4 @@
-72 candidates in 25 tests in 2 test files
+72 candidates in 25 tests in 2 source files
 $DIR/src/net/url/url_test.go: dry running
 $DIR/src/net/url/url_test.go: mutilating
 $DIR/src/net/url/url_test.go: `expected = tt.roundtrip` failed

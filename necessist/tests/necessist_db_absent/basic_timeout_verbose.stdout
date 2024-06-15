@@ -1,4 +1,4 @@
-4 candidates in 4 tests in 1 test file
+4 candidates in 4 tests in 1 source file
 fixtures/basic/src/lib.rs: dry running
 fixtures/basic/src/lib.rs: mutilating
 fixtures/basic/src/lib.rs:4:5-4:12: `n += 1;` passed

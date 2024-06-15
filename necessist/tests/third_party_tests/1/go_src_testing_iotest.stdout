@@ -1,4 +1,4 @@
-133 candidates in 15 tests in 4 test files
+133 candidates in 15 tests in 4 source files
 $DIR/src/testing/iotest/logger_test.go: dry running
 $DIR/src/testing/iotest/logger_test.go: mutilating
 $DIR/src/testing/iotest/logger_test.go: `log.SetFlags(olf)` passed

@@ -1,4 +1,4 @@
-36 candidates in 16 tests in 2 test files
+36 candidates in 16 tests in 2 source files
 $DIR/src/text/template/parse/parse_test.go: dry running
 $DIR/src/text/template/parse/parse_test.go: mutilating
 $DIR/src/text/template/parse/parse_test.go: `typ = itemCharConstant` failed

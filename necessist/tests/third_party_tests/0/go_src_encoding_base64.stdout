@@ -1,4 +1,4 @@
-102 candidates in 17 tests in 2 test files
+102 candidates in 17 tests in 2 source files
 $DIR/src/encoding/base64/base64_test.go: dry running
 $DIR/src/encoding/base64/base64_test.go: mutilating
 $DIR/src/encoding/base64/base64_test.go: `testEqual(t, "Encode(%q) = %q, want %q", p.decoded, got, tt.conv(p.encoded))` passed

@@ -1,4 +1,4 @@
-455 candidates in 78 tests in 1 test file
+455 candidates in 78 tests in 1 source file
 $DIR/src/os/os_test.go: dry running
 $DIR/src/os/os_test.go: mutilating
 $DIR/src/os/os_test.go: Warning: Failed to run test `TestMain`

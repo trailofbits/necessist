@@ -1,4 +1,4 @@
-17 candidates in 10 tests in 1 test file
+17 candidates in 10 tests in 1 source file
 $DIR/tests/collectibles.spec.ts: dry running
 $DIR/tests/collectibles.spec.ts: mutilating
 $DIR/tests/collectibles.spec.ts: `await client.createCollectibleXnft({

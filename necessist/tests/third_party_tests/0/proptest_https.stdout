@@ -1,4 +1,4 @@
-30 candidates in 9 tests in 1 test file
+30 candidates in 9 tests in 1 source file
 $DIR/proptest/src/sample.rs: dry running
 $DIR/proptest/src/sample.rs: mutilating
 $DIR/proptest/src/sample.rs: `sorted.sort();` passed
