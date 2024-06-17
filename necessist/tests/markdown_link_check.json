@@ -1,5 +1,10 @@
 {
   "httpHeaders": [
     { "urls": ["https://crates.io"], "headers": { "Accept": "text/html" } }
+  ],
+  "ignorePatterns": [
+    {
+      "pattern": "^https://www\\.cs\\.cmu\\.edu/~aldrich/courses/15-819O-13sp/resources/hoare-logic\\.pdf$"
+    }
   ]
 }
