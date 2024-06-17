@@ -173,6 +173,10 @@ fn tests_are_not_rebuilt() {
 
     let _lock = BASIC_MUTEX.lock().unwrap();
 
+    let necessist_db = PathBuf::from(ROOT).join("necessist.db");
+
+    let _remove_file = util::RemoveFile(necessist_db);
+
     Command::cargo_bin("necessist")
         .unwrap()
         .args(["--root", ROOT, "--timeout", TIMEOUT])
