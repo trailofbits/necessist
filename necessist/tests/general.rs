@@ -2,7 +2,7 @@ use assert_cmd::prelude::*;
 use fs_extra::dir::{copy, CopyOptions};
 use necessist_core::util;
 use predicates::prelude::*;
-use std::{path::PathBuf, process::Command, sync::Mutex};
+use std::{env::set_current_dir, path::PathBuf, process::Command, sync::Mutex};
 use subprocess::ExitStatus;
 
 mod tempfile_util;
@@ -10,53 +10,54 @@ use tempfile_util::tempdir;
 
 const TIMEOUT: &str = "5";
 
-// smoelius: Three tests use the `basic` fixture, but only one can run at a time.
-static BASIC_MUTEX: Mutex<()> = Mutex::new(());
+const BASIC_ROOT: &str = "fixtures/basic";
+
+#[ctor::ctor]
+fn initialize() {
+    set_current_dir("..").unwrap();
+}
 
 #[test]
 fn necessist_db_can_be_moved() {
-    const ROOT: &str = "../fixtures/basic";
+    run_basic_test(|| {
+        Command::cargo_bin("necessist")
+            .unwrap()
+            .args(["--root", BASIC_ROOT, "--timeout", TIMEOUT])
+            .assert()
+            .success();
 
-    let _lock = BASIC_MUTEX.lock().unwrap();
+        let tempdir = tempdir().unwrap();
 
-    Command::cargo_bin("necessist")
-        .unwrap()
-        .args(["--root", ROOT, "--timeout", TIMEOUT])
-        .assert()
-        .success();
+        copy(
+            BASIC_ROOT,
+            &tempdir,
+            &CopyOptions {
+                content_only: true,
+                ..Default::default()
+            },
+        )
+        .unwrap();
 
-    let necessist_db = PathBuf::from(ROOT).join("necessist.db");
-
-    let _remove_file = util::RemoveFile(necessist_db);
-
-    let tempdir = tempdir().unwrap();
-
-    copy(
-        ROOT,
-        &tempdir,
-        &CopyOptions {
-            content_only: true,
-            ..Default::default()
-        },
-    )
-    .unwrap();
-
-    Command::cargo_bin("necessist")
-        .unwrap()
-        .args(["--root", &tempdir.path().to_string_lossy(), "--resume"])
-        .assert()
-        .success()
-        .stdout(predicate::eq("4 candidates in 4 tests in 1 test file\n"));
+        Command::cargo_bin("necessist")
+            .unwrap()
+            .args(["--root", &tempdir.path().to_string_lossy(), "--resume"])
+            .assert()
+            .success()
+            .stdout(predicate::eq("4 candidates in 4 tests in 1 test file\n"));
+    });
 }
 
 #[test]
 fn resume_following_dry_run_failure() {
-    const ROOT: &str = "fixtures/dry_run_failure";
+    const DRF_ROOT: &str = "fixtures/dry_run_failure";
+
+    let necessist_db = PathBuf::from(DRF_ROOT).join("necessist.db");
+
+    let _remove_file = util::RemoveFile(necessist_db);
 
     let assert = Command::cargo_bin("necessist")
         .unwrap()
-        .current_dir("..")
-        .args(["--root", ROOT])
+        .args(["--root", DRF_ROOT])
         .assert()
         .success();
     let stdout_normalized = std::str::from_utf8(&assert.get_output().stdout)
@@ -73,14 +74,9 @@ fixtures/dry_run_failure/tests/a.rs: Warning: dry run failed: code=101
         "{stdout_normalized:?}",
     );
 
-    let necessist_db = PathBuf::from("..").join(ROOT).join("necessist.db");
-
-    let _remove_file = util::RemoveFile(necessist_db);
-
     Command::cargo_bin("necessist")
         .unwrap()
-        .current_dir("..")
-        .args(["--root", ROOT, "--resume"])
+        .args(["--root", DRF_ROOT, "--resume"])
         .assert()
         .success()
         .stdout(predicate::eq("2 candidates in 2 tests in 3 test files\n"));
@@ -97,51 +93,42 @@ fn resume_following_ctrl_c() {
     use std::io::{BufRead, BufReader, Read};
     use subprocess::Redirection;
 
-    const ROOT: &str = "fixtures/basic";
-
     fn command() -> Command {
         let mut command = Command::cargo_bin("necessist").unwrap();
-        command
-            .current_dir("..")
-            .args(["--root", ROOT, "--timeout", TIMEOUT, "--verbose"]);
+        command.args(["--root", BASIC_ROOT, "--timeout", TIMEOUT, "--verbose"]);
         command
     }
 
-    let _lock = BASIC_MUTEX.lock().unwrap();
+    run_basic_test(|| {
+        let exec = util::exec_from_command(&command())
+            .stdout(Redirection::Pipe)
+            .stderr(Redirection::Pipe);
+        let mut popen = exec.popen().unwrap();
 
-    let exec = util::exec_from_command(&command())
-        .stdout(Redirection::Pipe)
-        .stderr(Redirection::Pipe);
-    let mut popen = exec.popen().unwrap();
+        let stdout = popen.stdout.as_ref().unwrap();
+        let reader = BufReader::new(stdout);
+        let _: String = reader
+            .lines()
+            .map(Result::unwrap)
+            .find(|line| line == "fixtures/basic/src/lib.rs:4:5-4:12: `n += 1;` passed")
+            .unwrap();
 
-    let stdout = popen.stdout.as_ref().unwrap();
-    let reader = BufReader::new(stdout);
-    let _: String = reader
-        .lines()
-        .map(Result::unwrap)
-        .find(|line| line == "fixtures/basic/src/lib.rs:4:5-4:12: `n += 1;` passed")
-        .unwrap();
+        let pid = popen.pid().unwrap();
+        kill().arg(pid.to_string()).assert().success();
 
-    let pid = popen.pid().unwrap();
-    kill().arg(pid.to_string()).assert().success();
+        let mut stderr = popen.stderr.as_ref().unwrap();
+        let mut buf = Vec::new();
+        let _: usize = stderr.read_to_end(&mut buf).unwrap();
+        let stderr = String::from_utf8(buf).unwrap();
+        assert!(stderr.ends_with("Ctrl-C detected\n"), "{stderr:?}");
 
-    let mut stderr = popen.stderr.as_ref().unwrap();
-    let mut buf = Vec::new();
-    let _: usize = stderr.read_to_end(&mut buf).unwrap();
-    let stderr = String::from_utf8(buf).unwrap();
-    assert!(stderr.ends_with("Ctrl-C detected\n"), "{stderr:?}");
+        let _: ExitStatus = popen.wait().unwrap();
 
-    let _: ExitStatus = popen.wait().unwrap();
+        let assert = command().arg("--resume").assert().success();
 
-    let necessist_db = PathBuf::from("..").join(ROOT).join("necessist.db");
-
-    let _remove_file = util::RemoveFile(necessist_db);
-
-    let assert = command().arg("--resume").assert().success();
-
-    // smoelius: N.B. `stdout_expected` intentionally lacks the following line:
-    //   fixtures/basic/src/lib.rs:4:5-4:12: `n += 1;` passed
-    let stdout_expected: &str = "\
+        // smoelius: N.B. `stdout_expected` intentionally lacks the following line:
+        //   fixtures/basic/src/lib.rs:4:5-4:12: `n += 1;` passed
+        let stdout_expected: &str = "\
 4 candidates in 4 tests in 1 test file
 fixtures/basic/src/lib.rs: dry running
 fixtures/basic/src/lib.rs: mutilating
@@ -150,14 +137,15 @@ fixtures/basic/src/lib.rs:21:5-21:12: `n += 1;` failed
 fixtures/basic/src/lib.rs:28:18-28:27: `.join(\"\")` nonbuildable
 ";
 
-    let stdout_actual = std::str::from_utf8(&assert.get_output().stdout).unwrap();
+        let stdout_actual = std::str::from_utf8(&assert.get_output().stdout).unwrap();
 
-    assert_eq!(
-        stdout_expected,
-        stdout_actual,
-        "{}",
-        SimpleDiff::from_str(stdout_expected, stdout_actual, "left", "right")
-    );
+        assert_eq!(
+            stdout_expected,
+            stdout_actual,
+            "{}",
+            SimpleDiff::from_str(stdout_expected, stdout_actual, "left", "right")
+        );
+    });
 }
 
 #[cfg(not(windows))]
@@ -169,18 +157,25 @@ fn kill() -> Command {
 
 #[test]
 fn tests_are_not_rebuilt() {
-    const ROOT: &str = "../fixtures/basic";
+    run_basic_test(|| {
+        Command::cargo_bin("necessist")
+            .unwrap()
+            .args(["--root", BASIC_ROOT, "--timeout", TIMEOUT])
+            .env("NECESSIST_CHECK_MTIMES", "1")
+            .assert()
+            .success();
+    });
+}
+
+fn run_basic_test(f: impl FnOnce()) {
+    // smoelius: Three tests use the `basic` fixture, but only one can run at a time.
+    static BASIC_MUTEX: Mutex<()> = Mutex::new(());
 
     let _lock = BASIC_MUTEX.lock().unwrap();
 
-    let necessist_db = PathBuf::from(ROOT).join("necessist.db");
+    let necessist_db = PathBuf::from(BASIC_ROOT).join("necessist.db");
 
     let _remove_file = util::RemoveFile(necessist_db);
 
-    Command::cargo_bin("necessist")
-        .unwrap()
-        .args(["--root", ROOT, "--timeout", TIMEOUT])
-        .env("NECESSIST_CHECK_MTIMES", "1")
-        .assert()
-        .success();
+    f();
 }
