@@ -2,6 +2,11 @@
 $DIR/test/UniswapV3Factory.spec.ts: dry running
 $DIR/test/UniswapV3Factory.spec.ts: mutilating
 $DIR/test/UniswapV3Factory.spec.ts: `await factory.createPool(TEST_ADDRESSES[0], TEST_ADDRESSES[1], FeeAmount.MEDIUM)` failed
+$DIR/test/UniswapV3Factory.spec.ts: `await factory.setOwner(other.address)` failed
+$DIR/test/UniswapV3Factory.spec.ts: `await factory.setOwner(other.address)` failed
+$DIR/test/UniswapV3Factory.spec.ts: `await factory.enableFeeAmount(100, 5)` failed
+$DIR/test/UniswapV3Factory.spec.ts: `await factory.enableFeeAmount(100, 5)` failed
+$DIR/test/UniswapV3Factory.spec.ts: `await factory.enableFeeAmount(250, 15)` failed
 $DIR/test/UniswapV3Factory.spec.ts: `.createPool(TEST_ADDRESSES[0], TEST_ADDRESSES[1], FeeAmount.MEDIUM)` failed
 $DIR/test/UniswapV3Factory.spec.ts: `.createPool(TEST_ADDRESSES[0], TEST_ADDRESSES[0], FeeAmount.LOW)` failed
 $DIR/test/UniswapV3Factory.spec.ts: `.createPool(TEST_ADDRESSES[0], TEST_ADDRESSES[1], 250)` failed
@@ -10,18 +15,13 @@ $DIR/test/UniswapV3Factory.spec.ts: `.connect(other)` failed
 $DIR/test/UniswapV3Factory.spec.ts: `.setOwner(wallet.address)` failed
 $DIR/test/UniswapV3Factory.spec.ts: `.connect(other)` failed
 $DIR/test/UniswapV3Factory.spec.ts: `.enableFeeAmount(100, 2)` failed
-$DIR/test/UniswapV3Factory.spec.ts: `await factory.setOwner(other.address)` failed
 $DIR/test/UniswapV3Factory.spec.ts: `.setOwner(other.address)` failed
-$DIR/test/UniswapV3Factory.spec.ts: `await factory.setOwner(other.address)` failed
 $DIR/test/UniswapV3Factory.spec.ts: `.setOwner(other.address)` failed
 $DIR/test/UniswapV3Factory.spec.ts: `.setOwner(wallet.address)` failed
 $DIR/test/UniswapV3Factory.spec.ts: `.enableFeeAmount(1000000, 10)` failed
 $DIR/test/UniswapV3Factory.spec.ts: `.enableFeeAmount(500, 0)` failed
 $DIR/test/UniswapV3Factory.spec.ts: `.enableFeeAmount(500, 16834)` failed
-$DIR/test/UniswapV3Factory.spec.ts: `await factory.enableFeeAmount(100, 5)` failed
 $DIR/test/UniswapV3Factory.spec.ts: `.enableFeeAmount(100, 5)` failed
 $DIR/test/UniswapV3Factory.spec.ts: `.enableFeeAmount(100, 10)` failed
-$DIR/test/UniswapV3Factory.spec.ts: `await factory.enableFeeAmount(100, 5)` failed
 $DIR/test/UniswapV3Factory.spec.ts: `.enableFeeAmount(100, 5)` failed
-$DIR/test/UniswapV3Factory.spec.ts: `await factory.enableFeeAmount(250, 15)` failed
 $DIR/test/UniswapV3Factory.spec.ts: `.enableFeeAmount(250, 15)` failed

@@ -81,259 +81,267 @@ $DIR/test/NoDelegateCall.spec.ts: `.getGasCostOfCanBeDelegateCalled()`
 $DIR/test/NoDelegateCall.spec.ts: `.cannotBeDelegateCalled()`
 $DIR/test/NoDelegateCall.spec.ts: `.callsIntoNoDelegateCallFunction()`
 $DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 1, tick: 1, time: 1 })`
-$DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 1, tick: 1, time: 1 })`
 $DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 1, tick: 1, time: 1 })`
-$DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 1, tick: 1, time: 1 })`
 $DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 1, tick: 1, time: 1 })`
-$DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 1, tick: 1, time: 1 })`
 $DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 1, tick: 1, time: 1 })`
-$DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 1, tick: 1, time: 1 })`
-$DIR/test/Oracle.spec.ts: `.observations(0)`
-$DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 1, tick: 1, time: 1 })`
 $DIR/test/Oracle.spec.ts: `await oracle.grow(5)`
-$DIR/test/Oracle.spec.ts: `.grow(5)`
 $DIR/test/Oracle.spec.ts: `await oracle.grow(5)`
-$DIR/test/Oracle.spec.ts: `.grow(5)`
-$DIR/test/Oracle.spec.ts: `.observations(0)`
 $DIR/test/Oracle.spec.ts: `await oracle.grow(5)`
-$DIR/test/Oracle.spec.ts: `.grow(5)`
 $DIR/test/Oracle.spec.ts: `await oracle.grow(3)`
-$DIR/test/Oracle.spec.ts: `.grow(3)`
 $DIR/test/Oracle.spec.ts: `await oracle.grow(5)`
-$DIR/test/Oracle.spec.ts: `.grow(5)`
 $DIR/test/Oracle.spec.ts: `await oracle.grow(2)`
-$DIR/test/Oracle.spec.ts: `.grow(2)`
 $DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 2, liquidity: 1, tick: 1 })`
-$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 2, liquidity: 1, tick: 1 })`
 $DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 2, liquidity: 1, tick: 1 })`
-$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 2, liquidity: 1, tick: 1 })`
 $DIR/test/Oracle.spec.ts: `await oracle.grow(3)`
-$DIR/test/Oracle.spec.ts: `.grow(3)`
-$DIR/test/Oracle.spec.ts: `.grow(2)`
-$DIR/test/Oracle.spec.ts: `.grow(11)`
 $DIR/test/Oracle.spec.ts: `await oracle.grow(2)`
-$DIR/test/Oracle.spec.ts: `.grow(2)`
-$DIR/test/Oracle.spec.ts: `.grow(3)`
 $DIR/test/Oracle.spec.ts: `await oracle.grow(2)`
-$DIR/test/Oracle.spec.ts: `.grow(2)`
-$DIR/test/Oracle.spec.ts: `.grow(12)`
 $DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 1, tick: 2, liquidity: 5 })`
-$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 1, tick: 2, liquidity: 5 })`
 $DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 5, tick: -1, liquidity: 8 })`
-$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 5, tick: -1, liquidity: 8 })`
 $DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 3, tick: 2, liquidity: 3 })`
-$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 3, tick: 2, liquidity: 3 })`
-$DIR/test/Oracle.spec.ts: `.observations(0)`
 $DIR/test/Oracle.spec.ts: `await oracle.grow(2)`
-$DIR/test/Oracle.spec.ts: `.grow(2)`
 $DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 1, tick: 3, liquidity: 2 })`
-$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 1, tick: 3, liquidity: 2 })`
 $DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 0, tick: -5, liquidity: 9 })`
-$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 0, tick: -5, liquidity: 9 })`
 $DIR/test/Oracle.spec.ts: `await oracle.grow(3)`
-$DIR/test/Oracle.spec.ts: `.grow(3)`
 $DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 6, tick: 3, liquidity: 2 })`
-$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 6, tick: 3, liquidity: 2 })`
 $DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 4, tick: -5, liquidity: 9 })`
-$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 4, tick: -5, liquidity: 9 })`
-$DIR/test/Oracle.spec.ts: `.observations(1)`
 $DIR/test/Oracle.spec.ts: `await oracle.grow(2)`
-$DIR/test/Oracle.spec.ts: `.grow(2)`
 $DIR/test/Oracle.spec.ts: `await oracle.grow(4)`
-$DIR/test/Oracle.spec.ts: `.grow(4)`
 $DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 3, tick: 5, liquidity: 6 })`
-$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 3, tick: 5, liquidity: 6 })`
 $DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 4, tick: 6, liquidity: 4 })`
-$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 4, tick: 6, liquidity: 4 })`
-$DIR/test/Oracle.spec.ts: `.observations(2)`
 $DIR/test/Oracle.spec.ts: `await oracle.grow(3)`
-$DIR/test/Oracle.spec.ts: `.grow(3)`
 $DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 3, tick: 1, liquidity: 2 })`
-$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 3, tick: 1, liquidity: 2 })`
 $DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 4, tick: 2, liquidity: 3 })`
-$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 4, tick: 2, liquidity: 3 })`
 $DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 5, tick: 3, liquidity: 4 })`
-$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 5, tick: 3, liquidity: 4 })`
-$DIR/test/Oracle.spec.ts: `.observations(0)`
 $DIR/test/Oracle.spec.ts: `await oracle.grow(4)`
-$DIR/test/Oracle.spec.ts: `.grow(4)`
 $DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 3, tick: 3, liquidity: 2 })`
-$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 3, tick: 3, liquidity: 2 })`
 $DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 4, tick: -7, liquidity: 6 })`
-$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 4, tick: -7, liquidity: 6 })`
 $DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 5, tick: -2, liquidity: 4 })`
-$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 5, tick: -2, liquidity: 4 })`
-$DIR/test/Oracle.spec.ts: `.observations(4)`
 $DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 4, tick: 2, time: 5 })`
-$DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 4, tick: 2, time: 5 })`
 $DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 4, tick: 2, time: 2 ** 32 - 1 })`
-$DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 4, tick: 2, time: 2 ** 32 - 1 })`
 $DIR/test/Oracle.spec.ts: `await oracle.advanceTime(2)`
-$DIR/test/Oracle.spec.ts: `.advanceTime(2)`
 $DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: MaxUint128, tick: 0, time: 0 })`
-$DIR/test/Oracle.spec.ts: `.initialize({ liquidity: MaxUint128, tick: 0, time: 0 })`
 $DIR/test/Oracle.spec.ts: `await oracle.grow(2)`
-$DIR/test/Oracle.spec.ts: `.grow(2)`
 $DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 13, tick: 0, liquidity: 0 })`
-$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 13, tick: 0, liquidity: 0 })`
 $DIR/test/Oracle.spec.ts: `({ secondsPerLiquidityCumulativeX128 } = await observeSingle(6))`
 $DIR/test/Oracle.spec.ts: `({ secondsPerLiquidityCumulativeX128 } = await observeSingle(12))`
 $DIR/test/Oracle.spec.ts: `({ secondsPerLiquidityCumulativeX128 } = await observeSingle(13))`
 $DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 0, tick: 0, time: 0 })`
-$DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 0, tick: 0, time: 0 })`
 $DIR/test/Oracle.spec.ts: `await oracle.grow(2)`
-$DIR/test/Oracle.spec.ts: `.grow(2)`
 $DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 13, tick: 0, liquidity: MaxUint128 })`
-$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 13, tick: 0, liquidity: MaxUint128 })`
 $DIR/test/Oracle.spec.ts: `({ secondsPerLiquidityCumulativeX128 } = await observeSingle(6))`
 $DIR/test/Oracle.spec.ts: `({ secondsPerLiquidityCumulativeX128 } = await observeSingle(12))`
 $DIR/test/Oracle.spec.ts: `({ secondsPerLiquidityCumulativeX128 } = await observeSingle(13))`
 $DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 1, tick: 0, time: 0 })`
-$DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 1, tick: 0, time: 0 })`
 $DIR/test/Oracle.spec.ts: `await oracle.grow(2)`
-$DIR/test/Oracle.spec.ts: `.grow(2)`
 $DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 13, tick: 0, liquidity: MaxUint128 })`
-$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 13, tick: 0, liquidity: MaxUint128 })`
 $DIR/test/Oracle.spec.ts: `({ secondsPerLiquidityCumulativeX128 } = await observeSingle(6))`
 $DIR/test/Oracle.spec.ts: `({ secondsPerLiquidityCumulativeX128 } = await observeSingle(12))`
 $DIR/test/Oracle.spec.ts: `({ secondsPerLiquidityCumulativeX128 } = await observeSingle(13))`
 $DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 0, tick: 0, time: 0 })`
-$DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 0, tick: 0, time: 0 })`
 $DIR/test/Oracle.spec.ts: `await oracle.grow(2)`
-$DIR/test/Oracle.spec.ts: `.grow(2)`
 $DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 2 ** 32 - 6, tick: 0, liquidity: 0 })`
-$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 2 ** 32 - 6, tick: 0, liquidity: 0 })`
 $DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 13, tick: 0, liquidity: 0 })
         ;`
-$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 13, tick: 0, liquidity: 0 })`
 $DIR/test/Oracle.spec.ts: `({ secondsPerLiquidityCumulativeX128 } = await observeSingle(0))`
 $DIR/test/Oracle.spec.ts: `({ secondsPerLiquidityCumulativeX128 } = await observeSingle(3))`
 $DIR/test/Oracle.spec.ts: `({ secondsPerLiquidityCumulativeX128 } = await observeSingle(8))`
+$DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 4, tick: 2, time: 5 })`
+$DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 4, tick: 2, time: 5 })`
+$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(3)`
+$DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 4, tick: 2, time: 5 })`
+$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(3)`
+$DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 4, tick: 2, time: 5 })`
+$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(3)`
+$DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 4, tick: 2, time: 5 })`
+$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(3)`
+$DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 5, tick: -5, time: 5 })`
+$DIR/test/Oracle.spec.ts: `await oracle.grow(2)`
+$DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 4, tick: 1, liquidity: 2 })`
+$DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 5, tick: -5, time: 5 })`
+$DIR/test/Oracle.spec.ts: `await oracle.grow(2)`
+$DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 4, tick: 1, liquidity: 2 })`
+$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(7)`
+$DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 5, tick: -5, time: 5 })`
+$DIR/test/Oracle.spec.ts: `await oracle.grow(2)`
+$DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 4, tick: 1, liquidity: 2 })`
+$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(7)`
+$DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 5, tick: -5, time: 5 })`
+$DIR/test/Oracle.spec.ts: `await oracle.grow(2)`
+$DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 4, tick: 1, liquidity: 2 })`
+$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(7)`
+$DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 5, tick: -5, time: 5 })`
+$DIR/test/Oracle.spec.ts: `await oracle.grow(2)`
+$DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 4, tick: 1, liquidity: 2 })`
+$DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 3, tick: -5, liquidity: 4 })`
+$DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 5, tick: -5, time: 5 })`
+$DIR/test/Oracle.spec.ts: `await oracle.grow(2)`
+$DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 4, tick: 1, liquidity: 2 })`
+$DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 3, tick: -5, liquidity: 4 })`
+$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(7)`
+$DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 5, tick: -5, time: 5 })`
+$DIR/test/Oracle.spec.ts: `await oracle.grow(2)`
+$DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 4, tick: 1, liquidity: 2 })`
+$DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 3, tick: -5, liquidity: 4 })`
+$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(7)`
+$DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 5, tick: -5, time: 5 })`
+$DIR/test/Oracle.spec.ts: `await oracle.grow(2)`
+$DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 4, tick: 1, liquidity: 2 })`
+$DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 3, tick: -5, liquidity: 4 })`
+$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(7)`
+$DIR/test/Oracle.spec.ts: `await oracle.initialize({ time: 5, tick: 2, liquidity: BigNumber.from(2).pow(15) })`
+$DIR/test/Oracle.spec.ts: `await oracle.grow(4)`
+$DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 13, tick: 6, liquidity: BigNumber.from(2).pow(12) })`
+$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(5)`
+$DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 5, tick: -5, time: 5 })`
+$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(2)`
+$DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 5, tick: -5, time: 5 })`
+$DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 5, tick: -5, time: 5 })`
+$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(5)`
+$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(5)`
+$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(5)`
+$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(5)`
+$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(5)`
+$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(6)`
+$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(6)`
+$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(6)`
+$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(5)`
+$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(5)`
+$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(5)`
+$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(5)`
+$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(5)`
+$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(5)`
+$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(5)`
+$DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 1, tick: 1, time: 1 })`
+$DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 1, tick: 1, time: 1 })`
+$DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 1, tick: 1, time: 1 })`
+$DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 1, tick: 1, time: 1 })`
+$DIR/test/Oracle.spec.ts: `.observations(0)`
+$DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 1, tick: 1, time: 1 })`
+$DIR/test/Oracle.spec.ts: `.grow(5)`
+$DIR/test/Oracle.spec.ts: `.grow(5)`
+$DIR/test/Oracle.spec.ts: `.observations(0)`
+$DIR/test/Oracle.spec.ts: `.grow(5)`
+$DIR/test/Oracle.spec.ts: `.grow(3)`
+$DIR/test/Oracle.spec.ts: `.grow(5)`
+$DIR/test/Oracle.spec.ts: `.grow(2)`
+$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 2, liquidity: 1, tick: 1 })`
+$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 2, liquidity: 1, tick: 1 })`
+$DIR/test/Oracle.spec.ts: `.grow(3)`
+$DIR/test/Oracle.spec.ts: `.grow(2)`
+$DIR/test/Oracle.spec.ts: `.grow(11)`
+$DIR/test/Oracle.spec.ts: `.grow(2)`
+$DIR/test/Oracle.spec.ts: `.grow(3)`
+$DIR/test/Oracle.spec.ts: `.grow(2)`
+$DIR/test/Oracle.spec.ts: `.grow(12)`
+$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 1, tick: 2, liquidity: 5 })`
+$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 5, tick: -1, liquidity: 8 })`
+$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 3, tick: 2, liquidity: 3 })`
+$DIR/test/Oracle.spec.ts: `.observations(0)`
+$DIR/test/Oracle.spec.ts: `.grow(2)`
+$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 1, tick: 3, liquidity: 2 })`
+$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 0, tick: -5, liquidity: 9 })`
+$DIR/test/Oracle.spec.ts: `.grow(3)`
+$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 6, tick: 3, liquidity: 2 })`
+$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 4, tick: -5, liquidity: 9 })`
+$DIR/test/Oracle.spec.ts: `.observations(1)`
+$DIR/test/Oracle.spec.ts: `.grow(2)`
+$DIR/test/Oracle.spec.ts: `.grow(4)`
+$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 3, tick: 5, liquidity: 6 })`
+$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 4, tick: 6, liquidity: 4 })`
+$DIR/test/Oracle.spec.ts: `.observations(2)`
+$DIR/test/Oracle.spec.ts: `.grow(3)`
+$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 3, tick: 1, liquidity: 2 })`
+$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 4, tick: 2, liquidity: 3 })`
+$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 5, tick: 3, liquidity: 4 })`
+$DIR/test/Oracle.spec.ts: `.observations(0)`
+$DIR/test/Oracle.spec.ts: `.grow(4)`
+$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 3, tick: 3, liquidity: 2 })`
+$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 4, tick: -7, liquidity: 6 })`
+$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 5, tick: -2, liquidity: 4 })`
+$DIR/test/Oracle.spec.ts: `.observations(4)`
+$DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 4, tick: 2, time: 5 })`
+$DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 4, tick: 2, time: 2 ** 32 - 1 })`
+$DIR/test/Oracle.spec.ts: `.advanceTime(2)`
+$DIR/test/Oracle.spec.ts: `.initialize({ liquidity: MaxUint128, tick: 0, time: 0 })`
+$DIR/test/Oracle.spec.ts: `.grow(2)`
+$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 13, tick: 0, liquidity: 0 })`
+$DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 0, tick: 0, time: 0 })`
+$DIR/test/Oracle.spec.ts: `.grow(2)`
+$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 13, tick: 0, liquidity: MaxUint128 })`
+$DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 1, tick: 0, time: 0 })`
+$DIR/test/Oracle.spec.ts: `.grow(2)`
+$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 13, tick: 0, liquidity: MaxUint128 })`
+$DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 0, tick: 0, time: 0 })`
+$DIR/test/Oracle.spec.ts: `.grow(2)`
+$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 2 ** 32 - 6, tick: 0, liquidity: 0 })`
+$DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 13, tick: 0, liquidity: 0 })`
 $DIR/test/Oracle.spec.ts: `.from(2 ** 32 - 1)`
 $DIR/test/Oracle.spec.ts: `.shl(128)`
-$DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 4, tick: 2, time: 5 })`
 $DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 4, tick: 2, time: 5 })`
-$DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 4, tick: 2, time: 5 })`
 $DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 4, tick: 2, time: 5 })`
-$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(3)`
 $DIR/test/Oracle.spec.ts: `.advanceTime(3)`
-$DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 4, tick: 2, time: 5 })`
 $DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 4, tick: 2, time: 5 })`
-$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(3)`
 $DIR/test/Oracle.spec.ts: `.advanceTime(3)`
-$DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 4, tick: 2, time: 5 })`
 $DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 4, tick: 2, time: 5 })`
-$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(3)`
 $DIR/test/Oracle.spec.ts: `.advanceTime(3)`
-$DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 4, tick: 2, time: 5 })`
 $DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 4, tick: 2, time: 5 })`
-$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(3)`
 $DIR/test/Oracle.spec.ts: `.advanceTime(3)`
-$DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 5, tick: -5, time: 5 })`
 $DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 5, tick: -5, time: 5 })`
-$DIR/test/Oracle.spec.ts: `await oracle.grow(2)`
 $DIR/test/Oracle.spec.ts: `.grow(2)`
-$DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 4, tick: 1, liquidity: 2 })`
 $DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 4, tick: 1, liquidity: 2 })`
-$DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 5, tick: -5, time: 5 })`
 $DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 5, tick: -5, time: 5 })`
-$DIR/test/Oracle.spec.ts: `await oracle.grow(2)`
 $DIR/test/Oracle.spec.ts: `.grow(2)`
-$DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 4, tick: 1, liquidity: 2 })`
 $DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 4, tick: 1, liquidity: 2 })`
-$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(7)`
 $DIR/test/Oracle.spec.ts: `.advanceTime(7)`
-$DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 5, tick: -5, time: 5 })`
 $DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 5, tick: -5, time: 5 })`
-$DIR/test/Oracle.spec.ts: `await oracle.grow(2)`
 $DIR/test/Oracle.spec.ts: `.grow(2)`
-$DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 4, tick: 1, liquidity: 2 })`
 $DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 4, tick: 1, liquidity: 2 })`
-$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(7)`
 $DIR/test/Oracle.spec.ts: `.advanceTime(7)`
-$DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 5, tick: -5, time: 5 })`
 $DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 5, tick: -5, time: 5 })`
-$DIR/test/Oracle.spec.ts: `await oracle.grow(2)`
 $DIR/test/Oracle.spec.ts: `.grow(2)`
-$DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 4, tick: 1, liquidity: 2 })`
 $DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 4, tick: 1, liquidity: 2 })`
-$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(7)`
 $DIR/test/Oracle.spec.ts: `.advanceTime(7)`
-$DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 5, tick: -5, time: 5 })`
 $DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 5, tick: -5, time: 5 })`
-$DIR/test/Oracle.spec.ts: `await oracle.grow(2)`
 $DIR/test/Oracle.spec.ts: `.grow(2)`
-$DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 4, tick: 1, liquidity: 2 })`
 $DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 4, tick: 1, liquidity: 2 })`
-$DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 3, tick: -5, liquidity: 4 })`
 $DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 3, tick: -5, liquidity: 4 })`
-$DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 5, tick: -5, time: 5 })`
 $DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 5, tick: -5, time: 5 })`
-$DIR/test/Oracle.spec.ts: `await oracle.grow(2)`
 $DIR/test/Oracle.spec.ts: `.grow(2)`
-$DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 4, tick: 1, liquidity: 2 })`
 $DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 4, tick: 1, liquidity: 2 })`
-$DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 3, tick: -5, liquidity: 4 })`
 $DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 3, tick: -5, liquidity: 4 })`
-$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(7)`
 $DIR/test/Oracle.spec.ts: `.advanceTime(7)`
-$DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 5, tick: -5, time: 5 })`
 $DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 5, tick: -5, time: 5 })`
-$DIR/test/Oracle.spec.ts: `await oracle.grow(2)`
 $DIR/test/Oracle.spec.ts: `.grow(2)`
-$DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 4, tick: 1, liquidity: 2 })`
 $DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 4, tick: 1, liquidity: 2 })`
-$DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 3, tick: -5, liquidity: 4 })`
 $DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 3, tick: -5, liquidity: 4 })`
-$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(7)`
 $DIR/test/Oracle.spec.ts: `.advanceTime(7)`
-$DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 5, tick: -5, time: 5 })`
 $DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 5, tick: -5, time: 5 })`
-$DIR/test/Oracle.spec.ts: `await oracle.grow(2)`
 $DIR/test/Oracle.spec.ts: `.grow(2)`
-$DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 4, tick: 1, liquidity: 2 })`
 $DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 4, tick: 1, liquidity: 2 })`
-$DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 3, tick: -5, liquidity: 4 })`
 $DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 3, tick: -5, liquidity: 4 })`
-$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(7)`
 $DIR/test/Oracle.spec.ts: `.advanceTime(7)`
-$DIR/test/Oracle.spec.ts: `await oracle.initialize({ time: 5, tick: 2, liquidity: BigNumber.from(2).pow(15) })`
 $DIR/test/Oracle.spec.ts: `.initialize({ time: 5, tick: 2, liquidity: BigNumber.from(2).pow(15) })`
 $DIR/test/Oracle.spec.ts: `.from(2)`
 $DIR/test/Oracle.spec.ts: `.pow(15)`
-$DIR/test/Oracle.spec.ts: `await oracle.grow(4)`
 $DIR/test/Oracle.spec.ts: `.grow(4)`
-$DIR/test/Oracle.spec.ts: `await oracle.update({ advanceTimeBy: 13, tick: 6, liquidity: BigNumber.from(2).pow(12) })`
 $DIR/test/Oracle.spec.ts: `.update({ advanceTimeBy: 13, tick: 6, liquidity: BigNumber.from(2).pow(12) })`
 $DIR/test/Oracle.spec.ts: `.from(2)`
 $DIR/test/Oracle.spec.ts: `.pow(12)`
-$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(5)`
 $DIR/test/Oracle.spec.ts: `.advanceTime(5)`
 $DIR/test/Oracle.spec.ts: `.observe([0, 3, 8, 13, 15, 18])`
-$DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 5, tick: -5, time: 5 })`
 $DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 5, tick: -5, time: 5 })`
-$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(2)`
 $DIR/test/Oracle.spec.ts: `.advanceTime(2)`
 $DIR/test/Oracle.spec.ts: `.getGasCostOfObserve([1])`
-$DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 5, tick: -5, time: 5 })`
 $DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 5, tick: -5, time: 5 })`
 $DIR/test/Oracle.spec.ts: `.getGasCostOfObserve([0])`
-$DIR/test/Oracle.spec.ts: `await oracle.initialize({ liquidity: 5, tick: -5, time: 5 })`
 $DIR/test/Oracle.spec.ts: `.initialize({ liquidity: 5, tick: -5, time: 5 })`
-$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(5)`
 $DIR/test/Oracle.spec.ts: `.advanceTime(5)`
 $DIR/test/Oracle.spec.ts: `.getGasCostOfObserve([0])`
-$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(5)`
 $DIR/test/Oracle.spec.ts: `.advanceTime(5)`
-$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(5)`
 $DIR/test/Oracle.spec.ts: `.advanceTime(5)`
-$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(5)`
 $DIR/test/Oracle.spec.ts: `.advanceTime(5)`
-$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(5)`
 $DIR/test/Oracle.spec.ts: `.advanceTime(5)`
-$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(6)`
 $DIR/test/Oracle.spec.ts: `.advanceTime(6)`
-$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(6)`
 $DIR/test/Oracle.spec.ts: `.advanceTime(6)`
 $DIR/test/Oracle.spec.ts: `.observe([
             20,
@@ -344,33 +352,25 @@ $DIR/test/Oracle.spec.ts: `.observe([
             1,
             0,
           ])`
-$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(6)`
 $DIR/test/Oracle.spec.ts: `.advanceTime(6)`
 $DIR/test/Oracle.spec.ts: `.getGasCostOfObserve([20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0])`
 $DIR/test/Oracle.spec.ts: `.getGasCostOfObserve([0])`
-$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(5)`
 $DIR/test/Oracle.spec.ts: `.advanceTime(5)`
 $DIR/test/Oracle.spec.ts: `.getGasCostOfObserve([0])`
 $DIR/test/Oracle.spec.ts: `.getGasCostOfObserve([14])`
 $DIR/test/Oracle.spec.ts: `.getGasCostOfObserve([13])`
 $DIR/test/Oracle.spec.ts: `.getGasCostOfObserve([5])`
-$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(5)`
 $DIR/test/Oracle.spec.ts: `.advanceTime(5)`
-$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(5)`
 $DIR/test/Oracle.spec.ts: `.advanceTime(5)`
-$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(5)`
 $DIR/test/Oracle.spec.ts: `.advanceTime(5)`
 $DIR/test/Oracle.spec.ts: `.getGasCostOfObserve([0])`
 $DIR/test/Oracle.spec.ts: `.getGasCostOfObserve([200 + 13])`
 $DIR/test/Oracle.spec.ts: `.getGasCostOfObserve([200 + 13 + 5])`
-$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(5)`
 $DIR/test/Oracle.spec.ts: `.advanceTime(5)`
 $DIR/test/Oracle.spec.ts: `.getGasCostOfObserve([0])`
-$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(5)`
 $DIR/test/Oracle.spec.ts: `.advanceTime(5)`
 $DIR/test/Oracle.spec.ts: `.getGasCostOfObserve([5])`
 $DIR/test/Oracle.spec.ts: `.getGasCostOfObserve([65534 * 13])`
-$DIR/test/Oracle.spec.ts: `await oracle.advanceTime(5)`
 $DIR/test/Oracle.spec.ts: `.advanceTime(5)`
 $DIR/test/Oracle.spec.ts: `.getGasCostOfObserve([65534 * 13 + 5])`
 $DIR/test/SqrtPriceMath.spec.ts: `.getNextSqrtPriceFromInput(0, 0, expandTo18Decimals(1).div(10), false)`
@@ -670,14 +670,6 @@ $DIR/test/SwapMath.spec.ts: `.getGasCostOfComputeSwapStep(
             1000,
             600
           )`
-$DIR/test/Tick.spec.ts: `.tickSpacingToMaxLiquidityPerTick(TICK_SPACINGS[FeeAmount.LOW])`
-$DIR/test/Tick.spec.ts: `.tickSpacingToMaxLiquidityPerTick(TICK_SPACINGS[FeeAmount.MEDIUM])`
-$DIR/test/Tick.spec.ts: `.tickSpacingToMaxLiquidityPerTick(TICK_SPACINGS[FeeAmount.HIGH])`
-$DIR/test/Tick.spec.ts: `.tickSpacingToMaxLiquidityPerTick(887272)`
-$DIR/test/Tick.spec.ts: `.tickSpacingToMaxLiquidityPerTick(2302)`
-$DIR/test/Tick.spec.ts: `.getFeeGrowthInside(-2, 2, 0, 15, 15)`
-$DIR/test/Tick.spec.ts: `.getFeeGrowthInside(-2, 2, 4, 15, 15)`
-$DIR/test/Tick.spec.ts: `.getFeeGrowthInside(-2, 2, -4, 15, 15)`
 $DIR/test/Tick.spec.ts: `await tickTest.setTick(2, {
         feeGrowthOutside0X128: 2,
         feeGrowthOutside1X128: 3,
@@ -688,17 +680,6 @@ $DIR/test/Tick.spec.ts: `await tickTest.setTick(2, {
         secondsOutside: 0,
         initialized: true,
       })`
-$DIR/test/Tick.spec.ts: `.setTick(2, {
-        feeGrowthOutside0X128: 2,
-        feeGrowthOutside1X128: 3,
-        liquidityGross: 0,
-        liquidityNet: 0,
-        secondsPerLiquidityOutsideX128: 0,
-        tickCumulativeOutside: 0,
-        secondsOutside: 0,
-        initialized: true,
-      })`
-$DIR/test/Tick.spec.ts: `.getFeeGrowthInside(-2, 2, 0, 15, 15)`
 $DIR/test/Tick.spec.ts: `await tickTest.setTick(-2, {
         feeGrowthOutside0X128: 2,
         feeGrowthOutside1X128: 3,
@@ -709,28 +690,7 @@ $DIR/test/Tick.spec.ts: `await tickTest.setTick(-2, {
         secondsOutside: 0,
         initialized: true,
       })`
-$DIR/test/Tick.spec.ts: `.setTick(-2, {
-        feeGrowthOutside0X128: 2,
-        feeGrowthOutside1X128: 3,
-        liquidityGross: 0,
-        liquidityNet: 0,
-        secondsPerLiquidityOutsideX128: 0,
-        tickCumulativeOutside: 0,
-        secondsOutside: 0,
-        initialized: true,
-      })`
-$DIR/test/Tick.spec.ts: `.getFeeGrowthInside(-2, 2, 0, 15, 15)`
 $DIR/test/Tick.spec.ts: `await tickTest.setTick(-2, {
-        feeGrowthOutside0X128: 2,
-        feeGrowthOutside1X128: 3,
-        liquidityGross: 0,
-        liquidityNet: 0,
-        secondsPerLiquidityOutsideX128: 0,
-        tickCumulativeOutside: 0,
-        secondsOutside: 0,
-        initialized: true,
-      })`
-$DIR/test/Tick.spec.ts: `.setTick(-2, {
         feeGrowthOutside0X128: 2,
         feeGrowthOutside1X128: 3,
         liquidityGross: 0,
@@ -750,17 +710,6 @@ $DIR/test/Tick.spec.ts: `await tickTest.setTick(2, {
         secondsOutside: 0,
         initialized: true,
       })`
-$DIR/test/Tick.spec.ts: `.setTick(2, {
-        feeGrowthOutside0X128: 4,
-        feeGrowthOutside1X128: 1,
-        liquidityGross: 0,
-        liquidityNet: 0,
-        secondsPerLiquidityOutsideX128: 0,
-        tickCumulativeOutside: 0,
-        secondsOutside: 0,
-        initialized: true,
-      })`
-$DIR/test/Tick.spec.ts: `.getFeeGrowthInside(-2, 2, 0, 15, 15)`
 $DIR/test/Tick.spec.ts: `await tickTest.setTick(-2, {
         feeGrowthOutside0X128: constants.MaxUint256.sub(3),
         feeGrowthOutside1X128: constants.MaxUint256.sub(2),
@@ -771,6 +720,116 @@ $DIR/test/Tick.spec.ts: `await tickTest.setTick(-2, {
         secondsOutside: 0,
         initialized: true,
       })`
+$DIR/test/Tick.spec.ts: `await tickTest.setTick(2, {
+        feeGrowthOutside0X128: 3,
+        feeGrowthOutside1X128: 5,
+        liquidityGross: 0,
+        liquidityNet: 0,
+        secondsPerLiquidityOutsideX128: 0,
+        tickCumulativeOutside: 0,
+        secondsOutside: 0,
+        initialized: true,
+      })`
+$DIR/test/Tick.spec.ts: `await tickTest.update(0, 0, 1, 0, 0, 0, 0, 0, false, 3)`
+$DIR/test/Tick.spec.ts: `await tickTest.update(0, 0, 1, 0, 0, 0, 0, 0, false, 3)`
+$DIR/test/Tick.spec.ts: `await tickTest.update(0, 0, 2, 0, 0, 0, 0, 0, false, 3)`
+$DIR/test/Tick.spec.ts: `await tickTest.update(0, 0, 2, 0, 0, 0, 0, 0, false, 3)`
+$DIR/test/Tick.spec.ts: `await tickTest.update(0, 0, 2, 0, 0, 0, 0, 0, false, 3)`
+$DIR/test/Tick.spec.ts: `await tickTest.update(0, 0, 1, 0, 0, 0, 0, 0, true, 3)`
+$DIR/test/Tick.spec.ts: `await tickTest.update(0, 0, 2, 0, 0, 0, 0, 0, false, 10)`
+$DIR/test/Tick.spec.ts: `await tickTest.update(0, 0, 1, 0, 0, 0, 0, 0, true, 10)`
+$DIR/test/Tick.spec.ts: `await tickTest.update(0, 0, 3, 0, 0, 0, 0, 0, true, 10)`
+$DIR/test/Tick.spec.ts: `await tickTest.update(0, 0, 1, 0, 0, 0, 0, 0, false, 10)`
+$DIR/test/Tick.spec.ts: `await tickTest.update(0, 0, MaxUint128.div(2).sub(1), 0, 0, 0, 0, 0, false, MaxUint128)`
+$DIR/test/Tick.spec.ts: `await tickTest.update(1, 1, 1, 1, 2, 3, 4, 5, false, MaxUint128)`
+$DIR/test/Tick.spec.ts: `await tickTest.update(1, 1, 1, 1, 2, 3, 4, 5, false, MaxUint128)`
+$DIR/test/Tick.spec.ts: `await tickTest.update(1, 1, 1, 6, 7, 8, 9, 10, false, MaxUint128)`
+$DIR/test/Tick.spec.ts: `await tickTest.update(2, 1, 1, 1, 2, 3, 4, 5, false, MaxUint128)`
+$DIR/test/Tick.spec.ts: `await tickTest.setTick(2, {
+        feeGrowthOutside0X128: 1,
+        feeGrowthOutside1X128: 2,
+        liquidityGross: 3,
+        liquidityNet: 4,
+        secondsPerLiquidityOutsideX128: 5,
+        tickCumulativeOutside: 6,
+        secondsOutside: 7,
+        initialized: true,
+      })`
+$DIR/test/Tick.spec.ts: `await tickTest.clear(2)`
+$DIR/test/Tick.spec.ts: `await tickTest.setTick(2, {
+        feeGrowthOutside0X128: 1,
+        feeGrowthOutside1X128: 2,
+        liquidityGross: 3,
+        liquidityNet: 4,
+        secondsPerLiquidityOutsideX128: 5,
+        tickCumulativeOutside: 6,
+        secondsOutside: 7,
+        initialized: true,
+      })`
+$DIR/test/Tick.spec.ts: `await tickTest.cross(2, 7, 9, 8, 15, 10)`
+$DIR/test/Tick.spec.ts: `await tickTest.setTick(2, {
+        feeGrowthOutside0X128: 1,
+        feeGrowthOutside1X128: 2,
+        liquidityGross: 3,
+        liquidityNet: 4,
+        secondsPerLiquidityOutsideX128: 5,
+        tickCumulativeOutside: 6,
+        secondsOutside: 7,
+        initialized: true,
+      })`
+$DIR/test/Tick.spec.ts: `await tickTest.cross(2, 7, 9, 8, 15, 10)`
+$DIR/test/Tick.spec.ts: `await tickTest.cross(2, 7, 9, 8, 15, 10)`
+$DIR/test/Tick.spec.ts: `.tickSpacingToMaxLiquidityPerTick(TICK_SPACINGS[FeeAmount.LOW])`
+$DIR/test/Tick.spec.ts: `.tickSpacingToMaxLiquidityPerTick(TICK_SPACINGS[FeeAmount.MEDIUM])`
+$DIR/test/Tick.spec.ts: `.tickSpacingToMaxLiquidityPerTick(TICK_SPACINGS[FeeAmount.HIGH])`
+$DIR/test/Tick.spec.ts: `.tickSpacingToMaxLiquidityPerTick(887272)`
+$DIR/test/Tick.spec.ts: `.tickSpacingToMaxLiquidityPerTick(2302)`
+$DIR/test/Tick.spec.ts: `.getFeeGrowthInside(-2, 2, 0, 15, 15)`
+$DIR/test/Tick.spec.ts: `.getFeeGrowthInside(-2, 2, 4, 15, 15)`
+$DIR/test/Tick.spec.ts: `.getFeeGrowthInside(-2, 2, -4, 15, 15)`
+$DIR/test/Tick.spec.ts: `.setTick(2, {
+        feeGrowthOutside0X128: 2,
+        feeGrowthOutside1X128: 3,
+        liquidityGross: 0,
+        liquidityNet: 0,
+        secondsPerLiquidityOutsideX128: 0,
+        tickCumulativeOutside: 0,
+        secondsOutside: 0,
+        initialized: true,
+      })`
+$DIR/test/Tick.spec.ts: `.getFeeGrowthInside(-2, 2, 0, 15, 15)`
+$DIR/test/Tick.spec.ts: `.setTick(-2, {
+        feeGrowthOutside0X128: 2,
+        feeGrowthOutside1X128: 3,
+        liquidityGross: 0,
+        liquidityNet: 0,
+        secondsPerLiquidityOutsideX128: 0,
+        tickCumulativeOutside: 0,
+        secondsOutside: 0,
+        initialized: true,
+      })`
+$DIR/test/Tick.spec.ts: `.getFeeGrowthInside(-2, 2, 0, 15, 15)`
+$DIR/test/Tick.spec.ts: `.setTick(-2, {
+        feeGrowthOutside0X128: 2,
+        feeGrowthOutside1X128: 3,
+        liquidityGross: 0,
+        liquidityNet: 0,
+        secondsPerLiquidityOutsideX128: 0,
+        tickCumulativeOutside: 0,
+        secondsOutside: 0,
+        initialized: true,
+      })`
+$DIR/test/Tick.spec.ts: `.setTick(2, {
+        feeGrowthOutside0X128: 4,
+        feeGrowthOutside1X128: 1,
+        liquidityGross: 0,
+        liquidityNet: 0,
+        secondsPerLiquidityOutsideX128: 0,
+        tickCumulativeOutside: 0,
+        secondsOutside: 0,
+        initialized: true,
+      })`
+$DIR/test/Tick.spec.ts: `.getFeeGrowthInside(-2, 2, 0, 15, 15)`
 $DIR/test/Tick.spec.ts: `.setTick(-2, {
         feeGrowthOutside0X128: constants.MaxUint256.sub(3),
         feeGrowthOutside1X128: constants.MaxUint256.sub(2),
@@ -783,16 +842,6 @@ $DIR/test/Tick.spec.ts: `.setTick(-2, {
       })`
 $DIR/test/Tick.spec.ts: `.MaxUint256.sub(3)`
 $DIR/test/Tick.spec.ts: `.MaxUint256.sub(2)`
-$DIR/test/Tick.spec.ts: `await tickTest.setTick(2, {
-        feeGrowthOutside0X128: 3,
-        feeGrowthOutside1X128: 5,
-        liquidityGross: 0,
-        liquidityNet: 0,
-        secondsPerLiquidityOutsideX128: 0,
-        tickCumulativeOutside: 0,
-        secondsOutside: 0,
-        initialized: true,
-      })`
 $DIR/test/Tick.spec.ts: `.setTick(2, {
         feeGrowthOutside0X128: 3,
         feeGrowthOutside1X128: 5,
@@ -804,55 +853,30 @@ $DIR/test/Tick.spec.ts: `.setTick(2, {
         initialized: true,
       })`
 $DIR/test/Tick.spec.ts: `.getFeeGrowthInside(-2, 2, 0, 15, 15)`
-$DIR/test/Tick.spec.ts: `await tickTest.update(0, 0, 1, 0, 0, 0, 0, 0, false, 3)`
 $DIR/test/Tick.spec.ts: `.update(0, 0, 1, 0, 0, 0, 0, 0, false, 3)`
-$DIR/test/Tick.spec.ts: `await tickTest.update(0, 0, 1, 0, 0, 0, 0, 0, false, 3)`
 $DIR/test/Tick.spec.ts: `.update(0, 0, 1, 0, 0, 0, 0, 0, false, 3)`
-$DIR/test/Tick.spec.ts: `await tickTest.update(0, 0, 2, 0, 0, 0, 0, 0, false, 3)`
 $DIR/test/Tick.spec.ts: `.update(0, 0, 2, 0, 0, 0, 0, 0, false, 3)`
-$DIR/test/Tick.spec.ts: `await tickTest.update(0, 0, 2, 0, 0, 0, 0, 0, false, 3)`
 $DIR/test/Tick.spec.ts: `.update(0, 0, 2, 0, 0, 0, 0, 0, false, 3)`
-$DIR/test/Tick.spec.ts: `await tickTest.update(0, 0, 2, 0, 0, 0, 0, 0, false, 3)`
 $DIR/test/Tick.spec.ts: `.update(0, 0, 2, 0, 0, 0, 0, 0, false, 3)`
-$DIR/test/Tick.spec.ts: `await tickTest.update(0, 0, 1, 0, 0, 0, 0, 0, true, 3)`
 $DIR/test/Tick.spec.ts: `.update(0, 0, 1, 0, 0, 0, 0, 0, true, 3)`
-$DIR/test/Tick.spec.ts: `await tickTest.update(0, 0, 2, 0, 0, 0, 0, 0, false, 10)`
 $DIR/test/Tick.spec.ts: `.update(0, 0, 2, 0, 0, 0, 0, 0, false, 10)`
-$DIR/test/Tick.spec.ts: `await tickTest.update(0, 0, 1, 0, 0, 0, 0, 0, true, 10)`
 $DIR/test/Tick.spec.ts: `.update(0, 0, 1, 0, 0, 0, 0, 0, true, 10)`
-$DIR/test/Tick.spec.ts: `await tickTest.update(0, 0, 3, 0, 0, 0, 0, 0, true, 10)`
 $DIR/test/Tick.spec.ts: `.update(0, 0, 3, 0, 0, 0, 0, 0, true, 10)`
-$DIR/test/Tick.spec.ts: `await tickTest.update(0, 0, 1, 0, 0, 0, 0, 0, false, 10)`
 $DIR/test/Tick.spec.ts: `.update(0, 0, 1, 0, 0, 0, 0, 0, false, 10)`
 $DIR/test/Tick.spec.ts: `.ticks(0)`
-$DIR/test/Tick.spec.ts: `await tickTest.update(0, 0, MaxUint128.div(2).sub(1), 0, 0, 0, 0, 0, false, MaxUint128)`
 $DIR/test/Tick.spec.ts: `.update(0, 0, MaxUint128.div(2).sub(1), 0, 0, 0, 0, 0, false, MaxUint128)`
 $DIR/test/Tick.spec.ts: `.div(2)`
 $DIR/test/Tick.spec.ts: `.sub(1)`
 $DIR/test/Tick.spec.ts: `.update(0, 0, MaxUint128.div(2).sub(1), 0, 0, 0, 0, 0, false, MaxUint128)`
 $DIR/test/Tick.spec.ts: `.div(2)`
 $DIR/test/Tick.spec.ts: `.sub(1)`
-$DIR/test/Tick.spec.ts: `await tickTest.update(1, 1, 1, 1, 2, 3, 4, 5, false, MaxUint128)`
 $DIR/test/Tick.spec.ts: `.update(1, 1, 1, 1, 2, 3, 4, 5, false, MaxUint128)`
 $DIR/test/Tick.spec.ts: `.ticks(1)`
-$DIR/test/Tick.spec.ts: `await tickTest.update(1, 1, 1, 1, 2, 3, 4, 5, false, MaxUint128)`
 $DIR/test/Tick.spec.ts: `.update(1, 1, 1, 1, 2, 3, 4, 5, false, MaxUint128)`
-$DIR/test/Tick.spec.ts: `await tickTest.update(1, 1, 1, 6, 7, 8, 9, 10, false, MaxUint128)`
 $DIR/test/Tick.spec.ts: `.update(1, 1, 1, 6, 7, 8, 9, 10, false, MaxUint128)`
 $DIR/test/Tick.spec.ts: `.ticks(1)`
-$DIR/test/Tick.spec.ts: `await tickTest.update(2, 1, 1, 1, 2, 3, 4, 5, false, MaxUint128)`
 $DIR/test/Tick.spec.ts: `.update(2, 1, 1, 1, 2, 3, 4, 5, false, MaxUint128)`
 $DIR/test/Tick.spec.ts: `.ticks(2)`
-$DIR/test/Tick.spec.ts: `await tickTest.setTick(2, {
-        feeGrowthOutside0X128: 1,
-        feeGrowthOutside1X128: 2,
-        liquidityGross: 3,
-        liquidityNet: 4,
-        secondsPerLiquidityOutsideX128: 5,
-        tickCumulativeOutside: 6,
-        secondsOutside: 7,
-        initialized: true,
-      })`
 $DIR/test/Tick.spec.ts: `.setTick(2, {
         feeGrowthOutside0X128: 1,
         feeGrowthOutside1X128: 2,
@@ -863,19 +887,8 @@ $DIR/test/Tick.spec.ts: `.setTick(2, {
         secondsOutside: 7,
         initialized: true,
       })`
-$DIR/test/Tick.spec.ts: `await tickTest.clear(2)`
 $DIR/test/Tick.spec.ts: `.clear(2)`
 $DIR/test/Tick.spec.ts: `.ticks(2)`
-$DIR/test/Tick.spec.ts: `await tickTest.setTick(2, {
-        feeGrowthOutside0X128: 1,
-        feeGrowthOutside1X128: 2,
-        liquidityGross: 3,
-        liquidityNet: 4,
-        secondsPerLiquidityOutsideX128: 5,
-        tickCumulativeOutside: 6,
-        secondsOutside: 7,
-        initialized: true,
-      })`
 $DIR/test/Tick.spec.ts: `.setTick(2, {
         feeGrowthOutside0X128: 1,
         feeGrowthOutside1X128: 2,
@@ -886,19 +899,8 @@ $DIR/test/Tick.spec.ts: `.setTick(2, {
         secondsOutside: 7,
         initialized: true,
       })`
-$DIR/test/Tick.spec.ts: `await tickTest.cross(2, 7, 9, 8, 15, 10)`
 $DIR/test/Tick.spec.ts: `.cross(2, 7, 9, 8, 15, 10)`
 $DIR/test/Tick.spec.ts: `.ticks(2)`
-$DIR/test/Tick.spec.ts: `await tickTest.setTick(2, {
-        feeGrowthOutside0X128: 1,
-        feeGrowthOutside1X128: 2,
-        liquidityGross: 3,
-        liquidityNet: 4,
-        secondsPerLiquidityOutsideX128: 5,
-        tickCumulativeOutside: 6,
-        secondsOutside: 7,
-        initialized: true,
-      })`
 $DIR/test/Tick.spec.ts: `.setTick(2, {
         feeGrowthOutside0X128: 1,
         feeGrowthOutside1X128: 2,
@@ -909,44 +911,44 @@ $DIR/test/Tick.spec.ts: `.setTick(2, {
         secondsOutside: 7,
         initialized: true,
       })`
-$DIR/test/Tick.spec.ts: `await tickTest.cross(2, 7, 9, 8, 15, 10)`
 $DIR/test/Tick.spec.ts: `.cross(2, 7, 9, 8, 15, 10)`
-$DIR/test/Tick.spec.ts: `await tickTest.cross(2, 7, 9, 8, 15, 10)`
 $DIR/test/Tick.spec.ts: `.cross(2, 7, 9, 8, 15, 10)`
 $DIR/test/Tick.spec.ts: `.ticks(2)`
 $DIR/test/TickBitmap.spec.ts: `await tickBitmap.flipTick(1)`
-$DIR/test/TickBitmap.spec.ts: `.flipTick(1)`
 $DIR/test/TickBitmap.spec.ts: `await tickBitmap.flipTick(1)`
-$DIR/test/TickBitmap.spec.ts: `.flipTick(1)`
 $DIR/test/TickBitmap.spec.ts: `await tickBitmap.flipTick(1)`
-$DIR/test/TickBitmap.spec.ts: `.flipTick(1)`
 $DIR/test/TickBitmap.spec.ts: `await tickBitmap.flipTick(2)`
-$DIR/test/TickBitmap.spec.ts: `.flipTick(2)`
 $DIR/test/TickBitmap.spec.ts: `await tickBitmap.flipTick(1 + 256)`
-$DIR/test/TickBitmap.spec.ts: `.flipTick(1 + 256)`
 $DIR/test/TickBitmap.spec.ts: `await tickBitmap.flipTick(-230)`
-$DIR/test/TickBitmap.spec.ts: `.flipTick(-230)`
 $DIR/test/TickBitmap.spec.ts: `await tickBitmap.flipTick(-230)`
-$DIR/test/TickBitmap.spec.ts: `.flipTick(-230)`
 $DIR/test/TickBitmap.spec.ts: `await tickBitmap.flipTick(-230)`
-$DIR/test/TickBitmap.spec.ts: `.flipTick(-230)`
 $DIR/test/TickBitmap.spec.ts: `await tickBitmap.flipTick(-259)`
-$DIR/test/TickBitmap.spec.ts: `.flipTick(-259)`
 $DIR/test/TickBitmap.spec.ts: `await tickBitmap.flipTick(-229)`
-$DIR/test/TickBitmap.spec.ts: `.flipTick(-229)`
 $DIR/test/TickBitmap.spec.ts: `await tickBitmap.flipTick(500)`
-$DIR/test/TickBitmap.spec.ts: `.flipTick(500)`
 $DIR/test/TickBitmap.spec.ts: `await tickBitmap.flipTick(-259)`
-$DIR/test/TickBitmap.spec.ts: `.flipTick(-259)`
 $DIR/test/TickBitmap.spec.ts: `await tickBitmap.flipTick(-229)`
-$DIR/test/TickBitmap.spec.ts: `.flipTick(-229)`
 $DIR/test/TickBitmap.spec.ts: `await tickBitmap.flipTick(-259)`
+$DIR/test/TickBitmap.spec.ts: `await tickBitmap.flipTick(0)`
+$DIR/test/TickBitmap.spec.ts: `await tickBitmap.flipTick(0)`
+$DIR/test/TickBitmap.spec.ts: `await tickBitmap.flipTick(340)`
+$DIR/test/TickBitmap.spec.ts: `await tickBitmap.flipTick(329)`
+$DIR/test/TickBitmap.spec.ts: `.flipTick(1)`
+$DIR/test/TickBitmap.spec.ts: `.flipTick(1)`
+$DIR/test/TickBitmap.spec.ts: `.flipTick(1)`
+$DIR/test/TickBitmap.spec.ts: `.flipTick(2)`
+$DIR/test/TickBitmap.spec.ts: `.flipTick(1 + 256)`
+$DIR/test/TickBitmap.spec.ts: `.flipTick(-230)`
+$DIR/test/TickBitmap.spec.ts: `.flipTick(-230)`
+$DIR/test/TickBitmap.spec.ts: `.flipTick(-230)`
+$DIR/test/TickBitmap.spec.ts: `.flipTick(-259)`
+$DIR/test/TickBitmap.spec.ts: `.flipTick(-229)`
+$DIR/test/TickBitmap.spec.ts: `.flipTick(500)`
+$DIR/test/TickBitmap.spec.ts: `.flipTick(-259)`
+$DIR/test/TickBitmap.spec.ts: `.flipTick(-229)`
 $DIR/test/TickBitmap.spec.ts: `.flipTick(-259)`
 $DIR/test/TickBitmap.spec.ts: `.getGasCostOfFlipTick(1)`
-$DIR/test/TickBitmap.spec.ts: `await tickBitmap.flipTick(0)`
 $DIR/test/TickBitmap.spec.ts: `.flipTick(0)`
 $DIR/test/TickBitmap.spec.ts: `.getGasCostOfFlipTick(1)`
-$DIR/test/TickBitmap.spec.ts: `await tickBitmap.flipTick(0)`
 $DIR/test/TickBitmap.spec.ts: `.flipTick(0)`
 $DIR/test/TickBitmap.spec.ts: `.getGasCostOfFlipTick(0)`
 $DIR/test/TickBitmap.spec.ts: `.nextInitializedTickWithinOneWord(78, false)`
@@ -955,7 +957,6 @@ $DIR/test/TickBitmap.spec.ts: `.nextInitializedTickWithinOneWord(77, false)`
 $DIR/test/TickBitmap.spec.ts: `.nextInitializedTickWithinOneWord(-56, false)`
 $DIR/test/TickBitmap.spec.ts: `.nextInitializedTickWithinOneWord(255, false)`
 $DIR/test/TickBitmap.spec.ts: `.nextInitializedTickWithinOneWord(-257, false)`
-$DIR/test/TickBitmap.spec.ts: `await tickBitmap.flipTick(340)`
 $DIR/test/TickBitmap.spec.ts: `.flipTick(340)`
 $DIR/test/TickBitmap.spec.ts: `.nextInitializedTickWithinOneWord(328, false)`
 $DIR/test/TickBitmap.spec.ts: `.nextInitializedTickWithinOneWord(508, false)`
@@ -975,7 +976,6 @@ $DIR/test/TickBitmap.spec.ts: `.nextInitializedTickWithinOneWord(72, true)`
 $DIR/test/TickBitmap.spec.ts: `.nextInitializedTickWithinOneWord(-257, true)`
 $DIR/test/TickBitmap.spec.ts: `.nextInitializedTickWithinOneWord(1023, true)`
 $DIR/test/TickBitmap.spec.ts: `.nextInitializedTickWithinOneWord(900, true)`
-$DIR/test/TickBitmap.spec.ts: `await tickBitmap.flipTick(329)`
 $DIR/test/TickBitmap.spec.ts: `.flipTick(329)`
 $DIR/test/TickBitmap.spec.ts: `.nextInitializedTickWithinOneWord(456, true)`
 $DIR/test/TickMath.spec.ts: `.from(2)`
@@ -1005,6 +1005,11 @@ $DIR/test/TickMath.spec.ts: `.getTickAtSqrtRatio(ratio)`
 $DIR/test/TickMath.spec.ts: `.getSqrtRatioAtTick(tick)`
 $DIR/test/TickMath.spec.ts: `.getSqrtRatioAtTick(tick + 1)`
 $DIR/test/UniswapV3Factory.spec.ts: `await factory.createPool(TEST_ADDRESSES[0], TEST_ADDRESSES[1], FeeAmount.MEDIUM)`
+$DIR/test/UniswapV3Factory.spec.ts: `await factory.setOwner(other.address)`
+$DIR/test/UniswapV3Factory.spec.ts: `await factory.setOwner(other.address)`
+$DIR/test/UniswapV3Factory.spec.ts: `await factory.enableFeeAmount(100, 5)`
+$DIR/test/UniswapV3Factory.spec.ts: `await factory.enableFeeAmount(100, 5)`
+$DIR/test/UniswapV3Factory.spec.ts: `await factory.enableFeeAmount(250, 15)`
 $DIR/test/UniswapV3Factory.spec.ts: `.createPool(TEST_ADDRESSES[0], TEST_ADDRESSES[1], FeeAmount.MEDIUM)`
 $DIR/test/UniswapV3Factory.spec.ts: `.createPool(TEST_ADDRESSES[0], TEST_ADDRESSES[0], FeeAmount.LOW)`
 $DIR/test/UniswapV3Factory.spec.ts: `.createPool(TEST_ADDRESSES[0], TEST_ADDRESSES[1], 250)`
@@ -1013,24 +1018,45 @@ $DIR/test/UniswapV3Factory.spec.ts: `.connect(other)`
 $DIR/test/UniswapV3Factory.spec.ts: `.setOwner(wallet.address)`
 $DIR/test/UniswapV3Factory.spec.ts: `.connect(other)`
 $DIR/test/UniswapV3Factory.spec.ts: `.enableFeeAmount(100, 2)`
-$DIR/test/UniswapV3Factory.spec.ts: `await factory.setOwner(other.address)`
 $DIR/test/UniswapV3Factory.spec.ts: `.setOwner(other.address)`
-$DIR/test/UniswapV3Factory.spec.ts: `await factory.setOwner(other.address)`
 $DIR/test/UniswapV3Factory.spec.ts: `.setOwner(other.address)`
 $DIR/test/UniswapV3Factory.spec.ts: `.setOwner(wallet.address)`
 $DIR/test/UniswapV3Factory.spec.ts: `.enableFeeAmount(1000000, 10)`
 $DIR/test/UniswapV3Factory.spec.ts: `.enableFeeAmount(500, 0)`
 $DIR/test/UniswapV3Factory.spec.ts: `.enableFeeAmount(500, 16834)`
-$DIR/test/UniswapV3Factory.spec.ts: `await factory.enableFeeAmount(100, 5)`
 $DIR/test/UniswapV3Factory.spec.ts: `.enableFeeAmount(100, 5)`
 $DIR/test/UniswapV3Factory.spec.ts: `.enableFeeAmount(100, 10)`
-$DIR/test/UniswapV3Factory.spec.ts: `await factory.enableFeeAmount(100, 5)`
 $DIR/test/UniswapV3Factory.spec.ts: `.enableFeeAmount(100, 5)`
-$DIR/test/UniswapV3Factory.spec.ts: `await factory.enableFeeAmount(250, 15)`
 $DIR/test/UniswapV3Factory.spec.ts: `.enableFeeAmount(250, 15)`
 $DIR/test/UniswapV3Pool.arbitrage.spec.ts: `zeroForOne
                   ? await swapExact0For1(inputAmount, wallet.address)
                   : await swapExact1For0(inputAmount, wallet.address)`
+$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `arbBalance0 = arbBalance0.sub(frontrunDelta0)`
+$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `arbBalance1 = arbBalance1.sub(frontrunDelta1)`
+$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `zeroForOne
+                  ? await swapToLowerPrice(priceSwapStart, arbitrageur.address)
+                  : await swapToHigherPrice(priceSwapStart, arbitrageur.address)`
+$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `arbBalance0 = arbBalance0.sub(amount0Mint)`
+$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `arbBalance1 = arbBalance1.sub(amount1Mint)`
+$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `zeroForOne
+                  ? await swapExact0For1(inputAmount, wallet.address)
+                  : await swapExact1For0(inputAmount, wallet.address)`
+$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `await pool.burn(tickLower, tickUpper, getMaxLiquidityPerTick(tickSpacing))`
+$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `arbBalance0 = arbBalance0.add(amount0Burn)`
+$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `arbBalance1 = arbBalance1.add(amount1Burn)`
+$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `arbBalance0 = arbBalance0.add(amount0Collect)`
+$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `arbBalance1 = arbBalance1.add(amount1Collect)`
+$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `await swapToHigherPrice(priceToSwapTo, wallet.address)`
+$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `arbBalance0 = arbBalance0.sub(backrunDelta0)`
+$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `arbBalance1 = arbBalance1.sub(backrunDelta1)`
+$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `zeroForOne
+                  ? await swapExact0For1(inputAmount, wallet.address)
+                  : await swapExact1For0(inputAmount, wallet.address)`
+$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `zeroForOne
+                  ? await swapToHigherPrice(priceToSwapTo, wallet.address)
+                  : await swapToLowerPrice(priceToSwapTo, wallet.address)`
+$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `arbBalance0 = arbBalance0.sub(backrunDelta0)`
+$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `arbBalance1 = arbBalance1.sub(backrunDelta1)`
 $DIR/test/UniswapV3Pool.arbitrage.spec.ts: `.ceil(
                       (await tickMath.getTickAtSqrtRatio(
                         applySqrtRatioBipsHundredthsDelta(executionPrice, feeAmount)
@@ -1051,64 +1077,37 @@ $DIR/test/UniswapV3Pool.arbitrage.spec.ts: `.getSqrtRatioAtTick(firstTickAboveMa
 $DIR/test/UniswapV3Pool.arbitrage.spec.ts: `.from(0)`
 $DIR/test/UniswapV3Pool.arbitrage.spec.ts: `.from(0)`
 $DIR/test/UniswapV3Pool.arbitrage.spec.ts: `.div(2)`
-$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `arbBalance0 = arbBalance0.sub(frontrunDelta0)`
 $DIR/test/UniswapV3Pool.arbitrage.spec.ts: `.sub(frontrunDelta0)`
-$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `arbBalance1 = arbBalance1.sub(frontrunDelta1)`
 $DIR/test/UniswapV3Pool.arbitrage.spec.ts: `.sub(frontrunDelta1)`
-$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `zeroForOne
-                  ? await swapToLowerPrice(priceSwapStart, arbitrageur.address)
-                  : await swapToHigherPrice(priceSwapStart, arbitrageur.address)`
 $DIR/test/UniswapV3Pool.arbitrage.spec.ts: `.wait()`
 $DIR/test/UniswapV3Pool.arbitrage.spec.ts: `.interface.decodeEventLog(
                   pool.interface.events['Mint(address,address,int24,int24,uint128,uint256,uint256)'],
                   mintReceipt.events?.[2].data!
                 )`
-$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `arbBalance0 = arbBalance0.sub(amount0Mint)`
 $DIR/test/UniswapV3Pool.arbitrage.spec.ts: `.sub(amount0Mint)`
-$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `arbBalance1 = arbBalance1.sub(amount1Mint)`
 $DIR/test/UniswapV3Pool.arbitrage.spec.ts: `.sub(amount1Mint)`
-$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `zeroForOne
-                  ? await swapExact0For1(inputAmount, wallet.address)
-                  : await swapExact1For0(inputAmount, wallet.address)`
 $DIR/test/UniswapV3Pool.arbitrage.spec.ts: `.callStatic.burn(
                   tickLower,
                   tickUpper,
                   getMaxLiquidityPerTick(tickSpacing)
                 )`
-$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `await pool.burn(tickLower, tickUpper, getMaxLiquidityPerTick(tickSpacing))`
 $DIR/test/UniswapV3Pool.arbitrage.spec.ts: `.burn(tickLower, tickUpper, getMaxLiquidityPerTick(tickSpacing))`
-$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `arbBalance0 = arbBalance0.add(amount0Burn)`
 $DIR/test/UniswapV3Pool.arbitrage.spec.ts: `.add(amount0Burn)`
-$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `arbBalance1 = arbBalance1.add(amount1Burn)`
 $DIR/test/UniswapV3Pool.arbitrage.spec.ts: `.add(amount1Burn)`
 $DIR/test/UniswapV3Pool.arbitrage.spec.ts: `.callStatic.collect(arbitrageur.address, tickLower, tickUpper, MaxUint128, MaxUint128)`
 $DIR/test/UniswapV3Pool.arbitrage.spec.ts: `.sub(amount0Burn)`
 $DIR/test/UniswapV3Pool.arbitrage.spec.ts: `.sub(amount1Burn)`
-$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `arbBalance0 = arbBalance0.add(amount0Collect)`
 $DIR/test/UniswapV3Pool.arbitrage.spec.ts: `.add(amount0Collect)`
-$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `arbBalance1 = arbBalance1.add(amount1Collect)`
 $DIR/test/UniswapV3Pool.arbitrage.spec.ts: `.add(amount1Collect)`
 $DIR/test/UniswapV3Pool.arbitrage.spec.ts: `.div(2)`
-$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `await swapToHigherPrice(priceToSwapTo, wallet.address)`
-$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `arbBalance0 = arbBalance0.sub(backrunDelta0)`
 $DIR/test/UniswapV3Pool.arbitrage.spec.ts: `.sub(backrunDelta0)`
-$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `arbBalance1 = arbBalance1.sub(backrunDelta1)`
 $DIR/test/UniswapV3Pool.arbitrage.spec.ts: `.sub(backrunDelta1)`
 $DIR/test/UniswapV3Pool.arbitrage.spec.ts: `.from(0)`
 $DIR/test/UniswapV3Pool.arbitrage.spec.ts: `.from(0)`
-$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `zeroForOne
-                  ? await swapExact0For1(inputAmount, wallet.address)
-                  : await swapExact1For0(inputAmount, wallet.address)`
 $DIR/test/UniswapV3Pool.arbitrage.spec.ts: `.div(2)`
-$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `zeroForOne
-                  ? await swapToHigherPrice(priceToSwapTo, wallet.address)
-                  : await swapToLowerPrice(priceToSwapTo, wallet.address)`
-$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `arbBalance0 = arbBalance0.sub(backrunDelta0)`
 $DIR/test/UniswapV3Pool.arbitrage.spec.ts: `.sub(backrunDelta0)`
-$DIR/test/UniswapV3Pool.arbitrage.spec.ts: `arbBalance1 = arbBalance1.sub(backrunDelta1)`
 $DIR/test/UniswapV3Pool.arbitrage.spec.ts: `.sub(backrunDelta1)`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `await swapExact0For1(expandTo18Decimals(1).div(10000), wallet.address)`
-$DIR/test/UniswapV3Pool.gas.spec.ts: `.div(10000)`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `await swapExact0For1(1000, wallet.address)`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `await mint(wallet.address, startingTick - 3 * tickSpacing, startingTick - tickSpacing, expandTo18Decimals(1))`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `await mint(
@@ -1126,10 +1125,8 @@ $DIR/test/UniswapV3Pool.gas.spec.ts: `await mint(
             expandTo18Decimals(1)
           )`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `await swapExact0For1(expandTo18Decimals(1).div(10000), wallet.address)`
-$DIR/test/UniswapV3Pool.gas.spec.ts: `.div(10000)`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `await mint(wallet.address, minTick, startingTick - 2 * tickSpacing, expandTo18Decimals(1))`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `await swapExact0For1(expandTo18Decimals(1).div(10000), wallet.address)`
-$DIR/test/UniswapV3Pool.gas.spec.ts: `.div(10000)`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `await mint(wallet.address, startingTick - 3 * tickSpacing, startingTick - tickSpacing, expandTo18Decimals(1))`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `await mint(
             wallet.address,
@@ -1139,7 +1136,6 @@ $DIR/test/UniswapV3Pool.gas.spec.ts: `await mint(
           )`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `await swapExact0For1(2, wallet.address)`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `await pool.advanceTime(1)`
-$DIR/test/UniswapV3Pool.gas.spec.ts: `.advanceTime(1)`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `await mint(wallet.address, startingTick - 3 * tickSpacing, startingTick - tickSpacing, expandTo18Decimals(1))`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `await mint(
             wallet.address,
@@ -1150,175 +1146,107 @@ $DIR/test/UniswapV3Pool.gas.spec.ts: `await mint(
 $DIR/test/UniswapV3Pool.gas.spec.ts: `await swapExact0For1(expandTo18Decimals(1), wallet.address)`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `await swapToHigherPrice(startingPrice, wallet.address)`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `await pool.advanceTime(1)`
-$DIR/test/UniswapV3Pool.gas.spec.ts: `.advanceTime(1)`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `await mint(wallet.address, tickLower, tickUpper, expandTo18Decimals(1))`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `await mint(wallet.address, tickLower, tickUpper, expandTo18Decimals(1))`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `await mint(wallet.address, tickLower, tickUpper, expandTo18Decimals(1))`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `await pool.advanceTime(1)`
+$DIR/test/UniswapV3Pool.gas.spec.ts: `await mint(other.address, tickLower, tickUpper, expandTo18Decimals(1))`
+$DIR/test/UniswapV3Pool.gas.spec.ts: `await pool.advanceTime(1)`
+$DIR/test/UniswapV3Pool.gas.spec.ts: `await mint(wallet.address, tickLower, tickUpper, expandTo18Decimals(1))`
+$DIR/test/UniswapV3Pool.gas.spec.ts: `await swapExact0For1(expandTo18Decimals(1).div(100), wallet.address)`
+$DIR/test/UniswapV3Pool.gas.spec.ts: `await pool.burn(tickLower, tickUpper, 0)`
+$DIR/test/UniswapV3Pool.gas.spec.ts: `await swapExact0For1(expandTo18Decimals(1).div(100), wallet.address)`
+$DIR/test/UniswapV3Pool.gas.spec.ts: `await mint(wallet.address, tickLower, tickUpper, expandTo18Decimals(1))`
+$DIR/test/UniswapV3Pool.gas.spec.ts: `await swapExact0For1(expandTo18Decimals(1).div(100), wallet.address)`
+$DIR/test/UniswapV3Pool.gas.spec.ts: `await pool.burn(tickLower, tickUpper, 0)`
+$DIR/test/UniswapV3Pool.gas.spec.ts: `await swapToHigherPrice(MAX_SQRT_RATIO.sub(1), wallet.address)`
+$DIR/test/UniswapV3Pool.gas.spec.ts: `await swapToLowerPrice(MIN_SQRT_RATIO.add(1), wallet.address)`
+$DIR/test/UniswapV3Pool.gas.spec.ts: `.div(10000)`
+$DIR/test/UniswapV3Pool.gas.spec.ts: `.div(10000)`
+$DIR/test/UniswapV3Pool.gas.spec.ts: `.div(10000)`
+$DIR/test/UniswapV3Pool.gas.spec.ts: `.advanceTime(1)`
+$DIR/test/UniswapV3Pool.gas.spec.ts: `.advanceTime(1)`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `.advanceTime(1)`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `.burn(tickLower, tickUpper, expandTo18Decimals(1))`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `.burn(tickLower, tickUpper, expandTo18Decimals(1).div(2))`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `.div(2)`
-$DIR/test/UniswapV3Pool.gas.spec.ts: `await mint(other.address, tickLower, tickUpper, expandTo18Decimals(1))`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `.burn(tickLower, tickUpper, expandTo18Decimals(1))`
-$DIR/test/UniswapV3Pool.gas.spec.ts: `await pool.advanceTime(1)`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `.advanceTime(1)`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `.burn(tickLower, tickUpper, expandTo18Decimals(1))`
-$DIR/test/UniswapV3Pool.gas.spec.ts: `await mint(wallet.address, tickLower, tickUpper, expandTo18Decimals(1))`
-$DIR/test/UniswapV3Pool.gas.spec.ts: `await swapExact0For1(expandTo18Decimals(1).div(100), wallet.address)`
-$DIR/test/UniswapV3Pool.gas.spec.ts: `.div(100)`
-$DIR/test/UniswapV3Pool.gas.spec.ts: `await pool.burn(tickLower, tickUpper, 0)`
-$DIR/test/UniswapV3Pool.gas.spec.ts: `.burn(tickLower, tickUpper, 0)`
-$DIR/test/UniswapV3Pool.gas.spec.ts: `await swapExact0For1(expandTo18Decimals(1).div(100), wallet.address)`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `.div(100)`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `.burn(tickLower, tickUpper, 0)`
-$DIR/test/UniswapV3Pool.gas.spec.ts: `await mint(wallet.address, tickLower, tickUpper, expandTo18Decimals(1))`
-$DIR/test/UniswapV3Pool.gas.spec.ts: `await swapExact0For1(expandTo18Decimals(1).div(100), wallet.address)`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `.div(100)`
-$DIR/test/UniswapV3Pool.gas.spec.ts: `await pool.burn(tickLower, tickUpper, 0)`
+$DIR/test/UniswapV3Pool.gas.spec.ts: `.burn(tickLower, tickUpper, 0)`
+$DIR/test/UniswapV3Pool.gas.spec.ts: `.div(100)`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `.burn(tickLower, tickUpper, 0)`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `.collect(wallet.address, tickLower, tickUpper, MaxUint128, MaxUint128)`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `.increaseObservationCardinalityNext(5)`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `.increaseObservationCardinalityNext(3)`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `.estimateGas.snapshotCumulativesInside(minTick, maxTick)`
-$DIR/test/UniswapV3Pool.gas.spec.ts: `await swapToHigherPrice(MAX_SQRT_RATIO.sub(1), wallet.address)`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `.sub(1)`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `.estimateGas.snapshotCumulativesInside(minTick, maxTick)`
-$DIR/test/UniswapV3Pool.gas.spec.ts: `await swapToLowerPrice(MIN_SQRT_RATIO.add(1), wallet.address)`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `.add(1)`
 $DIR/test/UniswapV3Pool.gas.spec.ts: `.estimateGas.snapshotCumulativesInside(minTick, maxTick)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.initialize(encodePriceSqrt(1, 1))`
-$DIR/test/UniswapV3Pool.spec.ts: `.initialize(encodePriceSqrt(1, 1))`
-$DIR/test/UniswapV3Pool.spec.ts: `.initialize(encodePriceSqrt(1, 1))`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.initialize(MIN_SQRT_RATIO)`
-$DIR/test/UniswapV3Pool.spec.ts: `.initialize(MIN_SQRT_RATIO)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.initialize(MAX_SQRT_RATIO.sub(1))`
-$DIR/test/UniswapV3Pool.spec.ts: `.initialize(MAX_SQRT_RATIO.sub(1))`
-$DIR/test/UniswapV3Pool.spec.ts: `.sub(1)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.initialize(price)`
-$DIR/test/UniswapV3Pool.spec.ts: `.initialize(price)`
-$DIR/test/UniswapV3Pool.spec.ts: `.slot0()`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.initialize(encodePriceSqrt(1, 1))`
-$DIR/test/UniswapV3Pool.spec.ts: `.initialize(encodePriceSqrt(1, 1))`
-$DIR/test/UniswapV3Pool.spec.ts: `.observations(0)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.initialize(encodePriceSqrt(1, 1))`
-$DIR/test/UniswapV3Pool.spec.ts: `.initialize(encodePriceSqrt(1, 1))`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.initialize(encodePriceSqrt(1, 1))`
-$DIR/test/UniswapV3Pool.spec.ts: `.initialize(encodePriceSqrt(1, 1))`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.increaseObservationCardinalityNext(3)`
-$DIR/test/UniswapV3Pool.spec.ts: `.increaseObservationCardinalityNext(3)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.initialize(encodePriceSqrt(1, 1))`
-$DIR/test/UniswapV3Pool.spec.ts: `.initialize(encodePriceSqrt(1, 1))`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.increaseObservationCardinalityNext(3)`
-$DIR/test/UniswapV3Pool.spec.ts: `.increaseObservationCardinalityNext(3)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.increaseObservationCardinalityNext(2)`
-$DIR/test/UniswapV3Pool.spec.ts: `.increaseObservationCardinalityNext(2)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.initialize(encodePriceSqrt(1, 1))`
-$DIR/test/UniswapV3Pool.spec.ts: `.initialize(encodePriceSqrt(1, 1))`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.increaseObservationCardinalityNext(2)`
-$DIR/test/UniswapV3Pool.spec.ts: `.increaseObservationCardinalityNext(2)`
-$DIR/test/UniswapV3Pool.spec.ts: `.slot0()`
-$DIR/test/UniswapV3Pool.spec.ts: `.maxLiquidityPerTick()`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, minTick + tickSpacing, maxTick - tickSpacing, 1000)`
-$DIR/test/UniswapV3Pool.spec.ts: `.maxLiquidityPerTick()`
-$DIR/test/UniswapV3Pool.spec.ts: `.sub(1000)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, maxTick - tickSpacing, maxTick, BigNumber.from(2).pow(102))`
-$DIR/test/UniswapV3Pool.spec.ts: `.from(2)`
-$DIR/test/UniswapV3Pool.spec.ts: `.pow(102)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, -240, 0, 10000)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(-240, 0, 10000)`
-$DIR/test/UniswapV3Pool.spec.ts: `.burn(-240, 0, 10000)`
-$DIR/test/UniswapV3Pool.spec.ts: `.callStatic.collect(wallet.address, -240, 0, MaxUint128, MaxUint128)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, minTick + tickSpacing, maxTick - tickSpacing, 100)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(minTick + tickSpacing, maxTick - tickSpacing, 100)`
-$DIR/test/UniswapV3Pool.spec.ts: `.burn(minTick + tickSpacing, maxTick - tickSpacing, 100)`
-$DIR/test/UniswapV3Pool.spec.ts: `.callStatic.collect(
-              wallet.address,
-              minTick + tickSpacing,
-              maxTick - tickSpacing,
-              MaxUint128,
-              MaxUint128
-            )`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, -46080, -46020, 10000)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(-46080, -46020, 10000)`
-$DIR/test/UniswapV3Pool.spec.ts: `.burn(-46080, -46020, 10000)`
-$DIR/test/UniswapV3Pool.spec.ts: `.callStatic.collect(
-              wallet.address,
-              -46080,
-              -46020,
-              MaxUint128,
-              MaxUint128
-            )`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, -240, 0, 100)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, -240, tickSpacing, 150)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, 0, tickSpacing * 2, 60)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, -240, 0, 100)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, -240, 0, 40)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(-240, 0, 90)`
-$DIR/test/UniswapV3Pool.spec.ts: `.burn(-240, 0, 90)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, -240, 0, 100)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(-240, 0, 100)`
-$DIR/test/UniswapV3Pool.spec.ts: `.burn(-240, 0, 100)`
-$DIR/test/UniswapV3Pool.spec.ts: `.ticks(-240)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, -240, 0, 100)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(-240, 0, 100)`
-$DIR/test/UniswapV3Pool.spec.ts: `.burn(-240, 0, 100)`
-$DIR/test/UniswapV3Pool.spec.ts: `.ticks(0)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, -240, 0, 100)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, -tickSpacing, 0, 250)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(-240, 0, 100)`
-$DIR/test/UniswapV3Pool.spec.ts: `.burn(-240, 0, 100)`
-$DIR/test/UniswapV3Pool.spec.ts: `.ticks(-240)`
 $DIR/test/UniswapV3Pool.spec.ts: `({ liquidityGross, feeGrowthOutside0X128, feeGrowthOutside1X128 } = await pool.ticks(-tickSpacing))`
-$DIR/test/UniswapV3Pool.spec.ts: `.ticks(-tickSpacing)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(1)`
-$DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(1)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, -240, 0, 100)`
-$DIR/test/UniswapV3Pool.spec.ts: `.observations(0)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(1)`
-$DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(1)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, -46080, -23040, 100)`
-$DIR/test/UniswapV3Pool.spec.ts: `.observations(0)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, minTick + tickSpacing, maxTick - tickSpacing, 100)`
-$DIR/test/UniswapV3Pool.spec.ts: `.ticks(minTick + tickSpacing)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, minTick + tickSpacing, maxTick - tickSpacing, 100)`
-$DIR/test/UniswapV3Pool.spec.ts: `.ticks(maxTick - tickSpacing)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(1)`
-$DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(1)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, minTick, maxTick, 100)`
-$DIR/test/UniswapV3Pool.spec.ts: `.observations(0)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, minTick, minTick + tickSpacing, BigNumber.from(2).pow(102))`
-$DIR/test/UniswapV3Pool.spec.ts: `.from(2)`
-$DIR/test/UniswapV3Pool.spec.ts: `.pow(102)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.setFeeProtocol(6, 6)`
-$DIR/test/UniswapV3Pool.spec.ts: `.setFeeProtocol(6, 6)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, minTick + tickSpacing, maxTick - tickSpacing, expandTo18Decimals(1))`
 $DIR/test/UniswapV3Pool.spec.ts: `await swapExact0For1(expandTo18Decimals(1).div(10), wallet.address)`
-$DIR/test/UniswapV3Pool.spec.ts: `.div(10)`
 $DIR/test/UniswapV3Pool.spec.ts: `await swapExact1For0(expandTo18Decimals(1).div(100), wallet.address)`
-$DIR/test/UniswapV3Pool.spec.ts: `.div(100)`
-$DIR/test/UniswapV3Pool.spec.ts: `.protocolFees()`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, minTick + tickSpacing, maxTick - tickSpacing, expandTo18Decimals(1))`
 $DIR/test/UniswapV3Pool.spec.ts: `await swapExact0For1(expandTo18Decimals(1).div(10), wallet.address)`
-$DIR/test/UniswapV3Pool.spec.ts: `.div(10)`
 $DIR/test/UniswapV3Pool.spec.ts: `await swapExact1For0(expandTo18Decimals(1).div(100), wallet.address)`
-$DIR/test/UniswapV3Pool.spec.ts: `.div(100)`
-$DIR/test/UniswapV3Pool.spec.ts: `.protocolFees()`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.setFeeProtocol(6, 6)
         ;`
-$DIR/test/UniswapV3Pool.spec.ts: `.setFeeProtocol(6, 6)`
 $DIR/test/UniswapV3Pool.spec.ts: `({ token0: token0ProtocolFees, token1: token1ProtocolFees } = await pool.protocolFees())`
-$DIR/test/UniswapV3Pool.spec.ts: `.protocolFees()`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(other.address, minTick + tickSpacing, maxTick - tickSpacing, expandTo18Decimals(1))`
 $DIR/test/UniswapV3Pool.spec.ts: `await swapExact0For1(expandTo18Decimals(1).div(10), wallet.address)`
-$DIR/test/UniswapV3Pool.spec.ts: `.div(10)`
 $DIR/test/UniswapV3Pool.spec.ts: `await swapExact1For0(expandTo18Decimals(1).div(100), wallet.address)`
-$DIR/test/UniswapV3Pool.spec.ts: `.div(100)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, minTick + tickSpacing, maxTick - tickSpacing, 1)`
-$DIR/test/UniswapV3Pool.spec.ts: `.positions(getPositionKey(wallet.address, minTick + tickSpacing, maxTick - tickSpacing))`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(minTick + tickSpacing, maxTick - tickSpacing, 1)
         ;`
-$DIR/test/UniswapV3Pool.spec.ts: `.burn(minTick + tickSpacing, maxTick - tickSpacing, 1)`
 $DIR/test/UniswapV3Pool.spec.ts: `({
           liquidity,
           feeGrowthInside0LastX128,
@@ -1326,117 +1254,55 @@ $DIR/test/UniswapV3Pool.spec.ts: `({
           tokensOwed1,
           tokensOwed0,
         } = await pool.positions(getPositionKey(wallet.address, minTick + tickSpacing, maxTick - tickSpacing)))`
-$DIR/test/UniswapV3Pool.spec.ts: `.positions(getPositionKey(wallet.address, minTick + tickSpacing, maxTick - tickSpacing))`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(10)`
-$DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(10)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(other.address, minTick, maxTick, expandTo18Decimals(1))`
 $DIR/test/UniswapV3Pool.spec.ts: `await swapExact0For1(expandTo18Decimals(1), wallet.address)`
 $DIR/test/UniswapV3Pool.spec.ts: `await swapExact1For0(expandTo18Decimals(1), wallet.address)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.connect(other).burn(minTick, maxTick, expandTo18Decimals(1))`
-$DIR/test/UniswapV3Pool.spec.ts: `.connect(other)`
-$DIR/test/UniswapV3Pool.spec.ts: `.burn(minTick, maxTick, expandTo18Decimals(1))`
-$DIR/test/UniswapV3Pool.spec.ts: `.positions(getPositionKey(other.address, minTick, maxTick))`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(10)`
-$DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(10)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, tickLower, tickUpper, 1)`
 $DIR/test/UniswapV3Pool.spec.ts: `await swapExact0For1(expandTo18Decimals(1), wallet.address)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(tickLower, tickUpper, 1)`
-$DIR/test/UniswapV3Pool.spec.ts: `.burn(tickLower, tickUpper, 1)`
 $DIR/test/UniswapV3Pool.spec.ts: `await checkTickIsClear(tickLower)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(10)`
-$DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(10)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, tickLower, tickUpper, 1)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, tickLower + tickSpacing, tickUpper, 1)`
 $DIR/test/UniswapV3Pool.spec.ts: `await swapExact0For1(expandTo18Decimals(1), wallet.address)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(tickLower, tickUpper, 1)`
-$DIR/test/UniswapV3Pool.spec.ts: `.burn(tickLower, tickUpper, 1)`
 $DIR/test/UniswapV3Pool.spec.ts: `await checkTickIsClear(tickLower)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(10)`
-$DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(10)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, tickLower, tickUpper, 1)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, tickLower, tickUpper - tickSpacing, 1)`
 $DIR/test/UniswapV3Pool.spec.ts: `await swapExact0For1(expandTo18Decimals(1), wallet.address)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(tickLower, tickUpper, 1)`
-$DIR/test/UniswapV3Pool.spec.ts: `.burn(tickLower, tickUpper, 1)`
 $DIR/test/UniswapV3Pool.spec.ts: `await checkTickIsNotClear(tickLower)`
-$DIR/test/UniswapV3Pool.spec.ts: `.observe([0])`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(10)
       ;`
-$DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(10)`
 $DIR/test/UniswapV3Pool.spec.ts: `({
         tickCumulatives: [tickCumulative],
       } = await pool.observe([0]))`
-$DIR/test/UniswapV3Pool.spec.ts: `.observe([0])`
 $DIR/test/UniswapV3Pool.spec.ts: `await swapExact0For1(1000, wallet.address)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(4)`
-$DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(4)`
-$DIR/test/UniswapV3Pool.spec.ts: `.observe([0])`
 $DIR/test/UniswapV3Pool.spec.ts: `await swapExact0For1(expandTo18Decimals(1).div(2), wallet.address)`
-$DIR/test/UniswapV3Pool.spec.ts: `.div(2)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(4)`
-$DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(4)`
 $DIR/test/UniswapV3Pool.spec.ts: `await swapExact1For0(expandTo18Decimals(1).div(4), wallet.address)`
-$DIR/test/UniswapV3Pool.spec.ts: `.div(4)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(6)`
-$DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(6)`
-$DIR/test/UniswapV3Pool.spec.ts: `.observe([0])`
-$DIR/test/UniswapV3Pool.spec.ts: `.liquidity()`
-$DIR/test/UniswapV3Pool.spec.ts: `.balanceOf(pool.address)`
-$DIR/test/UniswapV3Pool.spec.ts: `.balanceOf(pool.address)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, lowerTick, upperTick, liquidityDelta)`
-$DIR/test/UniswapV3Pool.spec.ts: `.liquidity()`
-$DIR/test/UniswapV3Pool.spec.ts: `.liquidity()`
-$DIR/test/UniswapV3Pool.spec.ts: `.balanceOf(pool.address)`
-$DIR/test/UniswapV3Pool.spec.ts: `.balanceOf(pool.address)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, lowerTick, upperTick, liquidityDelta)`
-$DIR/test/UniswapV3Pool.spec.ts: `.liquidity()`
-$DIR/test/UniswapV3Pool.spec.ts: `.liquidity()`
-$DIR/test/UniswapV3Pool.spec.ts: `.balanceOf(pool.address)`
-$DIR/test/UniswapV3Pool.spec.ts: `.balanceOf(pool.address)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, lowerTick, upperTick, liquidityDelta)`
-$DIR/test/UniswapV3Pool.spec.ts: `.liquidity()`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, lowerTick, upperTick, expandTo18Decimals(1000))`
-$DIR/test/UniswapV3Pool.spec.ts: `.burn(lowerTick, upperTick, expandTo18Decimals(1001))`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, lowerTick, upperTick, liquidityDelta)`
-$DIR/test/UniswapV3Pool.spec.ts: `.liquidity()`
 $DIR/test/UniswapV3Pool.spec.ts: `await swapExact0For1(amount0In, wallet.address)`
-$DIR/test/UniswapV3Pool.spec.ts: `.liquidity()`
-$DIR/test/UniswapV3Pool.spec.ts: `.balanceOf(pool.address)`
-$DIR/test/UniswapV3Pool.spec.ts: `.balanceOf(pool.address)`
-$DIR/test/UniswapV3Pool.spec.ts: `.balanceOf(wallet.address)`
-$DIR/test/UniswapV3Pool.spec.ts: `.balanceOf(wallet.address)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(lowerTick, upperTick, 0)`
-$DIR/test/UniswapV3Pool.spec.ts: `.burn(lowerTick, upperTick, 0)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.collect(wallet.address, lowerTick, upperTick, MaxUint128, MaxUint128)`
-$DIR/test/UniswapV3Pool.spec.ts: `.collect(wallet.address, lowerTick, upperTick, MaxUint128, MaxUint128)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(lowerTick, upperTick, 0)`
-$DIR/test/UniswapV3Pool.spec.ts: `.burn(lowerTick, upperTick, 0)`
-$DIR/test/UniswapV3Pool.spec.ts: `.callStatic.collect(
-        wallet.address,
-        lowerTick,
-        upperTick,
-        MaxUint128,
-        MaxUint128
-      )`
-$DIR/test/UniswapV3Pool.spec.ts: `.balanceOf(wallet.address)`
-$DIR/test/UniswapV3Pool.spec.ts: `.balanceOf(wallet.address)`
-$DIR/test/UniswapV3Pool.spec.ts: `.balanceOf(pool.address)`
-$DIR/test/UniswapV3Pool.spec.ts: `.balanceOf(pool.address)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, -tickSpacing, tickSpacing, expandTo18Decimals(3))`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, tickSpacing, tickSpacing * 2, expandTo18Decimals(3))`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, -tickSpacing * 2, -tickSpacing, expandTo18Decimals(3))`
-$DIR/test/UniswapV3Pool.spec.ts: `.liquidity()`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, lowerTick, upperTick, liquidityDelta)`
-$DIR/test/UniswapV3Pool.spec.ts: `.liquidity()`
 $DIR/test/UniswapV3Pool.spec.ts: `await swapExact0For1(1, wallet.address)`
-$DIR/test/UniswapV3Pool.spec.ts: `.slot0()`
-$DIR/test/UniswapV3Pool.spec.ts: `.liquidity()`
-$DIR/test/UniswapV3Pool.spec.ts: `.liquidity()`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, lowerTick, upperTick, liquidityDelta)`
-$DIR/test/UniswapV3Pool.spec.ts: `.liquidity()`
 $DIR/test/UniswapV3Pool.spec.ts: `await swapExact0For1(1, wallet.address)`
-$DIR/test/UniswapV3Pool.spec.ts: `.slot0()`
-$DIR/test/UniswapV3Pool.spec.ts: `.liquidity()`
 $DIR/test/UniswapV3Pool.spec.ts: `await swapExact1For0(expandTo18Decimals(2), other.address)`
 $DIR/test/UniswapV3Pool.spec.ts: `await swapExact1For0(expandTo18Decimals(2), other.address)`
 $DIR/test/UniswapV3Pool.spec.ts: `await swapExact0For1(expandTo18Decimals(2), other.address)`
@@ -1445,67 +1311,21 @@ $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, minTick, maxTick, e
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, minTick + tickSpacing, maxTick - tickSpacing, expandTo18Decimals(2))`
 $DIR/test/UniswapV3Pool.spec.ts: `await swapExact0For1(expandTo18Decimals(1), wallet.address)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(minTick, maxTick, 0)`
-$DIR/test/UniswapV3Pool.spec.ts: `.burn(minTick, maxTick, 0)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(minTick + tickSpacing, maxTick - tickSpacing, 0)`
-$DIR/test/UniswapV3Pool.spec.ts: `.burn(minTick + tickSpacing, maxTick - tickSpacing, 0)`
-$DIR/test/UniswapV3Pool.spec.ts: `.positions(
-        getPositionKey(wallet.address, minTick, maxTick)
-      )`
-$DIR/test/UniswapV3Pool.spec.ts: `.positions(
-        getPositionKey(wallet.address, minTick + tickSpacing, maxTick - tickSpacing)
-      )`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.setFeeGrowthGlobal0X128(magicNumber)`
-$DIR/test/UniswapV3Pool.spec.ts: `.setFeeGrowthGlobal0X128(magicNumber)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(minTick, maxTick, 0)`
-$DIR/test/UniswapV3Pool.spec.ts: `.burn(minTick, maxTick, 0)`
-$DIR/test/UniswapV3Pool.spec.ts: `.positions(getPositionKey(wallet.address, minTick, maxTick))`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.setFeeGrowthGlobal0X128(magicNumber.add(1))`
-$DIR/test/UniswapV3Pool.spec.ts: `.setFeeGrowthGlobal0X128(magicNumber.add(1))`
-$DIR/test/UniswapV3Pool.spec.ts: `.add(1)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(minTick, maxTick, 0)`
-$DIR/test/UniswapV3Pool.spec.ts: `.burn(minTick, maxTick, 0)`
-$DIR/test/UniswapV3Pool.spec.ts: `.positions(getPositionKey(wallet.address, minTick, maxTick))`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.setFeeGrowthGlobal0X128(constants.MaxUint256)`
-$DIR/test/UniswapV3Pool.spec.ts: `.setFeeGrowthGlobal0X128(constants.MaxUint256)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(minTick, maxTick, 0)`
-$DIR/test/UniswapV3Pool.spec.ts: `.burn(minTick, maxTick, 0)`
-$DIR/test/UniswapV3Pool.spec.ts: `.positions(getPositionKey(wallet.address, minTick, maxTick))`
 $DIR/test/UniswapV3Pool.spec.ts: `await swapExact0For1(expandTo18Decimals(1), wallet.address)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(minTick, maxTick, 0)`
-$DIR/test/UniswapV3Pool.spec.ts: `.burn(minTick, maxTick, 0)`
-$DIR/test/UniswapV3Pool.spec.ts: `.callStatic.collect(
-          wallet.address,
-          minTick,
-          maxTick,
-          MaxUint128,
-          MaxUint128
-        )`
 $DIR/test/UniswapV3Pool.spec.ts: `await swapExact1For0(expandTo18Decimals(1), wallet.address)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(minTick, maxTick, 0)`
-$DIR/test/UniswapV3Pool.spec.ts: `.burn(minTick, maxTick, 0)`
-$DIR/test/UniswapV3Pool.spec.ts: `.callStatic.collect(
-          wallet.address,
-          minTick,
-          maxTick,
-          MaxUint128,
-          MaxUint128
-        )`
 $DIR/test/UniswapV3Pool.spec.ts: `await swapExact0For1(expandTo18Decimals(1), wallet.address)`
 $DIR/test/UniswapV3Pool.spec.ts: `await swapExact1For0(expandTo18Decimals(1), wallet.address)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(minTick, maxTick, 0)`
-$DIR/test/UniswapV3Pool.spec.ts: `.burn(minTick, maxTick, 0)`
-$DIR/test/UniswapV3Pool.spec.ts: `.callStatic.collect(
-          wallet.address,
-          minTick,
-          maxTick,
-          MaxUint128,
-          MaxUint128
-        )`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.setFeeProtocol(6, 6)`
-$DIR/test/UniswapV3Pool.spec.ts: `.setFeeProtocol(6, 6)`
-$DIR/test/UniswapV3Pool.spec.ts: `.setFeeProtocol(11, 11)`
-$DIR/test/UniswapV3Pool.spec.ts: `.connect(other)`
-$DIR/test/UniswapV3Pool.spec.ts: `.setFeeProtocol(6, 6)`
 $DIR/test/UniswapV3Pool.spec.ts: `({ token0Fees, token1Fees } = await swapAndGetFeesOwed({
         amount: expandTo18Decimals(1),
         zeroForOne: true,
@@ -1537,19 +1357,14 @@ $DIR/test/UniswapV3Pool.spec.ts: `({ token0Fees, token1Fees } = await swapAndGet
         poke: true,
       }))`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.setFeeProtocol(6, 6)`
-$DIR/test/UniswapV3Pool.spec.ts: `.setFeeProtocol(6, 6)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.setFeeProtocol(6, 6)`
-$DIR/test/UniswapV3Pool.spec.ts: `.setFeeProtocol(6, 6)`
-$DIR/test/UniswapV3Pool.spec.ts: `.callStatic.collectProtocol(wallet.address, MaxUint128, MaxUint128)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.setFeeProtocol(6, 6)`
-$DIR/test/UniswapV3Pool.spec.ts: `.setFeeProtocol(6, 6)`
 $DIR/test/UniswapV3Pool.spec.ts: `await swapAndGetFeesOwed({
           amount: expandTo18Decimals(1),
           zeroForOne: true,
           poke: true,
         })`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.setFeeProtocol(8, 5)`
-$DIR/test/UniswapV3Pool.spec.ts: `.setFeeProtocol(8, 5)`
 $DIR/test/UniswapV3Pool.spec.ts: `await swapAndGetFeesOwed({
           amount: expandTo18Decimals(1),
           zeroForOne: true,
@@ -1571,34 +1386,299 @@ $DIR/test/UniswapV3Pool.spec.ts: `await swapAndGetFeesOwed({
         poke: false,
       })`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.setFeeProtocol(6, 6)`
-$DIR/test/UniswapV3Pool.spec.ts: `.setFeeProtocol(6, 6)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.setFeeProtocol(6, 6)`
-$DIR/test/UniswapV3Pool.spec.ts: `.setFeeProtocol(6, 6)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.collect(wallet.address, minTick, maxTick, MaxUint128, MaxUint128)`
-$DIR/test/UniswapV3Pool.spec.ts: `.collect(wallet.address, minTick, maxTick, MaxUint128, MaxUint128)`
-$DIR/test/UniswapV3Pool.spec.ts: `.protocolFees()`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(minTick, maxTick, 0)`
-$DIR/test/UniswapV3Pool.spec.ts: `.burn(minTick, maxTick, 0)`
 $DIR/test/UniswapV3Pool.spec.ts: `({ token0: token0ProtocolFees, token1: token1ProtocolFees } = await pool.protocolFees())`
-$DIR/test/UniswapV3Pool.spec.ts: `.protocolFees()`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, 12, 24, 1)`
-$DIR/test/UniswapV3Pool.spec.ts: `.div(4)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, 120000, 121200, liquidityAmount)`
 $DIR/test/UniswapV3Pool.spec.ts: `await swapExact1For0(expandTo18Decimals(1), wallet.address)`
-$DIR/test/UniswapV3Pool.spec.ts: `.div(4)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, -121200, -120000, liquidityAmount)`
 $DIR/test/UniswapV3Pool.spec.ts: `await swapExact0For1(expandTo18Decimals(1), wallet.address)`
 $DIR/test/UniswapV3Pool.spec.ts: `pool = await createPool(FeeAmount.MEDIUM, 1)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.initialize(p0)`
+$DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, -24082, -24080, liquidity)`
+$DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, -24082, -24081, liquidity)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.initialize(encodePriceSqrt(1, 1))`
+$DIR/test/UniswapV3Pool.spec.ts: `await flash(1001, 2002, other.address)`
+$DIR/test/UniswapV3Pool.spec.ts: `await flash(2002, 4004, other.address)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.increaseObservationCardinalityNext(2)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.increaseObservationCardinalityNext(5)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.increaseObservationCardinalityNext(3)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.setFeeProtocol(7, 7)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.setFeeProtocol(7, 7)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.setFeeProtocol(5, 8)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.setFeeProtocol(4, 4)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.setFeeProtocol(0, 0)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.setFeeProtocol(7, 5)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.setFeeProtocol(4, 10)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.setFeeProtocol(5, 9)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(5)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(5)`
+$DIR/test/UniswapV3Pool.spec.ts: `await swapToHigherPrice(encodePriceSqrt(2, 1), wallet.address)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(7)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(5)`
+$DIR/test/UniswapV3Pool.spec.ts: `await swapToLowerPrice(encodePriceSqrt(1, 2), wallet.address)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(7)`
+$DIR/test/UniswapV3Pool.spec.ts: `await swapToLowerPrice(encodePriceSqrt(1, 2), wallet.address)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(5)`
+$DIR/test/UniswapV3Pool.spec.ts: `await swapToHigherPrice(encodePriceSqrt(1, 1), wallet.address)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(7)`
+$DIR/test/UniswapV3Pool.spec.ts: `await swapToHigherPrice(encodePriceSqrt(2, 1), wallet.address)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(5)`
+$DIR/test/UniswapV3Pool.spec.ts: `await swapToLowerPrice(encodePriceSqrt(1, 1), wallet.address)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(7)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(5)`
+$DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, tickUpper, getMaxTick(tickSpacing), 15)`
+$DIR/test/UniswapV3Pool.spec.ts: `await swapToHigherPrice(encodePriceSqrt(2, 1), wallet.address)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(8)`
+$DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, tickLower, getMaxTick(tickSpacing), 15)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(5)`
+$DIR/test/UniswapV3Pool.spec.ts: `await swapToHigherPrice(encodePriceSqrt(2, 1), wallet.address)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(8)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(5)`
+$DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, getMinTick(tickSpacing), tickLower, 15)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(8)`
+$DIR/test/UniswapV3Pool.spec.ts: `await swapToLowerPrice(encodePriceSqrt(1, 2), wallet.address)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(3)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.initialize(encodePriceSqrt(1, 1))`
+$DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, minTick, maxTick, 1)`
+$DIR/test/UniswapV3Pool.spec.ts: `await flash(0, 0, wallet.address, MaxUint128, MaxUint128)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(minTick, maxTick, 0)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.initialize(encodePriceSqrt(1, 1))`
+$DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, minTick, maxTick, 1)`
+$DIR/test/UniswapV3Pool.spec.ts: `await flash(0, 0, wallet.address, MaxUint128, MaxUint128)`
+$DIR/test/UniswapV3Pool.spec.ts: `await flash(0, 0, wallet.address, 1, 1)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(minTick, maxTick, 0)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.initialize(encodePriceSqrt(1, 1))`
+$DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, minTick, maxTick, 1)`
+$DIR/test/UniswapV3Pool.spec.ts: `await flash(0, 0, wallet.address, MaxUint128, MaxUint128)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(minTick, maxTick, 0)`
+$DIR/test/UniswapV3Pool.spec.ts: `await flash(0, 0, wallet.address, 1, 1)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(minTick, maxTick, 0)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.initialize(encodePriceSqrt(1, 1))`
+$DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, minTick, maxTick, 1)`
+$DIR/test/UniswapV3Pool.spec.ts: `await mint(other.address, minTick, maxTick, 1)`
+$DIR/test/UniswapV3Pool.spec.ts: `await flash(0, 0, wallet.address, MaxUint128, 0)`
+$DIR/test/UniswapV3Pool.spec.ts: `await flash(0, 0, wallet.address, MaxUint128, 0)`
+$DIR/test/UniswapV3Pool.spec.ts: `await flash(0, 0, wallet.address, 2, 0)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(minTick, maxTick, 0)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.connect(other).burn(minTick, maxTick, 0)`
+$DIR/test/UniswapV3Pool.spec.ts: `({ amount0 } = await pool
+        .connect(other)
+        .callStatic.collect(other.address, minTick, maxTick, MaxUint128, MaxUint128))`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.initialize(encodePriceSqrt(1, 1))`
+$DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, minTick, maxTick, 1)`
+$DIR/test/UniswapV3Pool.spec.ts: `await flash(0, 0, wallet.address, 1, 0)`
+$DIR/test/UniswapV3Pool.spec.ts: `await mint(other.address, minTick, maxTick, 1)`
+$DIR/test/UniswapV3Pool.spec.ts: `await flash(0, 0, wallet.address, MaxUint128, 0)`
+$DIR/test/UniswapV3Pool.spec.ts: `await flash(0, 0, wallet.address, MaxUint128, 0)`
+$DIR/test/UniswapV3Pool.spec.ts: `await flash(0, 0, wallet.address, 2, 0)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(minTick, maxTick, 0)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.connect(other).burn(minTick, maxTick, 0)`
+$DIR/test/UniswapV3Pool.spec.ts: `({ amount0 } = await pool
+        .connect(other)
+        .callStatic.collect(other.address, minTick, maxTick, MaxUint128, MaxUint128))`
+$DIR/test/UniswapV3Pool.spec.ts: `.initialize(encodePriceSqrt(1, 1))`
+$DIR/test/UniswapV3Pool.spec.ts: `.initialize(encodePriceSqrt(1, 1))`
+$DIR/test/UniswapV3Pool.spec.ts: `.initialize(MIN_SQRT_RATIO)`
+$DIR/test/UniswapV3Pool.spec.ts: `.initialize(MAX_SQRT_RATIO.sub(1))`
+$DIR/test/UniswapV3Pool.spec.ts: `.sub(1)`
+$DIR/test/UniswapV3Pool.spec.ts: `.initialize(price)`
+$DIR/test/UniswapV3Pool.spec.ts: `.slot0()`
+$DIR/test/UniswapV3Pool.spec.ts: `.initialize(encodePriceSqrt(1, 1))`
+$DIR/test/UniswapV3Pool.spec.ts: `.observations(0)`
+$DIR/test/UniswapV3Pool.spec.ts: `.initialize(encodePriceSqrt(1, 1))`
+$DIR/test/UniswapV3Pool.spec.ts: `.initialize(encodePriceSqrt(1, 1))`
+$DIR/test/UniswapV3Pool.spec.ts: `.increaseObservationCardinalityNext(3)`
+$DIR/test/UniswapV3Pool.spec.ts: `.initialize(encodePriceSqrt(1, 1))`
+$DIR/test/UniswapV3Pool.spec.ts: `.increaseObservationCardinalityNext(3)`
+$DIR/test/UniswapV3Pool.spec.ts: `.increaseObservationCardinalityNext(2)`
+$DIR/test/UniswapV3Pool.spec.ts: `.initialize(encodePriceSqrt(1, 1))`
+$DIR/test/UniswapV3Pool.spec.ts: `.increaseObservationCardinalityNext(2)`
+$DIR/test/UniswapV3Pool.spec.ts: `.slot0()`
+$DIR/test/UniswapV3Pool.spec.ts: `.maxLiquidityPerTick()`
+$DIR/test/UniswapV3Pool.spec.ts: `.maxLiquidityPerTick()`
+$DIR/test/UniswapV3Pool.spec.ts: `.sub(1000)`
+$DIR/test/UniswapV3Pool.spec.ts: `.from(2)`
+$DIR/test/UniswapV3Pool.spec.ts: `.pow(102)`
+$DIR/test/UniswapV3Pool.spec.ts: `.burn(-240, 0, 10000)`
+$DIR/test/UniswapV3Pool.spec.ts: `.callStatic.collect(wallet.address, -240, 0, MaxUint128, MaxUint128)`
+$DIR/test/UniswapV3Pool.spec.ts: `.burn(minTick + tickSpacing, maxTick - tickSpacing, 100)`
+$DIR/test/UniswapV3Pool.spec.ts: `.callStatic.collect(
+              wallet.address,
+              minTick + tickSpacing,
+              maxTick - tickSpacing,
+              MaxUint128,
+              MaxUint128
+            )`
+$DIR/test/UniswapV3Pool.spec.ts: `.burn(-46080, -46020, 10000)`
+$DIR/test/UniswapV3Pool.spec.ts: `.callStatic.collect(
+              wallet.address,
+              -46080,
+              -46020,
+              MaxUint128,
+              MaxUint128
+            )`
+$DIR/test/UniswapV3Pool.spec.ts: `.burn(-240, 0, 90)`
+$DIR/test/UniswapV3Pool.spec.ts: `.burn(-240, 0, 100)`
+$DIR/test/UniswapV3Pool.spec.ts: `.ticks(-240)`
+$DIR/test/UniswapV3Pool.spec.ts: `.burn(-240, 0, 100)`
+$DIR/test/UniswapV3Pool.spec.ts: `.ticks(0)`
+$DIR/test/UniswapV3Pool.spec.ts: `.burn(-240, 0, 100)`
+$DIR/test/UniswapV3Pool.spec.ts: `.ticks(-240)`
+$DIR/test/UniswapV3Pool.spec.ts: `.ticks(-tickSpacing)`
+$DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(1)`
+$DIR/test/UniswapV3Pool.spec.ts: `.observations(0)`
+$DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(1)`
+$DIR/test/UniswapV3Pool.spec.ts: `.observations(0)`
+$DIR/test/UniswapV3Pool.spec.ts: `.ticks(minTick + tickSpacing)`
+$DIR/test/UniswapV3Pool.spec.ts: `.ticks(maxTick - tickSpacing)`
+$DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(1)`
+$DIR/test/UniswapV3Pool.spec.ts: `.observations(0)`
+$DIR/test/UniswapV3Pool.spec.ts: `.from(2)`
+$DIR/test/UniswapV3Pool.spec.ts: `.pow(102)`
+$DIR/test/UniswapV3Pool.spec.ts: `.setFeeProtocol(6, 6)`
+$DIR/test/UniswapV3Pool.spec.ts: `.div(10)`
+$DIR/test/UniswapV3Pool.spec.ts: `.div(100)`
+$DIR/test/UniswapV3Pool.spec.ts: `.protocolFees()`
+$DIR/test/UniswapV3Pool.spec.ts: `.div(10)`
+$DIR/test/UniswapV3Pool.spec.ts: `.div(100)`
+$DIR/test/UniswapV3Pool.spec.ts: `.protocolFees()`
+$DIR/test/UniswapV3Pool.spec.ts: `.setFeeProtocol(6, 6)`
+$DIR/test/UniswapV3Pool.spec.ts: `.protocolFees()`
+$DIR/test/UniswapV3Pool.spec.ts: `.div(10)`
+$DIR/test/UniswapV3Pool.spec.ts: `.div(100)`
+$DIR/test/UniswapV3Pool.spec.ts: `.positions(getPositionKey(wallet.address, minTick + tickSpacing, maxTick - tickSpacing))`
+$DIR/test/UniswapV3Pool.spec.ts: `.burn(minTick + tickSpacing, maxTick - tickSpacing, 1)`
+$DIR/test/UniswapV3Pool.spec.ts: `.positions(getPositionKey(wallet.address, minTick + tickSpacing, maxTick - tickSpacing))`
+$DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(10)`
+$DIR/test/UniswapV3Pool.spec.ts: `.connect(other)`
+$DIR/test/UniswapV3Pool.spec.ts: `.burn(minTick, maxTick, expandTo18Decimals(1))`
+$DIR/test/UniswapV3Pool.spec.ts: `.positions(getPositionKey(other.address, minTick, maxTick))`
+$DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(10)`
+$DIR/test/UniswapV3Pool.spec.ts: `.burn(tickLower, tickUpper, 1)`
+$DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(10)`
+$DIR/test/UniswapV3Pool.spec.ts: `.burn(tickLower, tickUpper, 1)`
+$DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(10)`
+$DIR/test/UniswapV3Pool.spec.ts: `.burn(tickLower, tickUpper, 1)`
+$DIR/test/UniswapV3Pool.spec.ts: `.observe([0])`
+$DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(10)`
+$DIR/test/UniswapV3Pool.spec.ts: `.observe([0])`
+$DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(4)`
+$DIR/test/UniswapV3Pool.spec.ts: `.observe([0])`
+$DIR/test/UniswapV3Pool.spec.ts: `.div(2)`
+$DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(4)`
+$DIR/test/UniswapV3Pool.spec.ts: `.div(4)`
+$DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(6)`
+$DIR/test/UniswapV3Pool.spec.ts: `.observe([0])`
+$DIR/test/UniswapV3Pool.spec.ts: `.liquidity()`
+$DIR/test/UniswapV3Pool.spec.ts: `.balanceOf(pool.address)`
+$DIR/test/UniswapV3Pool.spec.ts: `.balanceOf(pool.address)`
+$DIR/test/UniswapV3Pool.spec.ts: `.liquidity()`
+$DIR/test/UniswapV3Pool.spec.ts: `.liquidity()`
+$DIR/test/UniswapV3Pool.spec.ts: `.balanceOf(pool.address)`
+$DIR/test/UniswapV3Pool.spec.ts: `.balanceOf(pool.address)`
+$DIR/test/UniswapV3Pool.spec.ts: `.liquidity()`
+$DIR/test/UniswapV3Pool.spec.ts: `.liquidity()`
+$DIR/test/UniswapV3Pool.spec.ts: `.balanceOf(pool.address)`
+$DIR/test/UniswapV3Pool.spec.ts: `.balanceOf(pool.address)`
+$DIR/test/UniswapV3Pool.spec.ts: `.liquidity()`
+$DIR/test/UniswapV3Pool.spec.ts: `.burn(lowerTick, upperTick, expandTo18Decimals(1001))`
+$DIR/test/UniswapV3Pool.spec.ts: `.liquidity()`
+$DIR/test/UniswapV3Pool.spec.ts: `.liquidity()`
+$DIR/test/UniswapV3Pool.spec.ts: `.balanceOf(pool.address)`
+$DIR/test/UniswapV3Pool.spec.ts: `.balanceOf(pool.address)`
+$DIR/test/UniswapV3Pool.spec.ts: `.balanceOf(wallet.address)`
+$DIR/test/UniswapV3Pool.spec.ts: `.balanceOf(wallet.address)`
+$DIR/test/UniswapV3Pool.spec.ts: `.burn(lowerTick, upperTick, 0)`
+$DIR/test/UniswapV3Pool.spec.ts: `.collect(wallet.address, lowerTick, upperTick, MaxUint128, MaxUint128)`
+$DIR/test/UniswapV3Pool.spec.ts: `.burn(lowerTick, upperTick, 0)`
+$DIR/test/UniswapV3Pool.spec.ts: `.callStatic.collect(
+        wallet.address,
+        lowerTick,
+        upperTick,
+        MaxUint128,
+        MaxUint128
+      )`
+$DIR/test/UniswapV3Pool.spec.ts: `.balanceOf(wallet.address)`
+$DIR/test/UniswapV3Pool.spec.ts: `.balanceOf(wallet.address)`
+$DIR/test/UniswapV3Pool.spec.ts: `.balanceOf(pool.address)`
+$DIR/test/UniswapV3Pool.spec.ts: `.balanceOf(pool.address)`
+$DIR/test/UniswapV3Pool.spec.ts: `.liquidity()`
+$DIR/test/UniswapV3Pool.spec.ts: `.liquidity()`
+$DIR/test/UniswapV3Pool.spec.ts: `.slot0()`
+$DIR/test/UniswapV3Pool.spec.ts: `.liquidity()`
+$DIR/test/UniswapV3Pool.spec.ts: `.liquidity()`
+$DIR/test/UniswapV3Pool.spec.ts: `.liquidity()`
+$DIR/test/UniswapV3Pool.spec.ts: `.slot0()`
+$DIR/test/UniswapV3Pool.spec.ts: `.liquidity()`
+$DIR/test/UniswapV3Pool.spec.ts: `.burn(minTick, maxTick, 0)`
+$DIR/test/UniswapV3Pool.spec.ts: `.burn(minTick + tickSpacing, maxTick - tickSpacing, 0)`
+$DIR/test/UniswapV3Pool.spec.ts: `.positions(
+        getPositionKey(wallet.address, minTick, maxTick)
+      )`
+$DIR/test/UniswapV3Pool.spec.ts: `.positions(
+        getPositionKey(wallet.address, minTick + tickSpacing, maxTick - tickSpacing)
+      )`
+$DIR/test/UniswapV3Pool.spec.ts: `.setFeeGrowthGlobal0X128(magicNumber)`
+$DIR/test/UniswapV3Pool.spec.ts: `.burn(minTick, maxTick, 0)`
+$DIR/test/UniswapV3Pool.spec.ts: `.positions(getPositionKey(wallet.address, minTick, maxTick))`
+$DIR/test/UniswapV3Pool.spec.ts: `.setFeeGrowthGlobal0X128(magicNumber.add(1))`
+$DIR/test/UniswapV3Pool.spec.ts: `.add(1)`
+$DIR/test/UniswapV3Pool.spec.ts: `.burn(minTick, maxTick, 0)`
+$DIR/test/UniswapV3Pool.spec.ts: `.positions(getPositionKey(wallet.address, minTick, maxTick))`
+$DIR/test/UniswapV3Pool.spec.ts: `.setFeeGrowthGlobal0X128(constants.MaxUint256)`
+$DIR/test/UniswapV3Pool.spec.ts: `.burn(minTick, maxTick, 0)`
+$DIR/test/UniswapV3Pool.spec.ts: `.positions(getPositionKey(wallet.address, minTick, maxTick))`
+$DIR/test/UniswapV3Pool.spec.ts: `.burn(minTick, maxTick, 0)`
+$DIR/test/UniswapV3Pool.spec.ts: `.callStatic.collect(
+          wallet.address,
+          minTick,
+          maxTick,
+          MaxUint128,
+          MaxUint128
+        )`
+$DIR/test/UniswapV3Pool.spec.ts: `.burn(minTick, maxTick, 0)`
+$DIR/test/UniswapV3Pool.spec.ts: `.callStatic.collect(
+          wallet.address,
+          minTick,
+          maxTick,
+          MaxUint128,
+          MaxUint128
+        )`
+$DIR/test/UniswapV3Pool.spec.ts: `.burn(minTick, maxTick, 0)`
+$DIR/test/UniswapV3Pool.spec.ts: `.callStatic.collect(
+          wallet.address,
+          minTick,
+          maxTick,
+          MaxUint128,
+          MaxUint128
+        )`
+$DIR/test/UniswapV3Pool.spec.ts: `.setFeeProtocol(6, 6)`
+$DIR/test/UniswapV3Pool.spec.ts: `.setFeeProtocol(11, 11)`
+$DIR/test/UniswapV3Pool.spec.ts: `.connect(other)`
+$DIR/test/UniswapV3Pool.spec.ts: `.setFeeProtocol(6, 6)`
+$DIR/test/UniswapV3Pool.spec.ts: `.setFeeProtocol(6, 6)`
+$DIR/test/UniswapV3Pool.spec.ts: `.setFeeProtocol(6, 6)`
+$DIR/test/UniswapV3Pool.spec.ts: `.callStatic.collectProtocol(wallet.address, MaxUint128, MaxUint128)`
+$DIR/test/UniswapV3Pool.spec.ts: `.setFeeProtocol(6, 6)`
+$DIR/test/UniswapV3Pool.spec.ts: `.setFeeProtocol(8, 5)`
+$DIR/test/UniswapV3Pool.spec.ts: `.setFeeProtocol(6, 6)`
+$DIR/test/UniswapV3Pool.spec.ts: `.setFeeProtocol(6, 6)`
+$DIR/test/UniswapV3Pool.spec.ts: `.collect(wallet.address, minTick, maxTick, MaxUint128, MaxUint128)`
+$DIR/test/UniswapV3Pool.spec.ts: `.protocolFees()`
+$DIR/test/UniswapV3Pool.spec.ts: `.burn(minTick, maxTick, 0)`
+$DIR/test/UniswapV3Pool.spec.ts: `.protocolFees()`
+$DIR/test/UniswapV3Pool.spec.ts: `.div(4)`
+$DIR/test/UniswapV3Pool.spec.ts: `.div(4)`
 $DIR/test/UniswapV3Pool.spec.ts: `.getContractFactory('TickMathTest')`
 $DIR/test/UniswapV3Pool.spec.ts: `.deploy()`
 $DIR/test/UniswapV3Pool.spec.ts: `.getContractFactory('SwapMathTest')`
 $DIR/test/UniswapV3Pool.spec.ts: `.deploy()`
 $DIR/test/UniswapV3Pool.spec.ts: `.getSqrtRatioAtTick(-24081)`
 $DIR/test/UniswapV3Pool.spec.ts: `.add(1)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.initialize(p0)`
 $DIR/test/UniswapV3Pool.spec.ts: `.initialize(p0)`
-$DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, -24082, -24080, liquidity)`
-$DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, -24082, -24081, liquidity)`
 $DIR/test/UniswapV3Pool.spec.ts: `.computeSwapStep(
         p0,
         p0.sub(1),
@@ -1609,16 +1689,13 @@ $DIR/test/UniswapV3Pool.spec.ts: `.computeSwapStep(
 $DIR/test/UniswapV3Pool.spec.ts: `.sub(1)`
 $DIR/test/UniswapV3Pool.spec.ts: `.slot0()`
 $DIR/test/UniswapV3Pool.spec.ts: `.mul(2)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.initialize(encodePriceSqrt(1, 1))`
 $DIR/test/UniswapV3Pool.spec.ts: `.initialize(encodePriceSqrt(1, 1))`
 $DIR/test/UniswapV3Pool.spec.ts: `.add(1)`
-$DIR/test/UniswapV3Pool.spec.ts: `await flash(1001, 2002, other.address)`
 $DIR/test/UniswapV3Pool.spec.ts: `.from(7)`
 $DIR/test/UniswapV3Pool.spec.ts: `.mul(BigNumber.from(2).pow(128))`
 $DIR/test/UniswapV3Pool.spec.ts: `.from(2)`
 $DIR/test/UniswapV3Pool.spec.ts: `.pow(128)`
 $DIR/test/UniswapV3Pool.spec.ts: `.div(expandTo18Decimals(2))`
-$DIR/test/UniswapV3Pool.spec.ts: `await flash(2002, 4004, other.address)`
 $DIR/test/UniswapV3Pool.spec.ts: `.protocolFees()`
 $DIR/test/UniswapV3Pool.spec.ts: `.from(11)`
 $DIR/test/UniswapV3Pool.spec.ts: `.mul(BigNumber.from(2).pow(128))`
@@ -1661,32 +1738,21 @@ $DIR/test/UniswapV3Pool.spec.ts: `.div(expandTo18Decimals(2))`
 $DIR/test/UniswapV3Pool.spec.ts: `.increaseObservationCardinalityNext(2)`
 $DIR/test/UniswapV3Pool.spec.ts: `.slot0()`
 $DIR/test/UniswapV3Pool.spec.ts: `.observations(0)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.increaseObservationCardinalityNext(2)`
 $DIR/test/UniswapV3Pool.spec.ts: `.increaseObservationCardinalityNext(2)`
 $DIR/test/UniswapV3Pool.spec.ts: `.slot0()`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.increaseObservationCardinalityNext(5)`
 $DIR/test/UniswapV3Pool.spec.ts: `.increaseObservationCardinalityNext(5)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.increaseObservationCardinalityNext(3)`
 $DIR/test/UniswapV3Pool.spec.ts: `.increaseObservationCardinalityNext(3)`
 $DIR/test/UniswapV3Pool.spec.ts: `.slot0()`
 $DIR/test/UniswapV3Pool.spec.ts: `.connect(other)`
 $DIR/test/UniswapV3Pool.spec.ts: `.setFeeProtocol(5, 5)`
 $DIR/test/UniswapV3Pool.spec.ts: `.setFeeProtocol(11, 6)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.setFeeProtocol(7, 7)`
 $DIR/test/UniswapV3Pool.spec.ts: `.setFeeProtocol(7, 7)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.setFeeProtocol(7, 7)`
 $DIR/test/UniswapV3Pool.spec.ts: `.setFeeProtocol(7, 7)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.setFeeProtocol(5, 8)`
 $DIR/test/UniswapV3Pool.spec.ts: `.setFeeProtocol(5, 8)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.setFeeProtocol(4, 4)`
 $DIR/test/UniswapV3Pool.spec.ts: `.setFeeProtocol(4, 4)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.setFeeProtocol(0, 0)`
 $DIR/test/UniswapV3Pool.spec.ts: `.setFeeProtocol(0, 0)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.setFeeProtocol(7, 5)`
 $DIR/test/UniswapV3Pool.spec.ts: `.setFeeProtocol(7, 5)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.setFeeProtocol(4, 10)`
 $DIR/test/UniswapV3Pool.spec.ts: `.setFeeProtocol(4, 10)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.setFeeProtocol(5, 9)`
 $DIR/test/UniswapV3Pool.spec.ts: `.setFeeProtocol(5, 9)`
 $DIR/test/UniswapV3Pool.spec.ts: `.getContractFactory('TestUniswapV3ReentrantCallee')`
 $DIR/test/UniswapV3Pool.spec.ts: `.deploy()`
@@ -1697,73 +1763,41 @@ $DIR/test/UniswapV3Pool.spec.ts: `.snapshotCumulativesInside(tickLower, getMaxTi
 $DIR/test/UniswapV3Pool.spec.ts: `.snapshotCumulativesInside(tickLower - tickSpacing, tickUpper)`
 $DIR/test/UniswapV3Pool.spec.ts: `.snapshotCumulativesInside(tickLower, tickUpper + tickSpacing)`
 $DIR/test/UniswapV3Pool.spec.ts: `.snapshotCumulativesInside(tickLower, tickUpper)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(5)`
 $DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(5)`
 $DIR/test/UniswapV3Pool.spec.ts: `.snapshotCumulativesInside(tickLower, tickUpper)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(5)`
 $DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(5)`
-$DIR/test/UniswapV3Pool.spec.ts: `await swapToHigherPrice(encodePriceSqrt(2, 1), wallet.address)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(7)`
 $DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(7)`
 $DIR/test/UniswapV3Pool.spec.ts: `.snapshotCumulativesInside(tickLower, tickUpper)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(5)`
 $DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(5)`
-$DIR/test/UniswapV3Pool.spec.ts: `await swapToLowerPrice(encodePriceSqrt(1, 2), wallet.address)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(7)`
 $DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(7)`
 $DIR/test/UniswapV3Pool.spec.ts: `.snapshotCumulativesInside(tickLower, tickUpper)`
-$DIR/test/UniswapV3Pool.spec.ts: `await swapToLowerPrice(encodePriceSqrt(1, 2), wallet.address)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(5)`
 $DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(5)`
-$DIR/test/UniswapV3Pool.spec.ts: `await swapToHigherPrice(encodePriceSqrt(1, 1), wallet.address)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(7)`
 $DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(7)`
 $DIR/test/UniswapV3Pool.spec.ts: `.snapshotCumulativesInside(tickLower, tickUpper)`
-$DIR/test/UniswapV3Pool.spec.ts: `await swapToHigherPrice(encodePriceSqrt(2, 1), wallet.address)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(5)`
 $DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(5)`
-$DIR/test/UniswapV3Pool.spec.ts: `await swapToLowerPrice(encodePriceSqrt(1, 1), wallet.address)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(7)`
 $DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(7)`
 $DIR/test/UniswapV3Pool.spec.ts: `.snapshotCumulativesInside(tickLower, tickUpper)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(5)`
 $DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(5)`
-$DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, tickUpper, getMaxTick(tickSpacing), 15)`
-$DIR/test/UniswapV3Pool.spec.ts: `await swapToHigherPrice(encodePriceSqrt(2, 1), wallet.address)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(8)`
 $DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(8)`
 $DIR/test/UniswapV3Pool.spec.ts: `.snapshotCumulativesInside(tickUpper, getMaxTick(tickSpacing))`
-$DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, tickLower, getMaxTick(tickSpacing), 15)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(5)`
 $DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(5)`
-$DIR/test/UniswapV3Pool.spec.ts: `await swapToHigherPrice(encodePriceSqrt(2, 1), wallet.address)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(8)`
 $DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(8)`
 $DIR/test/UniswapV3Pool.spec.ts: `.snapshotCumulativesInside(tickLower, tickUpper)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(5)`
 $DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(5)`
-$DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, getMinTick(tickSpacing), tickLower, 15)`
 $DIR/test/UniswapV3Pool.spec.ts: `.snapshotCumulativesInside(getMinTick(tickSpacing), tickLower)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(8)`
 $DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(8)`
-$DIR/test/UniswapV3Pool.spec.ts: `await swapToLowerPrice(encodePriceSqrt(1, 2), wallet.address)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(3)`
 $DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(3)`
 $DIR/test/UniswapV3Pool.spec.ts: `.snapshotCumulativesInside(getMinTick(tickSpacing), tickLower)`
 $DIR/test/UniswapV3Pool.spec.ts: `.from(3)`
 $DIR/test/UniswapV3Pool.spec.ts: `.shl(128)`
 $DIR/test/UniswapV3Pool.spec.ts: `.div(15)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.initialize(encodePriceSqrt(1, 1))`
 $DIR/test/UniswapV3Pool.spec.ts: `.initialize(encodePriceSqrt(1, 1))`
-$DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, minTick, maxTick, 1)`
-$DIR/test/UniswapV3Pool.spec.ts: `await flash(0, 0, wallet.address, MaxUint128, MaxUint128)`
 $DIR/test/UniswapV3Pool.spec.ts: `.all([
         pool.feeGrowthGlobal0X128(),
         pool.feeGrowthGlobal1X128(),
       ])`
 $DIR/test/UniswapV3Pool.spec.ts: `.feeGrowthGlobal0X128()`
 $DIR/test/UniswapV3Pool.spec.ts: `.feeGrowthGlobal1X128()`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(minTick, maxTick, 0)`
 $DIR/test/UniswapV3Pool.spec.ts: `.burn(minTick, maxTick, 0)`
 $DIR/test/UniswapV3Pool.spec.ts: `.callStatic.collect(
         wallet.address,
@@ -1772,18 +1806,13 @@ $DIR/test/UniswapV3Pool.spec.ts: `.callStatic.collect(
         MaxUint128,
         MaxUint128
       )`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.initialize(encodePriceSqrt(1, 1))`
 $DIR/test/UniswapV3Pool.spec.ts: `.initialize(encodePriceSqrt(1, 1))`
-$DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, minTick, maxTick, 1)`
-$DIR/test/UniswapV3Pool.spec.ts: `await flash(0, 0, wallet.address, MaxUint128, MaxUint128)`
-$DIR/test/UniswapV3Pool.spec.ts: `await flash(0, 0, wallet.address, 1, 1)`
 $DIR/test/UniswapV3Pool.spec.ts: `.all([
         pool.feeGrowthGlobal0X128(),
         pool.feeGrowthGlobal1X128(),
       ])`
 $DIR/test/UniswapV3Pool.spec.ts: `.feeGrowthGlobal0X128()`
 $DIR/test/UniswapV3Pool.spec.ts: `.feeGrowthGlobal1X128()`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(minTick, maxTick, 0)`
 $DIR/test/UniswapV3Pool.spec.ts: `.burn(minTick, maxTick, 0)`
 $DIR/test/UniswapV3Pool.spec.ts: `.callStatic.collect(
         wallet.address,
@@ -1792,14 +1821,8 @@ $DIR/test/UniswapV3Pool.spec.ts: `.callStatic.collect(
         MaxUint128,
         MaxUint128
       )`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.initialize(encodePriceSqrt(1, 1))`
 $DIR/test/UniswapV3Pool.spec.ts: `.initialize(encodePriceSqrt(1, 1))`
-$DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, minTick, maxTick, 1)`
-$DIR/test/UniswapV3Pool.spec.ts: `await flash(0, 0, wallet.address, MaxUint128, MaxUint128)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(minTick, maxTick, 0)`
 $DIR/test/UniswapV3Pool.spec.ts: `.burn(minTick, maxTick, 0)`
-$DIR/test/UniswapV3Pool.spec.ts: `await flash(0, 0, wallet.address, 1, 1)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(minTick, maxTick, 0)`
 $DIR/test/UniswapV3Pool.spec.ts: `.burn(minTick, maxTick, 0)`
 $DIR/test/UniswapV3Pool.spec.ts: `.callStatic.collect(
         wallet.address,
@@ -1808,43 +1831,20 @@ $DIR/test/UniswapV3Pool.spec.ts: `.callStatic.collect(
         MaxUint128,
         MaxUint128
       )`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.initialize(encodePriceSqrt(1, 1))`
 $DIR/test/UniswapV3Pool.spec.ts: `.initialize(encodePriceSqrt(1, 1))`
-$DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, minTick, maxTick, 1)`
-$DIR/test/UniswapV3Pool.spec.ts: `await mint(other.address, minTick, maxTick, 1)`
-$DIR/test/UniswapV3Pool.spec.ts: `await flash(0, 0, wallet.address, MaxUint128, 0)`
-$DIR/test/UniswapV3Pool.spec.ts: `await flash(0, 0, wallet.address, MaxUint128, 0)`
 $DIR/test/UniswapV3Pool.spec.ts: `.feeGrowthGlobal0X128()`
-$DIR/test/UniswapV3Pool.spec.ts: `await flash(0, 0, wallet.address, 2, 0)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(minTick, maxTick, 0)`
 $DIR/test/UniswapV3Pool.spec.ts: `.burn(minTick, maxTick, 0)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.connect(other).burn(minTick, maxTick, 0)`
 $DIR/test/UniswapV3Pool.spec.ts: `.connect(other)`
 $DIR/test/UniswapV3Pool.spec.ts: `.burn(minTick, maxTick, 0)`
 $DIR/test/UniswapV3Pool.spec.ts: `.callStatic.collect(wallet.address, minTick, maxTick, MaxUint128, MaxUint128)`
-$DIR/test/UniswapV3Pool.spec.ts: `({ amount0 } = await pool
-        .connect(other)
-        .callStatic.collect(other.address, minTick, maxTick, MaxUint128, MaxUint128))`
 $DIR/test/UniswapV3Pool.spec.ts: `.connect(other)`
 $DIR/test/UniswapV3Pool.spec.ts: `.callStatic.collect(other.address, minTick, maxTick, MaxUint128, MaxUint128)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.initialize(encodePriceSqrt(1, 1))`
 $DIR/test/UniswapV3Pool.spec.ts: `.initialize(encodePriceSqrt(1, 1))`
-$DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, minTick, maxTick, 1)`
-$DIR/test/UniswapV3Pool.spec.ts: `await flash(0, 0, wallet.address, 1, 0)`
-$DIR/test/UniswapV3Pool.spec.ts: `await mint(other.address, minTick, maxTick, 1)`
-$DIR/test/UniswapV3Pool.spec.ts: `await flash(0, 0, wallet.address, MaxUint128, 0)`
-$DIR/test/UniswapV3Pool.spec.ts: `await flash(0, 0, wallet.address, MaxUint128, 0)`
 $DIR/test/UniswapV3Pool.spec.ts: `.feeGrowthGlobal0X128()`
-$DIR/test/UniswapV3Pool.spec.ts: `await flash(0, 0, wallet.address, 2, 0)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(minTick, maxTick, 0)`
 $DIR/test/UniswapV3Pool.spec.ts: `.burn(minTick, maxTick, 0)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.connect(other).burn(minTick, maxTick, 0)`
 $DIR/test/UniswapV3Pool.spec.ts: `.connect(other)`
 $DIR/test/UniswapV3Pool.spec.ts: `.burn(minTick, maxTick, 0)`
 $DIR/test/UniswapV3Pool.spec.ts: `.callStatic.collect(wallet.address, minTick, maxTick, MaxUint128, MaxUint128)`
-$DIR/test/UniswapV3Pool.spec.ts: `({ amount0 } = await pool
-        .connect(other)
-        .callStatic.collect(other.address, minTick, maxTick, MaxUint128, MaxUint128))`
 $DIR/test/UniswapV3Pool.spec.ts: `.connect(other)`
 $DIR/test/UniswapV3Pool.spec.ts: `.callStatic.collect(other.address, minTick, maxTick, MaxUint128, MaxUint128)`
 $DIR/test/UniswapV3Router.spec.ts: `.token0()`

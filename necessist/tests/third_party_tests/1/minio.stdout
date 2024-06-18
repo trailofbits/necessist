@@ -2553,9 +2553,8 @@ $DIR/cmd/erasure-healing-common_test.go: `t.Run(fmt.Sprintf("case-%d", i), func(
 				t.Fatalf("Expected modTime to be equal to %v but was found to be %v",
 					test.expectedTime, modTime)
 			}
-			availableDisks, newErrs, _ := disksWithAllParts(ctx, onlineDisks, partsMetadata,
+			availableDisks, _, _ := disksWithAllParts(ctx, onlineDisks, partsMetadata,
 				test.errs, fi, bucket, object, madmin.HealDeepScan)
-			test.errs = newErrs
 
 			if test._tamperBackend != noTamper {
 				if tamperedIndex != -1 && availableDisks[tamperedIndex] != nil {
@@ -2569,7 +2568,6 @@ $DIR/cmd/erasure-healing-common_test.go: `partsMetadata[j].ModTime = test.modTim
 $DIR/cmd/erasure-healing-common_test.go: `tamperedIndex = index`
 $DIR/cmd/erasure-healing-common_test.go: `tamperedIndex = index`
 $DIR/cmd/erasure-healing-common_test.go: `f.WriteString("oops")`
-$DIR/cmd/erasure-healing-common_test.go: `test.errs = newErrs`
 $DIR/cmd/erasure-healing-common_test.go: `setObjectLayer(obj)`
 $DIR/cmd/erasure-healing-common_test.go: `modTimesThreeFour[i] = fourNanoSecs`
 $DIR/cmd/erasure-healing-common_test.go: `modTimesThreeNone[i] = timeSentinel`
@@ -2650,9 +2648,8 @@ $DIR/cmd/erasure-healing-common_test.go: `t.Run(fmt.Sprintf("case-%d", i), func(
 					test.expectedTime, modTime)
 			}
 
-			availableDisks, newErrs, _ := disksWithAllParts(ctx, onlineDisks, partsMetadata,
+			availableDisks, _, _ := disksWithAllParts(ctx, onlineDisks, partsMetadata,
 				test.errs, fi, bucket, object, madmin.HealDeepScan)
-			test.errs = newErrs
 
 			if test._tamperBackend != noTamper {
 				if tamperedIndex != -1 && availableDisks[tamperedIndex] != nil {
@@ -2665,7 +2662,6 @@ $DIR/cmd/erasure-healing-common_test.go: `partsMetadata[j].ModTime = test.modTim
 $DIR/cmd/erasure-healing-common_test.go: `tamperedIndex = index`
 $DIR/cmd/erasure-healing-common_test.go: `tamperedIndex = index`
 $DIR/cmd/erasure-healing-common_test.go: `f.WriteString("oops")`
-$DIR/cmd/erasure-healing-common_test.go: `test.errs = newErrs`
 $DIR/cmd/erasure-healing-common_test.go: `setObjectLayer(obj)`
 $DIR/cmd/erasure-healing-common_test.go: `err = obj.MakeBucket(ctx, "bucket", MakeBucketOptions{})`
 $DIR/cmd/erasure-healing-common_test.go: `_, err = obj.PutObject(ctx, bucket, object, mustGetPutObjReader(t, bytes.NewReader(data), int64(len(data)), "", ""), ObjectOptions{})`
@@ -2686,7 +2682,7 @@ $DIR/cmd/erasure-healing-common_test.go: `diskFailures[3] = "part.1"`
 $DIR/cmd/erasure-healing-common_test.go: `diskFailures[15] = "part.1"`
 $DIR/cmd/erasure-healing-common_test.go: `f.WriteString("oops")`
 $DIR/cmd/erasure-healing-common_test.go: `errs = make([]error, len(erasureDisks))`
-$DIR/cmd/erasure-healing-common_test.go: `filteredDisks, errs, _ = disksWithAllParts(ctx, erasureDisks, partsMetadata,
+$DIR/cmd/erasure-healing-common_test.go: `filteredDisks, dataErrsPerDisk, _ = disksWithAllParts(ctx, erasureDisks, partsMetadata,
 		errs, fi, bucket, object, madmin.HealDeepScan)`
 $DIR/cmd/erasure-healing-common_test.go: `fi = test.fi2`
 $DIR/cmd/erasure-healing-common_test.go: `metaArr = append(metaArr, fi)`
@@ -2819,9 +2815,8 @@ $DIR/cmd/erasure-healing-common_test.go: `.Run(fmt.Sprintf("case-%d", i), func(t
 				t.Fatalf("Expected modTime to be equal to %v but was found to be %v",
 					test.expectedTime, modTime)
 			}
-			availableDisks, newErrs, _ := disksWithAllParts(ctx, onlineDisks, partsMetadata,
+			availableDisks, _, _ := disksWithAllParts(ctx, onlineDisks, partsMetadata,
 				test.errs, fi, bucket, object, madmin.HealDeepScan)
-			test.errs = newErrs
 
 			if test._tamperBackend != noTamper {
 				if tamperedIndex != -1 && availableDisks[tamperedIndex] != nil {
@@ -2929,9 +2924,8 @@ $DIR/cmd/erasure-healing-common_test.go: `.Run(fmt.Sprintf("case-%d", i), func(t
 					test.expectedTime, modTime)
 			}
 
-			availableDisks, newErrs, _ := disksWithAllParts(ctx, onlineDisks, partsMetadata,
+			availableDisks, _, _ := disksWithAllParts(ctx, onlineDisks, partsMetadata,
 				test.errs, fi, bucket, object, madmin.HealDeepScan)
-			test.errs = newErrs
 
 			if test._tamperBackend != noTamper {
 				if tamperedIndex != -1 && availableDisks[tamperedIndex] != nil {
@@ -6822,6 +6816,7 @@ $DIR/cmd/signature-v4-utils_test.go: `.ParseForm()`
 $DIR/cmd/signature-v4_test.go: `query.Set(key, value)`
 $DIR/cmd/signature-v4_test.go: `req.Header.Set(key, value)`
 $DIR/cmd/signature-v4_test.go: `req.ParseForm()`
+$DIR/cmd/signature-v4_test.go: `.Background()`
 $DIR/cmd/signature-v4_test.go: `.Sprintf(credentialTemplate, "EXAMPLEINVALIDEXAMPL", now.Format(yyyymmdd), globalMinioDefaultRegion)`
 $DIR/cmd/signature-v4_test.go: `.Format(yyyymmdd)`
 $DIR/cmd/signature-v4_test.go: `.Sprintf(credentialTemplate, accessKey, now.Format(yyyymmdd), globalMinioDefaultRegion)`
@@ -7107,6 +7102,19 @@ $DIR/cmd/storage-datatypes_gen_test.go: `msgp.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go: `buf.Reset()`
 $DIR/cmd/storage-datatypes_gen_test.go: `msgp.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go: `err = msgp.NewReader(&buf).Skip()`
+$DIR/cmd/storage-datatypes_gen_test.go: `left, err = msgp.Skip(bts)`
+$DIR/cmd/storage-datatypes_gen_test.go: `msgp.Encode(&buf, &v)`
+$DIR/cmd/storage-datatypes_gen_test.go: `buf.Reset()`
+$DIR/cmd/storage-datatypes_gen_test.go: `msgp.Encode(&buf, &v)`
+$DIR/cmd/storage-datatypes_gen_test.go: `err = msgp.NewReader(&buf).Skip()`
+$DIR/cmd/storage-datatypes_gen_test.go: `.MarshalMsg(nil)`
+$DIR/cmd/storage-datatypes_gen_test.go: `.UnmarshalMsg(bts)`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Encode(&buf, &v)`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Msgsize()`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Len()`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Decode(&buf, &vn)`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Reset()`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go: `.MarshalMsg(nil)`
 $DIR/cmd/storage-datatypes_gen_test.go: `.UnmarshalMsg(bts)`
 $DIR/cmd/storage-datatypes_gen_test.go: `.Encode(&buf, &v)`
@@ -8281,7 +8289,9 @@ $DIR/cmd/xl-storage-format-utils_test.go: `xl.DeleteVersion(transfi)`
 $DIR/cmd/xl-storage-format-utils_test.go: `fi.SetTierFreeVersionID(mustGetUUID())`
 $DIR/cmd/xl-storage-format-utils_test.go: `xl.DeleteVersion(fi)`
 $DIR/cmd/xl-storage-format-utils_test.go: `freeVersionIDs = append(freeVersionIDs, fi.TierFreeVersionID())`
+$DIR/cmd/xl-storage-format-utils_test.go: `allVersionIDs = append(allVersionIDs, fi.TierFreeVersionID())`
 $DIR/cmd/xl-storage-format-utils_test.go: `versions = append(versions, fi)`
+$DIR/cmd/xl-storage-format-utils_test.go: `allVersionIDs = append(allVersionIDs, fi.VersionID)`
 $DIR/cmd/xl-storage-format-utils_test.go: `sort.Slice(versions, func(i, j int) bool {
 		if versions[i].IsLatest {
 			return true
@@ -8291,6 +8301,8 @@ $DIR/cmd/xl-storage-format-utils_test.go: `sort.Slice(versions, func(i, j int) b
 		}
 		return versions[i].ModTime.After(versions[j].ModTime)
 	})`
+$DIR/cmd/xl-storage-format-utils_test.go: `slices.Reverse(allVersionIDs)`
+$DIR/cmd/xl-storage-format-utils_test.go: `fivs, err = getFileInfoVersions(buf, basefi.Volume, basefi.Name, true, true)`
 $DIR/cmd/xl-storage-format-utils_test.go: `.Run(tt.name, func(t *testing.T) {
 			const n = 100
 			want := hashDeterministicString(tt.arg)
@@ -8346,6 +8358,7 @@ $DIR/cmd/xl-storage-format-utils_test.go: `.DeleteVersion(transfi)`
 $DIR/cmd/xl-storage-format-utils_test.go: `.SetTierFreeVersionID(mustGetUUID())`
 $DIR/cmd/xl-storage-format-utils_test.go: `.DeleteVersion(fi)`
 $DIR/cmd/xl-storage-format-utils_test.go: `.TierFreeVersionID()`
+$DIR/cmd/xl-storage-format-utils_test.go: `.TierFreeVersionID()`
 $DIR/cmd/xl-storage-format-utils_test.go: `.AppendTo(nil)`
 $DIR/cmd/xl-storage-format-utils_test.go: `.Slice(versions, func(i, j int) bool {
 		if versions[i].IsLatest {
@@ -8357,6 +8370,7 @@ $DIR/cmd/xl-storage-format-utils_test.go: `.Slice(versions, func(i, j int) bool 
 		return versions[i].ModTime.After(versions[j].ModTime)
 	})`
 $DIR/cmd/xl-storage-format-utils_test.go: `.ModTime.After(versions[j].ModTime)`
+$DIR/cmd/xl-storage-format-utils_test.go: `.Reverse(allVersionIDs)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go: `left, err = msgp.Skip(bts)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go: `msgp.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v1_gen_test.go: `buf.Reset()`
@@ -12483,7 +12497,79 @@ $DIR/internal/grid/grid_test.go: `t.Run("testGenericsStreamRoundtripSubroute", f
 $DIR/internal/grid/grid_test.go: `testGenericsStreamRoundtripSubroute(t, local, remote)`
 $DIR/internal/grid/grid_test.go: `assertNoActive(t, connRemoteLocal)`
 $DIR/internal/grid/grid_test.go: `assertNoActive(t, connLocalToRemote)`
+$DIR/internal/grid/grid_test.go: `t.Run("testServerStreamResponseBlocked", func(t *testing.T) {
+		defer timeout(1 * time.Minute)()
+		testServerStreamResponseBlocked(t, local, remote)
+		assertNoActive(t, connRemoteLocal)
+		assertNoActive(t, connLocalToRemote)
+	})`
 $DIR/internal/grid/grid_test.go: `testServerStreamResponseBlocked(t, local, remote)`
+$DIR/internal/grid/grid_test.go: `assertNoActive(t, connRemoteLocal)`
+$DIR/internal/grid/grid_test.go: `assertNoActive(t, connLocalToRemote)`
+$DIR/internal/grid/grid_test.go: `t.Run("testServerStreamOnewayNoPing", func(t *testing.T) {
+		defer timeout(1 * time.Minute)()
+		testServerStreamNoPing(t, local, remote, 0)
+		assertNoActive(t, connRemoteLocal)
+		assertNoActive(t, connLocalToRemote)
+	})`
+$DIR/internal/grid/grid_test.go: `testServerStreamNoPing(t, local, remote, 0)`
+$DIR/internal/grid/grid_test.go: `assertNoActive(t, connRemoteLocal)`
+$DIR/internal/grid/grid_test.go: `assertNoActive(t, connLocalToRemote)`
+$DIR/internal/grid/grid_test.go: `t.Run("testServerStreamTwowayNoPing", func(t *testing.T) {
+		defer timeout(1 * time.Minute)()
+		testServerStreamNoPing(t, local, remote, 1)
+		assertNoActive(t, connRemoteLocal)
+		assertNoActive(t, connLocalToRemote)
+	})`
+$DIR/internal/grid/grid_test.go: `testServerStreamNoPing(t, local, remote, 1)`
+$DIR/internal/grid/grid_test.go: `assertNoActive(t, connRemoteLocal)`
+$DIR/internal/grid/grid_test.go: `assertNoActive(t, connLocalToRemote)`
+$DIR/internal/grid/grid_test.go: `t.Run("testServerStreamTwowayPing", func(t *testing.T) {
+		defer timeout(1 * time.Minute)()
+		testServerStreamPingRunning(t, local, remote, 1, false, false)
+		assertNoActive(t, connRemoteLocal)
+		assertNoActive(t, connLocalToRemote)
+	})`
+$DIR/internal/grid/grid_test.go: `testServerStreamPingRunning(t, local, remote, 1, false, false)`
+$DIR/internal/grid/grid_test.go: `assertNoActive(t, connRemoteLocal)`
+$DIR/internal/grid/grid_test.go: `assertNoActive(t, connLocalToRemote)`
+$DIR/internal/grid/grid_test.go: `t.Run("testServerStreamTwowayPingReq", func(t *testing.T) {
+		defer timeout(1 * time.Minute)()
+		testServerStreamPingRunning(t, local, remote, 1, false, true)
+		assertNoActive(t, connRemoteLocal)
+		assertNoActive(t, connLocalToRemote)
+	})`
+$DIR/internal/grid/grid_test.go: `testServerStreamPingRunning(t, local, remote, 1, false, true)`
+$DIR/internal/grid/grid_test.go: `assertNoActive(t, connRemoteLocal)`
+$DIR/internal/grid/grid_test.go: `assertNoActive(t, connLocalToRemote)`
+$DIR/internal/grid/grid_test.go: `t.Run("testServerStreamTwowayPingResp", func(t *testing.T) {
+		defer timeout(1 * time.Minute)()
+		testServerStreamPingRunning(t, local, remote, 1, true, false)
+		assertNoActive(t, connRemoteLocal)
+		assertNoActive(t, connLocalToRemote)
+	})`
+$DIR/internal/grid/grid_test.go: `testServerStreamPingRunning(t, local, remote, 1, true, false)`
+$DIR/internal/grid/grid_test.go: `assertNoActive(t, connRemoteLocal)`
+$DIR/internal/grid/grid_test.go: `assertNoActive(t, connLocalToRemote)`
+$DIR/internal/grid/grid_test.go: `t.Run("testServerStreamTwowayPingReqResp", func(t *testing.T) {
+		defer timeout(1 * time.Minute)()
+		testServerStreamPingRunning(t, local, remote, 1, true, true)
+		assertNoActive(t, connRemoteLocal)
+		assertNoActive(t, connLocalToRemote)
+	})`
+$DIR/internal/grid/grid_test.go: `testServerStreamPingRunning(t, local, remote, 1, true, true)`
+$DIR/internal/grid/grid_test.go: `assertNoActive(t, connRemoteLocal)`
+$DIR/internal/grid/grid_test.go: `assertNoActive(t, connLocalToRemote)`
+$DIR/internal/grid/grid_test.go: `t.Run("testServerStreamOnewayPing", func(t *testing.T) {
+		defer timeout(1 * time.Minute)()
+		testServerStreamPingRunning(t, local, remote, 0, false, true)
+		assertNoActive(t, connRemoteLocal)
+		assertNoActive(t, connLocalToRemote)
+	})`
+$DIR/internal/grid/grid_test.go: `testServerStreamPingRunning(t, local, remote, 0, false, true)`
+$DIR/internal/grid/grid_test.go: `assertNoActive(t, connRemoteLocal)`
+$DIR/internal/grid/grid_test.go: `assertNoActive(t, connLocalToRemote)`
+$DIR/internal/grid/grid_test.go: `testServerStreamPingRunning(t, local, remote, 0, false, false)`
 $DIR/internal/grid/grid_test.go: `assertNoActive(t, connRemoteLocal)`
 $DIR/internal/grid/grid_test.go: `assertNoActive(t, connLocalToRemote)`
 $DIR/internal/grid/grid_test.go: `.T.SetLogTB(t)`
@@ -12658,6 +12744,54 @@ $DIR/internal/grid/grid_test.go: `.Run("testGenericsStreamRoundtrip", func(t *te
 $DIR/internal/grid/grid_test.go: `.Run("testGenericsStreamRoundtripSubroute", func(t *testing.T) {
 		defer timeout(1 * time.Minute)()
 		testGenericsStreamRoundtripSubroute(t, local, remote)
+		assertNoActive(t, connRemoteLocal)
+		assertNoActive(t, connLocalToRemote)
+	})`
+$DIR/internal/grid/grid_test.go: `.Run("testServerStreamResponseBlocked", func(t *testing.T) {
+		defer timeout(1 * time.Minute)()
+		testServerStreamResponseBlocked(t, local, remote)
+		assertNoActive(t, connRemoteLocal)
+		assertNoActive(t, connLocalToRemote)
+	})`
+$DIR/internal/grid/grid_test.go: `.Run("testServerStreamOnewayNoPing", func(t *testing.T) {
+		defer timeout(1 * time.Minute)()
+		testServerStreamNoPing(t, local, remote, 0)
+		assertNoActive(t, connRemoteLocal)
+		assertNoActive(t, connLocalToRemote)
+	})`
+$DIR/internal/grid/grid_test.go: `.Run("testServerStreamTwowayNoPing", func(t *testing.T) {
+		defer timeout(1 * time.Minute)()
+		testServerStreamNoPing(t, local, remote, 1)
+		assertNoActive(t, connRemoteLocal)
+		assertNoActive(t, connLocalToRemote)
+	})`
+$DIR/internal/grid/grid_test.go: `.Run("testServerStreamTwowayPing", func(t *testing.T) {
+		defer timeout(1 * time.Minute)()
+		testServerStreamPingRunning(t, local, remote, 1, false, false)
+		assertNoActive(t, connRemoteLocal)
+		assertNoActive(t, connLocalToRemote)
+	})`
+$DIR/internal/grid/grid_test.go: `.Run("testServerStreamTwowayPingReq", func(t *testing.T) {
+		defer timeout(1 * time.Minute)()
+		testServerStreamPingRunning(t, local, remote, 1, false, true)
+		assertNoActive(t, connRemoteLocal)
+		assertNoActive(t, connLocalToRemote)
+	})`
+$DIR/internal/grid/grid_test.go: `.Run("testServerStreamTwowayPingResp", func(t *testing.T) {
+		defer timeout(1 * time.Minute)()
+		testServerStreamPingRunning(t, local, remote, 1, true, false)
+		assertNoActive(t, connRemoteLocal)
+		assertNoActive(t, connLocalToRemote)
+	})`
+$DIR/internal/grid/grid_test.go: `.Run("testServerStreamTwowayPingReqResp", func(t *testing.T) {
+		defer timeout(1 * time.Minute)()
+		testServerStreamPingRunning(t, local, remote, 1, true, true)
+		assertNoActive(t, connRemoteLocal)
+		assertNoActive(t, connLocalToRemote)
+	})`
+$DIR/internal/grid/grid_test.go: `.Run("testServerStreamOnewayPing", func(t *testing.T) {
+		defer timeout(1 * time.Minute)()
+		testServerStreamPingRunning(t, local, remote, 0, false, true)
 		assertNoActive(t, connRemoteLocal)
 		assertNoActive(t, connLocalToRemote)
 	})`

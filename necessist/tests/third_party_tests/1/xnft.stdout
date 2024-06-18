@@ -7,24 +7,24 @@ $DIR/tests/collectibles.spec.ts: `await client.createCollectibleXnft({
           tag: "none",
           uri: "https://arweave.net/abc123",
         });` failed
+$DIR/tests/collectibles.spec.ts: `[xnft] = deriveXnftAddress(validNft.mintAddress);` failed
+$DIR/tests/collectibles.spec.ts: `await client.install(xnft, client.provider.publicKey);` failed
+$DIR/tests/collectibles.spec.ts: `await client.transfer(xnft, validNft.mintAddress, recipient);` failed
+$DIR/tests/collectibles.spec.ts: `[xnft] = deriveXnftAddress(pnft.mintAddress);` failed
 $DIR/tests/collectibles.spec.ts: `.createCollectibleXnft({
           metadata: invalidNft.metadataAddress,
           mint: invalidNft.mintAddress,
           tag: "none",
           uri: "https://arweave.net/abc123",
         })` failed
-$DIR/tests/collectibles.spec.ts: `[xnft] = deriveXnftAddress(validNft.mintAddress);` failed
 $DIR/tests/collectibles.spec.ts: `.program.account.xnft.fetch(xnft)` failed
 $DIR/tests/collectibles.spec.ts: `.masterMint.toBase58()` failed
 $DIR/tests/collectibles.spec.ts: `.mintAddress.toBase58()` failed
-$DIR/tests/collectibles.spec.ts: `await client.install(xnft, client.provider.publicKey);` failed
 $DIR/tests/collectibles.spec.ts: `.install(xnft, client.provider.publicKey)` failed
 $DIR/tests/collectibles.spec.ts: `.web3.Keypair.generate()` failed
-$DIR/tests/collectibles.spec.ts: `await client.transfer(xnft, validNft.mintAddress, recipient);` failed
 $DIR/tests/collectibles.spec.ts: `.transfer(xnft, validNft.mintAddress, recipient)` failed
 $DIR/tests/collectibles.spec.ts: `.provider.connection.getAccountInfo(xnft)` failed
 $DIR/tests/collectibles.spec.ts: `.provider.connection.getAccountInfo(validNft.tokenAddress)` passed
-$DIR/tests/collectibles.spec.ts: `[xnft] = deriveXnftAddress(pnft.mintAddress);` failed
 $DIR/tests/collectibles.spec.ts: `.program.account.xnft.fetch(xnft)` failed
 $DIR/tests/collectibles.spec.ts: `.masterMint.toBase58()` failed
 $DIR/tests/collectibles.spec.ts: `.mintAddress.toBase58()` failed

@@ -1,562 +1,562 @@
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
-$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
-$DIR/test/OperatorFilterRegistry.t.sol: `.subscriptionOf(address(filterer))`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
-$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.registerAndSubscribe(address(this), subscription);`
-$DIR/test/OperatorFilterRegistry.t.sol: `.registerAndSubscribe(address(this), subscription)`
-$DIR/test/OperatorFilterRegistry.t.sol: `.subscriberAt(subscription, 0)`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
-$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
-$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.updateOperator(address(this), makeAddr("operator"), true);`
-$DIR/test/OperatorFilterRegistry.t.sol: `.updateOperator(address(this), makeAddr("operator"), true)`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.updateCodeHash(address(this), bytes32(bytes4(0xdeadbeef)), true);`
-$DIR/test/OperatorFilterRegistry.t.sol: `.updateCodeHash(address(this), bytes32(bytes4(0xdeadbeef)), true)`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.copyEntriesOf(address(filterer), address(this));`
-$DIR/test/OperatorFilterRegistry.t.sol: `.copyEntriesOf(address(filterer), address(this))`
-$DIR/test/OperatorFilterRegistry.t.sol: `.filteredCodeHashAt(address(filterer), 0)`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
-$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
-$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
-$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.updateOperator(address(this), makeAddr("operator"), true);`
-$DIR/test/OperatorFilterRegistry.t.sol: `.updateOperator(address(this), makeAddr("operator"), true)`
-$DIR/test/OperatorFilterRegistry.t.sol: `.filteredOperatorAt(address(this), 0)`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.registerAndSubscribe(address(this), subscription);`
-$DIR/test/OperatorFilterRegistry.t.sol: `.registerAndSubscribe(address(this), subscription)`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
-$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.updateOperator(address(this), makeAddr("operator"), true);`
-$DIR/test/OperatorFilterRegistry.t.sol: `.updateOperator(address(this), makeAddr("operator"), true)`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.updateOperator(address(this), makeAddr("operator"), false);`
-$DIR/test/OperatorFilterRegistry.t.sol: `.updateOperator(address(this), makeAddr("operator"), false)`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
-$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
-$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.updateOperator(address(this), makeAddr("operator"), true);`
-$DIR/test/OperatorFilterRegistry.t.sol: `.updateOperator(address(this), makeAddr("operator"), true)`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
-$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.updateCodeHash(address(this), bytes32(bytes4(0xdeadbeef)), true);`
-$DIR/test/OperatorFilterRegistry.t.sol: `.updateCodeHash(address(this), bytes32(bytes4(0xdeadbeef)), true)`
-$DIR/test/OperatorFilterRegistry.t.sol: `.filteredCodeHashAt(address(this), 0)`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
-$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.registerAndSubscribe(address(this), subscription);`
-$DIR/test/OperatorFilterRegistry.t.sol: `.registerAndSubscribe(address(this), subscription)`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
-$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.updateCodeHash(address(this), bytes32(bytes4(0xdeadbeef)), true);`
-$DIR/test/OperatorFilterRegistry.t.sol: `.updateCodeHash(address(this), bytes32(bytes4(0xdeadbeef)), true)`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.updateCodeHash(address(this), bytes32(bytes4(0xdeadbeef)), false);`
-$DIR/test/OperatorFilterRegistry.t.sol: `.updateCodeHash(address(this), bytes32(bytes4(0xdeadbeef)), false)`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
-$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
-$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.updateCodeHash(address(this), bytes32(bytes4(0xdeadbeef)), true);`
-$DIR/test/OperatorFilterRegistry.t.sol: `.updateCodeHash(address(this), bytes32(bytes4(0xdeadbeef)), true)`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
-$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
 $DIR/test/OperatorFilterRegistry.t.sol: `operator[0] = makeAddr("operator1");`
 $DIR/test/OperatorFilterRegistry.t.sol: `operator[1] = makeAddr("operator2");`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.updateOperators(address(this), operator, true);`
-$DIR/test/OperatorFilterRegistry.t.sol: `.updateOperators(address(this), operator, true)`
-$DIR/test/OperatorFilterRegistry.t.sol: `.filteredOperatorAt(address(this), 1)`
 $DIR/test/OperatorFilterRegistry.t.sol: `operator[0] = makeAddr("operator1");`
 $DIR/test/OperatorFilterRegistry.t.sol: `operator[0] = makeAddr("operator1");`
 $DIR/test/OperatorFilterRegistry.t.sol: `operator[1] = makeAddr("operator2");`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.registerAndSubscribe(address(this), subscription);`
-$DIR/test/OperatorFilterRegistry.t.sol: `.registerAndSubscribe(address(this), subscription)`
 $DIR/test/OperatorFilterRegistry.t.sol: `operator[0] = makeAddr("operator1");`
 $DIR/test/OperatorFilterRegistry.t.sol: `operator[1] = makeAddr("operator2");`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
-$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.updateOperator(address(this), makeAddr("operator1"), true);`
-$DIR/test/OperatorFilterRegistry.t.sol: `.updateOperator(address(this), makeAddr("operator1"), true)`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.updateOperator(address(this), makeAddr("operator2"), true);`
-$DIR/test/OperatorFilterRegistry.t.sol: `.updateOperator(address(this), makeAddr("operator2"), true)`
 $DIR/test/OperatorFilterRegistry.t.sol: `operator[0] = makeAddr("operator1");`
 $DIR/test/OperatorFilterRegistry.t.sol: `operator[1] = makeAddr("operator2");`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.updateOperators(address(this), operator, false);`
-$DIR/test/OperatorFilterRegistry.t.sol: `.updateOperators(address(this), operator, false)`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
-$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
 $DIR/test/OperatorFilterRegistry.t.sol: `operator[0] = makeAddr("operator1");`
 $DIR/test/OperatorFilterRegistry.t.sol: `operator[1] = makeAddr("operator2");`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
-$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.updateOperator(address(this), makeAddr("operator1"), true);`
-$DIR/test/OperatorFilterRegistry.t.sol: `.updateOperator(address(this), makeAddr("operator1"), true)`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.updateOperator(address(this), makeAddr("operator2"), true);`
-$DIR/test/OperatorFilterRegistry.t.sol: `.updateOperator(address(this), makeAddr("operator2"), true)`
 $DIR/test/OperatorFilterRegistry.t.sol: `operator[0] = makeAddr("operator1");`
 $DIR/test/OperatorFilterRegistry.t.sol: `operator[1] = makeAddr("operator2");`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
-$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
 $DIR/test/OperatorFilterRegistry.t.sol: `codeHash[0] = bytes32(bytes4(0xdeadbeef));`
 $DIR/test/OperatorFilterRegistry.t.sol: `codeHash[1] = bytes32(bytes4(0xdeafbeef));`
 $DIR/test/OperatorFilterRegistry.t.sol: `codeHash[0] = bytes32(bytes4(0xdeadbeef));`
 $DIR/test/OperatorFilterRegistry.t.sol: `codeHash[0] = bytes32(bytes4(0xdeadbeef));`
 $DIR/test/OperatorFilterRegistry.t.sol: `codeHash[1] = bytes32(bytes4(0xdeafbeef));`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.registerAndSubscribe(address(this), subscription);`
-$DIR/test/OperatorFilterRegistry.t.sol: `.registerAndSubscribe(address(this), subscription)`
 $DIR/test/OperatorFilterRegistry.t.sol: `codeHash[0] = bytes32(bytes4(0xdeadbeef));`
 $DIR/test/OperatorFilterRegistry.t.sol: `codeHash[1] = bytes32(bytes4(0xdeafbeef));`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
-$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.updateCodeHash(address(this), bytes32(bytes4(0xdeadbeef)), true);`
-$DIR/test/OperatorFilterRegistry.t.sol: `.updateCodeHash(address(this), bytes32(bytes4(0xdeadbeef)), true)`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.updateCodeHash(address(this), bytes32(bytes4(0xdeafbeef)), true);`
-$DIR/test/OperatorFilterRegistry.t.sol: `.updateCodeHash(address(this), bytes32(bytes4(0xdeafbeef)), true)`
 $DIR/test/OperatorFilterRegistry.t.sol: `codeHash[0] = bytes32(bytes4(0xdeadbeef));`
 $DIR/test/OperatorFilterRegistry.t.sol: `codeHash[1] = bytes32(bytes4(0xdeafbeef));`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.updateCodeHashes(address(this), codeHash, false);`
-$DIR/test/OperatorFilterRegistry.t.sol: `.updateCodeHashes(address(this), codeHash, false)`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
-$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
 $DIR/test/OperatorFilterRegistry.t.sol: `codeHash[0] = bytes32(bytes4(0xdeadbeef));`
 $DIR/test/OperatorFilterRegistry.t.sol: `codeHash[1] = bytes32(bytes4(0xdeafbeef));`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
-$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
 $DIR/test/OperatorFilterRegistry.t.sol: `codeHash[0] = bytes32(bytes4(0xdeadbeef));`
 $DIR/test/OperatorFilterRegistry.t.sol: `codeHash[1] = keccak256("");`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
-$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.updateCodeHash(address(this), bytes32(bytes4(0xdeadbeef)), true);`
-$DIR/test/OperatorFilterRegistry.t.sol: `.updateCodeHash(address(this), bytes32(bytes4(0xdeadbeef)), true)`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.updateCodeHash(address(this), bytes32(bytes4(0xdeafbeef)), true);`
-$DIR/test/OperatorFilterRegistry.t.sol: `.updateCodeHash(address(this), bytes32(bytes4(0xdeafbeef)), true)`
 $DIR/test/OperatorFilterRegistry.t.sol: `codeHash[0] = bytes32(bytes4(0xdeadbeef));`
 $DIR/test/OperatorFilterRegistry.t.sol: `codeHash[1] = bytes32(bytes4(0xdeafbeef));`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
-$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
 $DIR/test/OperatorFilterRegistry.t.sol: `registry.subscribe(address(this), subscription);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.subscribe(address(this), subscription);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.subscribe(address(this), oldSubscription);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.subscribe(address(this), newSubscription);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.subscribe(address(this), subscription);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.unsubscribe(address(this), false);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.subscribe(address(this), subscription);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(subscription);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateOperator(subscription, operator, true);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateCodeHash(subscription, codeHash, true);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.subscribe(address(this), subscription);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.unsubscribe(address(this), true);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(subscription);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateOperator(subscription, operator, true);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateOperator(subscription, duplicateOperator, true);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateCodeHash(subscription, codeHash, true);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateCodeHash(subscription, duplicateCodeHash, true);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateOperator(address(this), duplicateOperator, true);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateCodeHash(address(this), duplicateCodeHash, true);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.copyEntriesOf(address(this), subscription);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(subscription);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(subscription);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateOperator(subscription, operator, true);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateCodeHash(subscription, codeHash, true);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.subscribe(address(this), subscription);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
+$DIR/test/OperatorFilterRegistry.t.sol: `vm.etch(toCheck, code);`
+$DIR/test/OperatorFilterRegistry.t.sol: `vm.etch(toCheck, code);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateCodeHash(address(this), codeHash, true);`
+$DIR/test/OperatorFilterRegistry.t.sol: `vm.etch(toCheck, code);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(subscription);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateCodeHash(subscription, codeHash, true);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.registerAndSubscribe(address(this), subscription);`
+$DIR/test/OperatorFilterRegistry.t.sol: `vm.etch(toCheck, code);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(subscription);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateCodeHash(subscription, codeHash, true);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.registerAndSubscribe(address(this), subscription);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(subscription);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateOperator(subscription, operator, true);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.registerAndSubscribe(address(this), subscription);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(subscription);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateOperator(subscription, operator, true);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.registerAndSubscribe(address(this), subscription);`
+$DIR/test/OperatorFilterRegistry.t.sol: `vm.etch(toCheck, code);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(subscription);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateCodeHash(subscription, codeHash, true);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.registerAndSubscribe(address(this), subscription);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(subscription);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateOperator(subscription, operator, true);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.registerAndSubscribe(address(this), subscription);`
+$DIR/test/OperatorFilterRegistry.t.sol: `vm.etch(toCheck, code);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(subscription);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateCodeHash(subscription, codeHash, true);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.registerAndSubscribe(address(this), subscription);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
+$DIR/test/OperatorFilterRegistry.t.sol: `vm.etch(toCheck, code);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateOperator(address(this), operator, true);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateCodeHash(address(this), codeHash, true);`
+$DIR/test/OperatorFilterRegistry.t.sol: `vm.etch(toCheck, code);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(subscription);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateOperator(subscription, operator, true);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateCodeHash(subscription, codeHash, true);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.registerAndSubscribe(address(this), subscription);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.registerAndSubscribe(address(this), subscription);`
+$DIR/test/OperatorFilterRegistry.t.sol: `registry.unregister(address(this));`
+$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol: `.subscriptionOf(address(filterer))`
+$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol: `.registerAndSubscribe(address(this), subscription)`
+$DIR/test/OperatorFilterRegistry.t.sol: `.subscriberAt(subscription, 0)`
+$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol: `.updateOperator(address(this), makeAddr("operator"), true)`
+$DIR/test/OperatorFilterRegistry.t.sol: `.updateCodeHash(address(this), bytes32(bytes4(0xdeadbeef)), true)`
+$DIR/test/OperatorFilterRegistry.t.sol: `.copyEntriesOf(address(filterer), address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol: `.filteredCodeHashAt(address(filterer), 0)`
+$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol: `.updateOperator(address(this), makeAddr("operator"), true)`
+$DIR/test/OperatorFilterRegistry.t.sol: `.filteredOperatorAt(address(this), 0)`
+$DIR/test/OperatorFilterRegistry.t.sol: `.registerAndSubscribe(address(this), subscription)`
+$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol: `.updateOperator(address(this), makeAddr("operator"), true)`
+$DIR/test/OperatorFilterRegistry.t.sol: `.updateOperator(address(this), makeAddr("operator"), false)`
+$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol: `.updateOperator(address(this), makeAddr("operator"), true)`
+$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol: `.updateCodeHash(address(this), bytes32(bytes4(0xdeadbeef)), true)`
+$DIR/test/OperatorFilterRegistry.t.sol: `.filteredCodeHashAt(address(this), 0)`
+$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol: `.registerAndSubscribe(address(this), subscription)`
+$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol: `.updateCodeHash(address(this), bytes32(bytes4(0xdeadbeef)), true)`
+$DIR/test/OperatorFilterRegistry.t.sol: `.updateCodeHash(address(this), bytes32(bytes4(0xdeadbeef)), false)`
+$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol: `.updateCodeHash(address(this), bytes32(bytes4(0xdeadbeef)), true)`
+$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol: `.updateOperators(address(this), operator, true)`
+$DIR/test/OperatorFilterRegistry.t.sol: `.filteredOperatorAt(address(this), 1)`
+$DIR/test/OperatorFilterRegistry.t.sol: `.registerAndSubscribe(address(this), subscription)`
+$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol: `.updateOperator(address(this), makeAddr("operator1"), true)`
+$DIR/test/OperatorFilterRegistry.t.sol: `.updateOperator(address(this), makeAddr("operator2"), true)`
+$DIR/test/OperatorFilterRegistry.t.sol: `.updateOperators(address(this), operator, false)`
+$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol: `.updateOperator(address(this), makeAddr("operator1"), true)`
+$DIR/test/OperatorFilterRegistry.t.sol: `.updateOperator(address(this), makeAddr("operator2"), true)`
+$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol: `.registerAndSubscribe(address(this), subscription)`
+$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol: `.updateCodeHash(address(this), bytes32(bytes4(0xdeadbeef)), true)`
+$DIR/test/OperatorFilterRegistry.t.sol: `.updateCodeHash(address(this), bytes32(bytes4(0xdeafbeef)), true)`
+$DIR/test/OperatorFilterRegistry.t.sol: `.updateCodeHashes(address(this), codeHash, false)`
+$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
+$DIR/test/OperatorFilterRegistry.t.sol: `.updateCodeHash(address(this), bytes32(bytes4(0xdeadbeef)), true)`
+$DIR/test/OperatorFilterRegistry.t.sol: `.updateCodeHash(address(this), bytes32(bytes4(0xdeafbeef)), true)`
+$DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
 $DIR/test/OperatorFilterRegistry.t.sol: `.subscribe(address(this), subscription)`
 $DIR/test/OperatorFilterRegistry.t.sol: `.subscriberAt(subscription, 0)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
 $DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
 $DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
 $DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.subscribe(address(this), subscription);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.subscribe(address(this), subscription)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
 $DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
 $DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.subscribe(address(this), oldSubscription);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.subscribe(address(this), oldSubscription)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.subscribe(address(this), newSubscription);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.subscribe(address(this), newSubscription)`
 $DIR/test/OperatorFilterRegistry.t.sol: `.subscriberAt(newSubscription, 0)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
 $DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
 $DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.subscribe(address(this), subscription);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.subscribe(address(this), subscription)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.unsubscribe(address(this), false);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.unsubscribe(address(this), false)`
 $DIR/test/OperatorFilterRegistry.t.sol: `.subscriptionOf(address(this))`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
 $DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.subscribe(address(this), subscription);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.subscribe(address(this), subscription)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(subscription);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.register(subscription)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateOperator(subscription, operator, true);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.updateOperator(subscription, operator, true)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateCodeHash(subscription, codeHash, true);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.updateCodeHash(subscription, codeHash, true)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
 $DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.subscribe(address(this), subscription);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.subscribe(address(this), subscription)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.unsubscribe(address(this), true);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.unsubscribe(address(this), true)`
 $DIR/test/OperatorFilterRegistry.t.sol: `.subscriptionOf(address(this))`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
 $DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(subscription);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.register(subscription)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateOperator(subscription, operator, true);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.updateOperator(subscription, operator, true)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateOperator(subscription, duplicateOperator, true);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.updateOperator(subscription, duplicateOperator, true)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateCodeHash(subscription, codeHash, true);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.updateCodeHash(subscription, codeHash, true)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateCodeHash(subscription, duplicateCodeHash, true);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.updateCodeHash(subscription, duplicateCodeHash, true)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
 $DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateOperator(address(this), duplicateOperator, true);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.updateOperator(address(this), duplicateOperator, true)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateCodeHash(address(this), duplicateCodeHash, true);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.updateCodeHash(address(this), duplicateCodeHash, true)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.copyEntriesOf(address(this), subscription);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.copyEntriesOf(address(this), subscription)`
 $DIR/test/OperatorFilterRegistry.t.sol: `.filteredCodeHashAt(address(this), 1)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
 $DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(subscription);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.register(subscription)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
 $DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(subscription);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.register(subscription)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateOperator(subscription, operator, true);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.updateOperator(subscription, operator, true)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateCodeHash(subscription, codeHash, true);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.updateCodeHash(subscription, codeHash, true)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
 $DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.subscribe(address(this), subscription);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.subscribe(address(this), subscription)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
 $DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
-$DIR/test/OperatorFilterRegistry.t.sol: `vm.etch(toCheck, code);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.etch(toCheck, code)`
 $DIR/test/OperatorFilterRegistry.t.sol: `.codeHashOf(toCheck)`
-$DIR/test/OperatorFilterRegistry.t.sol: `vm.etch(toCheck, code);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.etch(toCheck, code)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
 $DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateCodeHash(address(this), codeHash, true);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.updateCodeHash(address(this), codeHash, true)`
 $DIR/test/OperatorFilterRegistry.t.sol: `.isCodeHashOfFiltered(address(this), makeAddr("not filtered"))`
-$DIR/test/OperatorFilterRegistry.t.sol: `vm.etch(toCheck, code);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.etch(toCheck, code)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(subscription);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.register(subscription)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateCodeHash(subscription, codeHash, true);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.updateCodeHash(subscription, codeHash, true)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.registerAndSubscribe(address(this), subscription);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.registerAndSubscribe(address(this), subscription)`
 $DIR/test/OperatorFilterRegistry.t.sol: `.isCodeHashOfFiltered(address(this), makeAddr("not filtered"))`
-$DIR/test/OperatorFilterRegistry.t.sol: `vm.etch(toCheck, code);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.etch(toCheck, code)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(subscription);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.register(subscription)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateCodeHash(subscription, codeHash, true);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.updateCodeHash(subscription, codeHash, true)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.registerAndSubscribe(address(this), subscription);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.registerAndSubscribe(address(this), subscription)`
 $DIR/test/OperatorFilterRegistry.t.sol: `.isCodeHashFiltered(address(this), bytes32(bytes4(0xdeadbeef)))`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(subscription);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.register(subscription)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateOperator(subscription, operator, true);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.updateOperator(subscription, operator, true)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.registerAndSubscribe(address(this), subscription);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.registerAndSubscribe(address(this), subscription)`
 $DIR/test/OperatorFilterRegistry.t.sol: `.isOperatorFiltered(address(this), makeAddr("not filtered"))`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(subscription);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.register(subscription)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateOperator(subscription, operator, true);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.updateOperator(subscription, operator, true)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.registerAndSubscribe(address(this), subscription);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.registerAndSubscribe(address(this), subscription)`
 $DIR/test/OperatorFilterRegistry.t.sol: `.filteredOperatorAt(address(this), 0)`
-$DIR/test/OperatorFilterRegistry.t.sol: `vm.etch(toCheck, code);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.etch(toCheck, code)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(subscription);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.register(subscription)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateCodeHash(subscription, codeHash, true);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.updateCodeHash(subscription, codeHash, true)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.registerAndSubscribe(address(this), subscription);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.registerAndSubscribe(address(this), subscription)`
 $DIR/test/OperatorFilterRegistry.t.sol: `.filteredCodeHashAt(address(this), 0)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(subscription);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.register(subscription)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateOperator(subscription, operator, true);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.updateOperator(subscription, operator, true)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.registerAndSubscribe(address(this), subscription);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.registerAndSubscribe(address(this), subscription)`
 $DIR/test/OperatorFilterRegistry.t.sol: `.filteredOperatorAt(address(this), 0)`
-$DIR/test/OperatorFilterRegistry.t.sol: `vm.etch(toCheck, code);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.etch(toCheck, code)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(subscription);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.register(subscription)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateCodeHash(subscription, codeHash, true);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.updateCodeHash(subscription, codeHash, true)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.registerAndSubscribe(address(this), subscription);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.registerAndSubscribe(address(this), subscription)`
 $DIR/test/OperatorFilterRegistry.t.sol: `.filteredCodeHashAt(address(this), 0)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
 $DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
 $DIR/test/OperatorFilterRegistry.t.sol: `.isRegistered(makeAddr("not registered"))`
 $DIR/test/OperatorFilterRegistry.t.sol: `.isOperatorAllowed(address(this), makeAddr("allowed"))`
-$DIR/test/OperatorFilterRegistry.t.sol: `vm.etch(toCheck, code);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.etch(toCheck, code)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(address(this));`
 $DIR/test/OperatorFilterRegistry.t.sol: `.register(address(this))`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateOperator(address(this), operator, true);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.updateOperator(address(this), operator, true)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateCodeHash(address(this), codeHash, true);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.updateCodeHash(address(this), codeHash, true)`
-$DIR/test/OperatorFilterRegistry.t.sol: `vm.etch(toCheck, code);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.etch(toCheck, code)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.register(subscription);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.register(subscription)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateOperator(subscription, operator, true);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.updateOperator(subscription, operator, true)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.updateCodeHash(subscription, codeHash, true);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.updateCodeHash(subscription, codeHash, true)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.registerAndSubscribe(address(this), subscription);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.registerAndSubscribe(address(this), subscription)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.registerAndSubscribe(address(this), subscription);`
 $DIR/test/OperatorFilterRegistry.t.sol: `.registerAndSubscribe(address(this), subscription)`
-$DIR/test/OperatorFilterRegistry.t.sol: `registry.unregister(address(this));`
 $DIR/test/OperatorFilterRegistry.t.sol: `.unregister(address(this))`
 $DIR/test/OperatorFilterer.t.sol: `vm.recordLogs();`
+$DIR/test/OperatorFilterer.t.sol: `vm.recordLogs();`
+$DIR/test/OperatorFilterer.t.sol: `new ConcreteOperatorFilterer(address(filterer), true);`
+$DIR/test/OperatorFilterer.t.sol: `vm.etch(address(registry), "");`
 $DIR/test/OperatorFilterer.t.sol: `.recordLogs()`
 $DIR/test/OperatorFilterer.t.sol: `.getRecordedLogs()`
 $DIR/test/OperatorFilterer.t.sol: `.getNonce(address(this))`
 $DIR/test/OperatorFilterer.t.sol: `.getNonce(address(this))`
-$DIR/test/OperatorFilterer.t.sol: `vm.recordLogs();`
 $DIR/test/OperatorFilterer.t.sol: `.recordLogs()`
-$DIR/test/OperatorFilterer.t.sol: `new ConcreteOperatorFilterer(address(filterer), true);`
-$DIR/test/OperatorFilterer.t.sol: `vm.etch(address(registry), "");`
 $DIR/test/OperatorFilterer.t.sol: `.etch(address(registry), "")`
 $DIR/test/OperatorFilterer.t.sol: `.testFilter(notFiltered)`
 $DIR/test/OwnedRegistrant.t.sol: `registry.updateOperator(address(registrant), filteredAddress, true);`
 $DIR/test/OwnedRegistrant.t.sol: `.updateOperator(address(registrant), filteredAddress, true)`
 $DIR/test/OwnedRegistrant.t.sol: `.isOperatorFiltered(address(registrant), filteredAddress)`
 $DIR/test/RevokableDefaultOperatorFilterer.t.sol: `filterer.updateOperatorFilterRegistryAddress(address(0));`
-$DIR/test/RevokableDefaultOperatorFilterer.t.sol: `.updateOperatorFilterRegistryAddress(address(0))`
 $DIR/test/RevokableDefaultOperatorFilterer.t.sol: `filterer.revokeOperatorFilterRegistry();`
+$DIR/test/RevokableDefaultOperatorFilterer.t.sol: `.updateOperatorFilterRegistryAddress(address(0))`
 $DIR/test/RevokableDefaultOperatorFilterer.t.sol: `.revokeOperatorFilterRegistry()`
 $DIR/test/RevokableOperatorFilterer.t.sol: `vm.recordLogs();`
+$DIR/test/RevokableOperatorFilterer.t.sol: `vm.recordLogs();`
+$DIR/test/RevokableOperatorFilterer.t.sol: `new ConcreteRevokableOperatorFilterer(address(registry), address(filterer), true);`
+$DIR/test/RevokableOperatorFilterer.t.sol: `vm.etch(address(registry), "");`
+$DIR/test/RevokableOperatorFilterer.t.sol: `filterer.updateOperatorFilterRegistryAddress(newRegistry);`
+$DIR/test/RevokableOperatorFilterer.t.sol: `filterer.updateOperatorFilterRegistryAddress(address(0));`
+$DIR/test/RevokableOperatorFilterer.t.sol: `filterer.updateOperatorFilterRegistryAddress(address(registry));`
+$DIR/test/RevokableOperatorFilterer.t.sol: `filterer.revokeOperatorFilterRegistry();`
 $DIR/test/RevokableOperatorFilterer.t.sol: `.recordLogs()`
 $DIR/test/RevokableOperatorFilterer.t.sol: `.getRecordedLogs()`
 $DIR/test/RevokableOperatorFilterer.t.sol: `.getNonce(address(this))`
 $DIR/test/RevokableOperatorFilterer.t.sol: `.getNonce(address(this))`
-$DIR/test/RevokableOperatorFilterer.t.sol: `vm.recordLogs();`
 $DIR/test/RevokableOperatorFilterer.t.sol: `.recordLogs()`
-$DIR/test/RevokableOperatorFilterer.t.sol: `new ConcreteRevokableOperatorFilterer(address(registry), address(filterer), true);`
-$DIR/test/RevokableOperatorFilterer.t.sol: `vm.etch(address(registry), "");`
 $DIR/test/RevokableOperatorFilterer.t.sol: `.etch(address(registry), "")`
 $DIR/test/RevokableOperatorFilterer.t.sol: `.testFilter(notFiltered)`
-$DIR/test/RevokableOperatorFilterer.t.sol: `filterer.updateOperatorFilterRegistryAddress(newRegistry);`
 $DIR/test/RevokableOperatorFilterer.t.sol: `.updateOperatorFilterRegistryAddress(newRegistry)`
 $DIR/test/RevokableOperatorFilterer.t.sol: `.operatorFilterRegistry()`
-$DIR/test/RevokableOperatorFilterer.t.sol: `filterer.updateOperatorFilterRegistryAddress(address(0));`
 $DIR/test/RevokableOperatorFilterer.t.sol: `.updateOperatorFilterRegistryAddress(address(0))`
-$DIR/test/RevokableOperatorFilterer.t.sol: `filterer.updateOperatorFilterRegistryAddress(address(registry));`
 $DIR/test/RevokableOperatorFilterer.t.sol: `.updateOperatorFilterRegistryAddress(address(registry))`
-$DIR/test/RevokableOperatorFilterer.t.sol: `filterer.revokeOperatorFilterRegistry();`
 $DIR/test/RevokableOperatorFilterer.t.sol: `.revokeOperatorFilterRegistry()`
 $DIR/test/UpdatableOperatorFilterer.t.sol: `vm.recordLogs();`
+$DIR/test/UpdatableOperatorFilterer.t.sol: `vm.recordLogs();`
+$DIR/test/UpdatableOperatorFilterer.t.sol: `new ConcreteUpdatableOperatorFilterer(address(registry), address(filterer), true);`
+$DIR/test/UpdatableOperatorFilterer.t.sol: `vm.etch(address(registry), "");`
+$DIR/test/UpdatableOperatorFilterer.t.sol: `filterer.updateOperatorFilterRegistryAddress(newRegistry);`
+$DIR/test/UpdatableOperatorFilterer.t.sol: `filterer.updateOperatorFilterRegistryAddress(address(0));`
+$DIR/test/UpdatableOperatorFilterer.t.sol: `filterer.updateOperatorFilterRegistryAddress(address(registry));`
 $DIR/test/UpdatableOperatorFilterer.t.sol: `.recordLogs()`
 $DIR/test/UpdatableOperatorFilterer.t.sol: `.getRecordedLogs()`
 $DIR/test/UpdatableOperatorFilterer.t.sol: `.getNonce(address(this))`
 $DIR/test/UpdatableOperatorFilterer.t.sol: `.getNonce(address(this))`
-$DIR/test/UpdatableOperatorFilterer.t.sol: `vm.recordLogs();`
 $DIR/test/UpdatableOperatorFilterer.t.sol: `.recordLogs()`
-$DIR/test/UpdatableOperatorFilterer.t.sol: `new ConcreteUpdatableOperatorFilterer(address(registry), address(filterer), true);`
-$DIR/test/UpdatableOperatorFilterer.t.sol: `vm.etch(address(registry), "");`
 $DIR/test/UpdatableOperatorFilterer.t.sol: `.etch(address(registry), "")`
 $DIR/test/UpdatableOperatorFilterer.t.sol: `.testFilter(notFiltered)`
-$DIR/test/UpdatableOperatorFilterer.t.sol: `filterer.updateOperatorFilterRegistryAddress(newRegistry);`
 $DIR/test/UpdatableOperatorFilterer.t.sol: `.updateOperatorFilterRegistryAddress(newRegistry)`
 $DIR/test/UpdatableOperatorFilterer.t.sol: `.operatorFilterRegistry()`
-$DIR/test/UpdatableOperatorFilterer.t.sol: `filterer.updateOperatorFilterRegistryAddress(address(0));`
 $DIR/test/UpdatableOperatorFilterer.t.sol: `.updateOperatorFilterRegistryAddress(address(0))`
-$DIR/test/UpdatableOperatorFilterer.t.sol: `filterer.updateOperatorFilterRegistryAddress(address(registry));`
 $DIR/test/UpdatableOperatorFilterer.t.sol: `.updateOperatorFilterRegistryAddress(address(registry))`
 $DIR/test/example/ExampleERC1155.t.sol: `ids[0] = 1;`
 $DIR/test/example/ExampleERC1155.t.sol: `amounts[0] = 1;`
 $DIR/test/example/ExampleERC1155.t.sol: `example.mint(alice, 1);`
-$DIR/test/example/ExampleERC1155.t.sol: `.mint(alice, 1)`
 $DIR/test/example/ExampleERC1155.t.sol: `example.mint(alice, 1);`
-$DIR/test/example/ExampleERC1155.t.sol: `.mint(alice, 1)`
 $DIR/test/example/ExampleERC1155.t.sol: `ids[0] = 1;`
 $DIR/test/example/ExampleERC1155.t.sol: `amounts[0] = 1;`
 $DIR/test/example/ExampleERC1155.t.sol: `example.mint(bob, 1);`
-$DIR/test/example/ExampleERC1155.t.sol: `.mint(bob, 1)`
 $DIR/test/example/ExampleERC1155.t.sol: `example.mint(bob, 1);`
+$DIR/test/example/ExampleERC1155.t.sol: `.mint(alice, 1)`
+$DIR/test/example/ExampleERC1155.t.sol: `.mint(alice, 1)`
+$DIR/test/example/ExampleERC1155.t.sol: `.mint(bob, 1)`
 $DIR/test/example/ExampleERC1155.t.sol: `.mint(bob, 1)`
 $DIR/test/example/ExampleERC1155.t.sol: `.supportsInterface(type(IERC2981).interfaceId)`
 $DIR/test/example/ExampleERC721.t.sol: `example.mint(alice, 1);`
-$DIR/test/example/ExampleERC721.t.sol: `.mint(alice, 1)`
 $DIR/test/example/ExampleERC721.t.sol: `example.mint(alice, 1);`
-$DIR/test/example/ExampleERC721.t.sol: `.mint(alice, 1)`
 $DIR/test/example/ExampleERC721.t.sol: `example.mint(alice, 2);`
-$DIR/test/example/ExampleERC721.t.sol: `.mint(alice, 2)`
 $DIR/test/example/ExampleERC721.t.sol: `example.safeTransferFrom(alice, makeAddr("to"), 1);`
+$DIR/test/example/ExampleERC721.t.sol: `example.mint(bob, 1);`
+$DIR/test/example/ExampleERC721.t.sol: `example.mint(bob, 1);`
+$DIR/test/example/ExampleERC721.t.sol: `.mint(alice, 1)`
+$DIR/test/example/ExampleERC721.t.sol: `.mint(alice, 1)`
+$DIR/test/example/ExampleERC721.t.sol: `.mint(alice, 2)`
 $DIR/test/example/ExampleERC721.t.sol: `.safeTransferFrom(alice, makeAddr("to"), 1)`
-$DIR/test/example/ExampleERC721.t.sol: `example.mint(bob, 1);`
 $DIR/test/example/ExampleERC721.t.sol: `.mint(bob, 1)`
-$DIR/test/example/ExampleERC721.t.sol: `example.mint(bob, 1);`
 $DIR/test/example/ExampleERC721.t.sol: `.mint(bob, 1)`
 $DIR/test/example/ExampleERC721.t.sol: `.supportsInterface(type(IERC2981).interfaceId)`
 $DIR/test/example/RevokableERC1155.t.sol: `ids[0] = 1;`
 $DIR/test/example/RevokableERC1155.t.sol: `amounts[0] = 1;`
 $DIR/test/example/RevokableERC1155.t.sol: `example.mint(alice, 1);`
-$DIR/test/example/RevokableERC1155.t.sol: `.mint(alice, 1)`
 $DIR/test/example/RevokableERC1155.t.sol: `example.mint(alice, 1);`
-$DIR/test/example/RevokableERC1155.t.sol: `.mint(alice, 1)`
 $DIR/test/example/RevokableERC1155.t.sol: `ids[0] = 1;`
 $DIR/test/example/RevokableERC1155.t.sol: `amounts[0] = 1;`
 $DIR/test/example/RevokableERC1155.t.sol: `example.mint(bob, 1);`
-$DIR/test/example/RevokableERC1155.t.sol: `.mint(bob, 1)`
 $DIR/test/example/RevokableERC1155.t.sol: `example.mint(bob, 1);`
-$DIR/test/example/RevokableERC1155.t.sol: `.mint(bob, 1)`
 $DIR/test/example/RevokableERC1155.t.sol: `example.mint(makeAddr("bob"), 1);`
-$DIR/test/example/RevokableERC1155.t.sol: `.mint(makeAddr("bob"), 1)`
 $DIR/test/example/RevokableERC1155.t.sol: `example.updateOperatorFilterRegistryAddress(address(0));`
+$DIR/test/example/RevokableERC1155.t.sol: `.mint(alice, 1)`
+$DIR/test/example/RevokableERC1155.t.sol: `.mint(alice, 1)`
+$DIR/test/example/RevokableERC1155.t.sol: `.mint(bob, 1)`
+$DIR/test/example/RevokableERC1155.t.sol: `.mint(bob, 1)`
+$DIR/test/example/RevokableERC1155.t.sol: `.mint(makeAddr("bob"), 1)`
 $DIR/test/example/RevokableERC1155.t.sol: `.updateOperatorFilterRegistryAddress(address(0))`
 $DIR/test/example/RevokableERC1155.t.sol: `.supportsInterface(type(IERC2981).interfaceId)`
 $DIR/test/example/RevokableERC721.t.sol: `example.mint(alice, 1);`
-$DIR/test/example/RevokableERC721.t.sol: `.mint(alice, 1)`
 $DIR/test/example/RevokableERC721.t.sol: `example.mint(alice, 1);`
-$DIR/test/example/RevokableERC721.t.sol: `.mint(alice, 1)`
 $DIR/test/example/RevokableERC721.t.sol: `example.mint(alice, 2);`
-$DIR/test/example/RevokableERC721.t.sol: `.mint(alice, 2)`
 $DIR/test/example/RevokableERC721.t.sol: `example.safeTransferFrom(alice, makeAddr("to"), 1);`
-$DIR/test/example/RevokableERC721.t.sol: `.safeTransferFrom(alice, makeAddr("to"), 1)`
 $DIR/test/example/RevokableERC721.t.sol: `example.mint(bob, 1);`
-$DIR/test/example/RevokableERC721.t.sol: `.mint(bob, 1)`
 $DIR/test/example/RevokableERC721.t.sol: `example.mint(bob, 1);`
-$DIR/test/example/RevokableERC721.t.sol: `.mint(bob, 1)`
 $DIR/test/example/RevokableERC721.t.sol: `example.mint(makeAddr("bob"), 1);`
-$DIR/test/example/RevokableERC721.t.sol: `.mint(makeAddr("bob"), 1)`
 $DIR/test/example/RevokableERC721.t.sol: `example.updateOperatorFilterRegistryAddress(address(0));`
+$DIR/test/example/RevokableERC721.t.sol: `.mint(alice, 1)`
+$DIR/test/example/RevokableERC721.t.sol: `.mint(alice, 1)`
+$DIR/test/example/RevokableERC721.t.sol: `.mint(alice, 2)`
+$DIR/test/example/RevokableERC721.t.sol: `.safeTransferFrom(alice, makeAddr("to"), 1)`
+$DIR/test/example/RevokableERC721.t.sol: `.mint(bob, 1)`
+$DIR/test/example/RevokableERC721.t.sol: `.mint(bob, 1)`
+$DIR/test/example/RevokableERC721.t.sol: `.mint(makeAddr("bob"), 1)`
 $DIR/test/example/RevokableERC721.t.sol: `.updateOperatorFilterRegistryAddress(address(0))`
 $DIR/test/example/RevokableERC721.t.sol: `.supportsInterface(type(IERC2981).interfaceId)`
 $DIR/test/example/upgradeable/ExampleERC1155Upgradeable.t.sol: `example2.initialize();`
+$DIR/test/example/upgradeable/ExampleERC1155Upgradeable.t.sol: `ids[0] = 1;`
+$DIR/test/example/upgradeable/ExampleERC1155Upgradeable.t.sol: `amounts[0] = 1;`
+$DIR/test/example/upgradeable/ExampleERC1155Upgradeable.t.sol: `example.mint(alice, 1);`
+$DIR/test/example/upgradeable/ExampleERC1155Upgradeable.t.sol: `example.mint(alice, 1);`
+$DIR/test/example/upgradeable/ExampleERC1155Upgradeable.t.sol: `ids[0] = 1;`
+$DIR/test/example/upgradeable/ExampleERC1155Upgradeable.t.sol: `amounts[0] = 1;`
+$DIR/test/example/upgradeable/ExampleERC1155Upgradeable.t.sol: `example.mint(bob, 1);`
+$DIR/test/example/upgradeable/ExampleERC1155Upgradeable.t.sol: `example.mint(bob, 1);`
 $DIR/test/example/upgradeable/ExampleERC1155Upgradeable.t.sol: `.initialize()`
-$DIR/test/example/upgradeable/ExampleERC1155Upgradeable.t.sol: `ids[0] = 1;`
-$DIR/test/example/upgradeable/ExampleERC1155Upgradeable.t.sol: `amounts[0] = 1;`
-$DIR/test/example/upgradeable/ExampleERC1155Upgradeable.t.sol: `example.mint(alice, 1);`
 $DIR/test/example/upgradeable/ExampleERC1155Upgradeable.t.sol: `.mint(alice, 1)`
-$DIR/test/example/upgradeable/ExampleERC1155Upgradeable.t.sol: `example.mint(alice, 1);`
 $DIR/test/example/upgradeable/ExampleERC1155Upgradeable.t.sol: `.mint(alice, 1)`
-$DIR/test/example/upgradeable/ExampleERC1155Upgradeable.t.sol: `ids[0] = 1;`
-$DIR/test/example/upgradeable/ExampleERC1155Upgradeable.t.sol: `amounts[0] = 1;`
-$DIR/test/example/upgradeable/ExampleERC1155Upgradeable.t.sol: `example.mint(bob, 1);`
 $DIR/test/example/upgradeable/ExampleERC1155Upgradeable.t.sol: `.mint(bob, 1)`
-$DIR/test/example/upgradeable/ExampleERC1155Upgradeable.t.sol: `example.mint(bob, 1);`
 $DIR/test/example/upgradeable/ExampleERC1155Upgradeable.t.sol: `.mint(bob, 1)`
 $DIR/test/example/upgradeable/ExampleERC1155Upgradeable.t.sol: `.supportsInterface(type(IERC2981).interfaceId)`
 $DIR/test/example/upgradeable/ExampleERC721Upgradeable.t.sol: `example2.initialize();`
-$DIR/test/example/upgradeable/ExampleERC721Upgradeable.t.sol: `.initialize()`
 $DIR/test/example/upgradeable/ExampleERC721Upgradeable.t.sol: `example.mint(alice, 1);`
-$DIR/test/example/upgradeable/ExampleERC721Upgradeable.t.sol: `.mint(alice, 1)`
 $DIR/test/example/upgradeable/ExampleERC721Upgradeable.t.sol: `example.mint(alice, 1);`
-$DIR/test/example/upgradeable/ExampleERC721Upgradeable.t.sol: `.mint(alice, 1)`
 $DIR/test/example/upgradeable/ExampleERC721Upgradeable.t.sol: `example.mint(alice, 2);`
-$DIR/test/example/upgradeable/ExampleERC721Upgradeable.t.sol: `.mint(alice, 2)`
 $DIR/test/example/upgradeable/ExampleERC721Upgradeable.t.sol: `example.safeTransferFrom(alice, makeAddr("to"), 1);`
+$DIR/test/example/upgradeable/ExampleERC721Upgradeable.t.sol: `example.mint(bob, 1);`
+$DIR/test/example/upgradeable/ExampleERC721Upgradeable.t.sol: `example.mint(bob, 1);`
+$DIR/test/example/upgradeable/ExampleERC721Upgradeable.t.sol: `.initialize()`
+$DIR/test/example/upgradeable/ExampleERC721Upgradeable.t.sol: `.mint(alice, 1)`
+$DIR/test/example/upgradeable/ExampleERC721Upgradeable.t.sol: `.mint(alice, 1)`
+$DIR/test/example/upgradeable/ExampleERC721Upgradeable.t.sol: `.mint(alice, 2)`
 $DIR/test/example/upgradeable/ExampleERC721Upgradeable.t.sol: `.safeTransferFrom(alice, makeAddr("to"), 1)`
-$DIR/test/example/upgradeable/ExampleERC721Upgradeable.t.sol: `example.mint(bob, 1);`
 $DIR/test/example/upgradeable/ExampleERC721Upgradeable.t.sol: `.mint(bob, 1)`
-$DIR/test/example/upgradeable/ExampleERC721Upgradeable.t.sol: `example.mint(bob, 1);`
 $DIR/test/example/upgradeable/ExampleERC721Upgradeable.t.sol: `.mint(bob, 1)`
 $DIR/test/example/upgradeable/ExampleERC721Upgradeable.t.sol: `.supportsInterface(type(IERC2981).interfaceId)`
 $DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol: `example2.initialize();`
-$DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol: `.initialize()`
 $DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol: `ids[0] = 1;`
 $DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol: `amounts[0] = 1;`
 $DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol: `example.mint(alice, 1);`
-$DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol: `.mint(alice, 1)`
 $DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol: `example.mint(alice, 1);`
-$DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol: `.mint(alice, 1)`
 $DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol: `ids[0] = 1;`
 $DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol: `amounts[0] = 1;`
 $DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol: `example.mint(bob, 1);`
-$DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol: `.mint(bob, 1)`
 $DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol: `example.mint(bob, 1);`
-$DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol: `.mint(bob, 1)`
 $DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol: `example.mint(makeAddr("bob"), 1);`
-$DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol: `.mint(makeAddr("bob"), 1)`
 $DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol: `example.revokeOperatorFilterRegistry();`
+$DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol: `.initialize()`
+$DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol: `.mint(alice, 1)`
+$DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol: `.mint(alice, 1)`
+$DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol: `.mint(bob, 1)`
+$DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol: `.mint(bob, 1)`
+$DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol: `.mint(makeAddr("bob"), 1)`
 $DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol: `.revokeOperatorFilterRegistry()`
 $DIR/test/example/upgradeable/RevokableExampleERC1155Upgradeable.t.sol: `.supportsInterface(type(IERC2981).interfaceId)`
 $DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol: `example2.initialize();`
-$DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol: `.initialize()`
 $DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol: `example.mint(alice, 1);`
-$DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol: `.mint(alice, 1)`
 $DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol: `example.mint(alice, 1);`
-$DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol: `.mint(alice, 1)`
 $DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol: `example.mint(alice, 2);`
-$DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol: `.mint(alice, 2)`
 $DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol: `example.safeTransferFrom(alice, makeAddr("to"), 1);`
-$DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol: `.safeTransferFrom(alice, makeAddr("to"), 1)`
 $DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol: `example.mint(bob, 1);`
-$DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol: `.mint(bob, 1)`
 $DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol: `example.mint(bob, 1);`
-$DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol: `.mint(bob, 1)`
 $DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol: `example.mint(makeAddr("bob"), 1);`
-$DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol: `.mint(makeAddr("bob"), 1)`
 $DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol: `example.revokeOperatorFilterRegistry();`
+$DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol: `.initialize()`
+$DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol: `.mint(alice, 1)`
+$DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol: `.mint(alice, 1)`
+$DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol: `.mint(alice, 2)`
+$DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol: `.safeTransferFrom(alice, makeAddr("to"), 1)`
+$DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol: `.mint(bob, 1)`
+$DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol: `.mint(bob, 1)`
+$DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol: `.mint(makeAddr("bob"), 1)`
 $DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol: `.revokeOperatorFilterRegistry()`
 $DIR/test/example/upgradeable/RevokableExampleERC721Upgradeable.t.sol: `.supportsInterface(type(IERC2981).interfaceId)`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `example2.initialize(address(registry), DEFAULT_SUBSCRIPTION, true);`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.initialize(address(registry), DEFAULT_SUBSCRIPTION, true)`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `example.mint(alice, 1);`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.mint(alice, 1)`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `example.mint(alice, 1);`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.mint(alice, 1)`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `example.mint(alice, 2);`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.mint(alice, 2)`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `example.safeTransferFrom(alice, makeAddr("to"), 1);`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.safeTransferFrom(alice, makeAddr("to"), 1)`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `example.mint(bob, 1);`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.mint(bob, 1)`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `example.mint(bob, 1);`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.mint(bob, 1)`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `vm.recordLogs();`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.recordLogs()`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `filterer2.initialize(address(registry), address(0), false);`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `vm.recordLogs();`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `filterer2.initialize(address(registry), address(filterer), false);`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `vm.recordLogs();`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `filterer2.initialize(address(registry), address(filterer), true);`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `vm.etch(address(registry), "");`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `filterer2.initialize(address(registry), address(0), false);`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `filterer.updateOperatorFilterRegistryAddress(newRegistry);`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `filterer.updateOperatorFilterRegistryAddress(address(0));`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `filterer.updateOperatorFilterRegistryAddress(address(registry));`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `updatableFilterer.initialize(stubRegistry, address(0), false);`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.initialize(address(registry), DEFAULT_SUBSCRIPTION, true)`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.mint(alice, 1)`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.mint(alice, 1)`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.mint(alice, 2)`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.safeTransferFrom(alice, makeAddr("to"), 1)`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.mint(bob, 1)`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.mint(bob, 1)`
+$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.recordLogs()`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.initialize(address(registry), address(0), false)`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.getRecordedLogs()`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.getNonce(address(this))`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `vm.recordLogs();`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.recordLogs()`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `filterer2.initialize(address(registry), address(filterer), false);`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.initialize(address(registry), address(filterer), false)`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.getRecordedLogs()`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.getNonce(address(this))`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `vm.recordLogs();`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.recordLogs()`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `filterer2.initialize(address(registry), address(filterer), true);`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.initialize(address(registry), address(filterer), true)`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.getRecordedLogs()`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `vm.etch(address(registry), "");`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.etch(address(registry), "")`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `filterer2.initialize(address(registry), address(0), false);`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.initialize(address(registry), address(0), false)`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.testFilter(notFiltered)`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `filterer.updateOperatorFilterRegistryAddress(newRegistry);`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.updateOperatorFilterRegistryAddress(newRegistry)`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.operatorFilterRegistry()`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `filterer.updateOperatorFilterRegistryAddress(address(0));`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.updateOperatorFilterRegistryAddress(address(0))`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `filterer.updateOperatorFilterRegistryAddress(address(registry));`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.updateOperatorFilterRegistryAddress(address(registry))`
-$DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `updatableFilterer.initialize(stubRegistry, address(0), false);`
 $DIR/test/example/upgradeable/UpdatableExampleERC721Upgradeable.t.sol: `.initialize(stubRegistry, address(0), false)`
 $DIR/test/upgradeable/RevokableUpgradeableOperatorFilterer.t.sol: `filterer.revokeOperatorFilterRegistry();`
 $DIR/test/upgradeable/RevokableUpgradeableOperatorFilterer.t.sol: `.revokeOperatorFilterRegistry()`
 $DIR/test/upgradeable/UpgradeableOperatorFilterer.t.sol: `filterer.init(DEFAULT_SUBSCRIPTION, false);`
+$DIR/test/upgradeable/UpgradeableOperatorFilterer.t.sol: `filterer.init(address(0), false);`
+$DIR/test/upgradeable/UpgradeableOperatorFilterer.t.sol: `filterer.init(DEFAULT_SUBSCRIPTION, true);`
 $DIR/test/upgradeable/UpgradeableOperatorFilterer.t.sol: `.init(DEFAULT_SUBSCRIPTION, false)`
 $DIR/test/upgradeable/UpgradeableOperatorFilterer.t.sol: `.isOperatorFiltered(address(filterer), makeAddr("operator"))`
-$DIR/test/upgradeable/UpgradeableOperatorFilterer.t.sol: `filterer.init(address(0), false);`
 $DIR/test/upgradeable/UpgradeableOperatorFilterer.t.sol: `.init(address(0), false)`
 $DIR/test/upgradeable/UpgradeableOperatorFilterer.t.sol: `.isRegistered(address(filterer))`
-$DIR/test/upgradeable/UpgradeableOperatorFilterer.t.sol: `filterer.init(DEFAULT_SUBSCRIPTION, true);`
 $DIR/test/upgradeable/UpgradeableOperatorFilterer.t.sol: `.init(DEFAULT_SUBSCRIPTION, true)`
 $DIR/test/upgradeable/UpgradeableOperatorFilterer.t.sol: `.subscriptionOf(address(filterer))`
-$DIR/test/validation/Validation.t.sol: `.supportsInterface(type(IERC721).interfaceId)`
 $DIR/test/validation/Validation.t.sol: `_testERC721();`
-$DIR/test/validation/Validation.t.sol: `.supportsInterface(type(IERC1155).interfaceId)`
 $DIR/test/validation/Validation.t.sol: `_testERC1155();`
 $DIR/test/validation/Validation.t.sol: `_testERC721();`
 $DIR/test/validation/Validation.t.sol: `_testERC721();`
+$DIR/test/validation/Validation.t.sol: `.supportsInterface(type(IERC721).interfaceId)`
+$DIR/test/validation/Validation.t.sol: `.supportsInterface(type(IERC1155).interfaceId)`
