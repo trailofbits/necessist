@@ -1,3 +1,172 @@
+$DIR/pythnet/message_buffer/tests/message_buffer.ts: `await messageBufferProgram.methods
+      .setAllowedPrograms(allowedProgramAuthorities)
+      .accounts({
+        admin: whitelistAdmin.publicKey,
+      })
+      .signers([whitelistAdmin])
+      .rpc();`
+$DIR/pythnet/message_buffer/tests/message_buffer.ts: `await messageBufferProgram.methods
+      .createBuffer(mockCpiCallerAuth, pythPriceAccountPk, 1024 * 8)
+      .accounts({
+        whitelist: whitelistPubkey,
+        admin: whitelistAdmin.publicKey,
+        payer: payer.publicKey,
+        systemProgram: anchor.web3.SystemProgram.programId,
+      })
+      .signers([whitelistAdmin])
+      .remainingAccounts(msgBufferPdaMetas)
+      .rpc({ skipPreflight: true });`
+$DIR/pythnet/message_buffer/tests/message_buffer.ts: `await provider.sendAndConfirm(
+      (() => {
+        const tx = new anchor.web3.Transaction();
+        tx.add(
+          anchor.web3.SystemProgram.transfer({
+            fromPubkey: provider.wallet.publicKey,
+            toPubkey: messageBufferPda2,
+            lamports: minimumEmptyRent,
+          })
+        );
+        return tx;
+      })()
+    );`
+$DIR/pythnet/message_buffer/tests/message_buffer.ts: `tx.add(
+          anchor.web3.SystemProgram.transfer({
+            fromPubkey: provider.wallet.publicKey,
+            toPubkey: messageBufferPda2,
+            lamports: minimumEmptyRent,
+          })
+        );`
+$DIR/pythnet/message_buffer/tests/message_buffer.ts: `await messageBufferProgram.methods
+      .createBuffer(mockCpiCallerAuth, pythPriceAccountPk2, 1000)
+      .accounts({
+        whitelist: whitelistPubkey,
+        admin: whitelistAdmin.publicKey,
+        payer: payer.publicKey,
+        systemProgram: anchor.web3.SystemProgram.programId,
+      })
+      .signers([whitelistAdmin])
+      .remainingAccounts([messageBufferPdaMeta2])
+      .rpc({ skipPreflight: true });`
+$DIR/pythnet/message_buffer/tests/message_buffer.ts: `await messageBufferProgram.methods
+      .updateWhitelistAdmin(newWhitelistAdmin.publicKey)
+      .accounts({
+        admin: whitelistAdmin.publicKey,
+      })
+      .signers([whitelistAdmin])
+      .rpc();`
+$DIR/pythnet/message_buffer/tests/message_buffer.ts: `await messageBufferProgram.methods
+      .updateWhitelistAdmin(whitelistAdmin.publicKey)
+      .accounts({
+        admin: newWhitelistAdmin.publicKey,
+      })
+      .signers([newWhitelistAdmin])
+      .rpc();`
+$DIR/pythnet/message_buffer/tests/message_buffer.ts: `whitelist = await messageBufferProgram.account.whitelist.fetch(
+      whitelistPubkey
+    );`
+$DIR/pythnet/message_buffer/tests/message_buffer.ts: `await mockCpiProg.methods
+      .updatePrice(updatePriceParams)
+      .accounts({
+        pythPriceAccount: pythPriceAccountPk,
+        auth: mockCpiCallerAuth,
+        accumulatorWhitelist: whitelistPubkey,
+        messageBufferProgram: messageBufferProgram.programId,
+      })
+      .remainingAccounts([accumulatorPdaMeta])
+      .preInstructions([
+        ComputeBudgetProgram.setComputeUnitLimit({ units: 1_000_000 }),
+      ])
+      .rpc({
+        skipPreflight: true,
+      });`
+$DIR/pythnet/message_buffer/tests/message_buffer.ts: `await mockCpiProg.methods
+        .cpiMaxTest(updatePriceParams, testCase)
+        .accounts({
+          pythPriceAccount: pythPriceAccountPk,
+          auth: mockCpiCallerAuth,
+          accumulatorWhitelist: whitelistPubkey,
+          messageBufferProgram: messageBufferProgram.programId,
+        })
+        .remainingAccounts([accumulatorPdaMeta])
+        .preInstructions([
+          ComputeBudgetProgram.setComputeUnitLimit({ units: 1_000_000 }),
+        ])
+        .rpc({
+          skipPreflight: true,
+        });`
+$DIR/pythnet/message_buffer/tests/message_buffer.ts: `currentExpectedOffset += testCase[j];`
+$DIR/pythnet/message_buffer/tests/message_buffer.ts: `currentExpectedOffset += mockCpiMessageHeaderLen;`
+$DIR/pythnet/message_buffer/tests/message_buffer.ts: `await mockCpiProg.methods
+          .cpiMaxTest(updatePriceParams, testCase)
+          .accounts({
+            pythPriceAccount: pythPriceAccountPk,
+            auth: mockCpiCallerAuth,
+            accumulatorWhitelist: whitelistPubkey,
+            messageBufferProgram: messageBufferProgram.programId,
+          })
+          .remainingAccounts([accumulatorPdaMeta])
+          .preInstructions([
+            ComputeBudgetProgram.setComputeUnitLimit({ units: 1_000_000 }),
+          ])
+          .rpc({
+            skipPreflight: true,
+          });`
+$DIR/pythnet/message_buffer/tests/message_buffer.ts: `errorThrown = true;`
+$DIR/pythnet/message_buffer/tests/message_buffer.ts: `await messageBufferProgram.methods
+      .resizeBuffer(mockCpiCallerAuth, pythPriceAccountPk2, targetSize)
+      .accounts({
+        whitelist: whitelistPubkey,
+        admin: whitelistAdmin.publicKey,
+        payer: payer.publicKey,
+        systemProgram: anchor.web3.SystemProgram.programId,
+      })
+      .signers([whitelistAdmin])
+      .rpc({ skipPreflight: true });`
+$DIR/pythnet/message_buffer/tests/message_buffer.ts: `await messageBufferProgram.methods
+      .resizeBuffer(mockCpiCallerAuth, pythPriceAccountPk2, targetSize)
+      .accounts({
+        whitelist: whitelistPubkey,
+        admin: whitelistAdmin.publicKey,
+        payer: payer.publicKey,
+        systemProgram: anchor.web3.SystemProgram.programId,
+        messageBuffer: messageBufferPda2,
+      })
+      .signers([whitelistAdmin])
+      .rpc({ skipPreflight: true });`
+$DIR/pythnet/message_buffer/tests/message_buffer.ts: `await messageBufferProgram.methods
+          .resizeBuffer(mockCpiCallerAuth, pythPriceAccountPk2, testCase)
+          .accounts({
+            whitelist: whitelistPubkey,
+            admin: whitelistAdmin.publicKey,
+            payer: payer.publicKey,
+            systemProgram: anchor.web3.SystemProgram.programId,
+            messageBuffer: messageBufferPda2,
+          })
+          .signers([whitelistAdmin])
+          .rpc({ skipPreflight: true });`
+$DIR/pythnet/message_buffer/tests/message_buffer.ts: `errorThrown = true;`
+$DIR/pythnet/message_buffer/tests/message_buffer.ts: `await messageBufferProgram.methods
+      .deleteBuffer(mockCpiCallerAuth, pythPriceAccountPk2)
+      .accounts({
+        whitelist: whitelistPubkey,
+        admin: whitelistAdmin.publicKey,
+        payer: payer.publicKey,
+        messageBuffer: messageBufferPda2,
+      })
+      .signers([whitelistAdmin])
+      .remainingAccounts([messageBufferPdaMeta2])
+      .rpc({ skipPreflight: true });`
+$DIR/pythnet/message_buffer/tests/message_buffer.ts: `await messageBufferProgram.methods
+      .createBuffer(mockCpiCallerAuth, pythPriceAccountPk2, 1000)
+      .accounts({
+        whitelist: whitelistPubkey,
+        admin: whitelistAdmin.publicKey,
+        payer: payer.publicKey,
+        systemProgram: anchor.web3.SystemProgram.programId,
+      })
+      .signers([whitelistAdmin])
+      .remainingAccounts([messageBufferPdaMeta2])
+      .rpc({ skipPreflight: true });`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.methods
       .initialize()`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.accounts({
@@ -10,13 +179,6 @@ $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.account.whitelist.fetch(
       whitelistPubkey
     )`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.stringify(whitelist)`
-$DIR/pythnet/message_buffer/tests/message_buffer.ts: `await messageBufferProgram.methods
-      .setAllowedPrograms(allowedProgramAuthorities)
-      .accounts({
-        admin: whitelistAdmin.publicKey,
-      })
-      .signers([whitelistAdmin])
-      .rpc();`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.methods
       .setAllowedPrograms(allowedProgramAuthorities)`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.accounts({
@@ -31,17 +193,6 @@ $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.allowedPrograms.map((pk) 
       pk.toString()
     )`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.map((p) => p.toString())`
-$DIR/pythnet/message_buffer/tests/message_buffer.ts: `await messageBufferProgram.methods
-      .createBuffer(mockCpiCallerAuth, pythPriceAccountPk, 1024 * 8)
-      .accounts({
-        whitelist: whitelistPubkey,
-        admin: whitelistAdmin.publicKey,
-        payer: payer.publicKey,
-        systemProgram: anchor.web3.SystemProgram.programId,
-      })
-      .signers([whitelistAdmin])
-      .remainingAccounts(msgBufferPdaMetas)
-      .rpc({ skipPreflight: true });`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.methods
       .createBuffer(mockCpiCallerAuth, pythPriceAccountPk, 1024 * 8)`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.accounts({
@@ -54,19 +205,6 @@ $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.signers([whitelistAdmin])
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.remainingAccounts(msgBufferPdaMetas)`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.rpc({ skipPreflight: true })`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.connection.getMinimumBalanceForRentExemption(0)`
-$DIR/pythnet/message_buffer/tests/message_buffer.ts: `await provider.sendAndConfirm(
-      (() => {
-        const tx = new anchor.web3.Transaction();
-        tx.add(
-          anchor.web3.SystemProgram.transfer({
-            fromPubkey: provider.wallet.publicKey,
-            toPubkey: messageBufferPda2,
-            lamports: minimumEmptyRent,
-          })
-        );
-        return tx;
-      })()
-    );`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.sendAndConfirm(
       (() => {
         const tx = new anchor.web3.Transaction();
@@ -80,13 +218,6 @@ $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.sendAndConfirm(
         return tx;
       })()
     )`
-$DIR/pythnet/message_buffer/tests/message_buffer.ts: `tx.add(
-          anchor.web3.SystemProgram.transfer({
-            fromPubkey: provider.wallet.publicKey,
-            toPubkey: messageBufferPda2,
-            lamports: minimumEmptyRent,
-          })
-        );`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.add(
           anchor.web3.SystemProgram.transfer({
             fromPubkey: provider.wallet.publicKey,
@@ -102,17 +233,6 @@ $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.web3.SystemProgram.transf
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.connection.getBalance(
       messageBufferPda2
     )`
-$DIR/pythnet/message_buffer/tests/message_buffer.ts: `await messageBufferProgram.methods
-      .createBuffer(mockCpiCallerAuth, pythPriceAccountPk2, 1000)
-      .accounts({
-        whitelist: whitelistPubkey,
-        admin: whitelistAdmin.publicKey,
-        payer: payer.publicKey,
-        systemProgram: anchor.web3.SystemProgram.programId,
-      })
-      .signers([whitelistAdmin])
-      .remainingAccounts([messageBufferPdaMeta2])
-      .rpc({ skipPreflight: true });`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.methods
       .createBuffer(mockCpiCallerAuth, pythPriceAccountPk2, 1000)`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.accounts({
@@ -131,13 +251,6 @@ $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.connection.getBalance(
       messageBufferPda2
     )`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.web3.Keypair.generate()`
-$DIR/pythnet/message_buffer/tests/message_buffer.ts: `await messageBufferProgram.methods
-      .updateWhitelistAdmin(newWhitelistAdmin.publicKey)
-      .accounts({
-        admin: whitelistAdmin.publicKey,
-      })
-      .signers([whitelistAdmin])
-      .rpc();`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.methods
       .updateWhitelistAdmin(newWhitelistAdmin.publicKey)`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.accounts({
@@ -148,13 +261,6 @@ $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.rpc()`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.account.whitelist.fetch(
       whitelistPubkey
     )`
-$DIR/pythnet/message_buffer/tests/message_buffer.ts: `await messageBufferProgram.methods
-      .updateWhitelistAdmin(whitelistAdmin.publicKey)
-      .accounts({
-        admin: newWhitelistAdmin.publicKey,
-      })
-      .signers([newWhitelistAdmin])
-      .rpc();`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.methods
       .updateWhitelistAdmin(whitelistAdmin.publicKey)`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.accounts({
@@ -162,9 +268,6 @@ $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.accounts({
       })`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.signers([newWhitelistAdmin])`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.rpc()`
-$DIR/pythnet/message_buffer/tests/message_buffer.ts: `whitelist = await messageBufferProgram.account.whitelist.fetch(
-      whitelistPubkey
-    );`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.account.whitelist.fetch(
       whitelistPubkey
     )`
@@ -207,21 +310,6 @@ $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.connection.getAccountInfo
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.map((ai) =>
       ai.pubkey.toString()
     )`
-$DIR/pythnet/message_buffer/tests/message_buffer.ts: `await mockCpiProg.methods
-      .updatePrice(updatePriceParams)
-      .accounts({
-        pythPriceAccount: pythPriceAccountPk,
-        auth: mockCpiCallerAuth,
-        accumulatorWhitelist: whitelistPubkey,
-        messageBufferProgram: messageBufferProgram.programId,
-      })
-      .remainingAccounts([accumulatorPdaMeta])
-      .preInstructions([
-        ComputeBudgetProgram.setComputeUnitLimit({ units: 1_000_000 }),
-      ])
-      .rpc({
-        skipPreflight: true,
-      });`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.methods
       .updatePrice(updatePriceParams)`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.accounts({
@@ -241,21 +329,6 @@ $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.rpc({
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.account.priceAccount.fetch(
       pythPriceAccountPk
     )`
-$DIR/pythnet/message_buffer/tests/message_buffer.ts: `await mockCpiProg.methods
-        .cpiMaxTest(updatePriceParams, testCase)
-        .accounts({
-          pythPriceAccount: pythPriceAccountPk,
-          auth: mockCpiCallerAuth,
-          accumulatorWhitelist: whitelistPubkey,
-          messageBufferProgram: messageBufferProgram.programId,
-        })
-        .remainingAccounts([accumulatorPdaMeta])
-        .preInstructions([
-          ComputeBudgetProgram.setComputeUnitLimit({ units: 1_000_000 }),
-        ])
-        .rpc({
-          skipPreflight: true,
-        });`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.methods
         .cpiMaxTest(updatePriceParams, testCase)`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.accounts({
@@ -275,23 +348,6 @@ $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.rpc({
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.account.priceAccount.fetch(
         pythPriceAccountPk
       )`
-$DIR/pythnet/message_buffer/tests/message_buffer.ts: `currentExpectedOffset += testCase[j];`
-$DIR/pythnet/message_buffer/tests/message_buffer.ts: `currentExpectedOffset += mockCpiMessageHeaderLen;`
-$DIR/pythnet/message_buffer/tests/message_buffer.ts: `await mockCpiProg.methods
-          .cpiMaxTest(updatePriceParams, testCase)
-          .accounts({
-            pythPriceAccount: pythPriceAccountPk,
-            auth: mockCpiCallerAuth,
-            accumulatorWhitelist: whitelistPubkey,
-            messageBufferProgram: messageBufferProgram.programId,
-          })
-          .remainingAccounts([accumulatorPdaMeta])
-          .preInstructions([
-            ComputeBudgetProgram.setComputeUnitLimit({ units: 1_000_000 }),
-          ])
-          .rpc({
-            skipPreflight: true,
-          });`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.methods
           .cpiMaxTest(updatePriceParams, testCase)`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.accounts({
@@ -308,20 +364,9 @@ $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.setComputeUnitLimit({ uni
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.rpc({
             skipPreflight: true,
           })`
-$DIR/pythnet/message_buffer/tests/message_buffer.ts: `errorThrown = true;`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.connection.getBalance(
       payer.publicKey
     )`
-$DIR/pythnet/message_buffer/tests/message_buffer.ts: `await messageBufferProgram.methods
-      .resizeBuffer(mockCpiCallerAuth, pythPriceAccountPk2, targetSize)
-      .accounts({
-        whitelist: whitelistPubkey,
-        admin: whitelistAdmin.publicKey,
-        payer: payer.publicKey,
-        systemProgram: anchor.web3.SystemProgram.programId,
-      })
-      .signers([whitelistAdmin])
-      .rpc({ skipPreflight: true });`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.methods
       .resizeBuffer(mockCpiCallerAuth, pythPriceAccountPk2, targetSize)`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.accounts({
@@ -336,17 +381,6 @@ $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.connection.getBalance(
       payer.publicKey
     )`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.subarray(0, messageBufferAccountDataLenBefore)`
-$DIR/pythnet/message_buffer/tests/message_buffer.ts: `await messageBufferProgram.methods
-      .resizeBuffer(mockCpiCallerAuth, pythPriceAccountPk2, targetSize)
-      .accounts({
-        whitelist: whitelistPubkey,
-        admin: whitelistAdmin.publicKey,
-        payer: payer.publicKey,
-        systemProgram: anchor.web3.SystemProgram.programId,
-        messageBuffer: messageBufferPda2,
-      })
-      .signers([whitelistAdmin])
-      .rpc({ skipPreflight: true });`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.methods
       .resizeBuffer(mockCpiCallerAuth, pythPriceAccountPk2, targetSize)`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.accounts({
@@ -358,17 +392,6 @@ $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.accounts({
       })`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.signers([whitelistAdmin])`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.rpc({ skipPreflight: true })`
-$DIR/pythnet/message_buffer/tests/message_buffer.ts: `await messageBufferProgram.methods
-          .resizeBuffer(mockCpiCallerAuth, pythPriceAccountPk2, testCase)
-          .accounts({
-            whitelist: whitelistPubkey,
-            admin: whitelistAdmin.publicKey,
-            payer: payer.publicKey,
-            systemProgram: anchor.web3.SystemProgram.programId,
-            messageBuffer: messageBufferPda2,
-          })
-          .signers([whitelistAdmin])
-          .rpc({ skipPreflight: true });`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.methods
           .resizeBuffer(mockCpiCallerAuth, pythPriceAccountPk2, testCase)`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.accounts({
@@ -380,18 +403,6 @@ $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.accounts({
           })`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.signers([whitelistAdmin])`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.rpc({ skipPreflight: true })`
-$DIR/pythnet/message_buffer/tests/message_buffer.ts: `errorThrown = true;`
-$DIR/pythnet/message_buffer/tests/message_buffer.ts: `await messageBufferProgram.methods
-      .deleteBuffer(mockCpiCallerAuth, pythPriceAccountPk2)
-      .accounts({
-        whitelist: whitelistPubkey,
-        admin: whitelistAdmin.publicKey,
-        payer: payer.publicKey,
-        messageBuffer: messageBufferPda2,
-      })
-      .signers([whitelistAdmin])
-      .remainingAccounts([messageBufferPdaMeta2])
-      .rpc({ skipPreflight: true });`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.methods
       .deleteBuffer(mockCpiCallerAuth, pythPriceAccountPk2)`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.accounts({
@@ -405,17 +416,6 @@ $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.remainingAccounts([messag
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.rpc({ skipPreflight: true })`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.map((a) => a.pubkey.toString())`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.includes(messageBufferPda2.toString())`
-$DIR/pythnet/message_buffer/tests/message_buffer.ts: `await messageBufferProgram.methods
-      .createBuffer(mockCpiCallerAuth, pythPriceAccountPk2, 1000)
-      .accounts({
-        whitelist: whitelistPubkey,
-        admin: whitelistAdmin.publicKey,
-        payer: payer.publicKey,
-        systemProgram: anchor.web3.SystemProgram.programId,
-      })
-      .signers([whitelistAdmin])
-      .remainingAccounts([messageBufferPdaMeta2])
-      .rpc({ skipPreflight: true });`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.methods
       .createBuffer(mockCpiCallerAuth, pythPriceAccountPk2, 1000)`
 $DIR/pythnet/message_buffer/tests/message_buffer.ts: `.accounts({
