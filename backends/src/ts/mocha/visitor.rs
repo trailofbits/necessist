@@ -18,16 +18,16 @@ pub(super) fn visit<'ast>(
     Ok(visitor.generic_visitor.test_span_maps())
 }
 
-struct Visitor<'context, 'config, 'framework, 'ast, 'storage> {
-    generic_visitor: GenericVisitor<'context, 'config, 'framework, 'ast, Mocha>,
+struct Visitor<'context, 'config, 'backend, 'ast, 'storage> {
+    generic_visitor: GenericVisitor<'context, 'config, 'backend, 'ast, Mocha>,
     storage: &'storage RefCell<Storage<'ast>>,
 }
 
-impl<'context, 'config, 'framework, 'ast, 'storage>
-    Visitor<'context, 'config, 'framework, 'ast, 'storage>
+impl<'context, 'config, 'backend, 'ast, 'storage>
+    Visitor<'context, 'config, 'backend, 'ast, 'storage>
 {
     fn new(
-        generic_visitor: GenericVisitor<'context, 'config, 'framework, 'ast, Mocha>,
+        generic_visitor: GenericVisitor<'context, 'config, 'backend, 'ast, Mocha>,
         storage: &'storage RefCell<Storage<'ast>>,
     ) -> Self {
         Self {
@@ -37,8 +37,8 @@ impl<'context, 'config, 'framework, 'ast, 'storage>
     }
 }
 
-impl<'context, 'config, 'framework, 'ast, 'storage> Visit
-    for Visitor<'context, 'config, 'framework, 'ast, 'storage>
+impl<'context, 'config, 'backend, 'ast, 'storage> Visit
+    for Visitor<'context, 'config, 'backend, 'ast, 'storage>
 {
     fn visit_stmt(&mut self, stmt: &Stmt) {
         // smoelius: Unsafe hack to work around: https://github.com/swc-project/swc/issues/6032

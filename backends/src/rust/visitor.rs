@@ -31,24 +31,24 @@ pub(super) fn visit<'ast>(
     if let Some(error) = storage.borrow_mut().error.take() {
         return Err(error);
     }
-    let _: &Vec<String> = visitor.generic_visitor.framework.cached_source_file_flags(
+    let _: &Vec<String> = visitor.generic_visitor.backend.cached_source_file_flags(
         &mut storage.borrow_mut().source_file_package_cache,
         &visitor.generic_visitor.source_file,
     )?;
     Ok(visitor.generic_visitor.test_span_maps())
 }
 
-struct Visitor<'context, 'config, 'framework, 'ast, 'storage> {
-    generic_visitor: GenericVisitor<'context, 'config, 'framework, 'ast, Rust>,
+struct Visitor<'context, 'config, 'backend, 'ast, 'storage> {
+    generic_visitor: GenericVisitor<'context, 'config, 'backend, 'ast, Rust>,
     storage: &'storage RefCell<Storage<'ast>>,
     test_ident: Option<&'ast Ident>,
 }
 
-impl<'context, 'config, 'framework, 'ast, 'storage>
-    Visitor<'context, 'config, 'framework, 'ast, 'storage>
+impl<'context, 'config, 'backend, 'ast, 'storage>
+    Visitor<'context, 'config, 'backend, 'ast, 'storage>
 {
     fn new(
-        generic_visitor: GenericVisitor<'context, 'config, 'framework, 'ast, Rust>,
+        generic_visitor: GenericVisitor<'context, 'config, 'backend, 'ast, Rust>,
         storage: &'storage RefCell<Storage<'ast>>,
     ) -> Self {
         Self {
@@ -59,8 +59,8 @@ impl<'context, 'config, 'framework, 'ast, 'storage>
     }
 }
 
-impl<'context, 'config, 'framework, 'ast, 'storage> Visit<'ast>
-    for Visitor<'context, 'config, 'framework, 'ast, 'storage>
+impl<'context, 'config, 'backend, 'ast, 'storage> Visit<'ast>
+    for Visitor<'context, 'config, 'backend, 'ast, 'storage>
 {
     fn visit_item_mod(&mut self, item: &'ast ItemMod) {
         if self.test_ident.is_none() {

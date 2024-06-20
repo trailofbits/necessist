@@ -114,8 +114,8 @@ jobs:
             $CARGO_TEST -p necessist --test ${{ matrix.test }}
           else
             $CARGO_TEST -p necessist --test general
+            $CARGO_TEST -p necessist-backends
             $CARGO_TEST -p necessist-core
-            $CARGO_TEST -p necessist-frameworks
           fi
         env:
           CARGO_TEST: cargo test --no-run
@@ -126,8 +126,8 @@ jobs:
             cargo test -p necessist --test ${{ matrix.test }} -- --nocapture
           else
             cargo test -p necessist --test general
+            cargo test -p necessist-backends
             cargo test -p necessist-core
-            cargo test -p necessist-frameworks
           fi
 
   all-checks:

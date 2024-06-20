@@ -159,7 +159,7 @@ fn license() {
     .unwrap()
     .lines()
     {
-        if line == "AGPL-3.0 (3): necessist, necessist-core, necessist-frameworks" {
+        if line == "AGPL-3.0 (3): necessist, necessist-backends, necessist-core" {
             continue;
         }
         assert!(re.is_match(line), "{line:?} does not match");
@@ -231,7 +231,7 @@ fn prettier() {
         "{}/../**/*.md",
         "{}/../**/*.yml",
         "!{}/../fixtures/**",
-        "!{}/../frameworks/src/anchor_ts/rfc8032_test_vector.json",
+        "!{}/../backends/src/anchor_ts/rfc8032_test_vector.json",
         "!{}/../target/**",
         "!{}/../warnings.json",
     ];

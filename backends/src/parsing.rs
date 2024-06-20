@@ -196,7 +196,7 @@ impl<T: ParseLow> ParseLow for Rc<RefCell<T>> {
         let GenericVisitor {
             context,
             config,
-            framework,
+            backend,
             source_file,
             test_name,
             last_statement_in_test,
@@ -205,11 +205,11 @@ impl<T: ParseLow> ParseLow for Rc<RefCell<T>> {
             call_statement,
             test_span_maps,
         } = generic_visitor;
-        let mut framework = framework.borrow_mut();
+        let mut backend = backend.borrow_mut();
         let generic_visitor = GenericVisitor::<'_, '_, '_, 'ast, T> {
             context,
             config,
-            framework: &mut framework,
+            backend: &mut backend,
             source_file,
             test_name,
             last_statement_in_test,
@@ -353,7 +353,7 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
             let generic_visitor = GenericVisitor {
                 context,
                 config: &config,
-                framework: &mut self.0,
+                backend: &mut self.0,
                 source_file: source_file.clone(),
                 test_name: None,
                 last_statement_in_test: None,

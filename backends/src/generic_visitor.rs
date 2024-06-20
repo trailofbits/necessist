@@ -8,10 +8,10 @@ use necessist_core::{
 use paste::paste;
 use std::{cell::RefCell, collections::BTreeSet};
 
-pub struct GenericVisitor<'context, 'config, 'framework, 'ast, T: ParseLow> {
+pub struct GenericVisitor<'context, 'config, 'backend, 'ast, T: ParseLow> {
     pub context: &'context LightContext<'context>,
     pub config: &'config config::Compiled,
-    pub framework: &'framework mut T,
+    pub backend: &'backend mut T,
     pub source_file: SourceFile,
     pub test_name: Option<String>,
     pub last_statement_in_test: Option<<T::Types as AbstractTypes>::Statement<'ast>>,
@@ -80,8 +80,8 @@ macro_rules! visit_call_post {
     ($this:expr, $storage:expr) => {};
 }
 
-impl<'context, 'config, 'framework, 'ast, T: ParseLow>
-    GenericVisitor<'context, 'config, 'framework, 'ast, T>
+impl<'context, 'config, 'backend, 'ast, T: ParseLow>
+    GenericVisitor<'context, 'config, 'backend, 'ast, T>
 {
     pub fn test_span_maps(self) -> TestSpanMaps {
         self.test_span_maps
@@ -104,7 +104,7 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
         assert!(self.test_name.is_none());
         self.test_name = Some(name);
 
-        let statements = self.framework.test_statements(storage, test);
+        let statements = self.backend.test_statements(storage, test);
 
         assert!(self.last_statement_in_test.is_none());
         self.last_statement_in_test = statements.split_last().map(|(&statement, _)| statement);
@@ -171,8 +171,8 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
         if let Some(test_name) = self.test_name.as_ref() {
             if !self.is_last_statement_in_test(statement)
                 && !self.statement_is_call(storage, statement)
-                && !self.framework.statement_is_control(storage, statement)
-                && !self.framework.statement_is_declaration(storage, statement)
+                && !self.backend.statement_is_control(storage, statement)
+                && !self.backend.statement_is_declaration(storage, statement)
             {
                 let span = statement.span(&self.source_file);
                 self.register_span(span, &test_name.clone(), SpanKind::Statement);
@@ -274,23 +274,22 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
         storage: &RefCell<<T::Types as AbstractTypes>::Storage<'ast>>,
         statement: <T::Types as AbstractTypes>::Statement<'ast>,
     ) -> bool {
-        let Some(mut expression) = self.framework.statement_is_expression(storage, statement)
-        else {
+        let Some(mut expression) = self.backend.statement_is_expression(storage, statement) else {
             return false;
         };
 
         loop {
             #[allow(clippy::needless_bool)]
-            if let Some(await_) = self.framework.expression_is_await(storage, expression) {
-                expression = self.framework.await_arg(storage, await_);
-            } else if let Some(field) = self.framework.expression_is_field(storage, expression) {
-                expression = self.framework.field_base(storage, field);
+            if let Some(await_) = self.backend.expression_is_await(storage, expression) {
+                expression = self.backend.await_arg(storage, await_);
+            } else if let Some(field) = self.backend.expression_is_field(storage, expression) {
+                expression = self.backend.field_base(storage, field);
             } else if self
-                .framework
+                .backend
                 .expression_is_call(storage, expression)
                 .is_some()
                 || self
-                    .framework
+                    .backend
                     .expression_is_macro_call(storage, expression)
                     .is_some()
             {
@@ -371,12 +370,12 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
         innermost: bool,
         recursed: bool,
     ) -> CallInfo {
-        let mut base = self.framework.field_base(storage, field);
+        let mut base = self.backend.field_base(storage, field);
 
         let mut path_rev = vec![name.to_owned()];
 
         while let Some((field_inner, name_inner)) = self.field_base_is_named_field(storage, field) {
-            base = self.framework.field_base(storage, field_inner);
+            base = self.backend.field_base(storage, field_inner);
             path_rev.push(name_inner);
             field = field_inner;
         }
@@ -388,7 +387,7 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
             .collect::<Vec<_>>()
             .join(".");
 
-        if let Some(call) = self.framework.expression_is_call(storage, base) {
+        if let Some(call) = self.backend.expression_is_call(storage, base) {
             if innermost {
                 return if let Some((field, name)) = self.callee_is_named_field(storage, call) {
                     self.call_info_inner(
@@ -412,7 +411,7 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
                     }
                 };
             }
-        } else if let Some(macro_call) = self.framework.expression_is_macro_call(storage, base) {
+        } else if let Some(macro_call) = self.backend.expression_is_macro_call(storage, base) {
             if innermost {
                 let name = macro_call.name();
                 let is_ignored = self.config.is_ignored_macro(&name);
@@ -461,9 +460,9 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
         storage: &RefCell<<T::Types as AbstractTypes>::Storage<'ast>>,
         field: <T::Types as AbstractTypes>::Field<'ast>,
     ) -> Option<(<T::Types as AbstractTypes>::Field<'ast>, String)> {
-        let expression = self.framework.field_base(storage, field);
+        let expression = self.backend.field_base(storage, field);
         if_chain! {
-            if let Some(field) = self.framework.expression_is_field(storage, expression);
+            if let Some(field) = self.backend.expression_is_field(storage, expression);
             if let Some(name) = field.name();
             then {
                 Some((field, name))
@@ -478,9 +477,9 @@ impl<'context, 'config, 'framework, 'ast, T: ParseLow>
         storage: &RefCell<<T::Types as AbstractTypes>::Storage<'ast>>,
         call: <T::Types as AbstractTypes>::Call<'ast>,
     ) -> Option<(<T::Types as AbstractTypes>::Field<'ast>, String)> {
-        let expression = self.framework.call_callee(storage, call);
+        let expression = self.backend.call_callee(storage, call);
         if_chain! {
-            if let Some(field) = self.framework.expression_is_field(storage, expression);
+            if let Some(field) = self.backend.expression_is_field(storage, expression);
             if let Some(name) = field.name();
             then {
                 Some((field, name))
