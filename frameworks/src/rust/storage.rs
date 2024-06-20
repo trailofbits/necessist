@@ -14,7 +14,7 @@ pub struct Storage<'ast> {
     pub module_path: Vec<&'ast Ident>,
     pub source_file_fs_module_path_cache: BTreeMap<PathBuf, Vec<String>>,
     pub source_file_package_cache: BTreeMap<PathBuf, Package>,
-    pub tests_needing_warnings: Vec<(String, Error)>,
+    pub tests_needing_warnings: BTreeMap<String, Vec<Error>>,
     pub error: Option<Error>,
 }
 
@@ -24,7 +24,7 @@ impl<'ast> Storage<'ast> {
             module_path: Vec::new(),
             source_file_fs_module_path_cache: BTreeMap::new(),
             source_file_package_cache: BTreeMap::new(),
-            tests_needing_warnings: Vec::new(),
+            tests_needing_warnings: BTreeMap::new(),
             error: None,
         }
     }
