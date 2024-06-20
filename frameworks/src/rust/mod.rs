@@ -71,7 +71,9 @@ impl<'ast> Test<'ast> {
                 storage
                     .borrow_mut()
                     .tests_needing_warnings
-                    .push((test_name, error));
+                    .entry(test_name)
+                    .or_default()
+                    .push(error);
                 return None;
             }
         };
