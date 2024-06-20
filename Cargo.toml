@@ -1,5 +1,5 @@
 [workspace]
-members = ["core", "frameworks", "necessist"]
+members = ["backends", "core", "necessist"]
 resolver = "2"
 
 [workspace.lints.rust]

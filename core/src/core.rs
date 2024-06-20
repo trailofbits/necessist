@@ -59,7 +59,7 @@ struct Context<'a> {
     opts: Necessist,
     root: Rc<PathBuf>,
     println: &'a dyn Fn(&dyn AsRef<str>),
-    framework: Box<dyn framework::Interface>,
+    backend: Box<dyn framework::Interface>,
     progress: Option<&'a ProgressBar>,
 }
 
@@ -133,8 +133,7 @@ pub fn necessist<Identifier: Applicable + Display + IntoEnumIterator + ToImpleme
         context.println = &println;
     }
 
-    let Some((framework, n_spans, source_file_test_span_map)) = prepare(&context, framework)?
-    else {
+    let Some((backend, n_spans, source_file_test_span_map)) = prepare(&context, framework)? else {
         return Ok(());
     };
 
@@ -142,7 +141,7 @@ pub fn necessist<Identifier: Applicable + Display + IntoEnumIterator + ToImpleme
         opts,
         root,
         println: &|_| {},
-        framework,
+        backend,
         progress: None,
     };
 
@@ -188,11 +187,11 @@ fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementatio
         return Ok(None);
     }
 
-    let mut framework = find_framework(context, framework)?;
+    let mut backend = backend_for_framework(context, framework)?;
 
     let paths = canonicalize_source_files(context)?;
 
-    let source_file_test_span_map = framework.parse(
+    let source_file_test_span_map = backend.parse(
         context,
         &config,
         &paths.iter().map(AsRef::as_ref).collect::<Vec<_>>(),
@@ -241,7 +240,7 @@ fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementatio
         )
     });
 
-    Ok(Some((framework, n_spans, source_file_test_span_map)))
+    Ok(Some((backend, n_spans, source_file_test_span_map)))
 }
 
 fn run(mut context: Context, source_file_test_span_map: SourceFileTestSpanMap) -> Result<()> {
@@ -268,7 +267,7 @@ fn run(mut context: Context, source_file_test_span_map: SourceFileTestSpanMap) -
                 util::strip_current_dir(&source_file).to_string_lossy()
             ));
 
-            let result = context.framework.dry_run(&context.light(), &source_file);
+            let result = context.backend.dry_run(&context.light(), &source_file);
 
             if let Err(error) = &result {
                 source_warn(
@@ -325,7 +324,7 @@ fn run(mut context: Context, source_file_test_span_map: SourceFileTestSpanMap) -
             };
 
             let outcome = if let Some((exec, postprocess)) =
-                context.framework.exec(&context.light(), test_name, span)?
+                context.backend.exec(&context.light(), test_name, span)?
             {
                 // smoelius: Even if the removal is explicit (i.e., not with instrumentation), it
                 // doesn't hurt to set `NECESSIST_REMOVAL`.
@@ -421,7 +420,7 @@ fn dump(context: &LightContext, removals: &[Removal]) {
     }
 }
 
-fn find_framework<Identifier: Applicable + Display + IntoEnumIterator + ToImplementation>(
+fn backend_for_framework<Identifier: Applicable + Display + IntoEnumIterator + ToImplementation>(
     context: &LightContext,
     identifier: framework::Auto<Identifier>,
 ) -> Result<Box<dyn framework::Interface>> {
@@ -586,7 +585,7 @@ where
 
     let n_instrumentable_statements = count_instrumentable_statements(test_span_iter);
 
-    context.framework.instrument_source_file(
+    context.backend.instrument_source_file(
         &context.light(),
         &mut rewriter,
         source_file,
@@ -598,7 +597,7 @@ where
     // smoelius: Do not advance the underlying iterator while instrumenting. This way, if a
     // statement cannot be removed with instrumentation, it will be removed explicitly.
     while let Some((_, span, SpanKind::Statement)) = test_span_iter.peek_nth(i_span) {
-        let (prefix, suffix) = context.framework.statement_prefix_and_suffix(span)?;
+        let (prefix, suffix) = context.backend.statement_prefix_and_suffix(span)?;
         let insertions = insertion_map.entry(span.start()).or_default();
         insertions.push(prefix);
         let insertions = insertion_map.entry(span.end()).or_default();
@@ -622,7 +621,7 @@ where
     drop(file);
 
     let result = context
-        .framework
+        .backend
         .build_source_file(&context.light(), source_file);
     if let Err(error) = result {
         warn(

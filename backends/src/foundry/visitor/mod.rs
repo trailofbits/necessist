@@ -34,16 +34,16 @@ pub(super) fn visit<'ast>(
     Ok(visitor.generic_visitor.test_span_maps())
 }
 
-struct Visitor<'context, 'config, 'framework, 'ast, 'storage> {
-    generic_visitor: GenericVisitor<'context, 'config, 'framework, 'ast, Foundry>,
+struct Visitor<'context, 'config, 'backend, 'ast, 'storage> {
+    generic_visitor: GenericVisitor<'context, 'config, 'backend, 'ast, Foundry>,
     storage: &'storage RefCell<Storage<'ast>>,
 }
 
-impl<'context, 'config, 'framework, 'ast, 'storage>
-    Visitor<'context, 'config, 'framework, 'ast, 'storage>
+impl<'context, 'config, 'backend, 'ast, 'storage>
+    Visitor<'context, 'config, 'backend, 'ast, 'storage>
 {
     fn new(
-        generic_visitor: GenericVisitor<'context, 'config, 'framework, 'ast, Foundry>,
+        generic_visitor: GenericVisitor<'context, 'config, 'backend, 'ast, Foundry>,
         storage: &'storage RefCell<Storage<'ast>>,
     ) -> Self {
         Self {
@@ -53,8 +53,8 @@ impl<'context, 'config, 'framework, 'ast, 'storage>
     }
 }
 
-impl<'context, 'config, 'framework, 'ast, 'storage> visit_fns::Visitor<'ast>
-    for Visitor<'context, 'config, 'framework, 'ast, 'storage>
+impl<'context, 'config, 'backend, 'ast, 'storage> visit_fns::Visitor<'ast>
+    for Visitor<'context, 'config, 'backend, 'ast, 'storage>
 {
     type Error = Infallible;
 

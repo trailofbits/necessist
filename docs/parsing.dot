@@ -1,8 +1,8 @@
 digraph {
     context -> config;
-    config -> framework;
-    framework -> generic_visitor;
-    framework -> file;
+    config -> backend;
+    backend -> generic_visitor;
+    backend -> file;
     file -> storage;
     generic_visitor -> storage;
     storage -> visitor;
