@@ -143,8 +143,30 @@ struct Task {
 pub fn all_tests_in(path: impl AsRef<Path>) {
     set_var("CARGO_TERM_COLOR", "never");
 
+    let mut tests = read_tests_in(path, true);
+    let n_tests = tests.values().count();
+
+    if n_tests == 1 {
+        let (key, mut tests) = tests.pop_first().unwrap();
+        let (path, test) = tests.remove(0);
+        let tempdir = tempdir().unwrap();
+        let mut output_combined = init_tempdir(tempdir.path(), &key);
+        let (output, elapsed) = run_test(tempdir.path(), &path, &test);
+        output_combined += &output;
+        #[allow(clippy::explicit_write)]
+        write!(stderr(), "{output}").unwrap();
+        #[allow(clippy::explicit_write)]
+        writeln!(stderr(), "elapsed: {elapsed:?}").unwrap();
+    } else {
+        run_tests_concurrently(tests, n_tests);
+    }
+}
+
+fn read_tests_in(
+    path: impl AsRef<Path>,
+    filter_by_os: bool,
+) -> BTreeMap<Key, Vec<(PathBuf, Test)>> {
     let mut tests = BTreeMap::<_, Vec<_>>::new();
-    let mut n_tests = 0;
 
     for entry in read_dir(path).unwrap() {
         let entry = entry.unwrap();
@@ -176,31 +198,15 @@ pub fn all_tests_in(path: impl AsRef<Path>) {
             continue;
         }
 
-        if test.target_os.as_ref().map_or(false, |target_os| {
-            target_os.get().iter().all(|s| s != consts::OS)
-        }) {
+        if filter_by_os && !target_os_includes(&test.target_os, consts::OS) {
             continue;
         }
 
         let key = Key::from_test(&test);
         tests.entry(key).or_default().push((path, test));
-        n_tests += 1;
     }
 
-    if n_tests == 1 {
-        let (key, mut tests) = tests.pop_first().unwrap();
-        let (path, test) = tests.remove(0);
-        let tempdir = tempdir().unwrap();
-        let mut output_combined = init_tempdir(tempdir.path(), &key);
-        let (output, elapsed) = run_test(tempdir.path(), &path, &test);
-        output_combined += &output;
-        #[allow(clippy::explicit_write)]
-        write!(stderr(), "{output}").unwrap();
-        #[allow(clippy::explicit_write)]
-        writeln!(stderr(), "elapsed: {elapsed:?}").unwrap();
-    } else {
-        run_tests_concurrently(tests, n_tests);
-    }
+    tests
 }
 
 fn ssh_agent_is_running() -> bool {
@@ -714,6 +720,91 @@ fn subsequence<'a, 'b>(
     }
 
     true
+}
+
+static SPACE_RE: Lazy<Regex> = Lazy::new(|| Regex::new(" +").unwrap());
+static DASH_RE: Lazy<Regex> = Lazy::new(|| Regex::new("-+").unwrap());
+
+#[cfg_attr(dylint_lib = "general", allow(non_thread_safe_call_in_test))]
+#[test]
+fn readme_is_current() {
+    let readme_actual = read_to_string("tests/README.md").unwrap();
+    let readme_space_normalized = &SPACE_RE.replace_all(&readme_actual, " ");
+    let readme_normalized = DASH_RE.replace_all(readme_space_normalized, "-");
+
+    let tests = read_tests_in("tests/third_party_tests/0", false)
+        .into_values()
+        .flatten()
+        .map(|(path, test)| (path, test, 0))
+        .chain(
+            read_tests_in("tests/third_party_tests/1", false)
+                .into_values()
+                .flatten()
+                .map(|(path, test)| (path, test, 1)),
+        )
+        .collect::<Vec<_>>();
+
+    let mut test_lines = Vec::new();
+    for (path, test, partition) in tests {
+        let name = path.file_stem().unwrap();
+        test_lines.push(format!(
+            "| {} | {}| {}| {}| {}| {}| {}| {partition} |",
+            name.to_string_lossy(),
+            test.rev.map(|s| s + " ").unwrap_or_default(),
+            test.framework.map(|s| s + " ").unwrap_or_default(),
+            test.full.to_x_space(),
+            target_os_includes(&test.target_os, "linux").to_x_space(),
+            target_os_includes(&test.target_os, "macos").to_x_space(),
+            target_os_includes(&test.target_os, "windows").to_x_space(),
+        ));
+    }
+    test_lines.sort();
+
+    let mut readme_lines_expected = [
+        "# Third-party tests",
+        "",
+        "| Name | Version | Framework | Full | Linux | macOS | Windows | Partition |",
+        "| - | - | - | - | - | - | - | - |",
+    ]
+    .into_iter()
+    .map(ToOwned::to_owned)
+    .collect::<Vec<_>>();
+
+    for test_line in test_lines {
+        readme_lines_expected.push(test_line);
+    }
+
+    let readme_expected = readme_lines_expected
+        .into_iter()
+        .map(|s| format!("{s}\n"))
+        .collect::<String>();
+
+    if enabled("BLESS") {
+        write("tests/README.md", readme_expected).unwrap();
+    } else {
+        assert_eq!(readme_expected, readme_normalized);
+    }
+}
+
+trait ToXSpace {
+    fn to_x_space(&self) -> &'static str;
+}
+
+impl ToXSpace for bool {
+    fn to_x_space(&self) -> &'static str {
+        if *self {
+            "X "
+        } else {
+            ""
+        }
+    }
+}
+
+fn target_os_includes(target_os: &Option<StringOrVec>, os: &str) -> bool {
+    let Some(target_os) = target_os else {
+        return true;
+    };
+    target_os.get().iter().any(|s| s == os)
 }
 
 fn enabled(key: &str) -> bool {
