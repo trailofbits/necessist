@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.6.0
+
+- Don't remove `const` and `type` declarations in Go code ([#1139](https://github.com/trailofbits/necessist/pull/1139))
+- Update `swc_core` to version 0.95 ([#1146](https://github.com/trailofbits/necessist/pull/1146))
+- FEATURE: Use mutant schemata in the spirit of [Untch, et al. '93](https://dl.acm.org/doi/10.1145/154183.154265) when removing statements. This should make running Necessist faster. ([252ed2e](https://github.com/trailofbits/necessist/commit/252ed2eb4557cfe0741969f222b1add9584b3dbc))
+
 ## 0.5.1
 
 - Update `solang-parser` to version 0.3.4 ([#1132](https://github.com/trailofbits/necessist/pull/1132))
