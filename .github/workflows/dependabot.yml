@@ -1,0 +1,39 @@
+name: Dependabot workflow
+
+on: [pull_request]
+
+jobs:
+  dependabot:
+    # smoelius: Note that `github.event.pull_request.user.login` is the user that opened the pull
+    # request, which may be different from the user that triggered the action.
+    if: ${{ github.actor == 'dependabot[bot]' }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+
+      - name: Check updated files
+        # smoelius: Dependabot should update only manifest and/or lockfiles. Hard error otherwise.
+        run: |
+          git diff --name-only ${{ github.event.pull_request.base.sha }} | grep .
+          ! git diff --name-only ${{ github.event.pull_request.base.sha }} | grep -v '^\.github/workflows/\|\(^\|/\)Cargo\.\(lock\|toml\)$'
+
+      # smoelius: Based in part on:
+      # https://docs.github.com/en/actions/managing-issues-and-pull-requests/adding-labels-to-issues#creating-the-workflow
+      - name: Add `requires-release` label
+        run: |
+          PACKAGE="$(expr '${{ github.event.pull_request.title }}' : '^Bump \([^ ]*\) .*$')"
+          test -n "$PACKAGE"
+          git checkout -b tmp
+          git reset --hard HEAD~1
+          cargo update "$PACKAGE"
+          if ! git diff --exit-code '${{ github.event.pull_request.base_sha }}'; then
+            gh pr edit '${{ github.event.pull_request.number }}' --add-label 'requires-release'
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
