@@ -1449,6 +1449,9 @@ $DIR/cmd/data-usage_test.go: `createUsageTestFiles(t, base, bucket, files)`
 $DIR/cmd/data-usage_test.go: `s, err = os.Stat(item.Path)`
 $DIR/cmd/data-usage_test.go: `sizeS.totalSize = s.Size()`
 $DIR/cmd/data-usage_test.go: `sizeS.versions++`
+$DIR/cmd/data-usage_test.go: `xls.diskInfoCache.InitOnce(time.Second, cachevalue.Opts{}, func(ctx context.Context) (DiskInfo, error) {
+		return DiskInfo{Total: 1 << 40, Free: 1 << 40}, nil
+	})`
 $DIR/cmd/data-usage_test.go: `t.Run(p, func(t *testing.T) {
 			e := got.find(p)
 			if w.isNil {
@@ -1509,7 +1512,7 @@ $DIR/cmd/data-usage_test.go: `files = []usageTestFile{
 	}`
 $DIR/cmd/data-usage_test.go: `createUsageTestFiles(t, base, bucket, files)`
 $DIR/cmd/data-usage_test.go: `err = os.RemoveAll(filepath.Join(base, bucket, "dir1/dira/dirasub/dcfile"))`
-$DIR/cmd/data-usage_test.go: `got, err = scanDataFolder(context.Background(), nil, base, got, getSize, 0, weSleep)`
+$DIR/cmd/data-usage_test.go: `got, err = scanDataFolder(context.Background(), nil, &xls, got, getSize, 0, weSleep)`
 $DIR/cmd/data-usage_test.go: `got.Info.NextCycle++`
 $DIR/cmd/data-usage_test.go: `want = []struct {
 		path       string
@@ -1578,6 +1581,9 @@ $DIR/cmd/data-usage_test.go: `generateUsageTestFiles(t, base, "bucket/dirwitheve
 $DIR/cmd/data-usage_test.go: `s, err = os.Stat(item.Path)`
 $DIR/cmd/data-usage_test.go: `sizeS.totalSize = s.Size()`
 $DIR/cmd/data-usage_test.go: `sizeS.versions++`
+$DIR/cmd/data-usage_test.go: `xls.diskInfoCache.InitOnce(time.Second, cachevalue.Opts{}, func(ctx context.Context) (DiskInfo, error) {
+		return DiskInfo{Total: 1 << 40, Free: 1 << 40}, nil
+	})`
 $DIR/cmd/data-usage_test.go: `t.Run(w.path, func(t *testing.T) {
 			e := got.find(w.path)
 			if w.path == "flat" {
@@ -1640,7 +1646,7 @@ $DIR/cmd/data-usage_test.go: `files = []usageTestFile{
 	}`
 $DIR/cmd/data-usage_test.go: `createUsageTestFiles(t, base, "", files)`
 $DIR/cmd/data-usage_test.go: `err = os.RemoveAll(filepath.Join(base, "bucket/dir1/dira/dirasub/dcfile"))`
-$DIR/cmd/data-usage_test.go: `got, err = scanDataFolder(context.Background(), nil, base, got, getSize, 0, weSleep)`
+$DIR/cmd/data-usage_test.go: `got, err = scanDataFolder(context.Background(), nil, &xls, got, getSize, 0, weSleep)`
 $DIR/cmd/data-usage_test.go: `got.Info.NextCycle++`
 $DIR/cmd/data-usage_test.go: `want = []struct {
 		path       string
@@ -1716,6 +1722,9 @@ $DIR/cmd/data-usage_test.go: `createUsageTestFiles(t, base, bucket, files)`
 $DIR/cmd/data-usage_test.go: `s, err = os.Stat(item.Path)`
 $DIR/cmd/data-usage_test.go: `sizeS.versions++`
 $DIR/cmd/data-usage_test.go: `sizeS.totalSize = s.Size()`
+$DIR/cmd/data-usage_test.go: `xls.diskInfoCache.InitOnce(time.Second, cachevalue.Opts{}, func(ctx context.Context) (DiskInfo, error) {
+		return DiskInfo{Total: 1 << 40, Free: 1 << 40}, nil
+	})`
 $DIR/cmd/data-usage_test.go: `e.ReplicationStats = &replicationAllStats{
 		Targets: map[string]replicationStats{
 			"arn": {
@@ -1733,6 +1742,10 @@ $DIR/cmd/data-usage_test.go: `err = got.deserialize(&buf)`
 $DIR/cmd/data-usage_test.go: `.TempDir()`
 $DIR/cmd/data-usage_test.go: `.Stat(item.Path)`
 $DIR/cmd/data-usage_test.go: `.Size()`
+$DIR/cmd/data-usage_test.go: `.New[DiskInfo]()`
+$DIR/cmd/data-usage_test.go: `.diskInfoCache.InitOnce(time.Second, cachevalue.Opts{}, func(ctx context.Context) (DiskInfo, error) {
+		return DiskInfo{Total: 1 << 40, Free: 1 << 40}, nil
+	})`
 $DIR/cmd/data-usage_test.go: `.Background()`
 $DIR/cmd/data-usage_test.go: `.Join(bucket, w.path)`
 $DIR/cmd/data-usage_test.go: `.Run(p, func(t *testing.T) {
@@ -1801,6 +1814,10 @@ $DIR/cmd/data-usage_test.go: `.TempDir()`
 $DIR/cmd/data-usage_test.go: `.Update(0, 0)`
 $DIR/cmd/data-usage_test.go: `.Stat(item.Path)`
 $DIR/cmd/data-usage_test.go: `.Size()`
+$DIR/cmd/data-usage_test.go: `.New[DiskInfo]()`
+$DIR/cmd/data-usage_test.go: `.diskInfoCache.InitOnce(time.Second, cachevalue.Opts{}, func(ctx context.Context) (DiskInfo, error) {
+		return DiskInfo{Total: 1 << 40, Free: 1 << 40}, nil
+	})`
 $DIR/cmd/data-usage_test.go: `.Background()`
 $DIR/cmd/data-usage_test.go: `.root()`
 $DIR/cmd/data-usage_test.go: `.Run(w.path, func(t *testing.T) {
@@ -1873,6 +1890,10 @@ $DIR/cmd/data-usage_test.go: `.root()`
 $DIR/cmd/data-usage_test.go: `.TempDir()`
 $DIR/cmd/data-usage_test.go: `.Stat(item.Path)`
 $DIR/cmd/data-usage_test.go: `.Size()`
+$DIR/cmd/data-usage_test.go: `.New[DiskInfo]()`
+$DIR/cmd/data-usage_test.go: `.diskInfoCache.InitOnce(time.Second, cachevalue.Opts{}, func(ctx context.Context) (DiskInfo, error) {
+		return DiskInfo{Total: 1 << 40, Free: 1 << 40}, nil
+	})`
 $DIR/cmd/data-usage_test.go: `.Background()`
 $DIR/cmd/data-usage_test.go: `.find("abucket/dir2")`
 $DIR/cmd/data-usage_test.go: `.replace("abucket/dir2", "", *e)`
@@ -11512,6 +11533,7 @@ $DIR/internal/dsync/dsync_test.go: `wg.Wait()`
 $DIR/internal/dsync/dsync_test.go: `dm.refreshInterval = testDrwMutexUnlockCallTimeout`
 $DIR/internal/dsync/dsync_test.go: `lockServers[i].setResponseDelay(5 * testDrwMutexUnlockCallTimeout)`
 $DIR/internal/dsync/dsync_test.go: `dm.Unlock(ctx)`
+$DIR/internal/dsync/dsync_test.go: `dm.GetLock(ctx, nil, id, source, Options{Timeout: 5 * time.Minute})`
 $DIR/internal/dsync/dsync_test.go: `unlockReturned <- struct{}{}`
 $DIR/internal/dsync/dsync_test.go: `loops = 5`
 $DIR/internal/dsync/dsync_test.go: `go HammerMutex(m, loops, c)`
@@ -11615,6 +11637,7 @@ $DIR/internal/dsync/dsync_test.go: `.setResponseDelay(0)`
 $DIR/internal/dsync/dsync_test.go: `.WithTimeout(context.Background(), 500*time.Millisecond)`
 $DIR/internal/dsync/dsync_test.go: `.Background()`
 $DIR/internal/dsync/dsync_test.go: `.Unlock(ctx)`
+$DIR/internal/dsync/dsync_test.go: `.GetLock(ctx, nil, id, source, Options{Timeout: 5 * time.Minute})`
 $DIR/internal/dsync/dsync_test.go: `.NewTimer(2 * testDrwMutexUnlockCallTimeout)`
 $DIR/internal/dsync/dsync_test.go: `.Stop()`
 $DIR/internal/dsync/dsync_test.go: `.Short()`
@@ -13049,8 +13072,6 @@ $DIR/internal/http/server_test.go: `.HandlerFunc(func(w http.ResponseWriter, r *
 $DIR/internal/http/server_test.go: `.Fprintf(w, "Hello, world")`
 $DIR/internal/http/server_test.go: `.
 			UseHandler(testCase.handler)`
-$DIR/internal/http/server_test.go: `.
-			UseShutdownTimeout(DefaultShutdownTimeout)`
 $DIR/internal/http/server_test.go: `.UseTLSConfig(&tls.Config{
 				PreferServerCipherSuites: true,
 				GetCertificate:           testCase.certFn,
