@@ -728,7 +728,9 @@ static DASH_RE: Lazy<Regex> = Lazy::new(|| Regex::new("-+").unwrap());
 #[cfg_attr(dylint_lib = "general", allow(non_thread_safe_call_in_test))]
 #[test]
 fn readme_is_current() {
-    let readme_actual = read_to_string("tests/README.md").unwrap();
+    let path_readme = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/README.md");
+
+    let readme_actual = read_to_string(&path_readme).unwrap();
     let readme_space_normalized = &SPACE_RE.replace_all(&readme_actual, " ");
     let readme_normalized = DASH_RE.replace_all(readme_space_normalized, "-");
 
@@ -780,7 +782,20 @@ fn readme_is_current() {
         .collect::<String>();
 
     if enabled("BLESS") {
-        write("tests/README.md", readme_expected).unwrap();
+        write(&path_readme, readme_expected).unwrap();
+        let tempdir = tempdir().unwrap();
+        assert!(Command::new("npm")
+            .args(["install", "prettier"])
+            .current_dir(&tempdir)
+            .status()
+            .unwrap()
+            .success());
+        assert!(Command::new("npx")
+            .args(["prettier", "--write", &path_readme.to_string_lossy()])
+            .current_dir(&tempdir)
+            .status()
+            .unwrap()
+            .success());
     } else {
         assert_eq!(readme_expected, readme_normalized);
     }
