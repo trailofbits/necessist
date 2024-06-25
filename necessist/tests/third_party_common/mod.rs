@@ -162,10 +162,7 @@ pub fn all_tests_in(path: impl AsRef<Path>) {
     }
 }
 
-fn read_tests_in(
-    path: impl AsRef<Path>,
-    filter_by_os: bool,
-) -> BTreeMap<Key, Vec<(PathBuf, Test)>> {
+fn read_tests_in(path: impl AsRef<Path>, filter: bool) -> BTreeMap<Key, Vec<(PathBuf, Test)>> {
     let mut tests = BTreeMap::<_, Vec<_>>::new();
 
     for entry in read_dir(path).unwrap() {
@@ -178,9 +175,11 @@ fn read_tests_in(
 
         // smoelius: `TESTNAME` is what Clippy uses:
         // https://github.com/rust-lang/rust-clippy/blame/f8f9d01c2ad0dff565bdd60feeb4cbd09dada8cd/book/src/development/adding_lints.md#L99
-        if var("TESTNAME").ok().map_or(false, |testname| {
-            path.file_stem() != Some(OsStr::new(&testname))
-        }) {
+        if filter
+            && var("TESTNAME").ok().map_or(false, |testname| {
+                path.file_stem() != Some(OsStr::new(&testname))
+            })
+        {
             continue;
         }
 
@@ -198,7 +197,7 @@ fn read_tests_in(
             continue;
         }
 
-        if filter_by_os && !target_os_includes(&test.target_os, consts::OS) {
+        if filter && !target_os_includes(&test.target_os, consts::OS) {
             continue;
         }
 

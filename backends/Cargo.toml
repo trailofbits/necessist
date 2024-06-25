@@ -9,6 +9,8 @@ authors = ["Samuel Moelius <sam@moeli.us>"]
 license = "AGPL-3.0"
 repository = "https://github.com/trailofbits/necessist"
 
+build = "build/main.rs"
+
 [dependencies]
 necessist-core = { version = "=0.6.0", path = "../core" }
 
@@ -63,6 +65,7 @@ tempfile = "3.10"
 
 [build-dependencies]
 heck = "0.5"
+proc-macro2 = "1.0"
 syn = "2.0"
 
 [lints]

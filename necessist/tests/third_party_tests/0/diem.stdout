@@ -302,7 +302,6 @@ $DIR/consensus/consensus-types/src/block_test.rs: `.add_signature(signer.author(
 $DIR/consensus/consensus-types/src/block_test.rs: `.author()`
 $DIR/consensus/consensus-types/src/block_test.rs: `.vote_data()`
 $DIR/consensus/consensus-types/src/timeout_2chain.rs: `ledger_info.add_signature(signer.author(), signature);`
-$DIR/consensus/consensus-types/src/timeout_2chain.rs: `QuorumCert::new(vote_data, ledger_info)`
 $DIR/consensus/consensus-types/src/timeout_2chain.rs: `valid_timeout_cert.add(signer.author(), timeout.clone(), timeout.sign(signer));`
 $DIR/consensus/consensus-types/src/timeout_2chain.rs: `valid_timeout_cert.verify(&validators).unwrap();`
 $DIR/consensus/consensus-types/src/timeout_2chain.rs: `invalid_timeout_cert.timeout.round = 1;`
@@ -887,12 +886,9 @@ $DIR/consensus/src/experimental/tests/execution_phase_tests.rs: `.ok()`
 $DIR/consensus/src/experimental/tests/execution_phase_tests.rs: `.next()`
 $DIR/consensus/src/liveness/leader_reputation_test.rs: `proposers.push(signer.author());`
 $DIR/consensus/src/liveness/leader_reputation_test.rs: `signers.push(signer);`
-$DIR/consensus/src/liveness/leader_reputation_test.rs: `active_weight`
-$DIR/consensus/src/liveness/leader_reputation_test.rs: `inactive_weight`
 $DIR/consensus/src/liveness/leader_reputation_test.rs: `proposers.push(signer.author());`
 $DIR/consensus/src/liveness/leader_reputation_test.rs: `signers.push(signer);`
 $DIR/consensus/src/liveness/leader_reputation_test.rs: `s += *w;`
-$DIR/consensus/src/liveness/leader_reputation_test.rs: `s`
 $DIR/consensus/src/liveness/leader_reputation_test.rs: `accu += *w;`
 $DIR/consensus/src/liveness/leader_reputation_test.rs: `expected_index = i;`
 $DIR/consensus/src/liveness/leader_reputation_test.rs: `.push(signer.author())`
@@ -1008,20 +1004,12 @@ $DIR/consensus/src/network_tests.rs: `nodes[0]
 $DIR/consensus/src/network_tests.rs: `playground
                 .wait_for_messages(3, NetworkPlayground::take_all)
                 .await;`
-$DIR/consensus/src/network_tests.rs: `match msg {
-                    ConsensusMsg::VoteMsg(v) => assert_eq!(*v, vote_msg),
-                    _ => panic!("unexpected messages"),
-                }`
 $DIR/consensus/src/network_tests.rs: `nodes[0]
                 .broadcast(ConsensusMsg::ProposalMsg(Box::new(proposal.clone())))
                 .await;`
 $DIR/consensus/src/network_tests.rs: `playground
                 .wait_for_messages(4, NetworkPlayground::take_all)
                 .await;`
-$DIR/consensus/src/network_tests.rs: `match msg {
-                    ConsensusMsg::ProposalMsg(p) => assert_eq!(*p, proposal),
-                    _ => panic!("unexpected messages"),
-                }`
 $DIR/consensus/src/network_tests.rs: `shared_connections.write().insert(
                 *peer,
                 vec![
@@ -1489,7 +1477,6 @@ $DIR/crates/bounded-executor/src/lib.rs: `block_on(executor.spawn(async move {
             }));`
 $DIR/crates/bounded-executor/src/lib.rs: `yield_task().await;`
 $DIR/crates/bounded-executor/src/lib.rs: `COMPLETED_TASKS.fetch_add(1, Ordering::Relaxed);`
-$DIR/crates/bounded-executor/src/lib.rs: `std::hint::spin_loop()`
 $DIR/crates/bounded-executor/src/lib.rs: `.handle()`
 $DIR/crates/bounded-executor/src/lib.rs: `.try_spawn(rx1)`
 $DIR/crates/bounded-executor/src/lib.rs: `.try_spawn(rx2)`
@@ -2056,12 +2043,10 @@ $DIR/crates/diem-crypto/src/unit_tests/bcs_test.rs: `.sign(&message)`
 $DIR/crates/diem-crypto/src/unit_tests/cryptohasher.rs: `salt.extend_from_slice(b"Foo");`
 $DIR/crates/diem-crypto/src/unit_tests/cryptohasher.rs: `digest.update(HashValue::sha3_256_of(&salt[..]).as_ref());`
 $DIR/crates/diem-crypto/src/unit_tests/cryptohasher.rs: `digest.finalize(&mut hasher_bytes);`
-$DIR/crates/diem-crypto/src/unit_tests/cryptohasher.rs: `hasher_bytes`
 $DIR/crates/diem-crypto/src/unit_tests/cryptohasher.rs: `salt.extend_from_slice(b"Foo");`
 $DIR/crates/diem-crypto/src/unit_tests/cryptohasher.rs: `digest.update(HashValue::sha3_256_of(&salt[..]).as_ref());`
 $DIR/crates/diem-crypto/src/unit_tests/cryptohasher.rs: `digest.update(&bcs::to_bytes(&value).unwrap());`
 $DIR/crates/diem-crypto/src/unit_tests/cryptohasher.rs: `digest.finalize(&mut hasher_bytes);`
-$DIR/crates/diem-crypto/src/unit_tests/cryptohasher.rs: `hasher_bytes`
 $DIR/crates/diem-crypto/src/unit_tests/cryptohasher.rs: `.extend_from_slice(b"Foo")`
 $DIR/crates/diem-crypto/src/unit_tests/cryptohasher.rs: `.update(HashValue::sha3_256_of(&salt[..]).as_ref())`
 $DIR/crates/diem-crypto/src/unit_tests/cryptohasher.rs: `.finalize(&mut hasher_bytes)`
@@ -2190,41 +2175,15 @@ $DIR/crates/diem-crypto/src/unit_tests/multi_ed25519_test.rs: `.verify(message()
 $DIR/crates/diem-crypto/src/unit_tests/multi_ed25519_test.rs: `.sign(message())`
 $DIR/crates/diem-crypto/src/unit_tests/multi_ed25519_test.rs: `.verify(message(), &multi_public_key_1of3)`
 $DIR/crates/diem-crypto/src/unit_tests/multi_ed25519_test.rs: `.sign(message())`
-$DIR/crates/diem-crypto/src/unit_tests/noise_test.rs: `responder_session`
-$DIR/crates/diem-crypto/src/unit_tests/noise_test.rs: `responder
-                .respond_to_client(
-                    &mut rng,
-                    handshake_state,
-                    Some(payload2),
-                    &mut second_message,
-                )
-                .unwrap()`
 $DIR/crates/diem-crypto/src/unit_tests/noise_test.rs: `message_sent.push(i);`
 $DIR/crates/diem-crypto/src/unit_tests/noise_test.rs: `message.extend_from_slice(&auth_tag);`
-$DIR/crates/diem-crypto/src/unit_tests/noise_test.rs: `responder_session
-                    .read_message_in_place(&mut message)
-                    .expect("session should not be closed")`
 $DIR/crates/diem-crypto/src/unit_tests/noise_test.rs: `message.extend_from_slice(&auth_tag);`
-$DIR/crates/diem-crypto/src/unit_tests/noise_test.rs: `initiator_session
-                    .read_message_in_place(&mut message)
-                    .expect("session should not be closed")`
 $DIR/crates/diem-crypto/src/unit_tests/noise_test.rs: `dest.copy_from_slice(&self.ephemeral);`
 $DIR/crates/diem-crypto/src/unit_tests/noise_test.rs: `test_vectors_path.push("test_vectors");`
 $DIR/crates/diem-crypto/src/unit_tests/noise_test.rs: `test_vectors_path.push("noise_cacophony.txt");`
-$DIR/crates/diem-crypto/src/unit_tests/noise_test.rs: `responder_session`
-$DIR/crates/diem-crypto/src/unit_tests/noise_test.rs: `responder
-                .respond_to_client(
-                    &mut rng,
-                    handshake_state,
-                    Some(&payload2),
-                    &mut second_message,
-                )
-                .unwrap()`
 $DIR/crates/diem-crypto/src/unit_tests/noise_test.rs: `message.extend_from_slice(&auth_tag);`
 $DIR/crates/diem-crypto/src/unit_tests/noise_test.rs: `message.extend_from_slice(&auth_tag);`
 $DIR/crates/diem-crypto/src/unit_tests/noise_test.rs: `client_turn = !client_turn;`
-$DIR/crates/diem-crypto/src/unit_tests/noise_test.rs: `(responder_session, second_message_large)`
-$DIR/crates/diem-crypto/src/unit_tests/noise_test.rs: `(responder_session, second_message_large)`
 $DIR/crates/diem-crypto/src/unit_tests/noise_test.rs: `message.extend_from_slice(&auth_tag);`
 $DIR/crates/diem-crypto/src/unit_tests/noise_test.rs: `.public_key()`
 $DIR/crates/diem-crypto/src/unit_tests/noise_test.rs: `.public_key()`
@@ -2601,7 +2560,6 @@ $DIR/crates/diem-logger/src/sample.rs: `.sample()`
 $DIR/crates/diem-logger/src/sample.rs: `.push(i)`
 $DIR/crates/diem-logger/src/sample.rs: `.push(std::thread::spawn(work))`
 $DIR/crates/diem-logger/src/sample.rs: `.join()`
-$DIR/crates/diem-logger/tests/derive.rs: `write!(f, "Custom Error")`
 $DIR/crates/diem-logger/tests/derive.rs: `.required(1)`
 $DIR/crates/diem-logger/tests/derive.rs: `.debug(vec![1, 2, 3])`
 $DIR/crates/diem-logger/tests/derive.rs: `.debug_error(&debug_error)`
@@ -2640,7 +2598,6 @@ $DIR/crates/diem-logger/tests/logger_custom_format.rs: `write!(w, "0000-00-00")?
 $DIR/crates/diem-logger/tests/logger_custom_format.rs: `write!(w, " [{}]", entry.metadata().level())?;`
 $DIR/crates/diem-logger/tests/logger_custom_format.rs: `write!(w, " {}", message)?;`
 $DIR/crates/diem-logger/tests/logger_custom_format.rs: `write!(w, " {}", serde_json::to_string(&entry.data()).unwrap())?;`
-$DIR/crates/diem-logger/tests/logger_custom_format.rs: `Ok(w)`
 $DIR/crates/diem-logger/tests/logger_custom_format.rs: `info!("Hello");`
 $DIR/crates/diem-logger/tests/logger_custom_format.rs: `.is_async(false)`
 $DIR/crates/diem-logger/tests/logger_custom_format.rs: `.printer(Box::new(writer))`
@@ -2875,18 +2832,11 @@ $DIR/execution/execution-correctness/tests/binary.rs: `.reset()`
 $DIR/execution/execution-correctness/tests/binary.rs: `.kill()`
 $DIR/execution/execution-correctness/tests/binary.rs: `.wait()`
 $DIR/execution/executor/src/executor_test.rs: `parent_block_id = execute_and_commit_block(&executor, parent_block_id, i);`
-$DIR/execution/executor/src/executor_test.rs: `encode_mint_transaction(gen_address(i + 50), 100)`
-$DIR/execution/executor/src/executor_test.rs: `encode_transfer_transaction(gen_address(i), gen_address(i + 1), 500)`
 $DIR/execution/executor/src/executor_test.rs: `executor
         .commit_blocks(vec![block1_id], ledger_info.clone())
         .unwrap();`
 $DIR/execution/executor/src/executor_test.rs: `responses.push(output);`
 $DIR/execution/executor/src/executor_test.rs: `responses.dedup();`
-$DIR/execution/executor/src/executor_test.rs: `create_transaction_chunks(vec![
-            first_batch_start..first_batch_start + first_batch_size,
-            second_batch_start..second_batch_start + second_batch_size,
-            third_batch_start..third_batch_start + third_batch_size,
-        ])`
 $DIR/execution/executor/src/executor_test.rs: `executor
         .execute_and_commit_chunk(chunks[0].clone(), ledger_info.clone(), None)
         .unwrap();`
@@ -2906,20 +2856,12 @@ $DIR/execution/executor/src/executor_test.rs: `executor
 $DIR/execution/executor/src/executor_test.rs: `executor
         .execute_and_commit_chunk(chunks[2].clone(), ledger_info.clone(), None)
         .unwrap();`
-$DIR/execution/executor/src/executor_test.rs: `create_transaction_chunks(vec![
-            first_batch_start..first_batch_start + first_batch_size,
-            second_batch_start..second_batch_start + second_batch_size,
-        ])`
 $DIR/execution/executor/src/executor_test.rs: `executor
             .execute_and_commit_chunk(chunks[0].clone(), ledger_info.clone(), None)
             .unwrap();`
 $DIR/execution/executor/src/executor_test.rs: `executor
             .execute_and_commit_chunk(chunks[1].clone(), ledger_info.clone(), None)
             .unwrap();`
-$DIR/execution/executor/src/executor_test.rs: `create_transaction_chunks(vec![
-            first_batch_start..first_batch_start + first_batch_size,
-            second_batch_start..second_batch_start + second_batch_size,
-        ])`
 $DIR/execution/executor/src/executor_test.rs: `executor.commit_blocks(vec![block_id], ledger_info).unwrap();`
 $DIR/execution/executor/src/executor_test.rs: `parent_block_id = first_block_id;`
 $DIR/execution/executor/src/executor_test.rs: `.committed_block_id()`
@@ -3057,9 +2999,6 @@ $DIR/execution/executor/tests/storage_integration_test.rs: `executor
         .unwrap();`
 $DIR/execution/executor/tests/storage_integration_test.rs: `verify_committed_txn_status(t3.as_ref(), &txn_block[2]).unwrap();`
 $DIR/execution/executor/tests/storage_integration_test.rs: `path.create_as_dir().unwrap();`
-$DIR/execution/executor/tests/storage_integration_test.rs: `compiler
-            .into_script_blob("file_name", code)
-            .expect("Failed to compile")`
 $DIR/execution/executor/tests/storage_integration_test.rs: `executor
         .commit_blocks(vec![block1_id], ledger_info_with_sigs)
         .unwrap();`
@@ -3242,7 +3181,6 @@ $DIR/json-rpc/src/stream_rpc/tests/websockets.rs: `close_ws(ws_client, name).awa
 $DIR/json-rpc/src/stream_rpc/tests/websockets.rs: `ws_client.send_text(request).await;`
 $DIR/json-rpc/src/stream_rpc/tests/websockets.rs: `close_ws(ws_client1, "").await;`
 $DIR/json-rpc/src/stream_rpc/tests/websockets.rs: `close_ws(ws_client2, "").await;`
-$DIR/json-rpc/src/stream_rpc/tests/websockets.rs: `ws_stream`
 $DIR/json-rpc/src/stream_rpc/tests/websockets.rs: `runtime
             .handle()
             .block_on(timeout(
@@ -3315,15 +3253,11 @@ $DIR/json-rpc/src/tests/unit_tests.rs: `runtime.spawn(async move {
             cb.send(Ok(result)).unwrap();
         }
     });`
-$DIR/json-rpc/src/tests/unit_tests.rs: `(MempoolStatus::new(MempoolStatusCode::VmError), vm_status)`
-$DIR/json-rpc/src/tests/unit_tests.rs: `(MempoolStatus::new(MempoolStatusCode::Accepted), None)`
 $DIR/json-rpc/src/tests/unit_tests.rs: `cb.send(Ok(result)).unwrap();`
-$DIR/json-rpc/src/tests/unit_tests.rs: `client.submit(&txn)`
 $DIR/json-rpc/src/tests/unit_tests.rs: `txn_submission(sender).unwrap();`
 $DIR/json-rpc/src/tests/unit_tests.rs: `states.push(AccountState::try_from(blob).unwrap());`
 $DIR/json-rpc/src/tests/unit_tests.rs: `batch.push(MethodRequest::get_account(*account));`
 $DIR/json-rpc/src/tests/unit_tests.rs: `batch.push(MethodRequest::get_metadata_by_version(i));`
-$DIR/json-rpc/src/tests/unit_tests.rs: `None`
 $DIR/json-rpc/src/tests/unit_tests.rs: `.request(reqwest::Method::OPTIONS, &url)`
 $DIR/json-rpc/src/tests/unit_tests.rs: `.header("origin", origin)`
 $DIR/json-rpc/src/tests/unit_tests.rs: `.header("access-control-headers", "content-type")`
@@ -3379,7 +3313,6 @@ $DIR/json-rpc/src/tests/unit_tests.rs: `.status()`
 $DIR/json-rpc/src/tests/unit_tests.rs: `.is_some()`
 $DIR/json-rpc/src/tests/unit_tests.rs: `.send(Ok(result))`
 $DIR/json-rpc/src/tests/unit_tests.rs: `.public_key()`
-$DIR/json-rpc/src/tests/unit_tests.rs: `.submit(&txn)`
 $DIR/json-rpc/src/tests/unit_tests.rs: `.json_rpc_error()`
 $DIR/json-rpc/src/tests/unit_tests.rs: `.as_status_code()`
 $DIR/json-rpc/src/tests/unit_tests.rs: `.next()`
@@ -3858,9 +3791,7 @@ $DIR/language/bytecode-verifier/bytecode-verifier-tests/src/unit_tests/constants
 $DIR/language/bytecode-verifier/bytecode-verifier-tests/src/unit_tests/constants_tests.rs: `malformed(SignatureToken::U128, vec![0]);`
 $DIR/language/bytecode-verifier/bytecode-verifier-tests/src/unit_tests/constants_tests.rs: `items.extend(item.clone());`
 $DIR/language/bytecode-verifier/bytecode-verifier-tests/src/unit_tests/constants_tests.rs: `items.extend(item);`
-$DIR/language/bytecode-verifier/bytecode-verifier-tests/src/unit_tests/constants_tests.rs: `items`
 $DIR/language/bytecode-verifier/bytecode-verifier-tests/src/unit_tests/constants_tests.rs: `(0..0xFFFF).for_each(|_| items.extend(item.clone()));`
-$DIR/language/bytecode-verifier/bytecode-verifier-tests/src/unit_tests/constants_tests.rs: `items`
 $DIR/language/bytecode-verifier/bytecode-verifier-tests/src/unit_tests/constants_tests.rs: `module.constant_pool = vec![
         // empty
         Constant {
@@ -3937,9 +3868,7 @@ $DIR/language/bytecode-verifier/bytecode-verifier-tests/src/unit_tests/constants
     ];`
 $DIR/language/bytecode-verifier/bytecode-verifier-tests/src/unit_tests/constants_tests.rs: `items.extend(item.clone());`
 $DIR/language/bytecode-verifier/bytecode-verifier-tests/src/unit_tests/constants_tests.rs: `items.extend(item);`
-$DIR/language/bytecode-verifier/bytecode-verifier-tests/src/unit_tests/constants_tests.rs: `items`
 $DIR/language/bytecode-verifier/bytecode-verifier-tests/src/unit_tests/constants_tests.rs: `(0..(0xFFFF + 1)).for_each(|_| items.extend(item.clone()));`
-$DIR/language/bytecode-verifier/bytecode-verifier-tests/src/unit_tests/constants_tests.rs: `items`
 $DIR/language/bytecode-verifier/bytecode-verifier-tests/src/unit_tests/constants_tests.rs: `malformed(tvec(SignatureToken::U64), vec![1, 0]);`
 $DIR/language/bytecode-verifier/bytecode-verifier-tests/src/unit_tests/constants_tests.rs: `malformed(
         tvec(SignatureToken::Address),
@@ -4458,8 +4387,6 @@ $DIR/language/compiler/src/unit_tests/function_tests.rs: `.push_str(&generate_fu
 $DIR/language/compiler/src/unit_tests/function_tests.rs: `.push('}')`
 $DIR/language/compiler/src/unit_tests/serializer_tests.rs: `.serialize(&mut binary)`
 $DIR/language/diem-framework/releases/src/legacy/transaction_scripts.rs: `.files()`
-$DIR/language/diem-framework/releases/src/tests.rs: `CompiledModule::deserialize(blob)
-                    .unwrap_or_else(|_| panic!("unable to deserialize module from version {}", ver))`
 $DIR/language/diem-framework/releases/src/tests.rs: `bytecode_verifier::verify_module(module).unwrap_or_else(|_| {
                 panic!(
                     "failed to verify module {} from version {}",
@@ -4475,13 +4402,10 @@ $DIR/language/diem-framework/releases/src/tests.rs: `bytecode_verifier::dependen
                     .flat_map(|(j, module)| if i == j { None } else { Some(module) }),
             )
             .unwrap();`
-$DIR/language/diem-framework/releases/src/tests.rs: `None`
-$DIR/language/diem-framework/releases/src/tests.rs: `Some(module)`
 $DIR/language/diem-framework/releases/src/tests.rs: `.map(|blob| {
                 CompiledModule::deserialize(blob)
                     .unwrap_or_else(|_| panic!("unable to deserialize module from version {}", ver))
             })`
-$DIR/language/diem-framework/releases/src/tests.rs: `.unwrap_or_else(|_| panic!("unable to deserialize module from version {}", ver))`
 $DIR/language/diem-framework/releases/src/tests.rs: `.collect::<Vec<_>>()`
 $DIR/language/diem-framework/releases/src/tests.rs: `.enumerate()`
 $DIR/language/diem-framework/releases/src/tests.rs: `.unwrap_or_else(|_| {
@@ -4493,10 +4417,7 @@ $DIR/language/diem-framework/releases/src/tests.rs: `.unwrap_or_else(|_| {
             })`
 $DIR/language/diem-framework/releases/src/tests.rs: `.enumerate()`
 $DIR/language/diem-framework/releases/src/tests.rs: `.flat_map(|(j, module)| if i == j { None } else { Some(module) })`
-$DIR/language/diem-framework/tests/generated_files.rs: `check_that_version_control_has_no_unstaged_changes()
-            .unwrap_or_else(|err_msg| panic!("{}", err_msg))`
 $DIR/language/diem-framework/tests/generated_files.rs: `.is_ok()`
-$DIR/language/diem-framework/tests/generated_files.rs: `.unwrap_or_else(|err_msg| panic!("{}", err_msg))`
 $DIR/language/diem-tools/transaction-replay/src/unit_tests/bisection_tests.rs: `check(vec![true, true, true, true], None);`
 $DIR/language/diem-tools/transaction-replay/src/unit_tests/bisection_tests.rs: `check(vec![true, true, true, false], Some(3));`
 $DIR/language/diem-tools/transaction-replay/src/unit_tests/bisection_tests.rs: `check(vec![true, true, false, false], Some(2));`
@@ -4538,7 +4459,6 @@ $DIR/language/diem-tools/writeset-transaction-generator/src/release_flow/unit_te
 $DIR/language/diem-tools/writeset-transaction-generator/src/release_flow/unit_tests/release_tests.rs: `modules_bytes.push(bytes);`
 $DIR/language/diem-tools/writeset-transaction-generator/src/release_flow/unit_tests/release_tests.rs: `module.identifiers[0] = Identifier::new(format!("test_{:?}", 9)).unwrap();`
 $DIR/language/diem-tools/writeset-transaction-generator/src/release_flow/unit_tests/release_tests.rs: `verify_module(&module).expect("invalid module");`
-$DIR/language/diem-tools/writeset-transaction-generator/src/release_flow/unit_tests/release_tests.rs: `module`
 $DIR/language/diem-tools/writeset-transaction-generator/src/release_flow/unit_tests/release_tests.rs: `replace_module.serialize(&mut replace_module_bytes).unwrap();`
 $DIR/language/diem-tools/writeset-transaction-generator/src/release_flow/unit_tests/release_tests.rs: `replace_modules.pop();`
 $DIR/language/diem-tools/writeset-transaction-generator/src/release_flow/unit_tests/release_tests.rs: `replace_modules.push((replace_module_bytes.clone(), replace_module.clone()));`
@@ -4598,96 +4518,16 @@ $DIR/language/diem-vm/mvhashmap/src/unit_tests/mod.rs: `.read(&ap1, 15)`
 $DIR/language/diem-vm/mvhashmap/src/unit_tests/mod.rs: `.skip(&ap2, 20)`
 $DIR/language/diem-vm/mvhashmap/src/unit_tests/mod.rs: `.write(&ap2, 10, Some(vec![0, 0, 0]))`
 $DIR/language/diem-vm/mvhashmap/src/unit_tests/mod.rs: `.read(&ap2, 25)`
-$DIR/language/diem-vm/parallel-executor/src/unit_tests/mod.rs: `transactions.push(Transaction::Write {
-                reads: vec![key],
-                actual_writes: vec![(key, random::<u64>())],
-                skipped_writes: vec![],
-            })`
-$DIR/language/diem-vm/parallel-executor/src/unit_tests/mod.rs: `transactions.push(Transaction::Write {
-                reads: vec![*key],
-                actual_writes: vec![(*key, random::<u64>())],
-                skipped_writes: vec![],
-            })`
-$DIR/language/diem-vm/parallel-executor/src/unit_tests/mod.rs: `transactions.push(Transaction::Write {
-            reads: keys.clone(),
-            actual_writes: vec![],
-            skipped_writes: vec![],
-        })`
-$DIR/language/diem-vm/parallel-executor/src/unit_tests/mod.rs: `transactions.push(Transaction::Write {
-                reads: vec![*key],
-                actual_writes: vec![(*key, random::<u64>())],
-                skipped_writes: vec![],
-            })`
-$DIR/language/diem-vm/parallel-executor/src/unit_tests/mod.rs: `transactions.push(Transaction::Write {
-            reads: keys.clone(),
-            actual_writes: keys
-                .iter()
-                .map(|key| (*key, random::<u64>()))
-                .collect::<Vec<_>>(),
-            skipped_writes: vec![],
-        })`
-$DIR/language/diem-vm/parallel-executor/src/unit_tests/mod.rs: `transactions.push(Transaction::Write {
-                reads: vec![*key],
-                actual_writes: vec![(*key, random::<u64>())],
-                skipped_writes: vec![],
-            })`
-$DIR/language/diem-vm/parallel-executor/src/unit_tests/mod.rs: `transactions.push(Transaction::Abort)`
-$DIR/language/diem-vm/parallel-executor/src/unit_tests/mod.rs: `transactions.push(Transaction::Write {
-                reads: vec![*key],
-                actual_writes: vec![(*key, random::<u64>())],
-                skipped_writes: vec![],
-            })`
-$DIR/language/diem-vm/parallel-executor/src/unit_tests/mod.rs: `transactions.push(Transaction::SkipRest)`
-$DIR/language/diem-vm/parallel-executor/src/unit_tests/mod.rs: `.push(Transaction::Write {
-                reads: vec![key],
-                actual_writes: vec![(key, random::<u64>())],
-                skipped_writes: vec![],
-            })`
 $DIR/language/diem-vm/parallel-executor/src/unit_tests/mod.rs: `.map(|_| random::<[u8; 32]>())`
 $DIR/language/diem-vm/parallel-executor/src/unit_tests/mod.rs: `.collect()`
-$DIR/language/diem-vm/parallel-executor/src/unit_tests/mod.rs: `.push(Transaction::Write {
-                reads: vec![*key],
-                actual_writes: vec![(*key, random::<u64>())],
-                skipped_writes: vec![],
-            })`
-$DIR/language/diem-vm/parallel-executor/src/unit_tests/mod.rs: `.push(Transaction::Write {
-            reads: keys.clone(),
-            actual_writes: vec![],
-            skipped_writes: vec![],
-        })`
 $DIR/language/diem-vm/parallel-executor/src/unit_tests/mod.rs: `.map(|_| random::<[u8; 32]>())`
 $DIR/language/diem-vm/parallel-executor/src/unit_tests/mod.rs: `.collect()`
-$DIR/language/diem-vm/parallel-executor/src/unit_tests/mod.rs: `.push(Transaction::Write {
-                reads: vec![*key],
-                actual_writes: vec![(*key, random::<u64>())],
-                skipped_writes: vec![],
-            })`
-$DIR/language/diem-vm/parallel-executor/src/unit_tests/mod.rs: `.push(Transaction::Write {
-            reads: keys.clone(),
-            actual_writes: keys
-                .iter()
-                .map(|key| (*key, random::<u64>()))
-                .collect::<Vec<_>>(),
-            skipped_writes: vec![],
-        })`
 $DIR/language/diem-vm/parallel-executor/src/unit_tests/mod.rs: `.map(|key| (*key, random::<u64>()))`
 $DIR/language/diem-vm/parallel-executor/src/unit_tests/mod.rs: `.collect::<Vec<_>>()`
 $DIR/language/diem-vm/parallel-executor/src/unit_tests/mod.rs: `.map(|_| random::<[u8; 32]>())`
 $DIR/language/diem-vm/parallel-executor/src/unit_tests/mod.rs: `.collect()`
-$DIR/language/diem-vm/parallel-executor/src/unit_tests/mod.rs: `.push(Transaction::Write {
-                reads: vec![*key],
-                actual_writes: vec![(*key, random::<u64>())],
-                skipped_writes: vec![],
-            })`
-$DIR/language/diem-vm/parallel-executor/src/unit_tests/mod.rs: `.push(Transaction::Abort)`
 $DIR/language/diem-vm/parallel-executor/src/unit_tests/mod.rs: `.map(|_| random::<[u8; 32]>())`
 $DIR/language/diem-vm/parallel-executor/src/unit_tests/mod.rs: `.collect()`
-$DIR/language/diem-vm/parallel-executor/src/unit_tests/mod.rs: `.push(Transaction::Write {
-                reads: vec![*key],
-                actual_writes: vec![(*key, random::<u64>())],
-                skipped_writes: vec![],
-            })`
-$DIR/language/diem-vm/parallel-executor/src/unit_tests/mod.rs: `.push(Transaction::SkipRest)`
 $DIR/language/diem-vm/src/diem_vm_impl.rs: `assert_send::<DiemVM>();`
 $DIR/language/diem-vm/src/diem_vm_impl.rs: `assert_sync::<DiemVM>();`
 $DIR/language/diem-vm/src/diem_vm_impl.rs: `assert_send::<MoveVM>();`
@@ -5845,21 +5685,12 @@ $DIR/language/e2e-testsuite/src/tests/account_limits.rs: `.ttl(ttl)`
 $DIR/language/e2e-testsuite/src/tests/account_limits.rs: `.sign()`
 $DIR/language/e2e-testsuite/src/tests/admin_script.rs: `executor.set_golden_file(current_function_name!());`
 $DIR/language/e2e-testsuite/src/tests/admin_script.rs: `executor.add_account_data(&new_account);`
-$DIR/language/e2e-testsuite/src/tests/admin_script.rs: `compiler
-            .into_script_blob("file_name", code)
-            .expect("Failed to compile")`
 $DIR/language/e2e-testsuite/src/tests/admin_script.rs: `executor.new_block();`
 $DIR/language/e2e-testsuite/src/tests/admin_script.rs: `executor.set_golden_file(current_function_name!());`
 $DIR/language/e2e-testsuite/src/tests/admin_script.rs: `executor.add_account_data(&new_account);`
-$DIR/language/e2e-testsuite/src/tests/admin_script.rs: `compiler
-            .into_script_blob("file_name", code)
-            .expect("Failed to compile")`
 $DIR/language/e2e-testsuite/src/tests/admin_script.rs: `executor.new_block();`
 $DIR/language/e2e-testsuite/src/tests/admin_script.rs: `executor.set_golden_file(current_function_name!());`
 $DIR/language/e2e-testsuite/src/tests/admin_script.rs: `executor.add_account_data(&new_account);`
-$DIR/language/e2e-testsuite/src/tests/admin_script.rs: `compiler
-            .into_script_blob("file_name", code)
-            .expect("Failed to compile")`
 $DIR/language/e2e-testsuite/src/tests/admin_script.rs: `executor.new_block();`
 $DIR/language/e2e-testsuite/src/tests/admin_script.rs: `.set_golden_file(current_function_name!())`
 $DIR/language/e2e-testsuite/src/tests/admin_script.rs: `.create_raw_account_data(100_000, 0)`
@@ -6813,10 +6644,6 @@ $DIR/language/e2e-testsuite/src/tests/scripts.rs: `executor.set_golden_file(curr
 $DIR/language/e2e-testsuite/src/tests/scripts.rs: `executor.add_account_data(&sender);`
 $DIR/language/e2e-testsuite/src/tests/scripts.rs: `script.code.code = vec![Bytecode::LdU8(0), Bytecode::Add, Bytecode::Ret];`
 $DIR/language/e2e-testsuite/src/tests/scripts.rs: `script.serialize(&mut blob).expect("script must serialize");`
-$DIR/language/e2e-testsuite/src/tests/scripts.rs: `match status {
-        TransactionStatus::Keep(_) => (),
-        _ => panic!("TransactionStatus must be Keep"),
-    }`
 $DIR/language/e2e-testsuite/src/tests/scripts.rs: `executor.apply_write_set(output.write_set());`
 $DIR/language/e2e-testsuite/src/tests/scripts.rs: `executor.set_golden_file(current_function_name!());`
 $DIR/language/e2e-testsuite/src/tests/scripts.rs: `executor.add_account_data(&sender);`
@@ -6834,10 +6661,6 @@ $DIR/language/e2e-testsuite/src/tests/scripts.rs: `script.code.code = vec![
         Bytecode::Ret,
     ];`
 $DIR/language/e2e-testsuite/src/tests/scripts.rs: `script.serialize(&mut blob).expect("script must serialize");`
-$DIR/language/e2e-testsuite/src/tests/scripts.rs: `match status {
-        TransactionStatus::Keep(_) => (),
-        _ => panic!("TransactionStatus must be Keep"),
-    }`
 $DIR/language/e2e-testsuite/src/tests/scripts.rs: `executor.apply_write_set(output.write_set());`
 $DIR/language/e2e-testsuite/src/tests/scripts.rs: `executor.set_golden_file(current_function_name!());`
 $DIR/language/e2e-testsuite/src/tests/scripts.rs: `executor.add_account_data(&sender);`
@@ -6855,10 +6678,6 @@ $DIR/language/e2e-testsuite/src/tests/scripts.rs: `script.code.code = vec![
         Bytecode::Ret,
     ];`
 $DIR/language/e2e-testsuite/src/tests/scripts.rs: `script.serialize(&mut blob).expect("script must serialize");`
-$DIR/language/e2e-testsuite/src/tests/scripts.rs: `match status {
-        TransactionStatus::Keep(_) => (),
-        _ => panic!("TransactionStatus must be Keep"),
-    }`
 $DIR/language/e2e-testsuite/src/tests/scripts.rs: `executor.apply_write_set(output.write_set());`
 $DIR/language/e2e-testsuite/src/tests/scripts.rs: `executor.set_golden_file(current_function_name!());`
 $DIR/language/e2e-testsuite/src/tests/scripts.rs: `executor.add_account_data(&sender);`
@@ -6878,10 +6697,6 @@ $DIR/language/e2e-testsuite/src/tests/scripts.rs: `script.code.code = vec![
         Bytecode::Ret,
     ];`
 $DIR/language/e2e-testsuite/src/tests/scripts.rs: `script.serialize(&mut blob).expect("script must serialize");`
-$DIR/language/e2e-testsuite/src/tests/scripts.rs: `match status {
-        TransactionStatus::Keep(_) => (),
-        _ => panic!("TransactionStatus must be Keep"),
-    }`
 $DIR/language/e2e-testsuite/src/tests/scripts.rs: `executor.apply_write_set(output.write_set());`
 $DIR/language/e2e-testsuite/src/tests/scripts.rs: `executor.set_golden_file(current_function_name!());`
 $DIR/language/e2e-testsuite/src/tests/scripts.rs: `executor.add_account_data(&sender);`
@@ -7329,7 +7144,6 @@ $DIR/language/e2e-testsuite/src/tests/verify_txn.rs: `executor.add_account_data(
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs: `executor.set_golden_file(current_function_name!());`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs: `executor.add_module(&bad_module.self_id(), bad_module_bytes);`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs: `executor.add_account_data(&sender);`
-$DIR/language/e2e-testsuite/src/tests/verify_txn.rs: `diem_types::transaction::Module::new(serialized_module)`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs: `executor.set_golden_file(current_function_name!());`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs: `executor.add_module(&module.self_id(), bytes);`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs: `executor.add_account_data(&sender);`
@@ -7341,19 +7155,11 @@ $DIR/language/e2e-testsuite/src/tests/verify_txn.rs: `executor.set_golden_file(c
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs: `executor.add_module(&bad_module.self_id(), bad_module_bytes);`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs: `executor.add_module(&good_module.self_id(), good_module_bytes);`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs: `executor.add_account_data(&sender);`
-$DIR/language/e2e-testsuite/src/tests/verify_txn.rs: `diem_types::transaction::Module::new(
-            compiler
-                .into_module_blob("file_name", module_code.as_str())
-                .expect("Module compilation failed"),
-        )`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs: `executor.set_golden_file(current_function_name!());`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs: `executor.add_module(&bad_module.self_id(), bad_module_bytes);`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs: `executor.add_module(&good_module.self_id(), good_module_bytes);`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs: `executor.add_account_data(&sender);`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs: `executor.set_golden_file(current_function_name!());`
-$DIR/language/e2e-testsuite/src/tests/verify_txn.rs: `compiler
-                .into_script_blob("file_name", code)
-                .expect("Failed to compile")`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs: `executor.new_block();`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs: `executor.execute_and_apply(txn);`
 $DIR/language/e2e-testsuite/src/tests/verify_txn.rs: `executor.execute_and_apply(txn);`
@@ -7729,17 +7535,12 @@ $DIR/language/e2e-testsuite/src/tests/verify_txn.rs: `.exec(
     )`
 $DIR/language/e2e-testsuite/src/tests/writeset_builder.rs: `executor.set_golden_file(current_function_name!());`
 $DIR/language/e2e-testsuite/src/tests/writeset_builder.rs: `module.serialize(&mut v).unwrap();`
-$DIR/language/e2e-testsuite/src/tests/writeset_builder.rs: `v`
 $DIR/language/e2e-testsuite/src/tests/writeset_builder.rs: `session.set_diem_version(11);`
 $DIR/language/e2e-testsuite/src/tests/writeset_builder.rs: `writeset.push((
             AccessPath::code_access_path(module.self_id()),
             WriteOp::Value(module_bytes),
         ));`
-$DIR/language/e2e-testsuite/src/tests/writeset_builder.rs: `ChangeSet::new(writeset.freeze().unwrap(), events)`
 $DIR/language/e2e-testsuite/src/tests/writeset_builder.rs: `executor.apply_write_set(output.write_set());`
-$DIR/language/e2e-testsuite/src/tests/writeset_builder.rs: `compiler
-            .into_script_blob("file_name", code)
-            .expect("Failed to compile")`
 $DIR/language/e2e-testsuite/src/tests/writeset_builder.rs: `.set_golden_file(current_function_name!())`
 $DIR/language/e2e-testsuite/src/tests/writeset_builder.rs: `.serialize(&mut v)`
 $DIR/language/e2e-testsuite/src/tests/writeset_builder.rs: `.get_state_view()`
@@ -7812,8 +7613,6 @@ $DIR/language/move-core/types/src/vm_status.rs: `seen_statuses.insert(unwrapped_
 $DIR/language/move-core/types/src/vm_status.rs: `.contains(&possible_major_status_code)`
 $DIR/language/move-core/types/src/vm_status.rs: `.insert(*major_status_code)`
 $DIR/language/move-core/types/src/vm_status.rs: `.insert(unwrapped_status)`
-$DIR/language/move-prover/bytecode/src/graph.rs: `(&natural_loops[0], &natural_loops[1])`
-$DIR/language/move-prover/bytecode/src/graph.rs: `(&natural_loops[1], &natural_loops[0])`
 $DIR/language/move-prover/bytecode/src/graph.rs: `.compute_reducible()`
 $DIR/language/move-prover/bytecode/src/graph.rs: `.compute_reducible()`
 $DIR/language/move-stdlib/src/tests.rs: `crate::build_stdlib_doc(&temp_dir.path().to_string_lossy());`
@@ -8675,13 +8474,6 @@ $DIR/language/transaction-builder/generator/tests/generation.rs: `std::fs::copy(
         dir.path().join("StdlibDemo.java"),
     )
     .unwrap();`
-$DIR/language/transaction-builder/generator/tests/generation.rs: `std::iter::empty()
-            .chain(std::fs::read_dir(dir.path().join("com/novi/serde")).unwrap())
-            .chain(std::fs::read_dir(dir.path().join("com/novi/bcs")).unwrap())
-            .chain(std::fs::read_dir(dir.path().join("com/diem/types")).unwrap())
-            .chain(std::fs::read_dir(dir.path().join("com/diem/stdlib")).unwrap())
-            .map(|e| e.unwrap().path())
-            .chain(std::iter::once(dir.path().join("StdlibDemo.java")))`
 $DIR/language/transaction-builder/generator/tests/generation.rs: `std::env::set_var("TMPDIR", "/private/tmp/");`
 $DIR/language/transaction-builder/generator/tests/generation.rs: `bcs_installer.install_module(&config, &registry).unwrap();`
 $DIR/language/transaction-builder/generator/tests/generation.rs: `bcs_installer.install_serde_runtime().unwrap();`
@@ -8798,7 +8590,6 @@ $DIR/language/transaction-builder/generator/tests/generation.rs: `.path()`
 $DIR/language/transaction-builder/generator/tests/generation.rs: `.join("com/diem/stdlib")`
 $DIR/language/transaction-builder/generator/tests/generation.rs: `.map(|e| e.unwrap().path())`
 $DIR/language/transaction-builder/generator/tests/generation.rs: `.path()`
-$DIR/language/transaction-builder/generator/tests/generation.rs: `.chain(std::iter::once(dir.path().join("StdlibDemo.java")))`
 $DIR/language/transaction-builder/generator/tests/generation.rs: `.path()`
 $DIR/language/transaction-builder/generator/tests/generation.rs: `.join("StdlibDemo.java")`
 $DIR/language/transaction-builder/generator/tests/generation.rs: `.arg("-sourcepath")`
@@ -9017,9 +8808,6 @@ $DIR/mempool/src/tests/core_mempool_test.rs: `add_txns_to_mempool(
             TestTransaction::new(1, 5, 1),
         ],
     );`
-$DIR/mempool/src/tests/core_mempool_test.rs: `txns.iter()
-            .map(SignedTransaction::sequence_number)
-            .collect()`
 $DIR/mempool/src/tests/core_mempool_test.rs: `add_txns_to_mempool(&mut pool, vec![TestTransaction::new(1, 2, 1)]);`
 $DIR/mempool/src/tests/core_mempool_test.rs: `pool.remove_transaction(&TestTransaction::get_address(1), 4, false);`
 $DIR/mempool/src/tests/core_mempool_test.rs: `config.mempool.capacity = 1;`
@@ -9086,7 +8874,6 @@ $DIR/mempool/src/tests/core_mempool_test.rs: `.remove_transaction(&TestTransacti
 $DIR/mempool/src/tests/core_mempool_test.rs: `.remove_transaction(&TestTransaction::get_address(1), 0, true)`
 $DIR/mempool/src/tests/core_mempool_test.rs: `.remove_transaction(&TestTransaction::get_address(1), 1, true)`
 $DIR/mempool/src/tests/core_mempool_test.rs: `.map(SignedTransaction::sequence_number)`
-$DIR/mempool/src/tests/core_mempool_test.rs: `.collect()`
 $DIR/mempool/src/tests/core_mempool_test.rs: `.read_timeline(0, 10)`
 $DIR/mempool/src/tests/core_mempool_test.rs: `.read_timeline(0, 10)`
 $DIR/mempool/src/tests/core_mempool_test.rs: `.read_timeline(2, 10)`
@@ -9528,7 +9315,6 @@ $DIR/network/netcore/src/transport/tcp.rs: `out.write_all(b"Earth").await?;`
 $DIR/network/netcore/src/transport/tcp.rs: `out.read_exact(&mut buf).await?;`
 $DIR/network/netcore/src/transport/tcp.rs: `out.read_exact(&mut buf).await?;`
 $DIR/network/netcore/src/transport/tcp.rs: `out.write_all(b"Air").await?;`
-$DIR/network/netcore/src/transport/tcp.rs: `incoming.map(Result::unwrap)`
 $DIR/network/netcore/src/transport/tcp.rs: `.and_then(|mut out, _addr, origin| async move {
             match origin {
                 ConnectionOrigin::Inbound => {
@@ -9558,7 +9344,6 @@ $DIR/network/netcore/src/transport/tcp.rs: `.then(|(maybe_result, _stream)| {
             let (incoming, _addr) = maybe_result.unwrap().unwrap();
             incoming.map(Result::unwrap)
         })`
-$DIR/network/netcore/src/transport/tcp.rs: `.map(Result::unwrap)`
 $DIR/network/netcore/src/transport/tcp.rs: `.listen_on("/memory/0".parse().unwrap())`
 $DIR/network/netcore/src/transport/tcp.rs: `.parse()`
 $DIR/network/netcore/src/transport/tcp.rs: `.dial(peer_id, "/memory/22".parse().unwrap())`
@@ -9971,7 +9756,6 @@ $DIR/network/src/peer/test.rs: `assert_disconnected_event(
         )
         .await;`
 $DIR/network/src/peer/test.rs: `::diem_logger::Logger::init_for_testing();`
-$DIR/network/src/peer/test.rs: `req.res_tx.send(response).unwrap()`
 $DIR/network/src/peer/test.rs: `::diem_logger::Logger::init_for_testing();`
 $DIR/network/src/peer/test.rs: `match received {
                 PeerNotification::RecvRpc(req) => res_txs.push(req.res_tx),
@@ -10472,19 +10256,7 @@ $DIR/network/src/protocols/identity.rs: `supported_protocols.insert(
                 .into(),
         );`
 $DIR/network/src/protocols/identity.rs: `client_handshake.chain_id = ChainId::new(client_handshake.chain_id.id() + 1);`
-$DIR/network/src/protocols/identity.rs: `server_handshake
-                .perform_handshake(&remote_handshake)
-                .unwrap_err()`
-$DIR/network/src/protocols/identity.rs: `client_handshake
-                .perform_handshake(&remote_handshake)
-                .unwrap_err()`
 $DIR/network/src/protocols/identity.rs: `client_handshake.network_id = NetworkId::Public;`
-$DIR/network/src/protocols/identity.rs: `server_handshake
-                .perform_handshake(&remote_handshake)
-                .unwrap_err()`
-$DIR/network/src/protocols/identity.rs: `client_handshake
-                .perform_handshake(&remote_handshake)
-                .unwrap_err()`
 $DIR/network/src/protocols/identity.rs: `.insert(
             MessagingProtocolVersion::V1,
             [
@@ -10638,10 +10410,6 @@ $DIR/sdk/compatibility/src/lib.rs: `env.coffer()
 $DIR/sdk/compatibility/src/lib.rs: `client.submit(&txn)?;`
 $DIR/sdk/compatibility/src/lib.rs: `client.submit(&txn)?;`
 $DIR/sdk/compatibility/src/lib.rs: `client.wait_for_signed_transaction(&txn, None, None)?;`
-$DIR/sdk/compatibility/src/lib.rs: `dual_attestation_extended_secret_key
-            .sign(message.message(), &dual_attestation_public_key)
-            .to_bytes()
-            .to_vec()`
 $DIR/sdk/compatibility/src/lib.rs: `client.submit(&txn)?;`
 $DIR/sdk/compatibility/src/lib.rs: `client.wait_for_signed_transaction(&txn, None, None)?;`
 $DIR/sdk/compatibility/src/lib.rs: `env.coffer()
@@ -11275,8 +11043,6 @@ $DIR/state-sync/inter-component/event-notifications/src/tests.rs: `.subscribe_to
 $DIR/state-sync/inter-component/event-notifications/src/tests.rs: `.subscribe_to_events(vec![create_random_event_key()])`
 $DIR/state-sync/inter-component/event-notifications/src/tests.rs: `.subscribe_to_reconfigurations()`
 $DIR/state-sync/inter-component/mempool-notifications/src/lib.rs: `mempool_listener.notification_receiver.close();`
-$DIR/state-sync/inter-component/mempool-notifications/src/lib.rs: `transactions.push(create_block_metadata_transaction())`
-$DIR/state-sync/inter-component/mempool-notifications/src/lib.rs: `transactions.push(create_genesis_transaction())`
 $DIR/state-sync/inter-component/mempool-notifications/src/lib.rs: `transactions.push(create_user_transaction());`
 $DIR/state-sync/inter-component/mempool-notifications/src/lib.rs: `.enter()`
 $DIR/state-sync/inter-component/mempool-notifications/src/lib.rs: `.notify_new_commit(vec![create_user_transaction()], 0, 1000)`
@@ -11287,8 +11053,6 @@ $DIR/state-sync/inter-component/mempool-notifications/src/lib.rs: `.notify_new_c
 $DIR/state-sync/inter-component/mempool-notifications/src/lib.rs: `.enter()`
 $DIR/state-sync/inter-component/mempool-notifications/src/lib.rs: `.notify_new_commit(vec![], 0, 1000)`
 $DIR/state-sync/inter-component/mempool-notifications/src/lib.rs: `.enter()`
-$DIR/state-sync/inter-component/mempool-notifications/src/lib.rs: `.push(create_block_metadata_transaction())`
-$DIR/state-sync/inter-component/mempool-notifications/src/lib.rs: `.push(create_genesis_transaction())`
 $DIR/state-sync/inter-component/mempool-notifications/src/lib.rs: `.notify_new_commit(transactions.clone(), 0, 1000)`
 $DIR/state-sync/inter-component/mempool-notifications/src/lib.rs: `.push(create_user_transaction())`
 $DIR/state-sync/inter-component/mempool-notifications/src/lib.rs: `.notify_new_commit(transactions, 0, 1000)`
@@ -11513,8 +11277,6 @@ $DIR/state-sync/state-sync-v1/src/request_manager.rs: `request_manager.process_e
 $DIR/state-sync/state-sync-v1/src/request_manager.rs: `request_manager.process_invalid_chunk(&validators[0]);`
 $DIR/state-sync/state-sync-v1/src/request_manager.rs: `request_manager.process_invalid_chunk_request(&validators[0]);`
 $DIR/state-sync/state-sync-v1/src/request_manager.rs: `request_manager.process_chunk_from_downstream(&validators[0]);`
-$DIR/state-sync/state-sync-v1/src/request_manager.rs: `PeerRole::PreferredUpstream`
-$DIR/state-sync/state-sync-v1/src/request_manager.rs: `PeerRole::Validator`
 $DIR/state-sync/state-sync-v1/src/request_manager.rs: `add_validator_to_request_manager(&mut request_manager, &validator, peer_role);`
 $DIR/state-sync/state-sync-v1/src/request_manager.rs: `validators.push(validator);`
 $DIR/state-sync/state-sync-v1/src/request_manager.rs: `request_manager.add_request(1, validator_0.clone());`
@@ -11553,12 +11315,9 @@ $DIR/state-sync/state-sync-v1/tests/integration_tests.rs: `validator_0.commit(ve
 $DIR/state-sync/state-sync-v1/tests/integration_tests.rs: `validator_1.sync_to(target_li);`
 $DIR/state-sync/state-sync-v1/tests/integration_tests.rs: `env.start_validator_peer(0, false);`
 $DIR/state-sync/state-sync-v1/tests/integration_tests.rs: `attempt.fetch_add(1, Ordering::Relaxed);`
-$DIR/state-sync/state-sync-v1/tests/integration_tests.rs: `Err(Error::UnexpectedError("Failed to fetch chunk!".into()))`
-$DIR/state-sync/state-sync-v1/tests/integration_tests.rs: `Ok(resp)`
 $DIR/state-sync/state-sync-v1/tests/integration_tests.rs: `env.start_state_sync_peer(1, handler, RoleType::Validator, Waypoint::default(), false);`
 $DIR/state-sync/state-sync-v1/tests/integration_tests.rs: `validator_0.commit(synced_version);`
 $DIR/state-sync/state-sync-v1/tests/integration_tests.rs: `validator_1.sync_to(validator_0.latest_li());`
-$DIR/state-sync/state-sync-v1/tests/integration_tests.rs: `Err(Error::UnexpectedError("Failed to fetch chunk!".into()))`
 $DIR/state-sync/state-sync-v1/tests/integration_tests.rs: `env.start_state_sync_peer(0, handler, RoleType::Validator, Waypoint::default(), false);`
 $DIR/state-sync/state-sync-v1/tests/integration_tests.rs: `env.setup_state_sync_peer(
         1,
@@ -12216,18 +11975,9 @@ $DIR/storage/backup/backup-cli/src/utils/read_record_bytes.rs: `.pop()`
 $DIR/storage/backup/backup-cli/src/utils/read_record_bytes.rs: `.to_be_bytes()`
 $DIR/storage/backup/backup-cli/src/utils/read_record_bytes.rs: `.push(0u8)`
 $DIR/storage/diem-scratchpad/src/sparse_merkle/sparse_merkle_test.rs: `*buf.last_mut().unwrap() |= 1;`
-$DIR/storage/diem-scratchpad/src/sparse_merkle/sparse_merkle_test.rs: `HashValue::from_slice(&buf).unwrap()`
 $DIR/storage/diem-scratchpad/src/sparse_merkle/sparse_merkle_test.rs: `siblings.push(leaf2_hash);`
 $DIR/storage/diem-scratchpad/src/sparse_merkle/sparse_merkle_test.rs: `siblings.reverse();`
-$DIR/storage/diem-scratchpad/src/sparse_merkle/sparse_merkle_test.rs: `hash_internal(previous_hash, *hash)`
-$DIR/storage/diem-scratchpad/src/sparse_merkle/sparse_merkle_test.rs: `hash_internal(previous_hash, *hash)`
 $DIR/storage/diem-scratchpad/src/sparse_merkle/sparse_merkle_test.rs: `drop(smt1);`
-$DIR/storage/diem-scratchpad/src/sparse_merkle/sparse_merkle_test.rs: `smt = smt
-            .batch_update(
-                vec![(HashValue::zero(), &AccountStateBlob::from(b"zero".to_vec()))],
-                &proof_reader,
-            )
-            .unwrap()`
 $DIR/storage/diem-scratchpad/src/sparse_merkle/sparse_merkle_test.rs: `.test_only_hash()`
 $DIR/storage/diem-scratchpad/src/sparse_merkle/sparse_merkle_test.rs: `.test_only_hash()`
 $DIR/storage/diem-scratchpad/src/sparse_merkle/sparse_merkle_test.rs: `.into()`
@@ -12427,7 +12177,6 @@ $DIR/storage/jellyfish-merkle/src/jellyfish_merkle_test.rs: `children.insert(
             Nibble::from(1),
             Child::new(leaf2.hash(), 1 /* version */, true /* is_leaf */),
         );`
-$DIR/storage/jellyfish-merkle/src/jellyfish_merkle_test.rs: `Node::new_internal(children)`
 $DIR/storage/jellyfish-merkle/src/jellyfish_merkle_test.rs: `children.insert(
             Nibble::from(0),
             Child::new(
@@ -12436,14 +12185,10 @@ $DIR/storage/jellyfish-merkle/src/jellyfish_merkle_test.rs: `children.insert(
                 false, /* is_leaf */
             ),
         );`
-$DIR/storage/jellyfish-merkle/src/jellyfish_merkle_test.rs: `Node::new_internal(children)`
 $DIR/storage/jellyfish-merkle/src/jellyfish_merkle_test.rs: `db.write_tree_update_batch(batch).unwrap();`
 $DIR/storage/jellyfish-merkle/src/jellyfish_merkle_test.rs: `db.purge_stale_nodes(1).unwrap();`
 $DIR/storage/jellyfish-merkle/src/jellyfish_merkle_test.rs: `db.purge_stale_nodes(2).unwrap();`
 $DIR/storage/jellyfish-merkle/src/jellyfish_merkle_test.rs: `to_verify.remove(1);`
-$DIR/storage/jellyfish-merkle/src/jellyfish_merkle_test.rs: `to_verify
-            .iter()
-            .for_each(|(k, v)| assert_eq!(tree.get(*k, version).unwrap().unwrap(), *v))`
 $DIR/storage/jellyfish-merkle/src/jellyfish_merkle_test.rs: `db.write_tree_update_batch(batch).unwrap();`
 $DIR/storage/jellyfish-merkle/src/jellyfish_merkle_test.rs: `verify_fn(&tree, 0);`
 $DIR/storage/jellyfish-merkle/src/jellyfish_merkle_test.rs: `db.write_tree_update_batch(batch).unwrap();`
@@ -12542,7 +12287,6 @@ $DIR/storage/jellyfish-merkle/src/jellyfish_merkle_test.rs: `.purge_stale_nodes(
 $DIR/storage/jellyfish-merkle/src/jellyfish_merkle_test.rs: `.flatten()`
 $DIR/storage/jellyfish-merkle/src/jellyfish_merkle_test.rs: `.collect::<Vec<_>>()`
 $DIR/storage/jellyfish-merkle/src/jellyfish_merkle_test.rs: `.remove(1)`
-$DIR/storage/jellyfish-merkle/src/jellyfish_merkle_test.rs: `.for_each(|(k, v)| assert_eq!(tree.get(*k, version).unwrap().unwrap(), *v))`
 $DIR/storage/jellyfish-merkle/src/jellyfish_merkle_test.rs: `.put_value_set(one_batch, 0 /* version */)`
 $DIR/storage/jellyfish-merkle/src/jellyfish_merkle_test.rs: `.write_tree_update_batch(batch)`
 $DIR/storage/jellyfish-merkle/src/jellyfish_merkle_test.rs: `.batch_put_value_sets(batches, None, 0 /* first_version */)`
@@ -12607,7 +12351,6 @@ $DIR/storage/jellyfish-merkle/src/node_type/node_type_test.rs: `children.insert(
         Nibble::from(2),
         Child::new(leaf2_node.hash(), 0 /* version */, true),
     );`
-$DIR/storage/jellyfish-merkle/src/node_type/node_type_test.rs: `InternalNode::new(children)`
 $DIR/storage/jellyfish-merkle/src/node_type/node_type_test.rs: `children.insert(
             Nibble::from(1),
             Child::new(
@@ -12832,9 +12575,7 @@ $DIR/testsuite/cli/diem-wallet/src/mnemonic.rs: `.step_by(4)`
 $DIR/testsuite/cli/diem-wallet/src/mnemonic.rs: `.step_by(4)`
 $DIR/testsuite/cli/src/client_proxy.rs: `io_utils::write_recovery(&client.wallet, &path).expect("failed to write to file");`
 $DIR/testsuite/cli/src/client_proxy.rs: `.path()`
-$DIR/testsuite/diem-fuzzer/src/coverage.rs: `PathBuf::from(&crate_dir).join("fuzz/corpus")`
 $DIR/testsuite/diem-fuzzer/src/coverage.rs: `target.fuzz(&data);`
-$DIR/testsuite/diem-fuzzer/src/coverage.rs: `.join("fuzz/corpus")`
 $DIR/testsuite/diem-fuzzer/src/coverage.rs: `.read_dir()`
 $DIR/testsuite/diem-fuzzer/src/coverage.rs: `.path()`
 $DIR/testsuite/diem-fuzzer/src/coverage.rs: `.file_name()`
@@ -12864,10 +12605,6 @@ $DIR/testsuite/smoke-test/src/client.rs: `streaming_url
         .set_scheme("ws")
         .expect("Could not set scheme");`
 $DIR/testsuite/smoke-test/src/client.rs: `streaming_url.set_path("/v1/stream/ws");`
-$DIR/testsuite/smoke-test/src/client.rs: `match response_view {
-                StreamJsonRpcResponseView::Event(_) => {}
-                _ => panic!("Expected 'Event', but got: {:?}", response_view),
-            }`
 $DIR/testsuite/smoke-test/src/client.rs: `drop(subscription_stream);`
 $DIR/testsuite/smoke-test/src/client.rs: `rt.block_on(sleep(ms_500));`
 $DIR/testsuite/smoke-test/src/client.rs: `swarm.validators_mut().nth(3).unwrap().stop();`
@@ -13254,18 +12991,7 @@ $DIR/testsuite/smoke-test/src/genesis.rs: `swarm
 $DIR/testsuite/smoke-test/src/genesis.rs: `swarm
         .wait_for_all_nodes_to_catchup(Instant::now() + Duration::from_secs(60))
         .unwrap();`
-$DIR/testsuite/smoke-test/src/genesis.rs: `match known_version {
-                Some(v) if v != version => panic!(
-                    "version not equal, last known: {}, node {} is {}",
-                    v,
-                    validator.name(),
-                    version,
-                ),
-                None => known_version = Some(version),
-                _ => continue,
-            }`
 $DIR/testsuite/smoke-test/src/genesis.rs: `sleep(Duration::from_secs(1));`
-$DIR/testsuite/smoke-test/src/genesis.rs: `validator.stop()`
 $DIR/testsuite/smoke-test/src/genesis.rs: `genesis_path.create_as_file().unwrap();`
 $DIR/testsuite/smoke-test/src/genesis.rs: `file.write_all(&bcs::to_bytes(&genesis_transaction).unwrap())
         .unwrap();`
@@ -13367,7 +13093,6 @@ $DIR/testsuite/smoke-test/src/genesis.rs: `.validator(node_to_kill)`
 $DIR/testsuite/smoke-test/src/genesis.rs: `.json_rpc_endpoint()`
 $DIR/testsuite/smoke-test/src/genesis.rs: `.validator_config(validator_address, Some(&diem_root))`
 $DIR/testsuite/smoke-test/src/genesis.rs: `.validators_mut()`
-$DIR/testsuite/smoke-test/src/genesis.rs: `.stop()`
 $DIR/testsuite/smoke-test/src/genesis.rs: `.create_as_file()`
 $DIR/testsuite/smoke-test/src/genesis.rs: `.path()`
 $DIR/testsuite/smoke-test/src/genesis.rs: `.write_all(&bcs::to_bytes(&genesis_transaction).unwrap())`
@@ -14394,7 +14119,6 @@ $DIR/types/src/nibble/nibble_path/nibble_path_test.rs: `.nibbles()`
 $DIR/types/src/nibble/nibble_path/nibble_path_test.rs: `.nibbles()`
 $DIR/types/src/nibble/nibble_path/nibble_path_test.rs: `.nibbles()`
 $DIR/types/src/nibble/nibble_path/nibble_path_test.rs: `.nibbles()`
-$DIR/types/src/proof/accumulator/accumulator_test.rs: `compute_root_hash_naive(&leaves)`
 $DIR/types/src/proof/accumulator/accumulator_test.rs: `accumulator = accumulator.append(&[leaf]);`
 $DIR/types/src/proof/accumulator/accumulator_test.rs: `.map(|x| {
         let leaves = create_leaves(0..x);
@@ -14414,39 +14138,28 @@ $DIR/types/src/proof/position/position_test.rs: `test_invariant(|pos| pos.level(
 $DIR/types/src/proof/position/position_test.rs: `test_invariant(|pos| {
         Position::from_level_and_pos(pos.level(), pos.pos_counting_from_left()) == pos
     });`
-$DIR/types/src/proof/position/position_test.rs: `Position::from_level_and_pos(pos.level(), pos.pos_counting_from_left()) == pos`
 $DIR/types/src/proof/position/position_test.rs: `test_invariant(|pos| {
         Position::from_inorder_index(postorder_to_inorder(inorder_to_postorder(
             pos.to_inorder_index(),
         ))) == pos
     });`
-$DIR/types/src/proof/position/position_test.rs: `Position::from_inorder_index(postorder_to_inorder(inorder_to_postorder(
-            pos.to_inorder_index(),
-        ))) == pos`
 $DIR/types/src/proof/position/position_test.rs: `test_invariant_non_leaf(|pos| {
         pos.right_child().pos_counting_from_left() == pos.left_child().pos_counting_from_left() + 1
     });`
-$DIR/types/src/proof/position/position_test.rs: `pos.right_child().pos_counting_from_left() == pos.left_child().pos_counting_from_left() + 1`
 $DIR/types/src/proof/position/position_test.rs: `test_invariant_non_leaf(|pos| pos.left_child().to_inorder_index() < pos.to_inorder_index());`
 $DIR/types/src/proof/position/position_test.rs: `test_invariant_non_leaf(|pos| pos.to_inorder_index() < pos.right_child().to_inorder_index());`
 $DIR/types/src/proof/position/position_test.rs: `test_invariant_non_leaf(|pos| {
         inorder_to_postorder(pos.left_child().to_inorder_index())
             < inorder_to_postorder(pos.to_inorder_index())
     });`
-$DIR/types/src/proof/position/position_test.rs: `inorder_to_postorder(pos.left_child().to_inorder_index())
-            < inorder_to_postorder(pos.to_inorder_index())`
 $DIR/types/src/proof/position/position_test.rs: `test_invariant_non_leaf(|pos| {
         inorder_to_postorder(pos.right_child().to_inorder_index())
             < inorder_to_postorder(pos.to_inorder_index())
     });`
-$DIR/types/src/proof/position/position_test.rs: `inorder_to_postorder(pos.right_child().to_inorder_index())
-            < inorder_to_postorder(pos.to_inorder_index())`
 $DIR/types/src/proof/position/position_test.rs: `test_invariant_non_leaf(|pos| {
         inorder_to_postorder(pos.right_child().to_inorder_index()) + 1
             == inorder_to_postorder(pos.to_inorder_index())
     });`
-$DIR/types/src/proof/position/position_test.rs: `inorder_to_postorder(pos.right_child().to_inorder_index()) + 1
-            == inorder_to_postorder(pos.to_inorder_index())`
 $DIR/types/src/proof/position/position_test.rs: `test_invariant_non_leaf(|pos| pos.right_child() == pos.left_child().sibling());`
 $DIR/types/src/proof/position/position_test.rs: `test_invariant_non_leaf(|pos| pos.right_child().sibling() == pos.left_child());`
 $DIR/types/src/proof/position/position_test.rs: `test_invariant_non_leaf(|pos| pos.right_child() == pos.child(NodeDirection::Right));`
@@ -14519,11 +14232,8 @@ $DIR/types/src/proof/position/position_test.rs: `.child(NodeDirection::Right)`
 $DIR/types/src/proof/position/position_test.rs: `.left_child()`
 $DIR/types/src/proof/position/position_test.rs: `.child(NodeDirection::Left)`
 $DIR/types/src/proof/unit_tests/proof_test.rs: `siblings.push(HashValue::new([i; 32]));`
-$DIR/types/src/proof/unit_tests/proof_test.rs: `TestAccumulatorInternalNode::new(hash, *sibling_hash).hash()`
 $DIR/types/src/proof/unit_tests/proof_test.rs: `siblings.push(HashValue::new([i; 32]));`
-$DIR/types/src/proof/unit_tests/proof_test.rs: `TestAccumulatorInternalNode::new(*sibling_hash, hash).hash()`
 $DIR/types/src/proof/unit_tests/proof_test.rs: `siblings.push(HashValue::new([i; 32]));`
-$DIR/types/src/proof/unit_tests/proof_test.rs: `TestAccumulatorInternalNode::new(hash, *sibling_hash).hash()`
 $DIR/types/src/proof/unit_tests/proof_test.rs: `HashValue::zero();`
 $DIR/types/src/proof/unit_tests/proof_test.rs: `.test_only_hash()`
 $DIR/types/src/proof/unit_tests/proof_test.rs: `.test_only_hash()`
@@ -14541,20 +14251,17 @@ $DIR/types/src/proof/unit_tests/proof_test.rs: `.push(HashValue::new([i; 32]))`
 $DIR/types/src/proof/unit_tests/proof_test.rs: `.fold(element_hash, |hash, sibling_hash| {
         TestAccumulatorInternalNode::new(hash, *sibling_hash).hash()
     })`
-$DIR/types/src/proof/unit_tests/proof_test.rs: `.hash()`
 $DIR/types/src/proof/unit_tests/proof_test.rs: `.test_only_hash()`
 $DIR/types/src/proof/unit_tests/proof_test.rs: `.push(HashValue::new([i; 32]))`
 $DIR/types/src/proof/unit_tests/proof_test.rs: `.fold(element_hash, |hash, sibling_hash| {
         TestAccumulatorInternalNode::new(*sibling_hash, hash).hash()
     })`
-$DIR/types/src/proof/unit_tests/proof_test.rs: `.hash()`
 $DIR/types/src/proof/unit_tests/proof_test.rs: `.test_only_hash()`
 $DIR/types/src/proof/unit_tests/proof_test.rs: `.push(HashValue::new([i; 32]))`
 $DIR/types/src/proof/unit_tests/proof_test.rs: `.rev()`
 $DIR/types/src/proof/unit_tests/proof_test.rs: `.fold(element_hash, |hash, sibling_hash| {
             TestAccumulatorInternalNode::new(hash, *sibling_hash).hash()
         })`
-$DIR/types/src/proof/unit_tests/proof_test.rs: `.hash()`
 $DIR/types/src/proof/unit_tests/proof_test.rs: `.test_only_hash()`
 $DIR/types/src/proof/unit_tests/proof_test.rs: `.into()`
 $DIR/types/src/proof/unit_tests/proof_test.rs: `.test_only_hash()`
@@ -14639,7 +14346,6 @@ $DIR/types/src/validator_verifier.rs: `author_to_signature_map
 $DIR/types/src/validator_verifier.rs: `author_to_signature_map.clear();`
 $DIR/types/src/validator_verifier.rs: `author_to_signature_map.insert(validator.author(), validator.sign(&dummy_struct));`
 $DIR/types/src/validator_verifier.rs: `author_to_signature_map.insert(unknown_validator_signer.author(), unknown_signature);`
-$DIR/types/src/validator_verifier.rs: `voting_power = u64::max_value()`
 $DIR/types/src/validator_verifier.rs: `author_to_public_key_map.insert(
                 validator_signer.author(),
                 ValidatorConsensusInfo::new(validator_signer.public_key(), voting_power),

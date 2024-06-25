@@ -6,10 +6,10 @@ use std::{
 };
 use syn::{parse_file, Fields, File as SynFile, Ident, Item, ItemEnum, ItemStruct, Variant};
 
-fn main() {
+pub fn emit() {
     let out_dir = var("OUT_DIR").unwrap();
 
-    let contents = read_to_string("assets/pt.rs").unwrap();
+    let contents = read_to_string("assets/solang_parser_pt.rs").unwrap();
     let syn_file =
         parse_file(&contents).unwrap_or_else(|_| panic!("Failed to parse: {contents:?}"));
 
@@ -23,9 +23,6 @@ fn main() {
     emit_visitable_impls(&mut file, &syn_file).unwrap();
     emit_visitor_trait(&mut file, &syn_file).unwrap();
     emit_visit_fns(&mut file, &syn_file).unwrap();
-
-    println!("cargo:rerun-if-changed=build.rs");
-    println!("cargo:rerun-if-changed=assets/pt.rs");
 }
 
 fn emit_visitable_impls(file: &mut File, syn_file: &SynFile) -> Result<(), Error> {

@@ -28,15 +28,6 @@ Warning: Failed to determine module path for test `text_with_unknown_tag`: [Fail
 Warning: Failed to determine module path for test `test_write_crate`: [Failed to determine relative path of source file "$DIR/crates_io_index/ser.rs"]
 Warning: Failed to determine module path for test `test_write_crates`: [Failed to determine relative path of source file "$DIR/crates_io_index/ser.rs"]
 $DIR/crates_io_tarball/src/lib.rs: `assert_none!(tarball_info.vcs_info);`
-$DIR/crates_io_tarball/src/lib.rs: `builder.add_file(
-                        &format!("foo-0.0.1/{file}"),
-                        br#"
-[package]
-name = "foo"
-version = "0.0.1"
-repository = "https://github.com/foo/bar"
-"#,
-                    )`
 $DIR/crates_io_tarball/src/lib.rs: `want.sort();`
 $DIR/crates_io_tarball/src/lib.rs: `.add_file(
                 "foo-0.0.1/Cargo.toml",
@@ -130,15 +121,6 @@ repository = "https://github.com/foo/bar"
 "#,
                     )
                 })`
-$DIR/crates_io_tarball/src/lib.rs: `.add_file(
-                        &format!("foo-0.0.1/{file}"),
-                        br#"
-[package]
-name = "foo"
-version = "0.0.1"
-repository = "https://github.com/foo/bar"
-"#,
-                    )`
 $DIR/crates_io_tarball/src/lib.rs: `.build()`
 $DIR/crates_io_tarball/src/lib.rs: `.into_iter()`
 $DIR/crates_io_tarball/src/lib.rs: `.map(|file| PathBuf::from("foo-0.0.1").join(file))`
@@ -263,8 +245,6 @@ $DIR/src/downloads_counter.rs: `pending -= 10;`
 $DIR/src/downloads_counter.rs: `state.assert_downloads_count(conn, v1, 10);`
 $DIR/src/downloads_counter.rs: `pending -= 5;`
 $DIR/src/downloads_counter.rs: `state.assert_downloads_count(conn, v1, 10);`
-$DIR/src/downloads_counter.rs: `map.determine_map(&v1) == map.determine_map(&v2)`
-$DIR/src/downloads_counter.rs: `map.determine_map(&v1) != map.determine_map(&v2)`
 $DIR/src/downloads_counter.rs: `.new_version(conn)`
 $DIR/src/downloads_counter.rs: `.new_version(conn)`
 $DIR/src/downloads_counter.rs: `.new_version(conn)`
@@ -776,7 +756,6 @@ $DIR/src/swirl/runner.rs: `runner.get_single_job(dummy_sender(), move |job, _| {
         });`
 $DIR/src/swirl/runner.rs: `fetch_barrier.0.wait();`
 $DIR/src/swirl/runner.rs: `return_barrier.0.wait();`
-$DIR/src/swirl/runner.rs: `Ok(())`
 $DIR/src/swirl/runner.rs: `fetch_barrier2.0.wait();`
 $DIR/src/swirl/runner.rs: `runner.get_single_job(dummy_sender(), move |job, _| {
             assert_eq!(second_job_id, job.id);
@@ -784,7 +763,6 @@ $DIR/src/swirl/runner.rs: `runner.get_single_job(dummy_sender(), move |job, _| {
             Ok(())
         });`
 $DIR/src/swirl/runner.rs: `return_barrier2.0.wait();`
-$DIR/src/swirl/runner.rs: `Ok(())`
 $DIR/src/swirl/runner.rs: `create_dummy_job(&runner);`
 $DIR/src/swirl/runner.rs: `runner.get_single_job(dummy_sender(), |_, _| Ok(()));`
 $DIR/src/swirl/runner.rs: `runner.wait_for_jobs().unwrap();`
@@ -796,11 +774,6 @@ $DIR/src/swirl/runner.rs: `runner.get_single_job(dummy_sender(), move |_, state|
                 panic!();
             })
         });`
-$DIR/src/swirl/runner.rs: `state.conn.transaction(|_| {
-                barrier.0.wait();
-                // The job should go back into the queue after a panic
-                panic!();
-            })`
 $DIR/src/swirl/runner.rs: `barrier.0.wait();`
 $DIR/src/swirl/runner.rs: `barrier2.0.wait();`
 $DIR/src/swirl/runner.rs: `runner.get_single_job(dummy_sender(), |_, _| panic!());`
@@ -833,11 +806,6 @@ $DIR/src/swirl/runner.rs: `.get_single_job(dummy_sender(), move |_, state| {
                 panic!();
             })
         })`
-$DIR/src/swirl/runner.rs: `.conn.transaction(|_| {
-                barrier.0.wait();
-                // The job should go back into the queue after a panic
-                panic!();
-            })`
 $DIR/src/swirl/runner.rs: `.wait()`
 $DIR/src/swirl/runner.rs: `.connection()`
 $DIR/src/swirl/runner.rs: `.wait()`
@@ -1200,9 +1168,6 @@ $DIR/src/tests/krate/following.rs: `app.db(|conn| {
         CrateBuilder::new("foo_following", user.as_model().id).expect_build(conn);
     });`
 $DIR/src/tests/krate/following.rs: `CrateBuilder::new("foo_following", user.as_model().id).expect_build(conn);`
-$DIR/src/tests/krate/following.rs: `user.get::<F>("/api/v1/crates/foo_following/following")
-            .good()
-            .following`
 $DIR/src/tests/krate/following.rs: `follow();`
 $DIR/src/tests/krate/following.rs: `follow();`
 $DIR/src/tests/krate/following.rs: `unfollow();`
@@ -1213,9 +1178,6 @@ $DIR/src/tests/krate/following.rs: `app.db(|conn| {
     });`
 $DIR/src/tests/krate/following.rs: `CrateBuilder::new(crate_to_follow, api_token.user_id).expect_build(conn);`
 $DIR/src/tests/krate/following.rs: `CrateBuilder::new(crate_not_followed, api_token.user_id).expect_build(conn);`
-$DIR/src/tests/krate/following.rs: `user.get::<F>(&format!("/api/v1/crates/{crate_name}/following"))
-            .good()
-            .following`
 $DIR/src/tests/krate/following.rs: `follow(crate_to_follow);`
 $DIR/src/tests/krate/following.rs: `.with_user()`
 $DIR/src/tests/krate/following.rs: `.db(|conn| {
@@ -1224,7 +1186,6 @@ $DIR/src/tests/krate/following.rs: `.db(|conn| {
 $DIR/src/tests/krate/following.rs: `.as_model()`
 $DIR/src/tests/krate/following.rs: `.expect_build(conn)`
 $DIR/src/tests/krate/following.rs: `.get::<F>("/api/v1/crates/foo_following/following")`
-$DIR/src/tests/krate/following.rs: `.good()`
 $DIR/src/tests/krate/following.rs: `.with_token()`
 $DIR/src/tests/krate/following.rs: `.as_model()`
 $DIR/src/tests/krate/following.rs: `.db(|conn| {
@@ -1234,7 +1195,6 @@ $DIR/src/tests/krate/following.rs: `.db(|conn| {
 $DIR/src/tests/krate/following.rs: `.expect_build(conn)`
 $DIR/src/tests/krate/following.rs: `.expect_build(conn)`
 $DIR/src/tests/krate/following.rs: `.get::<F>(&format!("/api/v1/crates/{crate_name}/following"))`
-$DIR/src/tests/krate/following.rs: `.good()`
 $DIR/src/tests/krate/following.rs: `.search("following=1")`
 $DIR/src/tests/krate/publish/audit_action.rs: `app.db(|conn| assert!(VersionOwnerAction::all(conn).unwrap().is_empty()));`
 $DIR/src/tests/krate/publish/audit_action.rs: `token.publish_crate(crate_to_publish).good();`
@@ -1772,7 +1732,6 @@ $DIR/src/tests/krate/publish/max_size.rs: `assert_ok!(header.set_path("foo-1.1.0
 $DIR/src/tests/krate/publish/max_size.rs: `header.set_size(data.len() as u64);`
 $DIR/src/tests/krate/publish/max_size.rs: `header.set_cksum();`
 $DIR/src/tests/krate/publish/max_size.rs: `assert_ok!(builder.as_mut().append(&header, data));`
-$DIR/src/tests/krate/publish/max_size.rs: `builder.build_with_compression(Compression::none())`
 $DIR/src/tests/krate/publish/max_size.rs: `assert_json_snapshot!(response.into_json(), {
         ".crate.created_at" => "[datetime]",
         ".crate.updated_at" => "[datetime]",
@@ -1783,7 +1742,6 @@ $DIR/src/tests/krate/publish/max_size.rs: `assert_ok!(header.set_path("foo-1.1.0
 $DIR/src/tests/krate/publish/max_size.rs: `header.set_size(data.len() as u64);`
 $DIR/src/tests/krate/publish/max_size.rs: `header.set_cksum();`
 $DIR/src/tests/krate/publish/max_size.rs: `assert_ok!(builder.as_mut().append(&header, data));`
-$DIR/src/tests/krate/publish/max_size.rs: `builder.build_with_compression(Compression::none())`
 $DIR/src/tests/krate/publish/max_size.rs: `assert_json_snapshot!(response.into_json());`
 $DIR/src/tests/krate/publish/max_size.rs: `config.max_upload_size = 3000;`
 $DIR/src/tests/krate/publish/max_size.rs: `config.max_unpack_size = 2000;`
@@ -1812,7 +1770,6 @@ $DIR/src/tests/krate/publish/max_size.rs: `.set_cksum()`
 $DIR/src/tests/krate/publish/max_size.rs: `.set_size(data.len() as u64)`
 $DIR/src/tests/krate/publish/max_size.rs: `.len()`
 $DIR/src/tests/krate/publish/max_size.rs: `.set_cksum()`
-$DIR/src/tests/krate/publish/max_size.rs: `.build_with_compression(Compression::none())`
 $DIR/src/tests/krate/publish/max_size.rs: `.build()`
 $DIR/src/tests/krate/publish/max_size.rs: `.publish_crate(body)`
 $DIR/src/tests/krate/publish/max_size.rs: `.with_config(|config| {
@@ -1823,7 +1780,6 @@ $DIR/src/tests/krate/publish/max_size.rs: `.with_token()`
 $DIR/src/tests/krate/publish/max_size.rs: `.set_size(data.len() as u64)`
 $DIR/src/tests/krate/publish/max_size.rs: `.len()`
 $DIR/src/tests/krate/publish/max_size.rs: `.set_cksum()`
-$DIR/src/tests/krate/publish/max_size.rs: `.build_with_compression(Compression::none())`
 $DIR/src/tests/krate/publish/max_size.rs: `.build()`
 $DIR/src/tests/krate/publish/max_size.rs: `.publish_crate(body)`
 $DIR/src/tests/krate/publish/max_size.rs: `.with_config(|config| {
@@ -1867,15 +1823,6 @@ $DIR/src/tests/krate/publish/rate_limit.rs: `app.db(|conn| {
             .execute(conn)
             .expect("Failed to set fake ratelimit")
     });`
-$DIR/src/tests/krate/publish/rate_limit.rs: `diesel::insert_into(publish_limit_buckets::table)
-            .values((
-                publish_limit_buckets::user_id.eq(token.as_model().user_id),
-                publish_limit_buckets::action.eq(LimitedAction::PublishNew),
-                publish_limit_buckets::tokens.eq(0),
-                publish_limit_buckets::last_refill.eq(far_future),
-            ))
-            .execute(conn)
-            .expect("Failed to set fake ratelimit")`
 $DIR/src/tests/krate/publish/rate_limit.rs: `token
         .publish_crate(crate_to_publish)
         .assert_rate_limited(LimitedAction::PublishNew);`
@@ -1892,15 +1839,6 @@ $DIR/src/tests/krate/publish/rate_limit.rs: `app.db(|conn| {
             .execute(conn)
             .expect("Failed to set fake ratelimit")
     });`
-$DIR/src/tests/krate/publish/rate_limit.rs: `diesel::insert_into(publish_limit_buckets::table)
-            .values((
-                publish_limit_buckets::user_id.eq(token.as_model().user_id),
-                publish_limit_buckets::action.eq(LimitedAction::PublishNew),
-                publish_limit_buckets::tokens.eq(0),
-                publish_limit_buckets::last_refill.eq(just_now),
-            ))
-            .execute(conn)
-            .expect("Failed to set fake ratelimit")`
 $DIR/src/tests/krate/publish/rate_limit.rs: `token.publish_crate(crate_to_publish).good();`
 $DIR/src/tests/krate/publish/rate_limit.rs: `app.db(|conn| {
         // Add an override so our user gets *2* new tokens (expires, y'know, sometime)
@@ -1914,15 +1852,6 @@ $DIR/src/tests/krate/publish/rate_limit.rs: `app.db(|conn| {
             .execute(conn)
             .expect("Failed to add ratelimit override")
     });`
-$DIR/src/tests/krate/publish/rate_limit.rs: `diesel::insert_into(publish_rate_overrides::table)
-            .values((
-                publish_rate_overrides::user_id.eq(token.as_model().user_id),
-                publish_rate_overrides::burst.eq(2),
-                publish_rate_overrides::expires_at.eq(None::<NaiveDateTime>),
-                publish_rate_overrides::action.eq(LimitedAction::PublishNew),
-            ))
-            .execute(conn)
-            .expect("Failed to add ratelimit override")`
 $DIR/src/tests/krate/publish/rate_limit.rs: `token.publish_crate(crate_to_publish).good();`
 $DIR/src/tests/krate/publish/rate_limit.rs: `token.publish_crate(crate_to_publish).good();`
 $DIR/src/tests/krate/publish/rate_limit.rs: `token
@@ -1941,15 +1870,6 @@ $DIR/src/tests/krate/publish/rate_limit.rs: `app.db(|conn| {
             .execute(conn)
             .expect("Failed to add ratelimit override")
     });`
-$DIR/src/tests/krate/publish/rate_limit.rs: `diesel::insert_into(publish_rate_overrides::table)
-            .values((
-                publish_rate_overrides::user_id.eq(token.as_model().user_id),
-                publish_rate_overrides::burst.eq(2),
-                publish_rate_overrides::expires_at.eq(just_now),
-                publish_rate_overrides::action.eq(LimitedAction::PublishNew),
-            ))
-            .execute(conn)
-            .expect("Failed to add ratelimit override")`
 $DIR/src/tests/krate/publish/rate_limit.rs: `token.publish_crate(crate_to_publish).good();`
 $DIR/src/tests/krate/publish/rate_limit.rs: `token
         .publish_crate(crate_to_publish)
@@ -2239,7 +2159,6 @@ $DIR/src/tests/krate/publish/tarball.rs: `header.set_entry_type(tar::EntryType::
 $DIR/src/tests/krate/publish/tarball.rs: `assert_ok!(header.set_link_name("foo-1.1.0/another"));`
 $DIR/src/tests/krate/publish/tarball.rs: `header.set_cksum();`
 $DIR/src/tests/krate/publish/tarball.rs: `assert_ok!(builder.as_mut().append(&header, &[][..]));`
-$DIR/src/tests/krate/publish/tarball.rs: `builder.build()`
 $DIR/src/tests/krate/publish/tarball.rs: `assert_json_snapshot!(response.into_json());`
 $DIR/src/tests/krate/publish/tarball.rs: `assert_json_snapshot!(response.into_json());`
 $DIR/src/tests/krate/publish/tarball.rs: `assert_json_snapshot!(response.into_json());`
@@ -2254,7 +2173,6 @@ $DIR/src/tests/krate/publish/tarball.rs: `.with_token()`
 $DIR/src/tests/krate/publish/tarball.rs: `.set_size(0)`
 $DIR/src/tests/krate/publish/tarball.rs: `.set_entry_type(tar::EntryType::hard_link())`
 $DIR/src/tests/krate/publish/tarball.rs: `.set_cksum()`
-$DIR/src/tests/krate/publish/tarball.rs: `.build()`
 $DIR/src/tests/krate/publish/tarball.rs: `.build()`
 $DIR/src/tests/krate/publish/tarball.rs: `.publish_crate(body)`
 $DIR/src/tests/krate/publish/tarball.rs: `.with_user()`
@@ -2421,15 +2339,6 @@ $DIR/src/tests/krate/yanking.rs: `app.db(|conn| {
             .execute(conn)
             .expect("Failed to set fake ratelimit")
     });`
-$DIR/src/tests/krate/yanking.rs: `diesel::insert_into(publish_limit_buckets::table)
-            .values((
-                publish_limit_buckets::user_id.eq(token.as_model().user_id),
-                publish_limit_buckets::action.eq(LimitedAction::YankUnyank),
-                publish_limit_buckets::tokens.eq(0),
-                publish_limit_buckets::last_refill.eq(far_future),
-            ))
-            .execute(conn)
-            .expect("Failed to set fake ratelimit")`
 $DIR/src/tests/krate/yanking.rs: `token.publish_crate(crate_to_publish).good();`
 $DIR/src/tests/krate/yanking.rs: `token
         .yank("yankable", "1.0.0")
@@ -2447,15 +2356,6 @@ $DIR/src/tests/krate/yanking.rs: `app.db(|conn| {
             .execute(conn)
             .expect("Failed to set fake ratelimit")
     });`
-$DIR/src/tests/krate/yanking.rs: `diesel::insert_into(publish_limit_buckets::table)
-            .values((
-                publish_limit_buckets::user_id.eq(token.as_model().user_id),
-                publish_limit_buckets::action.eq(LimitedAction::YankUnyank),
-                publish_limit_buckets::tokens.eq(0),
-                publish_limit_buckets::last_refill.eq(just_now),
-            ))
-            .execute(conn)
-            .expect("Failed to set fake ratelimit")`
 $DIR/src/tests/krate/yanking.rs: `token.publish_crate(crate_to_publish).good();`
 $DIR/src/tests/krate/yanking.rs: `check_yanked(&app, false);`
 $DIR/src/tests/krate/yanking.rs: `token.yank("yankable", "1.0.0").good();`
@@ -2642,9 +2542,7 @@ $DIR/src/tests/owners.rs: `app.db(|conn| CrateBuilder::new("crate_name", owner.a
 $DIR/src/tests/owners.rs: `app.db_new_user("invited_user");`
 $DIR/src/tests/owners.rs: `expire_invitation(&app, krate.id);`
 $DIR/src/tests/owners.rs: `add_team_to_crate(&t, &krate, user, conn).unwrap();`
-$DIR/src/tests/owners.rs: `(krate, t)`
 $DIR/src/tests/owners.rs: `add_team_to_crate(&t, &krate, user, conn).unwrap();`
-$DIR/src/tests/owners.rs: `t`
 $DIR/src/tests/owners.rs: `app.db(|conn| {
         let krate = CrateBuilder::new("foo_my_packages", user.id).expect_build(conn);
         krate.owner_remove(conn, &user.gh_login).unwrap();
@@ -2696,24 +2594,12 @@ $DIR/src/tests/owners.rs: `app.db(|conn| {
     });`
 $DIR/src/tests/owners.rs: `CrateBuilder::new(krate_name, owner.id).expect_build(conn);`
 $DIR/src/tests/owners.rs: `owner_token.add_user_owner(krate_name, "user_bar");`
-$DIR/src/tests/owners.rs: `(
-            CrateBuilder::new("crate_1", owner.as_model().id).expect_build(conn),
-            CrateBuilder::new("crate_2", owner.as_model().id).expect_build(conn),
-        )`
 $DIR/src/tests/owners.rs: `token.add_user_owner("crate_1", "user_1");`
 $DIR/src/tests/owners.rs: `token.add_user_owner("crate_1", "user_2");`
 $DIR/src/tests/owners.rs: `token.add_user_owner("crate_2", "user_1");`
-$DIR/src/tests/owners.rs: `(
-            CrateBuilder::new("crate_1", owner.as_model().id).expect_build(conn),
-            CrateBuilder::new("crate_2", owner.as_model().id).expect_build(conn),
-        )`
 $DIR/src/tests/owners.rs: `token.add_user_owner("crate_1", "invited_user");`
 $DIR/src/tests/owners.rs: `token.add_user_owner("crate_2", "invited_user");`
 $DIR/src/tests/owners.rs: `expire_invitation(&app, crate1.id);`
-$DIR/src/tests/owners.rs: `(
-            CrateBuilder::new("crate_1", owner.as_model().id).expect_build(conn),
-            CrateBuilder::new("crate_2", owner.as_model().id).expect_build(conn),
-        )`
 $DIR/src/tests/owners.rs: `token.add_user_owner("crate_1", "invited_user");`
 $DIR/src/tests/owners.rs: `token.add_user_owner("crate_2", "invited_user");`
 $DIR/src/tests/owners.rs: `app.db(|conn| {
@@ -3125,7 +3011,6 @@ $DIR/src/tests/routes/categories/get.rs: `assert_ok!(new_category("cat1", "cat1"
 $DIR/src/tests/routes/categories/get.rs: `assert_ok!(
             new_category("Category 2", "category-2", "Category 2 crates").create_or_update(conn)
         );`
-$DIR/src/tests/routes/categories/get.rs: `CrateBuilder::new("foo_crate", user.id).expect_build(conn)`
 $DIR/src/tests/routes/categories/get.rs: `app.db(|conn| Category::update_crate(conn, &krate, &[]).unwrap());`
 $DIR/src/tests/routes/categories/get.rs: `app.db(|conn| Category::update_crate(conn, &krate, &["cat1"]).unwrap());`
 $DIR/src/tests/routes/categories/get.rs: `app.db(|conn| Category::update_crate(conn, &krate, &["category-2"]).unwrap());`
@@ -3165,7 +3050,6 @@ $DIR/src/tests/routes/categories/get.rs: `.db(|conn| {
 
         CrateBuilder::new("foo_crate", user.id).expect_build(conn)
     })`
-$DIR/src/tests/routes/categories/get.rs: `.expect_build(conn)`
 $DIR/src/tests/routes/categories/get.rs: `.db(|conn| Category::update_crate(conn, &krate, &[]).unwrap())`
 $DIR/src/tests/routes/categories/get.rs: `.db(|conn| Category::update_crate(conn, &krate, &["cat1"]).unwrap())`
 $DIR/src/tests/routes/categories/get.rs: `.db(|conn| Category::update_crate(conn, &krate, &["category-2"]).unwrap())`
@@ -3287,7 +3171,6 @@ $DIR/src/tests/routes/crates/following.rs: `.db(|conn| {
     })`
 $DIR/src/tests/routes/crates/following.rs: `.expect_build(conn)`
 $DIR/src/tests/routes/crates/following.rs: `.get(&format!("/api/v1/crates/{a_crate}/following"))`
-$DIR/src/tests/routes/crates/list.rs: `CrateBuilder::new("fooindex", u.id).expect_build(conn)`
 $DIR/src/tests/routes/crates/list.rs: `CrateBuilder::new("foo", user.id)
             .keyword("kw3")
             .expect_build(conn);`
@@ -3295,7 +3178,6 @@ $DIR/src/tests/routes/crates/list.rs: `CrateBuilder::new("two-keywords", user.id
             .keyword("kw1")
             .keyword("kw3")
             .expect_build(conn);`
-$DIR/src/tests/routes/crates/list.rs: `(krate, krate2)`
 $DIR/src/tests/routes/crates/list.rs: `app.db(|conn| {
         new_category("Category 1", "cat1", "Category 1 crates")
             .create_or_update(conn)
@@ -3547,7 +3429,6 @@ $DIR/src/tests/routes/crates/list.rs: `CrateBuilder::new("foo", user.id).expect_
 $DIR/src/tests/routes/crates/list.rs: `CrateBuilder::new("bar", user.id).expect_build(conn);`
 $DIR/src/tests/routes/crates/list.rs: `CrateBuilder::new("baz", user.id).expect_build(conn);`
 $DIR/src/tests/routes/crates/list.rs: `CrateBuilder::new("other", user.id).expect_build(conn);`
-$DIR/src/tests/routes/crates/list.rs: `vec![one, two, three, four]`
 $DIR/src/tests/routes/crates/list.rs: `app.db(|conn| {
         CrateBuilder::new("unyanked", user.id)
             .version(VersionBuilder::new("1.0.0"))
@@ -3652,7 +3533,6 @@ $DIR/src/tests/routes/crates/list.rs: `CrateBuilder::new("green_ball", user.id)
             .downloads(0)
             .recent_downloads(0)
             .expect_build(conn);`
-$DIR/src/tests/routes/crates/list.rs: `(green_crate, potato_crate)`
 $DIR/src/tests/routes/crates/list.rs: `app.db(|conn| {
         new_category("Animal", "animal", "animal crates")
             .create_or_update(conn)
@@ -3725,7 +3605,6 @@ $DIR/src/tests/routes/crates/list.rs: `.db(|conn| {
     })`
 $DIR/src/tests/routes/crates/list.rs: `.create_or_update(None, &app.as_inner().emails, conn)`
 $DIR/src/tests/routes/crates/list.rs: `.as_inner()`
-$DIR/src/tests/routes/crates/list.rs: `.expect_build(conn)`
 $DIR/src/tests/routes/crates/list.rs: `.search("")`
 $DIR/src/tests/routes/crates/list.rs: `.with_user()`
 $DIR/src/tests/routes/crates/list.rs: `.as_model()`
@@ -4369,14 +4248,12 @@ $DIR/src/tests/routes/crates/read.rs: `update(versions::table)
             .set(versions::published_by.eq(none))
             .execute(conn)
             .unwrap();`
-$DIR/src/tests/routes/crates/read.rs: `krate`
 $DIR/src/tests/routes/crates/read.rs: `assert_none!(&versions[0].published_by);`
 $DIR/src/tests/routes/crates/read.rs: `update(versions::table)
             .filter(versions::num.eq("1.0.0"))
             .set(versions::published_by.eq(none))
             .execute(conn)
             .unwrap();`
-$DIR/src/tests/routes/crates/read.rs: `krate`
 $DIR/src/tests/routes/crates/read.rs: `user.publish_crate(crate_to_publish).good();`
 $DIR/src/tests/routes/crates/read.rs: `user.publish_crate(crate_to_publish).good();`
 $DIR/src/tests/routes/crates/read.rs: `app.db(|conn| {
@@ -4384,9 +4261,6 @@ $DIR/src/tests/routes/crates/read.rs: `app.db(|conn| {
             .documentation("http://rust-ci.org/foo/foo_bad_doc_url/doc/foo_bad_doc_url/")
             .expect_build(conn)
     });`
-$DIR/src/tests/routes/crates/read.rs: `CrateBuilder::new("foo_bad_doc_url", user.id)
-            .documentation("http://rust-ci.org/foo/foo_bad_doc_url/doc/foo_bad_doc_url/")
-            .expect_build(conn)`
 $DIR/src/tests/routes/crates/read.rs: `.with_user()`
 $DIR/src/tests/routes/crates/read.rs: `.as_model()`
 $DIR/src/tests/routes/crates/read.rs: `.db(|conn| {
@@ -4494,7 +4368,6 @@ $DIR/src/tests/routes/crates/read.rs: `.db(|conn| {
             .expect_build(conn)
     })`
 $DIR/src/tests/routes/crates/read.rs: `.documentation("http://rust-ci.org/foo/foo_bad_doc_url/doc/foo_bad_doc_url/")`
-$DIR/src/tests/routes/crates/read.rs: `.expect_build(conn)`
 $DIR/src/tests/routes/crates/read.rs: `.show_crate("foo_bad_doc_url")`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `app.db(|conn| {
         let c1 = CrateBuilder::new("c1", user.id).expect_build(conn);
@@ -4985,16 +4858,10 @@ $DIR/src/tests/routes/crates/versions/download.rs: `.expect_build(conn)`
 $DIR/src/tests/routes/crates/versions/download.rs: `.get::<()>("/api/v1/crates/foo/1.0.0+bar/download")`
 $DIR/src/tests/routes/crates/versions/download.rs: `.assert_redirect_ends_with("/crates/foo/foo-1.0.0%2Bbar.crate")`
 $DIR/src/tests/routes/crates/versions/download.rs: `.get::<()>("/api/v1/crates/foo/1.0.0+bar/readme")`
-$DIR/src/tests/routes/crates/versions/read.rs: `VersionBuilder::new("2.0.0")
-            .size(1234)
-            .checksum("c241cd77c3723ccf1aa453f169ee60c0a888344da504bee0142adb859092acb4")
-            .rust_version("1.64")
-            .expect_build(krate.id, user.id, conn)`
 $DIR/src/tests/routes/crates/versions/read.rs: `update(versions::table)
             .set(versions::published_by.eq(none))
             .execute(conn)
             .unwrap();`
-$DIR/src/tests/routes/crates/versions/read.rs: `version`
 $DIR/src/tests/routes/crates/versions/read.rs: `.with_user()`
 $DIR/src/tests/routes/crates/versions/read.rs: `.as_model()`
 $DIR/src/tests/routes/crates/versions/read.rs: `.db(|conn| {
@@ -5009,7 +4876,6 @@ $DIR/src/tests/routes/crates/versions/read.rs: `.expect_build(conn)`
 $DIR/src/tests/routes/crates/versions/read.rs: `.size(1234)`
 $DIR/src/tests/routes/crates/versions/read.rs: `.checksum("c241cd77c3723ccf1aa453f169ee60c0a888344da504bee0142adb859092acb4")`
 $DIR/src/tests/routes/crates/versions/read.rs: `.rust_version("1.64")`
-$DIR/src/tests/routes/crates/versions/read.rs: `.expect_build(krate.id, user.id, conn)`
 $DIR/src/tests/routes/crates/versions/read.rs: `.get(url)`
 $DIR/src/tests/routes/crates/versions/read.rs: `.good()`
 $DIR/src/tests/routes/crates/versions/read.rs: `.with_user()`
@@ -5152,9 +5018,7 @@ $DIR/src/tests/routes/keywords/read.rs: `app.db(|conn| {
         Keyword::find_or_create_all(conn, &["UPPER"]).unwrap();
     });`
 $DIR/src/tests/routes/keywords/read.rs: `Keyword::find_or_create_all(conn, &["UPPER"]).unwrap();`
-$DIR/src/tests/routes/keywords/read.rs: `json.keyword.crates_cnt as usize`
 $DIR/src/tests/routes/keywords/read.rs: `Keyword::find_or_create_all(conn, &["kw1", "kw2"]).unwrap();`
-$DIR/src/tests/routes/keywords/read.rs: `CrateBuilder::new("fookey", user.id).expect_build(conn)`
 $DIR/src/tests/routes/keywords/read.rs: `app.db(|conn| {
         Keyword::update_crate(conn, &krate, &[]).unwrap();
     });`
@@ -5203,7 +5067,6 @@ $DIR/src/tests/routes/keywords/read.rs: `.db(|conn| {
         Keyword::find_or_create_all(conn, &["kw1", "kw2"]).unwrap();
         CrateBuilder::new("fookey", user.id).expect_build(conn)
     })`
-$DIR/src/tests/routes/keywords/read.rs: `.expect_build(conn)`
 $DIR/src/tests/routes/keywords/read.rs: `.db(|conn| {
         Keyword::update_crate(conn, &krate, &[]).unwrap();
     })`
@@ -5222,10 +5085,6 @@ $DIR/src/tests/routes/keywords/read.rs: `.db(|conn| {
 $DIR/src/tests/routes/keywords/read.rs: `.db(|conn| {
         Keyword::update_crate(conn, &krate, &[]).unwrap();
     })`
-$DIR/src/tests/routes/me/email_notifications.rs: `vec![
-            CrateBuilder::new("test_package", user.as_model().id).expect_build(conn),
-            CrateBuilder::new("another_package", user.as_model().id).expect_build(conn),
-        ]`
 $DIR/src/tests/routes/me/email_notifications.rs: `user.update_email_notifications(vec![EmailNotificationsUpdate {
         id: a_id,
         email_notifications: false,
@@ -5244,15 +5103,10 @@ $DIR/src/tests/routes/me/email_notifications.rs: `user.update_email_notification
             email_notifications: true,
         },
     ]);`
-$DIR/src/tests/routes/me/email_notifications.rs: `CrateBuilder::new("test_package", u.id).expect_build(conn)`
 $DIR/src/tests/routes/me/email_notifications.rs: `user.update_email_notifications(vec![EmailNotificationsUpdate {
         id: not_my_crate.id,
         email_notifications: false,
     }]);`
-$DIR/src/tests/routes/me/email_notifications.rs: `crate_owners::table
-                .select(crate_owners::email_notifications)
-                .filter(crate_owners::crate_id.eq(not_my_crate.id))
-                .first(conn)`
 $DIR/src/tests/routes/me/email_notifications.rs: `.with_user()`
 $DIR/src/tests/routes/me/email_notifications.rs: `.db(|conn| {
         vec![
@@ -5292,7 +5146,6 @@ $DIR/src/tests/routes/me/email_notifications.rs: `.db(|conn| {
     })`
 $DIR/src/tests/routes/me/email_notifications.rs: `.create_or_update(None, &app.as_inner().emails, conn)`
 $DIR/src/tests/routes/me/email_notifications.rs: `.as_inner()`
-$DIR/src/tests/routes/me/email_notifications.rs: `.expect_build(conn)`
 $DIR/src/tests/routes/me/email_notifications.rs: `.update_email_notifications(vec![EmailNotificationsUpdate {
         id: not_my_crate.id,
         email_notifications: false,
@@ -5306,7 +5159,6 @@ $DIR/src/tests/routes/me/email_notifications.rs: `.db(|conn| {
 $DIR/src/tests/routes/me/email_notifications.rs: `.select(crate_owners::email_notifications)`
 $DIR/src/tests/routes/me/email_notifications.rs: `.filter(crate_owners::crate_id.eq(not_my_crate.id))`
 $DIR/src/tests/routes/me/email_notifications.rs: `.eq(not_my_crate.id)`
-$DIR/src/tests/routes/me/email_notifications.rs: `.first(conn)`
 $DIR/src/tests/routes/me/get.rs: `anon.get(url).assert_forbidden();`
 $DIR/src/tests/routes/me/get.rs: `app.db(|conn| {
         CrateBuilder::new("foo_my_packages", user.as_model().id).expect_build(conn);
@@ -5351,27 +5203,18 @@ $DIR/src/tests/routes/me/tokens/create.rs: `assert_json_snapshot!(response.into_
         ".api_token.last_used_at" => "[datetime]",
         ".api_token.token" => insta::api_token_redaction(),
     });`
-$DIR/src/tests/routes/me/tokens/create.rs: `assert_ok!(ApiToken::belonging_to(user.as_model())
-            .select(ApiToken::as_select())
-            .load(conn))`
 $DIR/src/tests/routes/me/tokens/create.rs: `assert_json_snapshot!(response.into_json(), {
         ".api_token.id" => insta::any_id_redaction(),
         ".api_token.created_at" => "[datetime]",
         ".api_token.last_used_at" => "[datetime]",
         ".api_token.token" => insta::api_token_redaction(),
     });`
-$DIR/src/tests/routes/me/tokens/create.rs: `assert_ok!(ApiToken::belonging_to(user.as_model())
-            .select(ApiToken::as_select())
-            .load(conn))`
 $DIR/src/tests/routes/me/tokens/create.rs: `assert_json_snapshot!(response.into_json(), {
         ".api_token.id" => insta::any_id_redaction(),
         ".api_token.created_at" => "[datetime]",
         ".api_token.last_used_at" => "[datetime]",
         ".api_token.token" => insta::api_token_redaction(),
     });`
-$DIR/src/tests/routes/me/tokens/create.rs: `assert_ok!(ApiToken::belonging_to(user.as_model())
-            .select(ApiToken::as_select())
-            .load(conn))`
 $DIR/src/tests/routes/me/tokens/create.rs: `.empty()`
 $DIR/src/tests/routes/me/tokens/create.rs: `.put("/api/v1/me/tokens", NEW_BAR)`
 $DIR/src/tests/routes/me/tokens/create.rs: `.with_user()`
@@ -5522,28 +5365,6 @@ $DIR/src/tests/routes/me/tokens/list.rs: `app.db(|conn| {
             )),
         ]
     });`
-$DIR/src/tests/routes/me/tokens/list.rs: `vec![
-            assert_ok!(ApiToken::insert(conn, id, "bar")),
-            assert_ok!(ApiToken::insert_with_scopes(
-                conn,
-                id,
-                "baz",
-                Some(vec![
-                    CrateScope::try_from("serde").unwrap(),
-                    CrateScope::try_from("serde-*").unwrap()
-                ]),
-                Some(vec![EndpointScope::PublishUpdate]),
-                None
-            )),
-            assert_ok!(ApiToken::insert_with_scopes(
-                conn,
-                id,
-                "qux",
-                None,
-                None,
-                Some((Utc::now() - Duration::days(1)).naive_utc()),
-            )),
-        ]`
 $DIR/src/tests/routes/me/tokens/list.rs: `app.db(|conn| {
         vec![
             assert_ok!(ApiToken::insert(conn, id, "bar")),
@@ -5568,35 +5389,9 @@ $DIR/src/tests/routes/me/tokens/list.rs: `app.db(|conn| {
             )),
         ]
     });`
-$DIR/src/tests/routes/me/tokens/list.rs: `vec![
-            assert_ok!(ApiToken::insert(conn, id, "bar")),
-            assert_ok!(ApiToken::insert_with_scopes(
-                conn,
-                id,
-                "ancient",
-                Some(vec![
-                    CrateScope::try_from("serde").unwrap(),
-                    CrateScope::try_from("serde-*").unwrap()
-                ]),
-                Some(vec![EndpointScope::PublishUpdate]),
-                Some((Utc::now() - Duration::days(31)).naive_utc()),
-            )),
-            assert_ok!(ApiToken::insert_with_scopes(
-                conn,
-                id,
-                "recent",
-                None,
-                None,
-                Some((Utc::now() - Duration::days(1)).naive_utc()),
-            )),
-        ]`
 $DIR/src/tests/routes/me/tokens/list.rs: `assert_response_tokens_contain_name(response_tokens, "bar");`
 $DIR/src/tests/routes/me/tokens/list.rs: `assert_response_tokens_contain_name(response_tokens, "bar");`
 $DIR/src/tests/routes/me/tokens/list.rs: `assert_response_tokens_contain_name(response_tokens, "ancient");`
-$DIR/src/tests/routes/me/tokens/list.rs: `vec![
-            assert_ok!(ApiToken::insert(conn, id, "bar")),
-            assert_ok!(ApiToken::insert(conn, id, "baz")),
-        ]`
 $DIR/src/tests/routes/me/tokens/list.rs: `.empty()`
 $DIR/src/tests/routes/me/tokens/list.rs: `.get("/api/v1/me/tokens")`
 $DIR/src/tests/routes/me/tokens/list.rs: `.with_token()`
@@ -6225,7 +6020,6 @@ $DIR/src/tests/routes/versions/list.rs: `CrateBuilder::new("foo_vers_index", use
             .version(VersionBuilder::new("2.0.0").license(Some("MIT")))
             .version(VersionBuilder::new("2.0.1").license(Some("MIT/Apache-2.0")))
             .expect_build(conn);`
-$DIR/src/tests/routes/versions/list.rs: `(ids[0], ids[1])`
 $DIR/src/tests/routes/versions/list.rs: `.with_user()`
 $DIR/src/tests/routes/versions/list.rs: `.as_model()`
 $DIR/src/tests/routes/versions/list.rs: `.get(url)`
@@ -6247,9 +6041,6 @@ $DIR/src/tests/routes/versions/list.rs: `.select(versions::id)`
 $DIR/src/tests/routes/versions/list.rs: `.load(conn)`
 $DIR/src/tests/routes/versions/list.rs: `.get_with_query(url, &query)`
 $DIR/src/tests/routes/versions/list.rs: `.good()`
-$DIR/src/tests/routes/versions/read.rs: `VersionBuilder::new("2.0.0")
-            .size(1234)
-            .expect_build(krate.id, user.id, conn)`
 $DIR/src/tests/routes/versions/read.rs: `.with_user()`
 $DIR/src/tests/routes/versions/read.rs: `.as_model()`
 $DIR/src/tests/routes/versions/read.rs: `.db(|conn| {
@@ -6260,7 +6051,6 @@ $DIR/src/tests/routes/versions/read.rs: `.db(|conn| {
     })`
 $DIR/src/tests/routes/versions/read.rs: `.expect_build(conn)`
 $DIR/src/tests/routes/versions/read.rs: `.size(1234)`
-$DIR/src/tests/routes/versions/read.rs: `.expect_build(krate.id, user.id, conn)`
 $DIR/src/tests/routes/versions/read.rs: `.get(&url)`
 $DIR/src/tests/routes/versions/read.rs: `.good()`
 $DIR/src/tests/schema_details.rs: `.definition.contains("ON DELETE CASCADE")`
@@ -6453,13 +6243,6 @@ $DIR/src/tests/team.rs: `app.db(|conn| {
             .expect("couldn't insert nonexistent team")
     });`
 $DIR/src/tests/team.rs: `CrateBuilder::new("foo_remove_nonexistent", user.as_model().id).expect_build(conn);`
-$DIR/src/tests/team.rs: `insert_into(teams::table)
-            .values((
-                teams::login.eq("github:test-org:this-does-not-exist"),
-                teams::github_id.eq(5678),
-            ))
-            .execute(conn)
-            .expect("couldn't insert nonexistent team")`
 $DIR/src/tests/team.rs: `app.db(|conn| {
         CrateBuilder::new("foo_not_owned", user_on_both_teams.as_model().id).expect_build(conn);
     });`
@@ -6496,10 +6279,8 @@ $DIR/src/tests/team.rs: `token_on_both_teams
         .add_named_owner("foo_add_owner", "github:test-org:all")
         .good();`
 $DIR/src/tests/team.rs: `add_team_to_crate(&t, &krate, user, conn).unwrap();`
-$DIR/src/tests/team.rs: `t`
 $DIR/src/tests/team.rs: `add_team_to_crate(&t, &krate, user, conn).unwrap();`
 $DIR/src/tests/team.rs: `krate.owner_remove(conn, &t.login).unwrap();`
-$DIR/src/tests/team.rs: `t`
 $DIR/src/tests/team.rs: `.with_token()`
 $DIR/src/tests/team.rs: `.db(|conn| {
         CrateBuilder::new("foo_not_github", user.as_model().id).expect_build(conn);
@@ -6760,9 +6541,6 @@ $DIR/src/tests/token.rs: `anon.get(url).assert_forbidden();`
 $DIR/src/tests/token.rs: `user.get::<EncodableMe>(url).good();`
 $DIR/src/tests/token.rs: `assert_none!(token.as_model().last_used_at);`
 $DIR/src/tests/token.rs: `token.search("following=1");`
-$DIR/src/tests/token.rs: `assert_ok!(ApiToken::belonging_to(user.as_model())
-            .select(ApiToken::as_select())
-            .first(conn))`
 $DIR/src/tests/token.rs: `request.header(header::AUTHORIZATION, "oldtoken");`
 $DIR/src/tests/token.rs: `.with_token()`
 $DIR/src/tests/token.rs: `.get(url)`
@@ -6784,9 +6562,6 @@ $DIR/src/tests/unhealthy_database.rs: `app.db(|conn| {
             .version("1.0.0")
             .expect_build(conn)
     });`
-$DIR/src/tests/unhealthy_database.rs: `CrateBuilder::new("crate_name", owner.as_model().user_id)
-            .version("1.0.0")
-            .expect_build(conn)`
 $DIR/src/tests/unhealthy_database.rs: `app.primary_db_chaosproxy().break_networking();`
 $DIR/src/tests/unhealthy_database.rs: `assert_unconditional_redirects(&anon);`
 $DIR/src/tests/unhealthy_database.rs: `app.primary_db_chaosproxy().restore_networking();`
@@ -6831,7 +6606,6 @@ $DIR/src/tests/unhealthy_database.rs: `.db(|conn| {
     })`
 $DIR/src/tests/unhealthy_database.rs: `.as_model()`
 $DIR/src/tests/unhealthy_database.rs: `.version("1.0.0")`
-$DIR/src/tests/unhealthy_database.rs: `.expect_build(conn)`
 $DIR/src/tests/unhealthy_database.rs: `.primary_db_chaosproxy()`
 $DIR/src/tests/unhealthy_database.rs: `.break_networking()`
 $DIR/src/tests/unhealthy_database.rs: `.primary_db_chaosproxy()`
@@ -6901,21 +6675,8 @@ $DIR/src/tests/user.rs: `assert_ok!(
                 conn
             )
         );`
-$DIR/src/tests/user.rs: `assert_ok!(User::find_by_api_token(conn, token.expose_secret()))`
-$DIR/src/tests/user.rs: `MockCookieUser::new(&app, u)`
 $DIR/src/tests/user.rs: `user_without_github_email.update_email("apricot@apricots.apricot");`
-$DIR/src/tests/user.rs: `MockCookieUser::new(&app, u)`
-$DIR/src/tests/user.rs: `Email::belonging_to(model)
-            .select(emails::email)
-            .first(conn)
-            .unwrap()`
-$DIR/src/tests/user.rs: `MockCookieUser::new(&app, u)`
 $DIR/src/tests/user.rs: `user.update_email("mango@mangos.mango");`
-$DIR/src/tests/user.rs: `MockCookieUser::new(&app, u)`
-$DIR/src/tests/user.rs: `Email::belonging_to(user_model)
-            .select(emails::token)
-            .first(conn)
-            .unwrap()`
 $DIR/src/tests/user.rs: `user.confirm_email(&email_token);`
 $DIR/src/tests/user.rs: `update(Email::belonging_to(&u))
             // Users created before we added verification will have
@@ -6923,7 +6684,6 @@ $DIR/src/tests/user.rs: `update(Email::belonging_to(&u))
             .set(emails::token_generated_at.eq(None::<NaiveDateTime>))
             .execute(conn)
             .unwrap();`
-$DIR/src/tests/user.rs: `MockCookieUser::new(&app, u)`
 $DIR/src/tests/user.rs: `.with_token()`
 $DIR/src/tests/user.rs: `.as_model()`
 $DIR/src/tests/user.rs: `.plaintext()`
@@ -7150,10 +6910,6 @@ $DIR/src/worker/dump_db/configuration.rs: `.insert("c".to_owned(), table_config_
 $DIR/src/worker/dump_db/configuration.rs: `.insert("d".to_owned(), table_config_with_deps(&[]))`
 $DIR/src/worker/dump_db/configuration.rs: `.insert("a".to_owned(), table_config_with_deps(&["b"]))`
 $DIR/src/worker/dump_db/configuration.rs: `.insert("b".to_owned(), table_config_with_deps(&["a"]))`
-$DIR/src/worker/dump_db/gen_scripts.rs: `config.columns.keys().map(|column| Column {
-                    table_name: table.clone(),
-                    column_name: column.clone(),
-                })`
 $DIR/src/worker/dump_db/gen_scripts.rs: `errors.push(format!(
                 "No visibility information for columns {table_name}.{column_name}."
             ));`
@@ -7167,10 +6923,6 @@ $DIR/src/worker/dump_db/gen_scripts.rs: `.flat_map(|(table, config)| {
                 })
             })`
 $DIR/src/worker/dump_db/gen_scripts.rs: `.columns.keys()`
-$DIR/src/worker/dump_db/gen_scripts.rs: `.map(|column| Column {
-                    table_name: table.clone(),
-                    column_name: column.clone(),
-                })`
 $DIR/src/worker/dump_db/gen_scripts.rs: `.collect()`
 $DIR/src/worker/dump_db/gen_scripts.rs: `.difference(&vis_columns)`
 $DIR/src/worker/dump_db/gen_scripts.rs: `.push(format!(
