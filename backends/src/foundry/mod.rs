@@ -200,6 +200,13 @@ impl ParseLow for Foundry {
             .collect()
     }
 
+    fn statement_is_removable(
+        &self,
+        _statement: <Self::Types as AbstractTypes>::Statement<'_>,
+    ) -> bool {
+        true
+    }
+
     fn statement_is_expression<'ast>(
         &self,
         storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
@@ -552,7 +559,7 @@ mod test {
         let solang_dir = download_package(tempdir.path(), package).unwrap();
         let pt_rs = solang_dir.join(PT_RS);
         let expected = read_to_string(pt_rs).unwrap();
-        let actual = read_to_string("assets/pt.rs").unwrap();
+        let actual = read_to_string("assets/solang_parser_pt.rs").unwrap();
         assert_eq!(expected, actual);
     }
 

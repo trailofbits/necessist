@@ -1,0 +1,9 @@
+2 candidates in 1 test in 1 source file
+fixtures/block_ending_in_expression/src/lib.rs: dry running
+fixtures/block_ending_in_expression/src/lib.rs: mutilating
+fixtures/block_ending_in_expression/src/lib.rs:3:5-7:8: `positive(|| {
+        let mut n = 0;
+        n += 1;
+        n
+    });` passed
+fixtures/block_ending_in_expression/src/lib.rs:5:9-5:16: `n += 1;` failed

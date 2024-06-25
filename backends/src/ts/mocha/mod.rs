@@ -333,6 +333,13 @@ impl ParseLow for Mocha {
             .collect()
     }
 
+    fn statement_is_removable(
+        &self,
+        _statement: <Self::Types as AbstractTypes>::Statement<'_>,
+    ) -> bool {
+        true
+    }
+
     fn statement_is_expression<'ast>(
         &self,
         storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,

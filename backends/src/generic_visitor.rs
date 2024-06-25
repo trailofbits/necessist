@@ -50,7 +50,10 @@ macro_rules! visit_maybe_macro_call {
 
             if_chain! {
                 if let Some(test_name) = $this.test_name.clone();
-                if statement.map_or(true, |statement| !$this.is_last_statement_in_test(statement));
+                if statement.map_or(true, |statement| {
+                    $this.backend.statement_is_removable(statement)
+                        && !$this.is_last_statement_in_test(statement)
+                });
                 then {
                     if let Some(statement) = statement {
                         if !$args.is_ignored_as_call {
@@ -169,7 +172,8 @@ impl<'context, 'config, 'backend, 'ast, T: ParseLow>
         // smoelius: Call/macro call statements are handled by the visit/visit-post functions
         // specific to the call type.
         if let Some(test_name) = self.test_name.as_ref() {
-            if !self.is_last_statement_in_test(statement)
+            if self.backend.statement_is_removable(statement)
+                && !self.is_last_statement_in_test(statement)
                 && !self.statement_is_call(storage, statement)
                 && !self.backend.statement_is_control(storage, statement)
                 && !self.backend.statement_is_declaration(storage, statement)

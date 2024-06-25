@@ -109,6 +109,10 @@ pub trait ParseLow: Sized {
         test: <Self::Types as AbstractTypes>::Test<'ast>,
     ) -> Vec<<Self::Types as AbstractTypes>::Statement<'ast>>;
 
+    fn statement_is_removable(
+        &self,
+        statement: <Self::Types as AbstractTypes>::Statement<'_>,
+    ) -> bool;
     fn statement_is_expression<'ast>(
         &self,
         storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
@@ -226,6 +230,12 @@ impl<T: ParseLow> ParseLow for Rc<RefCell<T>> {
         test: <Self::Types as AbstractTypes>::Test<'ast>,
     ) -> Vec<<Self::Types as AbstractTypes>::Statement<'ast>> {
         self.borrow().test_statements(storage, test)
+    }
+    fn statement_is_removable(
+        &self,
+        statement: <Self::Types as AbstractTypes>::Statement<'_>,
+    ) -> bool {
+        self.borrow().statement_is_removable(statement)
     }
     fn statement_is_expression<'ast>(
         &self,

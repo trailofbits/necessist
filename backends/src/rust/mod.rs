@@ -399,6 +399,17 @@ impl ParseLow for Rust {
             .collect::<Vec<_>>()
     }
 
+    fn statement_is_removable(
+        &self,
+        statement: <Self::Types as AbstractTypes>::Statement<'_>,
+    ) -> bool {
+        if let syn::Stmt::Expr(expr, None) = statement {
+            expression_with_block(expr)
+        } else {
+            true
+        }
+    }
+
     fn statement_is_expression<'ast>(
         &self,
         _storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
@@ -528,6 +539,8 @@ impl ParseLow for Rust {
         Expression::Other(span_path.join(span_bang).unwrap())
     }
 }
+
+include!(concat!(env!("OUT_DIR"), "/expression_with_block.rs"));
 
 impl RunLow for Rust {
     fn command_to_run_source_file(&self, context: &LightContext, source_file: &Path) -> Command {
