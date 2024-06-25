@@ -4,8 +4,8 @@ This may indicate a bug in Necessist. Consider opening an issue at: https://gith
 
 Silence this warning with: --allow module-path-unknown
 Warning: Failed to determine module path for test `code_block_with_mermaid_highlighting`: [Failed to determine relative path of source file "$DIR/crates_io_markdown/lib.rs"]
-Warning: Failed to determine module path for test `code_block_with_syntax_highlighting_even_if_annot_has_no_run`: [Failed to determine relative path of source file "$DIR/crates_io_markdown/lib.rs"]
 Warning: Failed to determine module path for test `code_block_with_syntax_highlighting`: [Failed to determine relative path of source file "$DIR/crates_io_markdown/lib.rs"]
+Warning: Failed to determine module path for test `code_block_with_syntax_highlighting_even_if_annot_has_no_run`: [Failed to determine relative path of source file "$DIR/crates_io_markdown/lib.rs"]
 Warning: Failed to determine module path for test `empty_text`: [Failed to determine relative path of source file "$DIR/crates_io_markdown/lib.rs"]
 Warning: Failed to determine module path for test `header_has_tags`: [Failed to determine relative path of source file "$DIR/crates_io_markdown/lib.rs"]
 Warning: Failed to determine module path for test `image_alignment`: [Failed to determine relative path of source file "$DIR/crates_io_markdown/lib.rs"]
@@ -13,8 +13,6 @@ Warning: Failed to determine module path for test `manual_anchor_is_sanitized`: 
 Warning: Failed to determine module path for test `relative_links`: [Failed to determine relative path of source file "$DIR/crates_io_markdown/lib.rs"]
 Warning: Failed to determine module path for test `rustdoc_links`: [Failed to determine relative path of source file "$DIR/crates_io_markdown/lib.rs"]
 Warning: Failed to determine module path for test `tables_with_rowspan_and_colspan`: [Failed to determine relative path of source file "$DIR/crates_io_markdown/lib.rs"]
-Warning: Failed to determine module path for test `test_write_crate`: [Failed to determine relative path of source file "$DIR/crates_io_index/ser.rs"]
-Warning: Failed to determine module path for test `test_write_crates`: [Failed to determine relative path of source file "$DIR/crates_io_index/ser.rs"]
 Warning: Failed to determine module path for test `text_alignment`: [Failed to determine relative path of source file "$DIR/crates_io_markdown/lib.rs"]
 Warning: Failed to determine module path for test `text_to_html_renders_markdown`: [Failed to determine relative path of source file "$DIR/crates_io_markdown/lib.rs"]
 Warning: Failed to determine module path for test `text_to_html_renders_other_things`: [Failed to determine relative path of source file "$DIR/crates_io_markdown/lib.rs"]
@@ -27,6 +25,8 @@ Warning: Failed to determine module path for test `text_with_inline_javascript`:
 Warning: Failed to determine module path for test `text_with_kbd_tag`: [Failed to determine relative path of source file "$DIR/crates_io_markdown/lib.rs"]
 Warning: Failed to determine module path for test `text_with_script_tag`: [Failed to determine relative path of source file "$DIR/crates_io_markdown/lib.rs"]
 Warning: Failed to determine module path for test `text_with_unknown_tag`: [Failed to determine relative path of source file "$DIR/crates_io_markdown/lib.rs"]
+Warning: Failed to determine module path for test `test_write_crate`: [Failed to determine relative path of source file "$DIR/crates_io_index/ser.rs"]
+Warning: Failed to determine module path for test `test_write_crates`: [Failed to determine relative path of source file "$DIR/crates_io_index/ser.rs"]
 $DIR/crates_io_tarball/src/lib.rs: `assert_none!(tarball_info.vcs_info);`
 $DIR/crates_io_tarball/src/lib.rs: `builder.add_file(
                         &format!("foo-0.0.1/{file}"),
