@@ -29,5 +29,4 @@ libraries = [
 ]
 
 [workspace.metadata.unmaintained]
-# smoelius: Temporarily ignore `necessist-backends` get CI to pass.
-ignore = ["necessist-backends", "solang-parser"]
+ignore = ["solang-parser"]
