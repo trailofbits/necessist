@@ -144,7 +144,7 @@ pub fn all_tests_in(path: impl AsRef<Path>) {
     set_var("CARGO_TERM_COLOR", "never");
 
     let mut tests = read_tests_in(path, true);
-    let n_tests = tests.values().count();
+    let n_tests = tests.values().map(Vec::len).sum();
 
     if n_tests == 1 {
         let (key, mut tests) = tests.pop_first().unwrap();
@@ -231,6 +231,8 @@ If you do not see a panic message above, check that you passed --nocapture to th
         .unwrap();
         exit(ERROR_EXIT_CODE);
     }));
+
+    let n_tests_initial = n_tests;
 
     let mut summary = BTreeMap::<Key, (Vec<(PathBuf, Duration)>, Duration)>::new();
 
@@ -350,6 +352,9 @@ If you do not see a panic message above, check that you passed --nocapture to th
         drop(tx_task);
         child.join().unwrap();
     }
+
+    let n_tests_final = summary.values().map(|(pairs, _)| pairs.len()).sum();
+    assert_eq!(n_tests_initial, n_tests_final);
 
     display_summary(summary);
 }
