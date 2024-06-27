@@ -36,7 +36,7 @@ jobs:
           git checkout -b tmp
           git reset --hard HEAD~1
           cargo update "$PACKAGE@$VERSION"
-          cargo upgrade --offline
+          cargo upgrade --offline "$PACKAGE"
           if ! git diff --exit-code '${{ github.event.pull_request.head.sha }}'; then
             gh pr edit '${{ github.event.pull_request.number }}' --add-label 'requires release'
           fi
