@@ -11,7 +11,7 @@
 | go_src_encoding_binary     | go1.22.2                                 | go         | X    | X     | X     | X       | 0         |
 | go_src_mime                | go1.22.2                                 | go         | X    | X     | X     |         | 0         |
 | go_src_net_url             | go1.22.2                                 | go         | X    | X     | X     | X       | 0         |
-| go_src_os                  | go1.22.2                                 | go         | X    |       | X     |         | 0         |
+| go_src_os                  | go1.22.2                                 | go         | X    |       | X     |         | 1         |
 | go_src_os_user             | go1.22.2                                 | go         | X    | X     |       |         | 1         |
 | go_src_testing_iotest      | go1.22.2                                 | go         | X    | X     | X     | X       | 1         |
 | go_src_text_template_parse | go1.22.2                                 | go         | X    | X     | X     | X       | 1         |
