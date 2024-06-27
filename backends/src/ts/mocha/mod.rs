@@ -29,7 +29,7 @@ use swc_core::{
             Invalid, Lit, MemberExpr, MemberProp, Module, Stmt, Str,
         },
         atoms::JsWord,
-        parser::{lexer::Lexer, Parser, StringInput, Syntax, TsConfig},
+        parser::{lexer::Lexer, Parser, StringInput, Syntax, TsSyntax},
     },
 };
 
@@ -292,7 +292,7 @@ impl ParseLow for Mocha {
     ) -> Result<<Self::Types as AbstractTypes>::File> {
         let source_file = self.source_map.load_file(source_file)?;
         let lexer = Lexer::new(
-            Syntax::Typescript(TsConfig::default()),
+            Syntax::Typescript(TsSyntax::default()),
             EsVersion::default(),
             StringInput::from(&*source_file),
             None,
