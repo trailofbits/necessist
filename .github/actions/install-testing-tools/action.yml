@@ -28,8 +28,8 @@ runs:
     - name: Install Foundry
       uses: foundry-rs/foundry-toolchain@v1
       with:
-        # https://github.com/foundry-rs/foundry/releases/tag/nightly-de33b6af53005037b463318d2628b5cfcaf39916
-        version: nightly-de33b6af53005037b463318d2628b5cfcaf39916
+        # https://github.com/foundry-rs/foundry/releases/tag/nightly-e65b5b9a5fb71ee06753e43a56c0f03c4aeb4c07
+        version: nightly-e65b5b9a5fb71ee06753e43a56c0f03c4aeb4c07
 
     - name: Install Go
       uses: actions/setup-go@v5
