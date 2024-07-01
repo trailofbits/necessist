@@ -29,4 +29,4 @@ libraries = [
 ]
 
 [workspace.metadata.unmaintained]
-ignore = ["bit-set", "solang-parser"]
+ignore = ["bit-set", "num_cpus", "solang-parser"]
