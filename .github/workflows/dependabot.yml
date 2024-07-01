@@ -28,7 +28,7 @@ jobs:
       - name: Install cargo-edit
         run: cargo install cargo-edit
 
-      - name: Add `requires-release` label
+      - name: Add `requires release` label
         run: |
           PACKAGE="$(expr '${{ github.event.pull_request.title }}' : '^Bump \([^ ]*\) from [^ ]* .*$')"
           VERSION="$(expr '${{ github.event.pull_request.title }}' : '^Bump [^ ]* from \([^ ]*\) .*$')"
@@ -42,5 +42,5 @@ jobs:
             gh pr edit '${{ github.event.pull_request.number }}' --add-label 'requires release'
           fi
         env:
-          GH_TOKEN: ${{ secrets.REPO_TOKEN }}
+          GH_TOKEN: ${{ secrets.DEPENDABOT_REPO_TOKEN }}
           GH_REPO: ${{ github.repository }}
