@@ -144,7 +144,7 @@ pub fn all_tests_in(path: impl AsRef<Path>) {
     set_var("CARGO_TERM_COLOR", "never");
 
     let mut tests = read_tests_in(path, true);
-    let n_tests = tests.values().count();
+    let n_tests = tests.values().map(Vec::len).sum();
 
     if n_tests == 1 {
         let (key, mut tests) = tests.pop_first().unwrap();
