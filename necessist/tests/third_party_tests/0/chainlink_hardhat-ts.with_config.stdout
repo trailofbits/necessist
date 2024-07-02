@@ -7159,38 +7159,33 @@ $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await 
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await tx.wait()`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await pauseTx.wait()`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await pauseTxOwner.wait()`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `tx = await labm
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await labm
         .connect(owner)
-        .setWatchList(
-          [watchAddress1, watchAddress2, watchAddress3],
-          [oneLINK, oneLINK, oneLINK],
-          [oneLINK, oneLINK, oneLINK],
-          [1, 2, 3],
-        )`
+        .setWatchList([watchAddress1], [oneLINK], [oneLINK], [0])`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await tx.wait()`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `watchList = await labm.getWatchList()`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await tx.wait`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `tx = await labm
         .connect(owner)
-        .addToWatchListOrDecomission(watchAddress2, 0)`
+        .addToWatchListOrDecommission(watchAddress2, 0)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await tx.wait`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `watchList = await labm.getWatchList()`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `tx = await labm
         .connect(owner)
-        .addToWatchListOrDecomission(watchAddress3, 0)`
+        .addToWatchListOrDecommission(watchAddress3, 0)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await tx.wait`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `watchList = await labm.getWatchList()`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await tx.wait`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `tx = await labm
         .connect(owner)
-        .addToWatchListOrDecomission(watchAddress2, 1)`
+        .addToWatchListOrDecommission(watchAddress2, 1)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await tx.wait`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `watchList = await labm.getWatchList()`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `report = await labm.getAccountInfo(watchAddress2)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `report = await labm.getAccountInfo(watchAddress1)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `tx = await labm
         .connect(owner)
-        .addToWatchListOrDecomission(watchAddress3, 1)`
+        .addToWatchListOrDecommission(watchAddress3, 1)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await tx.wait`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `watchList = await labm.getWatchList()`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `report = await labm.getAccountInfo(watchAddress3)`
@@ -7198,17 +7193,17 @@ $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `report
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `report = await labm.getAccountInfo(watchAddress1)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await labm
         .connect(owner)
-        .addToWatchListOrDecomission(ethers.constants.AddressZero, 1)`
+        .addToWatchListOrDecommission(ethers.constants.AddressZero, 1)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await tx.wait`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `tx = await labm.connect(owner).removeFromWatchList(watchAddress1)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await labm.connect(owner).removeFromWatchList(watchAddress1)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `report = await labm.getAccountInfo(watchAddress1)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `watchList = await labm.getWatchList()`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await labm.connect(owner).addToWatchListOrDecomission(watchAddress1, 1)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await labm.connect(owner).addToWatchListOrDecomission(watchAddress2, 1)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await labm.connect(owner).addToWatchListOrDecomission(watchAddress1, 1)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await labm.connect(owner).addToWatchListOrDecommission(watchAddress1, 1)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await labm.connect(owner).addToWatchListOrDecommission(watchAddress2, 1)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await labm.connect(owner).addToWatchListOrDecommission(watchAddress1, 1)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await labm
         .connect(owner)
-        .addToWatchListOrDecomission(ethers.constants.AddressZero, 1)`
+        .addToWatchListOrDecommission(ethers.constants.AddressZero, 1)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await fundTx.wait()`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await labm.setWatchList(
         watchListAddresses,
@@ -7217,6 +7212,13 @@ $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await 
         watchListDstChainSelectors,
       )`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `addresses = await labm.sampleUnderfundedAddresses()`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await fundTx.wait()`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await labm.setWatchList(
+        watchListAddresses,
+        watchListMinBalances,
+        watchListTopUpAmounts,
+        watchListDstChainSelectors,
+      )`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await fundTx.wait()`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await labm.setWatchList(
         [aggregator2.address, directTarget1.address, directTarget2.address],
@@ -7246,16 +7248,16 @@ $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await 
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await directTarget1.mock.linkAvailableForPayment.returns(zeroLINK)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await directTarget2.mock.linkAvailableForPayment.returns(zeroLINK)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await fundTx.wait()`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `h.assertLinkTokenBalance(lt, aggregator1.address, zeroLINK)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `h.assertLinkTokenBalance(lt, aggregator2.address, zeroLINK)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `h.assertLinkTokenBalance(lt, aggregator3.address, zeroLINK)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `h.assertLinkTokenBalance(lt, directTarget1.address, zeroLINK)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `h.assertLinkTokenBalance(lt, directTarget2.address, zeroLINK)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await h.assertLinkTokenBalance(lt, aggregator1.address, zeroLINK)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await h.assertLinkTokenBalance(lt, aggregator2.address, zeroLINK)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await h.assertLinkTokenBalance(lt, aggregator3.address, zeroLINK)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await h.assertLinkTokenBalance(lt, directTarget1.address, zeroLINK)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await h.assertLinkTokenBalance(lt, directTarget2.address, zeroLINK)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await performTx.wait()`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `h.assertLinkTokenBalance(lt, aggregator1.address, twoLINK)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `h.assertLinkTokenBalance(lt, aggregator2.address, twoLINK)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `h.assertLinkTokenBalance(lt, aggregator3.address, twoLINK)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `h.assertLinkTokenBalance(lt, directTarget1.address, twoLINK)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await h.assertLinkTokenBalance(lt, aggregator1.address, twoLINK)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await h.assertLinkTokenBalance(lt, aggregator2.address, twoLINK)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await h.assertLinkTokenBalance(lt, aggregator3.address, twoLINK)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await h.assertLinkTokenBalance(lt, directTarget1.address, twoLINK)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await aggregator1.mock.linkAvailableForPayment.returns(twoLINK)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await aggregator2.mock.linkAvailableForPayment.returns(twoLINK)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await aggregator3.mock.linkAvailableForPayment.returns(twoLINK)`
@@ -7292,11 +7294,11 @@ $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await 
             [oneLINK, oneLINK],
             [1, 2],
           )`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `h.assertLinkTokenBalance(lt, aggregator1.address, twoLINK)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `h.assertLinkTokenBalance(lt, aggregator2.address, zeroLINK)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `h.assertLinkTokenBalance(lt, aggregator3.address, zeroLINK)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `h.assertLinkTokenBalance(lt, directTarget1.address, twoLINK)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `h.assertLinkTokenBalance(lt, directTarget2.address, zeroLINK)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await h.assertLinkTokenBalance(lt, aggregator1.address, oneLINK)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await h.assertLinkTokenBalance(lt, aggregator2.address, zeroLINK)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await h.assertLinkTokenBalance(lt, aggregator3.address, zeroLINK)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await h.assertLinkTokenBalance(lt, directTarget1.address, oneLINK)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await h.assertLinkTokenBalance(lt, directTarget2.address, zeroLINK)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await labm
           .connect(owner)
           .setWatchList(
@@ -7342,11 +7344,6 @@ $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await 
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await aggregator3.mock.linkAvailableForPayment.returns(zeroLINK)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await directTarget1.mock.linkAvailableForPayment.returns(zeroLINK)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `await directTarget2.mock.linkAvailableForPayment.returns(zeroLINK)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `h.assertLinkTokenBalance(lt, aggregator1.address, twoLINK)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `h.assertLinkTokenBalance(lt, aggregator2.address, twoLINK)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `h.assertLinkTokenBalance(lt, aggregator3.address, zeroLINK)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `h.assertLinkTokenBalance(lt, directTarget1.address, zeroLINK)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `h.assertLinkTokenBalance(lt, directTarget2.address, zeroLINK)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.transfer(labm.address, oneLINK)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.connect(stranger)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.connect(owner)`
@@ -7355,12 +7352,6 @@ $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.from(
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.getAccountInfo(directTarget1.address)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.connect(stranger)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.setTopUpAmount(directTarget1.address, 100)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.setMinBalance(proxy1.address, BigNumber.from(100))`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.from(100)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.getAccountInfo(proxy1.address)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.setMinBalance(proxy4.address, 100)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.connect(stranger)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.setMinBalance(proxy1.address, 100)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.connect(stranger)`
@@ -7369,6 +7360,12 @@ $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.conne
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.setMaxCheck(100)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.connect(stranger)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.setUpkeepInterval(100)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.setMinBalance(proxy1.address, BigNumber.from(100))`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.from(100)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.getAccountInfo(proxy1.address)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.setMinBalance(proxy4.address, 100)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.connect(owner)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.setMaxPerform(BigNumber.from(100))`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.from(100)`
@@ -7446,35 +7443,35 @@ $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.setWa
           [1, 2],
         )`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.addToWatchListOrDecomission(watchAddress1, 0)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.addToWatchListOrDecommission(watchAddress1, 0)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.getWatchList()`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.addToWatchListOrDecomission(watchAddress2, 0)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.addToWatchListOrDecommission(watchAddress2, 0)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.getWatchList()`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.addToWatchListOrDecomission(watchAddress3, 0)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.addToWatchListOrDecommission(watchAddress3, 0)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.getWatchList()`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.addToWatchListOrDecomission(watchAddress1, 1)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.addToWatchListOrDecommission(watchAddress1, 1)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.getWatchList()`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.getAccountInfo(watchAddress1)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.addToWatchListOrDecomission(watchAddress2, 1)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.addToWatchListOrDecommission(watchAddress2, 1)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.getWatchList()`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.getAccountInfo(watchAddress2)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.getAccountInfo(watchAddress1)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.addToWatchListOrDecomission(watchAddress3, 1)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.addToWatchListOrDecommission(watchAddress3, 1)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.getWatchList()`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.getAccountInfo(watchAddress3)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.getAccountInfo(watchAddress2)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.getAccountInfo(watchAddress1)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.addToWatchListOrDecomission(ethers.constants.AddressZero, 1)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.addToWatchListOrDecommission(ethers.constants.AddressZero, 1)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.connect(stranger)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.addToWatchListOrDecomission(watchAddress1, 1)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.addToWatchListOrDecommission(watchAddress1, 1)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.addToWatchListOrDecomission(watchAddress1, 1)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.addToWatchListOrDecommission(watchAddress1, 1)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.getWatchList()`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.getAccountInfo(watchAddress1)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.connect(owner)`
@@ -7482,14 +7479,14 @@ $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.remov
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.getAccountInfo(watchAddress1)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.getWatchList()`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.addToWatchListOrDecomission(watchAddress1, 1)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.addToWatchListOrDecommission(watchAddress1, 1)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.addToWatchListOrDecomission(watchAddress2, 1)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.addToWatchListOrDecommission(watchAddress2, 1)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.getWatchList()`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.addToWatchListOrDecomission(watchAddress1, 1)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.addToWatchListOrDecommission(watchAddress1, 1)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.addToWatchListOrDecomission(ethers.constants.AddressZero, 1)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.addToWatchListOrDecommission(ethers.constants.AddressZero, 1)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.getWatchList()`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.connect(owner)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.transfer(labm.address, oneHundredLINK)`
@@ -7506,6 +7503,17 @@ $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.utils
         payload,
       )`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.sampleUnderfundedAddresses()`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.transfer(labm.address, fourLINK.add(fourLINK))`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.add(fourLINK)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.wait()`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.setWatchList(
+        watchListAddresses,
+        watchListMinBalances,
+        watchListTopUpAmounts,
+        watchListDstChainSelectors,
+      )`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.checkUpkeep('0x')`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.connect(owner)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.transfer(
         labm.address,
@@ -7562,6 +7570,8 @@ $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.asser
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.assertLinkTokenBalance(lt, aggregator2.address, twoLINK)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.assertLinkTokenBalance(lt, aggregator3.address, twoLINK)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.assertLinkTokenBalance(lt, directTarget1.address, twoLINK)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.getAccountInfo(proxy1.address)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.getAccountInfo(directTarget1.address)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.connect(keeperRegistry)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.topUp(watchListAddresses)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.mock.linkAvailableForPayment.returns(twoLINK)`
@@ -7569,6 +7579,8 @@ $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.mock.
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.mock.linkAvailableForPayment.returns(twoLINK)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.mock.linkAvailableForPayment.returns(twoLINK)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.mock.linkAvailableForPayment.returns(twoLINK)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.getAccountInfo(proxy1.address)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.getAccountInfo(directTarget1.address)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.getMaxPerform()`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.mock.aggregator.returns(aggregator.address)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.mock.linkAvailableForPayment.returns(0)`
@@ -7623,11 +7635,13 @@ $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.topUp
             directTarget1.address,
             directTarget2.address,
           ])`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.assertLinkTokenBalance(lt, aggregator1.address, twoLINK)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.assertLinkTokenBalance(lt, aggregator1.address, oneLINK)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.assertLinkTokenBalance(lt, aggregator2.address, zeroLINK)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.assertLinkTokenBalance(lt, aggregator3.address, zeroLINK)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.assertLinkTokenBalance(lt, directTarget1.address, twoLINK)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.assertLinkTokenBalance(lt, directTarget1.address, oneLINK)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.assertLinkTokenBalance(lt, directTarget2.address, zeroLINK)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.getAccountInfo(proxy1.address)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.getAccountInfo(directTarget2.address)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.connect(owner)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.setWatchList(
             [proxy1.address, proxy4.address],
@@ -7678,13 +7692,11 @@ $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.mock.
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.mock.linkAvailableForPayment.returns(zeroLINK)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.mock.linkAvailableForPayment.returns(zeroLINK)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.mock.linkAvailableForPayment.returns(zeroLINK)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.assertLinkTokenBalance(lt, aggregator1.address, twoLINK)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.assertLinkTokenBalance(lt, aggregator2.address, twoLINK)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.assertLinkTokenBalance(lt, aggregator3.address, zeroLINK)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.assertLinkTokenBalance(lt, directTarget1.address, zeroLINK)`
-$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.assertLinkTokenBalance(lt, directTarget2.address, zeroLINK)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.connect(keeperRegistry)`
 $DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.topUp(watchListAddresses)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.balanceOf(directTarget1.address)`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.toBigInt()`
+$DIR/contracts/test/v0.8/automation/LinkAvailableBalanceMonitor.test.ts: `.toBigInt()`
 $DIR/contracts/test/v0.8/automation/UpkeepBalanceMonitor.test.ts: `await upkeepBalanceMonitor.connect(owner).setConfig(newConfig)`
 $DIR/contracts/test/v0.8/automation/UpkeepBalanceMonitor.test.ts: `await upkeepBalanceMonitor.connect(owner).pause()`
 $DIR/contracts/test/v0.8/automation/UpkeepBalanceMonitor.test.ts: `await upkeepBalanceMonitor.connect(owner).setForwarder(newForwarder)`
@@ -8889,7 +8901,7 @@ $DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.fulfillOracleRequ
                   )`
 $DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.connect(roles.oracleNode)`
 $DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.fulfillOracleRequest(...convertFufillParams(request, response))`
-$DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.currentPrice()`
+$DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.getCurrentPrice()`
 $DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.utils.parseBytes32String(currentValue)`
 $DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.connect(roles.oracleNode)`
 $DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.fulfillOracleRequest2(
@@ -8899,7 +8911,7 @@ $DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.fulfillOracleRequ
                   responseValues,
                 ),
               )`
-$DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.currentPrice()`
+$DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.getCurrentPrice()`
 $DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.utils.parseBytes32String(currentValue)`
 $DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.connect(roles.oracleNode)`
 $DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.fulfillOracleRequest2(
@@ -8909,7 +8921,7 @@ $DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.fulfillOracleRequ
                     responseValues,
                   ),
                 )`
-$DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.currentPrice()`
+$DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.getCurrentPrice()`
 $DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.utils.toUtf8String(currentValue)`
 $DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.connect(roles.oracleNode)`
 $DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.fulfillOracleRequest2(
@@ -8925,7 +8937,7 @@ $DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.jpy()`
 $DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.utils.parseBytes32String(thirdValue)`
 $DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.connect(roles.oracleNode)`
 $DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.fulfillOracleRequest(...convertFufillParams(request, response))`
-$DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.currentPrice()`
+$DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.getCurrentPrice()`
 $DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.utils.parseBytes32String(currentValue)`
 $DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.connect(roles.oracleNode)`
 $DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.fulfillOracleRequest2(
@@ -8935,7 +8947,7 @@ $DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.fulfillOracleRequ
                   responseValues,
                 ),
               )`
-$DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.currentPrice()`
+$DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.getCurrentPrice()`
 $DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.utils.parseBytes32String(currentValue)`
 $DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.connect(roles.oracleNode)`
 $DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.fulfillOracleRequest2(
@@ -8945,7 +8957,7 @@ $DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.fulfillOracleRequ
                     responseValues,
                   ),
                 )`
-$DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.currentPrice()`
+$DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.getCurrentPrice()`
 $DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.utils.toUtf8String(currentValue)`
 $DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.connect(roles.oracleNode)`
 $DIR/contracts/test/v0.8/operatorforwarder/Operator.test.ts: `.fulfillOracleRequest2(
