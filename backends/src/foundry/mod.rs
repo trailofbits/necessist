@@ -397,6 +397,8 @@ impl RunLow for Foundry {
     // passes them to the build command as well. This causes problems when the test command accepts
     // arguments that the build command doesn't. A workaround is to use, for the "build" command, a
     // test command that runs exactly zero tests.
+    // smoelius: Recent versions of Foundry output `Error: No tests to run` and exit with a non-zero
+    // status. So just return `forge build` like `command_to_build_source_file` above.
     fn command_to_build_test(
         &self,
         context: &LightContext,
@@ -405,7 +407,7 @@ impl RunLow for Foundry {
     ) -> Command {
         let mut command = Command::new("forge");
         command.current_dir(context.root.as_path());
-        command.args(["test", "--match-test='^$'"]);
+        command.arg("build");
         command
     }
 
