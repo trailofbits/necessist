@@ -10822,7 +10822,7 @@ $DIR/internal/bucket/object/lock/lock_test.go: `.Date(2020, 2, 1, 12, 0, 0, 0, t
 $DIR/internal/bucket/object/lock/lock_test.go: `.New("expected element type <Status> but have <MyStatus>")`
 $DIR/internal/bucket/object/lock/lock_test.go: `.New("expected element type <LegalHold>/<ObjectLockLegalHold> but have <UnknownLegalHold>")`
 $DIR/internal/bucket/object/lock/lock_test.go: `.NewReader(tt.value)`
-$DIR/internal/bucket/object/lock/lock_test.go: `.DeepEqual(o, tt.metadata)`
+$DIR/internal/bucket/object/lock/lock_test.go: `.DeepEqual(o, tt.expected)`
 $DIR/internal/bucket/replication/replication_test.go: `t.Run(fmt.Sprintf("Test %d", i+1), func(t *testing.T) {
 			cfg, err := ParseConfig(bytes.NewReader([]byte(tc.inputConfig)))
 			if err != nil && tc.expectedParsingErr != nil && err.Error() != tc.expectedParsingErr.Error() {
