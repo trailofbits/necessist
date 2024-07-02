@@ -420,13 +420,12 @@ impl RunLow for Foundry {
         let mut command = Self::test_command(context, &span.source_file);
         command.args(["--match-test", test_name]);
 
+        let pat = format!(" {test_name}(");
+
         (
             command,
             Vec::new(),
-            Some((
-                true,
-                Box::new(|line| !line.starts_with("No tests match the provided pattern")),
-            )),
+            Some((false, Box::new(move |line| line.contains(&pat)))),
         )
     }
 }
