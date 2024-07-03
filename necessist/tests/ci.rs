@@ -231,7 +231,7 @@ fn prettier() {
         "{}/../**/*.md",
         "{}/../**/*.yml",
         "!{}/../fixtures/**",
-        "!{}/../backends/src/anchor_ts/rfc8032_test_vector.json",
+        "!{}/../backends/src/anchor/rfc8032_test_vector.json",
         "!{}/../target/**",
         "!{}/../warnings.json",
     ];

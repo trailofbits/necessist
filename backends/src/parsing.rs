@@ -17,7 +17,7 @@ use std::{any::type_name, cell::RefCell, convert::Infallible, path::Path, rc::Rc
 //   of the `File`. The lifetime of a `Storage` is only what it takes to parse the `File`. `Storage`
 //   is wrapped in a `RefCell`.
 //
-// - framework: Rust, HardhatTs, etc. Implements the `ParseLow` trait, i.e., contains callbacks such
+// - framework: Rust, Hardhat, etc. Implements the `ParseLow` trait, i.e., contains callbacks such
 //   `statement_is_call`, which are used by the `GenericVisitor` (below). Most callbacks are passed
 //   a reference to the `Storage`.
 //
