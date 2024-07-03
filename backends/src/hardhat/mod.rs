@@ -8,11 +8,11 @@ use necessist_core::{
 use std::path::Path;
 use subprocess::Exec;
 
-pub struct HardhatTs {
+pub struct Hardhat {
     mocha_adapter: ParseAdapter<ts::mocha::Mocha>,
 }
 
-impl HardhatTs {
+impl Hardhat {
     pub fn applicable(context: &LightContext) -> Result<bool> {
         context
             .root
@@ -28,9 +28,9 @@ impl HardhatTs {
     }
 }
 
-impl Interface for HardhatTs {}
+impl Interface for Hardhat {}
 
-impl ParseHigh for HardhatTs {
+impl ParseHigh for Hardhat {
     fn parse(
         &mut self,
         context: &LightContext,
@@ -41,7 +41,7 @@ impl ParseHigh for HardhatTs {
     }
 }
 
-impl RunHigh for HardhatTs {
+impl RunHigh for Hardhat {
     fn dry_run(&self, context: &LightContext, source_file: &Path) -> Result<()> {
         ts::utils::install_node_modules(context)?;
 

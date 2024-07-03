@@ -17,7 +17,7 @@ runs:
     - name: Install Anchor
       if: ${{ runner.os != 'Windows' }}
       run: |
-        cp backends/src/anchor_ts/rfc8032_test_vector.json ~/.config/solana/id.json
+        cp backends/src/anchor/rfc8032_test_vector.json ~/.config/solana/id.json
         if [[ "$(anchor --version)" != 'anchor-cli 0.27.0' ]]; then
           cargo install --git https://github.com/coral-xyz/anchor avm --locked --force
           avm install 0.27.0

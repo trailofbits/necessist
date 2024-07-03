@@ -15,7 +15,7 @@ use std::{
 use subprocess::Exec;
 use toml_edit::{DocumentMut, Value};
 
-pub struct AnchorTs {
+pub struct Anchor {
     mocha_adapter: ParseAdapter<ts::mocha::Mocha>,
     anchor_toml: PathBuf,
     document: DocumentMut,
@@ -23,7 +23,7 @@ pub struct AnchorTs {
     suffix: String,
 }
 
-impl AnchorTs {
+impl Anchor {
     pub fn applicable(context: &LightContext) -> Result<bool> {
         context
             .root
@@ -47,9 +47,9 @@ impl AnchorTs {
     }
 }
 
-impl Interface for AnchorTs {}
+impl Interface for Anchor {}
 
-impl ParseHigh for AnchorTs {
+impl ParseHigh for Anchor {
     fn parse(
         &mut self,
         context: &LightContext,
@@ -60,7 +60,7 @@ impl ParseHigh for AnchorTs {
     }
 }
 
-impl RunHigh for AnchorTs {
+impl RunHigh for Anchor {
     fn dry_run(&self, context: &LightContext, source_file: &Path) -> Result<()> {
         ts::utils::install_node_modules(context)?;
 
@@ -134,7 +134,7 @@ impl RunHigh for AnchorTs {
     }
 }
 
-impl AnchorTs {
+impl Anchor {
     fn check(&self, context: &LightContext, source_file: &Path) -> Result<()> {
         let _backup: Backup = self.patch_anchor_toml(source_file, true)?;
 
