@@ -1,5 +1,5 @@
 use super::{GenericVisitor, ParseHigh};
-use anyhow::Result;
+use anyhow::{Context, Result};
 use heck::ToKebabCase;
 use necessist_core::{
     config,
@@ -381,7 +381,8 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
 
         if source_files.is_empty() {
             for entry in walk_dir_results {
-                let entry = entry?;
+                let entry = entry
+                    .with_context(|| format!(r#"Failed to walk "{}""#, context.root.display()))?;
                 let path = entry.path();
 
                 if !path.is_file() {

@@ -1,5 +1,5 @@
 use super::{ts, OutputAccessors, OutputStrippedOfAnsiScapes, ParseAdapter, ParseHigh, RunHigh};
-use anyhow::{anyhow, Result};
+use anyhow::{anyhow, Context, Result};
 use log::debug;
 use necessist_core::{
     framework::{Interface, Postprocess, SourceFileTestSpanMap},
@@ -34,7 +34,8 @@ impl Anchor {
 
     pub fn new(context: &LightContext) -> Result<Self> {
         let anchor_toml = context.root.join("Anchor.toml");
-        let contents = read_to_string(&anchor_toml)?;
+        let contents = read_to_string(&anchor_toml)
+            .with_context(|| format!(r#"Failed to read "{}""#, anchor_toml.display()))?;
         let mut document = contents.parse::<DocumentMut>()?;
         let (prefix, suffix) = edit_test_script(&mut document, parse_test_value)?;
         Ok(Self {
