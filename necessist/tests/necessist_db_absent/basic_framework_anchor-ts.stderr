@@ -1,0 +1,4 @@
+Error: Failed to read "[CWD]/fixtures/basic/Anchor.toml"
+
+Caused by:
+    [..] (os error 2)

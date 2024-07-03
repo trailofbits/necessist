@@ -1,0 +1,5 @@
+Error: Failed to walk "[CWD]/fixtures/basic"
+
+Caused by:
+    0: IO error for operation on [CWD]/fixtures/basic/test: [..] (os error 2)
+    1: [..] (os error 2)

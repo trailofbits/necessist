@@ -1,0 +1,10 @@
+args = ["--no-sqlite", "--root=fixtures/basic", "--framework=hardhat-ts"]
+
+[bin]
+name = "necessist"
+
+[fs]
+cwd = "../../.."
+
+[status]
+code = 1
