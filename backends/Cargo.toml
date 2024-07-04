@@ -1,6 +1,6 @@
 [package]
 name = "necessist-backends"
-version = "0.6.1"
+version = "0.6.2"
 edition = "2021"
 
 description = "necessist-backends"
@@ -12,7 +12,7 @@ repository = "https://github.com/trailofbits/necessist"
 build = "build/main.rs"
 
 [dependencies]
-necessist-core = { version = "=0.6.1", path = "../core" }
+necessist-core = { version = "=0.6.2", path = "../core" }
 
 anyhow = "1.0"
 assert_cmd = "2.0"
