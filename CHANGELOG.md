@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.6.2
+
+- Update `swc_core` to version 0.96 ([#1178](https://github.com/trailofbits/necessist/pull/1178))
+- Fix a bug causing Necessist to fail to build tests with recent versions of Foundry ([af5098f](https://github.com/trailofbits/necessist/commit/af5098fd7fcf5828ed149b1289bb6e5011f01dde))
+- Improve Foundry test detection, i.e., when "Failed to run test..." warnings should be emitted ([#1186](https://github.com/trailofbits/necessist/pull/1186))
+- Fix `necessist-backend`'s `rerun-if-changed` instructions, whose mention of a nonexistent file was causing the package to be unnecessarily rebuilt ([#1187](https://github.com/trailofbits/necessist/pull/1187))
+- Shorten `--framework` values `anchor-ts` and `hardhat-ts` to just `anchor` and `hardhat` (respectively). `anchor-ts` and `hardhat-ts` continue to work as aliases for the shortened values. ([de21f2e](https://github.com/trailofbits/necessist/commit/de21f2eca2ab3532567f7c37ccab87c07bec0dc5))
+- Improve error messages when certain Anchor and Hardhat files cannot be found ([e6e756e](https://github.com/trailofbits/necessist/commit/e6e756e9aec69f0dd9105f159860ae0d0b8e9b29))
+
 ## 0.6.1
 
 - Don't remove expressions that end blocks in Rust code ([#1162](https://github.com/trailofbits/necessist/pull/1162))
