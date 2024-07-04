@@ -3,7 +3,7 @@
 ## 0.6.1
 
 - Don't remove expressions that end blocks in Rust code ([#1162](https://github.com/trailofbits/necessist/pull/1162))
-- Update `git2` to version 0.19 ([248cdc0](https://github.com/trailofbits/necessist/commit/248cdc0fcad5bc05e009979f51683dac476c2e56))
+- Update `git2` to version 0.19 ([0de7726](https://github.com/trailofbits/necessist/commit/0de772628b40b53fc86344ccfa1da18b1104bb4b))
 
 ## 0.6.0
 
