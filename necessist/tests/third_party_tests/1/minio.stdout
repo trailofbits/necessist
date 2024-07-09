@@ -8109,26 +8109,18 @@ $DIR/cmd/update-notifier_test.go: `.Sprintf("Update: %s", color.CyanBold(testCas
 $DIR/cmd/update-notifier_test.go: `.CyanBold(testCase.dlURL)`
 $DIR/cmd/update-notifier_test.go: `.Contains(output, line1)`
 $DIR/cmd/update-notifier_test.go: `.Contains(output, line2)`
-$DIR/cmd/update_test.go: `globalIsCICD = false`
-$DIR/cmd/update_test.go: `globalIsCICD = sci`
 $DIR/cmd/update_test.go: `t.Setenv("KUBERNETES_SERVICE_HOST", "10.11.148.5")`
 $DIR/cmd/update_test.go: `durl = getDownloadURL(minioVersion1)`
 $DIR/cmd/update_test.go: `t.Setenv("MESOS_CONTAINER_NAME", "mesos-1111")`
 $DIR/cmd/update_test.go: `durl = getDownloadURL(minioVersion1)`
-$DIR/cmd/update_test.go: `globalIsCICD = false`
 $DIR/cmd/update_test.go: `t.Setenv(testCase.envName, testCase.envValue)`
 $DIR/cmd/update_test.go: `t.Setenv("MARATHON_APP_LABEL_DCOS_PACKAGE_VERSION", "mesos-1111")`
 $DIR/cmd/update_test.go: `expectedStr = strings.ReplaceAll(expectedStr, "; source", "; docker; source")`
-$DIR/cmd/update_test.go: `globalIsCICD = sci`
 $DIR/cmd/update_test.go: `os.Unsetenv("MARATHON_APP_LABEL_DCOS_PACKAGE_VERSION")`
 $DIR/cmd/update_test.go: `os.Unsetenv(testCase.envName)`
-$DIR/cmd/update_test.go: `globalIsCICD = false`
-$DIR/cmd/update_test.go: `globalIsCICD = sci`
 $DIR/cmd/update_test.go: `t.Setenv("MESOS_CONTAINER_NAME", "mesos-1111")`
 $DIR/cmd/update_test.go: `os.Unsetenv("MESOS_CONTAINER_NAME")`
 $DIR/cmd/update_test.go: `dcos = IsDCOS()`
-$DIR/cmd/update_test.go: `globalIsCICD = false`
-$DIR/cmd/update_test.go: `globalIsCICD = sci`
 $DIR/cmd/update_test.go: `t.Setenv("KUBERNETES_SERVICE_HOST", "10.11.148.5")`
 $DIR/cmd/update_test.go: `os.Unsetenv("KUBERNETES_SERVICE_HOST")`
 $DIR/cmd/update_test.go: `kubernetes = IsKubernetes()`
