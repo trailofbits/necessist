@@ -2,8 +2,9 @@
 members = ["backends", "core", "necessist"]
 resolver = "2"
 
-[workspace.lints.rust]
-unexpected-cfgs = "allow"
+[workspace.lints.rust.unexpected_cfgs]
+level = "deny"
+check-cfg = ["cfg(dylint_lib, values(any()))"]
 
 [workspace.lints.clippy]
 pedantic = { level = "warn", priority = -1 }

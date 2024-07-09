@@ -46,7 +46,6 @@ mod utils;
 use utils::{OutputAccessors, OutputStrippedOfAnsiScapes};
 
 #[derive(Debug, Clone, Copy, EnumIter, Eq, Ord, PartialEq, PartialOrd, ValueEnum)]
-#[cfg_attr(feature = "clap", derive(clap::ValueEnum))]
 #[non_exhaustive]
 #[remain::sorted]
 pub enum Identifier {
