@@ -20,11 +20,6 @@ pub struct CachingOffsetCalculator<'original> {
     lines_and_offsets: Vec<(String, usize)>,
 }
 
-#[derive(Debug)]
-pub struct StatelessOffsetCalculator<'original> {
-    original: &'original str,
-}
-
 impl<'original> CachingOffsetCalculator<'original> {
     pub fn new(original: &'original str) -> Self {
         Self {
@@ -37,13 +32,6 @@ impl<'original> CachingOffsetCalculator<'original> {
             earliest_non_ascii_zero_based_index: 0,
             lines_and_offsets: Vec::new(),
         }
-    }
-}
-
-impl<'original> StatelessOffsetCalculator<'original> {
-    #[allow(dead_code)]
-    pub fn new(original: &'original str) -> Self {
-        Self { original }
     }
 }
 
@@ -135,34 +123,5 @@ impl<'original> CachingOffsetCalculator<'original> {
         let offset = prefix.as_bytes().len();
         let ascii = prefix.is_ascii();
         (prefix, offset, ascii)
-    }
-}
-
-impl<'original> Interface for StatelessOffsetCalculator<'original> {
-    #[cfg_attr(
-        dylint_lib = "misleading_variable_name",
-        allow(misleading_variable_name)
-    )]
-    fn offset_from_line_column(&mut self, line_column: LineColumn) -> (usize, bool) {
-        let mut lines = self.original.split('\n');
-        let mut offset = 0;
-        let mut ascii = true;
-
-        for _ in 1..line_column.line {
-            let line = lines.next().unwrap();
-            offset += line.as_bytes().len() + 1;
-            ascii &= line.is_ascii();
-        }
-
-        let prefix = lines
-            .next()
-            .unwrap()
-            .chars()
-            .take(line_column.column)
-            .collect::<String>();
-        offset += prefix.as_bytes().len();
-        ascii &= prefix.is_ascii();
-
-        (offset, ascii)
     }
 }
