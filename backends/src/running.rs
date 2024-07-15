@@ -1,13 +1,28 @@
 use super::{rust, ts, OutputAccessors, OutputStrippedOfAnsiScapes, RunHigh};
 use anyhow::{anyhow, Error, Result};
+use assert_cmd::output::OutputError;
 use bstr::{io::BufReadExt, BStr};
 use log::debug;
 use necessist_core::{
     framework::Postprocess, source_warn, util, LightContext, SourceFile, Span, WarnFlags, Warning,
     __Rewriter as Rewriter,
 };
-use std::{cell::RefCell, env::var, path::Path, process::Command, rc::Rc};
-use subprocess::{Exec, NullFile, Redirection};
+use std::{
+    cell::RefCell,
+    env::var,
+    fs::File,
+    io::Read,
+    path::Path,
+    process::{Command, ExitStatus as StdExitStatus, Output},
+    rc::Rc,
+};
+use subprocess::{Exec, ExitStatus, NullFile, Redirection};
+
+#[cfg(unix)]
+use std::os::unix::process::ExitStatusExt;
+
+#[cfg(windows)]
+use std::os::windows::process::ExitStatusExt;
 
 pub type ProcessLines = (bool, Box<dyn Fn(&str) -> bool>);
 
@@ -160,10 +175,11 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
         let mut exec = util::exec_from_command(&command);
         if init_f_test.is_some() {
             exec = exec.stdout(Redirection::Pipe);
+            exec = exec.stderr(Redirection::Pipe);
         } else {
             exec = exec.stdout(NullFile);
+            exec = exec.stderr(NullFile);
         }
-        exec = exec.stderr(NullFile);
 
         let test_name = test_name.to_owned();
         let span = span.clone();
@@ -171,13 +187,13 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
         Ok(Some((
             exec,
             init_f_test.map(|(init, f)| -> Box<Postprocess> {
-                Box::new(move |context: &LightContext, popen| {
-                    let stdout = popen
+                Box::new(move |context: &LightContext, mut popen| {
+                    let stdout_file = popen
                         .stdout
-                        .as_ref()
+                        .take()
                         .ok_or_else(|| anyhow!("Failed to get stdout"))?;
-                    let reader = std::io::BufReader::new(stdout);
-                    let run = reader.byte_lines().try_fold(init, |prev, result| {
+                    let stdout = read_file_to_end(stdout_file)?;
+                    let run = stdout.byte_lines().try_fold(init, |prev, result| {
                         let buf = result?;
                         let line = match std::str::from_utf8(&buf) {
                             Ok(line) => line,
@@ -201,11 +217,27 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
                     if run {
                         return Ok(true);
                     }
+                    let stderr_file = popen
+                        .stderr
+                        .take()
+                        .ok_or_else(|| anyhow!("Failed to get stderr"))?;
+                    let stderr = read_file_to_end(stderr_file)?;
+                    let status = popen.wait()?;
+                    let ExitStatus::Exited(code) = status else {
+                        return Err(anyhow!("Unexpected exit status: {status:?}"));
+                    };
+                    // smoelius: `raw` is `i32` on Unix, and `u32` on Windows.
+                    let raw = code.try_into()?;
+                    let error = OutputError::new(Output {
+                        status: StdExitStatus::from_raw(raw),
+                        stdout,
+                        stderr,
+                    });
                     source_warn(
                         context,
                         Warning::RunTestFailed,
                         &span,
-                        &format!("Failed to run test `{test_name}`"),
+                        &format!("Failed to run test `{test_name}`: {error}"),
                         WarnFlags::empty(),
                     )?;
                     Ok(false)
@@ -213,6 +245,12 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
             }),
         )))
     }
+}
+
+fn read_file_to_end(mut file: File) -> Result<Vec<u8>> {
+    let mut buf = Vec::new();
+    let _: usize = file.read_to_end(&mut buf)?;
+    Ok(buf)
 }
 
 fn enabled(key: &str) -> bool {
