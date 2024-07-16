@@ -6472,22 +6472,10 @@ $DIR/cmd/server-main_test.go: `.Run(testcase.config, func(t *testing.T) {
 		})`
 $DIR/cmd/server-main_test.go: `.WithCancel(context.Background())`
 $DIR/cmd/server-main_test.go: `.Background()`
-$DIR/cmd/server-startup-msg_test.go: `infoStorage.Disks = []madmin.Disk{
-		{Endpoint: "http://127.0.0.1:9000/data/1/", State: madmin.DriveStateOk},
-		{Endpoint: "http://127.0.0.1:9000/data/2/", State: madmin.DriveStateOk},
-		{Endpoint: "http://127.0.0.1:9000/data/3/", State: madmin.DriveStateOk},
-		{Endpoint: "http://127.0.0.1:9000/data/4/", State: madmin.DriveStateOk},
-		{Endpoint: "http://127.0.0.1:9001/data/1/", State: madmin.DriveStateOk},
-		{Endpoint: "http://127.0.0.1:9001/data/2/", State: madmin.DriveStateOk},
-		{Endpoint: "http://127.0.0.1:9001/data/3/", State: madmin.DriveStateOk},
-		{Endpoint: "http://127.0.0.1:9001/data/4/", State: madmin.DriveStateOffline},
-	}`
-$DIR/cmd/server-startup-msg_test.go: `infoStorage.Backend.Type = madmin.Erasure`
 $DIR/cmd/server-startup-msg_test.go: `apiEndpoints = []string{"http://%%%%%:9000"}`
 $DIR/cmd/server-startup-msg_test.go: `newAPIEndpoints = stripStandardPorts(apiEndpoints, "")`
 $DIR/cmd/server-startup-msg_test.go: `apiEndpoints = []string{"http://127.0.0.1:443", "https://127.0.0.1:80"}`
 $DIR/cmd/server-startup-msg_test.go: `newAPIEndpoints = stripStandardPorts(apiEndpoints, "")`
-$DIR/cmd/server-startup-msg_test.go: `.Contains(msg, "7 Online, 1 Offline")`
 $DIR/cmd/server-startup-msg_test.go: `.DeepEqual(expectedAPIEndpoints, newAPIEndpoints)`
 $DIR/cmd/server-startup-msg_test.go: `.DeepEqual(apiEndpoints, newAPIEndpoints)`
 $DIR/cmd/server-startup-msg_test.go: `.DeepEqual(apiEndpoints, newAPIEndpoints)`
@@ -7424,6 +7412,7 @@ $DIR/cmd/sts-handlers_test.go: `t.Run(
 				suite.SetUpSuite(c)
 				suite.SetUpLDAP(c, ldapServer)
 				suite.TestLDAPSTS(c)
+				suite.TestLDAPPolicyEntitiesLookup(c)
 				suite.TestLDAPUnicodeVariations(c)
 				suite.TestLDAPSTSServiceAccounts(c)
 				suite.TestLDAPSTSServiceAccountsWithUsername(c)
@@ -7436,6 +7425,7 @@ $DIR/cmd/sts-handlers_test.go: `t.Run(
 $DIR/cmd/sts-handlers_test.go: `suite.SetUpSuite(c)`
 $DIR/cmd/sts-handlers_test.go: `suite.SetUpLDAP(c, ldapServer)`
 $DIR/cmd/sts-handlers_test.go: `suite.TestLDAPSTS(c)`
+$DIR/cmd/sts-handlers_test.go: `suite.TestLDAPPolicyEntitiesLookup(c)`
 $DIR/cmd/sts-handlers_test.go: `suite.TestLDAPUnicodeVariations(c)`
 $DIR/cmd/sts-handlers_test.go: `suite.TestLDAPSTSServiceAccounts(c)`
 $DIR/cmd/sts-handlers_test.go: `suite.TestLDAPSTSServiceAccountsWithUsername(c)`
@@ -7457,6 +7447,7 @@ $DIR/cmd/sts-handlers_test.go: `t.Run(
 				suite.SetUpSuite(c)
 				suite.SetUpLDAPWithNonNormalizedBaseDN(c, ldapServer)
 				suite.TestLDAPSTS(c)
+				suite.TestLDAPPolicyEntitiesLookup(c)
 				suite.TestLDAPUnicodeVariations(c)
 				suite.TestLDAPSTSServiceAccounts(c)
 				suite.TestLDAPSTSServiceAccountsWithUsername(c)
@@ -7467,6 +7458,7 @@ $DIR/cmd/sts-handlers_test.go: `t.Run(
 $DIR/cmd/sts-handlers_test.go: `suite.SetUpSuite(c)`
 $DIR/cmd/sts-handlers_test.go: `suite.SetUpLDAPWithNonNormalizedBaseDN(c, ldapServer)`
 $DIR/cmd/sts-handlers_test.go: `suite.TestLDAPSTS(c)`
+$DIR/cmd/sts-handlers_test.go: `suite.TestLDAPPolicyEntitiesLookup(c)`
 $DIR/cmd/sts-handlers_test.go: `suite.TestLDAPUnicodeVariations(c)`
 $DIR/cmd/sts-handlers_test.go: `suite.TestLDAPSTSServiceAccounts(c)`
 $DIR/cmd/sts-handlers_test.go: `suite.TestLDAPSTSServiceAccountsWithUsername(c)`
@@ -7717,6 +7709,7 @@ $DIR/cmd/sts-handlers_test.go: `.Run(
 				suite.SetUpSuite(c)
 				suite.SetUpLDAP(c, ldapServer)
 				suite.TestLDAPSTS(c)
+				suite.TestLDAPPolicyEntitiesLookup(c)
 				suite.TestLDAPUnicodeVariations(c)
 				suite.TestLDAPSTSServiceAccounts(c)
 				suite.TestLDAPSTSServiceAccountsWithUsername(c)
@@ -7731,6 +7724,7 @@ $DIR/cmd/sts-handlers_test.go: `.Getenv(EnvTestLDAPServer)`
 $DIR/cmd/sts-handlers_test.go: `.SetUpSuite(c)`
 $DIR/cmd/sts-handlers_test.go: `.SetUpLDAP(c, ldapServer)`
 $DIR/cmd/sts-handlers_test.go: `.TestLDAPSTS(c)`
+$DIR/cmd/sts-handlers_test.go: `.TestLDAPPolicyEntitiesLookup(c)`
 $DIR/cmd/sts-handlers_test.go: `.TestLDAPUnicodeVariations(c)`
 $DIR/cmd/sts-handlers_test.go: `.TestLDAPSTSServiceAccounts(c)`
 $DIR/cmd/sts-handlers_test.go: `.TestLDAPSTSServiceAccountsWithUsername(c)`
@@ -7752,6 +7746,7 @@ $DIR/cmd/sts-handlers_test.go: `.Run(
 				suite.SetUpSuite(c)
 				suite.SetUpLDAPWithNonNormalizedBaseDN(c, ldapServer)
 				suite.TestLDAPSTS(c)
+				suite.TestLDAPPolicyEntitiesLookup(c)
 				suite.TestLDAPUnicodeVariations(c)
 				suite.TestLDAPSTSServiceAccounts(c)
 				suite.TestLDAPSTSServiceAccountsWithUsername(c)
@@ -7764,6 +7759,7 @@ $DIR/cmd/sts-handlers_test.go: `.Getenv(EnvTestLDAPServer)`
 $DIR/cmd/sts-handlers_test.go: `.SetUpSuite(c)`
 $DIR/cmd/sts-handlers_test.go: `.SetUpLDAPWithNonNormalizedBaseDN(c, ldapServer)`
 $DIR/cmd/sts-handlers_test.go: `.TestLDAPSTS(c)`
+$DIR/cmd/sts-handlers_test.go: `.TestLDAPPolicyEntitiesLookup(c)`
 $DIR/cmd/sts-handlers_test.go: `.TestLDAPUnicodeVariations(c)`
 $DIR/cmd/sts-handlers_test.go: `.TestLDAPSTSServiceAccounts(c)`
 $DIR/cmd/sts-handlers_test.go: `.TestLDAPSTSServiceAccountsWithUsername(c)`
@@ -8043,7 +8039,7 @@ $DIR/cmd/test-utils_test.go: `globalActiveCred = auth.Credentials{
 $DIR/cmd/test-utils_test.go: `os.Unsetenv(env)`
 $DIR/cmd/test-utils_test.go: `globalIsDistErasure = false`
 $DIR/cmd/test-utils_test.go: `color.Output = io.Discard`
-$DIR/cmd/test-utils_test.go: `logger.DisableErrorLog = true`
+$DIR/cmd/test-utils_test.go: `logger.DisableLog = true`
 $DIR/cmd/test-utils_test.go: `setMaxResources(serverCtxt{})`
 $DIR/cmd/test-utils_test.go: `globalConsoleSys = NewConsoleLogger(context.Background(), io.Discard)`
 $DIR/cmd/test-utils_test.go: `globalInternodeTransport = NewInternodeHTTPTransport(0)()`
@@ -11300,8 +11296,8 @@ $DIR/internal/crypto/header_test.go: `.ParseHTTP(test.Header)`
 $DIR/internal/crypto/header_test.go: `.ParseHTTP(test.Header)`
 $DIR/internal/crypto/header_test.go: `.Strings(v)`
 $DIR/internal/crypto/header_test.go: `.Strings(u)`
-$DIR/internal/crypto/key_test.go: `logger.DisableErrorLog = l`
-$DIR/internal/crypto/key_test.go: `logger.DisableErrorLog = true`
+$DIR/internal/crypto/key_test.go: `logger.DisableLog = l`
+$DIR/internal/crypto/key_test.go: `logger.DisableLog = true`
 $DIR/internal/crypto/key_test.go: `func() {
 			defer recoverTest(i, test.ShouldPass, t)
 			key := GenerateKey(test.ExtKey[:], test.Random)
@@ -11309,8 +11305,8 @@ $DIR/internal/crypto/key_test.go: `func() {
 				t.Errorf("Test %d: generated key is zero key", i) // check that we generate random and unique key
 			}
 		}()`
-$DIR/internal/crypto/key_test.go: `logger.DisableErrorLog = l`
-$DIR/internal/crypto/key_test.go: `logger.DisableErrorLog = true`
+$DIR/internal/crypto/key_test.go: `logger.DisableLog = l`
+$DIR/internal/crypto/key_test.go: `logger.DisableLog = true`
 $DIR/internal/crypto/key_test.go: `func() {
 			defer recoverTest(i, test.ShouldPass, t)
 			iv := GenerateIV(test.Random)
@@ -11331,10 +11327,10 @@ $DIR/internal/crypto/key_test.go: `.DecodeString(etag)`
 $DIR/internal/crypto/key_test.go: `.SealETag(tag)`
 $DIR/internal/crypto/key_test.go: `.UnsealETag(sealedETag)`
 $DIR/internal/crypto/key_test.go: `.Equal(unsealedETag, tag)`
-$DIR/internal/crypto/metadata_test.go: `logger.DisableErrorLog = l`
-$DIR/internal/crypto/metadata_test.go: `logger.DisableErrorLog = true`
-$DIR/internal/crypto/metadata_test.go: `logger.DisableErrorLog = l`
-$DIR/internal/crypto/metadata_test.go: `logger.DisableErrorLog = true`
+$DIR/internal/crypto/metadata_test.go: `logger.DisableLog = l`
+$DIR/internal/crypto/metadata_test.go: `logger.DisableLog = true`
+$DIR/internal/crypto/metadata_test.go: `logger.DisableLog = l`
+$DIR/internal/crypto/metadata_test.go: `logger.DisableLog = true`
 $DIR/internal/crypto/metadata_test.go: `RemoveInternalEntries(test.Metadata)`
 $DIR/internal/crypto/metadata_test.go: `.IsEncrypted(test.Metadata)`
 $DIR/internal/crypto/metadata_test.go: `.IsEncrypted(test.Metadata)`
@@ -12316,8 +12312,8 @@ $DIR/internal/grid/connection_test.go: `.RegisterSingleHandler(handlerTest2, fun
 		return nil, &err
 	})`
 $DIR/internal/grid/connection_test.go: `.Background()`
-$DIR/internal/grid/connection_test.go: `.Handler()`
-$DIR/internal/grid/connection_test.go: `.Handler()`
+$DIR/internal/grid/connection_test.go: `.Handler(dummyRequestValidate)`
+$DIR/internal/grid/connection_test.go: `.Handler(dummyRequestValidate)`
 $DIR/internal/grid/connection_test.go: `.debugMsg(debugShutdown)`
 $DIR/internal/grid/connection_test.go: `.debugMsg(debugShutdown)`
 $DIR/internal/grid/connection_test.go: `.debugMsg(debugWaitForExit)`
