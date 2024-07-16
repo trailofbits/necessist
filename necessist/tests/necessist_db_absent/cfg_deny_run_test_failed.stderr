@@ -1,4 +1,27 @@
-Error: Failed to run test `passed`
+Error: Failed to run test `passed`: code=0
+stdout=```
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in [..]s
+
+```
+
+stderr=```
+warning: function `noop` is never used
+ --> [..]:9:4
+  |
+9 | fn noop() {}
+  |    ^^^^
+  |
+  = note: `#[warn(dead_code)]` on by default
+
+warning: `cfg` (lib test) generated 1 warning
+    Finished `test` profile [unoptimized + debuginfo] target(s) in [..]s
+     Running unittests [..] ([..])
+```
+
+
 
 This may indicate a bug in Necessist. Consider opening an issue at: https://github.com/trailofbits/necessist/issues
 
