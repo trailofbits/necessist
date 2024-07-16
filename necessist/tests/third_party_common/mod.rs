@@ -724,6 +724,27 @@ fn subsequence<'a, 'b>(
     true
 }
 
+static BIN_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r"/[^/]*-[0-9a-f]{16}\b").unwrap());
+
+pub fn stdout_files_are_sanitary_in(path: impl AsRef<Path>) {
+    for entry in read_dir(path).unwrap() {
+        let entry = entry.unwrap();
+        let path = entry.path();
+
+        if path.extension() != Some(OsStr::new("stdout")) {
+            continue;
+        }
+
+        let contents = read_to_string(&path).unwrap();
+
+        assert!(
+            !TIMING_RE.is_match(&contents),
+            "{path:?} matches `TIMING_RE`"
+        );
+        assert!(!BIN_RE.is_match(&contents), "{path:?} matches `BIN_RE`");
+    }
+}
+
 static SPACE_RE: Lazy<Regex> = Lazy::new(|| Regex::new(" +").unwrap());
 static DASH_RE: Lazy<Regex> = Lazy::new(|| Regex::new("-+").unwrap());
 

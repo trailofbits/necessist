@@ -9,6 +9,11 @@ fn all_tests() {
 }
 
 #[test]
+fn stdout_files_are_sanitary() {
+    third_party_common::stdout_files_are_sanitary_in(PATH);
+}
+
+#[test]
 fn stdout_subsequence() {
     third_party_common::stdout_subsequence_in(PATH);
 }
