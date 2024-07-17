@@ -646,10 +646,13 @@ fn remove_line_columns(s: &str) -> String {
     LINE_COLUMN_RE.replace_all(s, r"$$DIR/$1:").to_string()
 }
 
-static TIMING_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r"\b[0-9]+\.[0-9]+(m)?s\b").unwrap());
+// smoelius: Don't put a `\b` at the start of this pattern. `assert_cmd::output::OutputError`
+// escapes control characters (e.g., `\t`) and its output appears in the stdout files. So adding a
+// `\b` could introduce false negatives.
+static TIMING_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r"[0-9]+\.[0-9]+(m?)s\b").unwrap());
 
 fn remove_timings(s: &str) -> String {
-    TIMING_RE.replace_all(s, "[..]$1s]").to_string()
+    TIMING_RE.replace_all(s, "[..]${1}s").to_string()
 }
 
 fn permutation_ignoring_timeouts(expected: &str, actual: &str) -> bool {
