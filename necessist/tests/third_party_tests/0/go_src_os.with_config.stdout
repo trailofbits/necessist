@@ -1,13 +1,37 @@
 455 candidates in 78 tests in 1 source file
 $DIR/src/os/os_test.go: dry running
 $DIR/src/os/os_test.go: mutilating
-$DIR/src/os/os_test.go: Warning: Failed to run test `TestMain`
+$DIR/src/os/os_test.go: Warning: Failed to run test `TestMain`: code=0
+stdout=```
+testing: warning: no tests to run
+PASS
+ok  \tos\t[..]s [no tests to run]
+```
+
+stderr=""
+
 
 This may indicate a bug in Necessist. Consider opening an issue at: https://github.com/trailofbits/necessist/issues
 
 Silence this warning with: --allow run-test-failed
-$DIR/src/os/os_test.go: Warning: Failed to run test `TestMain`
-$DIR/src/os/os_test.go: Warning: Failed to run test `TestMain`
+$DIR/src/os/os_test.go: Warning: Failed to run test `TestMain`: code=0
+stdout=```
+testing: warning: no tests to run
+PASS
+ok  \tos\t(cached) [no tests to run]
+```
+
+stderr=""
+
+$DIR/src/os/os_test.go: Warning: Failed to run test `TestMain`: code=0
+stdout=```
+testing: warning: no tests to run
+PASS
+ok  \tos\t(cached) [no tests to run]
+```
+
+stderr=""
+
 $DIR/src/os/os_test.go: `testenv.MustHaveSymlink(t)` passed
 $DIR/src/os/os_test.go: `err = Symlink(path, link)` failed
 $DIR/src/os/os_test.go: `fi, err = Stat(link)` failed
