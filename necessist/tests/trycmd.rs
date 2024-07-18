@@ -54,6 +54,14 @@ fn check_stdout() {
         let contents = read_to_string(&path).unwrap();
 
         assert!(!re.is_match(&contents), "{path:?} matches");
+
+        let lines = contents.lines().collect::<Vec<_>>();
+        assert!(
+            lines
+                .windows(2)
+                .all(|w| w[0] != "stderr=```" || w[1] == "..."),
+            "failed for {path:?}"
+        );
     }
 }
 
