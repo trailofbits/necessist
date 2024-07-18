@@ -108,9 +108,9 @@ fn github() {
                 None
             }
         })
-        .chain(std::iter::once(String::from("other")))
         .collect::<Vec<_>>();
     metadata_tests.sort();
+    metadata_tests.push(String::from("other"));
 
     let ci_yml = Path::new(env!("CARGO_MANIFEST_DIR")).join("../.github/workflows/ci.yml");
     let contents = read_to_string(ci_yml).unwrap();
