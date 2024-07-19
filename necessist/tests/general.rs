@@ -3,7 +3,6 @@ use fs_extra::dir::{copy, CopyOptions};
 use necessist_core::util;
 use predicates::prelude::*;
 use std::{env::set_current_dir, path::PathBuf, process::Command, sync::Mutex};
-use subprocess::ExitStatus;
 
 mod tempfile_util;
 use tempfile_util::tempdir;
@@ -91,7 +90,6 @@ fixtures/dry_run_failure/tests/a.rs: Warning: dry run failed: code=101
 fn resume_following_ctrl_c() {
     use similar_asserts::SimpleDiff;
     use std::io::{BufRead, BufReader, Read};
-    use subprocess::Redirection;
 
     fn command() -> Command {
         let mut command = Command::cargo_bin("necessist").unwrap();
@@ -101,8 +99,8 @@ fn resume_following_ctrl_c() {
 
     run_basic_test(|| {
         let exec = util::exec_from_command(&command())
-            .stdout(Redirection::Pipe)
-            .stderr(Redirection::Pipe);
+            .stdout(subprocess::Redirection::Pipe)
+            .stderr(subprocess::Redirection::Pipe);
         let mut popen = exec.popen().unwrap();
 
         let stdout = popen.stdout.as_ref().unwrap();
@@ -122,7 +120,7 @@ fn resume_following_ctrl_c() {
         let stderr = String::from_utf8(buf).unwrap();
         assert!(stderr.ends_with("Ctrl-C detected\n"), "{stderr:?}");
 
-        let _: ExitStatus = popen.wait().unwrap();
+        let _: subprocess::ExitStatus = popen.wait().unwrap();
 
         let assert = command().arg("--resume").assert().success();
 
