@@ -8,6 +8,7 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 ```
 
 stderr=```
+...
 warning: function `noop` is never used
  --> [..]:9:4
   |
