@@ -38,7 +38,7 @@ fn trycmd() {
 }
 
 #[test]
-fn check_stdout() {
+fn check_stdout_files() {
     let re = Regex::new(r"\b[0-9]+\.[0-9]+s\b").unwrap();
 
     let necessist_db_absent = read_dir("tests/necessist_db_absent").unwrap();
@@ -54,6 +54,25 @@ fn check_stdout() {
         let contents = read_to_string(&path).unwrap();
 
         assert!(!re.is_match(&contents), "{path:?} matches");
+    }
+}
+
+#[test]
+fn check_stderr_annotations() {
+    let necessist_db_absent = read_dir("tests/necessist_db_absent").unwrap();
+    let necessist_db_present = read_dir("tests/necessist_db_present").unwrap();
+    for entry in necessist_db_absent.chain(necessist_db_present) {
+        let entry = entry.unwrap();
+        let path = entry.path();
+
+        if !["stdout", "stderr"]
+            .into_iter()
+            .any(|s| path.extension() == Some(OsStr::new(s)))
+        {
+            continue;
+        }
+
+        let contents = read_to_string(&path).unwrap();
 
         let lines = contents.lines().collect::<Vec<_>>();
         assert!(
@@ -66,7 +85,7 @@ fn check_stdout() {
 }
 
 #[test]
-fn check_toml() {
+fn check_toml_files() {
     let necessist_db_absent = read_dir("tests/necessist_db_absent").unwrap();
     let necessist_db_present = read_dir("tests/necessist_db_present").unwrap();
     for entry in necessist_db_absent.chain(necessist_db_present) {
