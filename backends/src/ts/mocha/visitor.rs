@@ -4,7 +4,7 @@ use necessist_core::framework::TestSpanMaps;
 use std::cell::RefCell;
 use swc_core::ecma::{
     ast::{Expr, Module, Stmt},
-    visit::{visit_expr, visit_stmt, Visit},
+    visit::{Visit, VisitWith},
 };
 
 #[allow(clippy::unnecessary_wraps)]
@@ -48,7 +48,7 @@ impl<'context, 'config, 'backend, 'ast, 'storage> Visit
             let walk = self.generic_visitor.visit_test(self.storage, test);
 
             if walk {
-                visit_stmt(self, stmt);
+                stmt.visit_children_with(self);
             }
 
             self.generic_visitor.visit_test_post(self.storage, test);
@@ -66,7 +66,7 @@ impl<'context, 'config, 'backend, 'ast, 'storage> Visit
             .visit_statement(self.storage, statement);
 
         if walk {
-            visit_stmt(self, stmt);
+            stmt.visit_children_with(self);
         }
 
         self.generic_visitor
@@ -78,7 +78,7 @@ impl<'context, 'config, 'backend, 'ast, 'storage> Visit
         let expr = unsafe { std::mem::transmute::<&Expr, &'ast Expr>(expr) };
 
         if is_it_call_expr(expr).is_some() {
-            visit_expr(self, expr);
+            expr.visit_children_with(self);
 
             return;
         }
@@ -92,7 +92,7 @@ impl<'context, 'config, 'backend, 'ast, 'storage> Visit
             let walk = self.generic_visitor.visit_call(self.storage, call);
 
             if walk {
-                visit_expr(self, expr);
+                expr.visit_children_with(self);
             } else {
                 self.visit_callee(&call.node.callee);
             }
@@ -102,6 +102,6 @@ impl<'context, 'config, 'backend, 'ast, 'storage> Visit
             return;
         }
 
-        visit_expr(self, expr);
+        expr.visit_children_with(self);
     }
 }
