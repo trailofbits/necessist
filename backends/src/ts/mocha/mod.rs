@@ -22,7 +22,7 @@ use std::{
 };
 use subprocess::{Exec, NullFile};
 use swc_core::{
-    common::{BytePos, Loc, SourceMap, Span as SwcSpan, Spanned as SwcSpanned, SyntaxContext},
+    common::{BytePos, Loc, SourceMap, Span as SwcSpan, Spanned as SwcSpanned},
     ecma::{
         ast::{
             ArrowExpr, AwaitExpr, BlockStmtOrExpr, CallExpr, Callee, EsVersion, Expr, ExprStmt,
@@ -43,7 +43,6 @@ static INVALID: Expr = Expr::Invalid(Invalid {
     span: SwcSpan {
         lo: BytePos(0),
         hi: BytePos(0),
-        ctxt: SyntaxContext::empty(),
     },
 });
 
