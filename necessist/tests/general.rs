@@ -1,5 +1,4 @@
 use assert_cmd::prelude::*;
-use fs_extra::dir::{copy, CopyOptions};
 use necessist_core::util;
 use predicates::prelude::*;
 use std::{env::set_current_dir, path::PathBuf, process::Command, sync::Mutex};
@@ -27,19 +26,18 @@ fn necessist_db_can_be_moved() {
 
         let tempdir = tempdir().unwrap();
 
-        copy(
-            BASIC_ROOT,
-            &tempdir,
-            &CopyOptions {
-                content_only: true,
-                ..Default::default()
-            },
-        )
-        .unwrap();
+        Command::new("cp")
+            .args(["-r", BASIC_ROOT, &tempdir.path().to_string_lossy()])
+            .assert()
+            .success();
 
         Command::cargo_bin("necessist")
             .unwrap()
-            .args(["--root", &tempdir.path().to_string_lossy(), "--resume"])
+            .args([
+                "--root",
+                &tempdir.path().join("basic").to_string_lossy(),
+                "--resume",
+            ])
             .assert()
             .success()
             .stdout(predicate::eq("4 candidates in 4 tests in 1 source file\n"));
