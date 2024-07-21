@@ -746,12 +746,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "fs_extra"
-version = "1.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "42703706b716c37f96a77aea830392ad231f44c9e9a67872fa5548707e11b11c"
-
-[[package]]
 name = "generic-array"
 version = "0.14.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1119,7 +1113,6 @@ dependencies = [
  "curl",
  "dunce",
  "env_logger",
- "fs_extra",
  "heck",
  "necessist-backends",
  "necessist-core",
