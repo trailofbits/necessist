@@ -30,15 +30,18 @@ jobs:
 
       - name: Add `requires release` label
         run: |
-          PACKAGE="$(expr '${{ github.event.pull_request.title }}' : '^Bump \([^ ]*\) from [^ ]* .*$')"
-          VERSION="$(expr '${{ github.event.pull_request.title }}' : '^Bump [^ ]* from \([^ ]*\) .*$')"
+          PACKAGE="$(expr '${{ github.event.pull_request.title }}' : '^Bump \([^ ]*\) from [^ ]* to [^ ]*$')"
+          OLD_VERSION="$(expr '${{ github.event.pull_request.title }}' : '^Bump [^ ]* from \([^ ]*\) to [^ ]*$')"
+          NEW_VERSION="$(expr '${{ github.event.pull_request.title }}' : '^Bump [^ ]* from [^ ]* to \([^ ]*\)$')"
           test -n "$PACKAGE"
-          test -n "$VERSION"
-          git checkout -b tmp
+          test -n "$OLD_VERSION"
+          test -n "$NEW_VERSION"
+          git checkout -b temporary-branch
           git reset --hard HEAD~1
-          cargo update "$PACKAGE@$VERSION"
+          cargo update "$PACKAGE@$OLD_VERSION" --precise "$NEW_VERSION"
+          git commmit -m temporary-message
           cargo upgrade --offline -p "$PACKAGE"
-          if ! git diff --quiet '${{ github.event.pull_request.head.sha }}'; then
+          if ! git diff --exit code; then
             gh pr edit '${{ github.event.pull_request.number }}' --add-label 'requires release'
           fi
         env:
