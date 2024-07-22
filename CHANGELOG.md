@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.6.3
+
+- FEATURE: When a test cannot be run, show why ([#1201](https://github.com/trailofbits/necessist/pull/1201))
+- Update `swc_core` to version 0.99 ([#1204](https://github.com/trailofbits/necessist/pull/1204))
+
 ## 0.6.2
 
 - Update `swc_core` to version 0.96 ([#1178](https://github.com/trailofbits/necessist/pull/1178))
