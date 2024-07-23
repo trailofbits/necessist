@@ -4746,6 +4746,86 @@ $DIR/cmd/httprange_test.go: `.ToHeader()`
 $DIR/cmd/jwt_test.go: `.WithCancel(context.Background())`
 $DIR/cmd/jwt_test.go: `.Background()`
 $DIR/cmd/jwt_test.go: `.RemoveAll(fsDir)`
+$DIR/cmd/kms-handlers_test.go: `t.Run(fmt.Sprintf("%d %s", testNum+1, test.name), func(t *testing.T) {
+			execKMSTest(t, test, adminTestBed)
+		})`
+$DIR/cmd/kms-handlers_test.go: `execKMSTest(t, test, adminTestBed)`
+$DIR/cmd/kms-handlers_test.go: `t.Run(fmt.Sprintf("%d %s", testNum+1, test.name), func(t *testing.T) {
+			execKMSTest(t, test, adminTestBed)
+		})`
+$DIR/cmd/kms-handlers_test.go: `execKMSTest(t, test, adminTestBed)`
+$DIR/cmd/kms-handlers_test.go: `t.Run(fmt.Sprintf("%d %s", testNum+1, test.name), func(t *testing.T) {
+			execKMSTest(t, test, adminTestBed)
+		})`
+$DIR/cmd/kms-handlers_test.go: `execKMSTest(t, test, adminTestBed)`
+$DIR/cmd/kms-handlers_test.go: `t.Run(fmt.Sprintf("%d %s", testNum+1, test.name), func(t *testing.T) {
+			execKMSTest(t, test, adminTestBed)
+		})`
+$DIR/cmd/kms-handlers_test.go: `execKMSTest(t, test, adminTestBed)`
+$DIR/cmd/kms-handlers_test.go: `t.Run(fmt.Sprintf("%d %s", testNum+1, test.name), func(t *testing.T) {
+			execKMSTest(t, test, adminTestBed)
+		})`
+$DIR/cmd/kms-handlers_test.go: `execKMSTest(t, test, adminTestBed)`
+$DIR/cmd/kms-handlers_test.go: `t.Run(test.name+" not configured", func(t *testing.T) {
+			req := buildKMSRequest(t, test.method, test.path, "", "", test.query)
+			rec := httptest.NewRecorder()
+			adminTestBed.router.ServeHTTP(rec, req)
+			if rec.Code != http.StatusNotImplemented {
+				t.Errorf("want status code %d, got %d", http.StatusNotImplemented, rec.Code)
+			}
+		})`
+$DIR/cmd/kms-handlers_test.go: `adminTestBed.router.ServeHTTP(rec, req)`
+$DIR/cmd/kms-handlers_test.go: `GlobalKMS = kms.NewStub("default-test-key")`
+$DIR/cmd/kms-handlers_test.go: `t.Run(test.name+" invalid credentials", func(t *testing.T) {
+			req := buildKMSRequest(t, test.method, test.path, userAccessKey, userSecretKey, test.query)
+			rec := httptest.NewRecorder()
+			adminTestBed.router.ServeHTTP(rec, req)
+			if rec.Code != http.StatusForbidden {
+				t.Errorf("want status code %d, got %d", http.StatusForbidden, rec.Code)
+			}
+		})`
+$DIR/cmd/kms-handlers_test.go: `adminTestBed.router.ServeHTTP(rec, req)`
+$DIR/cmd/kms-handlers_test.go: `.Run(fmt.Sprintf("%d %s", testNum+1, test.name), func(t *testing.T) {
+			execKMSTest(t, test, adminTestBed)
+		})`
+$DIR/cmd/kms-handlers_test.go: `.Sprintf("%d %s", testNum+1, test.name)`
+$DIR/cmd/kms-handlers_test.go: `.Run(fmt.Sprintf("%d %s", testNum+1, test.name), func(t *testing.T) {
+			execKMSTest(t, test, adminTestBed)
+		})`
+$DIR/cmd/kms-handlers_test.go: `.Sprintf("%d %s", testNum+1, test.name)`
+$DIR/cmd/kms-handlers_test.go: `.Run(fmt.Sprintf("%d %s", testNum+1, test.name), func(t *testing.T) {
+			execKMSTest(t, test, adminTestBed)
+		})`
+$DIR/cmd/kms-handlers_test.go: `.Sprintf("%d %s", testNum+1, test.name)`
+$DIR/cmd/kms-handlers_test.go: `.Run(fmt.Sprintf("%d %s", testNum+1, test.name), func(t *testing.T) {
+			execKMSTest(t, test, adminTestBed)
+		})`
+$DIR/cmd/kms-handlers_test.go: `.Sprintf("%d %s", testNum+1, test.name)`
+$DIR/cmd/kms-handlers_test.go: `.Run(fmt.Sprintf("%d %s", testNum+1, test.name), func(t *testing.T) {
+			execKMSTest(t, test, adminTestBed)
+		})`
+$DIR/cmd/kms-handlers_test.go: `.Sprintf("%d %s", testNum+1, test.name)`
+$DIR/cmd/kms-handlers_test.go: `.Run(test.name+" not configured", func(t *testing.T) {
+			req := buildKMSRequest(t, test.method, test.path, "", "", test.query)
+			rec := httptest.NewRecorder()
+			adminTestBed.router.ServeHTTP(rec, req)
+			if rec.Code != http.StatusNotImplemented {
+				t.Errorf("want status code %d, got %d", http.StatusNotImplemented, rec.Code)
+			}
+		})`
+$DIR/cmd/kms-handlers_test.go: `.NewRecorder()`
+$DIR/cmd/kms-handlers_test.go: `.router.ServeHTTP(rec, req)`
+$DIR/cmd/kms-handlers_test.go: `.NewStub("default-test-key")`
+$DIR/cmd/kms-handlers_test.go: `.Run(test.name+" invalid credentials", func(t *testing.T) {
+			req := buildKMSRequest(t, test.method, test.path, userAccessKey, userSecretKey, test.query)
+			rec := httptest.NewRecorder()
+			adminTestBed.router.ServeHTTP(rec, req)
+			if rec.Code != http.StatusForbidden {
+				t.Errorf("want status code %d, got %d", http.StatusForbidden, rec.Code)
+			}
+		})`
+$DIR/cmd/kms-handlers_test.go: `.NewRecorder()`
+$DIR/cmd/kms-handlers_test.go: `.router.ServeHTTP(rec, req)`
 $DIR/cmd/last-minute_gen_test.go: `left, err = msgp.Skip(bts)`
 $DIR/cmd/last-minute_gen_test.go: `msgp.Encode(&buf, &v)`
 $DIR/cmd/last-minute_gen_test.go: `buf.Reset()`
