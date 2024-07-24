@@ -1,4 +1,7 @@
-use crate::{offset_calculator::OffsetCalculator, to_console_string::ToConsoleString, util};
+use crate::{
+    offset_calculator::OffsetCalculator, to_console_string::ToConsoleString, util, LineColumn,
+    Rewriter, Span,
+};
 use anyhow::Result;
 use std::{
     cell::RefCell,
@@ -85,6 +88,16 @@ impl SourceFile {
     #[must_use]
     pub fn offset_calculator(&self) -> &RefCell<OffsetCalculator<'static>> {
         &self.inner.offset_calculator
+    }
+
+    pub fn insert(&self, rewriter: &mut Rewriter, line_column: LineColumn, insertion: &str) {
+        let span = Span {
+            source_file: self.clone(),
+            start: line_column,
+            end: line_column,
+        };
+
+        let _: String = rewriter.rewrite(&span, insertion);
     }
 }
 

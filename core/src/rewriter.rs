@@ -4,7 +4,7 @@
 use crate::{
     offset_based_rewriter::{self, OffsetBasedRewriter},
     offset_calculator::{self, OffsetCalculator},
-    LineColumn, SourceFile, Span,
+    LineColumn, Span,
 };
 use std::cell::RefCell;
 
@@ -32,16 +32,6 @@ impl<'original, 'oc> Rewriter<'original, 'oc> {
         use offset_based_rewriter::Interface;
 
         self.offset_based_rewriter.contents()
-    }
-
-    pub fn insert(&mut self, source_file: &SourceFile, line_column: LineColumn, insertion: &str) {
-        let span = Span {
-            source_file: source_file.clone(),
-            start: line_column,
-            end: line_column,
-        };
-
-        let _: String = self.rewrite(&span, insertion);
     }
 
     pub fn rewrite(&mut self, span: &Span, replacement: &str) -> String {
