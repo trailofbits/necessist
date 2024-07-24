@@ -609,7 +609,7 @@ where
 
     for (line_column, insertions) in insertion_map {
         for insertion in insertions {
-            rewriter.insert(source_file, line_column, &insertion);
+            source_file.insert(&mut rewriter, line_column, &insertion);
         }
     }
 
