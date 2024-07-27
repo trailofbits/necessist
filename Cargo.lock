@@ -1199,6 +1199,7 @@ dependencies = [
  "proc-macro2",
  "regex",
  "remain",
+ "rewriter",
  "rlimit",
  "serde",
  "sha2",
@@ -1634,6 +1635,16 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn 2.0.72",
+]
+
+[[package]]
+name = "rewriter"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "81a417374326652efe672e1b1b07a207193f10059e3d55c5cf298248def47c52"
+dependencies = [
+ "proc-macro2",
+ "tempfile",
 ]
 
 [[package]]

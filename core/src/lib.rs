@@ -4,7 +4,9 @@
 
 pub use proc_macro2::LineColumn;
 
-mod backup;
+mod backup {
+    pub use rewriter::Backup;
+}
 use backup::Backup;
 
 #[doc(hidden)]
@@ -23,15 +25,16 @@ pub use crate::core::{necessist, LightContext, Necessist};
 mod flock;
 
 pub mod framework;
-
-mod offset_based_rewriter;
-
-mod offset_calculator;
+mod offset_calculator {
+    pub type OffsetCalculator<'original> = rewriter::OffsetCalculator<'original, crate::Span>;
+}
 
 mod outcome;
 use outcome::Outcome;
 
-mod rewriter;
+mod rewriter {
+    pub type Rewriter<'original> = rewriter::Rewriter<'original, crate::Span>;
+}
 use rewriter::Rewriter;
 // smoelius: `Rewriter` is used by the Go framework to convert byte offsets to char offsets.
 pub use rewriter::Rewriter as __Rewriter;

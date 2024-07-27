@@ -644,33 +644,34 @@ trait ToInternalSpan {
 
 impl ToInternalSpan for Range {
     fn to_internal_span(&self, source_file: &SourceFile) -> Span {
-        let contents = source_file.contents();
-        let rewriter = Rewriter::new(contents, source_file.offset_calculator());
         Span {
             source_file: source_file.clone(),
-            start: self.start_point.to_line_column(source_file, &rewriter),
-            end: self.end_point.to_line_column(source_file, &rewriter),
+            start: self.start_point.to_line_column(source_file),
+            end: self.end_point.to_line_column(source_file),
         }
     }
 }
 
 trait ToLineColumn {
-    fn to_line_column(&self, source_file: &SourceFile, rewriter: &Rewriter) -> LineColumn;
+    fn to_line_column(&self, source_file: &SourceFile) -> LineColumn;
 }
 
 // smoelius: `Point`'s `column` field counts bytes, not chars. See:
 // https://github.com/tree-sitter/tree-sitter/issues/397#issuecomment-515115012
 impl ToLineColumn for Point {
-    fn to_line_column(&self, source_file: &SourceFile, rewriter: &Rewriter) -> LineColumn {
+    fn to_line_column(&self, source_file: &SourceFile) -> LineColumn {
         let line_column = LineColumn {
             line: self.row + 1,
             column: 0,
         };
-        let (line_offset, _) = rewriter.offsets_from_span(&Span {
-            source_file: source_file.clone(),
-            start: line_column,
-            end: line_column,
-        });
+        let (line_offset, _) = source_file
+            .offset_calculator()
+            .borrow_mut()
+            .offsets_from_span(&Span {
+                source_file: source_file.clone(),
+                start: line_column,
+                end: line_column,
+            });
         let suffix = &source_file.contents()[line_offset..];
         let column = suffix
             .char_indices()
