@@ -26,7 +26,7 @@ struct Inner {
     root: Rc<PathBuf>,
     path: PathBuf,
     contents: &'static str,
-    offset_calculator: RefCell<OffsetCalculator<'static>>,
+    offset_calculator: Rc<RefCell<OffsetCalculator<'static>>>,
 }
 
 impl Eq for Inner {}
@@ -65,7 +65,7 @@ impl SourceFile {
                         root,
                         path: path.clone(),
                         contents: leaked,
-                        offset_calculator: RefCell::new(OffsetCalculator::new(leaked)),
+                        offset_calculator: Rc::new(RefCell::new(OffsetCalculator::new(leaked))),
                     }),
                 };
                 source_files.insert(path, source_file.clone());
@@ -86,8 +86,8 @@ impl SourceFile {
     }
 
     #[must_use]
-    pub fn offset_calculator(&self) -> &RefCell<OffsetCalculator<'static>> {
-        &self.inner.offset_calculator
+    pub fn offset_calculator(&self) -> Rc<RefCell<OffsetCalculator<'static>>> {
+        self.inner.offset_calculator.clone()
     }
 
     pub fn insert(&self, rewriter: &mut Rewriter, line_column: LineColumn, insertion: &str) {

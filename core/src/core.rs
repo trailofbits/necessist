@@ -581,7 +581,8 @@ where
 {
     let backup = Backup::new(source_file)?;
 
-    let mut rewriter = Rewriter::new(source_file.contents(), source_file.offset_calculator());
+    let mut rewriter =
+        Rewriter::with_offset_calculator(source_file.contents(), source_file.offset_calculator());
 
     let n_instrumentable_statements = count_instrumentable_statements(test_span_iter);
 

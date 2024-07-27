@@ -23,6 +23,19 @@ impl std::fmt::Display for Span {
     }
 }
 
+impl rewriter::interface::Span for Span {
+    type LineColumn = proc_macro2::LineColumn;
+    fn line_column(line: usize, column: usize) -> Self::LineColumn {
+        proc_macro2::LineColumn { line, column }
+    }
+    fn start(&self) -> Self::LineColumn {
+        self.start
+    }
+    fn end(&self) -> Self::LineColumn {
+        self.end
+    }
+}
+
 impl ToConsoleString for Span {
     fn to_console_string(&self) -> String {
         self.to_string_with_path(&self.source_file.to_console_string())
@@ -138,8 +151,11 @@ impl Span {
         // (see comment therein).
         // smoelius: `Rewriter`s are now cheap to create because their underlying
         // `OffsetCalculator`s are shared.
-        let rewriter = Rewriter::new(contents, self.source_file.offset_calculator());
-        let (start, end) = rewriter.offsets_from_span(self);
+        let (start, end) = self
+            .source_file
+            .offset_calculator()
+            .borrow_mut()
+            .offsets_from_span(self);
 
         let bytes = &contents.as_bytes()[start..end];
         let text = std::str::from_utf8(bytes)?;
@@ -150,7 +166,7 @@ impl Span {
     pub fn remove(&self) -> Result<(String, Backup)> {
         let backup = Backup::new(&*self.source_file)?;
 
-        let mut rewriter = Rewriter::new(
+        let mut rewriter = Rewriter::with_offset_calculator(
             self.source_file.contents(),
             self.source_file.offset_calculator(),
         );
