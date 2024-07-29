@@ -39,7 +39,7 @@ jobs:
           git checkout -b temporary-branch
           git reset --hard HEAD~1
           cargo update "$PACKAGE@$OLD_VERSION" --precise "$NEW_VERSION"
-          git commmit -m temporary-message
+          git commit -m temporary-message
           cargo upgrade --offline -p "$PACKAGE"
           if ! git diff --exit code; then
             gh pr edit '${{ github.event.pull_request.number }}' --add-label 'requires release'
