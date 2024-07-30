@@ -145,6 +145,7 @@ $DIR/cmd/admin-handlers_test.go: `exp = append(exp, madmin.LockEntry{
 			Owner:      lri.Owner,
 			ID:         lri.UID,
 			Quorum:     lri.Quorum,
+			Timestamp:  time.Unix(0, lri.Timestamp),
 		})`
 $DIR/cmd/admin-handlers_test.go: `sort.Slice(exp, byResourceUID{exp}.Less)`
 $DIR/cmd/admin-handlers_test.go: `sort.Slice(got, byResourceUID{got}.Less)`
@@ -163,6 +164,7 @@ $DIR/cmd/admin-handlers_test.go: `.NewReader([]byte(body))`
 $DIR/cmd/admin-handlers_test.go: `.Sprintf("node-%d", i)`
 $DIR/cmd/admin-handlers_test.go: `.Sprintf("bucket/delete-object-%d", i)`
 $DIR/cmd/admin-handlers_test.go: `.Sprintf("bucket/get-object-%d", i)`
+$DIR/cmd/admin-handlers_test.go: `.Unix(0, lri.Timestamp)`
 $DIR/cmd/admin-handlers_test.go: `.Slice(exp, byResourceUID{exp}.Less)`
 $DIR/cmd/admin-handlers_test.go: `.Slice(got, byResourceUID{got}.Less)`
 $DIR/cmd/admin-handlers_test.go: `.Timestamp.Equal(got[i].Timestamp)`
@@ -293,7 +295,7 @@ $DIR/cmd/batch-expire_gen_test.go: `.Len()`
 $DIR/cmd/batch-expire_gen_test.go: `.Decode(&buf, &vn)`
 $DIR/cmd/batch-expire_gen_test.go: `.Reset()`
 $DIR/cmd/batch-expire_gen_test.go: `.Encode(&buf, &v)`
-$DIR/cmd/batch-expire_test.go: `.UnmarshalStrict([]byte(expireYaml), &job)`
+$DIR/cmd/batch-expire_test.go: `.Unmarshal([]byte(expireYaml), &job)`
 $DIR/cmd/batch-handlers_gen_test.go: `left, err = msgp.Skip(bts)`
 $DIR/cmd/batch-handlers_gen_test.go: `msgp.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go: `buf.Reset()`
@@ -505,6 +507,7 @@ $DIR/cmd/batch-replicate_gen_test.go: `.Len()`
 $DIR/cmd/batch-replicate_gen_test.go: `.Decode(&buf, &vn)`
 $DIR/cmd/batch-replicate_gen_test.go: `.Reset()`
 $DIR/cmd/batch-replicate_gen_test.go: `.Encode(&buf, &v)`
+$DIR/cmd/batch-replicate_test.go: `.Unmarshal([]byte(replicateYaml), &job)`
 $DIR/cmd/batch-rotate_gen_test.go: `left, err = msgp.Skip(bts)`
 $DIR/cmd/batch-rotate_gen_test.go: `msgp.Encode(&buf, &v)`
 $DIR/cmd/batch-rotate_gen_test.go: `buf.Reset()`
@@ -2766,7 +2769,7 @@ $DIR/cmd/erasure-healing-common_test.go: `.UTC()`
 $DIR/cmd/erasure-healing-common_test.go: `.Unix(4, 0)`
 $DIR/cmd/erasure-healing-common_test.go: `.UTC()`
 $DIR/cmd/erasure-healing-common_test.go: `.MakeBucket(ctx, "bucket", MakeBucketOptions{})`
-$DIR/cmd/erasure-healing-common_test.go: `.Repeat([]byte("a"), smallFileThreshold*16)`
+$DIR/cmd/erasure-healing-common_test.go: `.Repeat([]byte("a"), smallFileThreshold*32)`
 $DIR/cmd/erasure-healing-common_test.go: `.GetDisks(0, 0)`
 $DIR/cmd/erasure-healing-common_test.go: `.Run(fmt.Sprintf("case-%d", i), func(t *testing.T) {
 			_, err = obj.PutObject(ctx, bucket, object, mustGetPutObjReader(t, bytes.NewReader(data), int64(len(data)), "", ""), ObjectOptions{})
@@ -3924,6 +3927,40 @@ $DIR/cmd/erasure-metadata_test.go: `ofi.TransitionTier = inputs[1].tier`
 $DIR/cmd/erasure-metadata_test.go: `ofi.TransitionedObjName = inputs[1].remoteObjName`
 $DIR/cmd/erasure-metadata_test.go: `ofi.TransitionVersionID = inputs[1].remoteVersionID`
 $DIR/cmd/erasure-metadata_test.go: `fi.SetSkipTierFreeVersion()`
+$DIR/cmd/erasure-metadata_test.go: `fi.TransitionTier = "WARM-TIER"`
+$DIR/cmd/erasure-metadata_test.go: `fi.TransitionedObjName = mustGetUUID()`
+$DIR/cmd/erasure-metadata_test.go: `fi.TransitionStatus = "complete"`
+$DIR/cmd/erasure-metadata_test.go: `fi.Size = 1 << 20`
+$DIR/cmd/erasure-metadata_test.go: `fi.Erasure.Index = i + 1`
+$DIR/cmd/erasure-metadata_test.go: `metaArr[i] = fi`
+$DIR/cmd/erasure-metadata_test.go: `metaArr[i].TransitionTier, metaArr[i].TransitionedObjName = "", ""`
+$DIR/cmd/erasure-metadata_test.go: `metaArr[i].TransitionStatus = ""`
+$DIR/cmd/erasure-metadata_test.go: `ps[i] = agreedParity`
+$DIR/cmd/erasure-metadata_test.go: `ps[i] = disagreedParity`
+$DIR/cmd/erasure-metadata_test.go: `res.metaArr = mkMetaArr(N, parity, agree)`
+$DIR/cmd/erasure-metadata_test.go: `res.parities = mkParities(N, N-(N/2+1), parity, agree)`
+$DIR/cmd/erasure-metadata_test.go: `res.errs = make([]error, N)`
+$DIR/cmd/erasure-metadata_test.go: `res.parity = N - (N/2 + 1)`
+$DIR/cmd/erasure-metadata_test.go: `res.parity = -1`
+$DIR/cmd/erasure-metadata_test.go: `fi.Size = 1 << 20`
+$DIR/cmd/erasure-metadata_test.go: `fi.Erasure.Index = i + 1`
+$DIR/cmd/erasure-metadata_test.go: `metaArr[i] = fi`
+$DIR/cmd/erasure-metadata_test.go: `parities[i] = parity`
+$DIR/cmd/erasure-metadata_test.go: `metaArr[i].Erasure.Index = 0`
+$DIR/cmd/erasure-metadata_test.go: `parities[i] = -1`
+$DIR/cmd/erasure-metadata_test.go: `res.metaArr = metaArr`
+$DIR/cmd/erasure-metadata_test.go: `res.parities = parities`
+$DIR/cmd/erasure-metadata_test.go: `res.errs = make([]error, N)`
+$DIR/cmd/erasure-metadata_test.go: `res.parity = parity`
+$DIR/cmd/erasure-metadata_test.go: `res.parity = -1`
+$DIR/cmd/erasure-metadata_test.go: `t.Run(fmt.Sprintf("Test %d", i+1), func(t *testing.T) {
+			if got := listObjectParities(test.metaArr, test.errs); !slices.Equal(got, test.parities) {
+				t.Fatalf("Expected parities %v but got %v", test.parities, got)
+			}
+			if got := commonParity(test.parities, len(test.metaArr)/2); got != test.parity {
+				t.Fatalf("Expected common parity %v but got %v", test.parity, got)
+			}
+		})`
 $DIR/cmd/erasure-metadata_test.go: `.IsValid()`
 $DIR/cmd/erasure-metadata_test.go: `.Itoa(testCase.partNum)`
 $DIR/cmd/erasure-metadata_test.go: `.AddObjectPart(testCase.partNum, "etag."+partNumString, int64(testCase.partNum+humanize.MiByte), ActualSize, UTCNow(), nil, nil)`
@@ -3973,6 +4010,16 @@ $DIR/cmd/erasure-metadata_test.go: `.TransitionInfoEquals(ofi)`
 $DIR/cmd/erasure-metadata_test.go: `.TransitionInfoEquals(ofi)`
 $DIR/cmd/erasure-metadata_test.go: `.SetSkipTierFreeVersion()`
 $DIR/cmd/erasure-metadata_test.go: `.SkipTierFreeVersion()`
+$DIR/cmd/erasure-metadata_test.go: `.Run(fmt.Sprintf("Test %d", i+1), func(t *testing.T) {
+			if got := listObjectParities(test.metaArr, test.errs); !slices.Equal(got, test.parities) {
+				t.Fatalf("Expected parities %v but got %v", test.parities, got)
+			}
+			if got := commonParity(test.parities, len(test.metaArr)/2); got != test.parity {
+				t.Fatalf("Expected common parity %v but got %v", test.parity, got)
+			}
+		})`
+$DIR/cmd/erasure-metadata_test.go: `.Sprintf("Test %d", i+1)`
+$DIR/cmd/erasure-metadata_test.go: `.Equal(got, test.parities)`
 $DIR/cmd/erasure-object_test.go: `objLayer, disks, err = prepareErasure16(ctx)`
 $DIR/cmd/erasure-object_test.go: `err = objLayer.MakeBucket(ctx, "bucket1", MakeBucketOptions{})`
 $DIR/cmd/erasure-object_test.go: `_, err = objLayer.PutObjectPart(ctx, "bucket1", "mpartObj1", res.UploadID, 1, mustGetPutObjReader(t, bytes.NewReader(fiveMBBytes), 5*humanize.MiByte, md5Hex, ""), opts)`
@@ -4687,11 +4734,17 @@ $DIR/cmd/format-erasure_test.go: `.Clone()`
 $DIR/cmd/generic-handlers_test.go: `r = &http.Request{
 		Proto:  "HTTP/1.1",
 		Method: http.MethodGet,
+		URL:    u,
 	}`
 $DIR/cmd/generic-handlers_test.go: `r = &http.Request{
 		Proto:  "HTTP/1.1",
 		Method: http.MethodGet,
 		URL:    &url.URL{Path: grid.RoutePath},
+	}`
+$DIR/cmd/generic-handlers_test.go: `r = &http.Request{
+		Proto:  "HTTP/1.1",
+		Method: http.MethodGet,
+		URL:    &url.URL{Path: grid.RouteLockPath},
 	}`
 $DIR/cmd/generic-handlers_test.go: `t.Run("", func(t *testing.T) {
 			contains := containsReservedMetadata(test.header)
@@ -4941,7 +4994,7 @@ $DIR/cmd/local-locker_test.go: `t.Run(fmt.Sprintf("%d-locks", locks), func(t *te
 								Resources: res,
 								Source:    hex.EncodeToString(tmp[:8]),
 								Owner:     hex.EncodeToString(tmp[8:]),
-								Quorum:    0,
+								Quorum:    &quorum,
 							})
 							if !ok || err != nil {
 								t.Fatal("failed:", err, ok)
@@ -4963,7 +5016,7 @@ $DIR/cmd/local-locker_test.go: `t.Run(fmt.Sprintf("%d-locks", locks), func(t *te
 					for _, v := range l.lockMap {
 						for i := range v {
 							if rng.Intn(2) == 0 {
-								v[i].TimeLastRefresh = expired
+								v[i].TimeLastRefresh = expired.UnixNano()
 							}
 						}
 					}
@@ -5008,7 +5061,7 @@ $DIR/cmd/local-locker_test.go: `t.Run(fmt.Sprintf("%d-read", readers), func(t *t
 								Resources: res,
 								Source:    hex.EncodeToString(tmp[:8]),
 								Owner:     hex.EncodeToString(tmp[8:]),
-								Quorum:    0,
+								Quorum:    &quorum,
 							})
 							if !ok || err != nil {
 								t.Fatal("failed:", err, ok)
@@ -5030,7 +5083,7 @@ $DIR/cmd/local-locker_test.go: `t.Run(fmt.Sprintf("%d-read", readers), func(t *t
 					for _, v := range l.lockMap {
 						for i := range v {
 							if rng.Intn(2) == 0 {
-								v[i].TimeLastRefresh = expired
+								v[i].TimeLastRefresh = expired.UnixNano()
 							}
 						}
 					}
@@ -5062,7 +5115,7 @@ $DIR/cmd/local-locker_test.go: `t.Run(fmt.Sprintf("%d-read", readers), func(t *t
 $DIR/cmd/local-locker_test.go: `rng.Read(tmp[:])`
 $DIR/cmd/local-locker_test.go: `rng.Read(tmp[:])`
 $DIR/cmd/local-locker_test.go: `l.expireOldLocks(time.Hour)`
-$DIR/cmd/local-locker_test.go: `v[i].TimeLastRefresh = expired`
+$DIR/cmd/local-locker_test.go: `v[i].TimeLastRefresh = expired.UnixNano()`
 $DIR/cmd/local-locker_test.go: `start = time.Now()`
 $DIR/cmd/local-locker_test.go: `l.expireOldLocks(time.Hour)`
 $DIR/cmd/local-locker_test.go: `start = time.Now()`
@@ -5090,7 +5143,7 @@ $DIR/cmd/local-locker_test.go: `t.Run(fmt.Sprintf("%d-locks", locks), func(t *te
 								Resources: res,
 								Source:    hex.EncodeToString(tmp[:8]),
 								Owner:     hex.EncodeToString(tmp[8:]),
-								Quorum:    0,
+								Quorum:    &quorum,
 							})
 							if !ok || err != nil {
 								t.Fatal("failed:", err, ok)
@@ -5164,7 +5217,7 @@ $DIR/cmd/local-locker_test.go: `t.Run(fmt.Sprintf("%d-read", readers), func(t *t
 								Resources: res,
 								Source:    hex.EncodeToString(tmp[:8]),
 								Owner:     hex.EncodeToString(tmp[8:]),
-								Quorum:    0,
+								Quorum:    &quorum,
 							})
 							if !ok || err != nil {
 								t.Fatal("failed:", err, ok)
@@ -5272,7 +5325,7 @@ $DIR/cmd/local-locker_test.go: `.Run(fmt.Sprintf("%d-locks", locks), func(t *tes
 								Resources: res,
 								Source:    hex.EncodeToString(tmp[:8]),
 								Owner:     hex.EncodeToString(tmp[8:]),
-								Quorum:    0,
+								Quorum:    &quorum,
 							})
 							if !ok || err != nil {
 								t.Fatal("failed:", err, ok)
@@ -5294,7 +5347,7 @@ $DIR/cmd/local-locker_test.go: `.Run(fmt.Sprintf("%d-locks", locks), func(t *tes
 					for _, v := range l.lockMap {
 						for i := range v {
 							if rng.Intn(2) == 0 {
-								v[i].TimeLastRefresh = expired
+								v[i].TimeLastRefresh = expired.UnixNano()
 							}
 						}
 					}
@@ -5341,7 +5394,7 @@ $DIR/cmd/local-locker_test.go: `.Run(fmt.Sprintf("%d-read", readers), func(t *te
 								Resources: res,
 								Source:    hex.EncodeToString(tmp[:8]),
 								Owner:     hex.EncodeToString(tmp[8:]),
-								Quorum:    0,
+								Quorum:    &quorum,
 							})
 							if !ok || err != nil {
 								t.Fatal("failed:", err, ok)
@@ -5363,7 +5416,7 @@ $DIR/cmd/local-locker_test.go: `.Run(fmt.Sprintf("%d-read", readers), func(t *te
 					for _, v := range l.lockMap {
 						for i := range v {
 							if rng.Intn(2) == 0 {
-								v[i].TimeLastRefresh = expired
+								v[i].TimeLastRefresh = expired.UnixNano()
 							}
 						}
 					}
@@ -5401,7 +5454,7 @@ $DIR/cmd/local-locker_test.go: `.RLock(context.Background(), dsync.LockArgs{
 								Resources: res,
 								Source:    hex.EncodeToString(tmp[:8]),
 								Owner:     hex.EncodeToString(tmp[8:]),
-								Quorum:    0,
+								Quorum:    &quorum,
 							})`
 $DIR/cmd/local-locker_test.go: `.Background()`
 $DIR/cmd/local-locker_test.go: `.NewString()`
@@ -5412,6 +5465,7 @@ $DIR/cmd/local-locker_test.go: `.expireOldLocks(time.Hour)`
 $DIR/cmd/local-locker_test.go: `.Now()`
 $DIR/cmd/local-locker_test.go: `.Add(-time.Hour * 2)`
 $DIR/cmd/local-locker_test.go: `.Intn(2)`
+$DIR/cmd/local-locker_test.go: `.UnixNano()`
 $DIR/cmd/local-locker_test.go: `.Now()`
 $DIR/cmd/local-locker_test.go: `.expireOldLocks(time.Hour)`
 $DIR/cmd/local-locker_test.go: `.Now()`
@@ -5442,7 +5496,7 @@ $DIR/cmd/local-locker_test.go: `.Run(fmt.Sprintf("%d-locks", locks), func(t *tes
 								Resources: res,
 								Source:    hex.EncodeToString(tmp[:8]),
 								Owner:     hex.EncodeToString(tmp[8:]),
-								Quorum:    0,
+								Quorum:    &quorum,
 							})
 							if !ok || err != nil {
 								t.Fatal("failed:", err, ok)
@@ -5518,7 +5572,7 @@ $DIR/cmd/local-locker_test.go: `.Run(fmt.Sprintf("%d-read", readers), func(t *te
 								Resources: res,
 								Source:    hex.EncodeToString(tmp[:8]),
 								Owner:     hex.EncodeToString(tmp[8:]),
-								Quorum:    0,
+								Quorum:    &quorum,
 							})
 							if !ok || err != nil {
 								t.Fatal("failed:", err, ok)
@@ -5585,7 +5639,7 @@ $DIR/cmd/local-locker_test.go: `.RLock(context.Background(), dsync.LockArgs{
 								Resources: res,
 								Source:    hex.EncodeToString(tmp[:8]),
 								Owner:     hex.EncodeToString(tmp[8:]),
-								Quorum:    0,
+								Quorum:    &quorum,
 							})`
 $DIR/cmd/local-locker_test.go: `.Background()`
 $DIR/cmd/local-locker_test.go: `.NewString()`
@@ -5599,7 +5653,7 @@ $DIR/cmd/local-locker_test.go: `.Now()`
 $DIR/cmd/local-locker_test.go: `.RUnlock(context.TODO(), lock)`
 $DIR/cmd/local-locker_test.go: `.TODO()`
 $DIR/cmd/lock-rest-client_test.go: `endpointLocal.IsLocal = true`
-$DIR/cmd/lock-rest-client_test.go: `err = initGlobalGrid(ctx, []PoolEndpoints{{Endpoints: Endpoints{endpoint, endpointLocal}}})`
+$DIR/cmd/lock-rest-client_test.go: `err = initGlobalLockGrid(ctx, []PoolEndpoints{{Endpoints: Endpoints{endpoint, endpointLocal}}})`
 $DIR/cmd/lock-rest-client_test.go: `_, err = lkClient.RLock(context.Background(), dsync.LockArgs{})`
 $DIR/cmd/lock-rest-client_test.go: `_, err = lkClient.Lock(context.Background(), dsync.LockArgs{})`
 $DIR/cmd/lock-rest-client_test.go: `_, err = lkClient.RUnlock(context.Background(), dsync.LockArgs{})`
@@ -5622,6 +5676,10 @@ $DIR/cmd/lock-rest-server-common_test.go: `locker.ll.lockMap["name"] = []lockReq
 $DIR/cmd/lock-rest-server-common_test.go: `.WithCancel(context.Background())`
 $DIR/cmd/lock-rest-server-common_test.go: `.Background()`
 $DIR/cmd/lock-rest-server-common_test.go: `.RemoveAll(testPath)`
+$DIR/cmd/lock-rest-server-common_test.go: `.UnixNano()`
+$DIR/cmd/lock-rest-server-common_test.go: `.UnixNano()`
+$DIR/cmd/lock-rest-server-common_test.go: `.UnixNano()`
+$DIR/cmd/lock-rest-server-common_test.go: `.UnixNano()`
 $DIR/cmd/lock-rest-server-common_test.go: `.ll.removeEntry("name", dsync.LockArgs{
 		Owner: "owner",
 		UID:   "unknown-uid",
@@ -8116,6 +8174,7 @@ $DIR/cmd/test-utils_test.go: `globalActiveCred = auth.Credentials{
 		AccessKey: auth.DefaultAccessKey,
 		SecretKey: auth.DefaultSecretKey,
 	}`
+$DIR/cmd/test-utils_test.go: `globalNodeAuthToken, _ = authenticateNode(auth.DefaultAccessKey, auth.DefaultSecretKey)`
 $DIR/cmd/test-utils_test.go: `os.Unsetenv(env)`
 $DIR/cmd/test-utils_test.go: `globalIsDistErasure = false`
 $DIR/cmd/test-utils_test.go: `color.Output = io.Discard`
@@ -12911,6 +12970,19 @@ $DIR/internal/grid/msg_gen_test.go: `msgp.Encode(&buf, &v)`
 $DIR/internal/grid/msg_gen_test.go: `buf.Reset()`
 $DIR/internal/grid/msg_gen_test.go: `msgp.Encode(&buf, &v)`
 $DIR/internal/grid/msg_gen_test.go: `err = msgp.NewReader(&buf).Skip()`
+$DIR/internal/grid/msg_gen_test.go: `left, err = msgp.Skip(bts)`
+$DIR/internal/grid/msg_gen_test.go: `msgp.Encode(&buf, &v)`
+$DIR/internal/grid/msg_gen_test.go: `buf.Reset()`
+$DIR/internal/grid/msg_gen_test.go: `msgp.Encode(&buf, &v)`
+$DIR/internal/grid/msg_gen_test.go: `err = msgp.NewReader(&buf).Skip()`
+$DIR/internal/grid/msg_gen_test.go: `.MarshalMsg(nil)`
+$DIR/internal/grid/msg_gen_test.go: `.UnmarshalMsg(bts)`
+$DIR/internal/grid/msg_gen_test.go: `.Encode(&buf, &v)`
+$DIR/internal/grid/msg_gen_test.go: `.Msgsize()`
+$DIR/internal/grid/msg_gen_test.go: `.Len()`
+$DIR/internal/grid/msg_gen_test.go: `.Decode(&buf, &vn)`
+$DIR/internal/grid/msg_gen_test.go: `.Reset()`
+$DIR/internal/grid/msg_gen_test.go: `.Encode(&buf, &v)`
 $DIR/internal/grid/msg_gen_test.go: `.MarshalMsg(nil)`
 $DIR/internal/grid/msg_gen_test.go: `.UnmarshalMsg(bts)`
 $DIR/internal/grid/msg_gen_test.go: `.Encode(&buf, &v)`
