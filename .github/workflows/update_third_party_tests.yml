@@ -34,5 +34,6 @@ jobs:
         uses: peter-evans/create-pull-request@v6
         with:
           title: "Update third-party tests"
+          commit-message: "Update third-party tests"
           token: ${{ secrets.REPO_TOKEN }}
           branch-suffix: random
