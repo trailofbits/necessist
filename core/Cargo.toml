@@ -43,7 +43,7 @@ rlimit = { version = "0.10", optional = true }
 
 [target.'cfg(windows)'.dependencies]
 libsqlite3-sys = { version = "0.28", features = ["bundled"] }
-windows-sys = { version = "0.52", features = [
+windows-sys = { version = "0.59", features = [
     "Win32_Storage_FileSystem",
     "Win32_Foundation",
     "Win32_System_IO",
