@@ -25,9 +25,6 @@ jobs:
           git diff --name-only ${{ github.event.pull_request.base.sha }} | grep .
           ! git diff --name-only ${{ github.event.pull_request.base.sha }} | grep -v '^\.github/workflows/\|\(^\|/\)Cargo\.\(lock\|toml\)$'
 
-      - name: Install cargo-edit
-        run: cargo install cargo-edit
-
       - name: Add `requires release` label
         run: |
           PACKAGE="$(expr '${{ github.event.pull_request.title }}' : '^Bump \([^ ]*\) from [^ ]* to [^ ]*$')"
@@ -36,15 +33,8 @@ jobs:
           test -n "$PACKAGE"
           test -n "$OLD_VERSION"
           test -n "$NEW_VERSION"
-          git checkout -b temporary-branch
           git reset --hard HEAD~1
-          cargo update "$PACKAGE@$OLD_VERSION" --precise "$NEW_VERSION"
-          git add Cargo.lock
-          git config --global user.email "nobody@nowhere.com"
-          git config --global user.name "nobody"
-          git commit -m temporary-message
-          cargo upgrade --offline -p "$PACKAGE"
-          if ! git diff --exit code; then
+          if ! cargo update "$PACKAGE@$OLD_VERSION" --precise "$NEW_VERSION"; then
             gh pr edit '${{ github.event.pull_request.number }}' --add-label 'requires release'
           fi
         env:
