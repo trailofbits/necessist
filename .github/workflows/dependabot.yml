@@ -39,6 +39,7 @@ jobs:
           git checkout -b temporary-branch
           git reset --hard HEAD~1
           cargo update "$PACKAGE@$OLD_VERSION" --precise "$NEW_VERSION"
+          git add Cargo.lock
           git config --global user.email "nobody@nowhere.com"
           git config --global user.name "nobody"
           git commit -m temporary-message
