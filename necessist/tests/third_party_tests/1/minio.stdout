@@ -295,7 +295,18 @@ $DIR/cmd/batch-expire_gen_test.go: `.Len()`
 $DIR/cmd/batch-expire_gen_test.go: `.Decode(&buf, &vn)`
 $DIR/cmd/batch-expire_gen_test.go: `.Reset()`
 $DIR/cmd/batch-expire_gen_test.go: `.Encode(&buf, &v)`
+$DIR/cmd/batch-expire_test.go: `err = yaml.Unmarshal([]byte(multiPrefixExpireYaml), &multiPrefixJob)`
 $DIR/cmd/batch-expire_test.go: `.Unmarshal([]byte(expireYaml), &job)`
+$DIR/cmd/batch-expire_test.go: `.Equal(job.Expire.Prefix.F(), []string{"myprefix"})`
+$DIR/cmd/batch-expire_test.go: `.Expire.Prefix.F()`
+$DIR/cmd/batch-expire_test.go: `.Unmarshal([]byte(multiPrefixExpireYaml), &multiPrefixJob)`
+$DIR/cmd/batch-expire_test.go: `.Equal(multiPrefixJob.Expire.Prefix.F(), []string{"myprefix", "myprefix1"})`
+$DIR/cmd/batch-expire_test.go: `.Expire.Prefix.F()`
+$DIR/cmd/batch-handlers_gen_test.go: `left, err = msgp.Skip(bts)`
+$DIR/cmd/batch-handlers_gen_test.go: `msgp.Encode(&buf, &v)`
+$DIR/cmd/batch-handlers_gen_test.go: `buf.Reset()`
+$DIR/cmd/batch-handlers_gen_test.go: `msgp.Encode(&buf, &v)`
+$DIR/cmd/batch-handlers_gen_test.go: `err = msgp.NewReader(&buf).Skip()`
 $DIR/cmd/batch-handlers_gen_test.go: `left, err = msgp.Skip(bts)`
 $DIR/cmd/batch-handlers_gen_test.go: `msgp.Encode(&buf, &v)`
 $DIR/cmd/batch-handlers_gen_test.go: `buf.Reset()`
@@ -322,6 +333,33 @@ $DIR/cmd/batch-handlers_gen_test.go: `.Len()`
 $DIR/cmd/batch-handlers_gen_test.go: `.Decode(&buf, &vn)`
 $DIR/cmd/batch-handlers_gen_test.go: `.Reset()`
 $DIR/cmd/batch-handlers_gen_test.go: `.Encode(&buf, &v)`
+$DIR/cmd/batch-handlers_gen_test.go: `.MarshalMsg(nil)`
+$DIR/cmd/batch-handlers_gen_test.go: `.UnmarshalMsg(bts)`
+$DIR/cmd/batch-handlers_gen_test.go: `.Encode(&buf, &v)`
+$DIR/cmd/batch-handlers_gen_test.go: `.Msgsize()`
+$DIR/cmd/batch-handlers_gen_test.go: `.Len()`
+$DIR/cmd/batch-handlers_gen_test.go: `.Decode(&buf, &vn)`
+$DIR/cmd/batch-handlers_gen_test.go: `.Reset()`
+$DIR/cmd/batch-handlers_gen_test.go: `.Encode(&buf, &v)`
+$DIR/cmd/batch-handlers_test.go: `t.Run(tt.name, func(t *testing.T) {
+			if err := yaml.Unmarshal([]byte(tt.args.yamlStr), &tt.b); (err != nil) != tt.wantErr {
+				t.Errorf("UnmarshalYAML() error = %v, wantErr %v", err, tt.wantErr)
+			}
+			if !slices.Equal(tt.b.Prefix.F(), tt.want) {
+				t.Errorf("UnmarshalYAML() = %v, want %v", tt.b.Prefix.F(), tt.want)
+			}
+		})`
+$DIR/cmd/batch-handlers_test.go: `.Run(tt.name, func(t *testing.T) {
+			if err := yaml.Unmarshal([]byte(tt.args.yamlStr), &tt.b); (err != nil) != tt.wantErr {
+				t.Errorf("UnmarshalYAML() error = %v, wantErr %v", err, tt.wantErr)
+			}
+			if !slices.Equal(tt.b.Prefix.F(), tt.want) {
+				t.Errorf("UnmarshalYAML() = %v, want %v", tt.b.Prefix.F(), tt.want)
+			}
+		})`
+$DIR/cmd/batch-handlers_test.go: `.Unmarshal([]byte(tt.args.yamlStr), &tt.b)`
+$DIR/cmd/batch-handlers_test.go: `.Equal(tt.b.Prefix.F(), tt.want)`
+$DIR/cmd/batch-handlers_test.go: `.b.Prefix.F()`
 $DIR/cmd/batch-job-common-types_gen_test.go: `left, err = msgp.Skip(bts)`
 $DIR/cmd/batch-job-common-types_gen_test.go: `msgp.Encode(&buf, &v)`
 $DIR/cmd/batch-job-common-types_gen_test.go: `buf.Reset()`
@@ -507,7 +545,13 @@ $DIR/cmd/batch-replicate_gen_test.go: `.Len()`
 $DIR/cmd/batch-replicate_gen_test.go: `.Decode(&buf, &vn)`
 $DIR/cmd/batch-replicate_gen_test.go: `.Reset()`
 $DIR/cmd/batch-replicate_gen_test.go: `.Encode(&buf, &v)`
+$DIR/cmd/batch-replicate_test.go: `err = yaml.Unmarshal([]byte(multiPrefixReplicateYaml), &multiPrefixJob)`
 $DIR/cmd/batch-replicate_test.go: `.Unmarshal([]byte(replicateYaml), &job)`
+$DIR/cmd/batch-replicate_test.go: `.Equal(job.Replicate.Source.Prefix.F(), []string{"object-prefix1"})`
+$DIR/cmd/batch-replicate_test.go: `.Replicate.Source.Prefix.F()`
+$DIR/cmd/batch-replicate_test.go: `.Unmarshal([]byte(multiPrefixReplicateYaml), &multiPrefixJob)`
+$DIR/cmd/batch-replicate_test.go: `.Equal(multiPrefixJob.Replicate.Source.Prefix.F(), []string{"object-prefix1", "object-prefix2"})`
+$DIR/cmd/batch-replicate_test.go: `.Replicate.Source.Prefix.F()`
 $DIR/cmd/batch-rotate_gen_test.go: `left, err = msgp.Skip(bts)`
 $DIR/cmd/batch-rotate_gen_test.go: `msgp.Encode(&buf, &v)`
 $DIR/cmd/batch-rotate_gen_test.go: `buf.Reset()`
@@ -7254,6 +7298,32 @@ $DIR/cmd/storage-datatypes_gen_test.go: `msgp.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go: `buf.Reset()`
 $DIR/cmd/storage-datatypes_gen_test.go: `msgp.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go: `err = msgp.NewReader(&buf).Skip()`
+$DIR/cmd/storage-datatypes_gen_test.go: `left, err = msgp.Skip(bts)`
+$DIR/cmd/storage-datatypes_gen_test.go: `msgp.Encode(&buf, &v)`
+$DIR/cmd/storage-datatypes_gen_test.go: `buf.Reset()`
+$DIR/cmd/storage-datatypes_gen_test.go: `msgp.Encode(&buf, &v)`
+$DIR/cmd/storage-datatypes_gen_test.go: `err = msgp.NewReader(&buf).Skip()`
+$DIR/cmd/storage-datatypes_gen_test.go: `left, err = msgp.Skip(bts)`
+$DIR/cmd/storage-datatypes_gen_test.go: `msgp.Encode(&buf, &v)`
+$DIR/cmd/storage-datatypes_gen_test.go: `buf.Reset()`
+$DIR/cmd/storage-datatypes_gen_test.go: `msgp.Encode(&buf, &v)`
+$DIR/cmd/storage-datatypes_gen_test.go: `err = msgp.NewReader(&buf).Skip()`
+$DIR/cmd/storage-datatypes_gen_test.go: `.MarshalMsg(nil)`
+$DIR/cmd/storage-datatypes_gen_test.go: `.UnmarshalMsg(bts)`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Encode(&buf, &v)`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Msgsize()`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Len()`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Decode(&buf, &vn)`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Reset()`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Encode(&buf, &v)`
+$DIR/cmd/storage-datatypes_gen_test.go: `.MarshalMsg(nil)`
+$DIR/cmd/storage-datatypes_gen_test.go: `.UnmarshalMsg(bts)`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Encode(&buf, &v)`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Msgsize()`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Len()`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Decode(&buf, &vn)`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Reset()`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go: `.MarshalMsg(nil)`
 $DIR/cmd/storage-datatypes_gen_test.go: `.UnmarshalMsg(bts)`
 $DIR/cmd/storage-datatypes_gen_test.go: `.Encode(&buf, &v)`
