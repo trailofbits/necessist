@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.6.4
+
+- Update `windows-sys` to version 0.59 ([#1231](https://github.com/trailofbits/necessist/pull/1231))
+- Update `libsqlite3-sys` to version 0.29 ([#1233](https://github.com/trailofbits/necessist/pull/1233))
+- Update `swc_core` to version 0.101 ([#1246](https://github.com/trailofbits/necessist/pull/1246))
+
 ## 0.6.3
 
 - FEATURE: When a test cannot be run, show why ([#1201](https://github.com/trailofbits/necessist/pull/1201))
