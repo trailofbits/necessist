@@ -6151,6 +6151,19 @@ $DIR/cmd/metrics-v2_test.go: `.NewTicker(1 * time.Millisecond)`
 $DIR/cmd/metrics-v2_test.go: `.Stop()`
 $DIR/cmd/metrics-v2_test.go: `.With(prometheus.Labels{"api": obs.label})`
 $DIR/cmd/metrics-v2_test.go: `.Observe(obs.val)`
+$DIR/cmd/mrf_gen_test.go: `left, err = msgp.Skip(bts)`
+$DIR/cmd/mrf_gen_test.go: `msgp.Encode(&buf, &v)`
+$DIR/cmd/mrf_gen_test.go: `buf.Reset()`
+$DIR/cmd/mrf_gen_test.go: `msgp.Encode(&buf, &v)`
+$DIR/cmd/mrf_gen_test.go: `err = msgp.NewReader(&buf).Skip()`
+$DIR/cmd/mrf_gen_test.go: `.MarshalMsg(nil)`
+$DIR/cmd/mrf_gen_test.go: `.UnmarshalMsg(bts)`
+$DIR/cmd/mrf_gen_test.go: `.Encode(&buf, &v)`
+$DIR/cmd/mrf_gen_test.go: `.Msgsize()`
+$DIR/cmd/mrf_gen_test.go: `.Len()`
+$DIR/cmd/mrf_gen_test.go: `.Decode(&buf, &vn)`
+$DIR/cmd/mrf_gen_test.go: `.Reset()`
+$DIR/cmd/mrf_gen_test.go: `.Encode(&buf, &v)`
 $DIR/cmd/namespace-lock_test.go: `nsLk.lock(ctx, "volume", "path", "source", "opsID", false, 1*time.Millisecond)`
 $DIR/cmd/namespace-lock_test.go: `time.Sleep(1 * time.Millisecond)`
 $DIR/cmd/namespace-lock_test.go: `nsLk.unlock("volume", "path", false)`
@@ -7308,6 +7321,45 @@ $DIR/cmd/storage-datatypes_gen_test.go: `msgp.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go: `buf.Reset()`
 $DIR/cmd/storage-datatypes_gen_test.go: `msgp.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go: `err = msgp.NewReader(&buf).Skip()`
+$DIR/cmd/storage-datatypes_gen_test.go: `left, err = msgp.Skip(bts)`
+$DIR/cmd/storage-datatypes_gen_test.go: `msgp.Encode(&buf, &v)`
+$DIR/cmd/storage-datatypes_gen_test.go: `buf.Reset()`
+$DIR/cmd/storage-datatypes_gen_test.go: `msgp.Encode(&buf, &v)`
+$DIR/cmd/storage-datatypes_gen_test.go: `err = msgp.NewReader(&buf).Skip()`
+$DIR/cmd/storage-datatypes_gen_test.go: `left, err = msgp.Skip(bts)`
+$DIR/cmd/storage-datatypes_gen_test.go: `msgp.Encode(&buf, &v)`
+$DIR/cmd/storage-datatypes_gen_test.go: `buf.Reset()`
+$DIR/cmd/storage-datatypes_gen_test.go: `msgp.Encode(&buf, &v)`
+$DIR/cmd/storage-datatypes_gen_test.go: `err = msgp.NewReader(&buf).Skip()`
+$DIR/cmd/storage-datatypes_gen_test.go: `left, err = msgp.Skip(bts)`
+$DIR/cmd/storage-datatypes_gen_test.go: `msgp.Encode(&buf, &v)`
+$DIR/cmd/storage-datatypes_gen_test.go: `buf.Reset()`
+$DIR/cmd/storage-datatypes_gen_test.go: `msgp.Encode(&buf, &v)`
+$DIR/cmd/storage-datatypes_gen_test.go: `err = msgp.NewReader(&buf).Skip()`
+$DIR/cmd/storage-datatypes_gen_test.go: `.MarshalMsg(nil)`
+$DIR/cmd/storage-datatypes_gen_test.go: `.UnmarshalMsg(bts)`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Encode(&buf, &v)`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Msgsize()`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Len()`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Decode(&buf, &vn)`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Reset()`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Encode(&buf, &v)`
+$DIR/cmd/storage-datatypes_gen_test.go: `.MarshalMsg(nil)`
+$DIR/cmd/storage-datatypes_gen_test.go: `.UnmarshalMsg(bts)`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Encode(&buf, &v)`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Msgsize()`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Len()`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Decode(&buf, &vn)`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Reset()`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Encode(&buf, &v)`
+$DIR/cmd/storage-datatypes_gen_test.go: `.MarshalMsg(nil)`
+$DIR/cmd/storage-datatypes_gen_test.go: `.UnmarshalMsg(bts)`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Encode(&buf, &v)`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Msgsize()`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Len()`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Decode(&buf, &vn)`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Reset()`
+$DIR/cmd/storage-datatypes_gen_test.go: `.Encode(&buf, &v)`
 $DIR/cmd/storage-datatypes_gen_test.go: `.MarshalMsg(nil)`
 $DIR/cmd/storage-datatypes_gen_test.go: `.UnmarshalMsg(bts)`
 $DIR/cmd/storage-datatypes_gen_test.go: `.Encode(&buf, &v)`
@@ -8520,7 +8572,7 @@ $DIR/cmd/xl-storage-format-utils_test.go: `sort.Slice(versions, func(i, j int) b
 		return versions[i].ModTime.After(versions[j].ModTime)
 	})`
 $DIR/cmd/xl-storage-format-utils_test.go: `slices.Reverse(allVersionIDs)`
-$DIR/cmd/xl-storage-format-utils_test.go: `fivs, err = getFileInfoVersions(buf, basefi.Volume, basefi.Name, true, true)`
+$DIR/cmd/xl-storage-format-utils_test.go: `fivs, err = getFileInfoVersions(buf, basefi.Volume, basefi.Name, true)`
 $DIR/cmd/xl-storage-format-utils_test.go: `.Run(tt.name, func(t *testing.T) {
 			const n = 100
 			want := hashDeterministicString(tt.arg)
