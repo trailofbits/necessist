@@ -18,7 +18,9 @@ jobs:
           ssh-key: ${{ secrets.SSH_KEY }}
 
       - name: Update third-party tests
-        run: scripts/update_third_party_tests.sh
+        run: |
+          scripts/update_third_party_tests.sh
+          scripts/update_go_third_party_tests.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
