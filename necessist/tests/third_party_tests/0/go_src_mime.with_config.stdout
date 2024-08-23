@@ -1,4 +1,4 @@
-329 candidates in 56 tests in 12 source files
+331 candidates in 56 tests in 12 source files
 $DIR/src/mime/encodedword_test.go: dry running
 $DIR/src/mime/encodedword_test.go: mutilating
 $DIR/src/mime/encodedword_test.go: `wordLen = 0` timed-out
@@ -151,6 +151,7 @@ $DIR/src/mime/quotedprintable/reader_test.go: `cmd.Process.Kill()` passed
 $DIR/src/mime/quotedprintable/reader_test.go: `qpres <- want` passed
 $DIR/src/mime/quotedprintable/reader_test.go: `res["OK"]++` failed
 $DIR/src/mime/quotedprintable/reader_test.go: `outcomes = append(outcomes, fmt.Sprintf("%v: %d", k, v))` failed
+$DIR/src/mime/quotedprintable/reader_test.go: `slices.Sort(outcomes)` passed
 $DIR/src/mime/quotedprintable/reader_test.go: `want = `OK: 896
 invalid bytes after =: 100
 quotedprintable: invalid hex byte 0x0d: 26
@@ -190,6 +191,7 @@ $DIR/src/mime/quotedprintable/reader_test.go: `.Output()` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go: `.String()` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go: `.After(5 * time.Second)` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go: `.Sprintf("%v: %d", k, v)` nonbuildable
+$DIR/src/mime/quotedprintable/reader_test.go: `.Sort(outcomes)` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go: `.Join(outcomes, "\n")` nonbuildable
 $DIR/src/mime/quotedprintable/reader_test.go: `.Short()` nonbuildable
 $DIR/src/mime/quotedprintable/writer_test.go: dry running
