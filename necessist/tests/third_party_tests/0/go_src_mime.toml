@@ -8,4 +8,4 @@ config_mandatory = true
 subdir = "src/mime"
 
 [config]
-ignored_functions = ["sort.Strings"]
+ignored_functions = ["slices.Sort"]

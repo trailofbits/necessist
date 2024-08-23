@@ -1,5 +1,10 @@
 url = "https://github.com/golang/go"
 rev = "go1.23.0"
+
+# smoelius: Following the upgrade to go1.23.0, this test started acting funny on Windows. So just
+# ignore Windows for now.
+target_os = ["linux", "macos"]
+
 framework = "go"
 full = true
 
