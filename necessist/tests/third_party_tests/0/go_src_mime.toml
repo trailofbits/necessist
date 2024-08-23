@@ -1,6 +1,5 @@
 url = "https://github.com/golang/go"
 rev = "go1.23.0"
-target_os = ["linux", "macos"]
 framework = "go"
 full = true
 config_mandatory = true
