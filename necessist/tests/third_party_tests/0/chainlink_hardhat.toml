@@ -1,5 +1,5 @@
 url = "https://github.com/smartcontractkit/chainlink"
-rev = "v2.14.0"
+rev = "v2.15.0"
 subdir = "contracts"
 framework = "hardhat"
 

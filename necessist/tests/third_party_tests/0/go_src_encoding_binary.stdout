@@ -1,19 +1,160 @@
-105 candidates in 30 tests in 3 source files
+154 candidates in 32 tests in 3 source files
 $DIR/src/encoding/binary/binary_test.go: dry running
 $DIR/src/encoding/binary/binary_test.go: mutilating
-$DIR/src/encoding/binary/binary_test.go: `err = Read(bytes.NewReader([]byte{0}), BigEndian, &res)` passed
-$DIR/src/encoding/binary/binary_test.go: `checkResult(t, "ReadBool", BigEndian, err, res, false)` passed
+$DIR/src/encoding/binary/binary_test.go: `t.Run("Read", func(t *testing.T) {
+		slice := make([]int32, 2)
+		err := Read(bytes.NewReader(src), BigEndian, slice)
+		checkResult(t, "ReadSlice", BigEndian, err, slice, res)
+	})` passed
+$DIR/src/encoding/binary/binary_test.go: `checkResult(t, "ReadSlice", BigEndian, err, slice, res)` passed
+$DIR/src/encoding/binary/binary_test.go: `checkResult(t, "ReadSlice", BigEndian, err, slice, res)` passed
+$DIR/src/encoding/binary/binary_test.go: `t.Run(dec.name, func(t *testing.T) {
+			var res bool
+			var err error
+			err = dec.fn(BigEndian, &res, []byte{0})
+			checkResult(t, dec.name, BigEndian, err, res, false)
+			res = false
+			err = dec.fn(BigEndian, &res, []byte{1})
+			checkResult(t, dec.name, BigEndian, err, res, true)
+			res = false
+			err = dec.fn(BigEndian, &res, []byte{2})
+			checkResult(t, dec.name, BigEndian, err, res, true)
+		})` passed
+$DIR/src/encoding/binary/binary_test.go: `err = dec.fn(BigEndian, &res, []byte{0})` passed
+$DIR/src/encoding/binary/binary_test.go: `checkResult(t, dec.name, BigEndian, err, res, false)` passed
 $DIR/src/encoding/binary/binary_test.go: `res = false` passed
-$DIR/src/encoding/binary/binary_test.go: `err = Read(bytes.NewReader([]byte{1}), BigEndian, &res)` failed
-$DIR/src/encoding/binary/binary_test.go: `checkResult(t, "ReadBool", BigEndian, err, res, true)` passed
+$DIR/src/encoding/binary/binary_test.go: `err = dec.fn(BigEndian, &res, []byte{1})` failed
+$DIR/src/encoding/binary/binary_test.go: `checkResult(t, dec.name, BigEndian, err, res, true)` passed
 $DIR/src/encoding/binary/binary_test.go: `res = false` passed
-$DIR/src/encoding/binary/binary_test.go: `err = Read(bytes.NewReader([]byte{2}), BigEndian, &res)` failed
+$DIR/src/encoding/binary/binary_test.go: `err = dec.fn(BigEndian, &res, []byte{2})` failed
+$DIR/src/encoding/binary/binary_test.go: `checkResult(t, dec.name, BigEndian, err, res, true)` passed
+$DIR/src/encoding/binary/binary_test.go: `t.Run(dec.name, func(t *testing.T) {
+			slice := make([]bool, 4)
+			err := dec.fn(BigEndian, slice, []byte{0, 1, 2, 255})
+			checkResult(t, dec.name, BigEndian, err, slice, []bool{false, true, true, true})
+		})` passed
+$DIR/src/encoding/binary/binary_test.go: `checkResult(t, dec.name, BigEndian, err, slice, []bool{false, true, true, true})` passed
+$DIR/src/encoding/binary/binary_test.go: `t.Run(fmt.Sprintf("%s,%s", enc.name, dec.name), func(t *testing.T) {
+				for _, array := range intArrays {
+					src := reflect.ValueOf(array).Elem()
+					t.Run(src.Index(0).Type().Name(), func(t *testing.T) {
+						unsigned := false
+						switch src.Index(0).Kind() {
+						case reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+							unsigned = true
+						}
+						for i := 0; i < src.Len(); i++ {
+							if unsigned {
+								src.Index(i).SetUint(uint64(i * 0x07654321))
+							} else {
+								src.Index(i).SetInt(int64(i * 0x07654321))
+							}
+						}
+						srcSlice := src.Slice(0, src.Len())
+						buf, err := enc.fn(BigEndian, srcSlice.Interface())
+						if err != nil {
+							t.Fatal(err)
+						}
+						dst := reflect.New(src.Type()).Elem()
+						dstSlice := dst.Slice(0, dst.Len())
+						err = dec.fn(BigEndian, dstSlice.Interface(), buf)
+						if err != nil {
+							t.Fatal(err)
+						}
+						if !reflect.DeepEqual(src.Interface(), dst.Interface()) {
+							t.Log(dst)
+							t.Fatal(src)
+						}
+					})
+				}
+			})` passed
+$DIR/src/encoding/binary/binary_test.go: `t.Run(src.Index(0).Type().Name(), func(t *testing.T) {
+						unsigned := false
+						switch src.Index(0).Kind() {
+						case reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+							unsigned = true
+						}
+						for i := 0; i < src.Len(); i++ {
+							if unsigned {
+								src.Index(i).SetUint(uint64(i * 0x07654321))
+							} else {
+								src.Index(i).SetInt(int64(i * 0x07654321))
+							}
+						}
+						srcSlice := src.Slice(0, src.Len())
+						buf, err := enc.fn(BigEndian, srcSlice.Interface())
+						if err != nil {
+							t.Fatal(err)
+						}
+						dst := reflect.New(src.Type()).Elem()
+						dstSlice := dst.Slice(0, dst.Len())
+						err = dec.fn(BigEndian, dstSlice.Interface(), buf)
+						if err != nil {
+							t.Fatal(err)
+						}
+						if !reflect.DeepEqual(src.Interface(), dst.Interface()) {
+							t.Log(dst)
+							t.Fatal(src)
+						}
+					})` passed
 $DIR/src/encoding/binary/binary_test.go: `unsigned = true` failed
 $DIR/src/encoding/binary/binary_test.go: `src.Index(i).SetUint(uint64(i * 0x07654321))` passed
 $DIR/src/encoding/binary/binary_test.go: `src.Index(i).SetInt(int64(i * 0x07654321))` passed
-$DIR/src/encoding/binary/binary_test.go: `buf.Reset()` passed
-$DIR/src/encoding/binary/binary_test.go: `err = Read(buf, BigEndian, dstSlice.Interface())` failed
+$DIR/src/encoding/binary/binary_test.go: `err = dec.fn(BigEndian, dstSlice.Interface(), buf)` failed
+$DIR/src/encoding/binary/binary_test.go: `t.Run(enc.name, func(t *testing.T) {
+			ts := T{}
+			if _, err := enc.fn(BigEndian, ts); err == nil {
+				t.Errorf("WriteT: have err == nil, want non-nil")
+			}
+
+			tv := reflect.Indirect(reflect.ValueOf(ts))
+			for i, n := 0, tv.NumField(); i < n; i++ {
+				typ := tv.Field(i).Type().String()
+				if typ == "[4]int" {
+					typ = "int" // the problem is int, not the [4]
+				}
+				if _, err := enc.fn(BigEndian, tv.Field(i).Interface()); err == nil {
+					t.Errorf("WriteT.%v: have err == nil, want non-nil", tv.Field(i).Type())
+				} else if !strings.Contains(err.Error(), typ) {
+					t.Errorf("WriteT: have err == %q, want it to mention %s", err, typ)
+				}
+			}
+		})` passed
 $DIR/src/encoding/binary/binary_test.go: `typ = "int"` passed
+$DIR/src/encoding/binary/binary_test.go: `t.Run(enc.name, func(t *testing.T) {
+			b1 := BlankFields{A: 1234567890, B: 2.718281828, C: 42}
+			buf, err := enc.fn(LittleEndian, &b1)
+			if err != nil {
+				t.Error(err)
+			}
+
+			// zero values must have been written for blank fields
+			var p BlankFieldsProbe
+			if err := Read(bytes.NewReader(buf), LittleEndian, &p); err != nil {
+				t.Error(err)
+			}
+
+			// quick test: only check first value of slices
+			if p.P0 != 0 || p.P1[0] != 0 || p.P2[0] != 0 || p.P3.F[0] != 0 {
+				t.Errorf("non-zero values for originally blank fields: %#v", p)
+			}
+
+			// write p and see if we can probe only some fields
+			buf, err = enc.fn(LittleEndian, &p)
+			if err != nil {
+				t.Error(err)
+			}
+
+			// read should ignore blank fields in b2
+			var b2 BlankFields
+			if err := Read(bytes.NewReader(buf), LittleEndian, &b2); err != nil {
+				t.Error(err)
+			}
+			if b1.A != b2.A || b1.B != b2.B || b1.C != b2.C {
+				t.Errorf("%#v != %#v", b1, b2)
+			}
+		})` passed
+$DIR/src/encoding/binary/binary_test.go: `buf, err = enc.fn(LittleEndian, &p)` passed
 $DIR/src/encoding/binary/binary_test.go: `structSize = sync.Map{}` passed
 $DIR/src/encoding/binary/binary_test.go: `structSize.Range(func(_, _ any) bool {
 			i++
@@ -21,8 +162,37 @@ $DIR/src/encoding/binary/binary_test.go: `structSize.Range(func(_, _ any) bool {
 		})` failed
 $DIR/src/encoding/binary/binary_test.go: `i++` failed
 $DIR/src/encoding/binary/binary_test.go: `total += delta` failed
+$DIR/src/encoding/binary/binary_test.go: `t.Run(dec.name, func(t *testing.T) {
+			defer func() {
+				if recover() == nil {
+					t.Fatal("did not panic")
+				}
+			}()
+			var u2 Unexported
+			dec.fn(LittleEndian, &u2, buf.Bytes())
+		})` passed
+$DIR/src/encoding/binary/binary_test.go: `dec.fn(LittleEndian, &u2, buf.Bytes())` failed
+$DIR/src/encoding/binary/binary_test.go: `t.Run(dec.name, func(t *testing.T) {
+			read := func(data any) {
+				err := dec.fn(LittleEndian, data, nil)
+				want := fmt.Sprintf("binary.%s: invalid type %s", dec.name, reflect.TypeOf(data).String())
+				if err == nil {
+					t.Errorf("%T: got no error; want %q", data, want)
+					return
+				}
+				if got := err.Error(); got != want {
+					t.Errorf("%T: got %q; want %q", data, got, want)
+				}
+			}
+			read(0)
+			s := new(struct{})
+			read(&s)
+			p := &s
+			read(&p)
+		})` passed
 $DIR/src/encoding/binary/binary_test.go: `read(0)` passed
 $DIR/src/encoding/binary/binary_test.go: `read(&s)` passed
+$DIR/src/encoding/binary/binary_test.go: `read(&p)` passed
 $DIR/src/encoding/binary/binary_test.go: `errWant = io.EOF` failed
 $DIR/src/encoding/binary/binary_test.go: `errWant = nil` passed
 $DIR/src/encoding/binary/binary_test.go: `errWant = io.ErrUnexpectedEOF` failed
@@ -33,14 +203,125 @@ $DIR/src/encoding/binary/binary_test.go: `buf = order.AppendUint32(buf[:offset],
 $DIR/src/encoding/binary/binary_test.go: `order.PutUint64(buf[:8], want64)` failed
 $DIR/src/encoding/binary/binary_test.go: `buf = order.AppendUint64(buf[:offset], want64)` failed
 $DIR/src/encoding/binary/binary_test.go: `testReadInvalidDestination(t, BigEndian)` passed
+$DIR/src/encoding/binary/binary_test.go: `t.Run(enc.name, func(t *testing.T) {
+			_, err := enc.fn(LittleEndian, &person)
+			if err == nil {
+				t.Fatalf("binary.%s: unexpected success as size of type *binary.Person is not fixed", enc.name)
+			}
+			errs := fmt.Sprintf("binary.%s: some values are not fixed-sized in type *binary.Person", enc.name)
+			if err.Error() != errs {
+				t.Fatalf("got %q, want %q", err, errs)
+			}
+		})` passed
+$DIR/src/encoding/binary/binary_test.go: `_, err = Append(buf, LittleEndian, &s)` passed
+$DIR/src/encoding/binary/binary_test.go: `t.Run(fmt.Sprintf("%T", data), func(t *testing.T) {
+			// Size uses a sync.Map behind the scenes. The slow lookup path of
+			// that does allocate, so we need a couple of runs here to be
+			// allocation free.
+			allocs := testing.AllocsPerRun(10, func() {
+				_ = Size(data)
+			})
+			if allocs != 0 {
+				t.Fatalf("Expected no allocations, got %v", allocs)
+			}
+		})` passed
+$DIR/src/encoding/binary/binary_test.go: `_ = Size(data)` passed
+$DIR/src/encoding/binary/binary_test.go: `.Run("Read", func(t *testing.T) {
+		slice := make([]int32, 2)
+		err := Read(bytes.NewReader(src), BigEndian, slice)
+		checkResult(t, "ReadSlice", BigEndian, err, slice, res)
+	})` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.NewReader(src)` nonbuildable
-$DIR/src/encoding/binary/binary_test.go: `.Bytes()` failed
-$DIR/src/encoding/binary/binary_test.go: `.NewReader([]byte{0})` nonbuildable
-$DIR/src/encoding/binary/binary_test.go: `.NewReader([]byte{1})` nonbuildable
-$DIR/src/encoding/binary/binary_test.go: `.NewReader([]byte{2})` nonbuildable
-$DIR/src/encoding/binary/binary_test.go: `.NewReader([]byte{0, 1, 2, 255})` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.Run(dec.name, func(t *testing.T) {
+			var res bool
+			var err error
+			err = dec.fn(BigEndian, &res, []byte{0})
+			checkResult(t, dec.name, BigEndian, err, res, false)
+			res = false
+			err = dec.fn(BigEndian, &res, []byte{1})
+			checkResult(t, dec.name, BigEndian, err, res, true)
+			res = false
+			err = dec.fn(BigEndian, &res, []byte{2})
+			checkResult(t, dec.name, BigEndian, err, res, true)
+		})` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.fn(BigEndian, &res, []byte{0})` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.fn(BigEndian, &res, []byte{1})` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.fn(BigEndian, &res, []byte{2})` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.Run(dec.name, func(t *testing.T) {
+			slice := make([]bool, 4)
+			err := dec.fn(BigEndian, slice, []byte{0, 1, 2, 255})
+			checkResult(t, dec.name, BigEndian, err, slice, []bool{false, true, true, true})
+		})` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.fn(BigEndian, slice, []byte{0, 1, 2, 255})` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.Run(fmt.Sprintf("%s,%s", enc.name, dec.name), func(t *testing.T) {
+				for _, array := range intArrays {
+					src := reflect.ValueOf(array).Elem()
+					t.Run(src.Index(0).Type().Name(), func(t *testing.T) {
+						unsigned := false
+						switch src.Index(0).Kind() {
+						case reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+							unsigned = true
+						}
+						for i := 0; i < src.Len(); i++ {
+							if unsigned {
+								src.Index(i).SetUint(uint64(i * 0x07654321))
+							} else {
+								src.Index(i).SetInt(int64(i * 0x07654321))
+							}
+						}
+						srcSlice := src.Slice(0, src.Len())
+						buf, err := enc.fn(BigEndian, srcSlice.Interface())
+						if err != nil {
+							t.Fatal(err)
+						}
+						dst := reflect.New(src.Type()).Elem()
+						dstSlice := dst.Slice(0, dst.Len())
+						err = dec.fn(BigEndian, dstSlice.Interface(), buf)
+						if err != nil {
+							t.Fatal(err)
+						}
+						if !reflect.DeepEqual(src.Interface(), dst.Interface()) {
+							t.Log(dst)
+							t.Fatal(src)
+						}
+					})
+				}
+			})` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.Sprintf("%s,%s", enc.name, dec.name)` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.ValueOf(array)` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Elem()` failed
+$DIR/src/encoding/binary/binary_test.go: `.Run(src.Index(0).Type().Name(), func(t *testing.T) {
+						unsigned := false
+						switch src.Index(0).Kind() {
+						case reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+							unsigned = true
+						}
+						for i := 0; i < src.Len(); i++ {
+							if unsigned {
+								src.Index(i).SetUint(uint64(i * 0x07654321))
+							} else {
+								src.Index(i).SetInt(int64(i * 0x07654321))
+							}
+						}
+						srcSlice := src.Slice(0, src.Len())
+						buf, err := enc.fn(BigEndian, srcSlice.Interface())
+						if err != nil {
+							t.Fatal(err)
+						}
+						dst := reflect.New(src.Type()).Elem()
+						dstSlice := dst.Slice(0, dst.Len())
+						err = dec.fn(BigEndian, dstSlice.Interface(), buf)
+						if err != nil {
+							t.Fatal(err)
+						}
+						if !reflect.DeepEqual(src.Interface(), dst.Interface()) {
+							t.Log(dst)
+							t.Fatal(src)
+						}
+					})` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.Index(0)` passed
+$DIR/src/encoding/binary/binary_test.go: `.Type()` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.Name()` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Index(0)` failed
 $DIR/src/encoding/binary/binary_test.go: `.Kind()` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Len()` nonbuildable
@@ -48,34 +329,124 @@ $DIR/src/encoding/binary/binary_test.go: `.Index(i)` failed
 $DIR/src/encoding/binary/binary_test.go: `.SetUint(uint64(i * 0x07654321))` passed
 $DIR/src/encoding/binary/binary_test.go: `.Index(i)` failed
 $DIR/src/encoding/binary/binary_test.go: `.SetInt(int64(i * 0x07654321))` passed
-$DIR/src/encoding/binary/binary_test.go: `.Reset()` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Slice(0, src.Len())` passed
 $DIR/src/encoding/binary/binary_test.go: `.Len()` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.fn(BigEndian, srcSlice.Interface())` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Interface()` failed
 $DIR/src/encoding/binary/binary_test.go: `.New(src.Type())` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Type()` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Elem()` failed
 $DIR/src/encoding/binary/binary_test.go: `.Slice(0, dst.Len())` failed
 $DIR/src/encoding/binary/binary_test.go: `.Len()` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.fn(BigEndian, dstSlice.Interface(), buf)` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Interface()` failed
 $DIR/src/encoding/binary/binary_test.go: `.DeepEqual(src.Interface(), dst.Interface())` nonbuildable
-$DIR/src/encoding/binary/binary_test.go: `.Interface()` failed
-$DIR/src/encoding/binary/binary_test.go: `.Interface()` failed
+$DIR/src/encoding/binary/binary_test.go: `.Interface()` timed-out
+$DIR/src/encoding/binary/binary_test.go: `.Interface()` timed-out
+$DIR/src/encoding/binary/binary_test.go: `.Run(enc.name, func(t *testing.T) {
+			ts := T{}
+			if _, err := enc.fn(BigEndian, ts); err == nil {
+				t.Errorf("WriteT: have err == nil, want non-nil")
+			}
+
+			tv := reflect.Indirect(reflect.ValueOf(ts))
+			for i, n := 0, tv.NumField(); i < n; i++ {
+				typ := tv.Field(i).Type().String()
+				if typ == "[4]int" {
+					typ = "int" // the problem is int, not the [4]
+				}
+				if _, err := enc.fn(BigEndian, tv.Field(i).Interface()); err == nil {
+					t.Errorf("WriteT.%v: have err == nil, want non-nil", tv.Field(i).Type())
+				} else if !strings.Contains(err.Error(), typ) {
+					t.Errorf("WriteT: have err == %q, want it to mention %s", err, typ)
+				}
+			}
+		})` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.fn(BigEndian, ts)` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Indirect(reflect.ValueOf(ts))` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.ValueOf(ts)` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.NumField()` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Field(i)` failed
 $DIR/src/encoding/binary/binary_test.go: `.Type()` failed
 $DIR/src/encoding/binary/binary_test.go: `.String()` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.fn(BigEndian, tv.Field(i).Interface())` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Field(i)` failed
 $DIR/src/encoding/binary/binary_test.go: `.Interface()` failed
 $DIR/src/encoding/binary/binary_test.go: `.Contains(err.Error(), typ)` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.Run(enc.name, func(t *testing.T) {
+			b1 := BlankFields{A: 1234567890, B: 2.718281828, C: 42}
+			buf, err := enc.fn(LittleEndian, &b1)
+			if err != nil {
+				t.Error(err)
+			}
+
+			// zero values must have been written for blank fields
+			var p BlankFieldsProbe
+			if err := Read(bytes.NewReader(buf), LittleEndian, &p); err != nil {
+				t.Error(err)
+			}
+
+			// quick test: only check first value of slices
+			if p.P0 != 0 || p.P1[0] != 0 || p.P2[0] != 0 || p.P3.F[0] != 0 {
+				t.Errorf("non-zero values for originally blank fields: %#v", p)
+			}
+
+			// write p and see if we can probe only some fields
+			buf, err = enc.fn(LittleEndian, &p)
+			if err != nil {
+				t.Error(err)
+			}
+
+			// read should ignore blank fields in b2
+			var b2 BlankFields
+			if err := Read(bytes.NewReader(buf), LittleEndian, &b2); err != nil {
+				t.Error(err)
+			}
+			if b1.A != b2.A || b1.B != b2.B || b1.C != b2.C {
+				t.Errorf("%#v != %#v", b1, b2)
+			}
+		})` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.fn(LittleEndian, &b1)` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.NewReader(buf)` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.fn(LittleEndian, &p)` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.NewReader(buf)` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Range(func(_, _ any) bool {
 			i++
 			return true
 		})` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.Run(dec.name, func(t *testing.T) {
+			defer func() {
+				if recover() == nil {
+					t.Fatal("did not panic")
+				}
+			}()
+			var u2 Unexported
+			dec.fn(LittleEndian, &u2, buf.Bytes())
+		})` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.fn(LittleEndian, &u2, buf.Bytes())` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.Bytes()` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.Run(dec.name, func(t *testing.T) {
+			read := func(data any) {
+				err := dec.fn(LittleEndian, data, nil)
+				want := fmt.Sprintf("binary.%s: invalid type %s", dec.name, reflect.TypeOf(data).String())
+				if err == nil {
+					t.Errorf("%T: got no error; want %q", data, want)
+					return
+				}
+				if got := err.Error(); got != want {
+					t.Errorf("%T: got %q; want %q", data, got, want)
+				}
+			}
+			read(0)
+			s := new(struct{})
+			read(&s)
+			p := &s
+			read(&p)
+		})` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.fn(LittleEndian, data, nil)` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.Sprintf("binary.%s: invalid type %s", dec.name, reflect.TypeOf(data).String())` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.TypeOf(data)` nonbuildable
-$DIR/src/encoding/binary/binary_test.go: `.String()` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.String()` passed
 $DIR/src/encoding/binary/binary_test.go: `.NewReader(data[:i])` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.NewReader(data[:i])` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Float64bits(math.Pi)` nonbuildable
@@ -92,6 +463,36 @@ $DIR/src/encoding/binary/binary_test.go: `.PutUint64(buf[:8], want64)` nonbuilda
 $DIR/src/encoding/binary/binary_test.go: `.Uint64(buf[:8])` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.AppendUint64(buf[:offset], want64)` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Uint64(buf[offset:])` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.Run(enc.name, func(t *testing.T) {
+			_, err := enc.fn(LittleEndian, &person)
+			if err == nil {
+				t.Fatalf("binary.%s: unexpected success as size of type *binary.Person is not fixed", enc.name)
+			}
+			errs := fmt.Sprintf("binary.%s: some values are not fixed-sized in type *binary.Person", enc.name)
+			if err.Error() != errs {
+				t.Fatalf("got %q, want %q", err, errs)
+			}
+		})` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.fn(LittleEndian, &person)` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.Sprintf("binary.%s: some values are not fixed-sized in type *binary.Person", enc.name)` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.AllocsPerRun(1, func() {
+		_, err = Append(buf, LittleEndian, &s)
+	})` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.Run(fmt.Sprintf("%T", data), func(t *testing.T) {
+			// Size uses a sync.Map behind the scenes. The slow lookup path of
+			// that does allocate, so we need a couple of runs here to be
+			// allocation free.
+			allocs := testing.AllocsPerRun(10, func() {
+				_ = Size(data)
+			})
+			if allocs != 0 {
+				t.Fatalf("Expected no allocations, got %v", allocs)
+			}
+		})` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.Sprintf("%T", data)` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.AllocsPerRun(10, func() {
+				_ = Size(data)
+			})` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Slice((*byte)(unsafe.Pointer(&i)), unsafe.Sizeof(i))` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Pointer(&i)` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Sizeof(i)` nonbuildable
