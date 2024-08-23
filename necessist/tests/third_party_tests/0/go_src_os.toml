@@ -9,7 +9,7 @@
 # [`recursive_kill`]: https://github.com/trailofbits/necessist/blob/1ded71dc3bbd191535d38e9b6c1467eda7ea42b2/core/src/core.rs#L565
 
 url = "https://github.com/golang/go"
-rev = "go1.22.2"
+rev = "go1.23.0"
 init = "cd src && ./make.bash"
 path_prefix = "bin"
 
