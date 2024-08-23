@@ -1,10 +1,7 @@
 use crate::{config, rewriter::Rewriter, LightContext, SourceFile, Span};
 use anyhow::Result;
-use indexmap::IndexMap;
-use std::{
-    collections::{BTreeMap, BTreeSet},
-    path::Path,
-};
+use indexmap::IndexSet;
+use std::{collections::BTreeMap, path::Path};
 use subprocess::{Exec, Popen};
 
 mod auto;
@@ -31,8 +28,6 @@ pub trait Interface: Parse + Run {}
 
 pub type SourceFileTestSpanMap = BTreeMap<SourceFile, TestSpanMaps>;
 
-// smoelius: The `statement` and `method_call` maps are expected to have the same sets of keys. This
-// is a little ugly, but it simplifies the implementation of `necessist_core`.
 #[derive(Default)]
 pub struct TestSpanMaps {
     pub statement: TestSpanMap,
@@ -43,20 +38,23 @@ impl TestSpanMaps {
     pub fn iter(&self) -> impl Iterator<Item = (&str, &Span, SpanKind)> {
         self.statement
             .iter()
-            .flat_map(|(test_name, spans)| {
-                spans
+            .flat_map(|(span, test_names)| {
+                test_names
                     .iter()
-                    .map(|span| (test_name.as_str(), span, SpanKind::Statement))
+                    .map(move |test_name| (test_name.as_str(), span, SpanKind::Statement))
             })
-            .chain(self.method_call.iter().flat_map(|(test_name, spans)| {
-                spans
+            .chain(self.method_call.iter().flat_map(|(span, test_names)| {
+                test_names
                     .iter()
-                    .map(|span| (test_name.as_str(), span, SpanKind::MethodCall))
+                    .map(move |test_name| (test_name.as_str(), span, SpanKind::MethodCall))
             }))
     }
 }
 
-pub type TestSpanMap = IndexMap<String, BTreeSet<Span>>;
+/// Maps a [`Span`] to the names of the tests that exercise it
+///
+/// The test names are needed because they are passed to [`Run::exec`].
+pub type TestSpanMap = BTreeMap<Span, IndexSet<String>>;
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum SpanKind {

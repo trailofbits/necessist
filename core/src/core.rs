@@ -7,13 +7,14 @@ use crate::{
 use ansi_term::Style;
 use anyhow::{anyhow, bail, ensure, Context as _, Result};
 use heck::ToKebabCase;
+use indexmap::IndexSet;
 use indicatif::ProgressBar;
 use itertools::{peek_nth, PeekNth};
 use log::debug;
 use once_cell::sync::OnceCell;
 use std::{
     cell::RefCell,
-    collections::{BTreeMap, BTreeSet},
+    collections::BTreeMap,
     env::{current_dir, var},
     fmt::Display,
     io::{IsTerminal, Write},
@@ -203,12 +204,12 @@ fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementatio
             test_span_maps
                 .statement
                 .values()
-                .map(BTreeSet::len)
+                .map(IndexSet::len)
                 .sum::<usize>()
                 + test_span_maps
                     .method_call
                     .values()
-                    .map(BTreeSet::len)
+                    .map(IndexSet::len)
                     .sum::<usize>()
         })
         .sum();
@@ -222,11 +223,13 @@ fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementatio
         let n_tests = source_file_test_span_map
             .values()
             .map(|test_span_maps| {
-                assert_eq!(
-                    test_span_maps.statement.keys().len(),
-                    test_span_maps.method_call.keys().len()
-                );
-                test_span_maps.statement.keys().len()
+                test_span_maps
+                    .statement
+                    .values()
+                    .flatten()
+                    .chain(test_span_maps.method_call.values().flatten())
+                    .collect::<IndexSet<_>>()
+                    .len()
             })
             .sum::<usize>();
         let n_source_files = source_file_test_span_map.keys().len();
@@ -554,10 +557,9 @@ fn dump_candidates(
         .flat_map(|test_span_maps| {
             test_span_maps
                 .statement
-                .values()
-                .chain(test_span_maps.method_call.values())
+                .keys()
+                .chain(test_span_maps.method_call.keys())
         })
-        .flatten()
     {
         let text = span.source_text()?;
 
