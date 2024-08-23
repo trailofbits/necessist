@@ -6,7 +6,7 @@ use necessist_core::{
     LightContext, SourceFile, Span,
 };
 use paste::paste;
-use std::{cell::RefCell, collections::BTreeSet};
+use std::cell::RefCell;
 
 pub struct GenericVisitor<'context, 'config, 'backend, 'ast, T: ParseLow> {
     pub context: &'context LightContext<'context>,
@@ -101,8 +101,6 @@ impl<'context, 'config, 'backend, 'ast, T: ParseLow>
         if self.config.is_ignored_test(&name) {
             return false;
         }
-
-        self.register_test(&name);
 
         assert!(self.test_name.is_none());
         self.test_name = Some(name);
@@ -304,29 +302,13 @@ impl<'context, 'config, 'backend, 'ast, T: ParseLow>
         }
     }
 
-    fn register_test(&mut self, test_name: &str) {
-        if self.test_span_maps.statement.contains_key(test_name) {
-            assert!(self.test_span_maps.method_call.contains_key(test_name));
-        } else {
-            assert!(!self.test_span_maps.method_call.contains_key(test_name));
-            self.test_span_maps
-                .statement
-                .insert(test_name.to_owned(), BTreeSet::new());
-            self.test_span_maps
-                .method_call
-                .insert(test_name.to_owned(), BTreeSet::new());
-        }
-    }
-
     fn register_span(&mut self, span: Span, test_name: &str, kind: SpanKind) {
         let test_span_map = match kind {
             SpanKind::Statement => &mut self.test_span_maps.statement,
             SpanKind::MethodCall => &mut self.test_span_maps.method_call,
         };
-        let spans = test_span_map
-            .get_mut(test_name)
-            .unwrap_or_else(|| panic!("Test `{test_name}` is not registered"));
-        spans.insert(span);
+        let test_names = test_span_map.entry(span).or_default();
+        test_names.insert(test_name.to_owned());
     }
 
     /// Serves two functions that would require similar implementations:
