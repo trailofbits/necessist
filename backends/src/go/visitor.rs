@@ -1,8 +1,8 @@
 #![cfg_attr(dylint_lib = "general", allow(non_local_effect_before_error_return))]
 
 use super::{
-    bounded_cursor, cursor_matches, process_self_captures, valid_query, Call, GenericVisitor, Go,
-    Statement, Storage, Test, CALL_EXPRESSION_KIND,
+    bounded_cursor, process_self_captures, valid_query, Call, GenericVisitor, Go, Statement,
+    Storage, Test, CALL_EXPRESSION_KIND,
 };
 use anyhow::Result;
 use necessist_core::framework::TestSpanMaps;
@@ -67,8 +67,7 @@ impl<'context, 'config, 'backend, 'ast, 'storage>
 
     fn visit_tree(&mut self, tree: &'ast Tree) -> Result<()> {
         let mut cursor = QueryCursor::new();
-        for query_match in cursor_matches(
-            &mut cursor,
+        for query_match in cursor.matches(
             &TEST_FUNCTION_DECLARATION_QUERY,
             tree.root_node(),
             self.storage.borrow().text.as_bytes(),
@@ -81,7 +80,7 @@ impl<'context, 'config, 'backend, 'ast, 'storage>
 
     fn visit_test_function_declaration(
         &mut self,
-        query_match: &QueryMatch<'ast, '_>,
+        query_match: &QueryMatch<'_, 'ast>,
     ) -> Result<()> {
         assert_eq!(2, query_match.captures.len());
 
