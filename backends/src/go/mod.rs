@@ -13,7 +13,7 @@ use std::{
     collections::BTreeMap, convert::Infallible, fs::read_to_string, path::Path, process::Command,
 };
 use tree_sitter::{
-    Node, Parser, Point, Query, QueryCapture, QueryCursor, QueryMatches, Range, TextProvider, Tree,
+    Node, Parser, Point, Query, QueryCapture, QueryCursor, Range, TextProvider, Tree,
 };
 
 mod bounded_cursor;
@@ -606,7 +606,7 @@ where
     #[cfg(any())]
     cursor.set_max_start_depth(max_start_depth);
 
-    let query_matches = cursor_matches(&mut cursor, query, query_node, text_provider);
+    let query_matches = cursor.matches(query, query_node, text_provider);
 
     let mut iter = query_matches
         .map(|query_match| query_match.captures)
@@ -614,22 +614,6 @@ where
         .map(sort_captures);
 
     f(&mut iter)
-}
-
-// smoelius: `cursor_matches` is a workaround until the following is resolved:
-// https://github.com/tree-sitter/tree-sitter/pull/2273
-fn cursor_matches<'query, 'source, 'tree, 'cursor, T: TextProvider<&'source [u8]> + 'source>(
-    cursor: &'cursor mut QueryCursor,
-    query: &'query Query,
-    node: Node<'tree>,
-    text_provider: T,
-) -> QueryMatches<'source, 'source, T, &'source [u8]> {
-    let cursor = unsafe {
-        std::mem::transmute::<&'cursor mut QueryCursor, &'source mut QueryCursor>(cursor)
-    };
-    let query = unsafe { std::mem::transmute::<&'query Query, &'source Query>(query) };
-    let node = unsafe { std::mem::transmute::<Node<'tree>, Node<'source>>(node) };
-    cursor.matches(query, node, text_provider)
 }
 
 fn sort_captures<'tree>(captures: &[QueryCapture<'tree>]) -> Vec<QueryCapture<'tree>> {
