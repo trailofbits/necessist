@@ -593,7 +593,8 @@ where
 {
     // smoelius: `STATEMENT_QUERY` does not match `node` when `node` is a statement and the query
     // starts at `node`. I don't understand why.
-    let (_max_start_depth, query_node) = if let Some(parent) = node.parent() {
+    // smoelius: `STATEMENT_QUERY` is defined in the sibling file, visitor.rs.
+    let (max_start_depth, query_node) = if let Some(parent) = node.parent() {
         (1, parent)
     } else {
         (0, node)
@@ -601,10 +602,7 @@ where
 
     let mut cursor = QueryCursor::new();
 
-    // smoelius: Enable the next call to `set_max_start_depth` once the following is resolved:
-    // https://github.com/tree-sitter/tree-sitter/pull/2278
-    #[cfg(any())]
-    cursor.set_max_start_depth(max_start_depth);
+    cursor.set_max_start_depth(Some(max_start_depth));
 
     let query_matches = cursor.matches(query, query_node, text_provider);
 
