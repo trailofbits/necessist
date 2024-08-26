@@ -296,23 +296,21 @@ mod test {
                         Vec::new()
                     }
                 };
-                elems
-                    .into_iter()
-                    .filter_map(|expr| {
-                        if_chain! {
-                            if let Expr::Reference(ExprReference { expr, .. }) = expr;
-                            if let Expr::Array(ExprArray { elems, .. }) = *expr;
-                            if let Some(Expr::Lit(ExprLit { lit, .. })) = elems.last();
-                            if let Lit::Str(lit_str) = lit;
-                            let s = lit_str.value();
-                            if !REMOVED_METHODS.contains(&s.as_str());
-                            then {
-                                Some(s)
-                            } else {
-                                None
-                            }
+                elems.into_iter().filter_map(|expr| {
+                    if_chain! {
+                        if let Expr::Reference(ExprReference { expr, .. }) = expr;
+                        if let Expr::Array(ExprArray { elems, .. }) = *expr;
+                        if let Some(Expr::Lit(ExprLit { lit, .. })) = elems.last();
+                        if let Lit::Str(lit_str) = lit;
+                        let s = lit_str.value();
+                        if !REMOVED_METHODS.contains(&s.as_str());
+                        then {
+                            Some(s)
+                        } else {
+                            None
                         }
-                    })
+                    }
+                })
             })
             .chain(ADDED_METHODS.iter().map(ToString::to_string))
             .collect::<Vec<_>>();
