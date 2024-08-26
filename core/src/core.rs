@@ -797,10 +797,10 @@ fn sqlite_and_past_removals_init_lazy(
 #[allow(clippy::module_name_repetitions)]
 #[cfg(all(feature = "limit_threads", unix))]
 mod rlimit {
-    pub use ::rlimit::Resource;
-    use ::rlimit::{getrlimit, setrlimit};
     use anyhow::Result;
     use once_cell::sync::Lazy;
+    pub use rlimit::Resource;
+    use rlimit::{getrlimit, setrlimit};
     use std::process::Command;
 
     #[allow(clippy::unwrap_used)]
