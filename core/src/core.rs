@@ -1,6 +1,6 @@
 use crate::{
     config,
-    framework::{self, Applicable, Postprocess, SourceFileTestSpanMap, SpanKind, ToImplementation},
+    framework::{self, Applicable, Postprocess, SourceFileSpanTestMap, SpanKind, ToImplementation},
     note, source_warn, sqlite, util, warn, Backup, Outcome, Rewriter, SourceFile, Span,
     ToConsoleString, WarnFlags, Warning,
 };
@@ -134,7 +134,7 @@ pub fn necessist<Identifier: Applicable + Display + IntoEnumIterator + ToImpleme
         context.println = &println;
     }
 
-    let Some((backend, n_spans, source_file_test_span_map)) = prepare(&context, framework)? else {
+    let Some((backend, n_spans, source_file_span_test_map)) = prepare(&context, framework)? else {
         return Ok(());
     };
 
@@ -167,14 +167,14 @@ pub fn necessist<Identifier: Applicable + Display + IntoEnumIterator + ToImpleme
         context.progress = progress.as_ref();
     }
 
-    run(context, source_file_test_span_map)
+    run(context, source_file_span_test_map)
 }
 
 #[allow(clippy::type_complexity)]
 fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementation>(
     context: &LightContext,
     framework: framework::Auto<Identifier>,
-) -> Result<Option<(Box<dyn framework::Interface>, usize, SourceFileTestSpanMap)>> {
+) -> Result<Option<(Box<dyn framework::Interface>, usize, SourceFileSpanTestMap)>> {
     if context.opts.default_config {
         default_config(context, context.root)?;
         return Ok(None);
@@ -192,21 +192,21 @@ fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementatio
 
     let paths = canonicalize_source_files(context)?;
 
-    let source_file_test_span_map = backend.parse(
+    let source_file_span_test_map = backend.parse(
         context,
         &config,
         &paths.iter().map(AsRef::as_ref).collect::<Vec<_>>(),
     )?;
 
-    let n_spans = source_file_test_span_map
+    let n_spans = source_file_span_test_map
         .values()
-        .map(|test_span_maps| {
-            test_span_maps
+        .map(|span_test_maps| {
+            span_test_maps
                 .statement
                 .values()
                 .map(IndexSet::len)
                 .sum::<usize>()
-                + test_span_maps
+                + span_test_maps
                     .method_call
                     .values()
                     .map(IndexSet::len)
@@ -215,24 +215,24 @@ fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementatio
         .sum();
 
     if context.opts.dump_candidates {
-        dump_candidates(context, &source_file_test_span_map)?;
+        dump_candidates(context, &source_file_span_test_map)?;
         return Ok(None);
     }
 
     (context.println)({
-        let n_tests = source_file_test_span_map
+        let n_tests = source_file_span_test_map
             .values()
-            .map(|test_span_maps| {
-                test_span_maps
+            .map(|span_test_maps| {
+                span_test_maps
                     .statement
                     .values()
                     .flatten()
-                    .chain(test_span_maps.method_call.values().flatten())
+                    .chain(span_test_maps.method_call.values().flatten())
                     .collect::<IndexSet<_>>()
                     .len()
             })
             .sum::<usize>();
-        let n_source_files = source_file_test_span_map.keys().len();
+        let n_source_files = source_file_span_test_map.keys().len();
         &format!(
             "{} candidates in {} test{} in {} source file{}",
             n_spans,
@@ -243,24 +243,24 @@ fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementatio
         )
     });
 
-    Ok(Some((backend, n_spans, source_file_test_span_map)))
+    Ok(Some((backend, n_spans, source_file_span_test_map)))
 }
 
-fn run(mut context: Context, source_file_test_span_map: SourceFileTestSpanMap) -> Result<()> {
+fn run(mut context: Context, source_file_span_test_map: SourceFileSpanTestMap) -> Result<()> {
     ctrlc::set_handler(|| CTRLC.store(true, Ordering::SeqCst))?;
 
     let past_removals = past_removals_init_lazy(&context.light())?;
 
     let mut past_removal_iter = past_removals.into_iter().peekable();
 
-    for (source_file, test_span_maps) in source_file_test_span_map {
-        let mut test_span_iter = peek_nth(test_span_maps.iter());
+    for (source_file, span_test_maps) in source_file_span_test_map {
+        let mut span_test_iter = peek_nth(span_test_maps.iter());
 
-        let (mismatch, n) = skip_past_removals(&mut test_span_iter, &mut past_removal_iter);
+        let (mismatch, n) = skip_past_removals(&mut span_test_iter, &mut past_removal_iter);
 
         update_progress(&context, mismatch, n)?;
 
-        if test_span_iter.peek().is_none() {
+        if span_test_iter.peek().is_none() {
             continue;
         }
 
@@ -287,7 +287,7 @@ fn run(mut context: Context, source_file_test_span_map: SourceFileTestSpanMap) -
             }
 
             if result.is_err() {
-                let n = skip_present_spans(&context, test_span_iter)?;
+                let n = skip_present_spans(&context, span_test_iter)?;
                 update_progress(&context, None, n)?;
                 continue;
             }
@@ -299,14 +299,14 @@ fn run(mut context: Context, source_file_test_span_map: SourceFileTestSpanMap) -
         ));
 
         let mut instrumentation_backup =
-            instrument_statements(&context, &source_file, &mut test_span_iter)?;
+            instrument_statements(&context, &source_file, &mut span_test_iter)?;
 
         loop {
-            let (mismatch, n) = skip_past_removals(&mut test_span_iter, &mut past_removal_iter);
+            let (mismatch, n) = skip_past_removals(&mut span_test_iter, &mut past_removal_iter);
 
             update_progress(&context, mismatch, n)?;
 
-            let Some((test_name, span, span_kind)) = test_span_iter.next() else {
+            let Some((test_name, span, span_kind)) = span_test_iter.next() else {
                 break;
             };
 
@@ -455,7 +455,7 @@ fn canonicalize_source_files(context: &LightContext) -> Result<Vec<PathBuf>> {
 
 #[must_use]
 fn skip_past_removals<'a, I, J>(
-    test_span_iter: &mut PeekNth<I>,
+    span_test_iter: &mut PeekNth<I>,
     removal_iter: &mut Peekable<J>,
 ) -> (Option<Mismatch>, usize)
 where
@@ -464,7 +464,7 @@ where
 {
     let mut mismatch = None;
     let mut n = 0;
-    while let Some(&(_, span, _)) = test_span_iter.peek() {
+    while let Some(&(_, span, _)) = span_test_iter.peek() {
         let Some(removal) = removal_iter.peek() else {
             break;
         };
@@ -477,7 +477,7 @@ where
                 break;
             }
             std::cmp::Ordering::Equal => {
-                let _: Option<(&str, &Span, _)> = test_span_iter.next();
+                let _: Option<(&str, &Span, _)> = span_test_iter.next();
                 let _removal: Option<Removal> = removal_iter.next();
                 n += 1;
             }
@@ -498,13 +498,13 @@ where
 
 fn skip_present_spans<'a>(
     context: &Context,
-    test_span_iter: impl Iterator<Item = (&'a str, &'a Span, SpanKind)>,
+    span_test_iter: impl Iterator<Item = (&'a str, &'a Span, SpanKind)>,
 ) -> Result<usize> {
     let mut n = 0;
 
     let sqlite = sqlite_init_lazy(&context.light())?;
 
-    for (_, span, _) in test_span_iter {
+    for (_, span, _) in span_test_iter {
         if let Some(sqlite) = sqlite.borrow_mut().as_mut() {
             let text = span.source_text()?;
             let removal = Removal {
@@ -550,15 +550,15 @@ Configuration or source files have changed since necessist.db was created; the f
 
 fn dump_candidates(
     context: &LightContext,
-    source_file_test_span_map: &SourceFileTestSpanMap,
+    source_file_span_test_map: &SourceFileSpanTestMap,
 ) -> Result<()> {
-    for span in source_file_test_span_map
+    for span in source_file_span_test_map
         .values()
-        .flat_map(|test_span_maps| {
-            test_span_maps
+        .flat_map(|span_test_maps| {
+            span_test_maps
                 .statement
                 .keys()
-                .chain(test_span_maps.method_call.keys())
+                .chain(span_test_maps.method_call.keys())
         })
     {
         let text = span.source_text()?;
@@ -576,7 +576,7 @@ fn dump_candidates(
 fn instrument_statements<'a, I>(
     context: &Context,
     source_file: &SourceFile,
-    test_span_iter: &mut PeekNth<I>,
+    span_test_iter: &mut PeekNth<I>,
 ) -> Result<Option<Backup>>
 where
     I: Iterator<Item = (&'a str, &'a Span, SpanKind)>,
@@ -586,7 +586,7 @@ where
     let mut rewriter =
         Rewriter::with_offset_calculator(source_file.contents(), source_file.offset_calculator());
 
-    let n_instrumentable_statements = count_instrumentable_statements(test_span_iter);
+    let n_instrumentable_statements = count_instrumentable_statements(span_test_iter);
 
     context.backend.instrument_source_file(
         &context.light(),
@@ -599,7 +599,7 @@ where
     let mut insertion_map = BTreeMap::<_, Vec<_>>::new();
     // smoelius: Do not advance the underlying iterator while instrumenting. This way, if a
     // statement cannot be removed with instrumentation, it will be removed explicitly.
-    while let Some((_, span, SpanKind::Statement)) = test_span_iter.peek_nth(i_span) {
+    while let Some((_, span, SpanKind::Statement)) = span_test_iter.peek_nth(i_span) {
         let (prefix, suffix) = context.backend.statement_prefix_and_suffix(span)?;
         let insertions = insertion_map.entry(span.start()).or_default();
         insertions.push(prefix);
@@ -642,13 +642,13 @@ where
     Ok(Some(backup))
 }
 
-fn count_instrumentable_statements<'a, I>(test_span_iter: &mut PeekNth<I>) -> usize
+fn count_instrumentable_statements<'a, I>(span_test_iter: &mut PeekNth<I>) -> usize
 where
     I: Iterator<Item = (&'a str, &'a Span, SpanKind)>,
 {
     let mut n_instrumentable_statements = 0;
     while matches!(
-        test_span_iter.peek_nth(n_instrumentable_statements),
+        span_test_iter.peek_nth(n_instrumentable_statements),
         Some((_, _, SpanKind::Statement))
     ) {
         n_instrumentable_statements += 1;

@@ -5,7 +5,7 @@ use super::{
 use anyhow::Result;
 use cargo_metadata::Package;
 use necessist_core::{
-    framework::TestSpanMaps, LightContext, SourceFile, Span, ToInternalSpan, __Rewriter as Rewriter,
+    framework::SpanTestMaps, LightContext, SourceFile, Span, ToInternalSpan, __Rewriter as Rewriter,
 };
 use once_cell::sync::{Lazy, OnceCell};
 use quote::ToTokens;
@@ -382,7 +382,7 @@ impl ParseLow for Rust {
         generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Self>,
         storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
         file: &'ast <Self::Types as AbstractTypes>::File,
-    ) -> Result<TestSpanMaps> {
+    ) -> Result<SpanTestMaps> {
         visit(generic_visitor, storage, file)
     }
 

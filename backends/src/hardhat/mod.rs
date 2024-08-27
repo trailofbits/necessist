@@ -2,7 +2,7 @@ use super::{ts, OutputAccessors, OutputStrippedOfAnsiScapes, ParseAdapter, Parse
 use anyhow::Result;
 use log::debug;
 use necessist_core::{
-    framework::{Interface, Postprocess, SourceFileTestSpanMap},
+    framework::{Interface, Postprocess, SourceFileSpanTestMap},
     LightContext, SourceFile, Span, __Rewriter as Rewriter,
 };
 use std::path::Path;
@@ -36,7 +36,7 @@ impl ParseHigh for Hardhat {
         context: &LightContext,
         config: &necessist_core::config::Toml,
         source_files: &[&Path],
-    ) -> Result<SourceFileTestSpanMap> {
+    ) -> Result<SourceFileSpanTestMap> {
         self.mocha_adapter.parse(context, config, source_files)
     }
 }

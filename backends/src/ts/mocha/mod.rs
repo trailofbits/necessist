@@ -6,7 +6,7 @@ use anyhow::{anyhow, Result};
 use if_chain::if_chain;
 use log::debug;
 use necessist_core::{
-    framework::{Postprocess, TestSpanMaps},
+    framework::{Postprocess, SpanTestMaps},
     source_warn, util, LightContext, LineColumn, SourceFile, Span, WarnFlags, Warning,
 };
 use once_cell::sync::Lazy;
@@ -314,7 +314,7 @@ impl ParseLow for Mocha {
         generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Self>,
         storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
         file: &'ast <Self::Types as AbstractTypes>::File,
-    ) -> Result<TestSpanMaps> {
+    ) -> Result<SpanTestMaps> {
         visit(generic_visitor, storage, &file.1)
     }
 

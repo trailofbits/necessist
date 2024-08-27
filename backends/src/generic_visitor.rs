@@ -2,7 +2,7 @@ use super::{AbstractTypes, MaybeNamed, Named, ParseLow, Spanned};
 use if_chain::if_chain;
 use necessist_core::{
     config,
-    framework::{SpanKind, TestSpanMaps},
+    framework::{SpanKind, SpanTestMaps},
     LightContext, SourceFile, Span,
 };
 use paste::paste;
@@ -18,7 +18,7 @@ pub struct GenericVisitor<'context, 'config, 'backend, 'ast, T: ParseLow> {
     pub n_statement_leaves_visited: usize,
     pub n_before: Vec<usize>,
     pub call_statement: Option<<T::Types as AbstractTypes>::Statement<'ast>>,
-    pub test_span_maps: TestSpanMaps,
+    pub span_test_maps: SpanTestMaps,
 }
 
 /// `call_info` return values. See that method for details.
@@ -86,8 +86,8 @@ macro_rules! visit_call_post {
 impl<'context, 'config, 'backend, 'ast, T: ParseLow>
     GenericVisitor<'context, 'config, 'backend, 'ast, T>
 {
-    pub fn test_span_maps(self) -> TestSpanMaps {
-        self.test_span_maps
+    pub fn span_test_maps(self) -> SpanTestMaps {
+        self.span_test_maps
     }
 
     #[allow(clippy::unnecessary_wraps)]
@@ -303,11 +303,11 @@ impl<'context, 'config, 'backend, 'ast, T: ParseLow>
     }
 
     fn register_span(&mut self, span: Span, test_name: &str, kind: SpanKind) {
-        let test_span_map = match kind {
-            SpanKind::Statement => &mut self.test_span_maps.statement,
-            SpanKind::MethodCall => &mut self.test_span_maps.method_call,
+        let span_test_map = match kind {
+            SpanKind::Statement => &mut self.span_test_maps.statement,
+            SpanKind::MethodCall => &mut self.span_test_maps.method_call,
         };
-        let test_names = test_span_map.entry(span).or_default();
+        let test_names = span_test_map.entry(span).or_default();
         test_names.insert(test_name.to_owned());
     }
 
