@@ -6261,6 +6261,34 @@ $DIR/cmd/net_test.go: `.Run("", func(t *testing.T) {
 				}
 			}
 		})`
+$DIR/cmd/object-api-options_test.go: `globalBucketVersioningSys = &BucketVersioningSys{}`
+$DIR/cmd/object-api-options_test.go: `t.Run(testCase.name, func(t *testing.T) {
+			rec := httptest.NewRecorder()
+			req := httptest.NewRequest("GET", "/test", nil)
+			req.Header = testCase.headers
+
+			opts, _ := getAndValidateAttributesOpts(ctx, rec, req, bucket, "testobject")
+
+			if !reflect.DeepEqual(opts.ObjectAttributes, testCase.wantObjectAttrs) {
+				t.Errorf("want opts %v, got %v", testCase.wantObjectAttrs, opts.ObjectAttributes)
+			}
+		})`
+$DIR/cmd/object-api-options_test.go: `req.Header = testCase.headers`
+$DIR/cmd/object-api-options_test.go: `.Background()`
+$DIR/cmd/object-api-options_test.go: `.Run(testCase.name, func(t *testing.T) {
+			rec := httptest.NewRecorder()
+			req := httptest.NewRequest("GET", "/test", nil)
+			req.Header = testCase.headers
+
+			opts, _ := getAndValidateAttributesOpts(ctx, rec, req, bucket, "testobject")
+
+			if !reflect.DeepEqual(opts.ObjectAttributes, testCase.wantObjectAttrs) {
+				t.Errorf("want opts %v, got %v", testCase.wantObjectAttrs, opts.ObjectAttributes)
+			}
+		})`
+$DIR/cmd/object-api-options_test.go: `.NewRecorder()`
+$DIR/cmd/object-api-options_test.go: `.NewRequest("GET", "/test", nil)`
+$DIR/cmd/object-api-options_test.go: `.DeepEqual(opts.ObjectAttributes, testCase.wantObjectAttrs)`
 $DIR/cmd/object-api-utils_test.go: `t.Run(strconv.Itoa(i), func(t *testing.T) {
 			got := test.objInfo.IsCompressed()
 			if got != test.result {

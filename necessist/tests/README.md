@@ -15,7 +15,7 @@
 | go_src_os_user             | go1.23.0                                 | go        | X    | X     |       |         | 1         |
 | go_src_testing_iotest      | go1.23.0                                 | go        | X    | X     | X     | X       | 1         |
 | go_src_text_template_parse | go1.23.0                                 | go        | X    | X     | X     | X       | 1         |
-| minio                      | RELEASE.2024-08-17T01-24-54Z             |           |      | X     | X     | X       | 1         |
+| minio                      | RELEASE.2024-08-26T15-33-07Z             |           |      | X     | X     | X       | 1         |
 | operator-filter-registry   | v1.4.2                                   |           |      | X     | X     | X       | 0         |
 | proptest_https             | b71253807372932f72a71b1af7975371a41e7c88 |           | X    | X     | X     | X       | 0         |
 | pyth                       |                                          | anchor    |      | X     | X     |         | 0         |
