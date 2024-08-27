@@ -35,19 +35,15 @@ pub struct SpanTestMaps {
 }
 
 impl SpanTestMaps {
-    pub fn iter(&self) -> impl Iterator<Item = (&str, &Span, SpanKind)> {
+    pub fn iter(&self) -> impl Iterator<Item = (&Span, SpanKind, &IndexSet<String>)> {
         self.statement
             .iter()
-            .flat_map(|(span, test_names)| {
-                test_names
+            .map(|(span, test_names)| (span, SpanKind::Statement, test_names))
+            .chain(
+                self.method_call
                     .iter()
-                    .map(move |test_name| (test_name.as_str(), span, SpanKind::Statement))
-            })
-            .chain(self.method_call.iter().flat_map(|(span, test_names)| {
-                test_names
-                    .iter()
-                    .map(move |test_name| (test_name.as_str(), span, SpanKind::MethodCall))
-            }))
+                    .map(|(span, test_names)| (span, SpanKind::MethodCall, test_names)),
+            )
     }
 }
 
