@@ -2,7 +2,7 @@ use super::{AbstractTypes, MaybeNamed, Named, ParseLow, Spanned};
 use if_chain::if_chain;
 use necessist_core::{
     config,
-    framework::{SpanKind, SpanTestMaps},
+    framework::{SpanKind, SpanTestMaps, TestSet},
     LightContext, SourceFile, Span,
 };
 use paste::paste;
@@ -18,6 +18,7 @@ pub struct GenericVisitor<'context, 'config, 'backend, 'ast, T: ParseLow> {
     pub n_statement_leaves_visited: usize,
     pub n_before: Vec<usize>,
     pub call_statement: Option<<T::Types as AbstractTypes>::Statement<'ast>>,
+    pub test_set: TestSet,
     pub span_test_maps: SpanTestMaps,
 }
 
@@ -86,8 +87,8 @@ macro_rules! visit_call_post {
 impl<'context, 'config, 'backend, 'ast, T: ParseLow>
     GenericVisitor<'context, 'config, 'backend, 'ast, T>
 {
-    pub fn span_test_maps(self) -> SpanTestMaps {
-        self.span_test_maps
+    pub fn results(self) -> (TestSet, SpanTestMaps) {
+        (self.test_set, self.span_test_maps)
     }
 
     #[allow(clippy::unnecessary_wraps)]
@@ -101,6 +102,8 @@ impl<'context, 'config, 'backend, 'ast, T: ParseLow>
         if self.config.is_ignored_test(&name) {
             return false;
         }
+
+        self.register_test(&name);
 
         assert!(self.test_name.is_none());
         self.test_name = Some(name);
@@ -302,7 +305,15 @@ impl<'context, 'config, 'backend, 'ast, T: ParseLow>
         }
     }
 
+    fn register_test(&mut self, test_name: &str) {
+        self.test_set.insert(test_name.to_owned());
+    }
+
     fn register_span(&mut self, span: Span, test_name: &str, kind: SpanKind) {
+        assert!(
+            self.test_set.contains(test_name),
+            "Test `{test_name}` is not registered"
+        );
         let span_test_map = match kind {
             SpanKind::Statement => &mut self.span_test_maps.statement,
             SpanKind::MethodCall => &mut self.span_test_maps.method_call,

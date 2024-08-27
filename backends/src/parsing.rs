@@ -3,7 +3,7 @@ use anyhow::{Context, Result};
 use heck::ToKebabCase;
 use necessist_core::{
     config,
-    framework::{SourceFileSpanTestMap, SpanTestMaps},
+    framework::{SourceFileSpanTestMap, SpanTestMaps, TestSet},
     util, warn, LightContext, SourceFile, Span, WarnFlags, Warning,
 };
 use paste::paste;
@@ -101,7 +101,7 @@ pub trait ParseLow: Sized {
         generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Self>,
         storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
         file: &'ast <Self::Types as AbstractTypes>::File,
-    ) -> Result<SpanTestMaps>;
+    ) -> Result<(TestSet, SpanTestMaps)>;
 
     fn test_statements<'ast>(
         &self,
@@ -196,7 +196,7 @@ impl<T: ParseLow> ParseLow for Rc<RefCell<T>> {
         generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Self>,
         storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
         file: &'ast <Self::Types as AbstractTypes>::File,
-    ) -> Result<SpanTestMaps> {
+    ) -> Result<(TestSet, SpanTestMaps)> {
         let GenericVisitor {
             context,
             config,
@@ -207,6 +207,7 @@ impl<T: ParseLow> ParseLow for Rc<RefCell<T>> {
             n_before,
             n_statement_leaves_visited,
             call_statement,
+            test_set,
             span_test_maps,
         } = generic_visitor;
         let mut backend = backend.borrow_mut();
@@ -220,6 +221,7 @@ impl<T: ParseLow> ParseLow for Rc<RefCell<T>> {
             n_before,
             n_statement_leaves_visited,
             call_statement,
+            test_set,
             span_test_maps,
         };
         T::visit_file(generic_visitor, storage, file)
@@ -324,9 +326,10 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
         context: &LightContext,
         config: &config::Toml,
         source_files: &[&Path],
-    ) -> Result<SourceFileSpanTestMap> {
+    ) -> Result<(usize, SourceFileSpanTestMap)> {
         let config = Self::compile_config(context, config)?;
 
+        let mut n_tests = 0;
         let mut source_file_span_test_map = SourceFileSpanTestMap::new();
 
         let walk_dir_results = self.0.walk_dir(context.root);
@@ -370,10 +373,13 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
                 n_statement_leaves_visited: 0,
                 n_before: Vec::new(),
                 call_statement: None,
+                test_set: TestSet::default(),
                 span_test_maps: SpanTestMaps::default(),
             };
 
-            let span_test_map = T::visit_file(generic_visitor, &storage, &file)?;
+            let (test_set, span_test_map) = T::visit_file(generic_visitor, &storage, &file)?;
+
+            n_tests += test_set.len();
             extend(&mut source_file_span_test_map, source_file, span_test_map);
 
             Ok(())
@@ -397,7 +403,7 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
             }
         }
 
-        Ok(source_file_span_test_map)
+        Ok((n_tests, source_file_span_test_map))
     }
 }
 

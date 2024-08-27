@@ -192,7 +192,7 @@ fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementatio
 
     let paths = canonicalize_source_files(context)?;
 
-    let source_file_span_test_map = backend.parse(
+    let (n_tests, source_file_span_test_map) = backend.parse(
         context,
         &config,
         &paths.iter().map(AsRef::as_ref).collect::<Vec<_>>(),
@@ -220,18 +220,6 @@ fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementatio
     }
 
     (context.println)({
-        let n_tests = source_file_span_test_map
-            .values()
-            .map(|span_test_maps| {
-                span_test_maps
-                    .statement
-                    .values()
-                    .flatten()
-                    .chain(span_test_maps.method_call.values().flatten())
-                    .collect::<IndexSet<_>>()
-                    .len()
-            })
-            .sum::<usize>();
         let n_source_files = source_file_span_test_map.keys().len();
         &format!(
             "{} candidates in {} test{} in {} source file{}",
