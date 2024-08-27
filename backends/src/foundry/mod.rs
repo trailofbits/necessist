@@ -5,7 +5,7 @@ use super::{
 use anyhow::{anyhow, Result};
 use if_chain::if_chain;
 use necessist_core::{
-    framework::TestSpanMaps, util, LightContext, LineColumn, SourceFile, Span,
+    framework::SpanTestMaps, util, LightContext, LineColumn, SourceFile, Span,
     __Rewriter as Rewriter,
 };
 use solang_parser::pt::{CodeLocation, Expression, Identifier, Loc, SourceUnit, Statement};
@@ -182,7 +182,7 @@ impl ParseLow for Foundry {
         generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Self>,
         storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
         file: &'ast <Self::Types as AbstractTypes>::File,
-    ) -> Result<TestSpanMaps> {
+    ) -> Result<SpanTestMaps> {
         visit(generic_visitor, storage, &file.1)
     }
 

@@ -4,7 +4,7 @@ use super::{
 };
 use anyhow::{anyhow, bail, Context, Result};
 use necessist_core::{
-    framework::TestSpanMaps, util, LightContext, LineColumn, SourceFile, Span,
+    framework::SpanTestMaps, util, LightContext, LineColumn, SourceFile, Span,
     __Rewriter as Rewriter,
 };
 use once_cell::sync::Lazy;
@@ -263,7 +263,7 @@ impl ParseLow for Go {
         generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Self>,
         storage: &std::cell::RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
         file: &'ast <Self::Types as AbstractTypes>::File,
-    ) -> Result<TestSpanMaps> {
+    ) -> Result<SpanTestMaps> {
         visit(generic_visitor, storage, &file.1)
     }
 

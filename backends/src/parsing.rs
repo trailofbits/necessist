@@ -3,7 +3,7 @@ use anyhow::{Context, Result};
 use heck::ToKebabCase;
 use necessist_core::{
     config,
-    framework::{SourceFileTestSpanMap, TestSpanMaps},
+    framework::{SourceFileSpanTestMap, SpanTestMaps},
     util, warn, LightContext, SourceFile, Span, WarnFlags, Warning,
 };
 use paste::paste;
@@ -101,7 +101,7 @@ pub trait ParseLow: Sized {
         generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Self>,
         storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
         file: &'ast <Self::Types as AbstractTypes>::File,
-    ) -> Result<TestSpanMaps>;
+    ) -> Result<SpanTestMaps>;
 
     fn test_statements<'ast>(
         &self,
@@ -196,7 +196,7 @@ impl<T: ParseLow> ParseLow for Rc<RefCell<T>> {
         generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Self>,
         storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
         file: &'ast <Self::Types as AbstractTypes>::File,
-    ) -> Result<TestSpanMaps> {
+    ) -> Result<SpanTestMaps> {
         let GenericVisitor {
             context,
             config,
@@ -207,7 +207,7 @@ impl<T: ParseLow> ParseLow for Rc<RefCell<T>> {
             n_before,
             n_statement_leaves_visited,
             call_statement,
-            test_span_maps,
+            span_test_maps,
         } = generic_visitor;
         let mut backend = backend.borrow_mut();
         let generic_visitor = GenericVisitor::<'_, '_, '_, 'ast, T> {
@@ -220,7 +220,7 @@ impl<T: ParseLow> ParseLow for Rc<RefCell<T>> {
             n_before,
             n_statement_leaves_visited,
             call_statement,
-            test_span_maps,
+            span_test_maps,
         };
         T::visit_file(generic_visitor, storage, file)
     }
@@ -324,10 +324,10 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
         context: &LightContext,
         config: &config::Toml,
         source_files: &[&Path],
-    ) -> Result<SourceFileTestSpanMap> {
+    ) -> Result<SourceFileSpanTestMap> {
         let config = Self::compile_config(context, config)?;
 
-        let mut source_file_test_span_map = SourceFileTestSpanMap::new();
+        let mut source_file_span_test_map = SourceFileSpanTestMap::new();
 
         let walk_dir_results = self.0.walk_dir(context.root);
 
@@ -370,11 +370,11 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
                 n_statement_leaves_visited: 0,
                 n_before: Vec::new(),
                 call_statement: None,
-                test_span_maps: TestSpanMaps::default(),
+                span_test_maps: SpanTestMaps::default(),
             };
 
-            let test_span_map = T::visit_file(generic_visitor, &storage, &file)?;
-            extend(&mut source_file_test_span_map, source_file, test_span_map);
+            let span_test_map = T::visit_file(generic_visitor, &storage, &file)?;
+            extend(&mut source_file_span_test_map, source_file, span_test_map);
 
             Ok(())
         };
@@ -397,22 +397,22 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
             }
         }
 
-        Ok(source_file_test_span_map)
+        Ok(source_file_span_test_map)
     }
 }
 
 fn extend(
-    source_file_test_span_map: &mut SourceFileTestSpanMap,
+    source_file_span_test_map: &mut SourceFileSpanTestMap,
     source_file: SourceFile,
-    test_span_maps_incoming: TestSpanMaps,
+    span_test_maps_incoming: SpanTestMaps,
 ) {
-    let test_span_maps = source_file_test_span_map.entry(source_file).or_default();
-    for (test_name, spans_incoming) in test_span_maps_incoming.statement {
-        let spans = test_span_maps.statement.entry(test_name).or_default();
+    let span_test_maps = source_file_span_test_map.entry(source_file).or_default();
+    for (test_name, spans_incoming) in span_test_maps_incoming.statement {
+        let spans = span_test_maps.statement.entry(test_name).or_default();
         spans.extend(spans_incoming);
     }
-    for (test_name, spans_incoming) in test_span_maps_incoming.method_call {
-        let spans = test_span_maps.method_call.entry(test_name).or_default();
+    for (test_name, spans_incoming) in span_test_maps_incoming.method_call {
+        let spans = span_test_maps.method_call.entry(test_name).or_default();
         spans.extend(spans_incoming);
     }
 }

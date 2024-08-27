@@ -2,7 +2,7 @@ use super::{ts, OutputAccessors, OutputStrippedOfAnsiScapes, ParseAdapter, Parse
 use anyhow::{anyhow, Context, Result};
 use log::debug;
 use necessist_core::{
-    framework::{Interface, Postprocess, SourceFileTestSpanMap},
+    framework::{Interface, Postprocess, SourceFileSpanTestMap},
     LightContext, SourceFile, Span, __Backup as Backup, __Rewriter as Rewriter,
 };
 use once_cell::sync::Lazy;
@@ -56,7 +56,7 @@ impl ParseHigh for Anchor {
         context: &LightContext,
         config: &necessist_core::config::Toml,
         source_files: &[&Path],
-    ) -> Result<SourceFileTestSpanMap> {
+    ) -> Result<SourceFileSpanTestMap> {
         self.mocha_adapter.parse(context, config, source_files)
     }
 }

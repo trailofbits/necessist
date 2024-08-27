@@ -26,15 +26,15 @@ pub trait ToImplementation {
 
 pub trait Interface: Parse + Run {}
 
-pub type SourceFileTestSpanMap = BTreeMap<SourceFile, TestSpanMaps>;
+pub type SourceFileSpanTestMap = BTreeMap<SourceFile, SpanTestMaps>;
 
 #[derive(Default)]
-pub struct TestSpanMaps {
-    pub statement: TestSpanMap,
-    pub method_call: TestSpanMap,
+pub struct SpanTestMaps {
+    pub statement: SpanTestMap,
+    pub method_call: SpanTestMap,
 }
 
-impl TestSpanMaps {
+impl SpanTestMaps {
     pub fn iter(&self) -> impl Iterator<Item = (&str, &Span, SpanKind)> {
         self.statement
             .iter()
@@ -54,7 +54,7 @@ impl TestSpanMaps {
 /// Maps a [`Span`] to the names of the tests that exercise it
 ///
 /// The test names are needed because they are passed to [`Run::exec`].
-pub type TestSpanMap = BTreeMap<Span, IndexSet<String>>;
+pub type SpanTestMap = BTreeMap<Span, IndexSet<String>>;
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum SpanKind {
@@ -68,7 +68,7 @@ pub trait Parse {
         context: &LightContext,
         config: &config::Toml,
         source_files: &[&Path],
-    ) -> Result<SourceFileTestSpanMap>;
+    ) -> Result<SourceFileSpanTestMap>;
 }
 
 pub type Postprocess = dyn Fn(&LightContext, Popen) -> Result<bool>;
@@ -108,7 +108,7 @@ impl<T: AsParse> Parse for T {
         context: &LightContext,
         config: &config::Toml,
         source_files: &[&Path],
-    ) -> Result<SourceFileTestSpanMap> {
+    ) -> Result<SourceFileSpanTestMap> {
         self.as_parse_mut().parse(context, config, source_files)
     }
 }
