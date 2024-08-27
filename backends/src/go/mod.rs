@@ -22,7 +22,7 @@ mod storage;
 use storage::Storage;
 
 mod visitor;
-use visitor::visit;
+use visitor::{collect_local_functions, visit};
 
 // smoelius: To future editors of this file: Tree-sitter Playground has been super helpful for
 // debugging: https://tree-sitter.github.io/tree-sitter/playground
@@ -104,6 +104,11 @@ pub struct Test<'ast> {
     body: Node<'ast>,
 }
 
+#[derive(Clone, Copy, Eq, Hash, PartialEq)]
+pub struct LocalFunction<'ast> {
+    body: Node<'ast>,
+}
+
 #[derive(Clone, Copy, Eq, PartialEq)]
 pub struct NodeWithText<'ast> {
     text: &'ast str,
@@ -134,6 +139,7 @@ impl AbstractTypes for Types {
     type Storage<'ast> = Storage<'ast>;
     type File = (String, Tree);
     type Test<'ast> = Test<'ast>;
+    type LocalFunction<'ast> = LocalFunction<'ast>;
     type Statement<'ast> = Statement<'ast>;
     type Expression<'ast> = Expression<'ast>;
     type Await<'ast> = Infallible;
@@ -257,6 +263,14 @@ impl ParseLow for Go {
         file: &'ast <Self::Types as AbstractTypes>::File,
     ) -> <Self::Types as AbstractTypes>::Storage<'ast> {
         Storage::new(file)
+    }
+
+    fn local_functions<'ast>(
+        &self,
+        _storage: &std::cell::RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
+        file: &'ast <Self::Types as AbstractTypes>::File,
+    ) -> Result<BTreeMap<String, Vec<<Self::Types as AbstractTypes>::LocalFunction<'ast>>>> {
+        collect_local_functions(&file.0, &file.1)
     }
 
     fn visit_file<'ast>(

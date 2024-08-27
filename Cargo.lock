@@ -1150,6 +1150,7 @@ dependencies = [
  "quote",
  "regex",
  "remain",
+ "serde_json",
  "solang-parser",
  "strip-ansi-escapes",
  "strum",
@@ -1885,6 +1886,7 @@ dependencies = [
  "lalrpop",
  "lalrpop-util",
  "phf",
+ "serde",
  "thiserror",
  "unicode-xid",
 ]

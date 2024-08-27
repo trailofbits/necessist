@@ -26,7 +26,7 @@ use swc_core::{
     ecma::{
         ast::{
             ArrowExpr, AwaitExpr, BlockStmtOrExpr, CallExpr, Callee, EsVersion, Expr, ExprStmt,
-            Invalid, Lit, MemberExpr, MemberProp, Module, Stmt, Str,
+            FnDecl, Invalid, Lit, MemberExpr, MemberProp, Module, Stmt, Str,
         },
         atoms::JsWord,
         parser::{lexer::Lexer, Parser, StringInput, Syntax, TsSyntax},
@@ -37,7 +37,7 @@ mod storage;
 use storage::Storage;
 
 mod visitor;
-use visitor::visit;
+use visitor::{collect_local_functions, visit};
 
 static INVALID: Expr = Expr::Invalid(Invalid {
     span: SwcSpan {
@@ -216,6 +216,7 @@ impl AbstractTypes for Types {
     type Storage<'ast> = Storage<'ast>;
     type File = (Rc<SourceMap>, Module);
     type Test<'ast> = Test<'ast>;
+    type LocalFunction<'ast> = &'ast FnDecl;
     type Statement<'ast> = SourceMapped<'ast, Stmt>;
     type Expression<'ast> = SourceMapped<'ast, Expr>;
     type Await<'ast> = &'ast AwaitExpr;
@@ -308,6 +309,14 @@ impl ParseLow for Mocha {
         file: &'ast <Self::Types as AbstractTypes>::File,
     ) -> <Self::Types as AbstractTypes>::Storage<'ast> {
         Storage::new(file)
+    }
+
+    fn local_functions<'ast>(
+        &self,
+        _storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
+        file: &'ast <Self::Types as AbstractTypes>::File,
+    ) -> Result<BTreeMap<String, Vec<<Self::Types as AbstractTypes>::LocalFunction<'ast>>>> {
+        Ok(collect_local_functions(&file.1))
     }
 
     fn visit_file<'ast>(

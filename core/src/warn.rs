@@ -24,6 +24,7 @@ pub enum Warning {
     IgnoredMethodsUnsupported,
     InstrumentationNonbuildable,
     ItMessageNotFound,
+    LocalFunctionAmbiguous,
     ModulePathUnknown,
     OutputInvalid,
     ParsingFailed,
@@ -183,6 +184,7 @@ fn may_be_bug(warning: Warning) -> bool {
         | Warning::IgnoredMacrosUnsupported
         | Warning::IgnoredMethodsUnsupported
         | Warning::ItMessageNotFound
+        | Warning::LocalFunctionAmbiguous
         | Warning::OutputInvalid
         | Warning::ParsingFailed => false,
         Warning::InstrumentationNonbuildable

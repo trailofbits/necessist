@@ -23,13 +23,22 @@
 use super::{GenericVisitor, ParseHigh};
 use anyhow::{Context, Result};
 use heck::ToKebabCase;
+use indexmap::IndexMap;
 use necessist_core::{
     config,
     framework::{SourceFileSpanTestMap, SpanTestMaps, TestSet},
     util, warn, LightContext, SourceFile, Span, WarnFlags, Warning,
 };
 use paste::paste;
-use std::{any::type_name, cell::RefCell, convert::Infallible, path::Path, rc::Rc};
+use std::{
+    any::type_name,
+    cell::RefCell,
+    collections::{BTreeMap, BTreeSet, HashSet},
+    convert::Infallible,
+    hash::Hash,
+    path::Path,
+    rc::Rc,
+};
 
 pub trait Named {
     fn name(&self) -> String;
@@ -66,6 +75,7 @@ pub trait AbstractTypes {
     type Storage<'ast>;
     type File;
     type Test<'ast>: Copy + Named + 'ast;
+    type LocalFunction<'ast>: Copy + Eq + Hash;
     type Statement<'ast>: Copy + Eq + Spanned;
     // smoelius: `<Expression as MaybeNamed>::name` is allowed to return `None` when the expression
     // is one of the other known types, e.g., `Await`, `Call`, etc.
@@ -97,6 +107,15 @@ pub trait ParseLow: Sized {
         &self,
         file: &'ast <Self::Types as AbstractTypes>::File,
     ) -> <Self::Types as AbstractTypes>::Storage<'ast>;
+    // smoelius: A `local_functions` value can contain more than one `LocalFunction` when the one
+    // that should be used cannot be determined. In such cases, the `GenericVisitor` will use the
+    // first one and emit a warning.
+    fn local_functions<'ast>(
+        &self,
+        storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
+        file: &'ast <Self::Types as AbstractTypes>::File,
+    ) -> Result<BTreeMap<String, Vec<<Self::Types as AbstractTypes>::LocalFunction<'ast>>>>;
+
     // smoelius: `visit_file` cannot have a `&self` argument because `generic_visitor` holds a
     // mutable reference to `self`.
     fn visit_file<'ast>(
@@ -194,6 +213,13 @@ impl<T: ParseLow> ParseLow for Rc<RefCell<T>> {
     ) -> <Self::Types as AbstractTypes>::Storage<'ast> {
         self.borrow().storage_from_file(file)
     }
+    fn local_functions<'ast>(
+        &self,
+        storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
+        file: &'ast <Self::Types as AbstractTypes>::File,
+    ) -> Result<BTreeMap<String, Vec<<Self::Types as AbstractTypes>::LocalFunction<'ast>>>> {
+        self.borrow().local_functions(storage, file)
+    }
     fn visit_file<'ast>(
         generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Self>,
         storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
@@ -203,28 +229,36 @@ impl<T: ParseLow> ParseLow for Rc<RefCell<T>> {
             context,
             config,
             backend,
+            local_functions,
             source_file,
-            test_name,
+            test_names,
             last_statement_in_test,
             n_before,
             n_statement_leaves_visited,
             call_statement,
             test_set,
             span_test_maps,
+            local_functions_pending,
+            local_functions_returned,
+            local_functions_needing_warnings,
         } = generic_visitor;
         let mut backend = backend.borrow_mut();
         let generic_visitor = GenericVisitor::<'_, '_, '_, 'ast, T> {
             context,
             config,
             backend: &mut backend,
+            local_functions,
             source_file,
-            test_name,
+            test_names,
             last_statement_in_test,
             n_before,
             n_statement_leaves_visited,
             call_statement,
             test_set,
             span_test_maps,
+            local_functions_pending,
+            local_functions_returned,
+            local_functions_needing_warnings,
         };
         T::visit_file(generic_visitor, storage, file)
     }
@@ -363,20 +397,26 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
 
             let storage = RefCell::new(self.0.storage_from_file(&file));
 
+            let local_functions = self.0.local_functions(&storage, &file)?;
+
             let source_file = SourceFile::new(context.root.clone(), source_file.to_path_buf())?;
 
             let generic_visitor = GenericVisitor {
                 context,
                 config: &config,
                 backend: &mut self.0,
+                local_functions,
                 source_file: source_file.clone(),
-                test_name: None,
+                test_names: BTreeSet::default(),
                 last_statement_in_test: None,
                 n_statement_leaves_visited: 0,
                 n_before: Vec::new(),
                 call_statement: None,
                 test_set: TestSet::default(),
                 span_test_maps: SpanTestMaps::default(),
+                local_functions_pending: IndexMap::default(),
+                local_functions_returned: HashSet::default(),
+                local_functions_needing_warnings: BTreeSet::default(),
             };
 
             let (test_set, span_test_map) = T::visit_file(generic_visitor, &storage, &file)?;
