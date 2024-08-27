@@ -1,5 +1,4 @@
 $DIR/test/BitMath.spec.ts: `.mostSignificantBit(0)`
-$DIR/test/BitMath.spec.ts: `.leastSignificantBit(0)`
 $DIR/test/BitMath.spec.ts: `.all(
         [...Array(255)].map((_, i) => bitMath.mostSignificantBit(BigNumber.from(2).pow(i)))
       )`
@@ -8,6 +7,17 @@ $DIR/test/BitMath.spec.ts: `.mostSignificantBit(BigNumber.from(2).pow(i))`
 $DIR/test/BitMath.spec.ts: `.from(2)`
 $DIR/test/BitMath.spec.ts: `.pow(i)`
 $DIR/test/BitMath.spec.ts: `.map((_, i) => i)`
+$DIR/test/BitMath.spec.ts: `.getGasCostOfMostSignificantBit(BigNumber.from(3568))`
+$DIR/test/BitMath.spec.ts: `.from(3568)`
+$DIR/test/BitMath.spec.ts: `.getGasCostOfMostSignificantBit(BigNumber.from(2).pow(128).sub(1))`
+$DIR/test/BitMath.spec.ts: `.from(2)`
+$DIR/test/BitMath.spec.ts: `.pow(128)`
+$DIR/test/BitMath.spec.ts: `.sub(1)`
+$DIR/test/BitMath.spec.ts: `.getGasCostOfMostSignificantBit(BigNumber.from(2).pow(256).sub(1))`
+$DIR/test/BitMath.spec.ts: `.from(2)`
+$DIR/test/BitMath.spec.ts: `.pow(256)`
+$DIR/test/BitMath.spec.ts: `.sub(1)`
+$DIR/test/BitMath.spec.ts: `.leastSignificantBit(0)`
 $DIR/test/BitMath.spec.ts: `.all(
         [...Array(255)].map((_, i) => bitMath.leastSignificantBit(BigNumber.from(2).pow(i)))
       )`
@@ -16,53 +26,34 @@ $DIR/test/BitMath.spec.ts: `.leastSignificantBit(BigNumber.from(2).pow(i))`
 $DIR/test/BitMath.spec.ts: `.from(2)`
 $DIR/test/BitMath.spec.ts: `.pow(i)`
 $DIR/test/BitMath.spec.ts: `.map((_, i) => i)`
-$DIR/test/BitMath.spec.ts: `.getGasCostOfMostSignificantBit(BigNumber.from(3568))`
-$DIR/test/BitMath.spec.ts: `.from(3568)`
 $DIR/test/BitMath.spec.ts: `.getGasCostOfLeastSignificantBit(BigNumber.from(3568))`
 $DIR/test/BitMath.spec.ts: `.from(3568)`
-$DIR/test/BitMath.spec.ts: `.getGasCostOfMostSignificantBit(BigNumber.from(2).pow(128).sub(1))`
-$DIR/test/BitMath.spec.ts: `.from(2)`
-$DIR/test/BitMath.spec.ts: `.pow(128)`
-$DIR/test/BitMath.spec.ts: `.sub(1)`
 $DIR/test/BitMath.spec.ts: `.getGasCostOfLeastSignificantBit(BigNumber.from(2).pow(128).sub(1))`
 $DIR/test/BitMath.spec.ts: `.from(2)`
 $DIR/test/BitMath.spec.ts: `.pow(128)`
-$DIR/test/BitMath.spec.ts: `.sub(1)`
-$DIR/test/BitMath.spec.ts: `.getGasCostOfMostSignificantBit(BigNumber.from(2).pow(256).sub(1))`
-$DIR/test/BitMath.spec.ts: `.from(2)`
-$DIR/test/BitMath.spec.ts: `.pow(256)`
 $DIR/test/BitMath.spec.ts: `.sub(1)`
 $DIR/test/BitMath.spec.ts: `.getGasCostOfLeastSignificantBit(BigNumber.from(2).pow(256).sub(1))`
 $DIR/test/BitMath.spec.ts: `.from(2)`
 $DIR/test/BitMath.spec.ts: `.pow(256)`
 $DIR/test/BitMath.spec.ts: `.sub(1)`
 $DIR/test/FullMath.spec.ts: `.mulDiv(Q128, 5, 0)`
-$DIR/test/FullMath.spec.ts: `.mulDivRoundingUp(Q128, 5, 0)`
 $DIR/test/FullMath.spec.ts: `.mulDiv(Q128, Q128, 0)`
-$DIR/test/FullMath.spec.ts: `.mulDivRoundingUp(Q128, Q128, 0)`
 $DIR/test/FullMath.spec.ts: `.mulDiv(Q128, Q128, 1)`
 $DIR/test/FullMath.spec.ts: `.mulDiv(Q128, Q128, 1)`
-$DIR/test/FullMath.spec.ts: `.mulDivRoundingUp(Q128, Q128, 1)`
 $DIR/test/FullMath.spec.ts: `.mulDiv(MaxUint256, MaxUint256, MaxUint256.sub(1))`
 $DIR/test/FullMath.spec.ts: `.sub(1)`
+$DIR/test/FullMath.spec.ts: `.div(3)`
+$DIR/test/FullMath.spec.ts: `.from(4375)`
+$DIR/test/FullMath.spec.ts: `.mul(Q128)`
+$DIR/test/FullMath.spec.ts: `.div(1000)`
+$DIR/test/FullMath.spec.ts: `.from(1)`
+$DIR/test/FullMath.spec.ts: `.mul(Q128)`
+$DIR/test/FullMath.spec.ts: `.div(3)`
+$DIR/test/FullMath.spec.ts: `.mulDivRoundingUp(Q128, 5, 0)`
+$DIR/test/FullMath.spec.ts: `.mulDivRoundingUp(Q128, Q128, 0)`
+$DIR/test/FullMath.spec.ts: `.mulDivRoundingUp(Q128, Q128, 1)`
 $DIR/test/FullMath.spec.ts: `.mulDivRoundingUp(MaxUint256, MaxUint256, MaxUint256.sub(1))`
 $DIR/test/FullMath.spec.ts: `.sub(1)`
-$DIR/test/FullMath.spec.ts: `.div(3)`
-$DIR/test/FullMath.spec.ts: `.div(3)`
-$DIR/test/FullMath.spec.ts: `.add(1)`
-$DIR/test/FullMath.spec.ts: `.from(4375)`
-$DIR/test/FullMath.spec.ts: `.mul(Q128)`
-$DIR/test/FullMath.spec.ts: `.div(1000)`
-$DIR/test/FullMath.spec.ts: `.from(4375)`
-$DIR/test/FullMath.spec.ts: `.mul(Q128)`
-$DIR/test/FullMath.spec.ts: `.div(1000)`
-$DIR/test/FullMath.spec.ts: `.from(1)`
-$DIR/test/FullMath.spec.ts: `.mul(Q128)`
-$DIR/test/FullMath.spec.ts: `.div(3)`
-$DIR/test/FullMath.spec.ts: `.from(1)`
-$DIR/test/FullMath.spec.ts: `.mul(Q128)`
-$DIR/test/FullMath.spec.ts: `.div(3)`
-$DIR/test/FullMath.spec.ts: `.add(1)`
 $DIR/test/FullMath.spec.ts: `.mulDivRoundingUp(
           '535006138814359',
           '432862656469423142931042426214547535783388063929571229938474969',
@@ -73,6 +64,15 @@ $DIR/test/FullMath.spec.ts: `.mulDivRoundingUp(
           '115792089237316195423570985008687907853269984659341747863450311749907997002550',
           '115792089237316195423570985008687907853269984653042931687443039491902864365164'
         )`
+$DIR/test/FullMath.spec.ts: `.div(3)`
+$DIR/test/FullMath.spec.ts: `.add(1)`
+$DIR/test/FullMath.spec.ts: `.from(4375)`
+$DIR/test/FullMath.spec.ts: `.mul(Q128)`
+$DIR/test/FullMath.spec.ts: `.div(1000)`
+$DIR/test/FullMath.spec.ts: `.from(1)`
+$DIR/test/FullMath.spec.ts: `.mul(Q128)`
+$DIR/test/FullMath.spec.ts: `.div(3)`
+$DIR/test/FullMath.spec.ts: `.add(1)`
 $DIR/test/LiquidityMath.spec.ts: `.getGasCostOfAddDelta(15, 4)`
 $DIR/test/LiquidityMath.spec.ts: `.getGasCostOfAddDelta(15, -4)`
 $DIR/test/NoDelegateCall.spec.ts: `.getGasCostOfCannotBeDelegateCalled()`
@@ -375,11 +375,7 @@ $DIR/test/Oracle.spec.ts: `.advanceTime(5)`
 $DIR/test/Oracle.spec.ts: `.getGasCostOfObserve([65534 * 13 + 5])`
 $DIR/test/SqrtPriceMath.spec.ts: `.getNextSqrtPriceFromInput(0, 0, expandTo18Decimals(1).div(10), false)`
 $DIR/test/SqrtPriceMath.spec.ts: `.div(10)`
-$DIR/test/SqrtPriceMath.spec.ts: `.getNextSqrtPriceFromOutput(0, 0, expandTo18Decimals(1).div(10), false)`
-$DIR/test/SqrtPriceMath.spec.ts: `.div(10)`
 $DIR/test/SqrtPriceMath.spec.ts: `.getNextSqrtPriceFromInput(1, 0, expandTo18Decimals(1).div(10), true)`
-$DIR/test/SqrtPriceMath.spec.ts: `.div(10)`
-$DIR/test/SqrtPriceMath.spec.ts: `.getNextSqrtPriceFromOutput(1, 0, expandTo18Decimals(1).div(10), true)`
 $DIR/test/SqrtPriceMath.spec.ts: `.div(10)`
 $DIR/test/SqrtPriceMath.spec.ts: `.from(2)`
 $DIR/test/SqrtPriceMath.spec.ts: `.pow(160)`
@@ -414,13 +410,6 @@ $DIR/test/SqrtPriceMath.spec.ts: `.getGasCostOfGetNextSqrtPriceFromInput(
           true
         )`
 $DIR/test/SqrtPriceMath.spec.ts: `.div(10)`
-$DIR/test/SqrtPriceMath.spec.ts: `.getGasCostOfGetNextSqrtPriceFromOutput(
-          encodePriceSqrt(1, 1),
-          expandTo18Decimals(1),
-          expandTo18Decimals(1).div(10),
-          true
-        )`
-$DIR/test/SqrtPriceMath.spec.ts: `.div(10)`
 $DIR/test/SqrtPriceMath.spec.ts: `.getGasCostOfGetNextSqrtPriceFromInput(
           encodePriceSqrt(1, 1),
           expandTo18Decimals(1),
@@ -428,12 +417,9 @@ $DIR/test/SqrtPriceMath.spec.ts: `.getGasCostOfGetNextSqrtPriceFromInput(
           false
         )`
 $DIR/test/SqrtPriceMath.spec.ts: `.div(10)`
-$DIR/test/SqrtPriceMath.spec.ts: `.getGasCostOfGetNextSqrtPriceFromOutput(
-          encodePriceSqrt(1, 1),
-          expandTo18Decimals(1),
-          expandTo18Decimals(1).div(10),
-          false
-        )`
+$DIR/test/SqrtPriceMath.spec.ts: `.getNextSqrtPriceFromOutput(0, 0, expandTo18Decimals(1).div(10), false)`
+$DIR/test/SqrtPriceMath.spec.ts: `.div(10)`
+$DIR/test/SqrtPriceMath.spec.ts: `.getNextSqrtPriceFromOutput(1, 0, expandTo18Decimals(1).div(10), true)`
 $DIR/test/SqrtPriceMath.spec.ts: `.div(10)`
 $DIR/test/SqrtPriceMath.spec.ts: `.getNextSqrtPriceFromOutput(price, liquidity, amountOut, false)`
 $DIR/test/SqrtPriceMath.spec.ts: `.getNextSqrtPriceFromOutput(price, liquidity, amountOut, false)`
@@ -457,9 +443,21 @@ $DIR/test/SqrtPriceMath.spec.ts: `.getNextSqrtPriceFromOutput(
 $DIR/test/SqrtPriceMath.spec.ts: `.div(10)`
 $DIR/test/SqrtPriceMath.spec.ts: `.getNextSqrtPriceFromOutput(encodePriceSqrt(1, 1), 1, constants.MaxUint256, true)`
 $DIR/test/SqrtPriceMath.spec.ts: `.getNextSqrtPriceFromOutput(encodePriceSqrt(1, 1), 1, constants.MaxUint256, false)`
+$DIR/test/SqrtPriceMath.spec.ts: `.getGasCostOfGetNextSqrtPriceFromOutput(
+          encodePriceSqrt(1, 1),
+          expandTo18Decimals(1),
+          expandTo18Decimals(1).div(10),
+          true
+        )`
+$DIR/test/SqrtPriceMath.spec.ts: `.div(10)`
+$DIR/test/SqrtPriceMath.spec.ts: `.getGasCostOfGetNextSqrtPriceFromOutput(
+          encodePriceSqrt(1, 1),
+          expandTo18Decimals(1),
+          expandTo18Decimals(1).div(10),
+          false
+        )`
+$DIR/test/SqrtPriceMath.spec.ts: `.div(10)`
 $DIR/test/SqrtPriceMath.spec.ts: `.getAmount0Delta(encodePriceSqrt(1, 1), encodePriceSqrt(2, 1), 0, true)`
-$DIR/test/SqrtPriceMath.spec.ts: `.getAmount1Delta(encodePriceSqrt(1, 1), encodePriceSqrt(2, 1), 0, true)`
-$DIR/test/SqrtPriceMath.spec.ts: `.getAmount0Delta(encodePriceSqrt(1, 1), encodePriceSqrt(1, 1), 0, true)`
 $DIR/test/SqrtPriceMath.spec.ts: `.getAmount0Delta(encodePriceSqrt(1, 1), encodePriceSqrt(1, 1), 0, true)`
 $DIR/test/SqrtPriceMath.spec.ts: `.getAmount0Delta(
         encodePriceSqrt(1, 1),
@@ -468,19 +466,6 @@ $DIR/test/SqrtPriceMath.spec.ts: `.getAmount0Delta(
         true
       )`
 $DIR/test/SqrtPriceMath.spec.ts: `.getAmount0Delta(
-        encodePriceSqrt(1, 1),
-        encodePriceSqrt(121, 100),
-        expandTo18Decimals(1),
-        false
-      )`
-$DIR/test/SqrtPriceMath.spec.ts: `.sub(1)`
-$DIR/test/SqrtPriceMath.spec.ts: `.getAmount1Delta(
-        encodePriceSqrt(1, 1),
-        encodePriceSqrt(121, 100),
-        expandTo18Decimals(1),
-        true
-      )`
-$DIR/test/SqrtPriceMath.spec.ts: `.getAmount1Delta(
         encodePriceSqrt(1, 1),
         encodePriceSqrt(121, 100),
         expandTo18Decimals(1),
@@ -508,6 +493,21 @@ $DIR/test/SqrtPriceMath.spec.ts: `.pow(90)`
 $DIR/test/SqrtPriceMath.spec.ts: `.from(2)`
 $DIR/test/SqrtPriceMath.spec.ts: `.pow(96)`
 $DIR/test/SqrtPriceMath.spec.ts: `.add(1)`
+$DIR/test/SqrtPriceMath.spec.ts: `.getAmount1Delta(encodePriceSqrt(1, 1), encodePriceSqrt(2, 1), 0, true)`
+$DIR/test/SqrtPriceMath.spec.ts: `.getAmount0Delta(encodePriceSqrt(1, 1), encodePriceSqrt(1, 1), 0, true)`
+$DIR/test/SqrtPriceMath.spec.ts: `.getAmount1Delta(
+        encodePriceSqrt(1, 1),
+        encodePriceSqrt(121, 100),
+        expandTo18Decimals(1),
+        true
+      )`
+$DIR/test/SqrtPriceMath.spec.ts: `.getAmount1Delta(
+        encodePriceSqrt(1, 1),
+        encodePriceSqrt(121, 100),
+        expandTo18Decimals(1),
+        false
+      )`
+$DIR/test/SqrtPriceMath.spec.ts: `.sub(1)`
 $DIR/test/SqrtPriceMath.spec.ts: `.getNextSqrtPriceFromInput(sqrtP, liquidity, amountIn, zeroForOne)`
 $DIR/test/SqrtPriceMath.spec.ts: `.getAmount0Delta(sqrtQ, sqrtP, liquidity, true)`
 $DIR/test/SwapMath.spec.ts: `.computeSwapStep(
@@ -963,11 +963,8 @@ $DIR/test/TickBitmap.spec.ts: `.nextInitializedTickWithinOneWord(508, false)`
 $DIR/test/TickBitmap.spec.ts: `.nextInitializedTickWithinOneWord(255, false)`
 $DIR/test/TickBitmap.spec.ts: `.nextInitializedTickWithinOneWord(383, false)`
 $DIR/test/TickBitmap.spec.ts: `.getGasCostOfNextInitializedTickWithinOneWord(255, false)`
-$DIR/test/TickBitmap.spec.ts: `.getGasCostOfNextInitializedTickWithinOneWord(256, true)`
 $DIR/test/TickBitmap.spec.ts: `.getGasCostOfNextInitializedTickWithinOneWord(254, false)`
-$DIR/test/TickBitmap.spec.ts: `.getGasCostOfNextInitializedTickWithinOneWord(255, true)`
 $DIR/test/TickBitmap.spec.ts: `.getGasCostOfNextInitializedTickWithinOneWord(768, false)`
-$DIR/test/TickBitmap.spec.ts: `.getGasCostOfNextInitializedTickWithinOneWord(1024, true)`
 $DIR/test/TickBitmap.spec.ts: `.nextInitializedTickWithinOneWord(78, true)`
 $DIR/test/TickBitmap.spec.ts: `.nextInitializedTickWithinOneWord(79, true)`
 $DIR/test/TickBitmap.spec.ts: `.nextInitializedTickWithinOneWord(258, true)`
@@ -978,6 +975,9 @@ $DIR/test/TickBitmap.spec.ts: `.nextInitializedTickWithinOneWord(1023, true)`
 $DIR/test/TickBitmap.spec.ts: `.nextInitializedTickWithinOneWord(900, true)`
 $DIR/test/TickBitmap.spec.ts: `.flipTick(329)`
 $DIR/test/TickBitmap.spec.ts: `.nextInitializedTickWithinOneWord(456, true)`
+$DIR/test/TickBitmap.spec.ts: `.getGasCostOfNextInitializedTickWithinOneWord(256, true)`
+$DIR/test/TickBitmap.spec.ts: `.getGasCostOfNextInitializedTickWithinOneWord(255, true)`
+$DIR/test/TickBitmap.spec.ts: `.getGasCostOfNextInitializedTickWithinOneWord(1024, true)`
 $DIR/test/TickMath.spec.ts: `.from(2)`
 $DIR/test/TickMath.spec.ts: `.pow(127)`
 $DIR/test/TickMath.spec.ts: `.from(2)`
@@ -990,7 +990,6 @@ $DIR/test/TickMath.spec.ts: `.getSqrtRatioAtTick(tick)`
 $DIR/test/TickMath.spec.ts: `.sub(jsResult)`
 $DIR/test/TickMath.spec.ts: `.abs()`
 $DIR/test/TickMath.spec.ts: `.getGasCostOfGetSqrtRatioAtTick(tick)`
-$DIR/test/TickMath.spec.ts: `.getGasCostOfGetTickAtSqrtRatio(ratio)`
 $DIR/test/TickMath.spec.ts: `.getSqrtRatioAtTick(MIN_TICK)`
 $DIR/test/TickMath.spec.ts: `.getSqrtRatioAtTick(MAX_TICK)`
 $DIR/test/TickMath.spec.ts: `.div(new Decimal(2).pow(96))`
@@ -1004,6 +1003,7 @@ $DIR/test/TickMath.spec.ts: `.abs()`
 $DIR/test/TickMath.spec.ts: `.getTickAtSqrtRatio(ratio)`
 $DIR/test/TickMath.spec.ts: `.getSqrtRatioAtTick(tick)`
 $DIR/test/TickMath.spec.ts: `.getSqrtRatioAtTick(tick + 1)`
+$DIR/test/TickMath.spec.ts: `.getGasCostOfGetTickAtSqrtRatio(ratio)`
 $DIR/test/UniswapV3Factory.spec.ts: `await factory.createPool(TEST_ADDRESSES[0], TEST_ADDRESSES[1], FeeAmount.MEDIUM)`
 $DIR/test/UniswapV3Factory.spec.ts: `await factory.setOwner(other.address)`
 $DIR/test/UniswapV3Factory.spec.ts: `await factory.setOwner(other.address)`
@@ -1016,11 +1016,11 @@ $DIR/test/UniswapV3Factory.spec.ts: `.createPool(TEST_ADDRESSES[0], TEST_ADDRESS
 $DIR/test/UniswapV3Factory.spec.ts: `.createPool(TEST_ADDRESSES[0], TEST_ADDRESSES[1], FeeAmount.MEDIUM)`
 $DIR/test/UniswapV3Factory.spec.ts: `.connect(other)`
 $DIR/test/UniswapV3Factory.spec.ts: `.setOwner(wallet.address)`
-$DIR/test/UniswapV3Factory.spec.ts: `.connect(other)`
-$DIR/test/UniswapV3Factory.spec.ts: `.enableFeeAmount(100, 2)`
 $DIR/test/UniswapV3Factory.spec.ts: `.setOwner(other.address)`
 $DIR/test/UniswapV3Factory.spec.ts: `.setOwner(other.address)`
 $DIR/test/UniswapV3Factory.spec.ts: `.setOwner(wallet.address)`
+$DIR/test/UniswapV3Factory.spec.ts: `.connect(other)`
+$DIR/test/UniswapV3Factory.spec.ts: `.enableFeeAmount(100, 2)`
 $DIR/test/UniswapV3Factory.spec.ts: `.enableFeeAmount(1000000, 10)`
 $DIR/test/UniswapV3Factory.spec.ts: `.enableFeeAmount(500, 0)`
 $DIR/test/UniswapV3Factory.spec.ts: `.enableFeeAmount(500, 16834)`
@@ -1204,10 +1204,6 @@ $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, minTick + tickSpaci
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, maxTick - tickSpacing, maxTick, BigNumber.from(2).pow(102))`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, -240, 0, 10000)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(-240, 0, 10000)`
-$DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, minTick + tickSpacing, maxTick - tickSpacing, 100)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(minTick + tickSpacing, maxTick - tickSpacing, 100)`
-$DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, -46080, -46020, 10000)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(-46080, -46020, 10000)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, -240, 0, 100)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, -240, tickSpacing, 150)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, 0, tickSpacing * 2, 60)`
@@ -1224,13 +1220,17 @@ $DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(-240, 0, 100)`
 $DIR/test/UniswapV3Pool.spec.ts: `({ liquidityGross, feeGrowthOutside0X128, feeGrowthOutside1X128 } = await pool.ticks(-tickSpacing))`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(1)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, -240, 0, 100)`
-$DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(1)`
-$DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, -46080, -23040, 100)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, minTick + tickSpacing, maxTick - tickSpacing, 100)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, minTick + tickSpacing, maxTick - tickSpacing, 100)`
+$DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, minTick + tickSpacing, maxTick - tickSpacing, 100)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(minTick + tickSpacing, maxTick - tickSpacing, 100)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(1)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, minTick, maxTick, 100)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, minTick, minTick + tickSpacing, BigNumber.from(2).pow(102))`
+$DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, -46080, -46020, 10000)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.burn(-46080, -46020, 10000)`
+$DIR/test/UniswapV3Pool.spec.ts: `await pool.advanceTime(1)`
+$DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, -46080, -23040, 100)`
 $DIR/test/UniswapV3Pool.spec.ts: `await pool.setFeeProtocol(6, 6)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, minTick + tickSpacing, maxTick - tickSpacing, expandTo18Decimals(1))`
 $DIR/test/UniswapV3Pool.spec.ts: `await swapExact0For1(expandTo18Decimals(1).div(10), wallet.address)`
@@ -1304,8 +1304,8 @@ $DIR/test/UniswapV3Pool.spec.ts: `await swapExact0For1(1, wallet.address)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, lowerTick, upperTick, liquidityDelta)`
 $DIR/test/UniswapV3Pool.spec.ts: `await swapExact0For1(1, wallet.address)`
 $DIR/test/UniswapV3Pool.spec.ts: `await swapExact1For0(expandTo18Decimals(2), other.address)`
-$DIR/test/UniswapV3Pool.spec.ts: `await swapExact1For0(expandTo18Decimals(2), other.address)`
 $DIR/test/UniswapV3Pool.spec.ts: `await swapExact0For1(expandTo18Decimals(2), other.address)`
+$DIR/test/UniswapV3Pool.spec.ts: `await swapExact1For0(expandTo18Decimals(2), other.address)`
 $DIR/test/UniswapV3Pool.spec.ts: `await swapExact0For1(expandTo18Decimals(2), other.address)`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, minTick, maxTick, expandTo18Decimals(1))`
 $DIR/test/UniswapV3Pool.spec.ts: `await mint(wallet.address, minTick + tickSpacing, maxTick - tickSpacing, expandTo18Decimals(2))`
@@ -1504,22 +1504,6 @@ $DIR/test/UniswapV3Pool.spec.ts: `.from(2)`
 $DIR/test/UniswapV3Pool.spec.ts: `.pow(102)`
 $DIR/test/UniswapV3Pool.spec.ts: `.burn(-240, 0, 10000)`
 $DIR/test/UniswapV3Pool.spec.ts: `.callStatic.collect(wallet.address, -240, 0, MaxUint128, MaxUint128)`
-$DIR/test/UniswapV3Pool.spec.ts: `.burn(minTick + tickSpacing, maxTick - tickSpacing, 100)`
-$DIR/test/UniswapV3Pool.spec.ts: `.callStatic.collect(
-              wallet.address,
-              minTick + tickSpacing,
-              maxTick - tickSpacing,
-              MaxUint128,
-              MaxUint128
-            )`
-$DIR/test/UniswapV3Pool.spec.ts: `.burn(-46080, -46020, 10000)`
-$DIR/test/UniswapV3Pool.spec.ts: `.callStatic.collect(
-              wallet.address,
-              -46080,
-              -46020,
-              MaxUint128,
-              MaxUint128
-            )`
 $DIR/test/UniswapV3Pool.spec.ts: `.burn(-240, 0, 90)`
 $DIR/test/UniswapV3Pool.spec.ts: `.burn(-240, 0, 100)`
 $DIR/test/UniswapV3Pool.spec.ts: `.ticks(-240)`
@@ -1530,14 +1514,30 @@ $DIR/test/UniswapV3Pool.spec.ts: `.ticks(-240)`
 $DIR/test/UniswapV3Pool.spec.ts: `.ticks(-tickSpacing)`
 $DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(1)`
 $DIR/test/UniswapV3Pool.spec.ts: `.observations(0)`
-$DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(1)`
-$DIR/test/UniswapV3Pool.spec.ts: `.observations(0)`
 $DIR/test/UniswapV3Pool.spec.ts: `.ticks(minTick + tickSpacing)`
 $DIR/test/UniswapV3Pool.spec.ts: `.ticks(maxTick - tickSpacing)`
+$DIR/test/UniswapV3Pool.spec.ts: `.burn(minTick + tickSpacing, maxTick - tickSpacing, 100)`
+$DIR/test/UniswapV3Pool.spec.ts: `.callStatic.collect(
+              wallet.address,
+              minTick + tickSpacing,
+              maxTick - tickSpacing,
+              MaxUint128,
+              MaxUint128
+            )`
 $DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(1)`
 $DIR/test/UniswapV3Pool.spec.ts: `.observations(0)`
 $DIR/test/UniswapV3Pool.spec.ts: `.from(2)`
 $DIR/test/UniswapV3Pool.spec.ts: `.pow(102)`
+$DIR/test/UniswapV3Pool.spec.ts: `.burn(-46080, -46020, 10000)`
+$DIR/test/UniswapV3Pool.spec.ts: `.callStatic.collect(
+              wallet.address,
+              -46080,
+              -46020,
+              MaxUint128,
+              MaxUint128
+            )`
+$DIR/test/UniswapV3Pool.spec.ts: `.advanceTime(1)`
+$DIR/test/UniswapV3Pool.spec.ts: `.observations(0)`
 $DIR/test/UniswapV3Pool.spec.ts: `.setFeeProtocol(6, 6)`
 $DIR/test/UniswapV3Pool.spec.ts: `.div(10)`
 $DIR/test/UniswapV3Pool.spec.ts: `.div(100)`
@@ -1696,13 +1696,23 @@ $DIR/test/UniswapV3Pool.spec.ts: `.mul(BigNumber.from(2).pow(128))`
 $DIR/test/UniswapV3Pool.spec.ts: `.from(2)`
 $DIR/test/UniswapV3Pool.spec.ts: `.pow(128)`
 $DIR/test/UniswapV3Pool.spec.ts: `.div(expandTo18Decimals(2))`
-$DIR/test/UniswapV3Pool.spec.ts: `.protocolFees()`
-$DIR/test/UniswapV3Pool.spec.ts: `.from(11)`
+$DIR/test/UniswapV3Pool.spec.ts: `.from(567)`
 $DIR/test/UniswapV3Pool.spec.ts: `.mul(BigNumber.from(2).pow(128))`
 $DIR/test/UniswapV3Pool.spec.ts: `.from(2)`
 $DIR/test/UniswapV3Pool.spec.ts: `.pow(128)`
 $DIR/test/UniswapV3Pool.spec.ts: `.div(expandTo18Decimals(2))`
-$DIR/test/UniswapV3Pool.spec.ts: `.from(567)`
+$DIR/test/UniswapV3Pool.spec.ts: `.from(678)`
+$DIR/test/UniswapV3Pool.spec.ts: `.mul(BigNumber.from(2).pow(128))`
+$DIR/test/UniswapV3Pool.spec.ts: `.from(2)`
+$DIR/test/UniswapV3Pool.spec.ts: `.pow(128)`
+$DIR/test/UniswapV3Pool.spec.ts: `.div(expandTo18Decimals(2))`
+$DIR/test/UniswapV3Pool.spec.ts: `.from(1234)`
+$DIR/test/UniswapV3Pool.spec.ts: `.mul(BigNumber.from(2).pow(128))`
+$DIR/test/UniswapV3Pool.spec.ts: `.from(2)`
+$DIR/test/UniswapV3Pool.spec.ts: `.pow(128)`
+$DIR/test/UniswapV3Pool.spec.ts: `.div(expandTo18Decimals(2))`
+$DIR/test/UniswapV3Pool.spec.ts: `.protocolFees()`
+$DIR/test/UniswapV3Pool.spec.ts: `.from(11)`
 $DIR/test/UniswapV3Pool.spec.ts: `.mul(BigNumber.from(2).pow(128))`
 $DIR/test/UniswapV3Pool.spec.ts: `.from(2)`
 $DIR/test/UniswapV3Pool.spec.ts: `.pow(128)`
@@ -1713,18 +1723,8 @@ $DIR/test/UniswapV3Pool.spec.ts: `.mul(BigNumber.from(2).pow(128))`
 $DIR/test/UniswapV3Pool.spec.ts: `.from(2)`
 $DIR/test/UniswapV3Pool.spec.ts: `.pow(128)`
 $DIR/test/UniswapV3Pool.spec.ts: `.div(expandTo18Decimals(2))`
-$DIR/test/UniswapV3Pool.spec.ts: `.from(678)`
-$DIR/test/UniswapV3Pool.spec.ts: `.mul(BigNumber.from(2).pow(128))`
-$DIR/test/UniswapV3Pool.spec.ts: `.from(2)`
-$DIR/test/UniswapV3Pool.spec.ts: `.pow(128)`
-$DIR/test/UniswapV3Pool.spec.ts: `.div(expandTo18Decimals(2))`
 $DIR/test/UniswapV3Pool.spec.ts: `.protocolFees()`
 $DIR/test/UniswapV3Pool.spec.ts: `.from(565)`
-$DIR/test/UniswapV3Pool.spec.ts: `.mul(BigNumber.from(2).pow(128))`
-$DIR/test/UniswapV3Pool.spec.ts: `.from(2)`
-$DIR/test/UniswapV3Pool.spec.ts: `.pow(128)`
-$DIR/test/UniswapV3Pool.spec.ts: `.div(expandTo18Decimals(2))`
-$DIR/test/UniswapV3Pool.spec.ts: `.from(1234)`
 $DIR/test/UniswapV3Pool.spec.ts: `.mul(BigNumber.from(2).pow(128))`
 $DIR/test/UniswapV3Pool.spec.ts: `.from(2)`
 $DIR/test/UniswapV3Pool.spec.ts: `.pow(128)`
