@@ -2633,12 +2633,6 @@ $DIR/test/basic.spec.ts: `await mintAndApproveERC20(
           marketplaceContract.address,
           tokenAmount
         );`
-$DIR/test/basic.spec.ts: `await set721ApprovalForAll(buyer, marketplaceContract.address, true);`
-$DIR/test/basic.spec.ts: `await mintAndApproveERC20(
-          seller,
-          marketplaceContract.address,
-          tokenAmount
-        );`
 $DIR/test/basic.spec.ts: `await mintAndApproveERC20(
           buyer,
           marketplaceContract.address,
@@ -2646,12 +2640,6 @@ $DIR/test/basic.spec.ts: `await mintAndApproveERC20(
         );`
 $DIR/test/basic.spec.ts: `await mintAndApproveERC20(
           buyer,
-          marketplaceContract.address,
-          tokenAmount
-        );`
-$DIR/test/basic.spec.ts: `await set721ApprovalForAll(buyer, marketplaceContract.address, true);`
-$DIR/test/basic.spec.ts: `await mintAndApproveERC20(
-          seller,
           marketplaceContract.address,
           tokenAmount
         );`
@@ -2702,18 +2690,12 @@ $DIR/test/basic.spec.ts: `await mintAndApproveERC20(
           marketplaceContract.address,
           tokenAmount
         );`
-$DIR/test/basic.spec.ts: `await set721ApprovalForAll(buyer, marketplaceContract.address, true);`
-$DIR/test/basic.spec.ts: `await mintAndApproveERC20(
-          seller,
-          marketplaceContract.address,
-          tokenAmount
-        );`
 $DIR/test/basic.spec.ts: `await mintAndApproveERC20(
           buyer,
           marketplaceContract.address,
           tokenAmount
         );`
-$DIR/test/basic.spec.ts: `await set721ApprovalForAll(buyer, conduitOne.address, true);`
+$DIR/test/basic.spec.ts: `await set721ApprovalForAll(buyer, marketplaceContract.address, true);`
 $DIR/test/basic.spec.ts: `await mintAndApproveERC20(
           seller,
           marketplaceContract.address,
@@ -2729,6 +2711,12 @@ $DIR/test/basic.spec.ts: `order.extraData = "0x1234";`
 $DIR/test/basic.spec.ts: `await set721ApprovalForAll(buyer, marketplaceContract.address, true);`
 $DIR/test/basic.spec.ts: `await mintAndApproveERC20(seller, conduitOne.address, tokenAmount);`
 $DIR/test/basic.spec.ts: `await set721ApprovalForAll(buyer, conduitOne.address, true);`
+$DIR/test/basic.spec.ts: `await mintAndApproveERC20(
+          seller,
+          marketplaceContract.address,
+          tokenAmount
+        );`
+$DIR/test/basic.spec.ts: `await set721ApprovalForAll(buyer, marketplaceContract.address, true);`
 $DIR/test/basic.spec.ts: `await mintAndApproveERC20(
           seller,
           marketplaceContract.address,
@@ -2771,12 +2759,14 @@ $DIR/test/basic.spec.ts: `await mintAndApproveERC20(
           marketplaceContract.address,
           tokenAmount
         );`
+$DIR/test/basic.spec.ts: `await set721ApprovalForAll(buyer, marketplaceContract.address, true);`
+$DIR/test/basic.spec.ts: `await mintAndApproveERC20(
+          seller,
+          marketplaceContract.address,
+          tokenAmount
+        );`
 $DIR/test/basic.spec.ts: `order.extraData = "0x1234";`
-$DIR/test/basic.spec.ts: `await mintAndApproveERC20(
-          buyer,
-          marketplaceContract.address,
-          tokenAmount
-        );`
+$DIR/test/basic.spec.ts: `await set721ApprovalForAll(buyer, conduitOne.address, true);`
 $DIR/test/basic.spec.ts: `await mintAndApproveERC20(
           seller,
           marketplaceContract.address,
@@ -2793,7 +2783,12 @@ $DIR/test/basic.spec.ts: `await mintAndApproveERC20(
           tokenAmount
         );`
 $DIR/test/basic.spec.ts: `await mintAndApproveERC20(
-          seller,
+          buyer,
+          marketplaceContract.address,
+          tokenAmount
+        );`
+$DIR/test/basic.spec.ts: `await mintAndApproveERC20(
+          buyer,
           marketplaceContract.address,
           tokenAmount
         );`
@@ -2813,7 +2808,12 @@ $DIR/test/basic.spec.ts: `await mintAndApproveERC20(
           tokenAmount
         );`
 $DIR/test/basic.spec.ts: `await mintAndApproveERC20(
-          buyer,
+          seller,
+          marketplaceContract.address,
+          tokenAmount
+        );`
+$DIR/test/basic.spec.ts: `await mintAndApproveERC20(
+          seller,
           marketplaceContract.address,
           tokenAmount
         );`
@@ -3036,14 +3036,6 @@ $DIR/test/basic.spec.ts: `.wait()`
 $DIR/test/basic.spec.ts: `.sub(100)`
 $DIR/test/basic.spec.ts: `.sub(100)`
 $DIR/test/basic.spec.ts: `.connect(buyer)`
-$DIR/test/basic.spec.ts: `.fulfillOrder(order, toKey(0))`
-$DIR/test/basic.spec.ts: `.wait()`
-$DIR/test/basic.spec.ts: `.sub(100)`
-$DIR/test/basic.spec.ts: `.sub(100)`
-$DIR/test/basic.spec.ts: `.connect(buyer)`
-$DIR/test/basic.spec.ts: `.fulfillBasicOrder(basicOrderParameters)`
-$DIR/test/basic.spec.ts: `.wait()`
-$DIR/test/basic.spec.ts: `.connect(buyer)`
 $DIR/test/basic.spec.ts: `.fulfillBasicOrder(basicOrderParameters)`
 $DIR/test/basic.spec.ts: `.wait()`
 $DIR/test/basic.spec.ts: `.sub(100)`
@@ -3094,13 +3086,8 @@ $DIR/test/basic.spec.ts: `.matchOrders([order, mirrorOrder], fulfillments)`
 $DIR/test/basic.spec.ts: `.wait()`
 $DIR/test/basic.spec.ts: `.sub(100)`
 $DIR/test/basic.spec.ts: `.sub(100)`
-$DIR/test/basic.spec.ts: `.connect(owner)`
-$DIR/test/basic.spec.ts: `.matchOrders([order, mirrorOrder], fulfillments)`
-$DIR/test/basic.spec.ts: `.wait()`
-$DIR/test/basic.spec.ts: `.sub(100)`
-$DIR/test/basic.spec.ts: `.sub(100)`
-$DIR/test/basic.spec.ts: `.connect(owner)`
-$DIR/test/basic.spec.ts: `.matchOrders([order, mirrorOrder], fulfillments)`
+$DIR/test/basic.spec.ts: `.connect(buyer)`
+$DIR/test/basic.spec.ts: `.fulfillOrder(order, toKey(0))`
 $DIR/test/basic.spec.ts: `.wait()`
 $DIR/test/basic.spec.ts: `.sub(100)`
 $DIR/test/basic.spec.ts: `.sub(100)`
@@ -3125,6 +3112,9 @@ $DIR/test/basic.spec.ts: `.wait()`
 $DIR/test/basic.spec.ts: `.connect(buyer)`
 $DIR/test/basic.spec.ts: `.fulfillBasicOrder(basicOrderParameters)`
 $DIR/test/basic.spec.ts: `.wait()`
+$DIR/test/basic.spec.ts: `.connect(buyer)`
+$DIR/test/basic.spec.ts: `.fulfillBasicOrder(basicOrderParameters)`
+$DIR/test/basic.spec.ts: `.wait()`
 $DIR/test/basic.spec.ts: `.parameters.consideration.push(
           getTestItem20(50, 50, zone.address)
         )`
@@ -3144,6 +3134,11 @@ $DIR/test/basic.spec.ts: `.wait()`
 $DIR/test/basic.spec.ts: `.sub(100)`
 $DIR/test/basic.spec.ts: `.sub(100)`
 $DIR/test/basic.spec.ts: `.connect(owner)`
+$DIR/test/basic.spec.ts: `.matchOrders([order, mirrorOrder], fulfillments)`
+$DIR/test/basic.spec.ts: `.wait()`
+$DIR/test/basic.spec.ts: `.sub(100)`
+$DIR/test/basic.spec.ts: `.sub(100)`
+$DIR/test/basic.spec.ts: `.connect(owner)`
 $DIR/test/basic.spec.ts: `.matchAdvancedOrders(
             [order, mirrorOrder],
             [],
@@ -3151,6 +3146,11 @@ $DIR/test/basic.spec.ts: `.matchAdvancedOrders(
             ethers.constants.AddressZero
           )`
 $DIR/test/basic.spec.ts: `.wait()`
+$DIR/test/basic.spec.ts: `.sub(100)`
+$DIR/test/basic.spec.ts: `.sub(100)`
+$DIR/test/basic.spec.ts: `.connect(owner)`
+$DIR/test/basic.spec.ts: `.matchOrders([order, mirrorOrder], fulfillments)`
+$DIR/test/basic.spec.ts: `.wait()`
 $DIR/test/basic.spec.ts: `.connect(buyer)`
 $DIR/test/basic.spec.ts: `.fulfillOrder(order, toKey(0), {
               value,
@@ -3194,40 +3194,27 @@ $DIR/test/basic.spec.ts: `.wait()`
 $DIR/test/basic.spec.ts: `.sub(100)`
 $DIR/test/basic.spec.ts: `.sub(100)`
 $DIR/test/basic.spec.ts: `.connect(buyer)`
+$DIR/test/basic.spec.ts: `.fulfillBasicOrder(basicOrderParameters)`
+$DIR/test/basic.spec.ts: `.wait()`
+$DIR/test/basic.spec.ts: `.sub(100)`
+$DIR/test/basic.spec.ts: `.sub(100)`
+$DIR/test/basic.spec.ts: `.connect(buyer)`
+$DIR/test/basic.spec.ts: `.fulfillBasicOrder(basicOrderParameters)`
+$DIR/test/basic.spec.ts: `.wait()`
+$DIR/test/basic.spec.ts: `.sub(100)`
+$DIR/test/basic.spec.ts: `.sub(100)`
+$DIR/test/basic.spec.ts: `.connect(owner)`
+$DIR/test/basic.spec.ts: `.matchOrders([order, mirrorOrder], fulfillments)`
+$DIR/test/basic.spec.ts: `.wait()`
+$DIR/test/basic.spec.ts: `.sub(100)`
+$DIR/test/basic.spec.ts: `.sub(100)`
+$DIR/test/basic.spec.ts: `.connect(owner)`
+$DIR/test/basic.spec.ts: `.matchOrders([order, mirrorOrder], fulfillments)`
+$DIR/test/basic.spec.ts: `.wait()`
+$DIR/test/basic.spec.ts: `.sub(100)`
+$DIR/test/basic.spec.ts: `.sub(100)`
+$DIR/test/basic.spec.ts: `.connect(buyer)`
 $DIR/test/basic.spec.ts: `.fulfillOrder(order, toKey(0))`
-$DIR/test/basic.spec.ts: `.wait()`
-$DIR/test/basic.spec.ts: `.sub(100)`
-$DIR/test/basic.spec.ts: `.sub(100)`
-$DIR/test/basic.spec.ts: `.connect(buyer)`
-$DIR/test/basic.spec.ts: `.fulfillBasicOrder(basicOrderParameters)`
-$DIR/test/basic.spec.ts: `.wait()`
-$DIR/test/basic.spec.ts: `.connect(buyer)`
-$DIR/test/basic.spec.ts: `.fulfillBasicOrder(basicOrderParameters)`
-$DIR/test/basic.spec.ts: `.wait()`
-$DIR/test/basic.spec.ts: `.sub(100)`
-$DIR/test/basic.spec.ts: `.sub(100)`
-$DIR/test/basic.spec.ts: `.connect(buyer)`
-$DIR/test/basic.spec.ts: `.fulfillBasicOrder(basicOrderParameters)`
-$DIR/test/basic.spec.ts: `.wait()`
-$DIR/test/basic.spec.ts: `.sub(100)`
-$DIR/test/basic.spec.ts: `.sub(100)`
-$DIR/test/basic.spec.ts: `.connect(owner)`
-$DIR/test/basic.spec.ts: `.matchOrders([order, mirrorOrder], fulfillments)`
-$DIR/test/basic.spec.ts: `.wait()`
-$DIR/test/basic.spec.ts: `.sub(100)`
-$DIR/test/basic.spec.ts: `.sub(100)`
-$DIR/test/basic.spec.ts: `.connect(owner)`
-$DIR/test/basic.spec.ts: `.matchOrders([order, mirrorOrder], fulfillments)`
-$DIR/test/basic.spec.ts: `.wait()`
-$DIR/test/basic.spec.ts: `.sub(100)`
-$DIR/test/basic.spec.ts: `.sub(100)`
-$DIR/test/basic.spec.ts: `.connect(owner)`
-$DIR/test/basic.spec.ts: `.matchOrders([order, mirrorOrder], fulfillments)`
-$DIR/test/basic.spec.ts: `.wait()`
-$DIR/test/basic.spec.ts: `.sub(100)`
-$DIR/test/basic.spec.ts: `.sub(100)`
-$DIR/test/basic.spec.ts: `.connect(owner)`
-$DIR/test/basic.spec.ts: `.matchOrders([order, mirrorOrder], fulfillments)`
 $DIR/test/basic.spec.ts: `.wait()`
 $DIR/test/basic.spec.ts: `.sub(100)`
 $DIR/test/basic.spec.ts: `.sub(100)`
@@ -3236,6 +3223,19 @@ $DIR/test/basic.spec.ts: `.fulfillOrder(order, conduitKeyOne)`
 $DIR/test/basic.spec.ts: `.wait()`
 $DIR/test/basic.spec.ts: `.connect(buyer)`
 $DIR/test/basic.spec.ts: `.fulfillBasicOrder(basicOrderParameters)`
+$DIR/test/basic.spec.ts: `.wait()`
+$DIR/test/basic.spec.ts: `.connect(buyer)`
+$DIR/test/basic.spec.ts: `.fulfillBasicOrder(basicOrderParameters)`
+$DIR/test/basic.spec.ts: `.wait()`
+$DIR/test/basic.spec.ts: `.sub(100)`
+$DIR/test/basic.spec.ts: `.sub(100)`
+$DIR/test/basic.spec.ts: `.connect(owner)`
+$DIR/test/basic.spec.ts: `.matchOrders([order, mirrorOrder], fulfillments)`
+$DIR/test/basic.spec.ts: `.wait()`
+$DIR/test/basic.spec.ts: `.sub(100)`
+$DIR/test/basic.spec.ts: `.sub(100)`
+$DIR/test/basic.spec.ts: `.connect(owner)`
+$DIR/test/basic.spec.ts: `.matchOrders([order, mirrorOrder], fulfillments)`
 $DIR/test/basic.spec.ts: `.wait()`
 $DIR/test/conduit.spec.ts: `await conduitController
       .connect(owner)
@@ -4419,11 +4419,11 @@ $DIR/test/revert.spec.ts: `await set721ApprovalForAll(seller, marketplaceContrac
 $DIR/test/revert.spec.ts: `offer2[0].identifierOrCriteria = secondNFTId;`
 $DIR/test/revert.spec.ts: `offer2[0].token = testERC1155.address;`
 $DIR/test/revert.spec.ts: `await set721ApprovalForAll(seller, marketplaceContract.address, true);`
-$DIR/test/revert.spec.ts: `consideration2[0].token = testERC1155.address;`
-$DIR/test/revert.spec.ts: `await set721ApprovalForAll(seller, marketplaceContract.address, true);`
 $DIR/test/revert.spec.ts: `consideration2[0].recipient = owner.address;`
 $DIR/test/revert.spec.ts: `await set721ApprovalForAll(seller, marketplaceContract.address, true);`
 $DIR/test/revert.spec.ts: `consideration2[0].itemType = 1;`
+$DIR/test/revert.spec.ts: `await set721ApprovalForAll(seller, marketplaceContract.address, true);`
+$DIR/test/revert.spec.ts: `consideration2[0].token = testERC1155.address;`
 $DIR/test/revert.spec.ts: `await set721ApprovalForAll(seller, marketplaceContract.address, true);`
 $DIR/test/revert.spec.ts: `consideration2[0].identifierOrCriteria = nftId;`
 $DIR/test/revert.spec.ts: `await set721ApprovalForAll(seller, marketplaceContract.address, true);`
@@ -5808,23 +5808,6 @@ $DIR/test/transferhelper.spec.ts: `await mockConduitController
 $DIR/test/transferhelper.spec.ts: `await tempERC1155Contract
         .connect(sender)
         .setApprovalForAll(mockConduitAddress, true);`
-$DIR/test/transferhelper.spec.ts: `await tempERC1155Contract.connect(owner).mint(sender.address, 0, 100);`
-$DIR/test/transferhelper.spec.ts: `await mockConduitController
-        .connect(owner)
-        .createConduit(mockConduitKey, owner.address);`
-$DIR/test/transferhelper.spec.ts: `await tempERC1155Contract
-        .connect(sender)
-        .setApprovalForAll(mockConduitAddress, true);`
-$DIR/test/transferhelper.spec.ts: `await tempERC20Contract.connect(owner).mint(sender.address, 100);`
-$DIR/test/transferhelper.spec.ts: `await mockConduitController
-        .connect(owner)
-        .createConduit(mockConduitKey, owner.address);`
-$DIR/test/transferhelper.spec.ts: `await tempERC20Contract.connect(sender).approve(mockConduitAddress, 100);`
-$DIR/test/transferhelper.spec.ts: `await tempERC20Contract.connect(owner).mint(sender.address, 100);`
-$DIR/test/transferhelper.spec.ts: `await mockConduitController
-        .connect(owner)
-        .createConduit(mockConduitKey, owner.address);`
-$DIR/test/transferhelper.spec.ts: `await tempERC20Contract.connect(sender).approve(mockConduitAddress, 100);`
 $DIR/test/transferhelper.spec.ts: `await tempERC20Contract.connect(owner).mint(sender.address, 100);`
 $DIR/test/transferhelper.spec.ts: `await mockConduitController
         .connect(owner)
@@ -5879,6 +5862,23 @@ $DIR/test/transferhelper.spec.ts: `transfersWithRecipients[i] = createTransferWi
           true
         );`
 $DIR/test/transferhelper.spec.ts: `allContracts.push(...erc721Contracts);`
+$DIR/test/transferhelper.spec.ts: `await tempERC1155Contract.connect(owner).mint(sender.address, 0, 100);`
+$DIR/test/transferhelper.spec.ts: `await mockConduitController
+        .connect(owner)
+        .createConduit(mockConduitKey, owner.address);`
+$DIR/test/transferhelper.spec.ts: `await tempERC1155Contract
+        .connect(sender)
+        .setApprovalForAll(mockConduitAddress, true);`
+$DIR/test/transferhelper.spec.ts: `await tempERC20Contract.connect(owner).mint(sender.address, 100);`
+$DIR/test/transferhelper.spec.ts: `await mockConduitController
+        .connect(owner)
+        .createConduit(mockConduitKey, owner.address);`
+$DIR/test/transferhelper.spec.ts: `await tempERC20Contract.connect(sender).approve(mockConduitAddress, 100);`
+$DIR/test/transferhelper.spec.ts: `await tempERC20Contract.connect(owner).mint(sender.address, 100);`
+$DIR/test/transferhelper.spec.ts: `await mockConduitController
+        .connect(owner)
+        .createConduit(mockConduitKey, owner.address);`
+$DIR/test/transferhelper.spec.ts: `await tempERC20Contract.connect(sender).approve(mockConduitAddress, 100);`
 $DIR/test/transferhelper.spec.ts: `.max(1, randomInt(itemsToCreate - 2))`
 $DIR/test/transferhelper.spec.ts: `.max(1, randomInt(itemsToCreate - numERC20s - 1))`
 $DIR/test/transferhelper.spec.ts: `.max(1, itemsToCreate - numERC20s - numERC721s)`
@@ -5899,20 +5899,9 @@ $DIR/test/transferhelper.spec.ts: `.getContractFactory(
         "InvalidERC721Recipient"
       )`
 $DIR/test/transferhelper.spec.ts: `.deploy()`
-$DIR/test/transferhelper.spec.ts: `.getContractFactory(
-        "InvalidERC721Recipient"
-      )`
-$DIR/test/transferhelper.spec.ts: `.deploy()`
-$DIR/test/transferhelper.spec.ts: `.deploy()`
 $DIR/test/transferhelper.spec.ts: `.connect(sender)`
 $DIR/test/transferhelper.spec.ts: `.bulkTransfer(transfers, ethers.utils.formatBytes32String("0xabc"))`
 $DIR/test/transferhelper.spec.ts: `.utils.formatBytes32String("0xabc")`
-$DIR/test/transferhelper.spec.ts: `.connect(sender)`
-$DIR/test/transferhelper.spec.ts: `.bulkTransfer(
-            transferHelperItems,
-            ethers.utils.formatBytes32String("0xabc")
-          )`
-$DIR/test/transferhelper.spec.ts: `.utils.formatBytes32String("0xabc")`
 $DIR/test/transferhelper.spec.ts: `.getContractFactory(
         "ERC721ReceiverMock"
       )`
@@ -5929,51 +5918,6 @@ $DIR/test/transferhelper.spec.ts: `.deploy(
         1
       )`
 $DIR/test/transferhelper.spec.ts: `.from("abcd0000", "hex")`
-$DIR/test/transferhelper.spec.ts: `.deploy(
-        Buffer.from("abcd6969", "hex"),
-        1
-      )`
-$DIR/test/transferhelper.spec.ts: `.from("abcd6969", "hex")`
-$DIR/test/transferhelper.spec.ts: `.deploy(
-        Buffer.from("42069abc", "hex"),
-        1
-      )`
-$DIR/test/transferhelper.spec.ts: `.from("42069abc", "hex")`
-$DIR/test/transferhelper.spec.ts: `.deploy(
-        Buffer.from("abc42069", "hex"),
-        1
-      )`
-$DIR/test/transferhelper.spec.ts: `.from("abc42069", "hex")`
-$DIR/test/transferhelper.spec.ts: `.getContractFactory(
-        "ERC721ReceiverMock"
-      )`
-$DIR/test/transferhelper.spec.ts: `.deploy(
-        Buffer.from("abcd0000", "hex"),
-        1
-      )`
-$DIR/test/transferhelper.spec.ts: `.from("abcd0000", "hex")`
-$DIR/test/transferhelper.spec.ts: `.toLowerCase()`
-$DIR/test/transferhelper.spec.ts: `.toLowerCase()`
-$DIR/test/transferhelper.spec.ts: `.connect(owner)`
-$DIR/test/transferhelper.spec.ts: `.mint(sender.address, 0, 100)`
-$DIR/test/transferhelper.spec.ts: `.getContractFactory(
-        "ConduitControllerMock"
-      )`
-$DIR/test/transferhelper.spec.ts: `.deploy(
-        1 // ConduitMockRevertNoReason
-      )`
-$DIR/test/transferhelper.spec.ts: `.getContractFactory(
-        "TransferHelper"
-      )`
-$DIR/test/transferhelper.spec.ts: `.deploy(
-        mockConduitController.address
-      )`
-$DIR/test/transferhelper.spec.ts: `.slice(2)`
-$DIR/test/transferhelper.spec.ts: `.connect(owner)`
-$DIR/test/transferhelper.spec.ts: `.createConduit(mockConduitKey, owner.address)`
-$DIR/test/transferhelper.spec.ts: `.getConduit(mockConduitKey)`
-$DIR/test/transferhelper.spec.ts: `.connect(sender)`
-$DIR/test/transferhelper.spec.ts: `.setApprovalForAll(mockConduitAddress, true)`
 $DIR/test/transferhelper.spec.ts: `.toLowerCase()`
 $DIR/test/transferhelper.spec.ts: `.connect(owner)`
 $DIR/test/transferhelper.spec.ts: `.mint(sender.address, 0, 100)`
@@ -6000,10 +5944,6 @@ $DIR/test/transferhelper.spec.ts: `.getContractFactory(
         "TestERC20Panic"
       )`
 $DIR/test/transferhelper.spec.ts: `.deploy()`
-$DIR/test/transferhelper.spec.ts: `.getContractFactory(
-        "TestERC20Panic"
-      )`
-$DIR/test/transferhelper.spec.ts: `.deploy()`
 $DIR/test/transferhelper.spec.ts: `.connect(owner)`
 $DIR/test/transferhelper.spec.ts: `.mint(sender.address, 100)`
 $DIR/test/transferhelper.spec.ts: `.getContractFactory(
@@ -6024,50 +5964,6 @@ $DIR/test/transferhelper.spec.ts: `.createConduit(mockConduitKey, owner.address)
 $DIR/test/transferhelper.spec.ts: `.getConduit(mockConduitKey)`
 $DIR/test/transferhelper.spec.ts: `.connect(sender)`
 $DIR/test/transferhelper.spec.ts: `.approve(mockConduitAddress, 100)`
-$DIR/test/transferhelper.spec.ts: `.toLowerCase()`
-$DIR/test/transferhelper.spec.ts: `.connect(owner)`
-$DIR/test/transferhelper.spec.ts: `.mint(sender.address, 100)`
-$DIR/test/transferhelper.spec.ts: `.getContractFactory(
-        "ConduitControllerMock"
-      )`
-$DIR/test/transferhelper.spec.ts: `.deploy(
-        2 // ConduitMockInvalidMagic
-      )`
-$DIR/test/transferhelper.spec.ts: `.getContractFactory(
-        "TransferHelper"
-      )`
-$DIR/test/transferhelper.spec.ts: `.deploy(
-        mockConduitController.address
-      )`
-$DIR/test/transferhelper.spec.ts: `.slice(2)`
-$DIR/test/transferhelper.spec.ts: `.connect(owner)`
-$DIR/test/transferhelper.spec.ts: `.createConduit(mockConduitKey, owner.address)`
-$DIR/test/transferhelper.spec.ts: `.getConduit(mockConduitKey)`
-$DIR/test/transferhelper.spec.ts: `.connect(sender)`
-$DIR/test/transferhelper.spec.ts: `.approve(mockConduitAddress, 100)`
-$DIR/test/transferhelper.spec.ts: `.toLowerCase()`
-$DIR/test/transferhelper.spec.ts: `.connect(owner)`
-$DIR/test/transferhelper.spec.ts: `.mint(sender.address, 100)`
-$DIR/test/transferhelper.spec.ts: `.getContractFactory(
-        "ConduitControllerMock"
-      )`
-$DIR/test/transferhelper.spec.ts: `.deploy(
-        3 // ConduitMockRevertBytes
-      )`
-$DIR/test/transferhelper.spec.ts: `.getContractFactory(
-        "TransferHelper"
-      )`
-$DIR/test/transferhelper.spec.ts: `.deploy(
-        mockConduitController.address
-      )`
-$DIR/test/transferhelper.spec.ts: `.slice(2)`
-$DIR/test/transferhelper.spec.ts: `.connect(owner)`
-$DIR/test/transferhelper.spec.ts: `.createConduit(mockConduitKey, owner.address)`
-$DIR/test/transferhelper.spec.ts: `.getConduit(mockConduitKey)`
-$DIR/test/transferhelper.spec.ts: `.connect(sender)`
-$DIR/test/transferhelper.spec.ts: `.approve(mockConduitAddress, 100)`
-$DIR/test/transferhelper.spec.ts: `.utils.id("CustomError()")`
-$DIR/test/transferhelper.spec.ts: `.slice(0, 10)`
 $DIR/test/transferhelper.spec.ts: `.toLowerCase()`
 $DIR/test/transferhelper.spec.ts: `.connect(owner)`
 $DIR/test/transferhelper.spec.ts: `.mint(sender.address, 100)`
@@ -6147,6 +6043,110 @@ $DIR/test/transferhelper.spec.ts: `.deploy(
         0
       )`
 $DIR/test/transferhelper.spec.ts: `.connect(sender)`
+$DIR/test/transferhelper.spec.ts: `.getContractFactory(
+        "InvalidERC721Recipient"
+      )`
+$DIR/test/transferhelper.spec.ts: `.deploy()`
+$DIR/test/transferhelper.spec.ts: `.deploy()`
+$DIR/test/transferhelper.spec.ts: `.connect(sender)`
+$DIR/test/transferhelper.spec.ts: `.bulkTransfer(
+            transferHelperItems,
+            ethers.utils.formatBytes32String("0xabc")
+          )`
+$DIR/test/transferhelper.spec.ts: `.utils.formatBytes32String("0xabc")`
+$DIR/test/transferhelper.spec.ts: `.getContractFactory(
+        "ERC721ReceiverMock"
+      )`
+$DIR/test/transferhelper.spec.ts: `.deploy(
+        Buffer.from("abcd0000", "hex"),
+        1
+      )`
+$DIR/test/transferhelper.spec.ts: `.from("abcd0000", "hex")`
+$DIR/test/transferhelper.spec.ts: `.deploy(
+        Buffer.from("abcd6969", "hex"),
+        1
+      )`
+$DIR/test/transferhelper.spec.ts: `.from("abcd6969", "hex")`
+$DIR/test/transferhelper.spec.ts: `.deploy(
+        Buffer.from("42069abc", "hex"),
+        1
+      )`
+$DIR/test/transferhelper.spec.ts: `.from("42069abc", "hex")`
+$DIR/test/transferhelper.spec.ts: `.deploy(
+        Buffer.from("abc42069", "hex"),
+        1
+      )`
+$DIR/test/transferhelper.spec.ts: `.from("abc42069", "hex")`
+$DIR/test/transferhelper.spec.ts: `.toLowerCase()`
+$DIR/test/transferhelper.spec.ts: `.connect(owner)`
+$DIR/test/transferhelper.spec.ts: `.mint(sender.address, 0, 100)`
+$DIR/test/transferhelper.spec.ts: `.getContractFactory(
+        "ConduitControllerMock"
+      )`
+$DIR/test/transferhelper.spec.ts: `.deploy(
+        1 // ConduitMockRevertNoReason
+      )`
+$DIR/test/transferhelper.spec.ts: `.getContractFactory(
+        "TransferHelper"
+      )`
+$DIR/test/transferhelper.spec.ts: `.deploy(
+        mockConduitController.address
+      )`
+$DIR/test/transferhelper.spec.ts: `.slice(2)`
+$DIR/test/transferhelper.spec.ts: `.connect(owner)`
+$DIR/test/transferhelper.spec.ts: `.createConduit(mockConduitKey, owner.address)`
+$DIR/test/transferhelper.spec.ts: `.getConduit(mockConduitKey)`
+$DIR/test/transferhelper.spec.ts: `.connect(sender)`
+$DIR/test/transferhelper.spec.ts: `.setApprovalForAll(mockConduitAddress, true)`
+$DIR/test/transferhelper.spec.ts: `.toLowerCase()`
+$DIR/test/transferhelper.spec.ts: `.getContractFactory(
+        "TestERC20Panic"
+      )`
+$DIR/test/transferhelper.spec.ts: `.deploy()`
+$DIR/test/transferhelper.spec.ts: `.connect(owner)`
+$DIR/test/transferhelper.spec.ts: `.mint(sender.address, 100)`
+$DIR/test/transferhelper.spec.ts: `.getContractFactory(
+        "ConduitControllerMock"
+      )`
+$DIR/test/transferhelper.spec.ts: `.deploy(
+        2 // ConduitMockInvalidMagic
+      )`
+$DIR/test/transferhelper.spec.ts: `.getContractFactory(
+        "TransferHelper"
+      )`
+$DIR/test/transferhelper.spec.ts: `.deploy(
+        mockConduitController.address
+      )`
+$DIR/test/transferhelper.spec.ts: `.slice(2)`
+$DIR/test/transferhelper.spec.ts: `.connect(owner)`
+$DIR/test/transferhelper.spec.ts: `.createConduit(mockConduitKey, owner.address)`
+$DIR/test/transferhelper.spec.ts: `.getConduit(mockConduitKey)`
+$DIR/test/transferhelper.spec.ts: `.connect(sender)`
+$DIR/test/transferhelper.spec.ts: `.approve(mockConduitAddress, 100)`
+$DIR/test/transferhelper.spec.ts: `.toLowerCase()`
+$DIR/test/transferhelper.spec.ts: `.connect(owner)`
+$DIR/test/transferhelper.spec.ts: `.mint(sender.address, 100)`
+$DIR/test/transferhelper.spec.ts: `.getContractFactory(
+        "ConduitControllerMock"
+      )`
+$DIR/test/transferhelper.spec.ts: `.deploy(
+        3 // ConduitMockRevertBytes
+      )`
+$DIR/test/transferhelper.spec.ts: `.getContractFactory(
+        "TransferHelper"
+      )`
+$DIR/test/transferhelper.spec.ts: `.deploy(
+        mockConduitController.address
+      )`
+$DIR/test/transferhelper.spec.ts: `.slice(2)`
+$DIR/test/transferhelper.spec.ts: `.connect(owner)`
+$DIR/test/transferhelper.spec.ts: `.createConduit(mockConduitKey, owner.address)`
+$DIR/test/transferhelper.spec.ts: `.getConduit(mockConduitKey)`
+$DIR/test/transferhelper.spec.ts: `.connect(sender)`
+$DIR/test/transferhelper.spec.ts: `.approve(mockConduitAddress, 100)`
+$DIR/test/transferhelper.spec.ts: `.utils.id("CustomError()")`
+$DIR/test/transferhelper.spec.ts: `.slice(0, 10)`
+$DIR/test/transferhelper.spec.ts: `.toLowerCase()`
 $DIR/test/typehashdirectory.spec.ts: `.provider.getCode(address)`
 $DIR/test/zone.spec.ts: `await pausableZoneController.connect(owner).assignPauser(buyer.address);`
 $DIR/test/zone.spec.ts: `await pausableZoneController.createZone(salt);`
