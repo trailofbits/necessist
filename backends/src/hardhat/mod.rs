@@ -36,7 +36,7 @@ impl ParseHigh for Hardhat {
         context: &LightContext,
         config: &necessist_core::config::Toml,
         source_files: &[&Path],
-    ) -> Result<SourceFileSpanTestMap> {
+    ) -> Result<(usize, SourceFileSpanTestMap)> {
         self.mocha_adapter.parse(context, config, source_files)
     }
 }

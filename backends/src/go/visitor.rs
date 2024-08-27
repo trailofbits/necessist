@@ -5,7 +5,7 @@ use super::{
     Storage, Test, CALL_EXPRESSION_KIND,
 };
 use anyhow::Result;
-use necessist_core::framework::SpanTestMaps;
+use necessist_core::framework::{SpanTestMaps, TestSet};
 use once_cell::sync::Lazy;
 use std::cell::RefCell;
 use tree_sitter::{Query, QueryCursor, QueryMatch, Tree};
@@ -41,10 +41,10 @@ pub(super) fn visit<'ast>(
     generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Go>,
     storage: &RefCell<Storage<'ast>>,
     tree: &'ast Tree,
-) -> Result<SpanTestMaps> {
+) -> Result<(TestSet, SpanTestMaps)> {
     let mut visitor = Visitor::new(generic_visitor, storage);
     visitor.visit_tree(tree)?;
-    Ok(visitor.generic_visitor.span_test_maps())
+    Ok(visitor.generic_visitor.results())
 }
 
 struct Visitor<'context, 'config, 'backend, 'ast, 'storage> {

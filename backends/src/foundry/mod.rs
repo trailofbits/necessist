@@ -5,8 +5,8 @@ use super::{
 use anyhow::{anyhow, Result};
 use if_chain::if_chain;
 use necessist_core::{
-    framework::SpanTestMaps, util, LightContext, LineColumn, SourceFile, Span,
-    __Rewriter as Rewriter,
+    framework::{SpanTestMaps, TestSet},
+    util, LightContext, LineColumn, SourceFile, Span, __Rewriter as Rewriter,
 };
 use solang_parser::pt::{CodeLocation, Expression, Identifier, Loc, SourceUnit, Statement};
 use std::{cell::RefCell, convert::Infallible, fs::read_to_string, path::Path, process::Command};
@@ -182,7 +182,7 @@ impl ParseLow for Foundry {
         generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Self>,
         storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
         file: &'ast <Self::Types as AbstractTypes>::File,
-    ) -> Result<SpanTestMaps> {
+    ) -> Result<(TestSet, SpanTestMaps)> {
         visit(generic_visitor, storage, &file.1)
     }
 

@@ -1,7 +1,10 @@
 use crate::{config, rewriter::Rewriter, LightContext, SourceFile, Span};
 use anyhow::Result;
 use indexmap::IndexSet;
-use std::{collections::BTreeMap, path::Path};
+use std::{
+    collections::{BTreeMap, BTreeSet},
+    path::Path,
+};
 use subprocess::{Exec, Popen};
 
 mod auto;
@@ -25,6 +28,8 @@ pub trait ToImplementation {
 }
 
 pub trait Interface: Parse + Run {}
+
+pub type TestSet = BTreeSet<String>;
 
 pub type SourceFileSpanTestMap = BTreeMap<SourceFile, SpanTestMaps>;
 
@@ -64,7 +69,7 @@ pub trait Parse {
         context: &LightContext,
         config: &config::Toml,
         source_files: &[&Path],
-    ) -> Result<SourceFileSpanTestMap>;
+    ) -> Result<(usize, SourceFileSpanTestMap)>;
 }
 
 pub type Postprocess = dyn Fn(&LightContext, Popen) -> Result<bool>;
@@ -104,7 +109,7 @@ impl<T: AsParse> Parse for T {
         context: &LightContext,
         config: &config::Toml,
         source_files: &[&Path],
-    ) -> Result<SourceFileSpanTestMap> {
+    ) -> Result<(usize, SourceFileSpanTestMap)> {
         self.as_parse_mut().parse(context, config, source_files)
     }
 }
