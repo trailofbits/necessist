@@ -1,37 +1,6 @@
-395 candidates in 74 tests in 1 source file
+389 candidates in 73 tests in 1 source file
 $DIR/src/os/os_test.go: dry running
 $DIR/src/os/os_test.go: mutilating
-$DIR/src/os/os_test.go: Warning: Failed to run test `TestMain`: code=0
-stdout=```
-testing: warning: no tests to run
-PASS
-ok  \tos\t[..]s [no tests to run]
-```
-
-stderr=""
-
-
-This may indicate a bug in Necessist. Consider opening an issue at: https://github.com/trailofbits/necessist/issues
-
-Silence this warning with: --allow run-test-failed
-$DIR/src/os/os_test.go: Warning: Failed to run test `TestMain`: code=0
-stdout=```
-testing: warning: no tests to run
-PASS
-ok  \tos\t(cached) [no tests to run]
-```
-
-stderr=""
-
-$DIR/src/os/os_test.go: Warning: Failed to run test `TestMain`: code=0
-stdout=```
-testing: warning: no tests to run
-PASS
-ok  \tos\t(cached) [no tests to run]
-```
-
-stderr=""
-
 $DIR/src/os/os_test.go: `testenv.MustHaveSymlink(t)` passed
 $DIR/src/os/os_test.go: `err = Symlink(path, link)` failed
 $DIR/src/os/os_test.go: `fi, err = Stat(link)` failed
@@ -282,9 +251,6 @@ $DIR/src/os/os_test.go: `forceMFTUpdateOnWindows(t, insideDir)` passed
 $DIR/src/os/os_test.go: `forceMFTUpdateOnWindows(t, tmpDupDir)` passed
 $DIR/src/os/os_test.go: `target = outsideFile` passed
 $DIR/src/os/os_test.go: `target = insideFile` passed
-$DIR/src/os/os_test.go: `.Copy(io.Discard, Stdin)` nonbuildable
-$DIR/src/os/os_test.go: `.SetFlags(log.LstdFlags | log.Lshortfile)` nonbuildable
-$DIR/src/os/os_test.go: `.Run()` nonbuildable
 $DIR/src/os/os_test.go: `.Name()` nonbuildable
 $DIR/src/os/os_test.go: `.Size()` nonbuildable
 $DIR/src/os/os_test.go: `.MustHaveSymlink(t)` nonbuildable
