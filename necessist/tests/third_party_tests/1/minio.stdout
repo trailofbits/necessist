@@ -8317,28 +8317,6 @@ $DIR/cmd/sts-handlers_test.go: `.SetUpAccMgmtPlugin(c)`
 $DIR/cmd/sts-handlers_test.go: `.TestOpenIDSTSWithRolePolicyUnderAMP(c, testRoleARNs[0], testRoleMap[testRoleARNs[0]])`
 $DIR/cmd/sts-handlers_test.go: `.TestOpenIDSTSWithRolePolicyUnderAMP(c, testRoleARNs[1], testRoleMap[testRoleARNs[1]])`
 $DIR/cmd/sts-handlers_test.go: `.TestOpenIDServiceAccWithRolePolicyUnderAMP(c)`
-$DIR/cmd/test-utils_test.go: `flag.Parse()`
-$DIR/cmd/test-utils_test.go: `globalIsTesting = true`
-$DIR/cmd/test-utils_test.go: `globalIsCICD = globalIsTesting`
-$DIR/cmd/test-utils_test.go: `globalActiveCred = auth.Credentials{
-		AccessKey: auth.DefaultAccessKey,
-		SecretKey: auth.DefaultSecretKey,
-	}`
-$DIR/cmd/test-utils_test.go: `globalNodeAuthToken, _ = authenticateNode(auth.DefaultAccessKey, auth.DefaultSecretKey)`
-$DIR/cmd/test-utils_test.go: `os.Unsetenv(env)`
-$DIR/cmd/test-utils_test.go: `globalIsDistErasure = false`
-$DIR/cmd/test-utils_test.go: `color.Output = io.Discard`
-$DIR/cmd/test-utils_test.go: `logger.DisableLog = true`
-$DIR/cmd/test-utils_test.go: `setMaxResources(serverCtxt{})`
-$DIR/cmd/test-utils_test.go: `globalConsoleSys = NewConsoleLogger(context.Background(), io.Discard)`
-$DIR/cmd/test-utils_test.go: `globalInternodeTransport = NewInternodeHTTPTransport(0)()`
-$DIR/cmd/test-utils_test.go: `initHelp()`
-$DIR/cmd/test-utils_test.go: `resetTestGlobals()`
-$DIR/cmd/test-utils_test.go: `globalIsCICD = true`
-$DIR/cmd/test-utils_test.go: `.Parse()`
-$DIR/cmd/test-utils_test.go: `.Unsetenv(env)`
-$DIR/cmd/test-utils_test.go: `.Background()`
-$DIR/cmd/test-utils_test.go: `.Run()`
 $DIR/cmd/test-utils_test.go: `.Background()`
 $DIR/cmd/tier-last-day-stats_gen_test.go: `left, err = msgp.Skip(bts)`
 $DIR/cmd/tier-last-day-stats_gen_test.go: `msgp.Encode(&buf, &v)`
@@ -11753,9 +11731,6 @@ $DIR/internal/dsync/drwmutex_test.go: `.Unlock(context.Background())`
 $DIR/internal/dsync/drwmutex_test.go: `.Background()`
 $DIR/internal/dsync/drwmutex_test.go: `.Lock(id, source)`
 $DIR/internal/dsync/drwmutex_test.go: `.Background()`
-$DIR/internal/dsync/dsync_test.go: `startLockServers()`
-$DIR/internal/dsync/dsync_test.go: `clnts = append(clnts, newClient(nodes[i].URL))`
-$DIR/internal/dsync/dsync_test.go: `stopLockServers()`
 $DIR/internal/dsync/dsync_test.go: `dm.Lock(id, source)`
 $DIR/internal/dsync/dsync_test.go: `time.Sleep(testDrwMutexRefreshCallTimeout)`
 $DIR/internal/dsync/dsync_test.go: `dm.Lock(id, source)`
@@ -11815,9 +11790,6 @@ $DIR/internal/dsync/dsync_test.go: `unlockReturned <- struct{}{}`
 $DIR/internal/dsync/dsync_test.go: `loops = 5`
 $DIR/internal/dsync/dsync_test.go: `go HammerMutex(m, loops, c)`
 $DIR/internal/dsync/dsync_test.go: `<-c`
-$DIR/internal/dsync/dsync_test.go: `.New()`
-$DIR/internal/dsync/dsync_test.go: `.String()`
-$DIR/internal/dsync/dsync_test.go: `.Run()`
 $DIR/internal/dsync/dsync_test.go: `.Lock(id, source)`
 $DIR/internal/dsync/dsync_test.go: `.Sleep(testDrwMutexRefreshCallTimeout)`
 $DIR/internal/dsync/dsync_test.go: `.Background()`

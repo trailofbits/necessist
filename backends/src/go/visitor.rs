@@ -90,6 +90,11 @@ impl<'context, 'config, 'backend, 'ast, 'storage>
             .unwrap()
             .utf8_text(self.storage.borrow().text.as_bytes())?;
 
+        // smoelius: Do not consider `TestMain` a test: https://pkg.go.dev/testing#hdr-Main
+        if name == "TestMain" {
+            return Ok(());
+        }
+
         let body = query_match.nodes_for_capture_index(1).next().unwrap();
 
         let test = Test { name, body };
