@@ -1,11 +1,11 @@
 #![cfg_attr(dylint_lib = "general", allow(non_local_effect_before_error_return))]
 
-use super::{Foundry, FunctionCall, GenericVisitor, Storage, Test, WithContents};
+use super::{Foundry, FunctionCall, GenericVisitor, LocalFunction, Storage, Test, WithContents};
 use anyhow::Result;
 use if_chain::if_chain;
 use necessist_core::framework::{SpanTestMaps, TestSet};
 use solang_parser::pt::{Expression, FunctionDefinition, Identifier, Loc, SourceUnit, Statement};
-use std::{cell::RefCell, convert::Infallible};
+use std::{cell::RefCell, collections::BTreeMap, convert::Infallible};
 
 mod visit;
 use visit::{self as visit_fns, Visitor as _};
@@ -24,6 +24,38 @@ impl<'ast> Statements<'ast> {
     }
 }
 
+pub(super) fn collect_local_functions(
+    source_unit: &SourceUnit,
+) -> BTreeMap<String, Vec<LocalFunction>> {
+    let mut collector = FunctionDefinitionCollector::default();
+    collector.visit_source_unit(source_unit).unwrap();
+    collector.function_definitions.split_off(&String::new())
+}
+
+#[derive(Default)]
+struct FunctionDefinitionCollector<'ast> {
+    function_definitions: BTreeMap<String, Vec<LocalFunction<'ast>>>,
+}
+
+impl<'ast> visit_fns::Visitor<'ast> for FunctionDefinitionCollector<'ast> {
+    type Error = Infallible;
+
+    fn visit_function_definition(
+        &mut self,
+        function_definition: &'ast FunctionDefinition,
+    ) -> Result<(), Self::Error> {
+        if let Some(name) = &function_definition.name {
+            self.function_definitions
+                .entry(name.to_string())
+                .or_default()
+                .push(LocalFunction {
+                    function_definition,
+                });
+        }
+        Ok(())
+    }
+}
+
 pub(super) fn visit<'ast>(
     generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Foundry>,
     storage: &RefCell<Storage<'ast>>,
@@ -31,7 +63,10 @@ pub(super) fn visit<'ast>(
 ) -> Result<(TestSet, SpanTestMaps)> {
     let mut visitor = Visitor::new(generic_visitor, storage);
     visitor.visit_source_unit(source_unit)?;
-    Ok(visitor.generic_visitor.results())
+    while let Some(local_function) = visitor.generic_visitor.next_local_function() {
+        visitor.visit_local_function(local_function)?;
+    }
+    visitor.generic_visitor.results()
 }
 
 struct Visitor<'context, 'config, 'backend, 'ast, 'storage> {
@@ -50,6 +85,12 @@ impl<'context, 'config, 'backend, 'ast, 'storage>
             generic_visitor,
             storage,
         }
+    }
+
+    fn visit_local_function(&mut self, local_function: LocalFunction<'ast>) -> Result<()> {
+        visit_fns::visit_function_definition(self, local_function.function_definition)?;
+
+        Ok(())
     }
 }
 

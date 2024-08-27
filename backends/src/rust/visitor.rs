@@ -4,15 +4,44 @@ use necessist_core::{
     framework::{SpanTestMaps, TestSet},
     warn, WarnFlags, Warning,
 };
-use std::{cell::RefCell, fmt::Write};
+use std::{cell::RefCell, collections::BTreeMap, fmt::Write};
 use syn::{
     visit::{
-        visit_expr_call, visit_expr_macro, visit_expr_method_call, visit_item_fn, visit_item_mod,
-        visit_stmt, visit_stmt_macro, Visit,
+        visit_block, visit_expr_call, visit_expr_macro, visit_expr_method_call, visit_item_fn,
+        visit_item_mod, visit_stmt, visit_stmt_macro, Visit,
     },
-    ExprCall, ExprMacro, ExprMethodCall, File, Ident, ItemFn, ItemMod, PathSegment, Stmt,
-    StmtMacro,
+    Block, ExprCall, ExprMacro, ExprMethodCall, File, Ident, ImplItemFn, ItemFn, ItemMod,
+    PathSegment, Stmt, StmtMacro,
 };
+
+pub(super) fn collect_local_functions(file: &File) -> BTreeMap<String, Vec<&Block>> {
+    let mut collector = BlockCollector::default();
+    collector.visit_file(file);
+    collector.blocks.split_off(&String::new())
+}
+
+#[derive(Default)]
+struct BlockCollector<'ast> {
+    blocks: BTreeMap<String, Vec<&'ast Block>>,
+}
+
+impl<'ast> Visit<'ast> for BlockCollector<'ast> {
+    fn visit_impl_item_fn(&mut self, impl_item_fn: &'ast ImplItemFn) {
+        self.blocks
+            .entry(impl_item_fn.sig.ident.to_string())
+            .or_default()
+            .push(&impl_item_fn.block);
+    }
+    fn visit_item_fn(&mut self, item_fn: &'ast ItemFn) {
+        if is_test(item_fn).is_some() {
+            return;
+        }
+        self.blocks
+            .entry(item_fn.sig.ident.to_string())
+            .or_default()
+            .push(&item_fn.block);
+    }
+}
 
 #[cfg_attr(dylint_lib = "general", allow(non_local_effect_before_error_return))]
 pub(super) fn visit<'ast>(
@@ -22,6 +51,9 @@ pub(super) fn visit<'ast>(
 ) -> Result<(TestSet, SpanTestMaps)> {
     let mut visitor = Visitor::new(generic_visitor, storage);
     visitor.visit_file(file);
+    while let Some(local_function) = visitor.generic_visitor.next_local_function() {
+        visitor.visit_local_function(local_function);
+    }
     for (test_name, errors) in &storage.borrow().tests_needing_warnings {
         let msg = module_path_unknown_msg(test_name, errors)?;
         warn(
@@ -38,7 +70,7 @@ pub(super) fn visit<'ast>(
         &mut storage.borrow_mut().source_file_package_cache,
         &visitor.generic_visitor.source_file,
     )?;
-    Ok(visitor.generic_visitor.results())
+    visitor.generic_visitor.results()
 }
 
 fn module_path_unknown_msg(test_name: &str, errors: &[Error]) -> Result<String> {
@@ -74,6 +106,10 @@ impl<'context, 'config, 'backend, 'ast, 'storage>
             storage,
             test_ident: None,
         }
+    }
+
+    fn visit_local_function(&mut self, local_function: &'ast Block) {
+        visit_block(self, local_function);
     }
 }
 

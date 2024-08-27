@@ -1,13 +1,13 @@
 #![cfg_attr(dylint_lib = "general", allow(non_local_effect_before_error_return))]
 
 use super::{
-    bounded_cursor, process_self_captures, valid_query, Call, GenericVisitor, Go, Statement,
-    Storage, Test, CALL_EXPRESSION_KIND,
+    bounded_cursor, process_self_captures, valid_query, Call, GenericVisitor, Go, LocalFunction,
+    Statement, Storage, Test, BLOCK_KIND, CALL_EXPRESSION_KIND,
 };
 use anyhow::Result;
 use necessist_core::framework::{SpanTestMaps, TestSet};
 use once_cell::sync::Lazy;
-use std::cell::RefCell;
+use std::{cell::RefCell, collections::BTreeMap};
 use tree_sitter::{Query, QueryCursor, QueryMatch, Tree};
 
 macro_rules! trace {
@@ -18,6 +18,13 @@ macro_rules! trace {
         log::trace!("{}:{}: {:?}", file!(), line!(), $expr)
     };
 }
+
+const FUNCTION_DECLARATION_SOURCE: &str = r"
+(function_declaration
+    name: (identifier) @name
+    body: (block) @body
+)
+";
 
 const TEST_FUNCTION_DECLARATION_SOURCE: &str = r#"
 (function_declaration
@@ -33,9 +40,38 @@ const STATEMENT_SOURCE: &str = r"
 (_statement) @statement
 ";
 
+static FUNCTION_DECLARATION_QUERY: Lazy<Query> =
+    Lazy::new(|| valid_query(FUNCTION_DECLARATION_SOURCE));
 static TEST_FUNCTION_DECLARATION_QUERY: Lazy<Query> =
     Lazy::new(|| valid_query(TEST_FUNCTION_DECLARATION_SOURCE));
 static STATEMENT_QUERY: Lazy<Query> = Lazy::new(|| valid_query(STATEMENT_SOURCE));
+
+pub(super) fn collect_local_functions<'ast>(
+    text: &'ast str,
+    tree: &'ast Tree,
+) -> Result<BTreeMap<String, Vec<LocalFunction<'ast>>>> {
+    let mut function_declarations = BTreeMap::<_, Vec<_>>::new();
+    let mut cursor = QueryCursor::new();
+    for query_match in cursor.matches(
+        &FUNCTION_DECLARATION_QUERY,
+        tree.root_node(),
+        text.as_bytes(),
+    ) {
+        let captures = query_match.captures;
+        assert_eq!(2, captures.len());
+        let name = captures[0].node.utf8_text(text.as_bytes())?;
+        if name.starts_with("Test") {
+            continue;
+        }
+        function_declarations
+            .entry(name.to_owned())
+            .or_default()
+            .push(LocalFunction {
+                body: captures[1].node,
+            });
+    }
+    Ok(function_declarations)
+}
 
 pub(super) fn visit<'ast>(
     generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Go>,
@@ -44,7 +80,10 @@ pub(super) fn visit<'ast>(
 ) -> Result<(TestSet, SpanTestMaps)> {
     let mut visitor = Visitor::new(generic_visitor, storage);
     visitor.visit_tree(tree)?;
-    Ok(visitor.generic_visitor.results())
+    while let Some(local_function) = visitor.generic_visitor.next_local_function() {
+        visitor.visit_local_function(local_function)?;
+    }
+    visitor.generic_visitor.results()
 }
 
 struct Visitor<'context, 'config, 'backend, 'ast, 'storage> {
@@ -74,6 +113,14 @@ impl<'context, 'config, 'backend, 'ast, 'storage>
         ) {
             self.visit_test_function_declaration(&query_match)?;
         }
+
+        Ok(())
+    }
+
+    fn visit_local_function(&mut self, local_function: LocalFunction<'ast>) -> Result<()> {
+        assert_eq!(*BLOCK_KIND, local_function.body.kind_id());
+
+        self.walk_nodes(&mut bounded_cursor::BoundedCursor::new(local_function.body))?;
 
         Ok(())
     }

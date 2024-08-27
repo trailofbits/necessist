@@ -27,7 +27,7 @@ mod try_insert;
 use try_insert::TryInsert;
 
 mod visitor;
-use visitor::visit;
+use visitor::{collect_local_functions, visit};
 
 #[derive(Debug)]
 pub struct Rust {
@@ -111,6 +111,7 @@ pub enum Expression<'ast> {
     Field(Field<'ast>),
     Call(Call<'ast>),
     MacroCall(MacroCall<'ast>),
+    Path(&'ast syn::Path),
     Other(proc_macro2::Span),
 }
 
@@ -122,6 +123,9 @@ impl<'ast> From<&'ast syn::Expr> for Expression<'ast> {
             syn::Expr::Call(call) => Expression::Call(Call::FunctionCall(call)),
             syn::Expr::Macro(mac) => Expression::MacroCall(MacroCall::Expr(mac)),
             syn::Expr::MethodCall(method_call) => Expression::Call(Call::MethodCall(method_call)),
+            // smoelius: `syn::Expr::Path` is intentionally omitted. See remark in
+            // `call_callee` below.
+            // syn::Expr::Path(...) => ...
             _ => Expression::Other(<_ as syn::spanned::Spanned>::span(value)),
         }
     }
@@ -162,6 +166,9 @@ impl AbstractTypes for Types {
     type Storage<'ast> = Storage<'ast>;
     type File = syn::File;
     type Test<'ast> = Test<'ast>;
+    // smoelius: A "local function" is actually a `syn::Block` because it makes handling both
+    // `syn:ItemFn` and `syn::ImplItemFn` easier.
+    type LocalFunction<'ast> = &'ast syn::Block;
     type Statement<'ast> = &'ast syn::Stmt;
     type Expression<'ast> = Expression<'ast>;
     type Await<'ast> = &'ast syn::ExprAwait;
@@ -181,9 +188,17 @@ impl<'ast> Named for Test<'ast> {
 // smoelius: Implementing `MaybeNamed` for `Expression` is mainly to deal with languages where
 // calling a function in a module/package looks like a field access, e.g., Go and TS. Since Rust is
 // not such a language, it is safe to return `None`.
+// smoelius: "Safe to return `None`" is no longer accurate. The `GenericVisitor` now uses callee
+// names to identify local functions.
 impl<'ast> MaybeNamed for Expression<'ast> {
     fn name(&self) -> Option<String> {
-        None
+        match self {
+            Expression::Await(_) | Expression::Other(_) => None,
+            Expression::Call(call) => call.name(),
+            Expression::Field(field) => field.name(),
+            Expression::MacroCall(macro_call) => Some(macro_call.name()),
+            Expression::Path(path) => path.get_ident().map(syn::Ident::to_string),
+        }
     }
 }
 
@@ -237,6 +252,9 @@ impl<'ast> Spanned for <Types as AbstractTypes>::Expression<'ast> {
             Expression::Call(call) => call.span(source_file),
             Expression::Field(field) => field.span(source_file),
             Expression::MacroCall(macro_call) => macro_call.span(source_file),
+            Expression::Path(path) => {
+                <_ as syn::spanned::Spanned>::span(path).to_internal_span(source_file)
+            }
             Expression::Other(span) => span.to_internal_span(source_file),
         }
     }
@@ -377,6 +395,14 @@ impl ParseLow for Rust {
         file: &'ast <Self::Types as AbstractTypes>::File,
     ) -> <Self::Types as AbstractTypes>::Storage<'ast> {
         Storage::new(file)
+    }
+
+    fn local_functions<'ast>(
+        &self,
+        _storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
+        file: &'ast <Self::Types as AbstractTypes>::File,
+    ) -> Result<BTreeMap<String, Vec<<Self::Types as AbstractTypes>::LocalFunction<'ast>>>> {
+        Ok(collect_local_functions(file))
     }
 
     fn visit_file<'ast>(
@@ -521,7 +547,21 @@ impl ParseLow for Rust {
         call: <Self::Types as AbstractTypes>::Call<'ast>,
     ) -> <Self::Types as AbstractTypes>::Expression<'ast> {
         match call {
-            Call::FunctionCall(call) => Expression::from(&*call.func),
+            Call::FunctionCall(call) => {
+                // smoelius: Allow only paths in callee positions to be expressions. Allowing
+                // arbitrary paths to be expressions confuses the ignore machinery in
+                // `GenericVisitor`, specifically `GenericVisitor::call_info_inner`.
+                if let syn::Expr::Path(syn::ExprPath {
+                    attrs: _,
+                    qself: None,
+                    path,
+                }) = &*call.func
+                {
+                    Expression::Path(path)
+                } else {
+                    Expression::from(&*call.func)
+                }
+            }
             Call::MethodCall(method_call) => Expression::Field(Field::MethodCall(method_call)),
         }
     }

@@ -1,25 +1,78 @@
+//! `GenericVisitor` (see module-level documentation)
+//!
+//! A framework-specific visitor is meant to interact with the `GenericVisitor` as follows:
+//!
+//! - Walk a source file and call `visit_test`, `visit_statement`, etc. as necessary.
+//!
+//! - In a loop, do the following:
+//!
+//!   - Call `next_local_function` to obtain the next `LocalFunction` (if any) the `GenericVisitor`
+//!     wants to visit.
+//!
+//!   - Walk each returned `LocalFunction` and call `visit_statement`, etc. (but not `visit_test`)
+//!     as necessary.
+//!
+//! - Call `results` to obtain the `TestSet` and `SpanTestMaps` the `GenericVisitor` has
+//!   accumulated.
+//!
+//! It would be nice if the `GenericVisitor` had a function (say, `finish`) that took a closure,
+//! performed the loop, and returned the `TestSet` and `SpanTestMaps`. However, I haven't found a
+//! way to do this that satisfies the borrow checker.
+
 use super::{AbstractTypes, MaybeNamed, Named, ParseLow, Spanned};
+use anyhow::Result;
 use if_chain::if_chain;
+use indexmap::IndexMap;
 use necessist_core::{
     config,
     framework::{SpanKind, SpanTestMaps, TestSet},
-    LightContext, SourceFile, Span,
+    warn, LightContext, SourceFile, Span, WarnFlags, Warning, __ToConsoleString,
 };
 use paste::paste;
-use std::cell::RefCell;
+use std::{
+    cell::RefCell,
+    collections::{BTreeMap, BTreeSet, HashSet},
+};
 
 pub struct GenericVisitor<'context, 'config, 'backend, 'ast, T: ParseLow> {
     pub context: &'context LightContext<'context>,
     pub config: &'config config::Compiled,
     pub backend: &'backend mut T,
+    pub local_functions: BTreeMap<String, Vec<<T::Types as AbstractTypes>::LocalFunction<'ast>>>,
     pub source_file: SourceFile,
-    pub test_name: Option<String>,
+    pub test_names: BTreeSet<String>,
     pub last_statement_in_test: Option<<T::Types as AbstractTypes>::Statement<'ast>>,
     pub n_statement_leaves_visited: usize,
     pub n_before: Vec<usize>,
     pub call_statement: Option<<T::Types as AbstractTypes>::Statement<'ast>>,
     pub test_set: TestSet,
     pub span_test_maps: SpanTestMaps,
+    #[allow(clippy::test_attr_in_doctest)]
+    /// Maps a `LocalFunction` to the names of the tests that exercise it
+    ///
+    /// In principle, the set of test names could grow while walking a local function. A sketch of
+    /// how this could occur follows. For now, we ignore this possibility.
+    ///
+    /// ```
+    /// #[test]
+    /// fn test_foo() {
+    ///     foo();
+    /// }
+    /// #[test]
+    /// fn test_bar() {
+    ///     bar();
+    /// }
+    /// fn foo() {}
+    /// fn bar() {
+    ///     // While walking `bar`, we notice the call to `foo`, i.e., `foo` could be called by
+    ///     // `test_foo` or (indirectly) by `test_bar`.
+    ///     foo();
+    /// }
+    /// ```
+    pub local_functions_pending:
+        IndexMap<<T::Types as AbstractTypes>::LocalFunction<'ast>, BTreeSet<String>>,
+    pub local_functions_returned: HashSet<<T::Types as AbstractTypes>::LocalFunction<'ast>>,
+    pub local_functions_needing_warnings: BTreeSet<String>,
 }
 
 /// `call_info` return values. See that method for details.
@@ -50,7 +103,7 @@ macro_rules! visit_maybe_macro_call {
             let statement = $this.call_statement.take();
 
             if_chain! {
-                if let Some(test_name) = $this.test_name.clone();
+                if !$this.test_names.is_empty();
                 if statement.map_or(true, |statement| {
                     $this.backend.statement_is_removable(statement)
                         && !$this.is_last_statement_in_test(statement)
@@ -59,14 +112,14 @@ macro_rules! visit_maybe_macro_call {
                     if let Some(statement) = statement {
                         if !$args.is_ignored_as_call {
                             let span = statement.span(&$this.source_file);
-                            $this.register_span(span, &test_name, SpanKind::Statement);
+                            $this.register_span(span, SpanKind::Statement);
                         }
                     }
 
                     // smoelius: If the entire call is ignored, then treat the method call as
                     // ignored as well.
                     if !$args.is_ignored_as_call && $args.is_method_call && !$args.is_ignored_as_method_call {
-                        $this.register_span($args.span.clone(), &test_name, SpanKind::MethodCall);
+                        $this.register_span($args.span.clone(), SpanKind::MethodCall);
                     }
 
                     // smoelius: Return false (i.e., don't descend into the call arguments) only if
@@ -87,8 +140,38 @@ macro_rules! visit_call_post {
 impl<'context, 'config, 'backend, 'ast, T: ParseLow>
     GenericVisitor<'context, 'config, 'backend, 'ast, T>
 {
-    pub fn results(self) -> (TestSet, SpanTestMaps) {
-        (self.test_set, self.span_test_maps)
+    pub fn next_local_function(
+        &mut self,
+    ) -> Option<<T::Types as AbstractTypes>::LocalFunction<'ast>> {
+        let (local_function, test_names) = self.local_functions_pending.pop()?;
+        self.local_functions_returned.insert(local_function);
+        self.test_names = test_names;
+        Some(local_function)
+    }
+
+    /// Returns the [`TestSet`] and [`SpanTestMaps`] accumulated
+    ///
+    /// # Panics
+    ///
+    /// Panics if there are local functions that still need to be visited, i.e.,
+    /// [`Self::next_local_function`] would return `Some(..)`.
+    pub fn results(self) -> Result<(TestSet, SpanTestMaps)> {
+        assert!(self.local_functions_pending.is_empty());
+
+        if !self.local_functions_needing_warnings.is_empty() {
+            warn(
+                self.context,
+                Warning::LocalFunctionAmbiguous,
+                &format!(
+                    "Found multiple functions with the following names in `{}`: {:#?}",
+                    self.source_file.to_console_string(),
+                    self.local_functions_needing_warnings
+                ),
+                WarnFlags::empty(),
+            )?;
+        }
+
+        Ok((self.test_set, self.span_test_maps))
     }
 
     #[allow(clippy::unnecessary_wraps)]
@@ -105,8 +188,8 @@ impl<'context, 'config, 'backend, 'ast, T: ParseLow>
 
         self.register_test(&name);
 
-        assert!(self.test_name.is_none());
-        self.test_name = Some(name);
+        assert!(self.test_names.is_empty());
+        self.test_names = std::iter::once(name).collect();
 
         let statements = self.backend.test_statements(storage, test);
 
@@ -124,14 +207,14 @@ impl<'context, 'config, 'backend, 'ast, T: ParseLow>
         self.last_statement_in_test = None;
 
         // smoelius: Check whether the test was ignored.
-        if self.test_name.is_none() {
+        if self.test_names.is_empty() {
             debug_assert!(self.config.is_ignored_test(&test.name()));
             return;
         }
 
         let name = test.name();
-        assert_eq!(self.test_name, Some(name));
-        self.test_name = None;
+        assert!(self.test_names.len() == 1 && self.test_names.first() == Some(&name));
+        self.test_names.clear();
     }
 
     pub fn visit_statement(
@@ -172,16 +255,15 @@ impl<'context, 'config, 'backend, 'ast, T: ParseLow>
 
         // smoelius: Call/macro call statements are handled by the visit/visit-post functions
         // specific to the call type.
-        if let Some(test_name) = self.test_name.as_ref() {
-            if self.backend.statement_is_removable(statement)
-                && !self.is_last_statement_in_test(statement)
-                && !self.statement_is_call(storage, statement)
-                && !self.backend.statement_is_control(storage, statement)
-                && !self.backend.statement_is_declaration(storage, statement)
-            {
-                let span = statement.span(&self.source_file);
-                self.register_span(span, &test_name.clone(), SpanKind::Statement);
-            }
+        if !self.test_names.is_empty()
+            && self.backend.statement_is_removable(statement)
+            && !self.is_last_statement_in_test(statement)
+            && !self.statement_is_call(storage, statement)
+            && !self.backend.statement_is_control(storage, statement)
+            && !self.backend.statement_is_declaration(storage, statement)
+        {
+            let span = statement.span(&self.source_file);
+            self.register_span(span, SpanKind::Statement);
         }
     }
 
@@ -192,6 +274,31 @@ impl<'context, 'config, 'backend, 'ast, T: ParseLow>
         storage: &RefCell<<T::Types as AbstractTypes>::Storage<'ast>>,
         call: <T::Types as AbstractTypes>::Call<'ast>,
     ) -> bool {
+        if_chain! {
+            if let Some((name, local_functions)) = self.callee_is_local_function(storage, call);
+            let ambiguous = local_functions.len() >= 2;
+            // smoelius: As mentioned above, a new call to a local function `foo` could be
+            // discovered while walking a local function `bar`. In such a case, `foo` may already be
+            // in `local_functions_returned` and thus will not be revisited. A downside of this is
+            // that not all tests that exercise `foo` will be called when `foo`'s statements /
+            // method calls are removed. For now, we ignore this possibility.
+            if let Some(local_function) = local_functions.into_iter().next();
+            if !self.local_functions_returned.contains(&local_function);
+            then {
+                if ambiguous {
+                    self.local_functions_needing_warnings.insert(name);
+                }
+                self.local_functions_pending
+                    .entry(local_function)
+                    .or_default()
+                    .extend(self.test_names.clone());
+                // smoelius: `self.call_statement` would normally be cleared by
+                // `visit_maybe_macro_call!`. But since we're not calling that...
+                self.call_statement = None;
+                return true;
+            }
+        }
+
         let call_span = call.span(&self.source_file);
         if let Some((field, name)) = self.callee_is_named_field(storage, call) {
             let inner_most_call_info = self.call_info(storage, &call_span, field, &name, true);
@@ -309,17 +416,18 @@ impl<'context, 'config, 'backend, 'ast, T: ParseLow>
         self.test_set.insert(test_name.to_owned());
     }
 
-    fn register_span(&mut self, span: Span, test_name: &str, kind: SpanKind) {
-        assert!(
-            self.test_set.contains(test_name),
-            "Test `{test_name}` is not registered"
-        );
+    // smoelius: `register_span` no longer takes a `test_name` argument. It now registers a span
+    // using `self.test_names` (which must be non-empty).
+    fn register_span(&mut self, span: Span, kind: SpanKind) {
         let span_test_map = match kind {
             SpanKind::Statement => &mut self.span_test_maps.statement,
             SpanKind::MethodCall => &mut self.span_test_maps.method_call,
         };
-        let test_names = span_test_map.entry(span).or_default();
-        test_names.insert(test_name.to_owned());
+        let span_test_names = span_test_map.entry(span).or_default();
+        assert!(!self.test_names.is_empty());
+        for test_name in &self.test_names {
+            span_test_names.insert(test_name.to_owned());
+        }
     }
 
     /// Serves two functions that would require similar implementations:
@@ -467,6 +575,20 @@ impl<'context, 'config, 'backend, 'ast, T: ParseLow>
                 None
             }
         }
+    }
+
+    fn callee_is_local_function(
+        &self,
+        storage: &RefCell<<T::Types as AbstractTypes>::Storage<'ast>>,
+        call: <T::Types as AbstractTypes>::Call<'ast>,
+    ) -> Option<(
+        String,
+        Vec<<T::Types as AbstractTypes>::LocalFunction<'ast>>,
+    )> {
+        let expression = self.backend.call_callee(storage, call);
+        let name = expression.name()?;
+        let local_functions = self.local_functions.get(&name)?;
+        Some((name, local_functions.clone()))
     }
 
     fn callee_is_named_field(

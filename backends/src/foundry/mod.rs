@@ -8,14 +8,19 @@ use necessist_core::{
     framework::{SpanTestMaps, TestSet},
     util, LightContext, LineColumn, SourceFile, Span, __Rewriter as Rewriter,
 };
-use solang_parser::pt::{CodeLocation, Expression, Identifier, Loc, SourceUnit, Statement};
-use std::{cell::RefCell, convert::Infallible, fs::read_to_string, path::Path, process::Command};
+use solang_parser::pt::{
+    CodeLocation, Expression, FunctionDefinition, Identifier, Loc, SourceUnit, Statement,
+};
+use std::{
+    cell::RefCell, collections::BTreeMap, convert::Infallible, fs::read_to_string, hash::Hash,
+    path::Path, process::Command,
+};
 
 mod storage;
 use storage::Storage;
 
 mod visitor;
-use visitor::{visit, Statements};
+use visitor::{collect_local_functions, visit, Statements};
 
 #[derive(Debug)]
 pub struct Foundry;
@@ -38,6 +43,20 @@ impl Foundry {
 pub struct Test<'ast> {
     name: &'ast String,
     statements: Statements<'ast>,
+}
+
+#[derive(Clone, Copy, Eq, PartialEq)]
+pub struct LocalFunction<'ast> {
+    function_definition: &'ast FunctionDefinition,
+}
+
+impl<'ast> Hash for LocalFunction<'ast> {
+    fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
+        // smoelius: Hack.
+        let bytes = serde_json::to_vec(self.function_definition)
+            .expect("failed to serialize function definition");
+        bytes.hash(state);
+    }
 }
 
 #[derive(Clone, Copy, Eq, PartialEq)]
@@ -87,6 +106,7 @@ impl AbstractTypes for Types {
     type Storage<'ast> = Storage<'ast>;
     type File = (String, SourceUnit);
     type Test<'ast> = Test<'ast>;
+    type LocalFunction<'ast> = LocalFunction<'ast>;
     type Statement<'ast> = WithContents<'ast, &'ast Statement>;
     type Expression<'ast> = WithContents<'ast, &'ast Expression>;
     type Await<'ast> = Infallible;
@@ -176,6 +196,14 @@ impl ParseLow for Foundry {
         file: &'ast <Self::Types as AbstractTypes>::File,
     ) -> <Self::Types as AbstractTypes>::Storage<'ast> {
         Storage::new(file)
+    }
+
+    fn local_functions<'ast>(
+        &self,
+        _storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
+        file: &'ast <Self::Types as AbstractTypes>::File,
+    ) -> Result<BTreeMap<String, Vec<<Self::Types as AbstractTypes>::LocalFunction<'ast>>>> {
+        Ok(collect_local_functions(&file.1))
     }
 
     fn visit_file<'ast>(
