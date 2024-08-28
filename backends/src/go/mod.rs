@@ -221,7 +221,7 @@ impl ParseLow for Go {
     const IGNORED_MACROS: Option<&'static [&'static str]> = None;
 
     const IGNORED_METHODS: Option<&'static [&'static str]> = Some(&[
-        "Close", "Error", "Errorf", "Fail", "FailNow", "Fatal", "Fatalf", "Log", "Logf",
+        "Close", "Error", "Errorf", "Fail", "FailNow", "Fatal", "Fatalf", "Helper", "Log", "Logf",
         "Parallel", "Skip", "Skipf", "SkipNow",
     ]);
 
