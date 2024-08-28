@@ -85,6 +85,11 @@ pub trait Run {
     ) -> Result<()>;
     fn statement_prefix_and_suffix(&self, span: &Span) -> Result<(String, String)>;
     fn build_source_file(&self, context: &LightContext, source_file: &Path) -> Result<()>;
+    /// Execute test `test_name` with `span` removed. Returns `Ok(None)` if the test could not be
+    /// built.
+    ///
+    /// In most cases, just `span.source_file` is used. But in the implementation of `RunLow::exec`,
+    /// `span` is used for error reporting.
     fn exec(
         &self,
         context: &LightContext,
@@ -138,11 +143,6 @@ impl<T: AsRun> Run for T {
     fn build_source_file(&self, context: &LightContext, source_file: &Path) -> Result<()> {
         self.as_run().build_source_file(context, source_file)
     }
-    /// Execute test `test_name` with `span` removed. Returns `Ok(None)` if the test could not be
-    /// built.
-    ///
-    /// In most cases, just `span.source_file` is used. But in the implementation of `RunLow::exec`,
-    /// `span` is used for error reporting.
     fn exec(
         &self,
         context: &LightContext,
