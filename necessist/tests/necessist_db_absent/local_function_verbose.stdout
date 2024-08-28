@@ -1,0 +1,8 @@
+Warning: Found multiple functions with the following names in `fixtures/local_function/src/lib.rs`: {
+    "add",
+}
+Silence this warning with: --allow local-function-ambiguous
+1 candidates in 1 test in 1 source file
+fixtures/local_function/src/lib.rs: dry running
+fixtures/local_function/src/lib.rs: mutilating
+fixtures/local_function/src/lib.rs:3:5-3:18: `sum += right;` failed
