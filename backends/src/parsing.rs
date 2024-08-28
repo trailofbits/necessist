@@ -397,7 +397,11 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
 
             let storage = RefCell::new(self.0.storage_from_file(&file));
 
-            let local_functions = self.0.local_functions(&storage, &file)?;
+            let local_functions = if context.opts.no_local_functions {
+                BTreeMap::default()
+            } else {
+                self.0.local_functions(&storage, &file)?
+            };
 
             let source_file = SourceFile::new(context.root.clone(), source_file.to_path_buf())?;
 
