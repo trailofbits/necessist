@@ -1,3 +1,25 @@
+//! Backend parsing support
+//!
+//! Some of the key data structures used during parsing:
+//!
+//! - `File`: framework-specific abstract abstract syntax tree representing a file
+//!
+//! - `Storage`: framework-specific "scratch space." `Storage` is allowed to hold references to
+//!   parts of the `File`. The lifetime of a `Storage` is only what it takes to parse the `File`.
+//!   `Storage` is wrapped in a [`RefCell`].
+//!
+//! - framework: Rust, Hardhat, etc. Implements the [`ParseLow`] trait, i.e., contains callbacks
+//!   such `statement_is_call`, which are used by the [`GenericVisitor`] (below). Most callbacks are
+//!   passed a reference to the `Storage`.
+//!
+//! - [`GenericVisitor`]: contains callbacks such as `visit_statement`/`visit_statement_post`, which
+//!   are used by the framework-specific visitor (below). Holds a reference to the framework (among
+//!   other things).
+//!
+//! - framework-specific visitor: wraps a [`GenericVisitor`] and calls into it while traversing the
+//!   `File`. Holds a reference to the `Storage`, which it passes to the [`GenericVisitor`], who
+//!   then forwards it on to the framework.
+
 use super::{GenericVisitor, ParseHigh};
 use anyhow::{Context, Result};
 use heck::ToKebabCase;
@@ -8,26 +30,6 @@ use necessist_core::{
 };
 use paste::paste;
 use std::{any::type_name, cell::RefCell, convert::Infallible, path::Path, rc::Rc};
-
-// smoelius: Some of the key data structures used during parsing:
-//
-// - `File`: framework-specific abstract abstract syntax tree representing a file
-//
-// - `Storage`: framework-specific "scratch space." `Storage` is allowed to hold references to parts
-//   of the `File`. The lifetime of a `Storage` is only what it takes to parse the `File`. `Storage`
-//   is wrapped in a `RefCell`.
-//
-// - framework: Rust, Hardhat, etc. Implements the `ParseLow` trait, i.e., contains callbacks such
-//   `statement_is_call`, which are used by the `GenericVisitor` (below). Most callbacks are passed
-//   a reference to the `Storage`.
-//
-// - `GenericVisitor`: contains callbacks such as `visit_statement`/`visit_statement_post`, which
-//   are used by the framework-specific visitor (below). Holds a reference to the framework (among
-//   other things).
-//
-// - framework-specific visitor: wraps a `GenericVisitor` and calls into it while traversing the
-//   `File`. Holds a reference to the `Storage`, which it passes to the `GenericVisitor`, who then
-//   forwards it on to the framework.
 
 pub trait Named {
     fn name(&self) -> String;
