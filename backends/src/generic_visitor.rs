@@ -130,7 +130,7 @@ impl<'context, 'config, 'backend, 'ast, T: ParseLow>
         }
 
         let name = test.name();
-        assert!(self.test_name == Some(name));
+        assert_eq!(self.test_name, Some(name));
         self.test_name = None;
     }
 

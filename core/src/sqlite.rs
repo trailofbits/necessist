@@ -186,7 +186,7 @@ fn url_from_span(remote: &Remote, span: &Span) -> String {
     let base_url = remote.url.strip_suffix(".git").unwrap_or(&remote.url);
 
     let base_url = if let Some(captures) = SSH_RE.captures(base_url) {
-        assert!(captures.len() == 3);
+        assert_eq!(3, captures.len());
         format!("https://{}/{}", &captures[1], &captures[2])
     } else {
         base_url.to_owned()
