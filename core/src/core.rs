@@ -89,6 +89,7 @@ pub struct Necessist {
     pub dump: bool,
     pub dump_candidates: bool,
     pub no_dry_run: bool,
+    pub no_local_functions: bool,
     pub no_sqlite: bool,
     pub quiet: bool,
     pub reset: bool,
