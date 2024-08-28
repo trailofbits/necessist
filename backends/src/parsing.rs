@@ -413,13 +413,13 @@ fn extend(
     span_test_maps_incoming: SpanTestMaps,
 ) {
     let span_test_maps = source_file_span_test_map.entry(source_file).or_default();
-    for (test_name, spans_incoming) in span_test_maps_incoming.statement {
-        let spans = span_test_maps.statement.entry(test_name).or_default();
-        spans.extend(spans_incoming);
+    for (span, test_names_incoming) in span_test_maps_incoming.statement {
+        let test_names = span_test_maps.statement.entry(span).or_default();
+        test_names.extend(test_names_incoming);
     }
-    for (test_name, spans_incoming) in span_test_maps_incoming.method_call {
-        let spans = span_test_maps.method_call.entry(test_name).or_default();
-        spans.extend(spans_incoming);
+    for (span, test_names_incoming) in span_test_maps_incoming.method_call {
+        let test_names = span_test_maps.method_call.entry(span).or_default();
+        test_names.extend(test_names_incoming);
     }
 }
 
