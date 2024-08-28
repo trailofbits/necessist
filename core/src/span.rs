@@ -61,7 +61,7 @@ impl Span {
         let (source_file, start_line, start_column, end_line, end_column) = SPAN_RE
             .captures(s)
             .map(|captures| {
-                assert!(captures.len() == 6);
+                assert_eq!(6, captures.len());
                 (
                     captures[1].to_owned(),
                     captures[2].to_owned(),

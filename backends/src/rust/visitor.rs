@@ -94,7 +94,7 @@ impl<'context, 'config, 'backend, 'ast, 'storage> Visit<'ast>
                 self.generic_visitor.visit_test_post(self.storage, test);
             }
 
-            assert!(self.test_ident == Some(ident));
+            assert_eq!(self.test_ident, Some(ident));
             self.test_ident = None;
         }
     }

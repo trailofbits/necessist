@@ -110,7 +110,7 @@ impl Mocha {
                 .captures(line)
                 .or_else(|| LINE_WITHOUT_TIME_RE.captures(line))
             {
-                assert!(captures.len() == 2);
+                assert_eq!(2, captures.len());
                 it_message_state_map.insert(captures[1].to_string(), ItMessageState::Found);
             }
         }
