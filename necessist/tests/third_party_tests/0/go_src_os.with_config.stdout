@@ -1,6 +1,16 @@
-381 candidates in 73 tests in 1 source file
+584 candidates in 73 tests in 1 source file
 $DIR/src/os/os_test.go: dry running
 $DIR/src/os/os_test.go: mutilating
+$DIR/src/os/os_test.go: `r = strings.EqualFold(name1, name2)` passed
+$DIR/src/os/os_test.go: `r = name1 == name2` failed
+$DIR/src/os/os_test.go: `t.Cleanup(func() {
+		if err := f.Close(); err != nil && !errors.Is(err, ErrClosed) {
+			t.Fatal(err)
+		}
+		if err := Remove(f.Name()); err != nil {
+			t.Fatal(err)
+		}
+	})` passed
 $DIR/src/os/os_test.go: `testenv.MustHaveSymlink(t)` passed
 $DIR/src/os/os_test.go: `err = Symlink(path, link)` failed
 $DIR/src/os/os_test.go: `fi, err = Stat(link)` failed
@@ -10,12 +20,17 @@ $DIR/src/os/os_test.go: `_, err = Stat("x")` failed
 $DIR/src/os/os_test.go: `b = make([]byte, 100)` failed
 $DIR/src/os/os_test.go: `n, err = f.Read(b)` failed
 $DIR/src/os/os_test.go: `_, err = file.Read(b)` failed
+$DIR/src/os/os_test.go: `found = true` failed
+$DIR/src/os/os_test.go: `found = true` failed
+$DIR/src/os/os_test.go: `found = true` failed
 $DIR/src/os/os_test.go: `t.Run(".", testReaddirnames(".", dot))` passed
 $DIR/src/os/os_test.go: `t.Run("sysdir", testReaddirnames(sysdir.name, sysdir.files))` passed
 $DIR/src/os/os_test.go: `t.Run(".", testReaddir(".", dot))` passed
 $DIR/src/os/os_test.go: `t.Run("sysdir", testReaddir(sysdir.name, sysdir.files))` passed
 $DIR/src/os/os_test.go: `t.Run(".", testReadDir(".", dot))` passed
 $DIR/src/os/os_test.go: `t.Run("sysdir", testReadDir(sysdir.name, sysdir.files))` passed
+$DIR/src/os/os_test.go: `names[count] = d[0]` failed
+$DIR/src/os/os_test.go: `count++` failed
 $DIR/src/os/os_test.go: `dir = "/system/bin"` passed
 $DIR/src/os/os_test.go: `dir = wd` passed
 $DIR/src/os/os_test.go: `dir = "/bin"` passed
@@ -35,9 +50,6 @@ $DIR/src/os/os_test.go: `fn(2, 2, nil)` failed
 $DIR/src/os/os_test.go: `fn(105, 102, nil)` failed
 $DIR/src/os/os_test.go: `fn(3, 0, io.EOF)` passed
 $DIR/src/os/os_test.go: `*LstatP = Lstat` passed
-$DIR/src/os/os_test.go: `touch(t, filepath.Join(dir, "good1"))` failed
-$DIR/src/os/os_test.go: `touch(t, filepath.Join(dir, "x"))` failed
-$DIR/src/os/os_test.go: `touch(t, filepath.Join(dir, "good2"))` failed
 $DIR/src/os/os_test.go: `s[i] = fi.Name()` failed
 $DIR/src/os/os_test.go: `slices.Sort(s)` failed
 $DIR/src/os/os_test.go: `xerr = ErrNotExist` failed
@@ -47,6 +59,7 @@ $DIR/src/os/os_test.go: `testenv.MustHaveLink(t)` passed
 $DIR/src/os/os_test.go: `err = Link(to, from)` failed
 $DIR/src/os/os_test.go: `err = Link(none, none)` failed
 $DIR/src/os/os_test.go: `err = Link(to, from)` failed
+$DIR/src/os/os_test.go: `RemoveAll(d)` passed
 $DIR/src/os/os_test.go: `testenv.MustHaveSymlink(t)` passed
 $DIR/src/os/os_test.go: `err = Symlink(to, from)` failed
 $DIR/src/os/os_test.go: `fromstat, err = Lstat(from)` failed
@@ -103,39 +116,37 @@ $DIR/src/os/os_test.go: `pt.Run(test.name, func(t *testing.T) {
 			}
 		})` passed
 $DIR/src/os/os_test.go: `fm = FileMode(0444)` passed
-$DIR/src/os/os_test.go: `checkMode(t, f.Name(), fm)` passed
 $DIR/src/os/os_test.go: `fm = FileMode(0123)` passed
 $DIR/src/os/os_test.go: `fm = FileMode(0666)` passed
-$DIR/src/os/os_test.go: `checkSize(t, f, 0)` passed
 $DIR/src/os/os_test.go: `f.Write([]byte("hello, world\n"))` failed
-$DIR/src/os/os_test.go: `checkSize(t, f, 13)` passed
 $DIR/src/os/os_test.go: `f.Truncate(10)` failed
-$DIR/src/os/os_test.go: `checkSize(t, f, 10)` passed
 $DIR/src/os/os_test.go: `f.Truncate(1024)` failed
-$DIR/src/os/os_test.go: `checkSize(t, f, 1024)` passed
 $DIR/src/os/os_test.go: `f.Truncate(0)` failed
-$DIR/src/os/os_test.go: `checkSize(t, f, 0)` passed
-$DIR/src/os/os_test.go: `checkSize(t, f, 13+9)` passed
-$DIR/src/os/os_test.go: `checkSize(t, f, 0)` passed
 $DIR/src/os/os_test.go: `f.Write([]byte("hello, world\n"))` failed
-$DIR/src/os/os_test.go: `checkSize(t, f, 13)` passed
 $DIR/src/os/os_test.go: `Truncate(f.Name(), 10)` failed
-$DIR/src/os/os_test.go: `checkSize(t, f, 10)` passed
 $DIR/src/os/os_test.go: `Truncate(f.Name(), 1024)` failed
-$DIR/src/os/os_test.go: `checkSize(t, f, 1024)` passed
 $DIR/src/os/os_test.go: `Truncate(f.Name(), 0)` failed
-$DIR/src/os/os_test.go: `checkSize(t, f, 0)` passed
-$DIR/src/os/os_test.go: `checkSize(t, f, 13+9)` passed
 $DIR/src/os/os_test.go: `assertPathError(t, path, err)` passed
 $DIR/src/os/os_test.go: `_, err = Stat(path)` passed
 $DIR/src/os/os_test.go: `f.Write([]byte("hello, world\n"))` passed
-$DIR/src/os/os_test.go: `testChtimesOmit(t, true, false)` passed
-$DIR/src/os/os_test.go: `testChtimesOmit(t, false, true)` passed
-$DIR/src/os/os_test.go: `testChtimesOmit(t, true, true)` passed
+$DIR/src/os/os_test.go: `err = file.Close()` passed
+$DIR/src/os/os_test.go: `wantAtime = wantAtime.Truncate(time.Second)` passed
+$DIR/src/os/os_test.go: `wantMtime = wantMtime.Truncate(time.Second)` passed
+$DIR/src/os/os_test.go: `wantAtime = wantAtime.Add(-1 * time.Second)` passed
+$DIR/src/os/os_test.go: `setAtime = wantAtime` failed
+$DIR/src/os/os_test.go: `wantMtime = wantMtime.Add(-1 * time.Second)` passed
+$DIR/src/os/os_test.go: `setMtime = wantMtime` failed
+$DIR/src/os/os_test.go: `fs, err = Stat(name)` failed
+$DIR/src/os/os_test.go: `err = Chtimes(name, at.Add(-time.Second), mt.Add(-time.Second))` failed
+$DIR/src/os/os_test.go: `st, err = Stat(name)` failed
 $DIR/src/os/os_test.go: `io.WriteString(f, data)` failed
 $DIR/src/os/os_test.go: `_, err = r.Seek(0, 0)` failed
 $DIR/src/os/os_test.go: `_, err = w.Seek(0, 0)` passed
-$DIR/src/os/os_test.go: `testWindowsHostname(t, hostname)` passed
+$DIR/src/os/os_test.go: `argv = []string{"hostname", "-s"}` passed
+$DIR/src/os/os_test.go: `io.Copy(&b, r)` failed
+$DIR/src/os/os_test.go: `_, err = p.Wait()` failed
+$DIR/src/os/os_test.go: `err = p.Kill()` failed
+$DIR/src/os/os_test.go: `output = output[0 : n-1]` failed
 $DIR/src/os/os_test.go: `testenv.MustHaveExec(t)` passed
 $DIR/src/os/os_test.go: `io.WriteString(f, data)` failed
 $DIR/src/os/os_test.go: `io.WriteString(f, data)` failed
@@ -151,9 +162,7 @@ $DIR/src/os/os_test.go: `s = writeFile(t, f, O_CREATE|O_APPEND|O_RDWR, "new&appe
 $DIR/src/os/os_test.go: `s = writeFile(t, f, O_CREATE|O_RDWR, "old")` failed
 $DIR/src/os/os_test.go: `s = writeFile(t, f, O_CREATE|O_TRUNC|O_RDWR, "new")` failed
 $DIR/src/os/os_test.go: `path += "/"` passed
-$DIR/src/os/os_test.go: `testDevNullFile(t, DevNull)` passed
-$DIR/src/os/os_test.go: `testDevNullFile(t, "./nul")` passed
-$DIR/src/os/os_test.go: `testDevNullFile(t, "//./nul")` passed
+$DIR/src/os/os_test.go: `fi, err = Stat(devNullName)` passed
 $DIR/src/os/os_test.go: `b[i] = '.'` passed
 $DIR/src/os/os_test.go: `b[len(b)-1] = '\n'` passed
 $DIR/src/os/os_test.go: `n, err = Stderr.Write(b)` passed
@@ -220,18 +229,20 @@ $DIR/src/os/os_test.go: `t.Run(fmt.Sprintf("length=%d", sz), func(t *testing.T) 
 $DIR/src/os/os_test.go: `names = append(names, "symlink.txt")` passed
 $DIR/src/os/os_test.go: `names = append(names, "link.txt")` passed
 $DIR/src/os/os_test.go: `err = Chmod(path, dir.Mode())` passed
+$DIR/src/os/os_test.go: `testenv.MustHaveExec(t)` passed
+$DIR/src/os/os_test.go: `cmd.Env = append(cmd.Environ(), "GO_OS_TEST_DRAIN_STDIN=1")` timed-out
+$DIR/src/os/os_test.go: `err = cmd.Start()` timed-out
+$DIR/src/os/os_test.go: `io.Copy(io.Discard, stdout)` passed
+$DIR/src/os/os_test.go: `processKiller(cmd.Process)` timed-out
 $DIR/src/os/os_test.go: `err = p2.Kill()` timed-out
 $DIR/src/os/os_test.go: `t.Run("file", testDoubleCloseError(filepath.Join(sfdir, sfname)))` passed
 $DIR/src/os/os_test.go: `f, err = OpenFile(name, O_WRONLY|O_CREATE|O_TRUNC, 0)` failed
-$DIR/src/os/os_test.go: `forceMFTUpdateOnWindows(t, "./testdata/dirfs")` passed
 $DIR/src/os/os_test.go: `_, err = d.Open(`testdata\dirfs`)` passed
 $DIR/src/os/os_test.go: `_, err = d.Open(`NUL`)` passed
 $DIR/src/os/os_test.go: `cwd = cwd[len(filepath.VolumeName(cwd)):]` passed
 $DIR/src/os/os_test.go: `cwd = filepath.ToSlash(cwd)` passed
 $DIR/src/os/os_test.go: `cwd = strings.TrimPrefix(cwd, "/")` failed
 $DIR/src/os/os_test.go: `f.WriteString("I will not allocate when passed a string longer than 32 bytes.\n")` passed
-$DIR/src/os/os_test.go: `forceMFTUpdateOnWindows(t, "./testdata/dirfs")` passed
-$DIR/src/os/os_test.go: `forceMFTUpdateOnWindows(t, tmpDir)` passed
 $DIR/src/os/os_test.go: `fsys = fstest.MapFS{
 		"william":    {Data: []byte("Shakespeare\n")},
 		"carl":       {Data: []byte("Gauss\n")},
@@ -240,13 +251,23 @@ $DIR/src/os/os_test.go: `fsys = fstest.MapFS{
 		"dir/newton": {Data: []byte("Sir Isaac\n")},
 	}` failed
 $DIR/src/os/os_test.go: `tmpDir = t.TempDir()` passed
-$DIR/src/os/os_test.go: `forceMFTUpdateOnWindows(t, tmpDir)` passed
 $DIR/src/os/os_test.go: `tmpFsys = DirFS(tmpDir)` failed
 $DIR/src/os/os_test.go: `testenv.MustHaveSymlink(t)` passed
-$DIR/src/os/os_test.go: `forceMFTUpdateOnWindows(t, insideDir)` passed
-$DIR/src/os/os_test.go: `forceMFTUpdateOnWindows(t, tmpDupDir)` passed
 $DIR/src/os/os_test.go: `target = outsideFile` passed
 $DIR/src/os/os_test.go: `target = insideFile` passed
+$DIR/src/os/os_test.go: `.Copy(io.Discard, file)` nonbuildable
+$DIR/src/os/os_test.go: `.EqualFold(name1, name2)` nonbuildable
+$DIR/src/os/os_test.go: `.Name()` nonbuildable
+$DIR/src/os/os_test.go: `.Cleanup(func() {
+		if err := f.Close(); err != nil && !errors.Is(err, ErrClosed) {
+			t.Fatal(err)
+		}
+		if err := Remove(f.Name()); err != nil {
+			t.Fatal(err)
+		}
+	})` nonbuildable
+$DIR/src/os/os_test.go: `.Is(err, ErrClosed)` nonbuildable
+$DIR/src/os/os_test.go: `.Name()` nonbuildable
 $DIR/src/os/os_test.go: `.Name()` nonbuildable
 $DIR/src/os/os_test.go: `.Size()` nonbuildable
 $DIR/src/os/os_test.go: `.MustHaveSymlink(t)` nonbuildable
@@ -260,6 +281,21 @@ $DIR/src/os/os_test.go: `.Size()` nonbuildable
 $DIR/src/os/os_test.go: `.Read(b)` nonbuildable
 $DIR/src/os/os_test.go: `.Read(b)` nonbuildable
 $DIR/src/os/os_test.go: `.Read(b)` nonbuildable
+$DIR/src/os/os_test.go: `.Readdirnames(-1)` nonbuildable
+$DIR/src/os/os_test.go: `.Readdir(-1)` nonbuildable
+$DIR/src/os/os_test.go: `.Name()` nonbuildable
+$DIR/src/os/os_test.go: `.Name()` nonbuildable
+$DIR/src/os/os_test.go: `.Name()` nonbuildable
+$DIR/src/os/os_test.go: `.ReadDir(-1)` nonbuildable
+$DIR/src/os/os_test.go: `.Name()` nonbuildable
+$DIR/src/os/os_test.go: `.Name()` nonbuildable
+$DIR/src/os/os_test.go: `.Name()` nonbuildable
+$DIR/src/os/os_test.go: `.IsDir()` nonbuildable
+$DIR/src/os/os_test.go: `.IsDir()` nonbuildable
+$DIR/src/os/os_test.go: `.Type()` nonbuildable
+$DIR/src/os/os_test.go: `.Mode()` nonbuildable
+$DIR/src/os/os_test.go: `.Type()` failed
+$DIR/src/os/os_test.go: `.Info()` nonbuildable
 $DIR/src/os/os_test.go: `.Run(".", testReaddirnames(".", dot))` nonbuildable
 $DIR/src/os/os_test.go: `.Run("sysdir", testReaddirnames(sysdir.name, sysdir.files))` nonbuildable
 $DIR/src/os/os_test.go: `.TempDir()` nonbuildable
@@ -269,6 +305,7 @@ $DIR/src/os/os_test.go: `.TempDir()` nonbuildable
 $DIR/src/os/os_test.go: `.Run(".", testReadDir(".", dot))` nonbuildable
 $DIR/src/os/os_test.go: `.Run("sysdir", testReadDir(sysdir.name, sysdir.files))` nonbuildable
 $DIR/src/os/os_test.go: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go: `.Readdirnames(1)` nonbuildable
 $DIR/src/os/os_test.go: `.Readdirnames(-1)` nonbuildable
 $DIR/src/os/os_test.go: `.Short()` nonbuildable
 $DIR/src/os/os_test.go: `.TempDir()` nonbuildable
@@ -346,10 +383,13 @@ $DIR/src/os/os_test.go: `.Run(test.name, func(t *testing.T) {
 		})` nonbuildable
 $DIR/src/os/os_test.go: `.create()` nonbuildable
 $DIR/src/os/os_test.go: `.Readdirnames(-1)` nonbuildable
+$DIR/src/os/os_test.go: `.Mode()` nonbuildable
 $DIR/src/os/os_test.go: `.Name()` nonbuildable
 $DIR/src/os/os_test.go: `.Name()` nonbuildable
 $DIR/src/os/os_test.go: `.Chmod(fm)` nonbuildable
 $DIR/src/os/os_test.go: `.Name()` nonbuildable
+$DIR/src/os/os_test.go: `.Stat()` nonbuildable
+$DIR/src/os/os_test.go: `.Size()` nonbuildable
 $DIR/src/os/os_test.go: `.Write([]byte("hello, world\n"))` nonbuildable
 $DIR/src/os/os_test.go: `.Truncate(10)` nonbuildable
 $DIR/src/os/os_test.go: `.Truncate(1024)` nonbuildable
@@ -364,7 +404,26 @@ $DIR/src/os/os_test.go: `.Join(t.TempDir(), "nonexistent")` nonbuildable
 $DIR/src/os/os_test.go: `.TempDir()` nonbuildable
 $DIR/src/os/os_test.go: `.Write([]byte("hello, world\n"))` nonbuildable
 $DIR/src/os/os_test.go: `.Name()` nonbuildable
+$DIR/src/os/os_test.go: `.Write([]byte("hello, world\n"))` nonbuildable
+$DIR/src/os/os_test.go: `.Name()` nonbuildable
+$DIR/src/os/os_test.go: `.ModTime()` nonbuildable
+$DIR/src/os/os_test.go: `.Truncate(time.Second)` nonbuildable
+$DIR/src/os/os_test.go: `.Truncate(time.Second)` nonbuildable
+$DIR/src/os/os_test.go: `.Add(-1 * time.Second)` nonbuildable
+$DIR/src/os/os_test.go: `.Add(-1 * time.Second)` nonbuildable
+$DIR/src/os/os_test.go: `.ModTime()` nonbuildable
+$DIR/src/os/os_test.go: `.Equal(wantAtime)` nonbuildable
+$DIR/src/os/os_test.go: `.Sprintf("atime mismatch, got: %q, want: %q", gotAtime, wantAtime)` nonbuildable
+$DIR/src/os/os_test.go: `.Equal(wantMtime)` nonbuildable
+$DIR/src/os/os_test.go: `.Sprintf("mtime mismatch, got: %q, want: %q", gotMtime, wantMtime)` nonbuildable
 $DIR/src/os/os_test.go: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go: `.ModTime()` nonbuildable
+$DIR/src/os/os_test.go: `.Add(-time.Second)` failed
+$DIR/src/os/os_test.go: `.Add(-time.Second)` failed
+$DIR/src/os/os_test.go: `.ModTime()` nonbuildable
+$DIR/src/os/os_test.go: `.Before(at)` nonbuildable
+$DIR/src/os/os_test.go: `.Sprintf("AccessTime didn't go backwards; was=%v, after=%v", at, pat)` nonbuildable
+$DIR/src/os/os_test.go: `.Before(mt)` nonbuildable
 $DIR/src/os/os_test.go: `.Name()` nonbuildable
 $DIR/src/os/os_test.go: `.Write([]byte("hi"))` nonbuildable
 $DIR/src/os/os_test.go: `.Unix(0, 0)` nonbuildable
@@ -379,6 +438,15 @@ $DIR/src/os/os_test.go: `.Seek(0, 0)` nonbuildable
 $DIR/src/os/os_test.go: `.Replace(tt.error.Error(), "file ", "", 1)` nonbuildable
 $DIR/src/os/os_test.go: `.HasSuffix(syscallErrStr, expectedErrStr)` nonbuildable
 $DIR/src/os/os_test.go: `.HasSuffix(syscallErrStr, syscall.EACCES.Error())` nonbuildable
+$DIR/src/os/os_test.go: `.LookPath("hostname")` nonbuildable
+$DIR/src/os/os_test.go: `.Is(err, exec.ErrNotFound)` nonbuildable
+$DIR/src/os/os_test.go: `.Copy(&b, r)` nonbuildable
+$DIR/src/os/os_test.go: `.Wait()` nonbuildable
+$DIR/src/os/os_test.go: `.Kill()` nonbuildable
+$DIR/src/os/os_test.go: `.String()` nonbuildable
+$DIR/src/os/os_test.go: `.Command(t, "hostname")` nonbuildable
+$DIR/src/os/os_test.go: `.Output()` nonbuildable
+$DIR/src/os/os_test.go: `.Trim(string(out), "\r\n")` nonbuildable
 $DIR/src/os/os_test.go: `.Contains(hostname, "\x00")` nonbuildable
 $DIR/src/os/os_test.go: `.MustHaveExec(t)` nonbuildable
 $DIR/src/os/os_test.go: `.Cut(hostname, ".")` nonbuildable
@@ -400,8 +468,16 @@ $DIR/src/os/os_test.go: `.WriteAt([]byte("WORLD"), -10)` nonbuildable
 $DIR/src/os/os_test.go: `.Contains(fmt.Sprint(err), wantsub)` nonbuildable
 $DIR/src/os/os_test.go: `.Sprint(err)` nonbuildable
 $DIR/src/os/os_test.go: `.WriteAt([]byte(""), 1)` nonbuildable
+$DIR/src/os/os_test.go: `.WriteString(f, text)` nonbuildable
 $DIR/src/os/os_test.go: `.TempDir()` nonbuildable
 $DIR/src/os/os_test.go: `.String()` nonbuildable
+$DIR/src/os/os_test.go: `.Sprintf("%s(%q): ", statname, devNullName)` nonbuildable
+$DIR/src/os/os_test.go: `.Size()` nonbuildable
+$DIR/src/os/os_test.go: `.Mode()` nonbuildable
+$DIR/src/os/os_test.go: `.Mode()` nonbuildable
+$DIR/src/os/os_test.go: `.Mode()` nonbuildable
+$DIR/src/os/os_test.go: `.IsRegular()` nonbuildable
+$DIR/src/os/os_test.go: `.Stat()` nonbuildable
 $DIR/src/os/os_test.go: `.Write(b)` nonbuildable
 $DIR/src/os/os_test.go: `.Write(b)` nonbuildable
 $DIR/src/os/os_test.go: `.TempDir()` nonbuildable
@@ -477,6 +553,14 @@ $DIR/src/os/os_test.go: `.HasSymlink()` nonbuildable
 $DIR/src/os/os_test.go: `.HasLink()` nonbuildable
 $DIR/src/os/os_test.go: `.Size()` nonbuildable
 $DIR/src/os/os_test.go: `.Mode()` nonbuildable
+$DIR/src/os/os_test.go: `.MustHaveExec(t)` nonbuildable
+$DIR/src/os/os_test.go: `.Command(t, Args[0])` nonbuildable
+$DIR/src/os/os_test.go: `.Environ()` nonbuildable
+$DIR/src/os/os_test.go: `.StdoutPipe()` nonbuildable
+$DIR/src/os/os_test.go: `.StdinPipe()` nonbuildable
+$DIR/src/os/os_test.go: `.Start()` nonbuildable
+$DIR/src/os/os_test.go: `.Wait()` failed
+$DIR/src/os/os_test.go: `.Copy(io.Discard, stdout)` nonbuildable
 $DIR/src/os/os_test.go: `.Kill()` timed-out
 $DIR/src/os/os_test.go: `.Kill()` nonbuildable
 $DIR/src/os/os_test.go: `.f(file)` nonbuildable
@@ -497,6 +581,31 @@ $DIR/src/os/os_test.go: `.Join(dir, "x")` nonbuildable
 $DIR/src/os/os_test.go: `.Stat()` nonbuildable
 $DIR/src/os/os_test.go: `.Mode()` nonbuildable
 $DIR/src/os/os_test.go: `.Mode()` nonbuildable
+$DIR/src/os/os_test.go: `.WalkDir(path, func(path string, d fs.DirEntry, err error) error {
+		if err != nil {
+			t.Fatal(err)
+		}
+		info, err := d.Info()
+		if err != nil {
+			t.Fatal(err)
+		}
+		stat, err := Stat(path) // This uses GetFileInformationByHandle internally.
+		if err != nil {
+			t.Fatal(err)
+		}
+		if stat.ModTime() == info.ModTime() {
+			return nil
+		}
+		if err := Chtimes(path, stat.ModTime(), stat.ModTime()); err != nil {
+			t.Log(err) // We only log, not die, in case the test directory is not writable.
+		}
+		return nil
+	})` nonbuildable
+$DIR/src/os/os_test.go: `.Info()` nonbuildable
+$DIR/src/os/os_test.go: `.ModTime()` nonbuildable
+$DIR/src/os/os_test.go: `.ModTime()` nonbuildable
+$DIR/src/os/os_test.go: `.ModTime()` nonbuildable
+$DIR/src/os/os_test.go: `.ModTime()` nonbuildable
 $DIR/src/os/os_test.go: `.TestFS(fsys, "a", "b", "dir/x")` nonbuildable
 $DIR/src/os/os_test.go: `.ReadDir("nonexistent")` nonbuildable
 $DIR/src/os/os_test.go: `.Open(nonesuch)` nonbuildable
