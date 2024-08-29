@@ -1,10 +1,10 @@
 use super::{Call, GenericVisitor, MacroCall, Rust, Storage, Test};
-use anyhow::Result;
+use anyhow::{Error, Result};
 use necessist_core::{
     framework::{SpanTestMaps, TestSet},
     warn, WarnFlags, Warning,
 };
-use std::cell::RefCell;
+use std::{cell::RefCell, fmt::Write};
 use syn::{
     visit::{
         visit_expr_call, visit_expr_macro, visit_expr_method_call, visit_item_fn, visit_item_mod,
@@ -22,11 +22,12 @@ pub(super) fn visit<'ast>(
 ) -> Result<(TestSet, SpanTestMaps)> {
     let mut visitor = Visitor::new(generic_visitor, storage);
     visitor.visit_file(file);
-    for (test_name, error) in &storage.borrow().tests_needing_warnings {
+    for (test_name, errors) in &storage.borrow().tests_needing_warnings {
+        let msg = module_path_unknown_msg(test_name, errors)?;
         warn(
             visitor.generic_visitor.context,
             Warning::ModulePathUnknown,
-            &format!("Failed to determine module path for test `{test_name}`: {error:?}"),
+            &msg,
             WarnFlags::empty(),
         )?;
     }
@@ -38,6 +39,21 @@ pub(super) fn visit<'ast>(
         &visitor.generic_visitor.source_file,
     )?;
     Ok(visitor.generic_visitor.results())
+}
+
+fn module_path_unknown_msg(test_name: &str, errors: &[Error]) -> Result<String> {
+    let mut msg = String::new();
+    writeln!(
+        &mut msg,
+        "Failed to determine module path for test `{test_name}`: ["
+    )?;
+    for error in errors {
+        // smoelius: Debug formatting is intentionally _not_ used to facilitate path normalization
+        // in third_party_common/mod.rs.
+        writeln!(&mut msg, "    {error},")?;
+    }
+    write!(&mut msg, "]")?;
+    Ok(msg)
 }
 
 struct Visitor<'context, 'config, 'backend, 'ast, 'storage> {
