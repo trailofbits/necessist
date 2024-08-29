@@ -565,6 +565,13 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> (String, Duration) {
             );
             // smoelius: If `stdout_expected` and `stdout_actual` differ, prefer that the
             // lexicographically smaller one be stored in the repository.
+            // smoelius: This choice has subtle implications. For example, suppose the following
+            // warnings were emitted, grouped by `X`/`Y`:
+            //   Warning: A in X
+            //   Warning: C in X
+            //   Warning: B in Y
+            // This strategy would prefer that the third line appear before the second, even though
+            // that would violate the grouping!
             assert!(
                 stdout_expected <= stdout_normalized,
                 "{}",
