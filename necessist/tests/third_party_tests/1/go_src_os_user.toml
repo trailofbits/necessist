@@ -2,6 +2,10 @@ url = "https://github.com/golang/go"
 rev = "go1.23.0"
 framework = "go"
 full = true
+config_mandatory = true
 
 subdir = "src/os/user"
 target_os = "linux"
+
+[config]
+ignored_tests = ["TestListGroups"]

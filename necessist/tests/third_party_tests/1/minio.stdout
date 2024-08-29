@@ -1,3 +1,6 @@
+$DIR/cmd/admin-handlers-users-race_test.go: `suite.SetUpSuite(c)`
+$DIR/cmd/admin-handlers-users-race_test.go: `suite.TestDeleteUserRace(c)`
+$DIR/cmd/admin-handlers-users-race_test.go: `suite.TearDownSuite(c)`
 $DIR/cmd/admin-handlers-users-race_test.go: `testCases = append(testCases,
 			newTestSuiteIAM(bt, false),
 			newTestSuiteIAM(bt, true),
@@ -9,7 +12,9 @@ $DIR/cmd/admin-handlers-users-race_test.go: `t.Run(
 				runAllIAMConcurrencyTests(testCase, &check{t, testCase.serverType})
 			},
 		)`
-$DIR/cmd/admin-handlers-users-race_test.go: `runAllIAMConcurrencyTests(testCase, &check{t, testCase.serverType})`
+$DIR/cmd/admin-handlers-users-race_test.go: `.SetUpSuite(c)`
+$DIR/cmd/admin-handlers-users-race_test.go: `.TestDeleteUserRace(c)`
+$DIR/cmd/admin-handlers-users-race_test.go: `.TearDownSuite(c)`
 $DIR/cmd/admin-handlers-users-race_test.go: `.Run(
 			fmt.Sprintf("Test: %d, ServerType: %s%s", i+1, testCase.serverType, etcdStr),
 			func(t *testing.T) {
@@ -118,6 +123,29 @@ $DIR/cmd/admin-handlers-users_test.go: `.SetUpSuite(c)`
 $DIR/cmd/admin-handlers-users_test.go: `.TearDownSuite(c)`
 $DIR/cmd/admin-handlers-users_test.go: `.SetUpAccMgmtPlugin(c)`
 $DIR/cmd/admin-handlers-users_test.go: `.TestAccMgmtPlugin(c)`
+$DIR/cmd/admin-handlers_test.go: `resetTestGlobals()`
+$DIR/cmd/admin-handlers_test.go: `globalIsErasure = true`
+$DIR/cmd/admin-handlers_test.go: `cancel()`
+$DIR/cmd/admin-handlers_test.go: `cancel()`
+$DIR/cmd/admin-handlers_test.go: `globalBootTime = UTCNow()`
+$DIR/cmd/admin-handlers_test.go: `globalEndpoints = mustGetPoolEndpoints(0, erasureDirs...)`
+$DIR/cmd/admin-handlers_test.go: `initAllSubsystems(ctx)`
+$DIR/cmd/admin-handlers_test.go: `initConfigSubsystem(ctx, objLayer)`
+$DIR/cmd/admin-handlers_test.go: `globalIAMSys.Init(ctx, objLayer, globalEtcdClient, 2*time.Second)`
+$DIR/cmd/admin-handlers_test.go: `registerAdminRouter(adminRouter, true)`
+$DIR/cmd/admin-handlers_test.go: `globalPolicySys = NewPolicySys()`
+$DIR/cmd/admin-handlers_test.go: `globalObjLayerMutex.Lock()`
+$DIR/cmd/admin-handlers_test.go: `globalObjectAPI = objLayer`
+$DIR/cmd/admin-handlers_test.go: `globalObjLayerMutex.Unlock()`
+$DIR/cmd/admin-handlers_test.go: `queryVal.Set("action", string(cmd.toServiceAction()))`
+$DIR/cmd/admin-handlers_test.go: `queryVal.Set("type", "2")`
+$DIR/cmd/admin-handlers_test.go: `err = signRequestV4(req, cred.AccessKey, cred.SecretKey)`
+$DIR/cmd/admin-handlers_test.go: `globalMinioAddr = "127.0.0.1:9000"`
+$DIR/cmd/admin-handlers_test.go: `wg.Add(1)`
+$DIR/cmd/admin-handlers_test.go: `adminTestBed.router.ServeHTTP(rec, req)`
+$DIR/cmd/admin-handlers_test.go: `_ = result`
+$DIR/cmd/admin-handlers_test.go: `wg.Wait()`
+$DIR/cmd/admin-handlers_test.go: `err = signRequestV4(req, cred.AccessKey, cred.SecretKey)`
 $DIR/cmd/admin-handlers_test.go: `globalMinioAddr = "127.0.0.1:9000"`
 $DIR/cmd/admin-handlers_test.go: `queryVal.Set("info", "")`
 $DIR/cmd/admin-handlers_test.go: `adminTestBed.router.ServeHTTP(rec, req)`
@@ -149,6 +177,27 @@ $DIR/cmd/admin-handlers_test.go: `exp = append(exp, madmin.LockEntry{
 		})`
 $DIR/cmd/admin-handlers_test.go: `sort.Slice(exp, byResourceUID{exp}.Less)`
 $DIR/cmd/admin-handlers_test.go: `sort.Slice(got, byResourceUID{got}.Less)`
+$DIR/cmd/admin-handlers_test.go: `.WithCancel(ctx)`
+$DIR/cmd/admin-handlers_test.go: `.Init(ctx, objLayer, globalEtcdClient, 2*time.Second)`
+$DIR/cmd/admin-handlers_test.go: `.NewRouter()`
+$DIR/cmd/admin-handlers_test.go: `.Lock()`
+$DIR/cmd/admin-handlers_test.go: `.Unlock()`
+$DIR/cmd/admin-handlers_test.go: `.toServiceSignal()`
+$DIR/cmd/admin-handlers_test.go: `.Set("action", string(cmd.toServiceAction()))`
+$DIR/cmd/admin-handlers_test.go: `.toServiceAction()`
+$DIR/cmd/admin-handlers_test.go: `.Set("type", "2")`
+$DIR/cmd/admin-handlers_test.go: `.Encode()`
+$DIR/cmd/admin-handlers_test.go: `.WithCancel(context.Background())`
+$DIR/cmd/admin-handlers_test.go: `.Background()`
+$DIR/cmd/admin-handlers_test.go: `.TearDown()`
+$DIR/cmd/admin-handlers_test.go: `.Add(1)`
+$DIR/cmd/admin-handlers_test.go: `.Done()`
+$DIR/cmd/admin-handlers_test.go: `.NewRecorder()`
+$DIR/cmd/admin-handlers_test.go: `.router.ServeHTTP(rec, req)`
+$DIR/cmd/admin-handlers_test.go: `.ReadAll(rec.Body)`
+$DIR/cmd/admin-handlers_test.go: `.Unmarshal(resp, result)`
+$DIR/cmd/admin-handlers_test.go: `.Wait()`
+$DIR/cmd/admin-handlers_test.go: `.Encode()`
 $DIR/cmd/admin-handlers_test.go: `.WithCancel(context.Background())`
 $DIR/cmd/admin-handlers_test.go: `.Background()`
 $DIR/cmd/admin-handlers_test.go: `.TearDown()`
@@ -203,6 +252,9 @@ $DIR/cmd/auth-handler_test.go: `inputReq.ParseForm()`
 $DIR/cmd/auth-handler_test.go: `q.Add(testCase.inputQueryKey, testCase.inputQueryValue)`
 $DIR/cmd/auth-handler_test.go: `inputReq.URL.RawQuery = q.Encode()`
 $DIR/cmd/auth-handler_test.go: `inputReq.ParseForm()`
+$DIR/cmd/auth-handler_test.go: `req.Header.Set("Content-Md5", "invalid-digest")`
+$DIR/cmd/auth-handler_test.go: `req.Header.Set("Content-Md5", "")`
+$DIR/cmd/auth-handler_test.go: `req.Header.Set("Content-Md5", "YWFhYWFhYWFhYWFhYWFhCg==")`
 $DIR/cmd/auth-handler_test.go: `initAllSubsystems(ctx)`
 $DIR/cmd/auth-handler_test.go: `initConfigSubsystem(ctx, objLayer)`
 $DIR/cmd/auth-handler_test.go: `globalActiveCred = creds`
@@ -224,6 +276,15 @@ $DIR/cmd/auth-handler_test.go: `.URL.Query()`
 $DIR/cmd/auth-handler_test.go: `.Add(testCase.inputQueryKey, testCase.inputQueryValue)`
 $DIR/cmd/auth-handler_test.go: `.Encode()`
 $DIR/cmd/auth-handler_test.go: `.ParseForm()`
+$DIR/cmd/auth-handler_test.go: `.Now()`
+$DIR/cmd/auth-handler_test.go: `.Add(10*time.Minute)`
+$DIR/cmd/auth-handler_test.go: `.Unix()`
+$DIR/cmd/auth-handler_test.go: `.Now()`
+$DIR/cmd/auth-handler_test.go: `.Add(10*time.Minute)`
+$DIR/cmd/auth-handler_test.go: `.Unix()`
+$DIR/cmd/auth-handler_test.go: `.Header.Set("Content-Md5", "invalid-digest")`
+$DIR/cmd/auth-handler_test.go: `.Header.Set("Content-Md5", "")`
+$DIR/cmd/auth-handler_test.go: `.Header.Set("Content-Md5", "YWFhYWFhYWFhYWFhYWFhCg==")`
 $DIR/cmd/auth-handler_test.go: `.WithCancel(GlobalContext)`
 $DIR/cmd/auth-handler_test.go: `.RemoveAll(fsDir)`
 $DIR/cmd/auth-handler_test.go: `.CreateCredentials("myuser", "mypassword")`
@@ -617,7 +678,22 @@ $DIR/cmd/batch-rotate_gen_test.go: `.Len()`
 $DIR/cmd/batch-rotate_gen_test.go: `.Decode(&buf, &vn)`
 $DIR/cmd/batch-rotate_gen_test.go: `.Reset()`
 $DIR/cmd/batch-rotate_gen_test.go: `.Encode(&buf, &v)`
-$DIR/cmd/bitrot_test.go: `testBitrotReaderWriterAlgo(t, bitrotAlgo)`
+$DIR/cmd/bitrot_test.go: `disk.MakeVol(context.Background(), volume)`
+$DIR/cmd/bitrot_test.go: `_, err = writer.Write([]byte("aaaaaaaaaa"))`
+$DIR/cmd/bitrot_test.go: `_, err = writer.Write([]byte("aaaaaaaaaa"))`
+$DIR/cmd/bitrot_test.go: `_, err = writer.Write([]byte("aaaaaaaaaa"))`
+$DIR/cmd/bitrot_test.go: `_, err = writer.Write([]byte("aaaaa"))`
+$DIR/cmd/bitrot_test.go: `.TempDir()`
+$DIR/cmd/bitrot_test.go: `.MakeVol(context.Background(), volume)`
+$DIR/cmd/bitrot_test.go: `.Background()`
+$DIR/cmd/bitrot_test.go: `.Write([]byte("aaaaaaaaaa"))`
+$DIR/cmd/bitrot_test.go: `.Write([]byte("aaaaaaaaaa"))`
+$DIR/cmd/bitrot_test.go: `.Write([]byte("aaaaaaaaaa"))`
+$DIR/cmd/bitrot_test.go: `.Write([]byte("aaaaa"))`
+$DIR/cmd/bitrot_test.go: `.ReadAt(b, 0)`
+$DIR/cmd/bitrot_test.go: `.ReadAt(b, 10)`
+$DIR/cmd/bitrot_test.go: `.ReadAt(b, 20)`
+$DIR/cmd/bitrot_test.go: `.ReadAt(b[:5], 30)`
 $DIR/cmd/bootstrap-peer-server_gen_test.go: `left, err = msgp.Skip(bts)`
 $DIR/cmd/bootstrap-peer-server_gen_test.go: `msgp.Encode(&buf, &v)`
 $DIR/cmd/bootstrap-peer-server_gen_test.go: `buf.Reset()`
@@ -1492,7 +1568,6 @@ $DIR/cmd/data-usage-cache_test.go: `.Run(fmt.Sprintf("test-%d", i), func(t *test
 		})`
 $DIR/cmd/data-usage-cache_test.go: `.Sprintf("test-%d", i)`
 $DIR/cmd/data-usage-cache_test.go: `.mergeV1(test.v)`
-$DIR/cmd/data-usage_test.go: `createUsageTestFiles(t, base, bucket, files)`
 $DIR/cmd/data-usage_test.go: `s, err = os.Stat(item.Path)`
 $DIR/cmd/data-usage_test.go: `sizeS.totalSize = s.Size()`
 $DIR/cmd/data-usage_test.go: `sizeS.versions++`
@@ -1557,7 +1632,6 @@ $DIR/cmd/data-usage_test.go: `files = []usageTestFile{
 			size: 200,
 		},
 	}`
-$DIR/cmd/data-usage_test.go: `createUsageTestFiles(t, base, bucket, files)`
 $DIR/cmd/data-usage_test.go: `err = os.RemoveAll(filepath.Join(base, bucket, "dir1/dira/dirasub/dcfile"))`
 $DIR/cmd/data-usage_test.go: `got, err = scanDataFolder(context.Background(), nil, &xls, got, getSize, 0, weSleep)`
 $DIR/cmd/data-usage_test.go: `got.Info.NextCycle++`
@@ -1622,9 +1696,6 @@ $DIR/cmd/data-usage_test.go: `t.Run(p, func(t *testing.T) {
 		})`
 $DIR/cmd/data-usage_test.go: `*e = got.flatten(*e)`
 $DIR/cmd/data-usage_test.go: `scannerSleeper.Update(0, 0)`
-$DIR/cmd/data-usage_test.go: `createUsageTestFiles(t, base, "", files)`
-$DIR/cmd/data-usage_test.go: `generateUsageTestFiles(t, base, "bucket/dirwithalot", foldersBelow, filesBelowT, 1)`
-$DIR/cmd/data-usage_test.go: `generateUsageTestFiles(t, base, "bucket/dirwithevenmore", filesAboveT, 1, 1)`
 $DIR/cmd/data-usage_test.go: `s, err = os.Stat(item.Path)`
 $DIR/cmd/data-usage_test.go: `sizeS.totalSize = s.Size()`
 $DIR/cmd/data-usage_test.go: `sizeS.versions++`
@@ -1691,7 +1762,6 @@ $DIR/cmd/data-usage_test.go: `files = []usageTestFile{
 			size: 200,
 		},
 	}`
-$DIR/cmd/data-usage_test.go: `createUsageTestFiles(t, base, "", files)`
 $DIR/cmd/data-usage_test.go: `err = os.RemoveAll(filepath.Join(base, "bucket/dir1/dira/dirasub/dcfile"))`
 $DIR/cmd/data-usage_test.go: `got, err = scanDataFolder(context.Background(), nil, &xls, got, getSize, 0, weSleep)`
 $DIR/cmd/data-usage_test.go: `got.Info.NextCycle++`
@@ -1765,7 +1835,8 @@ $DIR/cmd/data-usage_test.go: `t.Run(w.path, func(t *testing.T) {
 			}
 		})`
 $DIR/cmd/data-usage_test.go: `e = &f`
-$DIR/cmd/data-usage_test.go: `createUsageTestFiles(t, base, bucket, files)`
+$DIR/cmd/data-usage_test.go: `err = os.WriteFile(filepath.Join(base, bucket, f.name), make([]byte, f.size), os.ModePerm)`
+$DIR/cmd/data-usage_test.go: `err = os.WriteFile(name, pl, os.ModePerm)`
 $DIR/cmd/data-usage_test.go: `s, err = os.Stat(item.Path)`
 $DIR/cmd/data-usage_test.go: `sizeS.versions++`
 $DIR/cmd/data-usage_test.go: `sizeS.totalSize = s.Size()`
@@ -1934,6 +2005,19 @@ $DIR/cmd/data-usage_test.go: `.Run(w.path, func(t *testing.T) {
 $DIR/cmd/data-usage_test.go: `.find(w.path)`
 $DIR/cmd/data-usage_test.go: `.flatten(*got.root())`
 $DIR/cmd/data-usage_test.go: `.root()`
+$DIR/cmd/data-usage_test.go: `.MkdirAll(filepath.Dir(filepath.Join(base, bucket, f.name)), os.ModePerm)`
+$DIR/cmd/data-usage_test.go: `.Dir(filepath.Join(base, bucket, f.name))`
+$DIR/cmd/data-usage_test.go: `.Join(base, bucket, f.name)`
+$DIR/cmd/data-usage_test.go: `.WriteFile(filepath.Join(base, bucket, f.name), make([]byte, f.size), os.ModePerm)`
+$DIR/cmd/data-usage_test.go: `.Join(base, bucket, f.name)`
+$DIR/cmd/data-usage_test.go: `.Join(base, bucket, fmt.Sprint(i), "0.txt")`
+$DIR/cmd/data-usage_test.go: `.Sprint(i)`
+$DIR/cmd/data-usage_test.go: `.MkdirAll(filepath.Dir(name), os.ModePerm)`
+$DIR/cmd/data-usage_test.go: `.Dir(name)`
+$DIR/cmd/data-usage_test.go: `.Join(base, bucket, fmt.Sprint(i), fmt.Sprint(j)+".txt")`
+$DIR/cmd/data-usage_test.go: `.Sprint(i)`
+$DIR/cmd/data-usage_test.go: `.Sprint(j)`
+$DIR/cmd/data-usage_test.go: `.WriteFile(name, pl, os.ModePerm)`
 $DIR/cmd/data-usage_test.go: `.TempDir()`
 $DIR/cmd/data-usage_test.go: `.Stat(item.Path)`
 $DIR/cmd/data-usage_test.go: `.Size()`
@@ -1948,12 +2032,24 @@ $DIR/cmd/data-usage_test.go: `.serializeTo(&buf)`
 $DIR/cmd/data-usage_test.go: `.deserialize(&buf)`
 $DIR/cmd/data-usage_test.go: `.Info.LastUpdate.IsZero()`
 $DIR/cmd/data-usage_test.go: `.Info.LastUpdate.Equal(got.Info.LastUpdate)`
+$DIR/cmd/data-usage_test.go: `.Marshal(a)`
+$DIR/cmd/data-usage_test.go: `.Marshal(b)`
+$DIR/cmd/data-usage_test.go: `.Equal(aj, bj)`
+$DIR/cmd/dummy-data-generator_test.go: `skipOffset %= int64(len(alphabets))`
 $DIR/cmd/dummy-data-generator_test.go: `checkEq(readAll(NewDummyDataGen(0, 0)), "")`
 $DIR/cmd/dummy-data-generator_test.go: `checkEq(readAll(NewDummyDataGen(10, 0)), readAll(NewDummyDataGen(10, int64(len(alphabets)))))`
 $DIR/cmd/dummy-data-generator_test.go: `checkEq(readAll(NewDummyDataGen(100, 0)), readAll(NewDummyDataGen(50, 0))+readAll(NewDummyDataGen(50, 50)))`
 $DIR/cmd/dummy-data-generator_test.go: `r.Seek(int64(len(alphabets)), 0)`
+$DIR/cmd/dummy-data-generator_test.go: `.Repeat(alphabets, multiply)`
 $DIR/cmd/dummy-data-generator_test.go: `.ReadAll(r)`
 $DIR/cmd/dummy-data-generator_test.go: `.Seek(int64(len(alphabets)), 0)`
+$DIR/cmd/dummy-data-generator_test.go: `.ReadFull(r1, b1)`
+$DIR/cmd/dummy-data-generator_test.go: `.ReadFull(r2, b2)`
+$DIR/cmd/dummy-data-generator_test.go: `.Sprintf("Read %d != %d bytes from the readers", n1, n2)`
+$DIR/cmd/dummy-data-generator_test.go: `.Equal(b1[:n1], b2[:n2])`
+$DIR/cmd/dummy-data-generator_test.go: `.Sprintf("After reading %d equal buffers (32Kib each), we got the following two strings:\n%v\n%v\n",
+				i, b1, b2)`
+$DIR/cmd/dummy-data-generator_test.go: `.Sprintf("Got unexpected error values: %v == %v", e1, e2)`
 $DIR/cmd/dummy-data-generator_test.go: `.NewReader([]byte("abc"))`
 $DIR/cmd/dummy-data-generator_test.go: `.NewReader([]byte("abc"))`
 $DIR/cmd/dummy-data-generator_test.go: `.NewReader([]byte("abc"))`
@@ -1968,12 +2064,11 @@ $DIR/cmd/dynamic-timeouts_test.go: `timeout.LogSuccess(successTimeout)`
 $DIR/cmd/dynamic-timeouts_test.go: `wg.Add(1)`
 $DIR/cmd/dynamic-timeouts_test.go: `timeout.LogSuccess(time.Duration(float64(time.Second) * rng.Float64()))`
 $DIR/cmd/dynamic-timeouts_test.go: `timeout.LogSuccess(successTimeout)`
+$DIR/cmd/dynamic-timeouts_test.go: `duration = 100 * time.Millisecond`
+$DIR/cmd/dynamic-timeouts_test.go: `timeout.LogFailure()`
+$DIR/cmd/dynamic-timeouts_test.go: `timeout.LogSuccess(duration)`
 $DIR/cmd/dynamic-timeouts_test.go: `rand.Seed(0)`
-$DIR/cmd/dynamic-timeouts_test.go: `testDynamicTimeoutAdjust(t, timeout, rand.ExpFloat64)`
 $DIR/cmd/dynamic-timeouts_test.go: `rand.Seed(0)`
-$DIR/cmd/dynamic-timeouts_test.go: `testDynamicTimeoutAdjust(t, timeout, func() float64 {
-			return 1.0 + rand.NormFloat64()
-		})`
 $DIR/cmd/dynamic-timeouts_test.go: `.Timeout()`
 $DIR/cmd/dynamic-timeouts_test.go: `.LogFailure()`
 $DIR/cmd/dynamic-timeouts_test.go: `.Timeout()`
@@ -2005,6 +2100,9 @@ $DIR/cmd/dynamic-timeouts_test.go: `.Timeout()`
 $DIR/cmd/dynamic-timeouts_test.go: `.Timeout()`
 $DIR/cmd/dynamic-timeouts_test.go: `.LogSuccess(successTimeout)`
 $DIR/cmd/dynamic-timeouts_test.go: `.Timeout()`
+$DIR/cmd/dynamic-timeouts_test.go: `.Duration(float64(successTimeout) * rnd)`
+$DIR/cmd/dynamic-timeouts_test.go: `.LogFailure()`
+$DIR/cmd/dynamic-timeouts_test.go: `.LogSuccess(duration)`
 $DIR/cmd/dynamic-timeouts_test.go: `.Seed(0)`
 $DIR/cmd/dynamic-timeouts_test.go: `.Timeout()`
 $DIR/cmd/dynamic-timeouts_test.go: `.Timeout()`
@@ -2116,6 +2214,10 @@ $DIR/cmd/endpoint-ellipses_test.go: `t.Run("", func(t *testing.T) {
 			}
 		})`
 $DIR/cmd/endpoint-ellipses_test.go: `argPatterns[i] = patterns`
+$DIR/cmd/endpoint-ellipses_test.go: `seq = append(seq, fmt.Sprintf("%x", i))`
+$DIR/cmd/endpoint-ellipses_test.go: `seq = append(seq, fmt.Sprintf(fmt.Sprintf("%%0%dx", paddinglen), i))`
+$DIR/cmd/endpoint-ellipses_test.go: `seq = append(seq, fmt.Sprintf("%d", i))`
+$DIR/cmd/endpoint-ellipses_test.go: `seq = append(seq, fmt.Sprintf(fmt.Sprintf("%%0%dd", paddinglen), i))`
 $DIR/cmd/endpoint-ellipses_test.go: `t.Run("", func(t *testing.T) {
 			gotEs, err := parseEndpointSet(0, testCase.arg)
 			if err != nil && testCase.success {
@@ -2193,6 +2295,12 @@ $DIR/cmd/endpoint-ellipses_test.go: `.Run("", func(t *testing.T) {
 		})`
 $DIR/cmd/endpoint-ellipses_test.go: `.FindEllipsesPatterns(arg)`
 $DIR/cmd/endpoint-ellipses_test.go: `.DeepEqual(testCase.indexes, gotIndexes)`
+$DIR/cmd/endpoint-ellipses_test.go: `.Sprintf("%x", i)`
+$DIR/cmd/endpoint-ellipses_test.go: `.Sprintf(fmt.Sprintf("%%0%dx", paddinglen), i)`
+$DIR/cmd/endpoint-ellipses_test.go: `.Sprintf("%%0%dx", paddinglen)`
+$DIR/cmd/endpoint-ellipses_test.go: `.Sprintf("%d", i)`
+$DIR/cmd/endpoint-ellipses_test.go: `.Sprintf(fmt.Sprintf("%%0%dd", paddinglen), i)`
+$DIR/cmd/endpoint-ellipses_test.go: `.Sprintf("%%0%dd", paddinglen)`
 $DIR/cmd/endpoint-ellipses_test.go: `.Run("", func(t *testing.T) {
 			gotEs, err := parseEndpointSet(0, testCase.arg)
 			if err != nil && testCase.success {
@@ -2547,6 +2655,9 @@ $DIR/cmd/erasure-heal_test.go: `.ShardSize()`
 $DIR/cmd/erasure-heal_test.go: `.Heal(context.Background(), staleWriters, readers, test.size, nil)`
 $DIR/cmd/erasure-heal_test.go: `.Background()`
 $DIR/cmd/erasure-heal_test.go: `.Equal(bitrotWriterSum(staleWriters[i]), bitrotWriterSum(writers[i]))`
+$DIR/cmd/erasure-healing-common_test.go: `expectedRQuorum = len(partsMetadata)`
+$DIR/cmd/erasure-healing-common_test.go: `latestFileInfo = partsMetadata[index]`
+$DIR/cmd/erasure-healing-common_test.go: `count++`
 $DIR/cmd/erasure-healing-common_test.go: `setObjectLayer(obj)`
 $DIR/cmd/erasure-healing-common_test.go: `modTimesThreeFour[i] = fourNanoSecs`
 $DIR/cmd/erasure-healing-common_test.go: `modTimesThreeNone[i] = timeSentinel`
@@ -2755,6 +2866,11 @@ $DIR/cmd/erasure-healing-common_test.go: `filteredDisks, dataErrsPerDisk, _ = di
 $DIR/cmd/erasure-healing-common_test.go: `fi = test.fi2`
 $DIR/cmd/erasure-healing-common_test.go: `metaArr = append(metaArr, fi)`
 $DIR/cmd/erasure-healing-common_test.go: `match++`
+$DIR/cmd/erasure-healing-common_test.go: `.IsZero()`
+$DIR/cmd/erasure-healing-common_test.go: `.Equal(timeSentinel)`
+$DIR/cmd/erasure-healing-common_test.go: `.IsValid()`
+$DIR/cmd/erasure-healing-common_test.go: `.Equal(modTime)`
+$DIR/cmd/erasure-healing-common_test.go: `.IsValid()`
 $DIR/cmd/erasure-healing-common_test.go: `.Unix(0, 1)`
 $DIR/cmd/erasure-healing-common_test.go: `.UTC()`
 $DIR/cmd/erasure-healing-common_test.go: `.Unix(0, 2)`
@@ -3899,6 +4015,7 @@ $DIR/cmd/erasure-metadata-utils_test.go: `.Background()`
 $DIR/cmd/erasure-metadata-utils_test.go: `.DeepEqual(testCase.hashedOrder, hashedOrder)`
 $DIR/cmd/erasure-metadata-utils_test.go: `.WithCancel(context.Background())`
 $DIR/cmd/erasure-metadata-utils_test.go: `.Background()`
+$DIR/cmd/erasure-metadata-utils_test.go: `.GetDisks(0)`
 $DIR/cmd/erasure-metadata-utils_test.go: `.WithCancel(context.Background())`
 $DIR/cmd/erasure-metadata-utils_test.go: `.Background()`
 $DIR/cmd/erasure-metadata-utils_test.go: `.Run(fmt.Sprintf("%d", x), func(t *testing.T) {
@@ -4573,6 +4690,7 @@ $DIR/cmd/erasure-server-pool-decom_gen_test.go: `.Len()`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go: `.Decode(&buf, &vn)`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go: `.Reset()`
 $DIR/cmd/erasure-server-pool-decom_gen_test.go: `.Encode(&buf, &v)`
+$DIR/cmd/erasure-server-pool-decom_test.go: `pools = append(pools, mustGetPoolEndpoints(1, fsDirs[16:]...)...)`
 $DIR/cmd/erasure-server-pool-decom_test.go: `nmeta1.Version = poolMetaVersion`
 $DIR/cmd/erasure-server-pool-decom_test.go: `nmeta1.Pools = append(nmeta1.Pools, meta.Pools...)`
 $DIR/cmd/erasure-server-pool-decom_test.go: `nmeta1.Pools[i] = PoolStatus{
@@ -4608,6 +4726,7 @@ $DIR/cmd/erasure-server-pool-decom_test.go: `t.Run(testCase.name, func(t *testin
 				t.Errorf("Expected %t, got %t", testCase.expectedUpdate, update)
 			}
 		})`
+$DIR/cmd/erasure-server-pool-decom_test.go: `.Background()`
 $DIR/cmd/erasure-server-pool-decom_test.go: `.Run(testCase.name, func(t *testing.T) {
 			update, err := testCase.meta.validate(testCase.pools)
 			if testCase.expectedErr {
@@ -4840,29 +4959,36 @@ $DIR/cmd/httprange_test.go: `o, l, err2 = rs.GetOffsetLength(resourceSize)`
 $DIR/cmd/httprange_test.go: `.GetOffsetLength(resourceSize)`
 $DIR/cmd/httprange_test.go: `.GetOffsetLength(resourceSize)`
 $DIR/cmd/httprange_test.go: `.ToHeader()`
+$DIR/cmd/jwt_test.go: `claims.SetExpiry(UTCNow().Add(defaultJWTExpiry))`
+$DIR/cmd/jwt_test.go: `claims.SetAccessKey(accessKey)`
+$DIR/cmd/jwt_test.go: `.NewMapClaims()`
+$DIR/cmd/jwt_test.go: `.SetExpiry(UTCNow().Add(defaultJWTExpiry))`
+$DIR/cmd/jwt_test.go: `.Add(defaultJWTExpiry)`
+$DIR/cmd/jwt_test.go: `.SetAccessKey(accessKey)`
+$DIR/cmd/jwt_test.go: `.NewWithClaims(jwtgo.SigningMethodHS512, claims)`
+$DIR/cmd/jwt_test.go: `.SignedString([]byte(secretKey))`
 $DIR/cmd/jwt_test.go: `.WithCancel(context.Background())`
 $DIR/cmd/jwt_test.go: `.Background()`
 $DIR/cmd/jwt_test.go: `.RemoveAll(fsDir)`
 $DIR/cmd/kms-handlers_test.go: `t.Run(fmt.Sprintf("%d %s", testNum+1, test.name), func(t *testing.T) {
 			execKMSTest(t, test, adminTestBed)
 		})`
-$DIR/cmd/kms-handlers_test.go: `execKMSTest(t, test, adminTestBed)`
 $DIR/cmd/kms-handlers_test.go: `t.Run(fmt.Sprintf("%d %s", testNum+1, test.name), func(t *testing.T) {
 			execKMSTest(t, test, adminTestBed)
 		})`
-$DIR/cmd/kms-handlers_test.go: `execKMSTest(t, test, adminTestBed)`
 $DIR/cmd/kms-handlers_test.go: `t.Run(fmt.Sprintf("%d %s", testNum+1, test.name), func(t *testing.T) {
 			execKMSTest(t, test, adminTestBed)
 		})`
-$DIR/cmd/kms-handlers_test.go: `execKMSTest(t, test, adminTestBed)`
 $DIR/cmd/kms-handlers_test.go: `t.Run(fmt.Sprintf("%d %s", testNum+1, test.name), func(t *testing.T) {
 			execKMSTest(t, test, adminTestBed)
 		})`
-$DIR/cmd/kms-handlers_test.go: `execKMSTest(t, test, adminTestBed)`
 $DIR/cmd/kms-handlers_test.go: `t.Run(fmt.Sprintf("%d %s", testNum+1, test.name), func(t *testing.T) {
 			execKMSTest(t, test, adminTestBed)
 		})`
-$DIR/cmd/kms-handlers_test.go: `execKMSTest(t, test, adminTestBed)`
+$DIR/cmd/kms-handlers_test.go: `accessKey, secretKey = globalActiveCred.AccessKey, globalActiveCred.SecretKey`
+$DIR/cmd/kms-handlers_test.go: `accessKey = userAccessKey`
+$DIR/cmd/kms-handlers_test.go: `secretKey = userSecretKey`
+$DIR/cmd/kms-handlers_test.go: `adminTestBed.router.ServeHTTP(rec, req)`
 $DIR/cmd/kms-handlers_test.go: `t.Run(test.name+" not configured", func(t *testing.T) {
 			req := buildKMSRequest(t, test.method, test.path, "", "", test.query)
 			rec := httptest.NewRecorder()
@@ -4882,6 +5008,19 @@ $DIR/cmd/kms-handlers_test.go: `t.Run(test.name+" invalid credentials", func(t *
 			}
 		})`
 $DIR/cmd/kms-handlers_test.go: `adminTestBed.router.ServeHTTP(rec, req)`
+$DIR/cmd/kms-handlers_test.go: `registerKMSRouter(adminTestBed.router)`
+$DIR/cmd/kms-handlers_test.go: `GlobalKMS = kms.NewStub("default-test-key")`
+$DIR/cmd/kms-handlers_test.go: `adminTestBed.TearDown()`
+$DIR/cmd/kms-handlers_test.go: `GlobalKMS = nil`
+$DIR/cmd/kms-handlers_test.go: `queryVal.Add(k, v)`
+$DIR/cmd/kms-handlers_test.go: `path = path + "?" + queryVal.Encode()`
+$DIR/cmd/kms-handlers_test.go: `accessKey = globalActiveCred.AccessKey`
+$DIR/cmd/kms-handlers_test.go: `secretKey = globalActiveCred.SecretKey`
+$DIR/cmd/kms-handlers_test.go: `p = `{"Version":"2012-10-17","Statement":[` + p + `]}``
+$DIR/cmd/kms-handlers_test.go: `_, err = globalIAMSys.SetPolicy(ctx, testKMSPolicyName, *policyData)`
+$DIR/cmd/kms-handlers_test.go: `_, err = globalIAMSys.PolicyDBSet(ctx, accessKey, testKMSPolicyName, regUser, false)`
+$DIR/cmd/kms-handlers_test.go: `err = globalIAMSys.DeletePolicy(ctx, testKMSPolicyName, false)`
+$DIR/cmd/kms-handlers_test.go: `_, err = globalIAMSys.PolicyDBSet(ctx, accessKey, "", regUser, false)`
 $DIR/cmd/kms-handlers_test.go: `.Run(fmt.Sprintf("%d %s", testNum+1, test.name), func(t *testing.T) {
 			execKMSTest(t, test, adminTestBed)
 		})`
@@ -4902,6 +5041,12 @@ $DIR/cmd/kms-handlers_test.go: `.Run(fmt.Sprintf("%d %s", testNum+1, test.name),
 			execKMSTest(t, test, adminTestBed)
 		})`
 $DIR/cmd/kms-handlers_test.go: `.Sprintf("%d %s", testNum+1, test.name)`
+$DIR/cmd/kms-handlers_test.go: `.NewRecorder()`
+$DIR/cmd/kms-handlers_test.go: `.router.ServeHTTP(rec, req)`
+$DIR/cmd/kms-handlers_test.go: `.Unmarshal(rec.Body.Bytes(), &keys)`
+$DIR/cmd/kms-handlers_test.go: `.Body.Bytes()`
+$DIR/cmd/kms-handlers_test.go: `.Contains(rec.Body.String(), want)`
+$DIR/cmd/kms-handlers_test.go: `.Body.String()`
 $DIR/cmd/kms-handlers_test.go: `.Run(test.name+" not configured", func(t *testing.T) {
 			req := buildKMSRequest(t, test.method, test.path, "", "", test.query)
 			rec := httptest.NewRecorder()
@@ -4923,6 +5068,19 @@ $DIR/cmd/kms-handlers_test.go: `.Run(test.name+" invalid credentials", func(t *t
 		})`
 $DIR/cmd/kms-handlers_test.go: `.NewRecorder()`
 $DIR/cmd/kms-handlers_test.go: `.router.ServeHTTP(rec, req)`
+$DIR/cmd/kms-handlers_test.go: `.Background()`
+$DIR/cmd/kms-handlers_test.go: `.NewStub("default-test-key")`
+$DIR/cmd/kms-handlers_test.go: `.TearDown()`
+$DIR/cmd/kms-handlers_test.go: `.Add(k, v)`
+$DIR/cmd/kms-handlers_test.go: `.Encode()`
+$DIR/cmd/kms-handlers_test.go: `.Background()`
+$DIR/cmd/kms-handlers_test.go: `.CreateUser(ctx, accessKey, createUserParams)`
+$DIR/cmd/kms-handlers_test.go: `.ParseConfig(strings.NewReader(p))`
+$DIR/cmd/kms-handlers_test.go: `.NewReader(p)`
+$DIR/cmd/kms-handlers_test.go: `.SetPolicy(ctx, testKMSPolicyName, *policyData)`
+$DIR/cmd/kms-handlers_test.go: `.PolicyDBSet(ctx, accessKey, testKMSPolicyName, regUser, false)`
+$DIR/cmd/kms-handlers_test.go: `.DeletePolicy(ctx, testKMSPolicyName, false)`
+$DIR/cmd/kms-handlers_test.go: `.PolicyDBSet(ctx, accessKey, "", regUser, false)`
 $DIR/cmd/last-minute_gen_test.go: `left, err = msgp.Skip(bts)`
 $DIR/cmd/last-minute_gen_test.go: `msgp.Encode(&buf, &v)`
 $DIR/cmd/last-minute_gen_test.go: `buf.Reset()`
@@ -5958,6 +6116,8 @@ $DIR/cmd/metacache-stream_test.go: `err = r.skip(5)`
 $DIR/cmd/metacache-stream_test.go: `names, err = r.readNames(5)`
 $DIR/cmd/metacache-stream_test.go: `want = loadMetacacheSampleNames[10:15]`
 $DIR/cmd/metacache-stream_test.go: `err = r.skip(len(loadMetacacheSampleNames))`
+$DIR/cmd/metacache-stream_test.go: `.ReadFile("testdata/metacache.s2")`
+$DIR/cmd/metacache-stream_test.go: `.NewReader(b)`
 $DIR/cmd/metacache-stream_test.go: `.readNames(-1)`
 $DIR/cmd/metacache-stream_test.go: `.DeepEqual(names, want)`
 $DIR/cmd/metacache-stream_test.go: `.readN(-1, false, true, false, "")`
@@ -6475,6 +6635,177 @@ $DIR/cmd/object-handlers_test.go: `globalPolicySys = NewPolicySys()`
 $DIR/cmd/object-handlers_test.go: `globalPolicySys = nil`
 $DIR/cmd/object-handlers_test.go: `globalPolicySys = NewPolicySys()`
 $DIR/cmd/object-handlers_test.go: `globalPolicySys = nil`
+$DIR/cmd/object_api_suite_test.go: `globalCompressConfigMu.Lock()`
+$DIR/cmd/object_api_suite_test.go: `globalCompressConfig.Enabled = true`
+$DIR/cmd/object_api_suite_test.go: `globalCompressConfig.MimeTypes = mimeTypes`
+$DIR/cmd/object_api_suite_test.go: `globalCompressConfig.Extensions = extensions`
+$DIR/cmd/object_api_suite_test.go: `globalCompressConfig.AllowEncrypted = encrypt`
+$DIR/cmd/object_api_suite_test.go: `globalCompressConfigMu.Unlock()`
+$DIR/cmd/object_api_suite_test.go: `globalAutoEncryption = encrypt`
+$DIR/cmd/object_api_suite_test.go: `GlobalKMS = KMS`
+$DIR/cmd/object_api_suite_test.go: `globalCompressConfigMu.Lock()`
+$DIR/cmd/object_api_suite_test.go: `globalCompressConfig.Enabled = false`
+$DIR/cmd/object_api_suite_test.go: `globalCompressConfigMu.Unlock()`
+$DIR/cmd/object_api_suite_test.go: `globalAutoEncryption = true`
+$DIR/cmd/object_api_suite_test.go: `GlobalKMS = KMS`
+$DIR/cmd/object_api_suite_test.go: `globalCompressConfigMu.Lock()`
+$DIR/cmd/object_api_suite_test.go: `globalCompressConfig.Enabled = false`
+$DIR/cmd/object_api_suite_test.go: `globalCompressConfig.AllowEncrypted = false`
+$DIR/cmd/object_api_suite_test.go: `globalCompressConfigMu.Unlock()`
+$DIR/cmd/object_api_suite_test.go: `globalAutoEncryption = false`
+$DIR/cmd/object_api_suite_test.go: `GlobalKMS = nil`
+$DIR/cmd/object_api_suite_test.go: `t.Run("default", func(t *testing.T) {
+		fn(t, nil, MakeBucketOptions{})
+	})`
+$DIR/cmd/object_api_suite_test.go: `fn(t, nil, MakeBucketOptions{})`
+$DIR/cmd/object_api_suite_test.go: `t.Run("default+versioned", func(t *testing.T) {
+		fn(t, nil, MakeBucketOptions{VersioningEnabled: true})
+	})`
+$DIR/cmd/object_api_suite_test.go: `fn(t, nil, MakeBucketOptions{VersioningEnabled: true})`
+$DIR/cmd/object_api_suite_test.go: `t.Run("compressed", func(t *testing.T) {
+		fn(t, func() {
+			resetCompressEncryption()
+			enableCompression(t, false, []string{"*"}, []string{"*"})
+		}, MakeBucketOptions{})
+	})`
+$DIR/cmd/object_api_suite_test.go: `fn(t, func() {
+			resetCompressEncryption()
+			enableCompression(t, false, []string{"*"}, []string{"*"})
+		}, MakeBucketOptions{})`
+$DIR/cmd/object_api_suite_test.go: `t.Run("compressed+versioned", func(t *testing.T) {
+		fn(t, func() {
+			resetCompressEncryption()
+			enableCompression(t, false, []string{"*"}, []string{"*"})
+		}, MakeBucketOptions{
+			VersioningEnabled: true,
+		})
+	})`
+$DIR/cmd/object_api_suite_test.go: `fn(t, func() {
+			resetCompressEncryption()
+			enableCompression(t, false, []string{"*"}, []string{"*"})
+		}, MakeBucketOptions{
+			VersioningEnabled: true,
+		})`
+$DIR/cmd/object_api_suite_test.go: `t.Run("encrypted", func(t *testing.T) {
+		fn(t, func() {
+			resetCompressEncryption()
+			enableEncryption(t)
+		}, MakeBucketOptions{})
+	})`
+$DIR/cmd/object_api_suite_test.go: `fn(t, func() {
+			resetCompressEncryption()
+			enableEncryption(t)
+		}, MakeBucketOptions{})`
+$DIR/cmd/object_api_suite_test.go: `t.Run("encrypted+versioned", func(t *testing.T) {
+		fn(t, func() {
+			resetCompressEncryption()
+			enableEncryption(t)
+		}, MakeBucketOptions{
+			VersioningEnabled: true,
+		})
+	})`
+$DIR/cmd/object_api_suite_test.go: `fn(t, func() {
+			resetCompressEncryption()
+			enableEncryption(t)
+		}, MakeBucketOptions{
+			VersioningEnabled: true,
+		})`
+$DIR/cmd/object_api_suite_test.go: `t.Run("compressed+encrypted", func(t *testing.T) {
+		fn(t, func() {
+			resetCompressEncryption()
+			enableCompression(t, true, []string{"*"}, []string{"*"})
+		}, MakeBucketOptions{})
+	})`
+$DIR/cmd/object_api_suite_test.go: `fn(t, func() {
+			resetCompressEncryption()
+			enableCompression(t, true, []string{"*"}, []string{"*"})
+		}, MakeBucketOptions{})`
+$DIR/cmd/object_api_suite_test.go: `t.Run("compressed+encrypted+versioned", func(t *testing.T) {
+		fn(t, func() {
+			resetCompressEncryption()
+			enableCompression(t, true, []string{"*"}, []string{"*"})
+		}, MakeBucketOptions{
+			VersioningEnabled: true,
+		})
+	})`
+$DIR/cmd/object_api_suite_test.go: `fn(t, func() {
+			resetCompressEncryption()
+			enableCompression(t, true, []string{"*"}, []string{"*"})
+		}, MakeBucketOptions{
+			VersioningEnabled: true,
+		})`
+$DIR/cmd/object_api_suite_test.go: `ExecObjectLayerTest(t, objTest)`
+$DIR/cmd/object_api_suite_test.go: `.Lock()`
+$DIR/cmd/object_api_suite_test.go: `.Unlock()`
+$DIR/cmd/object_api_suite_test.go: `.ParseSecretKey("my-minio-key:5lF+0pJM0OWwlQrvK2S/I7W9mO4a6rJJI7wzj7v09cw=")`
+$DIR/cmd/object_api_suite_test.go: `.Lock()`
+$DIR/cmd/object_api_suite_test.go: `.Unlock()`
+$DIR/cmd/object_api_suite_test.go: `.ParseSecretKey("my-minio-key:5lF+0pJM0OWwlQrvK2S/I7W9mO4a6rJJI7wzj7v09cw=")`
+$DIR/cmd/object_api_suite_test.go: `.Lock()`
+$DIR/cmd/object_api_suite_test.go: `.Unlock()`
+$DIR/cmd/object_api_suite_test.go: `.Run("default", func(t *testing.T) {
+		fn(t, nil, MakeBucketOptions{})
+	})`
+$DIR/cmd/object_api_suite_test.go: `.Run("default+versioned", func(t *testing.T) {
+		fn(t, nil, MakeBucketOptions{VersioningEnabled: true})
+	})`
+$DIR/cmd/object_api_suite_test.go: `.Run("compressed", func(t *testing.T) {
+		fn(t, func() {
+			resetCompressEncryption()
+			enableCompression(t, false, []string{"*"}, []string{"*"})
+		}, MakeBucketOptions{})
+	})`
+$DIR/cmd/object_api_suite_test.go: `.Run("compressed+versioned", func(t *testing.T) {
+		fn(t, func() {
+			resetCompressEncryption()
+			enableCompression(t, false, []string{"*"}, []string{"*"})
+		}, MakeBucketOptions{
+			VersioningEnabled: true,
+		})
+	})`
+$DIR/cmd/object_api_suite_test.go: `.Run("encrypted", func(t *testing.T) {
+		fn(t, func() {
+			resetCompressEncryption()
+			enableEncryption(t)
+		}, MakeBucketOptions{})
+	})`
+$DIR/cmd/object_api_suite_test.go: `.Run("encrypted+versioned", func(t *testing.T) {
+		fn(t, func() {
+			resetCompressEncryption()
+			enableEncryption(t)
+		}, MakeBucketOptions{
+			VersioningEnabled: true,
+		})
+	})`
+$DIR/cmd/object_api_suite_test.go: `.Run("compressed+encrypted", func(t *testing.T) {
+		fn(t, func() {
+			resetCompressEncryption()
+			enableCompression(t, true, []string{"*"}, []string{"*"})
+		}, MakeBucketOptions{})
+	})`
+$DIR/cmd/object_api_suite_test.go: `.Run("compressed+encrypted+versioned", func(t *testing.T) {
+		fn(t, func() {
+			resetCompressEncryption()
+			enableCompression(t, true, []string{"*"}, []string{"*"})
+		}, MakeBucketOptions{
+			VersioningEnabled: true,
+		})
+	})`
+$DIR/cmd/os-readdir_test.go: `testResults = append(testResults, result{t.TempDir(), []string{}})`
+$DIR/cmd/os-readdir_test.go: `testResults = append(testResults, result{dir, entries})`
+$DIR/cmd/os-readdir_test.go: `entries = append(entries, name)`
+$DIR/cmd/os-readdir_test.go: `sort.Strings(entries)`
+$DIR/cmd/os-readdir_test.go: `testResults = append(testResults, result{dir, entries})`
+$DIR/cmd/os-readdir_test.go: `testResults = append(testResults, result{dir, entries})`
+$DIR/cmd/os-readdir_test.go: `sort.Strings(entries)`
+$DIR/cmd/os-readdir_test.go: `testResults = append(testResults, result{dir, entries})`
+$DIR/cmd/os-readdir_test.go: `testResults = append(testResults, result{dir, entries})`
+$DIR/cmd/os-readdir_test.go: `entries = append(entries, name1)`
+$DIR/cmd/os-readdir_test.go: `entries = append(entries, name2)`
+$DIR/cmd/os-readdir_test.go: `entries = append(entries, "mydir/")`
+$DIR/cmd/os-readdir_test.go: `sort.Strings(entries)`
+$DIR/cmd/os-readdir_test.go: `testResults = append(testResults, result{dir, entries})`
+$DIR/cmd/os-readdir_test.go: `os.RemoveAll(r.dir)`
 $DIR/cmd/os-readdir_test.go: `testResults = append(testResults, setupTestReadDirEmpty(t)...)`
 $DIR/cmd/os-readdir_test.go: `testResults = append(testResults, setupTestReadDirFiles(t)...)`
 $DIR/cmd/os-readdir_test.go: `testResults = append(testResults, setupTestReadDirGeneric(t)...)`
@@ -6494,6 +6825,31 @@ $DIR/cmd/os-readdir_test.go: `.TempDir()`
 $DIR/cmd/os-readdir_test.go: `.MkdirAll(permDir, os.FileMode(0o200))`
 $DIR/cmd/os-readdir_test.go: `.FileMode(0o200)`
 $DIR/cmd/os-readdir_test.go: `.RemoveAll(permDir)`
+$DIR/cmd/os-readdir_test.go: `.TempDir()`
+$DIR/cmd/os-readdir_test.go: `.TempDir()`
+$DIR/cmd/os-readdir_test.go: `.Sprintf("file-%d", i)`
+$DIR/cmd/os-readdir_test.go: `.WriteFile(filepath.Join(dir, name), []byte{}, os.ModePerm)`
+$DIR/cmd/os-readdir_test.go: `.Join(dir, name)`
+$DIR/cmd/os-readdir_test.go: `.Strings(entries)`
+$DIR/cmd/os-readdir_test.go: `.TempDir()`
+$DIR/cmd/os-readdir_test.go: `.MkdirAll(filepath.Join(dir, "mydir"), 0o777)`
+$DIR/cmd/os-readdir_test.go: `.Join(dir, "mydir")`
+$DIR/cmd/os-readdir_test.go: `.Sprintf("file-%d", i)`
+$DIR/cmd/os-readdir_test.go: `.WriteFile(filepath.Join(dir, "mydir", name), []byte{}, os.ModePerm)`
+$DIR/cmd/os-readdir_test.go: `.Join(dir, "mydir", name)`
+$DIR/cmd/os-readdir_test.go: `.Strings(entries)`
+$DIR/cmd/os-readdir_test.go: `.TempDir()`
+$DIR/cmd/os-readdir_test.go: `.Sprintf("file-%d", i)`
+$DIR/cmd/os-readdir_test.go: `.Sprintf("file-%d", i+10)`
+$DIR/cmd/os-readdir_test.go: `.WriteFile(filepath.Join(dir, name1), []byte{}, os.ModePerm)`
+$DIR/cmd/os-readdir_test.go: `.Join(dir, name1)`
+$DIR/cmd/os-readdir_test.go: `.Symlink(filepath.Join(dir, name1), filepath.Join(dir, name2))`
+$DIR/cmd/os-readdir_test.go: `.Join(dir, name1)`
+$DIR/cmd/os-readdir_test.go: `.Join(dir, name2)`
+$DIR/cmd/os-readdir_test.go: `.MkdirAll(filepath.Join(dir, "mydir"), 0o777)`
+$DIR/cmd/os-readdir_test.go: `.Join(dir, "mydir")`
+$DIR/cmd/os-readdir_test.go: `.Strings(entries)`
+$DIR/cmd/os-readdir_test.go: `.RemoveAll(r.dir)`
 $DIR/cmd/os-readdir_test.go: `.Strings(entries)`
 $DIR/cmd/os-readdir_test.go: `.TempDir()`
 $DIR/cmd/os-readdir_test.go: `.WriteFile(filepath.Join(dir, fmt.Sprintf("%d", c)), []byte{}, os.ModePerm)`
@@ -6528,6 +6884,16 @@ $DIR/cmd/policy_test.go: `.NewResourceSet(policy.NewResource("mybucket/myobject*
 $DIR/cmd/policy_test.go: `.NewResource("mybucket/myobject*")`
 $DIR/cmd/policy_test.go: `.NewFunctions()`
 $DIR/cmd/policy_test.go: `.IsAllowed(testCase.args)`
+$DIR/cmd/policy_test.go: `.CreateStringSet("*")`
+$DIR/cmd/policy_test.go: `.CreateStringSet(policy.NewResource(bucketName).String())`
+$DIR/cmd/policy_test.go: `.NewResource(bucketName)`
+$DIR/cmd/policy_test.go: `.String()`
+$DIR/cmd/policy_test.go: `.CreateStringSet("s3:GetBucketLocation", "s3:ListBucket")`
+$DIR/cmd/policy_test.go: `.CreateStringSet("*")`
+$DIR/cmd/policy_test.go: `.CreateStringSet(policy.NewResource(bucketName + "/" + prefix).String())`
+$DIR/cmd/policy_test.go: `.NewResource(bucketName + "/" + prefix)`
+$DIR/cmd/policy_test.go: `.String()`
+$DIR/cmd/policy_test.go: `.CreateStringSet("s3:GetObject")`
 $DIR/cmd/policy_test.go: `.NewBPStatement("",
 				policy.Allow,
 				policy.NewPrincipal("*"),
@@ -6711,11 +7077,106 @@ $DIR/cmd/server-startup-msg_test.go: `.RemoveAll(fsDir)`
 $DIR/cmd/server-startup-msg_test.go: `.WithCancel(context.Background())`
 $DIR/cmd/server-startup-msg_test.go: `.Background()`
 $DIR/cmd/server-startup-msg_test.go: `.RemoveAll(fsDir)`
+$DIR/cmd/server_test.go: `suite.SetUpSuite(c)`
+$DIR/cmd/server_test.go: `suite.TestCors(c)`
+$DIR/cmd/server_test.go: `suite.TestObjectDir(c)`
+$DIR/cmd/server_test.go: `suite.TestBucketPolicy(c)`
+$DIR/cmd/server_test.go: `suite.TestDeleteBucket(c)`
+$DIR/cmd/server_test.go: `suite.TestDeleteBucketNotEmpty(c)`
+$DIR/cmd/server_test.go: `suite.TestDeleteMultipleObjects(c)`
+$DIR/cmd/server_test.go: `suite.TestDeleteObject(c)`
+$DIR/cmd/server_test.go: `suite.TestNonExistentBucket(c)`
+$DIR/cmd/server_test.go: `suite.TestEmptyObject(c)`
+$DIR/cmd/server_test.go: `suite.TestBucket(c)`
+$DIR/cmd/server_test.go: `suite.TestObjectGetAnonymous(c)`
+$DIR/cmd/server_test.go: `suite.TestMultipleObjects(c)`
+$DIR/cmd/server_test.go: `suite.TestHeader(c)`
+$DIR/cmd/server_test.go: `suite.TestPutBucket(c)`
+$DIR/cmd/server_test.go: `suite.TestCopyObject(c)`
+$DIR/cmd/server_test.go: `suite.TestPutObject(c)`
+$DIR/cmd/server_test.go: `suite.TestListBuckets(c)`
+$DIR/cmd/server_test.go: `suite.TestValidateSignature(c)`
+$DIR/cmd/server_test.go: `suite.TestSHA256Mismatch(c)`
+$DIR/cmd/server_test.go: `suite.TestPutObjectLongName(c)`
+$DIR/cmd/server_test.go: `suite.TestNotBeAbleToCreateObjectInNonexistentBucket(c)`
+$DIR/cmd/server_test.go: `suite.TestHeadOnObjectLastModified(c)`
+$DIR/cmd/server_test.go: `suite.TestHeadOnBucket(c)`
+$DIR/cmd/server_test.go: `suite.TestContentTypePersists(c)`
+$DIR/cmd/server_test.go: `suite.TestPartialContent(c)`
+$DIR/cmd/server_test.go: `suite.TestListObjectsHandler(c)`
+$DIR/cmd/server_test.go: `suite.TestListObjectVersionsOutputOrderHandler(c)`
+$DIR/cmd/server_test.go: `suite.TestListObjectsHandlerErrors(c)`
+$DIR/cmd/server_test.go: `suite.TestListObjectsV2HadoopUAHandler(c)`
+$DIR/cmd/server_test.go: `suite.TestPutBucketErrors(c)`
+$DIR/cmd/server_test.go: `suite.TestGetObjectLarge10MiB(c)`
+$DIR/cmd/server_test.go: `suite.TestGetObjectLarge11MiB(c)`
+$DIR/cmd/server_test.go: `suite.TestGetPartialObjectMisAligned(c)`
+$DIR/cmd/server_test.go: `suite.TestGetPartialObjectLarge11MiB(c)`
+$DIR/cmd/server_test.go: `suite.TestGetPartialObjectLarge10MiB(c)`
+$DIR/cmd/server_test.go: `suite.TestGetObjectErrors(c)`
+$DIR/cmd/server_test.go: `suite.TestGetObjectRangeErrors(c)`
+$DIR/cmd/server_test.go: `suite.TestObjectMultipartAbort(c)`
+$DIR/cmd/server_test.go: `suite.TestBucketMultipartList(c)`
+$DIR/cmd/server_test.go: `suite.TestValidateObjectMultipartUploadID(c)`
+$DIR/cmd/server_test.go: `suite.TestObjectMultipartListError(c)`
+$DIR/cmd/server_test.go: `suite.TestObjectValidMD5(c)`
+$DIR/cmd/server_test.go: `suite.TestObjectMultipart(c)`
+$DIR/cmd/server_test.go: `suite.TestMetricsV3Handler(c)`
+$DIR/cmd/server_test.go: `suite.TestBucketSQSNotificationWebHook(c)`
+$DIR/cmd/server_test.go: `suite.TestBucketSQSNotificationAMQP(c)`
+$DIR/cmd/server_test.go: `suite.TearDownSuite(c)`
 $DIR/cmd/server_test.go: `globalServerCtxt.StrictS3Compat = true`
 $DIR/cmd/server_test.go: `t.Run(fmt.Sprintf("Test: %d, ServerType: %s", i+1, testCase.serverType), func(t *testing.T) {
 			runAllTests(testCase, &check{t, testCase.serverType})
 		})`
-$DIR/cmd/server_test.go: `runAllTests(testCase, &check{t, testCase.serverType})`
+$DIR/cmd/server_test.go: `.SetUpSuite(c)`
+$DIR/cmd/server_test.go: `.TestCors(c)`
+$DIR/cmd/server_test.go: `.TestObjectDir(c)`
+$DIR/cmd/server_test.go: `.TestBucketPolicy(c)`
+$DIR/cmd/server_test.go: `.TestDeleteBucket(c)`
+$DIR/cmd/server_test.go: `.TestDeleteBucketNotEmpty(c)`
+$DIR/cmd/server_test.go: `.TestDeleteMultipleObjects(c)`
+$DIR/cmd/server_test.go: `.TestDeleteObject(c)`
+$DIR/cmd/server_test.go: `.TestNonExistentBucket(c)`
+$DIR/cmd/server_test.go: `.TestEmptyObject(c)`
+$DIR/cmd/server_test.go: `.TestBucket(c)`
+$DIR/cmd/server_test.go: `.TestObjectGetAnonymous(c)`
+$DIR/cmd/server_test.go: `.TestMultipleObjects(c)`
+$DIR/cmd/server_test.go: `.TestHeader(c)`
+$DIR/cmd/server_test.go: `.TestPutBucket(c)`
+$DIR/cmd/server_test.go: `.TestCopyObject(c)`
+$DIR/cmd/server_test.go: `.TestPutObject(c)`
+$DIR/cmd/server_test.go: `.TestListBuckets(c)`
+$DIR/cmd/server_test.go: `.TestValidateSignature(c)`
+$DIR/cmd/server_test.go: `.TestSHA256Mismatch(c)`
+$DIR/cmd/server_test.go: `.TestPutObjectLongName(c)`
+$DIR/cmd/server_test.go: `.TestNotBeAbleToCreateObjectInNonexistentBucket(c)`
+$DIR/cmd/server_test.go: `.TestHeadOnObjectLastModified(c)`
+$DIR/cmd/server_test.go: `.TestHeadOnBucket(c)`
+$DIR/cmd/server_test.go: `.TestContentTypePersists(c)`
+$DIR/cmd/server_test.go: `.TestPartialContent(c)`
+$DIR/cmd/server_test.go: `.TestListObjectsHandler(c)`
+$DIR/cmd/server_test.go: `.TestListObjectVersionsOutputOrderHandler(c)`
+$DIR/cmd/server_test.go: `.TestListObjectsHandlerErrors(c)`
+$DIR/cmd/server_test.go: `.TestListObjectsV2HadoopUAHandler(c)`
+$DIR/cmd/server_test.go: `.TestPutBucketErrors(c)`
+$DIR/cmd/server_test.go: `.TestGetObjectLarge10MiB(c)`
+$DIR/cmd/server_test.go: `.TestGetObjectLarge11MiB(c)`
+$DIR/cmd/server_test.go: `.TestGetPartialObjectMisAligned(c)`
+$DIR/cmd/server_test.go: `.TestGetPartialObjectLarge11MiB(c)`
+$DIR/cmd/server_test.go: `.TestGetPartialObjectLarge10MiB(c)`
+$DIR/cmd/server_test.go: `.TestGetObjectErrors(c)`
+$DIR/cmd/server_test.go: `.TestGetObjectRangeErrors(c)`
+$DIR/cmd/server_test.go: `.TestObjectMultipartAbort(c)`
+$DIR/cmd/server_test.go: `.TestBucketMultipartList(c)`
+$DIR/cmd/server_test.go: `.TestValidateObjectMultipartUploadID(c)`
+$DIR/cmd/server_test.go: `.TestObjectMultipartListError(c)`
+$DIR/cmd/server_test.go: `.TestObjectValidMD5(c)`
+$DIR/cmd/server_test.go: `.TestObjectMultipart(c)`
+$DIR/cmd/server_test.go: `.TestMetricsV3Handler(c)`
+$DIR/cmd/server_test.go: `.TestBucketSQSNotificationWebHook(c)`
+$DIR/cmd/server_test.go: `.TestBucketSQSNotificationAMQP(c)`
+$DIR/cmd/server_test.go: `.TearDownSuite(c)`
 $DIR/cmd/server_test.go: `.Run(fmt.Sprintf("Test: %d, ServerType: %s", i+1, testCase.serverType), func(t *testing.T) {
 			runAllTests(testCase, &check{t, testCase.serverType})
 		})`
@@ -6872,11 +7333,21 @@ $DIR/cmd/signature-v2_test.go: `.RemoveAll(fsDir)`
 $DIR/cmd/signature-v2_test.go: `.Set("Awsaccesskeyid", test.accessKey)`
 $DIR/cmd/signature-v2_test.go: `.Set("Signature", test.signature)`
 $DIR/cmd/signature-v2_test.go: `.Set("Policy", test.policy)`
-$DIR/cmd/signature-v4-parser_test.go: `validateCredentialfields(t, i+1, testCase.expectedCredentials, actualCredential)`
-$DIR/cmd/signature-v4-parser_test.go: `validateCredentialfields(t, i+1, testCase.expectedAuthField.Credential, parsedAuthField.Credential)`
+$DIR/cmd/signature-v4-parser_test.go: `cred.scope.date = parsedDate`
+$DIR/cmd/signature-v4-parser_test.go: `cred.scope.region = region`
+$DIR/cmd/signature-v4-parser_test.go: `cred.scope.service = service`
+$DIR/cmd/signature-v4-parser_test.go: `cred.scope.request = requestVersion`
 $DIR/cmd/signature-v4-parser_test.go: `inputQuery.Set(testCase.inputQueryKeyVals[j], testCase.inputQueryKeyVals[j+1])`
 $DIR/cmd/signature-v4-parser_test.go: `inputQuery.Set(testCase.inputQueryKeyVals[j], testCase.inputQueryKeyVals[j+1])`
-$DIR/cmd/signature-v4-parser_test.go: `validateCredentialfields(t, i+1, testCase.expectedPreSignValues.Credential, parsedPreSign.Credential)`
+$DIR/cmd/signature-v4-parser_test.go: `.Join([]string{
+		accessKey,
+		date,
+		region,
+		service,
+		requestVersion,
+	}, SlashSeparator)`
+$DIR/cmd/signature-v4-parser_test.go: `.Parse(yyyymmdd, date)`
+$DIR/cmd/signature-v4-parser_test.go: `.scope.date.Equal(actualCredential.scope.date)`
 $DIR/cmd/signature-v4-parser_test.go: `.Format(yyyymmdd)`
 $DIR/cmd/signature-v4-parser_test.go: `.Format(yyyymmdd)`
 $DIR/cmd/signature-v4-parser_test.go: `.String()`
@@ -7654,6 +8125,76 @@ $DIR/cmd/storage-rest-common_gen_test.go: `.Len()`
 $DIR/cmd/storage-rest-common_gen_test.go: `.Decode(&buf, &vn)`
 $DIR/cmd/storage-rest-common_gen_test.go: `.Reset()`
 $DIR/cmd/storage-rest-common_gen_test.go: `.Encode(&buf, &v)`
+$DIR/cmd/storage-rest_test.go: `result = result[testCase.offset:3]`
+$DIR/cmd/storage-rest_test.go: `err = storage.AppendFile(context.Background(), "foo", "otherobject", []byte("foo"))`
+$DIR/cmd/storage-rest_test.go: `t.Cleanup(tg.Cleanup)`
+$DIR/cmd/storage-rest_test.go: `globalMinioHost, globalMinioPort = prevHost, prevPort`
+$DIR/cmd/storage-rest_test.go: `url.Path = t.TempDir()`
+$DIR/cmd/storage-rest_test.go: `globalMinioHost, globalMinioPort = mustSplitHostPort(url.Host)`
+$DIR/cmd/storage-rest_test.go: `globalNodeAuthToken, _ = authenticateNode(globalActiveCred.AccessKey, globalActiveCred.SecretKey)`
+$DIR/cmd/storage-rest_test.go: `endpoint.PoolIdx = 0`
+$DIR/cmd/storage-rest_test.go: `endpoint.SetIdx = 0`
+$DIR/cmd/storage-rest_test.go: `endpoint.DiskIdx = 0`
+$DIR/cmd/storage-rest_test.go: `poolEps[0].SetCount = 1`
+$DIR/cmd/storage-rest_test.go: `poolEps[0].DrivesPerSet = 1`
+$DIR/cmd/storage-rest_test.go: `registerStorageRESTHandlers(tg.Mux[0], poolEps, tg.Managers[0])`
+$DIR/cmd/storage-rest_test.go: `registerStorageRESTHandlers(tg.Mux[1], poolEps, tg.Managers[1])`
+$DIR/cmd/storage-rest_test.go: `time.Sleep(time.Duration(rand.Float64() * float64(100*time.Millisecond)))`
+$DIR/cmd/storage-rest_test.go: `.DiskInfo(context.Background(), DiskInfoOptions{Metrics: true})`
+$DIR/cmd/storage-rest_test.go: `.Background()`
+$DIR/cmd/storage-rest_test.go: `.AppendFile(context.Background(), "foo", pathJoin("myobject", xlStorageFormatFile), []byte("foo"))`
+$DIR/cmd/storage-rest_test.go: `.Background()`
+$DIR/cmd/storage-rest_test.go: `.StatInfoFile(context.Background(), testCase.volumeName, testCase.objectName+"/"+xlStorageFormatFile, false)`
+$DIR/cmd/storage-rest_test.go: `.Background()`
+$DIR/cmd/storage-rest_test.go: `.AppendFile(context.Background(), "foo", "path/to/myobject", []byte("foo"))`
+$DIR/cmd/storage-rest_test.go: `.Background()`
+$DIR/cmd/storage-rest_test.go: `.ListDir(context.Background(), "", testCase.volumeName, testCase.prefix, -1)`
+$DIR/cmd/storage-rest_test.go: `.Background()`
+$DIR/cmd/storage-rest_test.go: `.DeepEqual(result, testCase.expectedResult)`
+$DIR/cmd/storage-rest_test.go: `.AppendFile(context.Background(), "foo", "myobject", []byte("foo"))`
+$DIR/cmd/storage-rest_test.go: `.Background()`
+$DIR/cmd/storage-rest_test.go: `.ReadAll(context.Background(), testCase.volumeName, testCase.objectName)`
+$DIR/cmd/storage-rest_test.go: `.Background()`
+$DIR/cmd/storage-rest_test.go: `.DeepEqual(result, testCase.expectedResult)`
+$DIR/cmd/storage-rest_test.go: `.AppendFile(context.Background(), "foo", "myobject", []byte("foo"))`
+$DIR/cmd/storage-rest_test.go: `.Background()`
+$DIR/cmd/storage-rest_test.go: `.ReadFile(context.Background(), testCase.volumeName, testCase.objectName, testCase.offset, result, nil)`
+$DIR/cmd/storage-rest_test.go: `.Background()`
+$DIR/cmd/storage-rest_test.go: `.DeepEqual(result, testCase.expectedResult)`
+$DIR/cmd/storage-rest_test.go: `.AppendFile(context.Background(), testCase.volumeName, testCase.objectName, testCase.data)`
+$DIR/cmd/storage-rest_test.go: `.Background()`
+$DIR/cmd/storage-rest_test.go: `.ReadAll(context.Background(), testCase.volumeName, testCase.objectName)`
+$DIR/cmd/storage-rest_test.go: `.Background()`
+$DIR/cmd/storage-rest_test.go: `.Equal(data, testCase.data)`
+$DIR/cmd/storage-rest_test.go: `.AppendFile(context.Background(), "foo", "myobject", []byte("foo"))`
+$DIR/cmd/storage-rest_test.go: `.Background()`
+$DIR/cmd/storage-rest_test.go: `.Delete(context.Background(), testCase.volumeName, testCase.objectName, DeleteOptions{
+			Recursive: false,
+			Immediate: false,
+		})`
+$DIR/cmd/storage-rest_test.go: `.Background()`
+$DIR/cmd/storage-rest_test.go: `.AppendFile(context.Background(), "foo", "myobject", []byte("foo"))`
+$DIR/cmd/storage-rest_test.go: `.Background()`
+$DIR/cmd/storage-rest_test.go: `.AppendFile(context.Background(), "foo", "otherobject", []byte("foo"))`
+$DIR/cmd/storage-rest_test.go: `.Background()`
+$DIR/cmd/storage-rest_test.go: `.RenameFile(context.Background(), testCase.volumeName, testCase.objectName, testCase.destVolumeName, testCase.destObjectName)`
+$DIR/cmd/storage-rest_test.go: `.Background()`
+$DIR/cmd/storage-rest_test.go: `.SetupTestGrid(2)`
+$DIR/cmd/storage-rest_test.go: `.Cleanup(tg.Cleanup)`
+$DIR/cmd/storage-rest_test.go: `.ParseHTTPURL(tg.Servers[1].URL)`
+$DIR/cmd/storage-rest_test.go: `.TempDir()`
+$DIR/cmd/storage-rest_test.go: `.String()`
+$DIR/cmd/storage-rest_test.go: `.UpdateIsLocal()`
+$DIR/cmd/storage-rest_test.go: `.MakeVol(context.Background(), "foo")`
+$DIR/cmd/storage-rest_test.go: `.Background()`
+$DIR/cmd/storage-rest_test.go: `.MakeVol(context.Background(), "bar")`
+$DIR/cmd/storage-rest_test.go: `.Background()`
+$DIR/cmd/storage-rest_test.go: `.DiskInfo(context.Background(), DiskInfoOptions{})`
+$DIR/cmd/storage-rest_test.go: `.Background()`
+$DIR/cmd/storage-rest_test.go: `.Is(err, errUnformattedDisk)`
+$DIR/cmd/storage-rest_test.go: `.Sleep(time.Duration(rand.Float64() * float64(100*time.Millisecond)))`
+$DIR/cmd/storage-rest_test.go: `.Duration(rand.Float64() * float64(100*time.Millisecond))`
+$DIR/cmd/storage-rest_test.go: `.Float64()`
 $DIR/cmd/streaming-signature-v4_test.go: `tests = append(tests, testCase{in: fmt.Sprintf("%x", i), want: i})`
 $DIR/cmd/streaming-signature-v4_test.go: `.NewReader([]byte("1000;chunk-signature=111123333333333333334444211\r\n"))`
 $DIR/cmd/streaming-signature-v4_test.go: `.NewReader([]byte("1000;"))`
@@ -7674,6 +8215,14 @@ $DIR/cmd/streaming-signature-v4_test.go: `.NewReader([]byte("he\r\n"))`
 $DIR/cmd/streaming-signature-v4_test.go: `.NewReader([]byte("h"))`
 $DIR/cmd/streaming-signature-v4_test.go: `.Sprintf("%x", i)`
 $DIR/cmd/streaming-signature-v4_test.go: `.Contains(err.Error(), tt.wantErr)`
+$DIR/cmd/sts-handlers_test.go: `suite.SetUpSuite(c)`
+$DIR/cmd/sts-handlers_test.go: `suite.TestSTSForRoot(c)`
+$DIR/cmd/sts-handlers_test.go: `suite.TestSTS(c)`
+$DIR/cmd/sts-handlers_test.go: `suite.TestSTSWithDenyDeleteVersion(c)`
+$DIR/cmd/sts-handlers_test.go: `suite.TestSTSWithTags(c)`
+$DIR/cmd/sts-handlers_test.go: `suite.TestSTSServiceAccountsWithUsername(c)`
+$DIR/cmd/sts-handlers_test.go: `suite.TestSTSWithGroupPolicy(c)`
+$DIR/cmd/sts-handlers_test.go: `suite.TearDownSuite(c)`
 $DIR/cmd/sts-handlers_test.go: `testCases = append(testCases,
 			newTestSuiteIAM(bt, false),
 			newTestSuiteIAM(bt, true),
@@ -7685,7 +8234,6 @@ $DIR/cmd/sts-handlers_test.go: `t.Run(
 				runAllIAMSTSTests(testCase, &check{t, testCase.serverType})
 			},
 		)`
-$DIR/cmd/sts-handlers_test.go: `runAllIAMSTSTests(testCase, &check{t, testCase.serverType})`
 $DIR/cmd/sts-handlers_test.go: `t.Run(
 			fmt.Sprintf("Test: %d, ServerType: %s", i+1, testCase.ServerTypeDescription),
 			func(t *testing.T) {
@@ -7976,6 +8524,14 @@ $DIR/cmd/sts-handlers_test.go: `suite.SetUpAccMgmtPlugin(c)`
 $DIR/cmd/sts-handlers_test.go: `suite.TestOpenIDSTSWithRolePolicyUnderAMP(c, testRoleARNs[0], testRoleMap[testRoleARNs[0]])`
 $DIR/cmd/sts-handlers_test.go: `suite.TestOpenIDSTSWithRolePolicyUnderAMP(c, testRoleARNs[1], testRoleMap[testRoleARNs[1]])`
 $DIR/cmd/sts-handlers_test.go: `suite.TestOpenIDServiceAccWithRolePolicyUnderAMP(c)`
+$DIR/cmd/sts-handlers_test.go: `.SetUpSuite(c)`
+$DIR/cmd/sts-handlers_test.go: `.TestSTSForRoot(c)`
+$DIR/cmd/sts-handlers_test.go: `.TestSTS(c)`
+$DIR/cmd/sts-handlers_test.go: `.TestSTSWithDenyDeleteVersion(c)`
+$DIR/cmd/sts-handlers_test.go: `.TestSTSWithTags(c)`
+$DIR/cmd/sts-handlers_test.go: `.TestSTSServiceAccountsWithUsername(c)`
+$DIR/cmd/sts-handlers_test.go: `.TestSTSWithGroupPolicy(c)`
+$DIR/cmd/sts-handlers_test.go: `.TearDownSuite(c)`
 $DIR/cmd/sts-handlers_test.go: `.Run(
 			fmt.Sprintf("Test: %d, ServerType: %s%s", i+1, testCase.serverType, etcdStr),
 			func(t *testing.T) {
@@ -8470,6 +9026,8 @@ $DIR/cmd/utils_test.go: `.Run("", func(t *testing.T) {
 				t.Errorf("failed expected bucket name \"%s\", got \"%s\"", testCase.object, objectName)
 			}
 		})`
+$DIR/cmd/utils_test.go: `.New("Address cannot be empty")`
+$DIR/cmd/utils_test.go: `.Parse(urlStr)`
 $DIR/cmd/utils_test.go: `.NewRequest(http.MethodGet, "http://localhost:9000?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=USWUXHGYZQYFYFFIT3RE%2F20170529%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20170529T190139Z&X-Amz-Expires=600&X-Amz-Signature=19b58080999df54b446fc97304eb8dda60d3df1812ae97f3e8783351bfd9781d&X-Amz-SignedHeaders=host&prefix=Hello%2AWorld%2A", nil)`
 $DIR/cmd/utils_test.go: `.Header.Set("content-md5", "====test")`
 $DIR/cmd/utils_test.go: `.Unmarshal([]byte(strings.ReplaceAll(jsonReq, "%%", "%")), &res)`
@@ -9575,6 +10133,33 @@ $DIR/cmd/xl-storage-format-v2_test.go: `.SetHealing()`
 $DIR/cmd/xl-storage-format-v2_test.go: `.AddVersion(fi)`
 $DIR/cmd/xl-storage-format-v2_test.go: `.ToFileInfo(fi.Volume, fi.Name, fi.VersionID, false, true)`
 $DIR/cmd/xl-storage-format-v2_test.go: `.Healing()`
+$DIR/cmd/xl-storage-format_test.go: `xlMeta.Version = xlMetaVersion101`
+$DIR/cmd/xl-storage-format_test.go: `xlMeta.Format = xlMetaFormat`
+$DIR/cmd/xl-storage-format_test.go: `xlMeta.Minio.Release = "test"`
+$DIR/cmd/xl-storage-format_test.go: `xlMeta.Erasure = ErasureInfo{
+		Algorithm:    "klauspost/reedsolomon/vandermonde",
+		DataBlocks:   5,
+		ParityBlocks: 5,
+		BlockSize:    10485760,
+		Index:        10,
+		Distribution: []int{9, 10, 1, 2, 3, 4, 5, 6, 7, 8},
+	}`
+$DIR/cmd/xl-storage-format_test.go: `xlMeta.Stat = StatInfo{
+		Size:    int64(20),
+		ModTime: UTCNow(),
+	}`
+$DIR/cmd/xl-storage-format_test.go: `xlMeta.Meta = make(map[string]string)`
+$DIR/cmd/xl-storage-format_test.go: `xlMeta.Meta["testKey1"] = "val1"`
+$DIR/cmd/xl-storage-format_test.go: `xlMeta.Meta["testKey2"] = "val2"`
+$DIR/cmd/xl-storage-format_test.go: `xlMeta.Erasure.Checksums = make([]ChecksumInfo, totalParts)`
+$DIR/cmd/xl-storage-format_test.go: `xlMeta.Parts = make([]ObjectPartInfo, totalParts)`
+$DIR/cmd/xl-storage-format_test.go: `xlMeta.AddTestObjectCheckSum(i+1, BLAKE2b512, "a23f5eff248c4372badd9f3b2455a285cd4ca86c3d9a570b091d3fc5cd7ca6d9484bbea3f8c5d8d4f84daae96874419eda578fd736455334afbac2c924b3915a")`
+$DIR/cmd/xl-storage-format_test.go: `xlMeta.AddTestObjectPart(i+1, 67108864)`
+$DIR/cmd/xl-storage-format_test.go: `.Marshal(xlSampleMeta)`
+$DIR/cmd/xl-storage-format_test.go: `.AddTestObjectCheckSum(i+1, BLAKE2b512, "a23f5eff248c4372badd9f3b2455a285cd4ca86c3d9a570b091d3fc5cd7ca6d9484bbea3f8c5d8d4f84daae96874419eda578fd736455334afbac2c924b3915a")`
+$DIR/cmd/xl-storage-format_test.go: `.AddTestObjectPart(i+1, 67108864)`
+$DIR/cmd/xl-storage-format_test.go: `.Stat.ModTime.Equal(jsoniterXLMeta.Stat.ModTime)`
+$DIR/cmd/xl-storage-format_test.go: `.Equal(unMarshalXLMeta.Erasure.Checksums[i].Hash, jsoniterXLMeta.Erasure.Checksums[i].Hash)`
 $DIR/cmd/xl-storage-format_test.go: `.Unmarshal(xlMetaJSON, &unMarshalXLMeta)`
 $DIR/cmd/xl-storage-format_test.go: `.Unmarshal(xlMetaJSON, &jsoniterXLMeta)`
 $DIR/cmd/xl-storage-format_test.go: `.Unmarshal(xlMetaJSON, &unMarshalXLMeta)`
@@ -9654,6 +10239,16 @@ $DIR/cmd/xl-storage_test.go: `t.Run("", func(t *testing.T) {
 				t.Errorf("Expected %s, got %s", testCase.expectedErr, gotErr)
 			}
 		})`
+$DIR/cmd/xl-storage_test.go: `disk.SetDiskID("da017d62-70e3-45f1-8a1a-587707e69ad1")`
+$DIR/cmd/xl-storage_test.go: `permDeniedDir = t.TempDir()`
+$DIR/cmd/xl-storage_test.go: `t.Cleanup(func() {
+		os.Chmod(slashpath.Join(permDeniedDir, "mybucket"), 0o775)
+	})`
+$DIR/cmd/xl-storage_test.go: `os.Chmod(slashpath.Join(permDeniedDir, "mybucket"), 0o775)`
+$DIR/cmd/xl-storage_test.go: `t.Cleanup(func() {
+		os.Chmod(permDeniedDir, 0o775)
+	})`
+$DIR/cmd/xl-storage_test.go: `os.Chmod(permDeniedDir, 0o775)`
 $DIR/cmd/xl-storage_test.go: `err = os.Mkdir(dir3, 0o777)`
 $DIR/cmd/xl-storage_test.go: `_, err = xlStorage.ReadVersion(context.Background(), "", testCase.volume, testCase.path, "", ReadOptions{})`
 $DIR/cmd/xl-storage_test.go: `dataRead, err = xlStorage.ReadAll(context.Background(), testCase.volume, testCase.path)`
@@ -9725,6 +10320,27 @@ $DIR/cmd/xl-storage_test.go: `.Run("", func(t *testing.T) {
 				t.Errorf("Expected %s, got %s", testCase.expectedErr, gotErr)
 			}
 		})`
+$DIR/cmd/xl-storage_test.go: `.TempDir()`
+$DIR/cmd/xl-storage_test.go: `.WriteAll(context.Background(), minioMetaBucket, formatConfigFile, []byte(`{"version":"1","format":"xl","id":"592a41c2-b7cc-4130-b883-c4b5cb15965b","xl":{"version":"3","this":"da017d62-70e3-45f1-8a1a-587707e69ad1","sets":[["e07285a6-8c73-4962-89c6-047fb939f803","33b8d431-482d-4376-b63c-626d229f0a29","cff6513a-4439-4dc1-bcaa-56c9e880c352","da017d62-70e3-45f1-8a1a-587707e69ad1","9c9f21d5-1f15-4737-bce6-835faa0d9626","0a59b346-1424-4fc2-9fa2-a2e80541d0c1","7924a3dc-b69a-4971-9a2e-014966d6aebb","4d2b8dd9-4e48-444b-bdca-c89194b26042"]],"distributionAlgo":"CRCMOD"}}`))`
+$DIR/cmd/xl-storage_test.go: `.Background()`
+$DIR/cmd/xl-storage_test.go: `.SetDiskID("da017d62-70e3-45f1-8a1a-587707e69ad1")`
+$DIR/cmd/xl-storage_test.go: `.TempDir()`
+$DIR/cmd/xl-storage_test.go: `.Mkdir(slashpath.Join(permDeniedDir, "mybucket"), 0o775)`
+$DIR/cmd/xl-storage_test.go: `.Join(permDeniedDir, "mybucket")`
+$DIR/cmd/xl-storage_test.go: `.WriteFile(slashpath.Join(permDeniedDir, "mybucket", "myobject"), []byte(""), 0o400)`
+$DIR/cmd/xl-storage_test.go: `.Join(permDeniedDir, "mybucket", "myobject")`
+$DIR/cmd/xl-storage_test.go: `.Chmod(slashpath.Join(permDeniedDir, "mybucket"), 0o400)`
+$DIR/cmd/xl-storage_test.go: `.Join(permDeniedDir, "mybucket")`
+$DIR/cmd/xl-storage_test.go: `.Cleanup(func() {
+		os.Chmod(slashpath.Join(permDeniedDir, "mybucket"), 0o775)
+	})`
+$DIR/cmd/xl-storage_test.go: `.Chmod(slashpath.Join(permDeniedDir, "mybucket"), 0o775)`
+$DIR/cmd/xl-storage_test.go: `.Join(permDeniedDir, "mybucket")`
+$DIR/cmd/xl-storage_test.go: `.Chmod(permDeniedDir, 0o400)`
+$DIR/cmd/xl-storage_test.go: `.Cleanup(func() {
+		os.Chmod(permDeniedDir, 0o775)
+	})`
+$DIR/cmd/xl-storage_test.go: `.Chmod(permDeniedDir, 0o775)`
 $DIR/cmd/xl-storage_test.go: `.TempDir()`
 $DIR/cmd/xl-storage_test.go: `.TempDir()`
 $DIR/cmd/xl-storage_test.go: `.Join(tmp, "non-existent-directory")`
@@ -9992,6 +10608,9 @@ $DIR/cmd/xl-storage_test.go: `.MakeVol(context.Background(), volume)`
 $DIR/cmd/xl-storage_test.go: `.Background()`
 $DIR/cmd/xl-storage_test.go: `.readMetadata(context.Background(), pathJoin(tmpDir, volume, object))`
 $DIR/cmd/xl-storage_test.go: `.Background()`
+$DIR/cmd/xl-storage_unix_test.go: `syscall.Umask(mask)`
+$DIR/cmd/xl-storage_unix_test.go: `.Umask(0)`
+$DIR/cmd/xl-storage_unix_test.go: `.Umask(mask)`
 $DIR/cmd/xl-storage_unix_test.go: `.TempDir()`
 $DIR/cmd/xl-storage_unix_test.go: `.MakeVol(context.Background(), testCase.volName)`
 $DIR/cmd/xl-storage_unix_test.go: `.Background()`
@@ -11201,6 +11820,10 @@ $DIR/internal/cachevalue/cache_test.go: `cache.InitOnce(2*time.Second, Opts{},
 		},
 	)`
 $DIR/internal/cachevalue/cache_test.go: `time.Sleep(3 * time.Second)`
+$DIR/internal/cachevalue/cache_test.go: `.NewTimer(time.Second)`
+$DIR/internal/cachevalue/cache_test.go: `.Stop()`
+$DIR/internal/cachevalue/cache_test.go: `.Done()`
+$DIR/internal/cachevalue/cache_test.go: `.Err()`
 $DIR/internal/cachevalue/cache_test.go: `.InitOnce(2*time.Second, Opts{},
 		func(ctx context.Context) (time.Time, error) {
 			return time.Now(), slowCaller(ctx)
@@ -11260,6 +11883,7 @@ $DIR/internal/config/cache/remote_gen_test.go: `.Len()`
 $DIR/internal/config/cache/remote_gen_test.go: `.Decode(&buf, &vn)`
 $DIR/internal/config/cache/remote_gen_test.go: `.Reset()`
 $DIR/internal/config/cache/remote_gen_test.go: `.Encode(&buf, &v)`
+$DIR/internal/config/certs_test.go: `tempFile = tmpfile.Name()`
 $DIR/internal/config/certs_test.go: `t.Cleanup(func() {
 		os.Unsetenv(EnvCertPassword)
 	})`
@@ -11269,6 +11893,9 @@ $DIR/internal/config/certs_test.go: `t.Setenv(EnvCertPassword, testCase.password
 $DIR/internal/config/certs_test.go: `_, err = LoadX509KeyPair(certificate, privateKey)`
 $DIR/internal/config/certs_test.go: `os.Remove(privateKey)`
 $DIR/internal/config/certs_test.go: `os.Remove(certificate)`
+$DIR/internal/config/certs_test.go: `.CreateTemp("", prefix)`
+$DIR/internal/config/certs_test.go: `.Write([]byte(content))`
+$DIR/internal/config/certs_test.go: `.Name()`
 $DIR/internal/config/certs_test.go: `.Remove(tempFile1)`
 $DIR/internal/config/certs_test.go: `.Remove(tempFile2)`
 $DIR/internal/config/certs_test.go: `.Remove(tempFile3)`
@@ -11447,6 +12074,7 @@ $DIR/internal/config/identity/openid/jwt_test.go: `t.Run("", func(t *testing.T) 
 			}
 		})`
 $DIR/internal/config/identity/openid/jwt_test.go: `claims["exp"] = testCase.exp`
+$DIR/internal/config/identity/openid/jwt_test.go: `w.Write([]byte(jsonkey))`
 $DIR/internal/config/identity/openid/jwt_test.go: `fmt.Println(token)`
 $DIR/internal/config/identity/openid/jwt_test.go: `pubKeys.add("76b95ae5-33ef-4283-97b7-d2a85dc2d8f4", []byte("WNGvKVyyNmXq0TraSvjaDN9CtpFgx35IXtGEffMCPR0"))`
 $DIR/internal/config/identity/openid/jwt_test.go: `provider.JWKS.URL = u1`
@@ -11469,6 +12097,31 @@ $DIR/internal/config/identity/openid/jwt_test.go: `.Run("", func(t *testing.T) {
 				t.Error("Expected failure, got success")
 			}
 		})`
+$DIR/internal/config/identity/openid/jwt_test.go: `.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		const jsonkey = `{"keys":
+       [
+         {"kty":"RSA",
+          "n": "0vx7agoebGcQSuuPiLJXZptN9nndrQmbXEps2aiAFbWhM78LhWx4cbbfAAtVT86zwu1RK7aPFFxuhDR1L6tSoc_BJECPebWKRXjBZCiFV4n3oknjhMstn64tZ_2W-5JsGY4Hc5n9yBXArwl93lqt7_RN5w6Cf0h4QyQ5v-65YGjQR0_FDW2QvzqY368QQMicAtaSqzs8KJZgnYb9c7d0zgdAZHzu6qMQvRL5hajrn1n91CbOpbISD08qNLyrdkt-bFTWhAI4vMQFh6WeZu0fM4lFd2NcRwr3XPksINHaQ-G_xBniIqbw0Ls1jF44-csFCur-kEgU8awapJzKnqDKgw",
+          "e":"AQAB",
+          "alg":"RS256",
+          "kid":"2011-04-29"}
+       ]
+     }`
+		w.Write([]byte(jsonkey))
+	}))`
+$DIR/internal/config/identity/openid/jwt_test.go: `.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		const jsonkey = `{"keys":
+       [
+         {"kty":"RSA",
+          "n": "0vx7agoebGcQSuuPiLJXZptN9nndrQmbXEps2aiAFbWhM78LhWx4cbbfAAtVT86zwu1RK7aPFFxuhDR1L6tSoc_BJECPebWKRXjBZCiFV4n3oknjhMstn64tZ_2W-5JsGY4Hc5n9yBXArwl93lqt7_RN5w6Cf0h4QyQ5v-65YGjQR0_FDW2QvzqY368QQMicAtaSqzs8KJZgnYb9c7d0zgdAZHzu6qMQvRL5hajrn1n91CbOpbISD08qNLyrdkt-bFTWhAI4vMQFh6WeZu0fM4lFd2NcRwr3XPksINHaQ-G_xBniIqbw0Ls1jF44-csFCur-kEgU8awapJzKnqDKgw",
+          "e":"AQAB",
+          "alg":"RS256",
+          "kid":"2011-04-29"}
+       ]
+     }`
+		w.Write([]byte(jsonkey))
+	})`
+$DIR/internal/config/identity/openid/jwt_test.go: `.Write([]byte(jsonkey))`
 $DIR/internal/config/identity/openid/jwt_test.go: `.SigningMethodHS256.Alg()`
 $DIR/internal/config/identity/openid/jwt_test.go: `.SignedString([]byte("WNGvKVyyNmXq0TraSvjaDN9CtpFgx35IXtGEffMCPR0"))`
 $DIR/internal/config/identity/openid/jwt_test.go: `.Println(token)`
@@ -11688,24 +12341,139 @@ $DIR/internal/disk/stat_test.go: `.WriteString(testCase.stat)`
 $DIR/internal/disk/stat_test.go: `.Sync()`
 $DIR/internal/disk/stat_test.go: `.Name()`
 $DIR/internal/disk/stat_test.go: `.DeepEqual(iostats, testCase.expectedIOStats)`
-$DIR/internal/dsync/drwmutex_test.go: `doTestParallelReaders(1, 4)`
-$DIR/internal/dsync/drwmutex_test.go: `doTestParallelReaders(3, 4)`
+$DIR/internal/dsync/drwmutex_test.go: `time.Sleep(2 * testDrwMutexAcquireTimeout)`
+$DIR/internal/dsync/drwmutex_test.go: `drwm1.RUnlock(context.Background())`
+$DIR/internal/dsync/drwmutex_test.go: `time.Sleep(3 * testDrwMutexAcquireTimeout)`
+$DIR/internal/dsync/drwmutex_test.go: `drwm2.RUnlock(context.Background())`
+$DIR/internal/dsync/drwmutex_test.go: `locked = drwm3.GetLock(ctx3, cancel3, id, source, Options{Timeout: duration})`
+$DIR/internal/dsync/drwmutex_test.go: `time.Sleep(testDrwMutexAcquireTimeout)`
+$DIR/internal/dsync/drwmutex_test.go: `drwm3.Unlock(context.Background())`
+$DIR/internal/dsync/drwmutex_test.go: `time.Sleep(3 * testDrwMutexAcquireTimeout)`
+$DIR/internal/dsync/drwmutex_test.go: `drwm1.Unlock(context.Background())`
+$DIR/internal/dsync/drwmutex_test.go: `locked = drwm2.GetLock(ctx2, cancel2, id, source, Options{Timeout: duration})`
+$DIR/internal/dsync/drwmutex_test.go: `time.Sleep(testDrwMutexAcquireTimeout)`
+$DIR/internal/dsync/drwmutex_test.go: `drwm2.Unlock(context.Background())`
+$DIR/internal/dsync/drwmutex_test.go: `clocked <- true`
+$DIR/internal/dsync/drwmutex_test.go: `<-cunlock`
+$DIR/internal/dsync/drwmutex_test.go: `m.RUnlock(context.Background())`
+$DIR/internal/dsync/drwmutex_test.go: `cdone <- true`
+$DIR/internal/dsync/drwmutex_test.go: `runtime.GOMAXPROCS(gomaxprocs)`
+$DIR/internal/dsync/drwmutex_test.go: `go parallelReader(context.Background(), m, clocked, cunlock, cdone)`
+$DIR/internal/dsync/drwmutex_test.go: `<-clocked`
+$DIR/internal/dsync/drwmutex_test.go: `cunlock <- true`
+$DIR/internal/dsync/drwmutex_test.go: `<-cdone`
+$DIR/internal/dsync/drwmutex_test.go: `for i := 0; i < 100; i++ {
+			}`
+$DIR/internal/dsync/drwmutex_test.go: `atomic.AddInt32(activity, -1)`
+$DIR/internal/dsync/drwmutex_test.go: `rwm.RUnlock(context.Background())`
+$DIR/internal/dsync/drwmutex_test.go: `cdone <- true`
+$DIR/internal/dsync/drwmutex_test.go: `for i := 0; i < 100; i++ {
+			}`
+$DIR/internal/dsync/drwmutex_test.go: `atomic.AddInt32(activity, -10000)`
+$DIR/internal/dsync/drwmutex_test.go: `rwm.Unlock(context.Background())`
+$DIR/internal/dsync/drwmutex_test.go: `cdone <- true`
+$DIR/internal/dsync/drwmutex_test.go: `t.Run(fmt.Sprintf("%d-%d-%d", gomaxprocs, numReaders, numIterations), func(t *testing.T) {
+		resource := "test"
+		runtime.GOMAXPROCS(gomaxprocs)
+		// Number of active readers + 10000 * number of active writers.
+		var activity int32
+		cdone := make(chan bool)
+		go writer(resource, numIterations, &activity, cdone)
+		var i int
+		for i = 0; i < numReaders/2; i++ {
+			go reader(resource, numIterations, &activity, cdone)
+		}
+		go writer(resource, numIterations, &activity, cdone)
+		for ; i < numReaders; i++ {
+			go reader(resource, numIterations, &activity, cdone)
+		}
+		// Wait for the 2 writers and all readers to finish.
+		for i := 0; i < 2+numReaders; i++ {
+			<-cdone
+		}
+	})`
+$DIR/internal/dsync/drwmutex_test.go: `runtime.GOMAXPROCS(gomaxprocs)`
+$DIR/internal/dsync/drwmutex_test.go: `go writer(resource, numIterations, &activity, cdone)`
+$DIR/internal/dsync/drwmutex_test.go: `go reader(resource, numIterations, &activity, cdone)`
+$DIR/internal/dsync/drwmutex_test.go: `go writer(resource, numIterations, &activity, cdone)`
+$DIR/internal/dsync/drwmutex_test.go: `go reader(resource, numIterations, &activity, cdone)`
+$DIR/internal/dsync/drwmutex_test.go: `<-cdone`
 $DIR/internal/dsync/drwmutex_test.go: `n = 5`
-$DIR/internal/dsync/drwmutex_test.go: `hammerRWMutex(t, 1, 1, n)`
-$DIR/internal/dsync/drwmutex_test.go: `hammerRWMutex(t, 1, 3, n)`
-$DIR/internal/dsync/drwmutex_test.go: `hammerRWMutex(t, 1, 10, n)`
-$DIR/internal/dsync/drwmutex_test.go: `hammerRWMutex(t, 4, 1, n)`
-$DIR/internal/dsync/drwmutex_test.go: `hammerRWMutex(t, 4, 3, n)`
-$DIR/internal/dsync/drwmutex_test.go: `hammerRWMutex(t, 4, 10, n)`
-$DIR/internal/dsync/drwmutex_test.go: `hammerRWMutex(t, 10, 1, n)`
-$DIR/internal/dsync/drwmutex_test.go: `hammerRWMutex(t, 10, 3, n)`
-$DIR/internal/dsync/drwmutex_test.go: `hammerRWMutex(t, 10, 10, n)`
 $DIR/internal/dsync/drwmutex_test.go: `mu.RUnlock(context.Background())`
 $DIR/internal/dsync/drwmutex_test.go: `mu.RLock(id, source)`
 $DIR/internal/dsync/drwmutex_test.go: `mu.Unlock(context.Background())`
 $DIR/internal/dsync/drwmutex_test.go: `mu.Lock(id, source)`
+$DIR/internal/dsync/drwmutex_test.go: `.WithCancel(context.Background())`
+$DIR/internal/dsync/drwmutex_test.go: `.Background()`
+$DIR/internal/dsync/drwmutex_test.go: `.GetRLock(ctx1, cancel1, id, source, Options{Timeout: time.Second})`
+$DIR/internal/dsync/drwmutex_test.go: `.WithCancel(context.Background())`
+$DIR/internal/dsync/drwmutex_test.go: `.Background()`
+$DIR/internal/dsync/drwmutex_test.go: `.GetRLock(ctx2, cancel2, id, source, Options{Timeout: time.Second})`
+$DIR/internal/dsync/drwmutex_test.go: `.Sleep(2 * testDrwMutexAcquireTimeout)`
+$DIR/internal/dsync/drwmutex_test.go: `.RUnlock(context.Background())`
+$DIR/internal/dsync/drwmutex_test.go: `.Background()`
+$DIR/internal/dsync/drwmutex_test.go: `.Sleep(3 * testDrwMutexAcquireTimeout)`
+$DIR/internal/dsync/drwmutex_test.go: `.RUnlock(context.Background())`
+$DIR/internal/dsync/drwmutex_test.go: `.Background()`
+$DIR/internal/dsync/drwmutex_test.go: `.WithCancel(context.Background())`
+$DIR/internal/dsync/drwmutex_test.go: `.Background()`
+$DIR/internal/dsync/drwmutex_test.go: `.GetLock(ctx3, cancel3, id, source, Options{Timeout: duration})`
+$DIR/internal/dsync/drwmutex_test.go: `.Sleep(testDrwMutexAcquireTimeout)`
+$DIR/internal/dsync/drwmutex_test.go: `.Unlock(context.Background())`
+$DIR/internal/dsync/drwmutex_test.go: `.Background()`
+$DIR/internal/dsync/drwmutex_test.go: `.WithCancel(context.Background())`
+$DIR/internal/dsync/drwmutex_test.go: `.Background()`
+$DIR/internal/dsync/drwmutex_test.go: `.GetLock(ctx1, cancel1, id, source, Options{Timeout: time.Second})`
+$DIR/internal/dsync/drwmutex_test.go: `.Sleep(3 * testDrwMutexAcquireTimeout)`
+$DIR/internal/dsync/drwmutex_test.go: `.Unlock(context.Background())`
+$DIR/internal/dsync/drwmutex_test.go: `.Background()`
+$DIR/internal/dsync/drwmutex_test.go: `.WithCancel(context.Background())`
+$DIR/internal/dsync/drwmutex_test.go: `.Background()`
+$DIR/internal/dsync/drwmutex_test.go: `.GetLock(ctx2, cancel2, id, source, Options{Timeout: duration})`
+$DIR/internal/dsync/drwmutex_test.go: `.Sleep(testDrwMutexAcquireTimeout)`
+$DIR/internal/dsync/drwmutex_test.go: `.Unlock(context.Background())`
+$DIR/internal/dsync/drwmutex_test.go: `.Background()`
+$DIR/internal/dsync/drwmutex_test.go: `.GetRLock(ctx, nil, id, source, Options{Timeout: time.Second})`
+$DIR/internal/dsync/drwmutex_test.go: `.RUnlock(context.Background())`
+$DIR/internal/dsync/drwmutex_test.go: `.Background()`
+$DIR/internal/dsync/drwmutex_test.go: `.GOMAXPROCS(gomaxprocs)`
+$DIR/internal/dsync/drwmutex_test.go: `.Background()`
 $DIR/internal/dsync/drwmutex_test.go: `.GOMAXPROCS(runtime.GOMAXPROCS(-1))`
 $DIR/internal/dsync/drwmutex_test.go: `.GOMAXPROCS(-1)`
+$DIR/internal/dsync/drwmutex_test.go: `.GetRLock(context.Background(), nil, id, source, Options{Timeout: time.Second})`
+$DIR/internal/dsync/drwmutex_test.go: `.Background()`
+$DIR/internal/dsync/drwmutex_test.go: `.AddInt32(activity, 1)`
+$DIR/internal/dsync/drwmutex_test.go: `.AddInt32(activity, -1)`
+$DIR/internal/dsync/drwmutex_test.go: `.RUnlock(context.Background())`
+$DIR/internal/dsync/drwmutex_test.go: `.Background()`
+$DIR/internal/dsync/drwmutex_test.go: `.GetLock(context.Background(), nil, id, source, Options{Timeout: time.Second})`
+$DIR/internal/dsync/drwmutex_test.go: `.Background()`
+$DIR/internal/dsync/drwmutex_test.go: `.AddInt32(activity, 10000)`
+$DIR/internal/dsync/drwmutex_test.go: `.AddInt32(activity, -10000)`
+$DIR/internal/dsync/drwmutex_test.go: `.Unlock(context.Background())`
+$DIR/internal/dsync/drwmutex_test.go: `.Background()`
+$DIR/internal/dsync/drwmutex_test.go: `.Run(fmt.Sprintf("%d-%d-%d", gomaxprocs, numReaders, numIterations), func(t *testing.T) {
+		resource := "test"
+		runtime.GOMAXPROCS(gomaxprocs)
+		// Number of active readers + 10000 * number of active writers.
+		var activity int32
+		cdone := make(chan bool)
+		go writer(resource, numIterations, &activity, cdone)
+		var i int
+		for i = 0; i < numReaders/2; i++ {
+			go reader(resource, numIterations, &activity, cdone)
+		}
+		go writer(resource, numIterations, &activity, cdone)
+		for ; i < numReaders; i++ {
+			go reader(resource, numIterations, &activity, cdone)
+		}
+		// Wait for the 2 writers and all readers to finish.
+		for i := 0; i < 2+numReaders; i++ {
+			<-cdone
+		}
+	})`
+$DIR/internal/dsync/drwmutex_test.go: `.Sprintf("%d-%d-%d", gomaxprocs, numReaders, numIterations)`
+$DIR/internal/dsync/drwmutex_test.go: `.GOMAXPROCS(gomaxprocs)`
 $DIR/internal/dsync/drwmutex_test.go: `.GOMAXPROCS(runtime.GOMAXPROCS(-1))`
 $DIR/internal/dsync/drwmutex_test.go: `.GOMAXPROCS(-1)`
 $DIR/internal/dsync/drwmutex_test.go: `.Short()`
@@ -11775,6 +12543,9 @@ $DIR/internal/dsync/dsync_test.go: `lockServers[i].setResponseDelay(5 * testDrwM
 $DIR/internal/dsync/dsync_test.go: `dm.Unlock(ctx)`
 $DIR/internal/dsync/dsync_test.go: `dm.GetLock(ctx, nil, id, source, Options{Timeout: 5 * time.Minute})`
 $DIR/internal/dsync/dsync_test.go: `unlockReturned <- struct{}{}`
+$DIR/internal/dsync/dsync_test.go: `m.Lock(id, source)`
+$DIR/internal/dsync/dsync_test.go: `m.Unlock(context.Background())`
+$DIR/internal/dsync/dsync_test.go: `cdone <- true`
 $DIR/internal/dsync/dsync_test.go: `loops = 5`
 $DIR/internal/dsync/dsync_test.go: `go HammerMutex(m, loops, c)`
 $DIR/internal/dsync/dsync_test.go: `<-c`
@@ -11877,6 +12648,9 @@ $DIR/internal/dsync/dsync_test.go: `.Unlock(ctx)`
 $DIR/internal/dsync/dsync_test.go: `.GetLock(ctx, nil, id, source, Options{Timeout: 5 * time.Minute})`
 $DIR/internal/dsync/dsync_test.go: `.NewTimer(2 * testDrwMutexUnlockCallTimeout)`
 $DIR/internal/dsync/dsync_test.go: `.Stop()`
+$DIR/internal/dsync/dsync_test.go: `.Lock(id, source)`
+$DIR/internal/dsync/dsync_test.go: `.Unlock(context.Background())`
+$DIR/internal/dsync/dsync_test.go: `.Background()`
 $DIR/internal/dsync/dsync_test.go: `.Short()`
 $DIR/internal/dsync/lock-args_gen_test.go: `left, err = msgp.Skip(bts)`
 $DIR/internal/dsync/lock-args_gen_test.go: `msgp.Encode(&buf, &v)`
@@ -12542,6 +13316,10 @@ $DIR/internal/grid/connection_test.go: `c.Remote = hosts[y]`
 $DIR/internal/grid/connection_test.go: `cReverse.Local = hosts[y]`
 $DIR/internal/grid/connection_test.go: `cReverse.Remote = hosts[x]`
 $DIR/internal/grid/connection_test.go: `should++`
+$DIR/internal/grid/connection_test.go: `server = httptest.NewUnstartedServer(handler)`
+$DIR/internal/grid/connection_test.go: `server.Config.Addr = listener.Addr().String()`
+$DIR/internal/grid/connection_test.go: `server.Listener = listener`
+$DIR/internal/grid/connection_test.go: `server.Start()`
 $DIR/internal/grid/connection_test.go: `.T.SetLogTB(t)`
 $DIR/internal/grid/connection_test.go: `.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			t.Logf("Got a %s request for: %v", r.Method, r.URL)
@@ -12589,6 +13367,10 @@ $DIR/internal/grid/connection_test.go: `.Background()`
 $DIR/internal/grid/connection_test.go: `.shouldConnect()`
 $DIR/internal/grid/connection_test.go: `.shouldConnect()`
 $DIR/internal/grid/connection_test.go: `.shouldConnect()`
+$DIR/internal/grid/connection_test.go: `.NewUnstartedServer(handler)`
+$DIR/internal/grid/connection_test.go: `.Addr()`
+$DIR/internal/grid/connection_test.go: `.String()`
+$DIR/internal/grid/connection_test.go: `.Start()`
 $DIR/internal/grid/grid_test.go: `errFatal(err)`
 $DIR/internal/grid/grid_test.go: `errFatal(local.RegisterSingleHandler(handlerTest, func(payload []byte) ([]byte, *RemoteErr) {
 		t.Log("1: server payload: ", len(payload), "bytes.")
@@ -12693,138 +13475,500 @@ $DIR/internal/grid/grid_test.go: `t.Run("testStreamRoundtrip", func(t *testing.T
 		assertNoActive(t, connRemoteLocal)
 		assertNoActive(t, connLocalToRemote)
 	})`
-$DIR/internal/grid/grid_test.go: `testStreamRoundtrip(t, local, remote)`
-$DIR/internal/grid/grid_test.go: `assertNoActive(t, connRemoteLocal)`
-$DIR/internal/grid/grid_test.go: `assertNoActive(t, connLocalToRemote)`
 $DIR/internal/grid/grid_test.go: `t.Run("testStreamCancel", func(t *testing.T) {
 		defer timeout(5 * time.Second)()
 		testStreamCancel(t, local, remote)
 		assertNoActive(t, connRemoteLocal)
 		assertNoActive(t, connLocalToRemote)
 	})`
-$DIR/internal/grid/grid_test.go: `testStreamCancel(t, local, remote)`
-$DIR/internal/grid/grid_test.go: `assertNoActive(t, connRemoteLocal)`
-$DIR/internal/grid/grid_test.go: `assertNoActive(t, connLocalToRemote)`
 $DIR/internal/grid/grid_test.go: `t.Run("testStreamDeadline", func(t *testing.T) {
 		defer timeout(5 * time.Second)()
 		testStreamDeadline(t, local, remote)
 		assertNoActive(t, connRemoteLocal)
 		assertNoActive(t, connLocalToRemote)
 	})`
-$DIR/internal/grid/grid_test.go: `testStreamDeadline(t, local, remote)`
-$DIR/internal/grid/grid_test.go: `assertNoActive(t, connRemoteLocal)`
-$DIR/internal/grid/grid_test.go: `assertNoActive(t, connLocalToRemote)`
 $DIR/internal/grid/grid_test.go: `t.Run("testServerOutCongestion", func(t *testing.T) {
 		defer timeout(1 * time.Minute)()
 		testServerOutCongestion(t, local, remote)
 		assertNoActive(t, connRemoteLocal)
 		assertNoActive(t, connLocalToRemote)
 	})`
-$DIR/internal/grid/grid_test.go: `testServerOutCongestion(t, local, remote)`
-$DIR/internal/grid/grid_test.go: `assertNoActive(t, connRemoteLocal)`
-$DIR/internal/grid/grid_test.go: `assertNoActive(t, connLocalToRemote)`
 $DIR/internal/grid/grid_test.go: `t.Run("testServerInCongestion", func(t *testing.T) {
 		defer timeout(1 * time.Minute)()
 		testServerInCongestion(t, local, remote)
 		assertNoActive(t, connRemoteLocal)
 		assertNoActive(t, connLocalToRemote)
 	})`
-$DIR/internal/grid/grid_test.go: `testServerInCongestion(t, local, remote)`
-$DIR/internal/grid/grid_test.go: `assertNoActive(t, connRemoteLocal)`
-$DIR/internal/grid/grid_test.go: `assertNoActive(t, connLocalToRemote)`
 $DIR/internal/grid/grid_test.go: `t.Run("testGenericsStreamRoundtrip", func(t *testing.T) {
 		defer timeout(1 * time.Minute)()
 		testGenericsStreamRoundtrip(t, local, remote)
 		assertNoActive(t, connRemoteLocal)
 		assertNoActive(t, connLocalToRemote)
 	})`
-$DIR/internal/grid/grid_test.go: `testGenericsStreamRoundtrip(t, local, remote)`
-$DIR/internal/grid/grid_test.go: `assertNoActive(t, connRemoteLocal)`
-$DIR/internal/grid/grid_test.go: `assertNoActive(t, connLocalToRemote)`
 $DIR/internal/grid/grid_test.go: `t.Run("testGenericsStreamRoundtripSubroute", func(t *testing.T) {
 		defer timeout(1 * time.Minute)()
 		testGenericsStreamRoundtripSubroute(t, local, remote)
 		assertNoActive(t, connRemoteLocal)
 		assertNoActive(t, connLocalToRemote)
 	})`
-$DIR/internal/grid/grid_test.go: `testGenericsStreamRoundtripSubroute(t, local, remote)`
-$DIR/internal/grid/grid_test.go: `assertNoActive(t, connRemoteLocal)`
-$DIR/internal/grid/grid_test.go: `assertNoActive(t, connLocalToRemote)`
 $DIR/internal/grid/grid_test.go: `t.Run("testServerStreamResponseBlocked", func(t *testing.T) {
 		defer timeout(1 * time.Minute)()
 		testServerStreamResponseBlocked(t, local, remote)
 		assertNoActive(t, connRemoteLocal)
 		assertNoActive(t, connLocalToRemote)
 	})`
-$DIR/internal/grid/grid_test.go: `testServerStreamResponseBlocked(t, local, remote)`
-$DIR/internal/grid/grid_test.go: `assertNoActive(t, connRemoteLocal)`
-$DIR/internal/grid/grid_test.go: `assertNoActive(t, connLocalToRemote)`
 $DIR/internal/grid/grid_test.go: `t.Run("testServerStreamOnewayNoPing", func(t *testing.T) {
 		defer timeout(1 * time.Minute)()
 		testServerStreamNoPing(t, local, remote, 0)
 		assertNoActive(t, connRemoteLocal)
 		assertNoActive(t, connLocalToRemote)
 	})`
-$DIR/internal/grid/grid_test.go: `testServerStreamNoPing(t, local, remote, 0)`
-$DIR/internal/grid/grid_test.go: `assertNoActive(t, connRemoteLocal)`
-$DIR/internal/grid/grid_test.go: `assertNoActive(t, connLocalToRemote)`
 $DIR/internal/grid/grid_test.go: `t.Run("testServerStreamTwowayNoPing", func(t *testing.T) {
 		defer timeout(1 * time.Minute)()
 		testServerStreamNoPing(t, local, remote, 1)
 		assertNoActive(t, connRemoteLocal)
 		assertNoActive(t, connLocalToRemote)
 	})`
-$DIR/internal/grid/grid_test.go: `testServerStreamNoPing(t, local, remote, 1)`
-$DIR/internal/grid/grid_test.go: `assertNoActive(t, connRemoteLocal)`
-$DIR/internal/grid/grid_test.go: `assertNoActive(t, connLocalToRemote)`
 $DIR/internal/grid/grid_test.go: `t.Run("testServerStreamTwowayPing", func(t *testing.T) {
 		defer timeout(1 * time.Minute)()
 		testServerStreamPingRunning(t, local, remote, 1, false, false)
 		assertNoActive(t, connRemoteLocal)
 		assertNoActive(t, connLocalToRemote)
 	})`
-$DIR/internal/grid/grid_test.go: `testServerStreamPingRunning(t, local, remote, 1, false, false)`
-$DIR/internal/grid/grid_test.go: `assertNoActive(t, connRemoteLocal)`
-$DIR/internal/grid/grid_test.go: `assertNoActive(t, connLocalToRemote)`
 $DIR/internal/grid/grid_test.go: `t.Run("testServerStreamTwowayPingReq", func(t *testing.T) {
 		defer timeout(1 * time.Minute)()
 		testServerStreamPingRunning(t, local, remote, 1, false, true)
 		assertNoActive(t, connRemoteLocal)
 		assertNoActive(t, connLocalToRemote)
 	})`
-$DIR/internal/grid/grid_test.go: `testServerStreamPingRunning(t, local, remote, 1, false, true)`
-$DIR/internal/grid/grid_test.go: `assertNoActive(t, connRemoteLocal)`
-$DIR/internal/grid/grid_test.go: `assertNoActive(t, connLocalToRemote)`
 $DIR/internal/grid/grid_test.go: `t.Run("testServerStreamTwowayPingResp", func(t *testing.T) {
 		defer timeout(1 * time.Minute)()
 		testServerStreamPingRunning(t, local, remote, 1, true, false)
 		assertNoActive(t, connRemoteLocal)
 		assertNoActive(t, connLocalToRemote)
 	})`
-$DIR/internal/grid/grid_test.go: `testServerStreamPingRunning(t, local, remote, 1, true, false)`
-$DIR/internal/grid/grid_test.go: `assertNoActive(t, connRemoteLocal)`
-$DIR/internal/grid/grid_test.go: `assertNoActive(t, connLocalToRemote)`
 $DIR/internal/grid/grid_test.go: `t.Run("testServerStreamTwowayPingReqResp", func(t *testing.T) {
 		defer timeout(1 * time.Minute)()
 		testServerStreamPingRunning(t, local, remote, 1, true, true)
 		assertNoActive(t, connRemoteLocal)
 		assertNoActive(t, connLocalToRemote)
 	})`
-$DIR/internal/grid/grid_test.go: `testServerStreamPingRunning(t, local, remote, 1, true, true)`
-$DIR/internal/grid/grid_test.go: `assertNoActive(t, connRemoteLocal)`
-$DIR/internal/grid/grid_test.go: `assertNoActive(t, connLocalToRemote)`
 $DIR/internal/grid/grid_test.go: `t.Run("testServerStreamOnewayPing", func(t *testing.T) {
 		defer timeout(1 * time.Minute)()
 		testServerStreamPingRunning(t, local, remote, 0, false, true)
 		assertNoActive(t, connRemoteLocal)
 		assertNoActive(t, connLocalToRemote)
 	})`
-$DIR/internal/grid/grid_test.go: `testServerStreamPingRunning(t, local, remote, 0, false, true)`
-$DIR/internal/grid/grid_test.go: `assertNoActive(t, connRemoteLocal)`
-$DIR/internal/grid/grid_test.go: `assertNoActive(t, connLocalToRemote)`
-$DIR/internal/grid/grid_test.go: `testServerStreamPingRunning(t, local, remote, 0, false, false)`
-$DIR/internal/grid/grid_test.go: `assertNoActive(t, connRemoteLocal)`
-$DIR/internal/grid/grid_test.go: `assertNoActive(t, connLocalToRemote)`
+$DIR/internal/grid/grid_test.go: `errFatal(manager.RegisterStreamingHandler(handlerTest, StreamHandler{
+			Handle: func(ctx context.Context, payload []byte, request <-chan []byte, resp chan<- []byte) *RemoteErr {
+				for in := range request {
+					b := append([]byte{}, payload...)
+					b = append(b, in...)
+					resp <- b
+				}
+				t.Log(GetCaller(ctx).Name, "Handler done")
+				return nil
+			},
+			OutCapacity: 1,
+			InCapacity:  1,
+		}))`
+$DIR/internal/grid/grid_test.go: `b = append(b, in...)`
+$DIR/internal/grid/grid_test.go: `resp <- b`
+$DIR/internal/grid/grid_test.go: `errFatal(manager.RegisterStreamingHandler(handlerTest2, StreamHandler{
+			Handle: func(ctx context.Context, payload []byte, request <-chan []byte, resp chan<- []byte) *RemoteErr {
+				for in := range request {
+					t.Log("2: Got err request", string(in))
+					err := RemoteErr(append(payload, in...))
+					return &err
+				}
+				return nil
+			},
+			OutCapacity: 1,
+			InCapacity:  1,
+		}))`
+$DIR/internal/grid/grid_test.go: `register(local)`
+$DIR/internal/grid/grid_test.go: `register(remote)`
+$DIR/internal/grid/grid_test.go: `errFatal(err)`
+$DIR/internal/grid/grid_test.go: `stream.Requests <- []byte(strconv.Itoa(n))`
+$DIR/internal/grid/grid_test.go: `errFatal(resp.Err)`
+$DIR/internal/grid/grid_test.go: `close(stream.Requests)`
+$DIR/internal/grid/grid_test.go: `n++`
+$DIR/internal/grid/grid_test.go: `stream.Requests <- []byte(strconv.Itoa(n))`
+$DIR/internal/grid/grid_test.go: `errFatal(manager.RegisterStreamingHandler(handlerTest, StreamHandler{
+			Handle: func(ctx context.Context, payload []byte, request <-chan []byte, resp chan<- []byte) *RemoteErr {
+				<-ctx.Done()
+				serverCanceled <- struct{}{}
+				fmt.Println(GetCaller(ctx).Name, "Server Context canceled")
+				return nil
+			},
+			OutCapacity: 1,
+			InCapacity:  0,
+		}))`
+$DIR/internal/grid/grid_test.go: `<-ctx.Done()`
+$DIR/internal/grid/grid_test.go: `serverCanceled <- struct{}{}`
+$DIR/internal/grid/grid_test.go: `fmt.Println(GetCaller(ctx).Name, "Server Context canceled")`
+$DIR/internal/grid/grid_test.go: `errFatal(manager.RegisterStreamingHandler(handlerTest2, StreamHandler{
+			Handle: func(ctx context.Context, payload []byte, request <-chan []byte, resp chan<- []byte) *RemoteErr {
+				<-ctx.Done()
+				serverCanceled <- struct{}{}
+				fmt.Println(GetCaller(ctx).Name, "Server Context canceled")
+				return nil
+			},
+			OutCapacity: 1,
+			InCapacity:  1,
+		}))`
+$DIR/internal/grid/grid_test.go: `<-ctx.Done()`
+$DIR/internal/grid/grid_test.go: `serverCanceled <- struct{}{}`
+$DIR/internal/grid/grid_test.go: `fmt.Println(GetCaller(ctx).Name, "Server Context canceled")`
+$DIR/internal/grid/grid_test.go: `register(local)`
+$DIR/internal/grid/grid_test.go: `register(remote)`
+$DIR/internal/grid/grid_test.go: `errFatal(err)`
+$DIR/internal/grid/grid_test.go: `err = nil`
+$DIR/internal/grid/grid_test.go: `err = resp.Err`
+$DIR/internal/grid/grid_test.go: `clientCanceled <- time.Now()`
+$DIR/internal/grid/grid_test.go: `time.Sleep(10 * time.Millisecond)`
+$DIR/internal/grid/grid_test.go: `sendReq = false`
+$DIR/internal/grid/grid_test.go: `cancel()`
+$DIR/internal/grid/grid_test.go: `<-serverCanceled`
+$DIR/internal/grid/grid_test.go: `t.Run("unbuffered", func(t *testing.T) {
+		testHandler(t, handlerTest, false)
+	})`
+$DIR/internal/grid/grid_test.go: `testHandler(t, handlerTest, false)`
+$DIR/internal/grid/grid_test.go: `t.Run("buffered", func(t *testing.T) {
+		testHandler(t, handlerTest2, false)
+	})`
+$DIR/internal/grid/grid_test.go: `testHandler(t, handlerTest2, false)`
+$DIR/internal/grid/grid_test.go: `t.Run("buffered", func(t *testing.T) {
+		testHandler(t, handlerTest2, true)
+	})`
+$DIR/internal/grid/grid_test.go: `testHandler(t, handlerTest2, true)`
+$DIR/internal/grid/grid_test.go: `errFatal(manager.RegisterStreamingHandler(handlerTest, StreamHandler{
+			Handle: func(ctx context.Context, payload []byte, request <-chan []byte, resp chan<- []byte) *RemoteErr {
+				started := time.Now()
+				dl, _ := ctx.Deadline()
+				if testing.Verbose() {
+					fmt.Println(GetCaller(ctx).Name, "Server deadline:", time.Until(dl))
+				}
+				<-ctx.Done()
+				serverCanceled <- time.Since(started)
+				if testing.Verbose() {
+					fmt.Println(GetCaller(ctx).Name, "Server Context canceled with", ctx.Err(), "after", time.Since(started))
+				}
+				return nil
+			},
+			OutCapacity: 1,
+			InCapacity:  0,
+		}))`
+$DIR/internal/grid/grid_test.go: `fmt.Println(GetCaller(ctx).Name, "Server deadline:", time.Until(dl))`
+$DIR/internal/grid/grid_test.go: `<-ctx.Done()`
+$DIR/internal/grid/grid_test.go: `serverCanceled <- time.Since(started)`
+$DIR/internal/grid/grid_test.go: `fmt.Println(GetCaller(ctx).Name, "Server Context canceled with", ctx.Err(), "after", time.Since(started))`
+$DIR/internal/grid/grid_test.go: `errFatal(manager.RegisterStreamingHandler(handlerTest2, StreamHandler{
+			Handle: func(ctx context.Context, payload []byte, request <-chan []byte, resp chan<- []byte) *RemoteErr {
+				started := time.Now()
+				dl, _ := ctx.Deadline()
+				if testing.Verbose() {
+					fmt.Println(GetCaller(ctx).Name, "Server deadline:", time.Until(dl))
+				}
+				<-ctx.Done()
+				serverCanceled <- time.Since(started)
+				if testing.Verbose() {
+					fmt.Println(GetCaller(ctx).Name, "Server Context canceled with", ctx.Err(), "after", time.Since(started))
+				}
+				return nil
+			},
+			OutCapacity: 1,
+			InCapacity:  1,
+		}))`
+$DIR/internal/grid/grid_test.go: `fmt.Println(GetCaller(ctx).Name, "Server deadline:", time.Until(dl))`
+$DIR/internal/grid/grid_test.go: `<-ctx.Done()`
+$DIR/internal/grid/grid_test.go: `serverCanceled <- time.Since(started)`
+$DIR/internal/grid/grid_test.go: `fmt.Println(GetCaller(ctx).Name, "Server Context canceled with", ctx.Err(), "after", time.Since(started))`
+$DIR/internal/grid/grid_test.go: `register(local)`
+$DIR/internal/grid/grid_test.go: `register(remote)`
+$DIR/internal/grid/grid_test.go: `local.debugMsg(debugAddToDeadline, wantDL)`
+$DIR/internal/grid/grid_test.go: `remote.debugMsg(debugAddToDeadline, wantDL)`
+$DIR/internal/grid/grid_test.go: `errFatal(err)`
+$DIR/internal/grid/grid_test.go: `err = resp.Err`
+$DIR/internal/grid/grid_test.go: `clientCanceled <- time.Since(started)`
+$DIR/internal/grid/grid_test.go: `t.Run("unbuffered", func(t *testing.T) {
+		testHandler(t, handlerTest)
+	})`
+$DIR/internal/grid/grid_test.go: `testHandler(t, handlerTest)`
+$DIR/internal/grid/grid_test.go: `t.Run("buffered", func(t *testing.T) {
+		testHandler(t, handlerTest2)
+	})`
+$DIR/internal/grid/grid_test.go: `testHandler(t, handlerTest2)`
+$DIR/internal/grid/grid_test.go: `errFatal(manager.RegisterStreamingHandler(handlerTest, StreamHandler{
+			Handle: func(ctx context.Context, payload []byte, request <-chan []byte, resp chan<- []byte) *RemoteErr {
+				// Send many responses.
+				// Test that this doesn't block.
+				for i := byte(0); i < 100; i++ {
+					select {
+					case resp <- []byte{i}:
+					// ok
+					case <-ctx.Done():
+						return NewRemoteErr(ctx.Err())
+					}
+					if i == 0 {
+						close(serverSent)
+					}
+				}
+				return nil
+			},
+			OutCapacity: 1,
+			InCapacity:  0,
+		}))`
+$DIR/internal/grid/grid_test.go: `close(serverSent)`
+$DIR/internal/grid/grid_test.go: `errFatal(manager.RegisterSingleHandler(handlerTest2, func(payload []byte) ([]byte, *RemoteErr) {
+			// Simple roundtrip
+			return append([]byte{}, payload...), nil
+		}))`
+$DIR/internal/grid/grid_test.go: `register(local)`
+$DIR/internal/grid/grid_test.go: `register(remote)`
+$DIR/internal/grid/grid_test.go: `errFatal(err)`
+$DIR/internal/grid/grid_test.go: `<-serverSent`
+$DIR/internal/grid/grid_test.go: `errFatal(err)`
+$DIR/internal/grid/grid_test.go: `errFatal(resp.Err)`
+$DIR/internal/grid/grid_test.go: `got++`
+$DIR/internal/grid/grid_test.go: `errFatal(manager.RegisterStreamingHandler(handlerTest, StreamHandler{
+			Handle: func(ctx context.Context, payload []byte, request <-chan []byte, resp chan<- []byte) *RemoteErr {
+				// Block incoming requests.
+				var n byte
+				<-processHandler
+				for {
+					select {
+					case in, ok := <-request:
+						if !ok {
+							return nil
+						}
+						if in[0] != n {
+							return NewRemoteErrString(fmt.Sprintf("expected incoming %d, got %d", n, in[0]))
+						}
+						n++
+						resp <- append([]byte{}, in...)
+					case <-ctx.Done():
+						return NewRemoteErr(ctx.Err())
+					}
+				}
+			},
+			OutCapacity: 5,
+			InCapacity:  5,
+		}))`
+$DIR/internal/grid/grid_test.go: `<-processHandler`
+$DIR/internal/grid/grid_test.go: `n++`
+$DIR/internal/grid/grid_test.go: `resp <- append([]byte{}, in...)`
+$DIR/internal/grid/grid_test.go: `errFatal(manager.RegisterSingleHandler(handlerTest2, func(payload []byte) ([]byte, *RemoteErr) {
+			// Simple roundtrip
+			return append([]byte{}, payload...), nil
+		}))`
+$DIR/internal/grid/grid_test.go: `register(local)`
+$DIR/internal/grid/grid_test.go: `register(remote)`
+$DIR/internal/grid/grid_test.go: `errFatal(err)`
+$DIR/internal/grid/grid_test.go: `st.Requests <- []byte{i}`
+$DIR/internal/grid/grid_test.go: `close(st.Requests)`
+$DIR/internal/grid/grid_test.go: `errFatal(err)`
+$DIR/internal/grid/grid_test.go: `close(processHandler)`
+$DIR/internal/grid/grid_test.go: `errFatal(resp.Err)`
+$DIR/internal/grid/grid_test.go: `got++`
+$DIR/internal/grid/grid_test.go: `handler.InCapacity = 1`
+$DIR/internal/grid/grid_test.go: `handler.OutCapacity = 1`
+$DIR/internal/grid/grid_test.go: `errFatal(handler.Register(manager, func(ctx context.Context, pp *testRequest, in <-chan *testRequest, out chan<- *testResponse) *RemoteErr {
+			n := 0
+			for i := range in {
+				if n > payloads {
+					panic("too many requests")
+				}
+
+				// t.Log("Got request:", *i)
+				out <- &testResponse{
+					OrgNum:    i.Num + pp.Num,
+					OrgString: pp.String + i.String,
+					Embedded:  *i,
+				}
+				n++
+			}
+			return nil
+		}))`
+$DIR/internal/grid/grid_test.go: `out <- &testResponse{
+					OrgNum:    i.Num + pp.Num,
+					OrgString: pp.String + i.String,
+					Embedded:  *i,
+				}`
+$DIR/internal/grid/grid_test.go: `n++`
+$DIR/internal/grid/grid_test.go: `register(local)`
+$DIR/internal/grid/grid_test.go: `register(remote)`
+$DIR/internal/grid/grid_test.go: `errFatal(err)`
+$DIR/internal/grid/grid_test.go: `stream.Requests <- &testRequest{Num: i, String: testPayload}`
+$DIR/internal/grid/grid_test.go: `handler.PutResponse(resp)`
+$DIR/internal/grid/grid_test.go: `n++`
+$DIR/internal/grid/grid_test.go: `errFatal(err)`
+$DIR/internal/grid/grid_test.go: `handler.InCapacity = 1`
+$DIR/internal/grid/grid_test.go: `handler.OutCapacity = 1`
+$DIR/internal/grid/grid_test.go: `errFatal(handler.Register(manager, func(ctx context.Context, pp *testRequest, in <-chan *testRequest, out chan<- *testResponse) *RemoteErr {
+			sub := GetSubroute(ctx)
+			if sub != "subroute/1" {
+				t.Fatal("expected subroute/1, got", sub)
+			}
+			n := 0
+			for i := range in {
+				if n > payloads {
+					panic("too many requests")
+				}
+
+				// t.Log("Got request:", *i)
+				out <- &testResponse{
+					OrgNum:    i.Num + pp.Num,
+					OrgString: pp.String + i.String,
+					Embedded:  *i,
+				}
+				n++
+			}
+			return nil
+		}, "subroute", "1"))`
+$DIR/internal/grid/grid_test.go: `out <- &testResponse{
+					OrgNum:    i.Num + pp.Num,
+					OrgString: pp.String + i.String,
+					Embedded:  *i,
+				}`
+$DIR/internal/grid/grid_test.go: `n++`
+$DIR/internal/grid/grid_test.go: `register(local)`
+$DIR/internal/grid/grid_test.go: `register(remote)`
+$DIR/internal/grid/grid_test.go: `errFatal(err)`
+$DIR/internal/grid/grid_test.go: `stream.Requests <- &testRequest{Num: i, String: testPayload}`
+$DIR/internal/grid/grid_test.go: `handler.PutResponse(resp)`
+$DIR/internal/grid/grid_test.go: `n++`
+$DIR/internal/grid/grid_test.go: `errFatal(err)`
+$DIR/internal/grid/grid_test.go: `errFatal(manager.RegisterStreamingHandler(handlerTest, StreamHandler{
+			Handle: func(ctx context.Context, payload []byte, _ <-chan []byte, resp chan<- []byte) *RemoteErr {
+				// Send many responses.
+				// Test that this doesn't block.
+				for i := byte(0); i < 100; i++ {
+					select {
+					case resp <- []byte{i}:
+					// ok
+					case <-ctx.Done():
+						close(serverCanceled)
+						return NewRemoteErr(ctx.Err())
+					}
+					if i == 1 {
+						close(serverSent)
+					}
+				}
+				return nil
+			},
+			OutCapacity: 1,
+			InCapacity:  0,
+		}))`
+$DIR/internal/grid/grid_test.go: `close(serverCanceled)`
+$DIR/internal/grid/grid_test.go: `close(serverSent)`
+$DIR/internal/grid/grid_test.go: `register(local)`
+$DIR/internal/grid/grid_test.go: `register(remote)`
+$DIR/internal/grid/grid_test.go: `errFatal(err)`
+$DIR/internal/grid/grid_test.go: `<-serverSent`
+$DIR/internal/grid/grid_test.go: `st.Results(func(b []byte) error {
+			close(nowBlocking)
+			// Block until test is done.
+			<-stopBlocking
+			return nil
+		})`
+$DIR/internal/grid/grid_test.go: `close(nowBlocking)`
+$DIR/internal/grid/grid_test.go: `<-stopBlocking`
+$DIR/internal/grid/grid_test.go: `<-nowBlocking`
+$DIR/internal/grid/grid_test.go: `time.Sleep(time.Millisecond)`
+$DIR/internal/grid/grid_test.go: `cancel()`
+$DIR/internal/grid/grid_test.go: `<-serverCanceled`
+$DIR/internal/grid/grid_test.go: `local.debugMsg(debugIsOutgoingClosed, st.muxID, func(closed bool) {
+		if !closed {
+			t.Error("expected outgoing closed")
+		} else {
+			t.Log("outgoing was closed")
+		}
+	})`
+$DIR/internal/grid/grid_test.go: `errFatal(manager.RegisterStreamingHandler(handlerTest, StreamHandler{
+			Handle: func(ctx context.Context, payload []byte, _ <-chan []byte, resp chan<- []byte) *RemoteErr {
+				close(reqStarted)
+				// Just wait for it to cancel.
+				<-ctx.Done()
+				close(serverCanceled)
+				return NewRemoteErr(ctx.Err())
+			},
+			OutCapacity: 1,
+			InCapacity:  inCap,
+		}))`
+$DIR/internal/grid/grid_test.go: `close(reqStarted)`
+$DIR/internal/grid/grid_test.go: `<-ctx.Done()`
+$DIR/internal/grid/grid_test.go: `close(serverCanceled)`
+$DIR/internal/grid/grid_test.go: `register(local)`
+$DIR/internal/grid/grid_test.go: `register(remote)`
+$DIR/internal/grid/grid_test.go: `remoteConn.debugMsg(debugSetClientPingDuration, 100*time.Millisecond)`
+$DIR/internal/grid/grid_test.go: `errFatal(err)`
+$DIR/internal/grid/grid_test.go: `<-reqStarted`
+$DIR/internal/grid/grid_test.go: `remoteConn.debugMsg(debugBlockInboundMessages, nowBlocking)`
+$DIR/internal/grid/grid_test.go: `<-serverCanceled`
+$DIR/internal/grid/grid_test.go: `close(nowBlocking)`
+$DIR/internal/grid/grid_test.go: `errFatal(manager.RegisterStreamingHandler(handlerTest, StreamHandler{
+			Handle: func(ctx context.Context, payload []byte, req <-chan []byte, resp chan<- []byte) *RemoteErr {
+				close(reqStarted)
+				// Just wait for it to cancel.
+				for blockResp {
+					select {
+					case <-ctx.Done():
+						close(serverCanceled)
+						return NewRemoteErr(ctx.Err())
+					case resp <- []byte{1}:
+						time.Sleep(10 * time.Millisecond)
+					}
+				}
+				// Just wait for it to cancel.
+				<-ctx.Done()
+				close(serverCanceled)
+				return NewRemoteErr(ctx.Err())
+			},
+			OutCapacity: 1,
+			InCapacity:  inCap,
+		}))`
+$DIR/internal/grid/grid_test.go: `close(reqStarted)`
+$DIR/internal/grid/grid_test.go: `close(serverCanceled)`
+$DIR/internal/grid/grid_test.go: `time.Sleep(10 * time.Millisecond)`
+$DIR/internal/grid/grid_test.go: `<-ctx.Done()`
+$DIR/internal/grid/grid_test.go: `close(serverCanceled)`
+$DIR/internal/grid/grid_test.go: `register(local)`
+$DIR/internal/grid/grid_test.go: `register(remote)`
+$DIR/internal/grid/grid_test.go: `remoteConn.debugMsg(debugSetClientPingDuration, 100*time.Millisecond)`
+$DIR/internal/grid/grid_test.go: `errFatal(err)`
+$DIR/internal/grid/grid_test.go: `<-reqStarted`
+$DIR/internal/grid/grid_test.go: `time.AfterFunc(time.Second, func() {
+		mu.Lock()
+		cancel()
+		close(nowBlocking)
+		mu.Unlock()
+	})`
+$DIR/internal/grid/grid_test.go: `mu.Lock()`
+$DIR/internal/grid/grid_test.go: `cancel()`
+$DIR/internal/grid/grid_test.go: `close(nowBlocking)`
+$DIR/internal/grid/grid_test.go: `mu.Unlock()`
+$DIR/internal/grid/grid_test.go: `<-nowBlocking`
+$DIR/internal/grid/grid_test.go: `time.Sleep(10 * time.Millisecond)`
+$DIR/internal/grid/grid_test.go: `<-st.Done()`
+$DIR/internal/grid/grid_test.go: `mu.Lock()`
+$DIR/internal/grid/grid_test.go: `<-serverCanceled`
+$DIR/internal/grid/grid_test.go: `fmt.Printf("=== Timeout, assuming deadlock ===\n*** goroutine dump...\n%s\n*** end\n", string(buf[:stacklen]))`
+$DIR/internal/grid/grid_test.go: `os.Exit(2)`
+$DIR/internal/grid/grid_test.go: `close(cc)`
+$DIR/internal/grid/grid_test.go: `runtime.Gosched()`
+$DIR/internal/grid/grid_test.go: `time.Sleep(100 * time.Millisecond)`
+$DIR/internal/grid/grid_test.go: `c.inStream.Range(func(key uint64, value *muxServer) bool {
+				found = append(found, key)
+				return true
+			})`
+$DIR/internal/grid/grid_test.go: `found = append(found, key)`
+$DIR/internal/grid/grid_test.go: `time.Sleep(100 * time.Millisecond)`
+$DIR/internal/grid/grid_test.go: `c.outgoing.Range(func(key uint64, value *muxClient) bool {
+				found = append(found, key)
+				return true
+			})`
+$DIR/internal/grid/grid_test.go: `found = append(found, key)`
 $DIR/internal/grid/grid_test.go: `.T.SetLogTB(t)`
 $DIR/internal/grid/grid_test.go: `.RegisterSingleHandler(handlerTest, func(payload []byte) ([]byte, *RemoteErr) {
 		t.Log("1: server payload: ", len(payload), "bytes.")
@@ -13043,6 +14187,449 @@ $DIR/internal/grid/grid_test.go: `.Run("testServerStreamOnewayPing", func(t *tes
 		assertNoActive(t, connRemoteLocal)
 		assertNoActive(t, connLocalToRemote)
 	})`
+$DIR/internal/grid/grid_test.go: `.T.SetErrorTB(t)`
+$DIR/internal/grid/grid_test.go: `.HostName()`
+$DIR/internal/grid/grid_test.go: `.RegisterStreamingHandler(handlerTest, StreamHandler{
+			Handle: func(ctx context.Context, payload []byte, request <-chan []byte, resp chan<- []byte) *RemoteErr {
+				for in := range request {
+					b := append([]byte{}, payload...)
+					b = append(b, in...)
+					resp <- b
+				}
+				t.Log(GetCaller(ctx).Name, "Handler done")
+				return nil
+			},
+			OutCapacity: 1,
+			InCapacity:  1,
+		})`
+$DIR/internal/grid/grid_test.go: `.RegisterStreamingHandler(handlerTest2, StreamHandler{
+			Handle: func(ctx context.Context, payload []byte, request <-chan []byte, resp chan<- []byte) *RemoteErr {
+				for in := range request {
+					t.Log("2: Got err request", string(in))
+					err := RemoteErr(append(payload, in...))
+					return &err
+				}
+				return nil
+			},
+			OutCapacity: 1,
+			InCapacity:  1,
+		})`
+$DIR/internal/grid/grid_test.go: `.Connection(remoteHost)`
+$DIR/internal/grid/grid_test.go: `.Now()`
+$DIR/internal/grid/grid_test.go: `.NewStream(context.Background(), handlerTest, []byte(testPayload))`
+$DIR/internal/grid/grid_test.go: `.Background()`
+$DIR/internal/grid/grid_test.go: `.Itoa(n)`
+$DIR/internal/grid/grid_test.go: `.Itoa(n)`
+$DIR/internal/grid/grid_test.go: `.Itoa(n)`
+$DIR/internal/grid/grid_test.go: `.T.SetErrorTB(t)`
+$DIR/internal/grid/grid_test.go: `.HostName()`
+$DIR/internal/grid/grid_test.go: `.RegisterStreamingHandler(handlerTest, StreamHandler{
+			Handle: func(ctx context.Context, payload []byte, request <-chan []byte, resp chan<- []byte) *RemoteErr {
+				<-ctx.Done()
+				serverCanceled <- struct{}{}
+				fmt.Println(GetCaller(ctx).Name, "Server Context canceled")
+				return nil
+			},
+			OutCapacity: 1,
+			InCapacity:  0,
+		})`
+$DIR/internal/grid/grid_test.go: `.Done()`
+$DIR/internal/grid/grid_test.go: `.Println(GetCaller(ctx).Name, "Server Context canceled")`
+$DIR/internal/grid/grid_test.go: `.RegisterStreamingHandler(handlerTest2, StreamHandler{
+			Handle: func(ctx context.Context, payload []byte, request <-chan []byte, resp chan<- []byte) *RemoteErr {
+				<-ctx.Done()
+				serverCanceled <- struct{}{}
+				fmt.Println(GetCaller(ctx).Name, "Server Context canceled")
+				return nil
+			},
+			OutCapacity: 1,
+			InCapacity:  1,
+		})`
+$DIR/internal/grid/grid_test.go: `.Done()`
+$DIR/internal/grid/grid_test.go: `.Println(GetCaller(ctx).Name, "Server Context canceled")`
+$DIR/internal/grid/grid_test.go: `.Connection(remoteHost)`
+$DIR/internal/grid/grid_test.go: `.WithCancel(context.Background())`
+$DIR/internal/grid/grid_test.go: `.Background()`
+$DIR/internal/grid/grid_test.go: `.NewStream(ctx, handler, []byte(testPayload))`
+$DIR/internal/grid/grid_test.go: `.Now()`
+$DIR/internal/grid/grid_test.go: `.Now()`
+$DIR/internal/grid/grid_test.go: `.Sleep(10 * time.Millisecond)`
+$DIR/internal/grid/grid_test.go: `.Is(err, context.Canceled)`
+$DIR/internal/grid/grid_test.go: `.Run("unbuffered", func(t *testing.T) {
+		testHandler(t, handlerTest, false)
+	})`
+$DIR/internal/grid/grid_test.go: `.Run("buffered", func(t *testing.T) {
+		testHandler(t, handlerTest2, false)
+	})`
+$DIR/internal/grid/grid_test.go: `.Run("buffered", func(t *testing.T) {
+		testHandler(t, handlerTest2, true)
+	})`
+$DIR/internal/grid/grid_test.go: `.T.SetErrorTB(t)`
+$DIR/internal/grid/grid_test.go: `.HostName()`
+$DIR/internal/grid/grid_test.go: `.RegisterStreamingHandler(handlerTest, StreamHandler{
+			Handle: func(ctx context.Context, payload []byte, request <-chan []byte, resp chan<- []byte) *RemoteErr {
+				started := time.Now()
+				dl, _ := ctx.Deadline()
+				if testing.Verbose() {
+					fmt.Println(GetCaller(ctx).Name, "Server deadline:", time.Until(dl))
+				}
+				<-ctx.Done()
+				serverCanceled <- time.Since(started)
+				if testing.Verbose() {
+					fmt.Println(GetCaller(ctx).Name, "Server Context canceled with", ctx.Err(), "after", time.Since(started))
+				}
+				return nil
+			},
+			OutCapacity: 1,
+			InCapacity:  0,
+		})`
+$DIR/internal/grid/grid_test.go: `.Now()`
+$DIR/internal/grid/grid_test.go: `.Deadline()`
+$DIR/internal/grid/grid_test.go: `.Verbose()`
+$DIR/internal/grid/grid_test.go: `.Println(GetCaller(ctx).Name, "Server deadline:", time.Until(dl))`
+$DIR/internal/grid/grid_test.go: `.Until(dl)`
+$DIR/internal/grid/grid_test.go: `.Done()`
+$DIR/internal/grid/grid_test.go: `.Since(started)`
+$DIR/internal/grid/grid_test.go: `.Verbose()`
+$DIR/internal/grid/grid_test.go: `.Println(GetCaller(ctx).Name, "Server Context canceled with", ctx.Err(), "after", time.Since(started))`
+$DIR/internal/grid/grid_test.go: `.Err()`
+$DIR/internal/grid/grid_test.go: `.Since(started)`
+$DIR/internal/grid/grid_test.go: `.RegisterStreamingHandler(handlerTest2, StreamHandler{
+			Handle: func(ctx context.Context, payload []byte, request <-chan []byte, resp chan<- []byte) *RemoteErr {
+				started := time.Now()
+				dl, _ := ctx.Deadline()
+				if testing.Verbose() {
+					fmt.Println(GetCaller(ctx).Name, "Server deadline:", time.Until(dl))
+				}
+				<-ctx.Done()
+				serverCanceled <- time.Since(started)
+				if testing.Verbose() {
+					fmt.Println(GetCaller(ctx).Name, "Server Context canceled with", ctx.Err(), "after", time.Since(started))
+				}
+				return nil
+			},
+			OutCapacity: 1,
+			InCapacity:  1,
+		})`
+$DIR/internal/grid/grid_test.go: `.Now()`
+$DIR/internal/grid/grid_test.go: `.Deadline()`
+$DIR/internal/grid/grid_test.go: `.Verbose()`
+$DIR/internal/grid/grid_test.go: `.Println(GetCaller(ctx).Name, "Server deadline:", time.Until(dl))`
+$DIR/internal/grid/grid_test.go: `.Until(dl)`
+$DIR/internal/grid/grid_test.go: `.Done()`
+$DIR/internal/grid/grid_test.go: `.Since(started)`
+$DIR/internal/grid/grid_test.go: `.Verbose()`
+$DIR/internal/grid/grid_test.go: `.Println(GetCaller(ctx).Name, "Server Context canceled with", ctx.Err(), "after", time.Since(started))`
+$DIR/internal/grid/grid_test.go: `.Err()`
+$DIR/internal/grid/grid_test.go: `.Since(started)`
+$DIR/internal/grid/grid_test.go: `.debugMsg(debugAddToDeadline, wantDL)`
+$DIR/internal/grid/grid_test.go: `.debugMsg(debugAddToDeadline, time.Duration(0))`
+$DIR/internal/grid/grid_test.go: `.Duration(0)`
+$DIR/internal/grid/grid_test.go: `.debugMsg(debugAddToDeadline, wantDL)`
+$DIR/internal/grid/grid_test.go: `.debugMsg(debugAddToDeadline, time.Duration(0))`
+$DIR/internal/grid/grid_test.go: `.Duration(0)`
+$DIR/internal/grid/grid_test.go: `.Connection(remoteHost)`
+$DIR/internal/grid/grid_test.go: `.WithTimeout(context.Background(), wantDL)`
+$DIR/internal/grid/grid_test.go: `.Background()`
+$DIR/internal/grid/grid_test.go: `.NewStream(ctx, handler, []byte(testPayload))`
+$DIR/internal/grid/grid_test.go: `.Now()`
+$DIR/internal/grid/grid_test.go: `.Since(started)`
+$DIR/internal/grid/grid_test.go: `.Is(err, context.DeadlineExceeded)`
+$DIR/internal/grid/grid_test.go: `.Run("unbuffered", func(t *testing.T) {
+		testHandler(t, handlerTest)
+	})`
+$DIR/internal/grid/grid_test.go: `.Run("buffered", func(t *testing.T) {
+		testHandler(t, handlerTest2)
+	})`
+$DIR/internal/grid/grid_test.go: `.T.SetErrorTB(t)`
+$DIR/internal/grid/grid_test.go: `.HostName()`
+$DIR/internal/grid/grid_test.go: `.RegisterStreamingHandler(handlerTest, StreamHandler{
+			Handle: func(ctx context.Context, payload []byte, request <-chan []byte, resp chan<- []byte) *RemoteErr {
+				// Send many responses.
+				// Test that this doesn't block.
+				for i := byte(0); i < 100; i++ {
+					select {
+					case resp <- []byte{i}:
+					// ok
+					case <-ctx.Done():
+						return NewRemoteErr(ctx.Err())
+					}
+					if i == 0 {
+						close(serverSent)
+					}
+				}
+				return nil
+			},
+			OutCapacity: 1,
+			InCapacity:  0,
+		})`
+$DIR/internal/grid/grid_test.go: `.Done()`
+$DIR/internal/grid/grid_test.go: `.Err()`
+$DIR/internal/grid/grid_test.go: `.RegisterSingleHandler(handlerTest2, func(payload []byte) ([]byte, *RemoteErr) {
+			// Simple roundtrip
+			return append([]byte{}, payload...), nil
+		})`
+$DIR/internal/grid/grid_test.go: `.Connection(remoteHost)`
+$DIR/internal/grid/grid_test.go: `.WithTimeout(context.Background(), time.Minute)`
+$DIR/internal/grid/grid_test.go: `.Background()`
+$DIR/internal/grid/grid_test.go: `.NewStream(ctx, handlerTest, []byte(testPayload))`
+$DIR/internal/grid/grid_test.go: `.Request(ctx, handlerTest2, []byte(testPayload))`
+$DIR/internal/grid/grid_test.go: `.T.SetErrorTB(t)`
+$DIR/internal/grid/grid_test.go: `.HostName()`
+$DIR/internal/grid/grid_test.go: `.RegisterStreamingHandler(handlerTest, StreamHandler{
+			Handle: func(ctx context.Context, payload []byte, request <-chan []byte, resp chan<- []byte) *RemoteErr {
+				// Block incoming requests.
+				var n byte
+				<-processHandler
+				for {
+					select {
+					case in, ok := <-request:
+						if !ok {
+							return nil
+						}
+						if in[0] != n {
+							return NewRemoteErrString(fmt.Sprintf("expected incoming %d, got %d", n, in[0]))
+						}
+						n++
+						resp <- append([]byte{}, in...)
+					case <-ctx.Done():
+						return NewRemoteErr(ctx.Err())
+					}
+				}
+			},
+			OutCapacity: 5,
+			InCapacity:  5,
+		})`
+$DIR/internal/grid/grid_test.go: `.Sprintf("expected incoming %d, got %d", n, in[0])`
+$DIR/internal/grid/grid_test.go: `.Done()`
+$DIR/internal/grid/grid_test.go: `.Err()`
+$DIR/internal/grid/grid_test.go: `.RegisterSingleHandler(handlerTest2, func(payload []byte) ([]byte, *RemoteErr) {
+			// Simple roundtrip
+			return append([]byte{}, payload...), nil
+		})`
+$DIR/internal/grid/grid_test.go: `.Connection(remoteHost)`
+$DIR/internal/grid/grid_test.go: `.WithTimeout(context.Background(), time.Minute)`
+$DIR/internal/grid/grid_test.go: `.Background()`
+$DIR/internal/grid/grid_test.go: `.NewStream(ctx, handlerTest, []byte(testPayload))`
+$DIR/internal/grid/grid_test.go: `.Request(ctx, handlerTest2, []byte(testPayload))`
+$DIR/internal/grid/grid_test.go: `.T.SetErrorTB(t)`
+$DIR/internal/grid/grid_test.go: `.HostName()`
+$DIR/internal/grid/grid_test.go: `.Register(manager, func(ctx context.Context, pp *testRequest, in <-chan *testRequest, out chan<- *testResponse) *RemoteErr {
+			n := 0
+			for i := range in {
+				if n > payloads {
+					panic("too many requests")
+				}
+
+				// t.Log("Got request:", *i)
+				out <- &testResponse{
+					OrgNum:    i.Num + pp.Num,
+					OrgString: pp.String + i.String,
+					Embedded:  *i,
+				}
+				n++
+			}
+			return nil
+		})`
+$DIR/internal/grid/grid_test.go: `.Connection(remoteHost)`
+$DIR/internal/grid/grid_test.go: `.Now()`
+$DIR/internal/grid/grid_test.go: `.Call(context.Background(), remoteConn, &testRequest{Num: 1, String: testPayload})`
+$DIR/internal/grid/grid_test.go: `.Background()`
+$DIR/internal/grid/grid_test.go: `.Results(func(resp *testResponse) error {
+		const wantString = testPayload + testPayload
+		if resp.OrgString != testPayload+testPayload {
+			t.Errorf("want %q, got %q", wantString, resp.OrgString)
+		}
+		if resp.OrgNum != n+1 {
+			t.Errorf("want %d, got %d", n+1, resp.OrgNum)
+		}
+		handler.PutResponse(resp)
+		n++
+		return nil
+	})`
+$DIR/internal/grid/grid_test.go: `.PutResponse(resp)`
+$DIR/internal/grid/grid_test.go: `.T.SetErrorTB(t)`
+$DIR/internal/grid/grid_test.go: `.HostName()`
+$DIR/internal/grid/grid_test.go: `.Register(manager, func(ctx context.Context, pp *testRequest, in <-chan *testRequest, out chan<- *testResponse) *RemoteErr {
+			sub := GetSubroute(ctx)
+			if sub != "subroute/1" {
+				t.Fatal("expected subroute/1, got", sub)
+			}
+			n := 0
+			for i := range in {
+				if n > payloads {
+					panic("too many requests")
+				}
+
+				// t.Log("Got request:", *i)
+				out <- &testResponse{
+					OrgNum:    i.Num + pp.Num,
+					OrgString: pp.String + i.String,
+					Embedded:  *i,
+				}
+				n++
+			}
+			return nil
+		}, "subroute", "1")`
+$DIR/internal/grid/grid_test.go: `.Connection(remoteHost)`
+$DIR/internal/grid/grid_test.go: `.Subroute(strings.Join([]string{"subroute", "1"}, "/"))`
+$DIR/internal/grid/grid_test.go: `.Join([]string{"subroute", "1"}, "/")`
+$DIR/internal/grid/grid_test.go: `.Now()`
+$DIR/internal/grid/grid_test.go: `.Call(context.Background(), remoteSub, &testRequest{Num: 1, String: testPayload})`
+$DIR/internal/grid/grid_test.go: `.Background()`
+$DIR/internal/grid/grid_test.go: `.Results(func(resp *testResponse) error {
+		// t.Logf("got resp: %+v", *resp.Msg)
+		const wantString = testPayload + testPayload
+		if resp.OrgString != testPayload+testPayload {
+			t.Errorf("want %q, got %q", wantString, resp.OrgString)
+		}
+		if resp.OrgNum != n+1 {
+			t.Errorf("want %d, got %d", n+1, resp.OrgNum)
+		}
+		handler.PutResponse(resp)
+		n++
+		return nil
+	})`
+$DIR/internal/grid/grid_test.go: `.PutResponse(resp)`
+$DIR/internal/grid/grid_test.go: `.T.SetErrorTB(t)`
+$DIR/internal/grid/grid_test.go: `.HostName()`
+$DIR/internal/grid/grid_test.go: `.RegisterStreamingHandler(handlerTest, StreamHandler{
+			Handle: func(ctx context.Context, payload []byte, _ <-chan []byte, resp chan<- []byte) *RemoteErr {
+				// Send many responses.
+				// Test that this doesn't block.
+				for i := byte(0); i < 100; i++ {
+					select {
+					case resp <- []byte{i}:
+					// ok
+					case <-ctx.Done():
+						close(serverCanceled)
+						return NewRemoteErr(ctx.Err())
+					}
+					if i == 1 {
+						close(serverSent)
+					}
+				}
+				return nil
+			},
+			OutCapacity: 1,
+			InCapacity:  0,
+		})`
+$DIR/internal/grid/grid_test.go: `.Done()`
+$DIR/internal/grid/grid_test.go: `.Err()`
+$DIR/internal/grid/grid_test.go: `.Connection(remoteHost)`
+$DIR/internal/grid/grid_test.go: `.WithTimeout(context.Background(), 5*time.Second)`
+$DIR/internal/grid/grid_test.go: `.Background()`
+$DIR/internal/grid/grid_test.go: `.NewStream(ctx, handlerTest, []byte(testPayload))`
+$DIR/internal/grid/grid_test.go: `.Results(func(b []byte) error {
+			close(nowBlocking)
+			// Block until test is done.
+			<-stopBlocking
+			return nil
+		})`
+$DIR/internal/grid/grid_test.go: `.Sleep(time.Millisecond)`
+$DIR/internal/grid/grid_test.go: `.debugMsg(debugIsOutgoingClosed, st.muxID, func(closed bool) {
+		if !closed {
+			t.Error("expected outgoing closed")
+		} else {
+			t.Log("outgoing was closed")
+		}
+	})`
+$DIR/internal/grid/grid_test.go: `.Results(func(b []byte) error {
+		return nil
+	})`
+$DIR/internal/grid/grid_test.go: `.Is(err, context.Canceled)`
+$DIR/internal/grid/grid_test.go: `.T.SetErrorTB(t)`
+$DIR/internal/grid/grid_test.go: `.HostName()`
+$DIR/internal/grid/grid_test.go: `.RegisterStreamingHandler(handlerTest, StreamHandler{
+			Handle: func(ctx context.Context, payload []byte, _ <-chan []byte, resp chan<- []byte) *RemoteErr {
+				close(reqStarted)
+				// Just wait for it to cancel.
+				<-ctx.Done()
+				close(serverCanceled)
+				return NewRemoteErr(ctx.Err())
+			},
+			OutCapacity: 1,
+			InCapacity:  inCap,
+		})`
+$DIR/internal/grid/grid_test.go: `.Done()`
+$DIR/internal/grid/grid_test.go: `.Err()`
+$DIR/internal/grid/grid_test.go: `.Connection(remoteHost)`
+$DIR/internal/grid/grid_test.go: `.debugMsg(debugSetClientPingDuration, 100*time.Millisecond)`
+$DIR/internal/grid/grid_test.go: `.debugMsg(debugSetClientPingDuration, clientPingInterval)`
+$DIR/internal/grid/grid_test.go: `.WithTimeout(context.Background(), time.Minute)`
+$DIR/internal/grid/grid_test.go: `.Background()`
+$DIR/internal/grid/grid_test.go: `.NewStream(ctx, handlerTest, []byte(testPayload))`
+$DIR/internal/grid/grid_test.go: `.debugMsg(debugBlockInboundMessages, nowBlocking)`
+$DIR/internal/grid/grid_test.go: `.Results(func(b []byte) error {
+		return nil
+	})`
+$DIR/internal/grid/grid_test.go: `.T.SetErrorTB(t)`
+$DIR/internal/grid/grid_test.go: `.HostName()`
+$DIR/internal/grid/grid_test.go: `.RegisterStreamingHandler(handlerTest, StreamHandler{
+			Handle: func(ctx context.Context, payload []byte, req <-chan []byte, resp chan<- []byte) *RemoteErr {
+				close(reqStarted)
+				// Just wait for it to cancel.
+				for blockResp {
+					select {
+					case <-ctx.Done():
+						close(serverCanceled)
+						return NewRemoteErr(ctx.Err())
+					case resp <- []byte{1}:
+						time.Sleep(10 * time.Millisecond)
+					}
+				}
+				// Just wait for it to cancel.
+				<-ctx.Done()
+				close(serverCanceled)
+				return NewRemoteErr(ctx.Err())
+			},
+			OutCapacity: 1,
+			InCapacity:  inCap,
+		})`
+$DIR/internal/grid/grid_test.go: `.Done()`
+$DIR/internal/grid/grid_test.go: `.Err()`
+$DIR/internal/grid/grid_test.go: `.Sleep(10 * time.Millisecond)`
+$DIR/internal/grid/grid_test.go: `.Done()`
+$DIR/internal/grid/grid_test.go: `.Err()`
+$DIR/internal/grid/grid_test.go: `.Connection(remoteHost)`
+$DIR/internal/grid/grid_test.go: `.debugMsg(debugSetClientPingDuration, 100*time.Millisecond)`
+$DIR/internal/grid/grid_test.go: `.debugMsg(debugSetClientPingDuration, clientPingInterval)`
+$DIR/internal/grid/grid_test.go: `.WithTimeout(context.Background(), time.Minute)`
+$DIR/internal/grid/grid_test.go: `.Background()`
+$DIR/internal/grid/grid_test.go: `.NewStream(ctx, handlerTest, []byte(testPayload))`
+$DIR/internal/grid/grid_test.go: `.AfterFunc(time.Second, func() {
+		mu.Lock()
+		cancel()
+		close(nowBlocking)
+		mu.Unlock()
+	})`
+$DIR/internal/grid/grid_test.go: `.Lock()`
+$DIR/internal/grid/grid_test.go: `.Unlock()`
+$DIR/internal/grid/grid_test.go: `.Done()`
+$DIR/internal/grid/grid_test.go: `.Sleep(10 * time.Millisecond)`
+$DIR/internal/grid/grid_test.go: `.Results(func(b []byte) error {
+		<-st.Done()
+		return ctx.Err()
+	})`
+$DIR/internal/grid/grid_test.go: `.Done()`
+$DIR/internal/grid/grid_test.go: `.Err()`
+$DIR/internal/grid/grid_test.go: `.Lock()`
+$DIR/internal/grid/grid_test.go: `.After(after)`
+$DIR/internal/grid/grid_test.go: `.Stack(buf, true)`
+$DIR/internal/grid/grid_test.go: `.Printf("=== Timeout, assuming deadlock ===\n*** goroutine dump...\n%s\n*** end\n", string(buf[:stacklen]))`
+$DIR/internal/grid/grid_test.go: `.Exit(2)`
+$DIR/internal/grid/grid_test.go: `.Gosched()`
+$DIR/internal/grid/grid_test.go: `.Stats()`
+$DIR/internal/grid/grid_test.go: `.Sleep(100 * time.Millisecond)`
+$DIR/internal/grid/grid_test.go: `.inStream.Range(func(key uint64, value *muxServer) bool {
+				found = append(found, key)
+				return true
+			})`
+$DIR/internal/grid/grid_test.go: `.Sleep(100 * time.Millisecond)`
+$DIR/internal/grid/grid_test.go: `.outgoing.Range(func(key uint64, value *muxClient) bool {
+				found = append(found, key)
+				return true
+			})`
 $DIR/internal/grid/msg_gen_test.go: `left, err = msgp.Skip(bts)`
 $DIR/internal/grid/msg_gen_test.go: `msgp.Encode(&buf, &v)`
 $DIR/internal/grid/msg_gen_test.go: `buf.Reset()`
@@ -13211,6 +14798,7 @@ $DIR/internal/hash/reader_test.go: `.Run(fmt.Sprintf("case-%d", i+1), func(t *te
 $DIR/internal/hash/reader_test.go: `.Sprintf("case-%d", i+1)`
 $DIR/internal/hash/reader_test.go: `.Background()`
 $DIR/internal/hash/reader_test.go: `.Copy(io.Discard, r)`
+$DIR/internal/hash/reader_test.go: `.Background()`
 $DIR/internal/hash/reader_test.go: `.NewReader([]byte("abcd"))`
 $DIR/internal/hash/reader_test.go: `.NewReader([]byte("abcd"))`
 $DIR/internal/hash/reader_test.go: `.NewReader([]byte("abcd"))`
@@ -13234,9 +14822,24 @@ $DIR/internal/hash/reader_test.go: `.Background()`
 $DIR/internal/http/check_port_test.go: `.Listen("tcp", "localhost:0")`
 $DIR/internal/http/check_port_test.go: `.Addr()`
 $DIR/internal/http/check_port_test.go: `.Itoa(testCase.port)`
+$DIR/internal/http/listener_test.go: `ip = v.IP`
+$DIR/internal/http/listener_test.go: `ip = v.IP`
+$DIR/internal/http/listener_test.go: `localIP4.Add(ip.String())`
 $DIR/internal/http/listener_test.go: `casePorts = append(casePorts, getNextPort())`
 $DIR/internal/http/listener_test.go: `casePorts = append(casePorts, getNextPort())`
 $DIR/internal/http/listener_test.go: `addrSet.Add(addr.String())`
+$DIR/internal/http/listener_test.go: `.Itoa(int(atomic.AddUint32(&serverPort, 1)))`
+$DIR/internal/http/listener_test.go: `.AddUint32(&serverPort, 1)`
+$DIR/internal/http/listener_test.go: `.NewStringSet()`
+$DIR/internal/http/listener_test.go: `.InterfaceAddrs()`
+$DIR/internal/http/listener_test.go: `.To4()`
+$DIR/internal/http/listener_test.go: `.Add(ip.String())`
+$DIR/internal/http/listener_test.go: `.String()`
+$DIR/internal/http/listener_test.go: `.FuncMatch(func(ip string, matchString string) bool {
+		return !strings.HasPrefix(ip, "127.")
+	}, "")`
+$DIR/internal/http/listener_test.go: `.HasPrefix(ip, "127.")`
+$DIR/internal/http/listener_test.go: `.ToSlice()`
 $DIR/internal/http/listener_test.go: `.Duration(0)`
 $DIR/internal/http/listener_test.go: `.Duration(0)`
 $DIR/internal/http/listener_test.go: `.Duration(0)`
@@ -13384,6 +14987,9 @@ $DIR/internal/ioutil/ioutil_test.go: `.Seek(0, io.SeekStart)`
 $DIR/internal/ioutil/ioutil_test.go: `.Size()`
 $DIR/internal/ioutil/ioutil_test.go: `.Is(err, nil)`
 $DIR/internal/ioutil/ioutil_test.go: `.Size()`
+$DIR/internal/jwt/parser_test.go: `claims.SetAccessKey("test")`
+$DIR/internal/jwt/parser_test.go: `claims.AccessKey = "test"`
+$DIR/internal/jwt/parser_test.go: `claims.Subject = "test"`
 $DIR/internal/jwt/parser_test.go: `t.Run(data.name, func(t *testing.T) {
 			// Parse the token
 			var err error
@@ -13421,6 +15027,11 @@ $DIR/internal/jwt/parser_test.go: `data.tokenString = mapClaimsToken(claims)`
 $DIR/internal/jwt/parser_test.go: `err = ParseWithClaims(data.tokenString, &MapClaims{}, data.keyfunc)`
 $DIR/internal/jwt/parser_test.go: `data.tokenString = standardClaimsToken(claims)`
 $DIR/internal/jwt/parser_test.go: `err = ParseWithStandardClaims(data.tokenString, &StandardClaims{}, []byte("HelloSecret"))`
+$DIR/internal/jwt/parser_test.go: `.SetAccessKey("test")`
+$DIR/internal/jwt/parser_test.go: `.NewWithClaims(jwt.SigningMethodHS512, claims)`
+$DIR/internal/jwt/parser_test.go: `.SignedString([]byte("HelloSecret"))`
+$DIR/internal/jwt/parser_test.go: `.NewWithClaims(jwt.SigningMethodHS512, claims)`
+$DIR/internal/jwt/parser_test.go: `.SignedString([]byte("HelloSecret"))`
 $DIR/internal/jwt/parser_test.go: `.Run(data.name, func(t *testing.T) {
 			// Parse the token
 			var err error
@@ -13514,18 +15125,44 @@ $DIR/internal/lock/lock_windows_test.go: `.Repeat("o", 248)`
 $DIR/internal/lock/lock_windows_test.go: `.ReplaceAll(test.in, "long", veryLong)`
 $DIR/internal/lock/lock_windows_test.go: `.ReplaceAll(test.want, "long", veryLong)`
 $DIR/internal/lock/lock_windows_test.go: `.ReplaceAll(got, veryLong, "long")`
-$DIR/internal/lsync/lrwmutex_test.go: `doTestParallelReaders(1, 4)`
-$DIR/internal/lsync/lrwmutex_test.go: `doTestParallelReaders(3, 4)`
+$DIR/internal/lsync/lrwmutex_test.go: `time.Sleep(2 * time.Second)`
+$DIR/internal/lsync/lrwmutex_test.go: `lrwm.RUnlock()`
+$DIR/internal/lsync/lrwmutex_test.go: `time.Sleep(3 * time.Second)`
+$DIR/internal/lsync/lrwmutex_test.go: `lrwm.RUnlock()`
+$DIR/internal/lsync/lrwmutex_test.go: `locked = lrwm.GetLock(ctx, "", "", duration)`
+$DIR/internal/lsync/lrwmutex_test.go: `time.Sleep(1 * time.Second)`
+$DIR/internal/lsync/lrwmutex_test.go: `lrwm.Unlock()`
+$DIR/internal/lsync/lrwmutex_test.go: `time.Sleep(2 * time.Second)`
+$DIR/internal/lsync/lrwmutex_test.go: `lrwm.Unlock()`
+$DIR/internal/lsync/lrwmutex_test.go: `locked = lrwm.GetLock(ctx, "", "", duration)`
+$DIR/internal/lsync/lrwmutex_test.go: `time.Sleep(time.Second)`
+$DIR/internal/lsync/lrwmutex_test.go: `lrwm.Unlock()`
+$DIR/internal/lsync/lrwmutex_test.go: `clocked <- true`
+$DIR/internal/lsync/lrwmutex_test.go: `<-cunlock`
+$DIR/internal/lsync/lrwmutex_test.go: `m.RUnlock()`
+$DIR/internal/lsync/lrwmutex_test.go: `cdone <- true`
+$DIR/internal/lsync/lrwmutex_test.go: `runtime.GOMAXPROCS(gomaxprocs)`
+$DIR/internal/lsync/lrwmutex_test.go: `go parallelReader(context.Background(), m, clocked, cunlock, cdone)`
+$DIR/internal/lsync/lrwmutex_test.go: `<-clocked`
+$DIR/internal/lsync/lrwmutex_test.go: `cunlock <- true`
+$DIR/internal/lsync/lrwmutex_test.go: `<-cdone`
+$DIR/internal/lsync/lrwmutex_test.go: `for i := 0; i < 100; i++ {
+			}`
+$DIR/internal/lsync/lrwmutex_test.go: `atomic.AddInt32(activity, -1)`
+$DIR/internal/lsync/lrwmutex_test.go: `rwm.RUnlock()`
+$DIR/internal/lsync/lrwmutex_test.go: `cdone <- true`
+$DIR/internal/lsync/lrwmutex_test.go: `for i := 0; i < 100; i++ {
+			}`
+$DIR/internal/lsync/lrwmutex_test.go: `atomic.AddInt32(activity, -10000)`
+$DIR/internal/lsync/lrwmutex_test.go: `rwm.Unlock()`
+$DIR/internal/lsync/lrwmutex_test.go: `cdone <- true`
+$DIR/internal/lsync/lrwmutex_test.go: `runtime.GOMAXPROCS(gomaxprocs)`
+$DIR/internal/lsync/lrwmutex_test.go: `go writer(rwm, numIterations, &activity, cdone)`
+$DIR/internal/lsync/lrwmutex_test.go: `go reader(rwm, numIterations, &activity, cdone)`
+$DIR/internal/lsync/lrwmutex_test.go: `go writer(rwm, numIterations, &activity, cdone)`
+$DIR/internal/lsync/lrwmutex_test.go: `go reader(rwm, numIterations, &activity, cdone)`
+$DIR/internal/lsync/lrwmutex_test.go: `<-cdone`
 $DIR/internal/lsync/lrwmutex_test.go: `n = 5`
-$DIR/internal/lsync/lrwmutex_test.go: `HammerRWMutex(1, 1, n)`
-$DIR/internal/lsync/lrwmutex_test.go: `HammerRWMutex(1, 3, n)`
-$DIR/internal/lsync/lrwmutex_test.go: `HammerRWMutex(1, 10, n)`
-$DIR/internal/lsync/lrwmutex_test.go: `HammerRWMutex(4, 1, n)`
-$DIR/internal/lsync/lrwmutex_test.go: `HammerRWMutex(4, 3, n)`
-$DIR/internal/lsync/lrwmutex_test.go: `HammerRWMutex(4, 10, n)`
-$DIR/internal/lsync/lrwmutex_test.go: `HammerRWMutex(10, 1, n)`
-$DIR/internal/lsync/lrwmutex_test.go: `HammerRWMutex(10, 3, n)`
-$DIR/internal/lsync/lrwmutex_test.go: `HammerRWMutex(10, 10, n)`
 $DIR/internal/lsync/lrwmutex_test.go: `rl = wl.DRLocker()`
 $DIR/internal/lsync/lrwmutex_test.go: `rl.Lock()`
 $DIR/internal/lsync/lrwmutex_test.go: `rl.Lock()`
@@ -13539,8 +15176,40 @@ $DIR/internal/lsync/lrwmutex_test.go: `<-wlocked`
 $DIR/internal/lsync/lrwmutex_test.go: `wl.Unlock()`
 $DIR/internal/lsync/lrwmutex_test.go: `mu.RLock()`
 $DIR/internal/lsync/lrwmutex_test.go: `mu.Lock()`
+$DIR/internal/lsync/lrwmutex_test.go: `.Background()`
+$DIR/internal/lsync/lrwmutex_test.go: `.GetRLock(ctx, "", "object1", time.Second)`
+$DIR/internal/lsync/lrwmutex_test.go: `.GetRLock(ctx, "", "object1", time.Second)`
+$DIR/internal/lsync/lrwmutex_test.go: `.Sleep(2 * time.Second)`
+$DIR/internal/lsync/lrwmutex_test.go: `.RUnlock()`
+$DIR/internal/lsync/lrwmutex_test.go: `.Sleep(3 * time.Second)`
+$DIR/internal/lsync/lrwmutex_test.go: `.RUnlock()`
+$DIR/internal/lsync/lrwmutex_test.go: `.GetLock(ctx, "", "", duration)`
+$DIR/internal/lsync/lrwmutex_test.go: `.Sleep(1 * time.Second)`
+$DIR/internal/lsync/lrwmutex_test.go: `.Unlock()`
+$DIR/internal/lsync/lrwmutex_test.go: `.Background()`
+$DIR/internal/lsync/lrwmutex_test.go: `.GetLock(ctx, "", "", time.Second)`
+$DIR/internal/lsync/lrwmutex_test.go: `.Sleep(2 * time.Second)`
+$DIR/internal/lsync/lrwmutex_test.go: `.Unlock()`
+$DIR/internal/lsync/lrwmutex_test.go: `.GetLock(ctx, "", "", duration)`
+$DIR/internal/lsync/lrwmutex_test.go: `.Sleep(time.Second)`
+$DIR/internal/lsync/lrwmutex_test.go: `.Unlock()`
+$DIR/internal/lsync/lrwmutex_test.go: `.GetRLock(ctx, "", "", time.Second)`
+$DIR/internal/lsync/lrwmutex_test.go: `.RUnlock()`
+$DIR/internal/lsync/lrwmutex_test.go: `.GOMAXPROCS(gomaxprocs)`
+$DIR/internal/lsync/lrwmutex_test.go: `.Background()`
 $DIR/internal/lsync/lrwmutex_test.go: `.GOMAXPROCS(runtime.GOMAXPROCS(-1))`
 $DIR/internal/lsync/lrwmutex_test.go: `.GOMAXPROCS(-1)`
+$DIR/internal/lsync/lrwmutex_test.go: `.GetRLock(context.Background(), "", "", time.Second)`
+$DIR/internal/lsync/lrwmutex_test.go: `.Background()`
+$DIR/internal/lsync/lrwmutex_test.go: `.AddInt32(activity, 1)`
+$DIR/internal/lsync/lrwmutex_test.go: `.AddInt32(activity, -1)`
+$DIR/internal/lsync/lrwmutex_test.go: `.RUnlock()`
+$DIR/internal/lsync/lrwmutex_test.go: `.GetLock(context.Background(), "", "", time.Second)`
+$DIR/internal/lsync/lrwmutex_test.go: `.Background()`
+$DIR/internal/lsync/lrwmutex_test.go: `.AddInt32(activity, 10000)`
+$DIR/internal/lsync/lrwmutex_test.go: `.AddInt32(activity, -10000)`
+$DIR/internal/lsync/lrwmutex_test.go: `.Unlock()`
+$DIR/internal/lsync/lrwmutex_test.go: `.GOMAXPROCS(gomaxprocs)`
 $DIR/internal/lsync/lrwmutex_test.go: `.GOMAXPROCS(runtime.GOMAXPROCS(-1))`
 $DIR/internal/lsync/lrwmutex_test.go: `.GOMAXPROCS(-1)`
 $DIR/internal/lsync/lrwmutex_test.go: `.Short()`
@@ -13822,6 +15491,9 @@ $DIR/internal/ringbuffer/ring_buffer_test.go: `_, err = rb.TryWrite([]byte("worl
 $DIR/internal/ringbuffer/ring_buffer_test.go: `done <- err`
 $DIR/internal/ringbuffer/ring_buffer_test.go: `err = rb.TryWriteByte(0)`
 $DIR/internal/ringbuffer/ring_buffer_test.go: `done <- err`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `fmt.Printf("=== Timeout, assuming deadlock ===\n*** goroutine dump...\n%s\n*** end\n", string(buf[:stacklen]))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `os.Exit(2)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `close(cc)`
 $DIR/internal/ringbuffer/ring_buffer_test.go: `.IsEmpty()`
 $DIR/internal/ringbuffer/ring_buffer_test.go: `.IsFull()`
 $DIR/internal/ringbuffer/ring_buffer_test.go: `.Length()`
@@ -14145,6 +15817,10 @@ $DIR/internal/ringbuffer/ring_buffer_test.go: `.WriteByte(0)`
 $DIR/internal/ringbuffer/ring_buffer_test.go: `.TryWrite([]byte("world"))`
 $DIR/internal/ringbuffer/ring_buffer_test.go: `.TryWriteByte(0)`
 $DIR/internal/ringbuffer/ring_buffer_test.go: `.ReadFull(rb, buf)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.After(after)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Stack(buf, true)`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Printf("=== Timeout, assuming deadlock ===\n*** goroutine dump...\n%s\n*** end\n", string(buf[:stacklen]))`
+$DIR/internal/ringbuffer/ring_buffer_test.go: `.Exit(2)`
 $DIR/internal/s3select/csv/reader_contrib_test.go: `record, err = r.Read(record)`
 $DIR/internal/s3select/csv/reader_contrib_test.go: `record.WriteCSV(&result, opts)`
 $DIR/internal/s3select/csv/reader_contrib_test.go: `result.Truncate(result.Len() - 1)`
@@ -14275,6 +15951,11 @@ $DIR/internal/s3select/csv/reader_contrib_test.go: `.Truncate(result.Len() - 1)`
 $DIR/internal/s3select/csv/reader_contrib_test.go: `.Len()`
 $DIR/internal/s3select/csv/reader_contrib_test.go: `.WriteString(c.recordDelimiter)`
 $DIR/internal/s3select/csv/reader_contrib_test.go: `.String()`
+$DIR/internal/s3select/csv/reader_contrib_test.go: `.ReadFile("testdata/testdata.zip")`
+$DIR/internal/s3select/csv/reader_contrib_test.go: `.NewReader(bytes.NewReader(f), int64(len(f)))`
+$DIR/internal/s3select/csv/reader_contrib_test.go: `.NewReader(f)`
+$DIR/internal/s3select/csv/reader_contrib_test.go: `.Open()`
+$DIR/internal/s3select/csv/reader_contrib_test.go: `.ReadAll(rc)`
 $DIR/internal/s3select/csv/reader_contrib_test.go: `.Run(c.file, func(t *testing.T) {
 			var err error
 			var record sql.Record
@@ -15040,6 +16721,9 @@ $DIR/internal/s3select/select_test.go: `t.Run(fmt.Sprint(i), func(t *testing.T) 
 			}
 		})`
 $DIR/internal/s3select/select_test.go: `s3Select.Evaluate(w)`
+$DIR/internal/s3select/select_test.go: `.NewReader(b)`
+$DIR/internal/s3select/select_test.go: `.Seek(offset, io.SeekStart)`
+$DIR/internal/s3select/select_test.go: `.NopCloser(r)`
 $DIR/internal/s3select/select_test.go: `.Run(testCase.name, func(t *testing.T) {
 			// Hack cpuid to the CPU doesn't appear to support AVX2.
 			// Restore whatever happens.
@@ -15600,6 +17284,8 @@ $DIR/internal/s3select/select_test.go: `.NewSelectResults(&resp, "testbucket")`
 $DIR/internal/s3select/select_test.go: `.ReadAll(res)`
 $DIR/internal/s3select/select_test.go: `.TrimSpace(string(got))`
 $DIR/internal/s3select/select_test.go: `.DeepEqual(gotS, testCase.wantResult)`
+$DIR/internal/s3select/simdj/reader_amd64_test.go: `js, err = os.ReadFile(filepath.Join("testdata", file+".json.zst"))`
+$DIR/internal/s3select/simdj/reader_amd64_test.go: `js, err = dec.DecodeAll(js, nil)`
 $DIR/internal/s3select/simdj/reader_amd64_test.go: `t.Run(tt.name, func(t *testing.T) {
 			ref := loadCompressed(t, tt.name)
 
@@ -15715,6 +17401,10 @@ $DIR/internal/s3select/simdj/reader_amd64_test.go: `wantB.Reset()`
 $DIR/internal/s3select/simdj/reader_amd64_test.go: `err = rec.WriteJSON(&gotB)`
 $DIR/internal/s3select/simdj/reader_amd64_test.go: `err = want.WriteJSON(&wantB)`
 $DIR/internal/s3select/simdj/reader_amd64_test.go: `wantB.Truncate(wantB.Len() - 1)`
+$DIR/internal/s3select/simdj/reader_amd64_test.go: `.NewReader(nil)`
+$DIR/internal/s3select/simdj/reader_amd64_test.go: `.ReadFile(filepath.Join("testdata", file+".json.zst"))`
+$DIR/internal/s3select/simdj/reader_amd64_test.go: `.Join("testdata", file+".json.zst")`
+$DIR/internal/s3select/simdj/reader_amd64_test.go: `.DecodeAll(js, nil)`
 $DIR/internal/s3select/simdj/reader_amd64_test.go: `.SupportedCPU()`
 $DIR/internal/s3select/simdj/reader_amd64_test.go: `.Run(tt.name, func(t *testing.T) {
 			ref := loadCompressed(t, tt.name)
@@ -15846,6 +17536,7 @@ $DIR/internal/s3select/simdj/reader_amd64_test.go: `.Len()`
 $DIR/internal/s3select/simdj/reader_amd64_test.go: `.Equal(gotB.Bytes(), wantB.Bytes())`
 $DIR/internal/s3select/simdj/reader_amd64_test.go: `.Bytes()`
 $DIR/internal/s3select/simdj/reader_amd64_test.go: `.Bytes()`
+$DIR/internal/s3select/sql/jsonpath_test.go: `result = append(result, parsedVal.Value)`
 $DIR/internal/s3select/sql/jsonpath_test.go: `t.Run(tc.str, func(t *testing.T) {
 			jp := JSONPath{}
 			err := p.ParseString(tc.str, &jp)
@@ -15873,6 +17564,11 @@ $DIR/internal/s3select/sql/jsonpath_test.go: `t.Run(tc.str, func(t *testing.T) {
 			}
 		})`
 $DIR/internal/s3select/sql/jsonpath_test.go: `fmt.Printf("%#v (%v) != %v (%v)\n", r, reflect.TypeOf(r), tc.res[j], reflect.TypeOf(tc.res[j]))`
+$DIR/internal/s3select/sql/jsonpath_test.go: `.NewDecoder(bytes.NewBuffer(b), 0)`
+$DIR/internal/s3select/sql/jsonpath_test.go: `.NewBuffer(b)`
+$DIR/internal/s3select/sql/jsonpath_test.go: `.ObjectAsKVS()`
+$DIR/internal/s3select/sql/jsonpath_test.go: `.Stream()`
+$DIR/internal/s3select/sql/jsonpath_test.go: `.Err()`
 $DIR/internal/s3select/sql/jsonpath_test.go: `.Open(filepath.Join("jsondata", "books.json"))`
 $DIR/internal/s3select/sql/jsonpath_test.go: `.Join("jsondata", "books.json")`
 $DIR/internal/s3select/sql/jsonpath_test.go: `.ReadAll(f)`
@@ -16222,6 +17918,8 @@ $DIR/internal/store/batch_test.go: `.GetAll()`
 $DIR/internal/store/batch_test.go: `.Len()`
 $DIR/internal/store/queuestore_test.go: `store, err = setUpQueueStore(queueDir, 10)`
 $DIR/internal/store/queuestore_test.go: `names, err = store.List()`
+$DIR/internal/store/queuestore_test.go: `.Open()`
+$DIR/internal/store/queuestore_test.go: `.RemoveAll(queueDir)`
 $DIR/internal/store/queuestore_test.go: `.Put(testItem)`
 $DIR/internal/store/queuestore_test.go: `.List()`
 $DIR/internal/store/queuestore_test.go: `.Put(testItem)`

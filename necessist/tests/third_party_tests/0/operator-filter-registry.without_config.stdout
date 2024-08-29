@@ -942,9 +942,49 @@ $DIR/test/upgradeable/UpgradeableOperatorFilterer.t.sol: `.isRegistered(address(
 $DIR/test/upgradeable/UpgradeableOperatorFilterer.t.sol: `.prank(address(filterer))`
 $DIR/test/upgradeable/UpgradeableOperatorFilterer.t.sol: `.init(DEFAULT_SUBSCRIPTION, true)`
 $DIR/test/upgradeable/UpgradeableOperatorFilterer.t.sol: `.subscriptionOf(address(filterer))`
-$DIR/test/validation/Validation.t.sol: `_testERC721();`
-$DIR/test/validation/Validation.t.sol: `_testERC1155();`
-$DIR/test/validation/Validation.t.sol: `_testERC721();`
-$DIR/test/validation/Validation.t.sol: `_testERC721();`
+$DIR/test/validation/Validation.t.sol: `owner = _owner;`
+$DIR/test/validation/Validation.t.sol: `owner = makeAddr("alice");`
+$DIR/test/validation/Validation.t.sol: `vm.startPrank(seaDropToken.owner());`
+$DIR/test/validation/Validation.t.sol: `seaDropToken.setMaxSupply(newMaxSupply);`
+$DIR/test/validation/Validation.t.sol: `allowedSeaDrop[0] = seaDrop;`
+$DIR/test/validation/Validation.t.sol: `seaDropToken.updateAllowedSeaDrop(allowedSeaDrop);`
+$DIR/test/validation/Validation.t.sol: `vm.stopPrank();`
+$DIR/test/validation/Validation.t.sol: `vm.prank(seaDrop);`
+$DIR/test/validation/Validation.t.sol: `tokenId = seaDropToken.totalSupply();`
+$DIR/test/validation/Validation.t.sol: `vm.startPrank(owner);`
+$DIR/test/validation/Validation.t.sol: `try nftContract.setApprovalForAll(operator, true) {
+                // Blocking approvals is not required, so continue to check transfers.
+            } catch {
+                // Continue to test transfer methods, since marketplace approvals can be
+                // hard-coded into contracts.
+            }`
+$DIR/test/validation/Validation.t.sol: `try nftContract.approve(operator, tokenId) {
+                // Continue to check transfers.
+            } catch {
+                // Continue to test transfer methods, since marketplace approvals can be
+                // hard-coded into contracts.
+            }`
+$DIR/test/validation/Validation.t.sol: `vm.stopPrank();`
+$DIR/test/validation/Validation.t.sol: `vm.startPrank(operator);`
+$DIR/test/validation/Validation.t.sol: `vm.stopPrank();`
+$DIR/test/validation/Validation.t.sol: `vm.prank(owner);`
+$DIR/test/validation/Validation.t.sol: `tokenIds[0] = tokenId;`
+$DIR/test/validation/Validation.t.sol: `amounts[0] = 1;`
+$DIR/test/validation/Validation.t.sol: `vm.startPrank(operator);`
+$DIR/test/validation/Validation.t.sol: `vm.stopPrank();`
 $DIR/test/validation/Validation.t.sol: `.supportsInterface(type(IERC721).interfaceId)`
 $DIR/test/validation/Validation.t.sol: `.supportsInterface(type(IERC1155).interfaceId)`
+$DIR/test/validation/Validation.t.sol: `.ownerOf(tokenId)`
+$DIR/test/validation/Validation.t.sol: `.startPrank(seaDropToken.owner())`
+$DIR/test/validation/Validation.t.sol: `.owner()`
+$DIR/test/validation/Validation.t.sol: `.setMaxSupply(newMaxSupply)`
+$DIR/test/validation/Validation.t.sol: `.updateAllowedSeaDrop(allowedSeaDrop)`
+$DIR/test/validation/Validation.t.sol: `.stopPrank()`
+$DIR/test/validation/Validation.t.sol: `.prank(seaDrop)`
+$DIR/test/validation/Validation.t.sol: `.startPrank(owner)`
+$DIR/test/validation/Validation.t.sol: `.stopPrank()`
+$DIR/test/validation/Validation.t.sol: `.startPrank(operator)`
+$DIR/test/validation/Validation.t.sol: `.stopPrank()`
+$DIR/test/validation/Validation.t.sol: `.prank(owner)`
+$DIR/test/validation/Validation.t.sol: `.startPrank(operator)`
+$DIR/test/validation/Validation.t.sol: `.stopPrank()`

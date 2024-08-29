@@ -1,6 +1,15 @@
-30 candidates in 9 tests in 1 source file
+Warning: Found multiple functions with the following names in `$DIR/proptest/src/sample.rs`: {
+    "complicate",
+    "current",
+    "new_tree",
+    "select",
+    "simplify",
+}
+Silence this warning with: --allow local-function-ambiguous
+68 candidates in 9 tests in 1 source file
 $DIR/proptest/src/sample.rs: dry running
 $DIR/proptest/src/sample.rs: mutilating
+$DIR/proptest/src/sample.rs: `size.assert_nonempty();` passed
 $DIR/proptest/src/sample.rs: `sorted.sort();` passed
 $DIR/proptest/src/sample.rs: `size_counts[value.len()] += 1;` failed
 $DIR/proptest/src/sample.rs: `value_counts[value] += 1;` failed
@@ -9,25 +18,22 @@ $DIR/proptest/src/sample.rs: `seen.insert(*tree.current().get(&col));` failed
 $DIR/proptest/src/sample.rs: `while tree.simplify() {}` failed
 $DIR/proptest/src/sample.rs: `seen.insert(*tree.current().select(&col));` failed
 $DIR/proptest/src/sample.rs: `while tree.simplify() {}` failed
-$DIR/proptest/src/sample.rs: `.new_tree(&mut runner)` nonbuildable
-$DIR/proptest/src/sample.rs: `.current()` nonbuildable
+$DIR/proptest/src/sample.rs: `.into()` nonbuildable
+$DIR/proptest/src/sample.rs: `.len()` nonbuildable
+$DIR/proptest/src/sample.rs: `.into()` nonbuildable
+$DIR/proptest/src/sample.rs: `.assert_nonempty()` nonbuildable
+$DIR/proptest/src/sample.rs: `.bit_strategy.new_tree(runner)` nonbuildable
+$DIR/proptest/src/sample.rs: `.inner.current()` nonbuildable
+$DIR/proptest/src/sample.rs: `.map(|ix| self.values[ix].clone())` nonbuildable
+$DIR/proptest/src/sample.rs: `.collect()` nonbuildable
+$DIR/proptest/src/sample.rs: `.into()` nonbuildable
+$DIR/proptest/src/sample.rs: `.len()` nonbuildable
+$DIR/proptest/src/sample.rs: `.len()` nonbuildable
 $DIR/proptest/src/sample.rs: `.sort()` nonbuildable
 $DIR/proptest/src/sample.rs: `.len()` nonbuildable
 $DIR/proptest/src/sample.rs: `.enumerate()` nonbuildable
-$DIR/proptest/src/sample.rs: `.new_tree(&mut runner)` nonbuildable
-$DIR/proptest/src/sample.rs: `.current()` passed
-$DIR/proptest/src/sample.rs: `.new_tree(&mut runner)` nonbuildable
-$DIR/proptest/src/sample.rs: `.current()` nonbuildable
 $DIR/proptest/src/sample.rs: `.enumerate()` nonbuildable
-$DIR/proptest/src/sample.rs: `.new_tree(&mut runner)` nonbuildable
 $DIR/proptest/src/sample.rs: `.insert(*tree.current().get(&col))` nonbuildable
-$DIR/proptest/src/sample.rs: `.current()` nonbuildable
-$DIR/proptest/src/sample.rs: `.get(&col)` nonbuildable
-$DIR/proptest/src/sample.rs: `.simplify()` nonbuildable
 $DIR/proptest/src/sample.rs: `.into_iter()` nonbuildable
 $DIR/proptest/src/sample.rs: `.collect()` nonbuildable
-$DIR/proptest/src/sample.rs: `.new_tree(&mut runner)` nonbuildable
 $DIR/proptest/src/sample.rs: `.insert(*tree.current().select(&col))` nonbuildable
-$DIR/proptest/src/sample.rs: `.current()` nonbuildable
-$DIR/proptest/src/sample.rs: `.select(&col)` nonbuildable
-$DIR/proptest/src/sample.rs: `.simplify()` nonbuildable

@@ -1,4 +1,4 @@
-329 candidates in 56 tests in 12 source files
+536 candidates in 56 tests in 12 source files
 $DIR/src/mime/encodedword_test.go: dry running
 $DIR/src/mime/encodedword_test.go: mutilating
 $DIR/src/mime/encodedword_test.go: `wordLen = 0` timed-out
@@ -67,81 +67,9 @@ multipart/formdata.go:10:2: use of internal package internal/godebug not allowed
 
 $DIR/src/mime/quotedprintable/reader_test.go: dry running
 $DIR/src/mime/quotedprintable/reader_test.go: mutilating
+$DIR/src/mime/quotedprintable/reader_test.go: `fn(base)` failed
+$DIR/src/mime/quotedprintable/reader_test.go: `everySequence(base+alpha[i:i+1], alpha, length, fn)` failed
 $DIR/src/mime/quotedprintable/reader_test.go: `n = 4` passed
-$DIR/src/mime/quotedprintable/reader_test.go: `everySequence("", "0A \r\n=", n, func(s string) {
-		if strings.HasSuffix(s, "=") || strings.Contains(s, "==") {
-			return
-		}
-		buf.Reset()
-		_, err := io.Copy(&buf, NewReader(strings.NewReader(s)))
-		if err != nil {
-			errStr := err.Error()
-			if strings.Contains(errStr, "invalid bytes after =:") {
-				errStr = "invalid bytes after ="
-			}
-			res[errStr]++
-			if strings.Contains(errStr, "invalid hex byte ") {
-				if strings.HasSuffix(errStr, "0x20") && (strings.Contains(s, "=0 ") || strings.Contains(s, "=A ") || strings.Contains(s, "= ")) {
-					return
-				}
-				if strings.HasSuffix(errStr, "0x3d") && (strings.Contains(s, "=0=") || strings.Contains(s, "=A=")) {
-					return
-				}
-				if strings.HasSuffix(errStr, "0x0a") || strings.HasSuffix(errStr, "0x0d") {
-					// bunch of cases; since whitespace at the end of a line before \n is removed.
-					return
-				}
-			}
-			if strings.Contains(errStr, "unexpected EOF") {
-				return
-			}
-			if errStr == "invalid bytes after =" && badSoftRx.MatchString(s) {
-				return
-			}
-			t.Errorf("decode(%q) = %v", s, err)
-			return
-		}
-		if *useQprint {
-			cmd := exec.Command("qprint", "-d")
-			cmd.Stdin = strings.NewReader(s)
-			stderr, err := cmd.StderrPipe()
-			if err != nil {
-				panic(err)
-			}
-			qpres := make(chan any, 2)
-			go func() {
-				br := bufio.NewReader(stderr)
-				s, _ := br.ReadString('\n')
-				if s != "" {
-					qpres <- errors.New(s)
-					if cmd.Process != nil {
-						// It can get stuck on invalid input, like:
-						// echo -n "0000= " | qprint -d
-						cmd.Process.Kill()
-					}
-				}
-			}()
-			go func() {
-				want, err := cmd.Output()
-				if err == nil {
-					qpres <- want
-				}
-			}()
-			select {
-			case got := <-qpres:
-				if want, ok := got.([]byte); ok {
-					if string(want) != buf.String() {
-						t.Errorf("go decode(%q) = %q; qprint = %q", s, want, buf.String())
-					}
-				} else {
-					t.Logf("qprint -d(%q) = %v", s, got)
-				}
-			case <-time.After(5 * time.Second):
-				t.Logf("qprint timeout on %q", s)
-			}
-		}
-		res["OK"]++
-	})` failed
 $DIR/src/mime/quotedprintable/reader_test.go: `buf.Reset()` passed
 $DIR/src/mime/quotedprintable/reader_test.go: `errStr = "invalid bytes after ="` timed-out
 $DIR/src/mime/quotedprintable/reader_test.go: `res[errStr]++` failed
@@ -194,28 +122,46 @@ $DIR/src/mime/quotedprintable/reader_test.go: `.Join(outcomes, "\n")` nonbuildab
 $DIR/src/mime/quotedprintable/reader_test.go: `.Short()` nonbuildable
 $DIR/src/mime/quotedprintable/writer_test.go: dry running
 $DIR/src/mime/quotedprintable/writer_test.go: mutilating
+$DIR/src/mime/quotedprintable/writer_test.go: `w.Binary = true` failed
+$DIR/src/mime/quotedprintable/writer_test.go: `want = tt.wantB` failed
+$DIR/src/mime/quotedprintable/writer_test.go: `.Repeat("a", 75)` nonbuildable
+$DIR/src/mime/quotedprintable/writer_test.go: `.Repeat("a", 75)` nonbuildable
+$DIR/src/mime/quotedprintable/writer_test.go: `.Repeat("a", 76)` nonbuildable
+$DIR/src/mime/quotedprintable/writer_test.go: `.Repeat("a", 75)` nonbuildable
+$DIR/src/mime/quotedprintable/writer_test.go: `.Repeat("a", 72)` nonbuildable
+$DIR/src/mime/quotedprintable/writer_test.go: `.Repeat("a", 72)` nonbuildable
+$DIR/src/mime/quotedprintable/writer_test.go: `.Repeat("a", 73)` nonbuildable
+$DIR/src/mime/quotedprintable/writer_test.go: `.Repeat("a", 73)` nonbuildable
+$DIR/src/mime/quotedprintable/writer_test.go: `.Repeat("a", 74)` nonbuildable
+$DIR/src/mime/quotedprintable/writer_test.go: `.Repeat("a", 74)` nonbuildable
+$DIR/src/mime/quotedprintable/writer_test.go: `.Repeat("a", 75)` nonbuildable
+$DIR/src/mime/quotedprintable/writer_test.go: `.Repeat("a", 75)` nonbuildable
+$DIR/src/mime/quotedprintable/writer_test.go: `.Repeat(" ", 73)` nonbuildable
+$DIR/src/mime/quotedprintable/writer_test.go: `.Repeat(" ", 72)` nonbuildable
+$DIR/src/mime/quotedprintable/writer_test.go: `.Repeat(" ", 74)` nonbuildable
+$DIR/src/mime/quotedprintable/writer_test.go: `.Repeat(" ", 73)` nonbuildable
+$DIR/src/mime/quotedprintable/writer_test.go: `.Repeat(" ", 75)` nonbuildable
+$DIR/src/mime/quotedprintable/writer_test.go: `.Repeat(" ", 74)` nonbuildable
+$DIR/src/mime/quotedprintable/writer_test.go: `.Repeat(" ", 76)` nonbuildable
+$DIR/src/mime/quotedprintable/writer_test.go: `.Repeat(" ", 75)` nonbuildable
+$DIR/src/mime/quotedprintable/writer_test.go: `.Repeat(" ", 77)` nonbuildable
+$DIR/src/mime/quotedprintable/writer_test.go: `.Repeat(" ", 75)` nonbuildable
+$DIR/src/mime/quotedprintable/writer_test.go: `.Write([]byte(tt.in))` nonbuildable
+$DIR/src/mime/quotedprintable/writer_test.go: `.String()` nonbuildable
 $DIR/src/mime/quotedprintable/writer_test.go: `.Write(testMsg)` nonbuildable
 $DIR/src/mime/quotedprintable/writer_test.go: `.ReadAll(r)` nonbuildable
 $DIR/src/mime/type_test.go: dry running
 $DIR/src/mime/type_test.go: mutilating
 $DIR/src/mime/type_test.go: `once = sync.Once{}` passed
-$DIR/src/mime/type_test.go: `clearMimeTypes()` passed
-$DIR/src/mime/type_test.go: `setType(".foo", "x/foo")` failed
-$DIR/src/mime/type_test.go: `setType(".bar", "x/bar")` failed
-$DIR/src/mime/type_test.go: `setType(".Bar", "x/bar; capital=1")` failed
-$DIR/src/mime/type_test.go: `clearMimeTypes()` passed
-$DIR/src/mime/type_test.go: `setType(".TEST", caps)` failed
-$DIR/src/mime/type_test.go: `setType(".tesT", custom)` failed
-$DIR/src/mime/type_test.go: `clearMimeTypes()` passed
-$DIR/src/mime/type_test.go: `setType(".gif", "image/gif")` failed
-$DIR/src/mime/type_test.go: `setType(".a", "foo/letter")` failed
-$DIR/src/mime/type_test.go: `setType(".b", "foo/letter")` passed
-$DIR/src/mime/type_test.go: `setType(".B", "foo/letter")` passed
-$DIR/src/mime/type_test.go: `setType(".PNG", "image/png")` failed
+$DIR/src/mime/type_test.go: `testInitMime = fn` failed
+$DIR/src/mime/type_test.go: `testInitMime = nil` passed
+$DIR/src/mime/type_test.go: `once = sync.Once{}` passed
+$DIR/src/mime/type_test.go: `setMimeTypes(map[string]string{}, map[string]string{})` passed
+$DIR/src/mime/type_test.go: `once = sync.Once{}` passed
 $DIR/src/mime/type_test.go: `TypeByExtension(".html")` passed
 $DIR/src/mime/type_test.go: `TypeByExtension(".HtML")` passed
-$DIR/src/mime/type_test.go: `clearMimeTypes()` passed
 $DIR/src/mime/type_test.go: `setMimeTypes(builtinTypesLower, builtinTypesLower)` failed
+$DIR/src/mime/type_test.go: `.HasPrefix(ext, ".")` nonbuildable
 $DIR/src/mime/type_test.go: `.Contains(err.Error(), tt.wantErr)` nonbuildable
 $DIR/src/mime/type_test.go: `.DeepEqual(got, tt.want)` nonbuildable
 $DIR/src/mime/type_test.go: `.AllocsPerRun(10000, func() {
@@ -225,4 +171,6 @@ $DIR/src/mime/type_test.go: `.AllocsPerRun(10000, func() {
 $DIR/src/mime/type_test.go: `.DeepEqual(got, tt.want)` nonbuildable
 $DIR/src/mime/type_unix_test.go: dry running
 $DIR/src/mime/type_unix_test.go: mutilating
-$DIR/src/mime/type_unix_test.go: `initMimeUnixTest(t)` failed
+$DIR/src/mime/type_unix_test.go: `once.Do(initMime)` failed
+$DIR/src/mime/type_unix_test.go: `loadMimeFile("testdata/test.types")` failed
+$DIR/src/mime/type_unix_test.go: `.Do(initMime)` nonbuildable

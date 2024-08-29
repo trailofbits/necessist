@@ -1,7 +1,7 @@
-18 candidates in 13 tests in 5 source files
-$DIR/src/os/user/listgroups_unix_test.go: dry running
-$DIR/src/os/user/listgroups_unix_test.go: mutilating
-$DIR/src/os/user/listgroups_unix_test.go: Warning: Failed to run test `TestListGroups`: code=0
+12 candidates in 12 tests in 5 source files
+$DIR/src/os/user/lookup_unix_test.go: dry running
+$DIR/src/os/user/lookup_unix_test.go: mutilating
+$DIR/src/os/user/lookup_unix_test.go: Warning: Failed to run test `TestFindGroupName`: code=0
 stdout=```
 testing: warning: no tests to run
 PASS
@@ -14,26 +14,6 @@ stderr=""
 This may indicate a bug in Necessist. Consider opening an issue at: https://github.com/trailofbits/necessist/issues
 
 Silence this warning with: --allow run-test-failed
-$DIR/src/os/user/listgroups_unix_test.go: Warning: Failed to run test `TestListGroups`: code=0
-stdout=```
-testing: warning: no tests to run
-PASS
-ok  \tstd/os/user\t(cached) [no tests to run]
-```
-
-stderr=""
-
-$DIR/src/os/user/lookup_unix_test.go: dry running
-$DIR/src/os/user/lookup_unix_test.go: mutilating
-$DIR/src/os/user/lookup_unix_test.go: Warning: Failed to run test `TestFindGroupName`: code=0
-stdout=```
-testing: warning: no tests to run
-PASS
-ok  \tstd/os/user\t[..]s [no tests to run]
-```
-
-stderr=""
-
 $DIR/src/os/user/lookup_unix_test.go: Warning: Failed to run test `TestFindGroupId`: code=0
 stdout=```
 testing: warning: no tests to run
@@ -92,10 +72,6 @@ $DIR/src/os/user/user_test.go: dry running
 $DIR/src/os/user/user_test.go: mutilating
 $DIR/src/os/user/user_test.go: `userBuffer = old` passed
 $DIR/src/os/user/user_test.go: `userBuffer = 1` passed
-$DIR/src/os/user/user_test.go: `checkUser(t)` passed
-$DIR/src/os/user/user_test.go: `checkUser(t)` passed
 $DIR/src/os/user/user_test.go: `groupBuffer = old` passed
 $DIR/src/os/user/user_test.go: `groupBuffer = 1` passed
-$DIR/src/os/user/user_test.go: `checkGroup(t)` passed
-$DIR/src/os/user/user_test.go: `checkGroupList(t)` passed
 $DIR/src/os/user/user_test.go: `.GroupIds()` nonbuildable
