@@ -388,6 +388,15 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
         };
 
         if source_files.is_empty() {
+            #[cfg(sort_walk_dir_results)]
+            let walk_dir_results = {
+                let mut walk_dir_results = walk_dir_results
+                    .collect::<walkdir::Result<Vec<_>>>()
+                    .with_context(|| format!(r#"Failed to walk "{}""#, context.root.display()))?;
+                walk_dir_results.sort_by(|x, y| x.path().cmp(y.path()));
+                walk_dir_results.into_iter().map(walkdir::Result::Ok)
+            };
+
             for entry in walk_dir_results {
                 let entry = entry
                     .with_context(|| format!(r#"Failed to walk "{}""#, context.root.display()))?;
