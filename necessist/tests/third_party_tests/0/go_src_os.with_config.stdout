@@ -1,4 +1,4 @@
-389 candidates in 73 tests in 1 source file
+381 candidates in 73 tests in 1 source file
 $DIR/src/os/os_test.go: dry running
 $DIR/src/os/os_test.go: mutilating
 $DIR/src/os/os_test.go: `testenv.MustHaveSymlink(t)` passed
@@ -22,9 +22,6 @@ $DIR/src/os/os_test.go: `dir = "/bin"` passed
 $DIR/src/os/os_test.go: `dir = Getenv("SystemRoot") + "\\system32"` passed
 $DIR/src/os/os_test.go: `f.Write([]byte(strings.Repeat("X", i)))` passed
 $DIR/src/os/os_test.go: `d, err = Open(dir)` failed
-$DIR/src/os/os_test.go: `t.Helper()` passed
-$DIR/src/os/os_test.go: `t.Helper()` passed
-$DIR/src/os/os_test.go: `t.Helper()` passed
 $DIR/src/os/os_test.go: `openDir()` failed
 $DIR/src/os/os_test.go: `fn(0, 105, nil)` failed
 $DIR/src/os/os_test.go: `fn(0, 0, nil)` passed
@@ -129,7 +126,6 @@ $DIR/src/os/os_test.go: `checkSize(t, f, 1024)` passed
 $DIR/src/os/os_test.go: `Truncate(f.Name(), 0)` failed
 $DIR/src/os/os_test.go: `checkSize(t, f, 0)` passed
 $DIR/src/os/os_test.go: `checkSize(t, f, 13+9)` passed
-$DIR/src/os/os_test.go: `t.Helper()` passed
 $DIR/src/os/os_test.go: `assertPathError(t, path, err)` passed
 $DIR/src/os/os_test.go: `_, err = Stat(path)` passed
 $DIR/src/os/os_test.go: `f.Write([]byte("hello, world\n"))` passed
@@ -280,11 +276,8 @@ $DIR/src/os/os_test.go: `.Join(dir, fmt.Sprintf("%d", i))` nonbuildable
 $DIR/src/os/os_test.go: `.Sprintf("%d", i)` nonbuildable
 $DIR/src/os/os_test.go: `.Write([]byte(strings.Repeat("X", i)))` nonbuildable
 $DIR/src/os/os_test.go: `.Repeat("X", i)` nonbuildable
-$DIR/src/os/os_test.go: `.Helper()` nonbuildable
 $DIR/src/os/os_test.go: `.Readdir(n)` nonbuildable
-$DIR/src/os/os_test.go: `.Helper()` nonbuildable
 $DIR/src/os/os_test.go: `.ReadDir(n)` nonbuildable
-$DIR/src/os/os_test.go: `.Helper()` nonbuildable
 $DIR/src/os/os_test.go: `.Readdirnames(n)` nonbuildable
 $DIR/src/os/os_test.go: `.HasSuffix(path, "x")` nonbuildable
 $DIR/src/os/os_test.go: `.TempDir()` nonbuildable
@@ -367,7 +360,6 @@ $DIR/src/os/os_test.go: `.Name()` nonbuildable
 $DIR/src/os/os_test.go: `.Name()` nonbuildable
 $DIR/src/os/os_test.go: `.Name()` nonbuildable
 $DIR/src/os/os_test.go: `.Write([]byte("surprise!"))` nonbuildable
-$DIR/src/os/os_test.go: `.Helper()` nonbuildable
 $DIR/src/os/os_test.go: `.Join(t.TempDir(), "nonexistent")` nonbuildable
 $DIR/src/os/os_test.go: `.TempDir()` nonbuildable
 $DIR/src/os/os_test.go: `.Write([]byte("hello, world\n"))` nonbuildable

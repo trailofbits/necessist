@@ -8791,7 +8791,6 @@ $DIR/cmd/xl-storage-format-v2_gen_test.go: `.Decode(&buf, &vn)`
 $DIR/cmd/xl-storage-format-v2_gen_test.go: `.Reset()`
 $DIR/cmd/xl-storage-format-v2_gen_test.go: `.Encode(&buf, &v)`
 $DIR/cmd/xl-storage-format-v2_test.go: `_, err = readXLMetaNoData(bytes.NewReader(buf), int64(len(buf)))`
-$DIR/cmd/xl-storage-format-v2_test.go: `t.Helper()`
 $DIR/cmd/xl-storage-format-v2_test.go: `failOnErr(xl.AddVersion(fi))`
 $DIR/cmd/xl-storage-format-v2_test.go: `fi.VersionID = mustGetUUID()`
 $DIR/cmd/xl-storage-format-v2_test.go: `fi.DataDir = mustGetUUID()`
@@ -8814,7 +8813,6 @@ $DIR/cmd/xl-storage-format-v2_test.go: `transitioned[ReservedMetadataPrefixLower
 $DIR/cmd/xl-storage-format-v2_test.go: `toBeRestored[xhttp.AmzRestore] = ongoingRestoreObj().String()`
 $DIR/cmd/xl-storage-format-v2_test.go: `restored[xhttp.AmzRestore] = completedRestoreObj(time.Now().UTC().Add(time.Hour)).String()`
 $DIR/cmd/xl-storage-format-v2_test.go: `restoredExpired[xhttp.AmzRestore] = completedRestoreObj(time.Now().UTC().Add(-time.Hour)).String()`
-$DIR/cmd/xl-storage-format-v2_test.go: `t.Helper()`
 $DIR/cmd/xl-storage-format-v2_test.go: `fi.VersionID = tc.versionID`
 $DIR/cmd/xl-storage-format-v2_test.go: `fi.DataDir = tc.dataDir`
 $DIR/cmd/xl-storage-format-v2_test.go: `fi.Data = tc.data`
@@ -9166,7 +9164,6 @@ $DIR/cmd/xl-storage-format-v2_test.go: `v.cached = nil`
 $DIR/cmd/xl-storage-format-v2_test.go: `ch <- v`
 $DIR/cmd/xl-storage-format-v2_test.go: `close(ch)`
 $DIR/cmd/xl-storage-format-v2_test.go: `entries = append(entries, ch)`
-$DIR/cmd/xl-storage-format-v2_test.go: `t.Helper()`
 $DIR/cmd/xl-storage-format-v2_test.go: `fi.SetHealing()`
 $DIR/cmd/xl-storage-format-v2_test.go: `failOnErr(xl.AddVersion(fi))`
 $DIR/cmd/xl-storage-format-v2_test.go: `fi, err = xl.ToFileInfo(fi.Volume, fi.Name, fi.VersionID, false, true)`
@@ -9175,7 +9172,6 @@ $DIR/cmd/xl-storage-format-v2_test.go: `.NewReader(bufio.NewReader(f))`
 $DIR/cmd/xl-storage-format-v2_test.go: `.NewReader(f)`
 $DIR/cmd/xl-storage-format-v2_test.go: `.ReadAll(gz)`
 $DIR/cmd/xl-storage-format-v2_test.go: `.NewReader(buf)`
-$DIR/cmd/xl-storage-format-v2_test.go: `.Helper()`
 $DIR/cmd/xl-storage-format-v2_test.go: `.Now()`
 $DIR/cmd/xl-storage-format-v2_test.go: `.String()`
 $DIR/cmd/xl-storage-format-v2_test.go: `.AddVersion(fi)`
@@ -9220,7 +9216,6 @@ $DIR/cmd/xl-storage-format-v2_test.go: `.UTC()`
 $DIR/cmd/xl-storage-format-v2_test.go: `.Add(-time.Hour)`
 $DIR/cmd/xl-storage-format-v2_test.go: `.String()`
 $DIR/cmd/xl-storage-format-v2_test.go: `.xlmeta.UsesDataDir()`
-$DIR/cmd/xl-storage-format-v2_test.go: `.Helper()`
 $DIR/cmd/xl-storage-format-v2_test.go: `.Now()`
 $DIR/cmd/xl-storage-format-v2_test.go: `.String()`
 $DIR/cmd/xl-storage-format-v2_test.go: `.String()`
@@ -9574,7 +9569,6 @@ $DIR/cmd/xl-storage-format-v2_test.go: `.SliceIsSorted(xl.versions, func(i, j in
 			return xl.versions[i].header.sortsBefore(xl.versions[j].header)
 		})`
 $DIR/cmd/xl-storage-format-v2_test.go: `.header.sortsBefore(xl.versions[j].header)`
-$DIR/cmd/xl-storage-format-v2_test.go: `.Helper()`
 $DIR/cmd/xl-storage-format-v2_test.go: `.Now()`
 $DIR/cmd/xl-storage-format-v2_test.go: `.String()`
 $DIR/cmd/xl-storage-format-v2_test.go: `.SetHealing()`
@@ -9585,8 +9579,6 @@ $DIR/cmd/xl-storage-format_test.go: `.Unmarshal(xlMetaJSON, &unMarshalXLMeta)`
 $DIR/cmd/xl-storage-format_test.go: `.Unmarshal(xlMetaJSON, &jsoniterXLMeta)`
 $DIR/cmd/xl-storage-format_test.go: `.Unmarshal(xlMetaJSON, &unMarshalXLMeta)`
 $DIR/cmd/xl-storage-format_test.go: `.Unmarshal(xlMetaJSON, &jsoniterXLMeta)`
-$DIR/cmd/xl-storage-free-version_test.go: `t.Helper()`
-$DIR/cmd/xl-storage-free-version_test.go: `t.Helper()`
 $DIR/cmd/xl-storage-free-version_test.go: `counter++`
 $DIR/cmd/xl-storage-free-version_test.go: `fatalErr(xl.AddVersion(fi))`
 $DIR/cmd/xl-storage-free-version_test.go: `report()`
@@ -9629,8 +9621,6 @@ $DIR/cmd/xl-storage-free-version_test.go: `j.MetaSys[metaTierName] = []byte("WAR
 $DIR/cmd/xl-storage-free-version_test.go: `j.MetaSys[metaTierStatus] = []byte(lifecycle.TransitionComplete)`
 $DIR/cmd/xl-storage-free-version_test.go: `j.MetaSys[metaTierObjName] = []byte("obj-1")`
 $DIR/cmd/xl-storage-free-version_test.go: `fi.SetSkipTierFreeVersion()`
-$DIR/cmd/xl-storage-free-version_test.go: `.Helper()`
-$DIR/cmd/xl-storage-free-version_test.go: `.Helper()`
 $DIR/cmd/xl-storage-free-version_test.go: `.Now()`
 $DIR/cmd/xl-storage-free-version_test.go: `.String()`
 $DIR/cmd/xl-storage-free-version_test.go: `.AddVersion(fi)`
@@ -9714,7 +9704,6 @@ $DIR/cmd/xl-storage_test.go: `_, err = newLocalXLStorage(permDeniedDir)`
 $DIR/cmd/xl-storage_test.go: `xlStoragePermStorage, err = newLocalXLStorage(permDeniedDir)`
 $DIR/cmd/xl-storage_test.go: `err = xlStorage.AppendFile(context.Background(), "bn", "yes", []byte("hello, world"))`
 $DIR/cmd/xl-storage_test.go: `versions[i] = uuid.New().String()`
-$DIR/cmd/xl-storage_test.go: `t.Helper()`
 $DIR/cmd/xl-storage_test.go: `checkVerExist(t)`
 $DIR/cmd/xl-storage_test.go: `err = xl.DeleteVersion(ctx, volume, object, FileInfo{Name: object, Volume: volume, VersionID: versions[0]}, false, DeleteOptions{})`
 $DIR/cmd/xl-storage_test.go: `deleted[0] = true`
@@ -9949,7 +9938,6 @@ $DIR/cmd/xl-storage_test.go: `.MakeVol(ctx, volume)`
 $DIR/cmd/xl-storage_test.go: `.New()`
 $DIR/cmd/xl-storage_test.go: `.String()`
 $DIR/cmd/xl-storage_test.go: `.WriteMetadata(ctx, "", volume, object, fi)`
-$DIR/cmd/xl-storage_test.go: `.Helper()`
 $DIR/cmd/xl-storage_test.go: `.ReadVersion(ctx, "", volume, object, versions[i], ReadOptions{})`
 $DIR/cmd/xl-storage_test.go: `.DeleteVersion(ctx, volume, object, FileInfo{Name: object, Volume: volume, VersionID: versions[0]}, false, DeleteOptions{})`
 $DIR/cmd/xl-storage_test.go: `.DeleteVersions(ctx, volume, fis, DeleteOptions{})`
@@ -12510,7 +12498,6 @@ $DIR/internal/event/targetlist_test.go: `.Add(&ExampleTarget{TargetID{"1", "webh
 $DIR/internal/event/targetlist_test.go: `.targetList.List()`
 $DIR/internal/event/targetlist_test.go: `.DeepEqual(targetID1, targetID2)`
 $DIR/internal/event/targetlist_test.go: `.Background()`
-$DIR/internal/grid/connection_test.go: `t.Helper()`
 $DIR/internal/grid/connection_test.go: `handler.ServeHTTP(w, r)`
 $DIR/internal/grid/connection_test.go: `errFatal(err)`
 $DIR/internal/grid/connection_test.go: `errFatal(local.RegisterSingleHandler(handlerTest, func(payload []byte) ([]byte, *RemoteErr) {
@@ -12556,7 +12543,6 @@ $DIR/internal/grid/connection_test.go: `cReverse.Local = hosts[y]`
 $DIR/internal/grid/connection_test.go: `cReverse.Remote = hosts[x]`
 $DIR/internal/grid/connection_test.go: `should++`
 $DIR/internal/grid/connection_test.go: `.T.SetLogTB(t)`
-$DIR/internal/grid/connection_test.go: `.Helper()`
 $DIR/internal/grid/connection_test.go: `.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			t.Logf("Got a %s request for: %v", r.Method, r.URL)
 			handler.ServeHTTP(w, r)
@@ -12603,7 +12589,6 @@ $DIR/internal/grid/connection_test.go: `.Background()`
 $DIR/internal/grid/connection_test.go: `.shouldConnect()`
 $DIR/internal/grid/connection_test.go: `.shouldConnect()`
 $DIR/internal/grid/connection_test.go: `.shouldConnect()`
-$DIR/internal/grid/grid_test.go: `t.Helper()`
 $DIR/internal/grid/grid_test.go: `errFatal(err)`
 $DIR/internal/grid/grid_test.go: `errFatal(local.RegisterSingleHandler(handlerTest, func(payload []byte) ([]byte, *RemoteErr) {
 		t.Log("1: server payload: ", len(payload), "bytes.")
@@ -12661,7 +12646,6 @@ $DIR/internal/grid/grid_test.go: `t.Run("localToRemoteHuge", func(t *testing.T) 
 		t.Log("Roundtrip:", time.Since(start))
 	})`
 $DIR/internal/grid/grid_test.go: `errFatal(err)`
-$DIR/internal/grid/grid_test.go: `t.Helper()`
 $DIR/internal/grid/grid_test.go: `errFatal(t, err)`
 $DIR/internal/grid/grid_test.go: `errFatal(t, local.RegisterSingleHandler(handlerTest, func(payload []byte) ([]byte, *RemoteErr) {
 		t.Log("1: server payload: ", len(payload), "bytes.")
@@ -12674,7 +12658,6 @@ $DIR/internal/grid/grid_test.go: `errFatal(t, local.RegisterSingleHandler(handle
 	}))`
 $DIR/internal/grid/grid_test.go: `remoteConn.WaitForConnect(context.Background())`
 $DIR/internal/grid/grid_test.go: `_, err = remoteConn.NewStream(context.Background(), handlerTest, []byte(testPayload))`
-$DIR/internal/grid/grid_test.go: `t.Helper()`
 $DIR/internal/grid/grid_test.go: `errFatal(err)`
 $DIR/internal/grid/grid_test.go: `resp = h1.NewResponse()`
 $DIR/internal/grid/grid_test.go: `*resp = testResponse{
@@ -12691,7 +12674,6 @@ $DIR/internal/grid/grid_test.go: `h1.PutResponse(resp)`
 $DIR/internal/grid/grid_test.go: `start = time.Now()`
 $DIR/internal/grid/grid_test.go: `resp, err = h2.Call(context.Background(), remoteConn, &testRequest{Num: 1, String: testPayload})`
 $DIR/internal/grid/grid_test.go: `h2.PutResponse(resp)`
-$DIR/internal/grid/grid_test.go: `t.Helper()`
 $DIR/internal/grid/grid_test.go: `errFatal(err)`
 $DIR/internal/grid/grid_test.go: `resp = h1.NewResponse()`
 $DIR/internal/grid/grid_test.go: `(*resp)[k] = v`
@@ -12703,7 +12685,6 @@ $DIR/internal/grid/grid_test.go: `errFatal(err)`
 $DIR/internal/grid/grid_test.go: `h1.PutResponse(resp)`
 $DIR/internal/grid/grid_test.go: `start = time.Now()`
 $DIR/internal/grid/grid_test.go: `resp, err = h2.Call(context.Background(), remoteConn, NewMSSWith(map[string]string{"err": testPayload}))`
-$DIR/internal/grid/grid_test.go: `t.Helper()`
 $DIR/internal/grid/grid_test.go: `errFatal(err)`
 $DIR/internal/grid/grid_test.go: `t.Cleanup(grid.Cleanup)`
 $DIR/internal/grid/grid_test.go: `t.Run("testStreamRoundtrip", func(t *testing.T) {
@@ -12845,7 +12826,6 @@ $DIR/internal/grid/grid_test.go: `testServerStreamPingRunning(t, local, remote, 
 $DIR/internal/grid/grid_test.go: `assertNoActive(t, connRemoteLocal)`
 $DIR/internal/grid/grid_test.go: `assertNoActive(t, connLocalToRemote)`
 $DIR/internal/grid/grid_test.go: `.T.SetLogTB(t)`
-$DIR/internal/grid/grid_test.go: `.Helper()`
 $DIR/internal/grid/grid_test.go: `.RegisterSingleHandler(handlerTest, func(payload []byte) ([]byte, *RemoteErr) {
 		t.Log("1: server payload: ", len(payload), "bytes.")
 		return append([]byte{}, payload...), nil
@@ -12918,7 +12898,6 @@ $DIR/internal/grid/grid_test.go: `.Now()`
 $DIR/internal/grid/grid_test.go: `.Request(context.Background(), handlerTest2, testPayload)`
 $DIR/internal/grid/grid_test.go: `.Background()`
 $DIR/internal/grid/grid_test.go: `.T.SetLogTB(t)`
-$DIR/internal/grid/grid_test.go: `.Helper()`
 $DIR/internal/grid/grid_test.go: `.RegisterSingleHandler(handlerTest, func(payload []byte) ([]byte, *RemoteErr) {
 		t.Log("1: server payload: ", len(payload), "bytes.")
 		return append([]byte{}, payload...), nil
@@ -12938,7 +12917,6 @@ $DIR/internal/grid/grid_test.go: `.NewStream(context.Background(), handlerTest, 
 $DIR/internal/grid/grid_test.go: `.Background()`
 $DIR/internal/grid/grid_test.go: `.Is(err, ErrUnknownHandler)`
 $DIR/internal/grid/grid_test.go: `.T.SetLogTB(t)`
-$DIR/internal/grid/grid_test.go: `.Helper()`
 $DIR/internal/grid/grid_test.go: `.NewResponse()`
 $DIR/internal/grid/grid_test.go: `.Register(local, handler1)`
 $DIR/internal/grid/grid_test.go: `.Register(local, handler2)`
@@ -12955,7 +12933,6 @@ $DIR/internal/grid/grid_test.go: `.Background()`
 $DIR/internal/grid/grid_test.go: `.PutResponse(resp)`
 $DIR/internal/grid/grid_test.go: `.Since(start)`
 $DIR/internal/grid/grid_test.go: `.T.SetLogTB(t)`
-$DIR/internal/grid/grid_test.go: `.Helper()`
 $DIR/internal/grid/grid_test.go: `.NewResponse()`
 $DIR/internal/grid/grid_test.go: `.Recycle()`
 $DIR/internal/grid/grid_test.go: `.Get("err")`
@@ -12973,7 +12950,6 @@ $DIR/internal/grid/grid_test.go: `.Now()`
 $DIR/internal/grid/grid_test.go: `.Call(context.Background(), remoteConn, NewMSSWith(map[string]string{"err": testPayload}))`
 $DIR/internal/grid/grid_test.go: `.Background()`
 $DIR/internal/grid/grid_test.go: `.T.SetErrorTB(t)`
-$DIR/internal/grid/grid_test.go: `.Helper()`
 $DIR/internal/grid/grid_test.go: `.Cleanup(grid.Cleanup)`
 $DIR/internal/grid/grid_test.go: `.Connection(remoteHost)`
 $DIR/internal/grid/grid_test.go: `.Connection(localHost)`
@@ -13806,7 +13782,6 @@ $DIR/internal/ringbuffer/ring_buffer_test.go: `rb.CloseWithError(testError2{})`
 $DIR/internal/ringbuffer/ring_buffer_test.go: `rb.Reset()`
 $DIR/internal/ringbuffer/ring_buffer_test.go: `rb.CloseWithError(testError1{})`
 $DIR/internal/ringbuffer/ring_buffer_test.go: `rb.CloseWithError(testError2{})`
-$DIR/internal/ringbuffer/ring_buffer_test.go: `t.Helper()`
 $DIR/internal/ringbuffer/ring_buffer_test.go: `rb.Reset()`
 $DIR/internal/ringbuffer/ring_buffer_test.go: `time.Sleep(10 * time.Millisecond)`
 $DIR/internal/ringbuffer/ring_buffer_test.go: `fn()`
@@ -14147,7 +14122,6 @@ $DIR/internal/ringbuffer/ring_buffer_test.go: `.ReadByte()`
 $DIR/internal/ringbuffer/ring_buffer_test.go: `.TryRead(nil)`
 $DIR/internal/ringbuffer/ring_buffer_test.go: `.TryRead([]byte{0})`
 $DIR/internal/ringbuffer/ring_buffer_test.go: `.SetBlocking(true)`
-$DIR/internal/ringbuffer/ring_buffer_test.go: `.Helper()`
 $DIR/internal/ringbuffer/ring_buffer_test.go: `.Reset()`
 $DIR/internal/ringbuffer/ring_buffer_test.go: `.Sleep(10 * time.Millisecond)`
 $DIR/internal/ringbuffer/ring_buffer_test.go: `.CloseWithError(errors.New("test error"))`
