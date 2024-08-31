@@ -1,8 +1,8 @@
 use crate::{
     config,
     framework::{self, Applicable, Postprocess, SourceFileSpanTestMap, SpanKind, ToImplementation},
-    note, source_warn, sqlite, util, warn, Backup, Outcome, Rewriter, SourceFile, Span,
-    ToConsoleString, WarnFlags, Warning,
+    note, source_warn, sqlite, util, warn, Backup, Outcome, Rewriter, SourceFile, Span, WarnFlags,
+    Warning, __ToConsoleString,
 };
 use ansi_term::Style;
 use anyhow::{anyhow, bail, ensure, Context as _, Result};

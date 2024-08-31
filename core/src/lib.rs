@@ -49,7 +49,8 @@ pub use span::{Span, ToInternalSpan};
 mod sqlite;
 
 mod to_console_string;
-use to_console_string::ToConsoleString;
+#[doc(hidden)]
+pub use to_console_string::ToConsoleString as __ToConsoleString;
 
 pub mod util;
 

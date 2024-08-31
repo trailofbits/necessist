@@ -1,4 +1,4 @@
-use crate::{LightContext, ToConsoleString};
+use crate::{LightContext, __ToConsoleString as ToConsoleString};
 use ansi_term::{
     Color::{Green, Yellow},
     Style,
