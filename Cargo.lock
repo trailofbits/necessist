@@ -1143,7 +1143,7 @@ dependencies = [
 
 [[package]]
 name = "necessist"
-version = "0.6.4"
+version = "0.7.0"
 dependencies = [
  "anyhow",
  "assert_cmd",
@@ -1174,7 +1174,7 @@ dependencies = [
 
 [[package]]
 name = "necessist-backends"
-version = "0.6.4"
+version = "0.7.0"
 dependencies = [
  "anyhow",
  "assert_cmd",
@@ -1210,7 +1210,7 @@ dependencies = [
 
 [[package]]
 name = "necessist-core"
-version = "0.6.4"
+version = "0.7.0"
 dependencies = [
  "ansi_term",
  "anyhow",

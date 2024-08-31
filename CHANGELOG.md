@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.7.0
+
+- Update `libsqlite3-sys` to version 0.30 ([#1260](https://github.com/trailofbits/necessist/pull/1260))
+- Update `swc_core` to version 0.102 ([#1263](https://github.com/trailofbits/necessist/pull/1263))
+- Do not consider `TestMain` a test in Go backend ([#1266](https://github.com/trailofbits/necessist/pull/1266))
+- Add `Helper` as an ignored method in the Go backend ([#1276](https://github.com/trailofbits/necessist/pull/1276))
+- FEATURE: Walk functions that are declared within the same files as the tests that call them ([#1268](https://github.com/trailofbits/necessist/pull/1268))
+- Update `tree-sitter` and `tree-sitter-go` to version 0.23 ([#1279](https://github.com/trailofbits/necessist/pull/1279))
+
 ## 0.6.4
 
 - Update `windows-sys` to version 0.59 ([#1231](https://github.com/trailofbits/necessist/pull/1231))
