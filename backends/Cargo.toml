@@ -43,8 +43,8 @@ toml_edit = "0.22"
 solang-parser = { version = "=0.3.4", features = ["pt-serde"] }
 
 # Go
-tree-sitter = "0.22"
-tree-sitter-go = "0.21"
+tree-sitter = "0.23"
+tree-sitter-go = "0.23"
 
 # Hardhat TS
 swc_core = { version = "0.102", features = [

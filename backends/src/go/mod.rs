@@ -13,7 +13,7 @@ use std::{
     collections::BTreeMap, convert::Infallible, fs::read_to_string, path::Path, process::Command,
 };
 use tree_sitter::{
-    Node, Parser, Point, Query, QueryCapture, QueryCursor, Range, TextProvider, Tree,
+    Language, Node, Parser, Point, Query, QueryCapture, QueryCursor, Range, TextProvider, Tree,
 };
 
 mod bounded_cursor;
@@ -41,13 +41,14 @@ const EXPRESSION_STATEMENT_EXPRESSION_SOURCE: &str = r"
 ) @expression_statement
 ";
 
+static LANGUAGE: Lazy<Language> = Lazy::new(|| Language::from(tree_sitter_go::LANGUAGE));
 static BLOCK_STATEMENTS_QUERY: Lazy<Query> = Lazy::new(|| valid_query(BLOCK_STATEMENTS_SOURCE));
 static EXPRESSION_STATEMENT_EXPRESSION_QUERY: Lazy<Query> =
     Lazy::new(|| valid_query(EXPRESSION_STATEMENT_EXPRESSION_SOURCE));
 
 fn valid_query(source: &str) -> Query {
     #[allow(clippy::unwrap_used)]
-    Query::new(&tree_sitter_go::language(), source).unwrap()
+    Query::new(&LANGUAGE, source).unwrap()
 }
 
 static FIELD_FIELD: Lazy<u16> = Lazy::new(|| valid_field_id("field"));
@@ -55,10 +56,7 @@ static FUNCTION_FIELD: Lazy<u16> = Lazy::new(|| valid_field_id("function"));
 static OPERAND_FIELD: Lazy<u16> = Lazy::new(|| valid_field_id("operand"));
 
 fn valid_field_id(field_name: &str) -> u16 {
-    tree_sitter_go::language()
-        .field_id_for_name(field_name)
-        .unwrap()
-        .into()
+    LANGUAGE.field_id_for_name(field_name).unwrap().into()
 }
 
 static BLOCK_KIND: Lazy<u16> = Lazy::new(|| non_zero_kind_id("block"));
@@ -76,7 +74,7 @@ static TYPE_DECLARATION_KIND: Lazy<u16> = Lazy::new(|| non_zero_kind_id("type_de
 static VAR_DECLARATION_KIND: Lazy<u16> = Lazy::new(|| non_zero_kind_id("var_declaration"));
 
 fn non_zero_kind_id(kind: &str) -> u16 {
-    let kind_id = tree_sitter_go::language().id_for_node_kind(kind, true);
+    let kind_id = LANGUAGE.id_for_node_kind(kind, true);
     assert_ne!(0, kind_id);
     kind_id
 }
@@ -249,7 +247,7 @@ impl ParseLow for Go {
         let text = read_to_string(source_file)?;
         let mut parser = Parser::new();
         parser
-            .set_language(&tree_sitter_go::language())
+            .set_language(&LANGUAGE)
             .with_context(|| "Failed to load Go grammar")?;
         // smoelius: https://github.com/tree-sitter/tree-sitter/issues/255
         parser
