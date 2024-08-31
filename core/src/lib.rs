@@ -37,6 +37,7 @@ mod rewriter {
 }
 use rewriter::Rewriter;
 // smoelius: `Rewriter` is used by the Go framework to convert byte offsets to char offsets.
+#[doc(hidden)]
 pub use rewriter::Rewriter as __Rewriter;
 
 mod source_file;
