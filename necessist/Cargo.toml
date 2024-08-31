@@ -1,6 +1,6 @@
 [package]
 name = "necessist"
-version = "0.6.4"
+version = "0.7.0"
 edition = "2021"
 
 description = "necessist"
@@ -10,8 +10,8 @@ license = "AGPL-3.0"
 repository = "https://github.com/trailofbits/necessist"
 
 [dependencies]
-necessist-backends = { version = "=0.6.4", path = "../backends" }
-necessist-core = { version = "=0.6.4", path = "../core", features = ["clap"] }
+necessist-backends = { version = "=0.7.0", path = "../backends" }
+necessist-core = { version = "=0.7.0", path = "../core", features = ["clap"] }
 
 anyhow = { version = "1.0", features = ["backtrace"] }
 clap = "4.5"
