@@ -1,4 +1,4 @@
-use crate::{Backup, Rewriter, SourceFile, ToConsoleString};
+use crate::{Backup, Rewriter, SourceFile, __ToConsoleString as ToConsoleString};
 use anyhow::{anyhow, Result};
 use once_cell::sync::Lazy;
 use regex::Regex;
