@@ -34,7 +34,8 @@ ignore = [
     "adler",
     "ascii-canvas",
     "bit-set",
+    "getset",
     "num_cpus",
+    "proc-macro-error",
     "solang-parser",
-    "swc_visit_macros",
 ]
