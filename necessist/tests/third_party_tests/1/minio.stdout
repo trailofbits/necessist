@@ -10801,21 +10801,28 @@ $DIR/internal/auth/credentials_test.go: `.Run("", func(t *testing.T) {
 $DIR/internal/auth/credentials_test.go: `.IsValid()`
 $DIR/internal/auth/credentials_test.go: `.IsValid()`
 $DIR/internal/auth/credentials_test.go: `.cred.Equal(testCase.ccred)`
-$DIR/internal/bpool/bpool_test.go: `bufPool.Put(b)`
-$DIR/internal/bpool/bpool_test.go: `bufPool.Put(make([]byte, bufPool.w))`
-$DIR/internal/bpool/bpool_test.go: `b = bufPool.Get()`
-$DIR/internal/bpool/bpool_test.go: `bufPool.Put(b)`
-$DIR/internal/bpool/bpool_test.go: `close(bufPool.c)`
-$DIR/internal/bpool/bpool_test.go: `b = bufPoolNoCap.Get()`
+$DIR/internal/bpool/bpool_test.go: `bp.Put(b)`
+$DIR/internal/bpool/bpool_test.go: `bp.Put(make([]byte, bp.w, bp.wcap))`
+$DIR/internal/bpool/bpool_test.go: `b = bp.Get()`
+$DIR/internal/bpool/bpool_test.go: `bp.Put(b)`
+$DIR/internal/bpool/bpool_test.go: `bp.Get()`
+$DIR/internal/bpool/bpool_test.go: `bp.Put(make([]byte, bp.w, bp.wcap-1))`
+$DIR/internal/bpool/bpool_test.go: `bp.Put(make([]byte, bp.w, bp.wcap+1))`
+$DIR/internal/bpool/bpool_test.go: `bp.Put(make([]byte, width))`
+$DIR/internal/bpool/bpool_test.go: `bp.Put(make([]byte, bp.w, bp.wcap)[:2])`
+$DIR/internal/bpool/bpool_test.go: `b = bp.Get()`
 $DIR/internal/bpool/bpool_test.go: `.Width()`
 $DIR/internal/bpool/bpool_test.go: `.WidthCap()`
 $DIR/internal/bpool/bpool_test.go: `.Get()`
 $DIR/internal/bpool/bpool_test.go: `.Put(b)`
-$DIR/internal/bpool/bpool_test.go: `.Put(make([]byte, bufPool.w))`
+$DIR/internal/bpool/bpool_test.go: `.Put(make([]byte, bp.w, bp.wcap))`
 $DIR/internal/bpool/bpool_test.go: `.Get()`
 $DIR/internal/bpool/bpool_test.go: `.Put(b)`
-$DIR/internal/bpool/bpool_test.go: `.Width()`
-$DIR/internal/bpool/bpool_test.go: `.WidthCap()`
+$DIR/internal/bpool/bpool_test.go: `.Get()`
+$DIR/internal/bpool/bpool_test.go: `.Put(make([]byte, bp.w, bp.wcap-1))`
+$DIR/internal/bpool/bpool_test.go: `.Put(make([]byte, bp.w, bp.wcap+1))`
+$DIR/internal/bpool/bpool_test.go: `.Put(make([]byte, width))`
+$DIR/internal/bpool/bpool_test.go: `.Put(make([]byte, bp.w, bp.wcap)[:2])`
 $DIR/internal/bpool/bpool_test.go: `.Get()`
 $DIR/internal/bucket/bandwidth/monitor_gen_test.go: `left, err = msgp.Skip(bts)`
 $DIR/internal/bucket/bandwidth/monitor_gen_test.go: `msgp.Encode(&buf, &v)`
