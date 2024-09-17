@@ -1,5 +1,5 @@
 url = "https://github.com/golang/go"
-rev = "go1.23.0"
+rev = "go1.22.7"
 
 # smoelius: Following the upgrade to go1.23.0, this test started acting funny on Windows. So just
 # ignore Windows for now.

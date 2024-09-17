@@ -6627,6 +6627,136 @@ $DIR/cmd/object-api-utils_test.go: `.NewReader(&rdrBuf)`
 $DIR/cmd/object-api-utils_test.go: `.Copy(&decBuf, decRdr)`
 $DIR/cmd/object-api-utils_test.go: `.Equal(tt.data, decBuf.Bytes())`
 $DIR/cmd/object-api-utils_test.go: `.Bytes()`
+$DIR/cmd/object-handlers-common_test.go: `t.Run(tc.name, func(t *testing.T) {
+			recorder := httptest.NewRecorder()
+			request := httptest.NewRequest(http.MethodHead, "/bucket/a", bytes.NewReader([]byte{}))
+			request.Header.Set(xhttp.IfNoneMatch, tc.ifNoneMatch)
+			request.Header.Set(xhttp.IfModifiedSince, tc.ifModifiedSince)
+			request.Header.Set(xhttp.IfMatch, tc.ifMatch)
+			request.Header.Set(xhttp.IfUnmodifiedSince, tc.ifUnmodifiedSince)
+			actualFlag := checkPreconditions(context.Background(), recorder, request, tc.objInfo, ObjectOptions{})
+			if tc.expectedFlag != actualFlag {
+				t.Errorf("test: %s, got flag: %v, want: %v", tc.name, actualFlag, tc.expectedFlag)
+			}
+			if tc.expectedCode != recorder.Code {
+				t.Errorf("test: %s, got code: %d, want: %d", tc.name, recorder.Code, tc.expectedCode)
+			}
+		})`
+$DIR/cmd/object-handlers-common_test.go: `request.Header.Set(xhttp.IfNoneMatch, tc.ifNoneMatch)`
+$DIR/cmd/object-handlers-common_test.go: `request.Header.Set(xhttp.IfModifiedSince, tc.ifModifiedSince)`
+$DIR/cmd/object-handlers-common_test.go: `request.Header.Set(xhttp.IfMatch, tc.ifMatch)`
+$DIR/cmd/object-handlers-common_test.go: `request.Header.Set(xhttp.IfUnmodifiedSince, tc.ifUnmodifiedSince)`
+$DIR/cmd/object-handlers-common_test.go: `testCases = []struct {
+		name              string
+		ifMatch           string
+		ifNoneMatch       string
+		ifModifiedSince   string
+		ifUnmodifiedSince string
+		objInfo           ObjectInfo
+		expectedFlag      bool
+		expectedCode      int
+	}{
+		// If-Match(true) and If-Unmodified-Since(false)
+		{
+			name:              "If-Match1",
+			ifMatch:           "aa",
+			ifUnmodifiedSince: "Sun, 26 Aug 2024 02:01:00 GMT",
+			objInfo:           objInfo,
+			expectedFlag:      false,
+			expectedCode:      200,
+		},
+		// If-Unmodified-Since(true)
+		{
+			name:              "If-Match2",
+			ifMatch:           "aa",
+			ifUnmodifiedSince: "Sun, 26 Aug 2024 02:01:01 GMT",
+			objInfo:           objInfo,
+			expectedFlag:      false,
+			expectedCode:      200,
+		},
+		{
+			name:              "If-Match3",
+			ifMatch:           "aa",
+			ifUnmodifiedSince: "Sun, 26 Aug 2024 02:01:02 GMT",
+			objInfo:           objInfo,
+			expectedFlag:      false,
+			expectedCode:      200,
+		},
+		// If-Match(true)
+		{
+			name:         "If-Match4",
+			ifMatch:      "aa",
+			objInfo:      objInfo,
+			expectedFlag: false,
+			expectedCode: 200,
+		},
+	}`
+$DIR/cmd/object-handlers-common_test.go: `t.Run(tc.name, func(t *testing.T) {
+			recorder := httptest.NewRecorder()
+			request := httptest.NewRequest(http.MethodHead, "/bucket/a", bytes.NewReader([]byte{}))
+			request.Header.Set(xhttp.IfNoneMatch, tc.ifNoneMatch)
+			request.Header.Set(xhttp.IfModifiedSince, tc.ifModifiedSince)
+			request.Header.Set(xhttp.IfMatch, tc.ifMatch)
+			request.Header.Set(xhttp.IfUnmodifiedSince, tc.ifUnmodifiedSince)
+			actualFlag := checkPreconditions(context.Background(), recorder, request, tc.objInfo, ObjectOptions{})
+			if tc.expectedFlag != actualFlag {
+				t.Errorf("test: %s, got flag: %v, want: %v", tc.name, actualFlag, tc.expectedFlag)
+			}
+			if tc.expectedCode != recorder.Code {
+				t.Errorf("test: %s, got code: %d, want: %d", tc.name, recorder.Code, tc.expectedCode)
+			}
+		})`
+$DIR/cmd/object-handlers-common_test.go: `request.Header.Set(xhttp.IfNoneMatch, tc.ifNoneMatch)`
+$DIR/cmd/object-handlers-common_test.go: `request.Header.Set(xhttp.IfModifiedSince, tc.ifModifiedSince)`
+$DIR/cmd/object-handlers-common_test.go: `request.Header.Set(xhttp.IfMatch, tc.ifMatch)`
+$DIR/cmd/object-handlers-common_test.go: `request.Header.Set(xhttp.IfUnmodifiedSince, tc.ifUnmodifiedSince)`
+$DIR/cmd/object-handlers-common_test.go: `.Date(2024, time.August, 26, 0o2, 0o1, 0o1, 0, time.UTC)`
+$DIR/cmd/object-handlers-common_test.go: `.Run(tc.name, func(t *testing.T) {
+			recorder := httptest.NewRecorder()
+			request := httptest.NewRequest(http.MethodHead, "/bucket/a", bytes.NewReader([]byte{}))
+			request.Header.Set(xhttp.IfNoneMatch, tc.ifNoneMatch)
+			request.Header.Set(xhttp.IfModifiedSince, tc.ifModifiedSince)
+			request.Header.Set(xhttp.IfMatch, tc.ifMatch)
+			request.Header.Set(xhttp.IfUnmodifiedSince, tc.ifUnmodifiedSince)
+			actualFlag := checkPreconditions(context.Background(), recorder, request, tc.objInfo, ObjectOptions{})
+			if tc.expectedFlag != actualFlag {
+				t.Errorf("test: %s, got flag: %v, want: %v", tc.name, actualFlag, tc.expectedFlag)
+			}
+			if tc.expectedCode != recorder.Code {
+				t.Errorf("test: %s, got code: %d, want: %d", tc.name, recorder.Code, tc.expectedCode)
+			}
+		})`
+$DIR/cmd/object-handlers-common_test.go: `.NewRecorder()`
+$DIR/cmd/object-handlers-common_test.go: `.NewRequest(http.MethodHead, "/bucket/a", bytes.NewReader([]byte{}))`
+$DIR/cmd/object-handlers-common_test.go: `.NewReader([]byte{})`
+$DIR/cmd/object-handlers-common_test.go: `.Header.Set(xhttp.IfNoneMatch, tc.ifNoneMatch)`
+$DIR/cmd/object-handlers-common_test.go: `.Header.Set(xhttp.IfModifiedSince, tc.ifModifiedSince)`
+$DIR/cmd/object-handlers-common_test.go: `.Header.Set(xhttp.IfMatch, tc.ifMatch)`
+$DIR/cmd/object-handlers-common_test.go: `.Header.Set(xhttp.IfUnmodifiedSince, tc.ifUnmodifiedSince)`
+$DIR/cmd/object-handlers-common_test.go: `.Background()`
+$DIR/cmd/object-handlers-common_test.go: `.Run(tc.name, func(t *testing.T) {
+			recorder := httptest.NewRecorder()
+			request := httptest.NewRequest(http.MethodHead, "/bucket/a", bytes.NewReader([]byte{}))
+			request.Header.Set(xhttp.IfNoneMatch, tc.ifNoneMatch)
+			request.Header.Set(xhttp.IfModifiedSince, tc.ifModifiedSince)
+			request.Header.Set(xhttp.IfMatch, tc.ifMatch)
+			request.Header.Set(xhttp.IfUnmodifiedSince, tc.ifUnmodifiedSince)
+			actualFlag := checkPreconditions(context.Background(), recorder, request, tc.objInfo, ObjectOptions{})
+			if tc.expectedFlag != actualFlag {
+				t.Errorf("test: %s, got flag: %v, want: %v", tc.name, actualFlag, tc.expectedFlag)
+			}
+			if tc.expectedCode != recorder.Code {
+				t.Errorf("test: %s, got code: %d, want: %d", tc.name, recorder.Code, tc.expectedCode)
+			}
+		})`
+$DIR/cmd/object-handlers-common_test.go: `.NewRecorder()`
+$DIR/cmd/object-handlers-common_test.go: `.NewRequest(http.MethodHead, "/bucket/a", bytes.NewReader([]byte{}))`
+$DIR/cmd/object-handlers-common_test.go: `.NewReader([]byte{})`
+$DIR/cmd/object-handlers-common_test.go: `.Header.Set(xhttp.IfNoneMatch, tc.ifNoneMatch)`
+$DIR/cmd/object-handlers-common_test.go: `.Header.Set(xhttp.IfModifiedSince, tc.ifModifiedSince)`
+$DIR/cmd/object-handlers-common_test.go: `.Header.Set(xhttp.IfMatch, tc.ifMatch)`
+$DIR/cmd/object-handlers-common_test.go: `.Header.Set(xhttp.IfUnmodifiedSince, tc.ifUnmodifiedSince)`
+$DIR/cmd/object-handlers-common_test.go: `.Background()`
 $DIR/cmd/object-handlers_test.go: `globalPolicySys = NewPolicySys()`
 $DIR/cmd/object-handlers_test.go: `globalPolicySys = nil`
 $DIR/cmd/object-handlers_test.go: `globalPolicySys = NewPolicySys()`
@@ -11864,32 +11994,6 @@ $DIR/internal/cachevalue/cache_test.go: `.Equal(t3)`
 $DIR/internal/config/bool-flag_test.go: `.flag.String()`
 $DIR/internal/config/bool-flag_test.go: `.flag.MarshalJSON()`
 $DIR/internal/config/bool-flag_test.go: `.UnmarshalJSON(testCase.data)`
-$DIR/internal/config/cache/remote_gen_test.go: `left, err = msgp.Skip(bts)`
-$DIR/internal/config/cache/remote_gen_test.go: `msgp.Encode(&buf, &v)`
-$DIR/internal/config/cache/remote_gen_test.go: `buf.Reset()`
-$DIR/internal/config/cache/remote_gen_test.go: `msgp.Encode(&buf, &v)`
-$DIR/internal/config/cache/remote_gen_test.go: `err = msgp.NewReader(&buf).Skip()`
-$DIR/internal/config/cache/remote_gen_test.go: `left, err = msgp.Skip(bts)`
-$DIR/internal/config/cache/remote_gen_test.go: `msgp.Encode(&buf, &v)`
-$DIR/internal/config/cache/remote_gen_test.go: `buf.Reset()`
-$DIR/internal/config/cache/remote_gen_test.go: `msgp.Encode(&buf, &v)`
-$DIR/internal/config/cache/remote_gen_test.go: `err = msgp.NewReader(&buf).Skip()`
-$DIR/internal/config/cache/remote_gen_test.go: `.MarshalMsg(nil)`
-$DIR/internal/config/cache/remote_gen_test.go: `.UnmarshalMsg(bts)`
-$DIR/internal/config/cache/remote_gen_test.go: `.Encode(&buf, &v)`
-$DIR/internal/config/cache/remote_gen_test.go: `.Msgsize()`
-$DIR/internal/config/cache/remote_gen_test.go: `.Len()`
-$DIR/internal/config/cache/remote_gen_test.go: `.Decode(&buf, &vn)`
-$DIR/internal/config/cache/remote_gen_test.go: `.Reset()`
-$DIR/internal/config/cache/remote_gen_test.go: `.Encode(&buf, &v)`
-$DIR/internal/config/cache/remote_gen_test.go: `.MarshalMsg(nil)`
-$DIR/internal/config/cache/remote_gen_test.go: `.UnmarshalMsg(bts)`
-$DIR/internal/config/cache/remote_gen_test.go: `.Encode(&buf, &v)`
-$DIR/internal/config/cache/remote_gen_test.go: `.Msgsize()`
-$DIR/internal/config/cache/remote_gen_test.go: `.Len()`
-$DIR/internal/config/cache/remote_gen_test.go: `.Decode(&buf, &vn)`
-$DIR/internal/config/cache/remote_gen_test.go: `.Reset()`
-$DIR/internal/config/cache/remote_gen_test.go: `.Encode(&buf, &v)`
 $DIR/internal/config/certs_test.go: `tempFile = tmpfile.Name()`
 $DIR/internal/config/certs_test.go: `t.Cleanup(func() {
 		os.Unsetenv(EnvCertPassword)
@@ -17900,44 +18004,61 @@ $DIR/internal/s3select/sql/value_test.go: `.Run(tt.name, func(t *testing.T) {
 		})`
 $DIR/internal/s3select/sql/value_test.go: `.bytesToBool()`
 $DIR/internal/store/batch_test.go: `batchLen = batch.Len()`
-$DIR/internal/store/batch_test.go: `keys, items, err = batch.GetAll()`
+$DIR/internal/store/batch_test.go: `keys = store.List()`
+$DIR/internal/store/batch_test.go: `time.Sleep(1 * time.Second)`
 $DIR/internal/store/batch_test.go: `wg.Add(1)`
 $DIR/internal/store/batch_test.go: `wg.Wait()`
-$DIR/internal/store/batch_test.go: `.Add(i, i)`
-$DIR/internal/store/batch_test.go: `.GetByKey(i)`
-$DIR/internal/store/batch_test.go: `.Add(101, 101)`
-$DIR/internal/store/batch_test.go: `.Is(err, ErrBatchFull)`
-$DIR/internal/store/batch_test.go: `.IsFull()`
+$DIR/internal/store/batch_test.go: `batchLen = batch.Len()`
+$DIR/internal/store/batch_test.go: `keys = store.List()`
+$DIR/internal/store/batch_test.go: `.Add(testItem)`
 $DIR/internal/store/batch_test.go: `.Len()`
-$DIR/internal/store/batch_test.go: `.GetAll()`
+$DIR/internal/store/batch_test.go: `.List()`
+$DIR/internal/store/batch_test.go: `.Add(testItem)`
 $DIR/internal/store/batch_test.go: `.Len()`
-$DIR/internal/store/batch_test.go: `.Add(99, 99)`
-$DIR/internal/store/batch_test.go: `.GetByKey(99)`
-$DIR/internal/store/batch_test.go: `.GetAll()`
-$DIR/internal/store/batch_test.go: `.Add(i, i)`
-$DIR/internal/store/batch_test.go: `.GetByKey(i)`
+$DIR/internal/store/batch_test.go: `.List()`
+$DIR/internal/store/batch_test.go: `.GetMultiple(key)`
+$DIR/internal/store/batch_test.go: `.Add(testItem)`
+$DIR/internal/store/batch_test.go: `.Sleep(1 * time.Second)`
+$DIR/internal/store/batch_test.go: `.Len()`
+$DIR/internal/store/batch_test.go: `.List()`
+$DIR/internal/store/batch_test.go: `.GetMultiple(key)`
 $DIR/internal/store/batch_test.go: `.Add(1)`
 $DIR/internal/store/batch_test.go: `.Done()`
-$DIR/internal/store/batch_test.go: `.Add(item, item)`
-$DIR/internal/store/batch_test.go: `.GetByKey(item)`
+$DIR/internal/store/batch_test.go: `.Add(testItem)`
 $DIR/internal/store/batch_test.go: `.Wait()`
-$DIR/internal/store/batch_test.go: `.GetAll()`
 $DIR/internal/store/batch_test.go: `.Len()`
+$DIR/internal/store/batch_test.go: `.List()`
+$DIR/internal/store/batch_test.go: `.Add(testItem)`
+$DIR/internal/store/batch_test.go: `.Len()`
+$DIR/internal/store/batch_test.go: `.List()`
+$DIR/internal/store/batch_test.go: `.GetMultiple(key)`
 $DIR/internal/store/queuestore_test.go: `store, err = setUpQueueStore(queueDir, 10)`
-$DIR/internal/store/queuestore_test.go: `names, err = store.List()`
+$DIR/internal/store/queuestore_test.go: `keys = store.List()`
+$DIR/internal/store/queuestore_test.go: `keys = store.List()`
+$DIR/internal/store/queuestore_test.go: `items = append(items, TestItem{
+			Name:     fmt.Sprintf("test-item-%d", i),
+			Property: "property",
+		})`
+$DIR/internal/store/queuestore_test.go: `keys = store.List()`
+$DIR/internal/store/queuestore_test.go: `items = append(items, TestItem{
+			Name:     fmt.Sprintf("test-item-%d", i),
+			Property: "property",
+		})`
+$DIR/internal/store/queuestore_test.go: `items = append(items, item)`
+$DIR/internal/store/queuestore_test.go: `resultItems = append(resultItems, items...)`
+$DIR/internal/store/queuestore_test.go: `resultItems = append(resultItems, item)`
+$DIR/internal/store/queuestore_test.go: `keys = store.List()`
 $DIR/internal/store/queuestore_test.go: `.Open()`
 $DIR/internal/store/queuestore_test.go: `.RemoveAll(queueDir)`
 $DIR/internal/store/queuestore_test.go: `.Put(testItem)`
 $DIR/internal/store/queuestore_test.go: `.List()`
 $DIR/internal/store/queuestore_test.go: `.Put(testItem)`
 $DIR/internal/store/queuestore_test.go: `.List()`
-$DIR/internal/store/queuestore_test.go: `.Get(strings.TrimSuffix(key, testItemExt))`
-$DIR/internal/store/queuestore_test.go: `.TrimSuffix(key, testItemExt)`
+$DIR/internal/store/queuestore_test.go: `.Get(key)`
 $DIR/internal/store/queuestore_test.go: `.DeepEqual(testItem, item)`
 $DIR/internal/store/queuestore_test.go: `.Put(testItem)`
 $DIR/internal/store/queuestore_test.go: `.List()`
-$DIR/internal/store/queuestore_test.go: `.Del(strings.TrimSuffix(key, testItemExt))`
-$DIR/internal/store/queuestore_test.go: `.TrimSuffix(key, testItemExt)`
+$DIR/internal/store/queuestore_test.go: `.Del(key)`
 $DIR/internal/store/queuestore_test.go: `.List()`
 $DIR/internal/store/queuestore_test.go: `.Put(testItem)`
 $DIR/internal/store/queuestore_test.go: `.Put(testItem)`
@@ -17947,3 +18068,23 @@ $DIR/internal/store/queuestore_test.go: `.List()`
 $DIR/internal/store/queuestore_test.go: `.Len()`
 $DIR/internal/store/queuestore_test.go: `.Del(key)`
 $DIR/internal/store/queuestore_test.go: `.List()`
+$DIR/internal/store/queuestore_test.go: `.Sprintf("test-item-%d", i)`
+$DIR/internal/store/queuestore_test.go: `.PutMultiple(items)`
+$DIR/internal/store/queuestore_test.go: `.List()`
+$DIR/internal/store/queuestore_test.go: `.GetMultiple(key)`
+$DIR/internal/store/queuestore_test.go: `.DeepEqual(resultItems, items)`
+$DIR/internal/store/queuestore_test.go: `.Del(key)`
+$DIR/internal/store/queuestore_test.go: `.List()`
+$DIR/internal/store/queuestore_test.go: `.Sprintf("test-item-%d", i)`
+$DIR/internal/store/queuestore_test.go: `.PutMultiple(items)`
+$DIR/internal/store/queuestore_test.go: `.Sprintf("test-item-%d", i)`
+$DIR/internal/store/queuestore_test.go: `.Put(item)`
+$DIR/internal/store/queuestore_test.go: `.List()`
+$DIR/internal/store/queuestore_test.go: `.GetMultiple(key)`
+$DIR/internal/store/queuestore_test.go: `.Get(key)`
+$DIR/internal/store/queuestore_test.go: `.DeepEqual(resultItems, items)`
+$DIR/internal/store/queuestore_test.go: `.Del(key)`
+$DIR/internal/store/queuestore_test.go: `.List()`
+$DIR/internal/store/store_test.go: `.key.String()`
+$DIR/internal/store/store_test.go: `.expectedKey.String()`
+$DIR/internal/store/store_test.go: `.String()`

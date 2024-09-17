@@ -1,5 +1,5 @@
 url = "https://github.com/golang/go"
-rev = "go1.23.0"
+rev = "go1.22.7"
 framework = "go"
 full = true
 
