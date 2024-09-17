@@ -20,7 +20,9 @@ jobs:
       - name: Update third-party tests
         run: |
           scripts/update_third_party_tests.sh
-          scripts/update_go_third_party_tests.sh
+          # smoelius: Need a better way to order Go tags. The current approach of ordering them by
+          # "creatordate" doesn't work.
+          # scripts/update_go_third_party_tests.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
