@@ -45,5 +45,7 @@ ignored_tests = [
     # smoelius: The following tests behave differently on Linux and macOS. I haven't figured out
     # why.
     "TestChdirAndGetwd",
+    "TestReaddirStatFailures",
+    "TestReaddirnamesOneAtATime",
     "TestStartProcess",
 ]
