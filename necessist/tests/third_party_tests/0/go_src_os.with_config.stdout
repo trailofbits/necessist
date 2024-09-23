@@ -1,4 +1,4 @@
-584 candidates in 73 tests in 1 source file
+560 candidates in 71 tests in 1 source file
 $DIR/src/os/os_test.go: dry running
 $DIR/src/os/os_test.go: mutilating
 $DIR/src/os/os_test.go: `r = strings.EqualFold(name1, name2)` passed
@@ -29,12 +29,6 @@ $DIR/src/os/os_test.go: `t.Run(".", testReaddir(".", dot))` passed
 $DIR/src/os/os_test.go: `t.Run("sysdir", testReaddir(sysdir.name, sysdir.files))` passed
 $DIR/src/os/os_test.go: `t.Run(".", testReadDir(".", dot))` passed
 $DIR/src/os/os_test.go: `t.Run("sysdir", testReadDir(sysdir.name, sysdir.files))` passed
-$DIR/src/os/os_test.go: `names[count] = d[0]` failed
-$DIR/src/os/os_test.go: `count++` failed
-$DIR/src/os/os_test.go: `dir = "/system/bin"` passed
-$DIR/src/os/os_test.go: `dir = wd` passed
-$DIR/src/os/os_test.go: `dir = "/bin"` passed
-$DIR/src/os/os_test.go: `dir = Getenv("SystemRoot") + "\\system32"` passed
 $DIR/src/os/os_test.go: `f.Write([]byte(strings.Repeat("X", i)))` passed
 $DIR/src/os/os_test.go: `d, err = Open(dir)` failed
 $DIR/src/os/os_test.go: `openDir()` failed
@@ -49,11 +43,6 @@ $DIR/src/os/os_test.go: `fn(1, 1, nil)` failed
 $DIR/src/os/os_test.go: `fn(2, 2, nil)` failed
 $DIR/src/os/os_test.go: `fn(105, 102, nil)` failed
 $DIR/src/os/os_test.go: `fn(3, 0, io.EOF)` passed
-$DIR/src/os/os_test.go: `*LstatP = Lstat` passed
-$DIR/src/os/os_test.go: `s[i] = fi.Name()` failed
-$DIR/src/os/os_test.go: `slices.Sort(s)` failed
-$DIR/src/os/os_test.go: `xerr = ErrNotExist` failed
-$DIR/src/os/os_test.go: `xerr = errors.New("some real error")` failed
 $DIR/src/os/os_test.go: `f.Write([]byte("foo"))` passed
 $DIR/src/os/os_test.go: `testenv.MustHaveLink(t)` passed
 $DIR/src/os/os_test.go: `err = Link(to, from)` failed
@@ -305,8 +294,6 @@ $DIR/src/os/os_test.go: `.TempDir()` nonbuildable
 $DIR/src/os/os_test.go: `.Run(".", testReadDir(".", dot))` nonbuildable
 $DIR/src/os/os_test.go: `.Run("sysdir", testReadDir(sysdir.name, sysdir.files))` nonbuildable
 $DIR/src/os/os_test.go: `.TempDir()` nonbuildable
-$DIR/src/os/os_test.go: `.Readdirnames(1)` nonbuildable
-$DIR/src/os/os_test.go: `.Readdirnames(-1)` nonbuildable
 $DIR/src/os/os_test.go: `.Short()` nonbuildable
 $DIR/src/os/os_test.go: `.TempDir()` nonbuildable
 $DIR/src/os/os_test.go: `.Join(dir, fmt.Sprintf("%d", i))` nonbuildable
@@ -316,17 +303,6 @@ $DIR/src/os/os_test.go: `.Repeat("X", i)` nonbuildable
 $DIR/src/os/os_test.go: `.Readdir(n)` nonbuildable
 $DIR/src/os/os_test.go: `.ReadDir(n)` nonbuildable
 $DIR/src/os/os_test.go: `.Readdirnames(n)` nonbuildable
-$DIR/src/os/os_test.go: `.HasSuffix(path, "x")` nonbuildable
-$DIR/src/os/os_test.go: `.TempDir()` nonbuildable
-$DIR/src/os/os_test.go: `.Join(dir, "good1")` nonbuildable
-$DIR/src/os/os_test.go: `.Join(dir, "x")` nonbuildable
-$DIR/src/os/os_test.go: `.Join(dir, "good2")` nonbuildable
-$DIR/src/os/os_test.go: `.Readdir(-1)` nonbuildable
-$DIR/src/os/os_test.go: `.Name()` nonbuildable
-$DIR/src/os/os_test.go: `.Sort(s)` nonbuildable
-$DIR/src/os/os_test.go: `.DeepEqual(got, want)` nonbuildable
-$DIR/src/os/os_test.go: `.DeepEqual(got, want)` nonbuildable
-$DIR/src/os/os_test.go: `.New("some real error")` nonbuildable
 $DIR/src/os/os_test.go: `.TempDir()` nonbuildable
 $DIR/src/os/os_test.go: `.Write([]byte("foo"))` nonbuildable
 $DIR/src/os/os_test.go: `.Name()` nonbuildable
