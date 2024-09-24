@@ -3023,13 +3023,6 @@ $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await mock.s
 $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await mock.setCanCheck(true)`
 $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await mock.setPerformData(randomBytes)`
 $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await ltUpkeep.mock.checkLog.withArgs(log, '0x').returns(true, '0x1234')`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await evmRevertCustomError(
-        registry.getActiveUpkeepIDs(numUpkeeps, 0),
-        registry,
-        'IndexOutOfRange',
-      )`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `upkeepIds = await registry.getActiveUpkeepIDs(1, 3)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `upkeepIds = await registry.getActiveUpkeepIDs(2, 0)`
 $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await gasPriceFeed
         .connect(owner)
         .updateRoundData(roundId, answer, updatedAt, startedAt)`
@@ -3108,95 +3101,7 @@ $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await regist
         )`
 $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `newKeepers.push(randomAddress())`
 $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `newKeepers.pop()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry.setPeerRegistryMigrationPermission(peer, 1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `permission = await registry.getPeerRegistryMigrationPermission(peer)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry.setPeerRegistryMigrationPermission(peer, 2)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `permission = await registry.getPeerRegistryMigrationPermission(peer)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry.setPeerRegistryMigrationPermission(peer, 0)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `permission = await registry.getPeerRegistryMigrationPermission(peer)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry.connect(admin).cancelUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry.connect(admin).pauseUpkeep(upkeepId)`
 $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry.connect(owner).cancelUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry.connect(owner).pause()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry.connect(admin).pauseUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry.connect(admin).pauseUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry.connect(admin).cancelUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry.connect(admin).pauseUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry.connect(admin).setUpkeepCheckData(upkeepId, randomBytes)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `longBytes += '1'`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry.connect(admin).cancelUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await evmRevertCustomError(
-        registry
-          .connect(admin)
-          .setUpkeepGasLimit(upkeepId, BigNumber.from('100')),
-        registry,
-        'GasLimitOutsideRange',
-      )`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry.connect(admin).setUpkeepGasLimit(upkeepId, newGasLimit)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry.connect(admin).cancelUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry.connect(admin).setUpkeepOffchainConfig(upkeepId, newConfig)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry.connect(admin).cancelUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry.connect(admin).cancelUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry
-        .connect(admin)
-        .transferUpkeepAdmin(upkeepId, await payee1.getAddress())`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry
-        .connect(admin)
-        .transferUpkeepAdmin(upkeepId, await payee1.getAddress())`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry
-        .connect(admin)
-        .transferUpkeepAdmin(upkeepId, await payee1.getAddress())`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry.connect(admin).cancelUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry.connect(payee1).acceptUpkeepAdmin(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry
-        .connect(payee1)
-        .transferPayeeship(
-          await keeper1.getAddress(),
-          await payee2.getAddress(),
-        )`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry
-        .connect(payee1)
-        .transferPayeeship(
-          await keeper1.getAddress(),
-          await payee2.getAddress(),
-        )`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry.connect(payee2).acceptPayeeship(await keeper1.getAddress())`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry.connect(owner).pause()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry.connect(owner).pause()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry.connect(owner).pause()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry.connect(owner).unpause()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await blankRegistry.connect(owner).setConfigTypeSafe(...baseConfig)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await blankRegistry // used to test initial configurations
-        .connect(owner)
-        .setConfigTypeSafe(
-          signers,
-          keepers,
-          f,
-          config,
-          offchainVersion,
-          offchainBytes,
-          [],
-          [],
-        )`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await blankRegistry.connect(owner).setPayees(payees)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await blankRegistry // used to test initial configurations
-        .connect(owner)
-        .setConfigTypeSafe(
-          [...signers, randomAddress()],
-          [...keepers, newTransmitter],
-          f,
-          config,
-          offchainVersion,
-          offchainBytes,
-          [],
-          [],
-        )`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await blankRegistry.connect(owner).setPayees(newPayees)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry.connect(owner).cancelUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry.connect(owner).cancelUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry.connect(admin).cancelUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry.connect(admin).cancelUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await ethers.provider.send('evm_mine', [])`
 $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await linkToken.connect(owner).approve(registry.address, toWei('100'))`
 $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry.connect(owner).addFunds(upkeepId, toWei('100'))`
 $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `await registry.connect(admin).cancelUpkeep(upkeepId)`
@@ -3667,18 +3572,6 @@ $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.addFunds(up
 $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(zeroAddress)`
 $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.mul(gasCeilingMultiplier)`
 $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.wait()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.withdrawFunds(upkeepId.add(1), await payee1.getAddress())`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.add(1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.withdrawFunds(upkeepId, await payee1.getAddress())`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.withdrawFunds(upkeepId, await payee1.getAddress())`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.withdrawFunds(upkeepId, zeroAddress)`
 $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getBalance(upkeepId)`
 $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
 $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
@@ -3773,13 +3666,6 @@ $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.utils.rando
 $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.mock.checkLog.withArgs(log, '0x')`
 $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.returns(true, '0x1234')`
 $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(zeroAddress)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getActiveUpkeepIDs(numUpkeeps, 0)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getActiveUpkeepIDs(numUpkeeps + 1, 0)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getActiveUpkeepIDs(0, 1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getActiveUpkeepIDs(1, 3)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getActiveUpkeepIDs(1, numUpkeeps + 100)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getActiveUpkeepIDs(0, 0)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getActiveUpkeepIDs(2, 0)`
 $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getGasOverhead()`
 $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.add(registryPerSignerGasOverhead.mul(f + 1))`
 $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.mul(f + 1)`
@@ -4048,348 +3934,9 @@ $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setConfigTy
             baseConfig[6],
             baseConfig[7],
           )`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getPeerRegistryMigrationPermission(peer)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setPeerRegistryMigrationPermission(peer, 1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getPeerRegistryMigrationPermission(peer)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setPeerRegistryMigrationPermission(peer, 2)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getPeerRegistryMigrationPermission(peer)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setPeerRegistryMigrationPermission(peer, 0)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getPeerRegistryMigrationPermission(peer)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setPeerRegistryMigrationPermission(peer, 10)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(keeper1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.pauseUpkeep(upkeepId.add(1))`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.add(1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.cancelUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.pauseUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.pauseUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.pauseUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(keeper1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.pauseUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.pauseUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(keeper1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.unpauseUpkeep(upkeepId.add(1))`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.add(1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.cancelUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.unpauseUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.pause()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getState()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.unpauseUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.pauseUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(keeper1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.unpauseUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getActiveUpkeepIDs(0, 0)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.pauseUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.unpauseUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getActiveUpkeepIDs(0, 0)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(keeper1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setUpkeepCheckData(upkeepId.add(1), randomBytes)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.add(1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(keeper1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setUpkeepCheckData(upkeepId, randomBytes)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.cancelUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setUpkeepCheckData(upkeepId, randomBytes)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.pauseUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setUpkeepCheckData(upkeepId, randomBytes)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setUpkeepCheckData(upkeepId, longBytes)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setUpkeepCheckData(upkeepId, randomBytes)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setUpkeepGasLimit(upkeepId.add(1), newGasLimit)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.add(1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.cancelUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setUpkeepGasLimit(upkeepId, newGasLimit)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setUpkeepGasLimit(upkeepId, newGasLimit)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setUpkeepGasLimit(upkeepId, BigNumber.from('100'))`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.from('100')`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setUpkeepGasLimit(upkeepId, BigNumber.from('6000000'))`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.from('6000000')`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setUpkeepGasLimit(upkeepId, newGasLimit)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setUpkeepGasLimit(upkeepId, newGasLimit)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setUpkeepOffchainConfig(upkeepId.add(1), newConfig)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.add(1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.cancelUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setUpkeepOffchainConfig(upkeepId, newConfig)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setUpkeepOffchainConfig(upkeepId, newConfig)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setUpkeepOffchainConfig(upkeepId, newConfig)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setUpkeepOffchainConfig(upkeepId, newConfig)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setUpkeepTriggerConfig(upkeepId.add(1), newConfig)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.add(1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.cancelUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setUpkeepTriggerConfig(upkeepId, newConfig)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setUpkeepTriggerConfig(upkeepId, newConfig)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setUpkeepTriggerConfig(upkeepId, newConfig)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(payee1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.transferUpkeepAdmin(upkeepId, await payee2.getAddress())`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.transferUpkeepAdmin(upkeepId, await admin.getAddress())`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.cancelUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.transferUpkeepAdmin(upkeepId, await keeper1.getAddress())`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.transferUpkeepAdmin(upkeepId, await payee1.getAddress())`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.transferUpkeepAdmin(upkeepId, ethers.constants.AddressZero)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.transferUpkeepAdmin(upkeepId, await payee1.getAddress())`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.transferUpkeepAdmin(upkeepId, await payee1.getAddress())`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.transferUpkeepAdmin(upkeepId, await payee1.getAddress())`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.transferUpkeepAdmin(upkeepId, await payee1.getAddress())`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.wait()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(payee2)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.acceptUpkeepAdmin(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.cancelUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(payee1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.acceptUpkeepAdmin(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(payee1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.acceptUpkeepAdmin(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(payee1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.acceptUpkeepAdmin(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(keeper1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.withdrawLink(zeroAddress, 1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(payee2)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.transferPayeeship(
-            await keeper1.getAddress(),
-            await payee2.getAddress(),
-          )`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(payee1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.transferPayeeship(
-            await keeper1.getAddress(),
-            await payee1.getAddress(),
-          )`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(payee1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.transferPayeeship(
-          await keeper1.getAddress(),
-          await payee2.getAddress(),
-        )`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getTransmitterInfo(await keeper1.getAddress())`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(payee1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.transferPayeeship(
-          await keeper1.getAddress(),
-          await payee2.getAddress(),
-        )`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(payee1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.transferPayeeship(
-          await keeper1.getAddress(),
-          await payee2.getAddress(),
-        )`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(payee1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.transferPayeeship(
-          await keeper1.getAddress(),
-          await payee2.getAddress(),
-        )`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.wait()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(payee1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.acceptPayeeship(await keeper1.getAddress())`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(payee2)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.acceptPayeeship(await keeper1.getAddress())`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(payee2)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.acceptPayeeship(await keeper1.getAddress())`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getTransmitterInfo(await keeper1.getAddress())`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(keeper1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.pause()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.pause()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getState()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.pause()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.pause()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.registerUpkeep(
-            mock.address,
-            performGas,
-            await admin.getAddress(),
-            Trigger.CONDITION,
-            linkToken.address,
-            '0x',
-            '0x',
-            '0x',
-          )`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(keeper1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.unpause()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.unpause()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getState()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(keeper1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setPayees(payees)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setPayees([...payees, randomAddress()])`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setConfigTypeSafe(...baseConfig)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `// used to test initial config
-          .connect(owner)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setPayees([ethers.constants.AddressZero, ...payees.slice(1)])`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.slice(1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.from({ length: 5 }, randomAddress)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.from({ length: 5 }, randomAddress)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.from({ length: 5 }, randomAddress)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.fill(IGNORE_ADDRESS)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `// used to test initial configurations
-        .connect(owner)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setConfigTypeSafe(
-          signers,
-          keepers,
-          f,
-          config,
-          offchainVersion,
-          offchainBytes,
-          [],
-          [],
-        )`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setPayees(payees)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `// used to test initial configurations
-        .connect(owner)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setConfigTypeSafe(
-          [...signers, randomAddress()],
-          [...keepers, newTransmitter],
-          f,
-          config,
-          offchainVersion,
-          offchainBytes,
-          [],
-          [],
-        )`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setPayees(newPayees)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getTransmitterInfo(newTransmitter)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.slice(1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setPayees(newPayees)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setPayees(payees)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.cancelUpkeep(upkeepId.add(1))`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.add(1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(keeper1)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.cancelUpkeep(upkeepId)`
 $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(owner)`
 $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.cancelUpkeep(upkeepId)`
 $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.wait()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.cancelUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.wait()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.from(receipt.blockNumber)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.cancelUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.wait()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.cancelUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.cancelUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.cancelUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.cancelUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.cancelUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.cancelUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.provider.send('evm_mine', [])`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(owner)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.cancelUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.cancelUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.wait()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.cancelUpkeep(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.wait()`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.from(receipt.blockNumber + cancellationDelay)`
 $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(owner)`
 $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.approve(registry.address, toWei('100'))`
 $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(owner)`
@@ -4630,18 +4177,6 @@ $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.utils.defau
       )`
 $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.gasUsed.gt(BigNumber.from('0'))`
 $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.from('0')`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(payee3)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setUpkeepPrivilegeConfig(upkeepId, '0x1234')`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getUpkeepPrivilegeConfig(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(personas.Norbert)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setUpkeepPrivilegeConfig(upkeepId, '0x1234')`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getUpkeepPrivilegeConfig(upkeepId)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(payee3)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setAdminPrivilegeConfig(admin, '0x1234')`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAdminPrivilegeConfig(admin)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.connect(personas.Norbert)`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.setAdminPrivilegeConfig(admin, '0x1234')`
-$DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getAdminPrivilegeConfig(admin)`
 $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.getState()`
 $DIR/contracts/test/v0.8/automation/AutomationRegistry2_3.test.ts: `.div(
         BigNumber.from(keeperAddresses.length),
@@ -6642,6 +6177,1286 @@ $DIR/contracts/test/v0.8/automation/UpkeepTranscoder4_0.test.ts: `.setPeerRegist
         )`
 $DIR/contracts/test/v0.8/automation/UpkeepTranscoder4_0.test.ts: `.connect(admin0)`
 $DIR/contracts/test/v0.8/automation/UpkeepTranscoder4_0.test.ts: `.migrateUpkeeps([id20], registry21.address)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry.connect(owner).pause()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `upkeepIds.push(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `gasLimits.push(performGas)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `triggers.push('0x')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `performDatas.push('0x')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `performDatas.push('0x')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry.connect(admin).addFunds(upkeepId, BigNumber.from(10))`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await tx.wait()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await ethers.provider.send('evm_mine', [])`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `newConfig.reorgProtectionEnabled = false`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry // used to test initial configurations
+          .connect(owner)
+          .setConfigTypeSafe(
+            signerAddresses,
+            keeperAddresses,
+            f,
+            newConfig,
+            offchainVersion,
+            offchainBytes,
+            baseConfig[6],
+            baseConfig[7],
+          )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `newConfig.reorgProtectionEnabled = false`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry // used to test initial configurations
+          .connect(owner)
+          .setConfigTypeSafe(
+            signerAddresses,
+            keeperAddresses,
+            f,
+            newConfig,
+            offchainVersion,
+            offchainBytes,
+            baseConfig[6],
+            baseConfig[7],
+          )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await ethers.provider.send('evm_mine', [])`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await ethers.provider.send('evm_mine', [])`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `tx = await getTransmitTx(registry, keeper1, [id], {
+            checkBlockNum: latestBlock.number + 100,
+            checkBlockHash: latestBlock.hash,
+          })`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `receipt = await tx.wait()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `reorgedUpkeepReportLogs = parseReorgedUpkeepReportLogs(receipt)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `newConfig.reorgProtectionEnabled = false`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry // used to test initial configurations
+          .connect(owner)
+          .setConfigTypeSafe(
+            signerAddresses,
+            keeperAddresses,
+            f,
+            newConfig,
+            offchainVersion,
+            offchainBytes,
+            baseConfig[6],
+            baseConfig[7],
+          )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `tx = await getTransmitTx(registry, keeper1, [id], {
+            checkBlockNum: latestBlock.number + 100,
+            checkBlockHash: latestBlock.hash,
+          })`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `receipt = await tx.wait()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `reorgedUpkeepReportLogs = parseReorgedUpkeepReportLogs(receipt)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry.connect(admin).cancelUpkeep(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await ethers.provider.send('evm_mine', [])`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await mock.setCanPerform(false)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await mock.setCanPerform(false)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await mock.setCanPerform(true)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await mock.setCanPerform(true)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `parsedLogs.push(iface.parseLog(log))`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await mock.setCanPerform(true)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await mock.setCanPerform(true)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry.connect(owner).addFunds(afUpkeepId, toWei('100'))`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await autoFunderUpkeep.setIsEligible(true)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await autoFunderUpkeep.setShouldCancel(true)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await getTransmitTx(registry, keeper1, [afUpkeepId])`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `registration = await registry.getUpkeep(afUpkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `upkeepIds.push(testUpkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry.connect(owner).addFunds(testUpkeepId, toWei('10'))`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await mock.setCanPerform(true)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await mock.setPerformGasToBurn(performGas)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `totalPerformGas = totalPerformGas.add(performGas)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await evmRevert(
+          getTransmitTx(registry, keeper1, upkeepIds, {
+            gasLimit: totalPerformGas,
+          }),
+        )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await mock.setCanCheck(true)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry.connect(admin).addFunds(upkeepId, tooLow)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry.connect(admin).addFunds(upkeepId, oneWei)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `checkUpkeepResult = await registry
+        .connect(zeroAddress)
+        .callStatic['checkUpkeep(uint256)'](upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await mock.setCanCheck(true)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await mock.setCanPerform(true)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry.connect(owner).addFunds(upkeepID, minBalance1)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `maxPerformData += '11'`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry.connect(admin).pauseUpkeep(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry.connect(owner).cancelUpkeep(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry
+          .connect(admin)
+          .withdrawFunds(upkeepId, await payee1.getAddress())`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `registration = await registry.getUpkeep(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry.connect(owner).pause()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await mock.setCanPerform(false)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await mock.setCanPerform(true)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await mock.setCanPerform(true)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await mock.setPerformGasToBurn(performGas)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry
+        .connect(admin)
+        .setUpkeepGasLimit(upkeepId, BigNumber.from(2000000))`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry.connect(admin).cancelUpkeep(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry.connect(owner).cancelUpkeep(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry.connect(owner).pause()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry.connect(admin).pauseUpkeep(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await mock.setShouldRevertCheck(true)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await mock.setCheckRevertReason(
+          'custom revert error, clever way to insert offchain data',
+        )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await mock.setShouldRevertCheck(true)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `longRevertReason += 'x'`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await mock.setCheckRevertReason(longRevertReason)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await mock.setCanCheck(false)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `longBytes += '1'`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await mock.setCanCheck(true)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await mock.setPerformData(longBytes)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await mock.setCanCheck(true)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await mock.setPerformData(randomBytes)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await ltUpkeep.mock.checkLog.withArgs(log, '0x').returns(true, '0x1234')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await gasPriceFeed
+        .connect(owner)
+        .updateRoundData(roundId, answer, updatedAt, startedAt)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `roundId = 100`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `updatedAt = now()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `startedAt = 946684799`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await gasPriceFeed
+        .connect(owner)
+        .updateRoundData(roundId, -100, updatedAt, startedAt)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `roundId = 101`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `updatedAt = now()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `startedAt = 946684799`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await gasPriceFeed
+        .connect(owner)
+        .updateRoundData(roundId, 0, updatedAt, startedAt)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await linkUSDFeed
+        .connect(owner)
+        .updateRoundData(roundId, answer, updatedAt, startedAt)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `roundId = 100`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `updatedAt = now()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `startedAt = 946684799`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await linkUSDFeed
+        .connect(owner)
+        .updateRoundData(roundId, -100, updatedAt, startedAt)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `roundId = 101`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `updatedAt = now()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `startedAt = 946684799`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await linkUSDFeed
+        .connect(owner)
+        .updateRoundData(roundId, 0, updatedAt, startedAt)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await evmRevertCustomError(
+        registry
+          .connect(owner)
+          .setConfigTypeSafe(
+            [randomAddress(), randomAddress(), randomAddress(), zeroAddress],
+            [
+              randomAddress(),
+              randomAddress(),
+              randomAddress(),
+              randomAddress(),
+            ],
+            f,
+            newConfig,
+            offchainVersion,
+            offchainBytes,
+            baseConfig[6],
+            baseConfig[7],
+          ),
+        registry,
+        'InvalidSigner',
+      )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry
+        .connect(owner)
+        .setConfigTypeSafe(
+          signerAddresses,
+          keeperAddresses,
+          f,
+          newConfig,
+          offchainVersion,
+          offchainBytes,
+          [],
+          [],
+        )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry.pause()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry
+        .connect(owner)
+        .setConfigTypeSafe(
+          signerAddresses,
+          keeperAddresses,
+          f,
+          newConfig,
+          offchainVersion,
+          offchainBytes,
+          [],
+          [],
+        )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `newKeepers.push(randomAddress())`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `newKeepers.pop()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry.connect(owner).setConfigTypeSafe(
+            signerAddresses,
+            keeperAddresses,
+            f,
+            {
+              checkGasLimit,
+              stalenessSeconds,
+              gasCeilingMultiplier,
+              maxCheckDataSize,
+              maxPerformDataSize,
+              maxRevertDataSize,
+              maxPerformGas,
+              fallbackGasPrice,
+              fallbackLinkPrice,
+              fallbackNativePrice,
+              transcoder: transcoder.address,
+              registrars: [],
+              upkeepPrivilegeManager: upkeepManager,
+              chainModule: moduleBase.address,
+              reorgProtectionEnabled: true,
+              financeAdmin: financeAdminAddress,
+            },
+            offchainVersion,
+            offchainBytes,
+            [linkToken.address],
+            [
+              {
+                gasFeePPB: paymentPremiumPPB,
+                flatFeeMilliCents,
+                priceFeed: linkUSDFeed.address,
+                fallbackPrice: fallbackLinkPrice,
+                minSpend: newMinUpkeepSpend,
+                decimals: 18,
+              },
+            ],
+          )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry.connect(admin).cancelUpkeep(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry.connect(owner).setConfigTypeSafe(
+            signerAddresses,
+            keeperAddresses,
+            f,
+            {
+              checkGasLimit,
+              stalenessSeconds,
+              gasCeilingMultiplier,
+              maxCheckDataSize,
+              maxPerformDataSize,
+              maxRevertDataSize,
+              maxPerformGas,
+              fallbackGasPrice,
+              fallbackLinkPrice,
+              fallbackNativePrice,
+              transcoder: transcoder.address,
+              registrars: [],
+              upkeepPrivilegeManager: upkeepManager,
+              chainModule: moduleBase.address,
+              reorgProtectionEnabled: true,
+              financeAdmin: financeAdminAddress,
+            },
+            offchainVersion,
+            offchainBytes,
+            [linkToken.address],
+            [
+              {
+                gasFeePPB: paymentPremiumPPB,
+                flatFeeMilliCents,
+                priceFeed: linkUSDFeed.address,
+                fallbackPrice: fallbackLinkPrice,
+                minSpend: newMinUpkeepSpend,
+                decimals: 18,
+              },
+            ],
+          )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry.connect(admin).cancelUpkeep(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry.connect(owner).setConfigTypeSafe(
+            signerAddresses,
+            keeperAddresses,
+            f,
+            {
+              checkGasLimit,
+              stalenessSeconds,
+              gasCeilingMultiplier,
+              maxCheckDataSize,
+              maxPerformDataSize,
+              maxRevertDataSize,
+              maxPerformGas,
+              fallbackGasPrice,
+              fallbackLinkPrice,
+              fallbackNativePrice,
+              transcoder: transcoder.address,
+              registrars: [],
+              upkeepPrivilegeManager: upkeepManager,
+              chainModule: moduleBase.address,
+              reorgProtectionEnabled: true,
+              financeAdmin: financeAdminAddress,
+            },
+            offchainVersion,
+            offchainBytes,
+            [linkToken.address],
+            [
+              {
+                gasFeePPB: paymentPremiumPPB,
+                flatFeeMilliCents,
+                priceFeed: linkUSDFeed.address,
+                fallbackPrice: fallbackLinkPrice,
+                minSpend: newMinUpkeepSpend,
+                decimals: 18,
+              },
+            ],
+          )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry.connect(admin).cancelUpkeep(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry
+        .connect(payee1)
+        .withdrawPayment(await keeper1.getAddress(), to)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await streamsLookupUpkeep.setShouldRevertCallback(true)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `longBytes += '11'`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await streamsLookupUpkeep.setCallbackReturnBool(false)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await getTransmitTx(registry, keeper1, [upkeepId])`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await getTransmitTx(registry, keeper2, [upkeepId])`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await getTransmitTx(registry, keeper1, [upkeepId])`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry
+        .connect(payee1)
+        .withdrawPayment(
+          await keeper1.getAddress(),
+          await nonkeeper.getAddress(),
+        )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await verifyConsistentAccounting(maxAllowedSpareChange)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await getTransmitTx(registry, keeper1, [upkeepId])`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `maxAllowedSpareChange = maxAllowedSpareChange.add(BigNumber.from('31'))`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await verifyConsistentAccounting(maxAllowedSpareChange)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry
+        .connect(payee1)
+        .withdrawPayment(
+          await keeper1.getAddress(),
+          await nonkeeper.getAddress(),
+        )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await verifyConsistentAccounting(maxAllowedSpareChange)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry
+        .connect(payee2)
+        .withdrawPayment(
+          await keeper2.getAddress(),
+          await nonkeeper.getAddress(),
+        )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await verifyConsistentAccounting(maxAllowedSpareChange)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await getTransmitTx(registry, keeper1, [upkeepId])`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `maxAllowedSpareChange = maxAllowedSpareChange.add(BigNumber.from('31'))`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await verifyConsistentAccounting(maxAllowedSpareChange)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry.connect(owner).setConfigTypeSafe(
+        signerAddresses.slice(2, 15), // only use 2-14th index keepers
+        keeperAddresses.slice(2, 15),
+        f,
+        config,
+        offchainVersion,
+        offchainBytes,
+        baseConfig[6],
+        baseConfig[7],
+      )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await verifyConsistentAccounting(maxAllowedSpareChange)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await getTransmitTx(registry, keeper3, [upkeepId], {
+        startingSignerIndex: 2,
+      })`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `maxAllowedSpareChange = maxAllowedSpareChange.add(BigNumber.from('13'))`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await verifyConsistentAccounting(maxAllowedSpareChange)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry
+        .connect(payee1)
+        .withdrawPayment(
+          await keeper1.getAddress(),
+          await nonkeeper.getAddress(),
+        )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await verifyConsistentAccounting(maxAllowedSpareChange)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry
+        .connect(payee3)
+        .withdrawPayment(
+          await keeper3.getAddress(),
+          await nonkeeper.getAddress(),
+        )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await verifyConsistentAccounting(maxAllowedSpareChange)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry.connect(owner).setConfigTypeSafe(
+        signerAddresses.slice(0, 4), // only use 0-3rd index keepers
+        keeperAddresses.slice(0, 4),
+        f,
+        config,
+        offchainVersion,
+        offchainBytes,
+        baseConfig[6],
+        baseConfig[7],
+      )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await verifyConsistentAccounting(maxAllowedSpareChange)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await getTransmitTx(registry, keeper1, [upkeepId])`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `maxAllowedSpareChange = maxAllowedSpareChange.add(BigNumber.from('4'))`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await getTransmitTx(registry, keeper3, [upkeepId])`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `maxAllowedSpareChange = maxAllowedSpareChange.add(BigNumber.from('4'))`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await verifyConsistentAccounting(maxAllowedSpareChange)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry
+        .connect(payee5)
+        .withdrawPayment(
+          await keeper5.getAddress(),
+          await nonkeeper.getAddress(),
+        )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await verifyConsistentAccounting(maxAllowedSpareChange)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `await registry
+        .connect(payee1)
+        .withdrawPayment(
+          await keeper1.getAddress(),
+          await nonkeeper.getAddress(),
+        )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.pause()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.push(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.push(performGas)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.push('0x')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.push('0x')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.push('0x')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.add(BigNumber.from('1'))`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.from('1')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.wait()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(admin)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.addFunds(upkeepId, BigNumber.from(10))`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.from(10)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.wait()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getUpkeep(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.wait()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.utils.randomBytes(32)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.utils.randomBytes(32)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.utils.solidityKeccak256(
+          ['uint256', 'bytes32', 'bytes32', 'uint32'],
+          [logUpkeepId, logBlockHash, txHash, logIndex],
+        )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.wait()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.wait()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getUpkeep(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.provider.getBlock(lastPerformed)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.wait()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.provider.getBlock('latest')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.wait()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.provider.send('evm_mine', [])`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.provider.getBlock('latest')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.provider.getBlock(latestBlock.number - 256)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.wait()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.provider.getBlock('latest')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.wait()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `// used to test initial configurations
+          .connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setConfigTypeSafe(
+            signerAddresses,
+            keeperAddresses,
+            f,
+            newConfig,
+            offchainVersion,
+            offchainBytes,
+            baseConfig[6],
+            baseConfig[7],
+          )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.provider.getBlock('latest')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.wait()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `// used to test initial configurations
+          .connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setConfigTypeSafe(
+            signerAddresses,
+            keeperAddresses,
+            f,
+            newConfig,
+            offchainVersion,
+            offchainBytes,
+            baseConfig[6],
+            baseConfig[7],
+          )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.provider.send('evm_mine', [])`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.provider.getBlock('latest')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.provider.getBlock(latestBlock.number - 256)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.wait()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.provider.send('evm_mine', [])`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.wait()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.provider.getBlock('latest')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.wait()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.wait()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `// used to test initial configurations
+          .connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setConfigTypeSafe(
+            signerAddresses,
+            keeperAddresses,
+            f,
+            newConfig,
+            offchainVersion,
+            offchainBytes,
+            baseConfig[6],
+            baseConfig[7],
+          )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.provider.getBlock('latest')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.wait()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.wait()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(admin)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.cancelUpkeep(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.provider.send('evm_mine', [])`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.wait()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setCanPerform(false)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.wait()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setCanPerform(false)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.wait()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setCanPerform(true)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.from(150000)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setCanPerform(true)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.wait()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.push(iface.parseLog(log))`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.parseLog(log)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setCanPerform(true)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getState()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.wait()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getState()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.sub(registryPremiumBefore)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.from('1')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.mul(BigNumber.from('10'))`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.from('10')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setCanPerform(true)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.wait()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.addFunds(afUpkeepId, toWei('100'))`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setIsEligible(true)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setShouldCancel(true)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getUpkeep(afUpkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getUpkeep(afUpkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.lt(oldExpiration)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.slice(0, f + 1)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(keeper1)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.transmit(
+              [reportContext[0], reportContext[1], reportContext[2]],
+              report,
+              sigs.rs,
+              sigs.ss,
+              sigs.vs,
+            )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getState()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.slice(0, f + 2)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(keeper1)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.transmit(
+              [reportContext[0], reportContext[1], reportContext[2]],
+              report,
+              sigs.rs,
+              sigs.ss,
+              sigs.vs,
+            )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getState()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.Wallet.createRandom()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.Wallet.createRandom()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(keeper1)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.transmit(
+              [reportContext[0], reportContext[1], reportContext[2]],
+              report,
+              sigs.rs,
+              sigs.ss,
+              sigs.vs,
+            )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getState()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(keeper1)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.transmit(
+              [reportContext[0], reportContext[1], reportContext[2]],
+              report,
+              sigs.rs,
+              sigs.ss,
+              sigs.vs,
+            )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.from('0')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.deploy()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.registerUpkeep(
+              mock.address,
+              performGas,
+              await admin.getAddress(),
+              Trigger.CONDITION,
+              linkToken.address,
+              '0x',
+              '0x',
+              '0x',
+            )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.push(testUpkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.addFunds(testUpkeepId, toWei('10'))`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setCanPerform(true)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setPerformGasToBurn(performGas)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.add(performGas)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.add(transmitGasOverhead)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setCanCheck(true)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.from(1)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getMinBalanceForUpkeep(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.sub(oneWei)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(admin)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.addFunds(upkeepId, tooLow)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(zeroAddress)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(admin)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.addFunds(upkeepId, oneWei)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(zeroAddress)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.registerUpkeep(
+          mock.address,
+          performGas,
+          await admin.getAddress(),
+          Trigger.CONDITION,
+          linkToken.address,
+          '0x',
+          '0x',
+          '0x',
+        )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setCanCheck(true)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setCanPerform(true)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getMinBalanceForUpkeep(upkeepID)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.sub(
+        1,
+      )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.addFunds(upkeepID, minBalance1)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(zeroAddress)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.mul(gasCeilingMultiplier)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.wait()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getBalance(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(admin)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.pauseUpkeep(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.cancelUpkeep(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(admin)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.withdrawFunds(upkeepId, await payee1.getAddress())`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(admin)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.balanceOf(
+          await payee1.getAddress(),
+        )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.balanceOf(registry.address)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getUpkeep(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(admin)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.withdrawFunds(upkeepId, await payee1.getAddress())`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.balanceOf(await payee1.getAddress())`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.balanceOf(registry.address)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getUpkeep(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(await owner.getAddress())`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.callStatic.simulatePerformUpkeep(upkeepId, '0x')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.pause()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(zeroAddress)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.callStatic.simulatePerformUpkeep(upkeepId, '0x')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setCanPerform(false)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(zeroAddress)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.callStatic.simulatePerformUpkeep(upkeepId, '0x')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.gasUsed.gt(BigNumber.from('0'))`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.from('0')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setCanPerform(true)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(zeroAddress)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.callStatic.simulatePerformUpkeep(upkeepId, '0x')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.gasUsed.gt(BigNumber.from('0'))`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.from('0')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setCanPerform(true)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setPerformGasToBurn(performGas)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(admin)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setUpkeepGasLimit(upkeepId, BigNumber.from(2000000))`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.from(2000000)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(zeroAddress)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.callStatic.simulatePerformUpkeep(upkeepId, '0x')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.gasUsed.gt(
+          performGas.add(pubdataGas).sub(BigNumber.from('1000')),
+        )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.add(pubdataGas)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.sub(BigNumber.from('1000'))`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.from('1000')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(await owner.getAddress())`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(admin)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.cancelUpkeep(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(zeroAddress)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.cancelUpkeep(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(zeroAddress)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.pause()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(zeroAddress)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(admin)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.pauseUpkeep(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(zeroAddress)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(zeroAddress)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setShouldRevertCheck(true)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setCheckRevertReason(
+          'custom revert error, clever way to insert offchain data',
+        )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(zeroAddress)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.performData.slice(10)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.linkUSD.gt(BigNumber.from('0'))`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.from('0')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setShouldRevertCheck(true)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setCheckRevertReason(longRevertReason)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(zeroAddress)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setCanCheck(false)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(zeroAddress)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setCanCheck(true)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setPerformData(longBytes)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(zeroAddress)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setCanCheck(true)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setPerformData(randomBytes)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.provider.getBlock('latest')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(zeroAddress)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.linkUSD.eq(linkUSD)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.utils.randomBytes(32)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.utils.randomBytes(32)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.utils.randomBytes(32)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.utils.randomBytes(32)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.utils.randomBytes(1000)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.mock.checkLog.withArgs(log, '0x')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.returns(true, '0x1234')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(zeroAddress)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getGasOverhead()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.add(registryPerSignerGasOverhead.mul(f + 1))`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.mul(f + 1)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.add(chainModuleOverheads.chainModuleFixedOverhead)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.mul('2')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.updateRoundData(roundId, answer, updatedAt, startedAt)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.updateRoundData(roundId, -100, updatedAt, startedAt)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.updateRoundData(roundId, 0, updatedAt, startedAt)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getMaxPaymentForGas(
+            upkeepId,
+            Trigger.CONDITION,
+            performGas,
+            linkToken.address,
+          )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getGasOverhead()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.add(registryPerSignerGasOverhead.mul(f + 1))`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.mul(f + 1)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.add(chainModuleOverheads.chainModuleFixedOverhead)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.mul('2')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.updateRoundData(roundId, answer, updatedAt, startedAt)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.updateRoundData(roundId, -100, updatedAt, startedAt)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.updateRoundData(roundId, 0, updatedAt, startedAt)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getMaxPaymentForGas(
+            upkeepId,
+            Trigger.CONDITION,
+            performGas,
+            linkToken.address,
+          )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.typeAndVersion()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(payee1)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setConfigTypeSafe(
+            signerAddresses,
+            keeperAddresses,
+            f,
+            newConfig,
+            offchainVersion,
+            offchainBytes,
+            baseConfig[6],
+            baseConfig[7],
+          )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setConfigTypeSafe(
+            [randomAddress(), randomAddress(), randomAddress(), zeroAddress],
+            [
+              randomAddress(),
+              randomAddress(),
+              randomAddress(),
+              randomAddress(),
+            ],
+            f,
+            newConfig,
+            offchainVersion,
+            offchainBytes,
+            baseConfig[6],
+            baseConfig[7],
+          )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setConfigTypeSafe(
+            [
+              randomAddress(),
+              randomAddress(),
+              randomAddress(),
+              randomAddress(),
+            ],
+            [randomAddress(), randomAddress(), randomAddress(), zeroAddress],
+            f,
+            newConfig,
+            offchainVersion,
+            offchainBytes,
+            baseConfig[6],
+            baseConfig[7],
+          )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getState()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getConfig()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setConfigTypeSafe(
+          signerAddresses,
+          keeperAddresses,
+          f,
+          newConfig,
+          offchainVersion,
+          offchainBytes,
+          [],
+          [],
+        )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getState()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.pause()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getState()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setConfigTypeSafe(
+          signerAddresses,
+          keeperAddresses,
+          f,
+          newConfig,
+          offchainVersion,
+          offchainBytes,
+          [],
+          [],
+        )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getState()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setConfigTypeSafe(
+          signerAddresses,
+          keeperAddresses,
+          f,
+          newConfig,
+          offchainVersion,
+          offchainBytes,
+          [],
+          [],
+        )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(payee1)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setConfigTypeSafe(
+            newKeepers,
+            newKeepers,
+            f,
+            config,
+            offchainVersion,
+            offchainBytes,
+            baseConfig[6],
+            baseConfig[7],
+          )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.push(randomAddress())`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setConfigTypeSafe(
+            newKeepers,
+            newKeepers,
+            f,
+            config,
+            offchainVersion,
+            offchainBytes,
+            baseConfig[6],
+            baseConfig[7],
+          )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setConfigTypeSafe(
+            newKeepers,
+            newKeepers,
+            0,
+            config,
+            offchainVersion,
+            offchainBytes,
+            baseConfig[6],
+            baseConfig[7],
+          )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setConfigTypeSafe(
+            signers,
+            newKeepers,
+            f,
+            config,
+            offchainVersion,
+            offchainBytes,
+            baseConfig[6],
+            baseConfig[7],
+          )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.pop()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setConfigTypeSafe(
+            newKeepers,
+            newKeepers,
+            f,
+            config,
+            offchainVersion,
+            offchainBytes,
+            baseConfig[6],
+            baseConfig[7],
+          )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.Eddy.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.Eddy.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.Eddy.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.Eddy.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setConfigTypeSafe(
+            newSigners,
+            newKeepers,
+            f,
+            config,
+            offchainVersion,
+            offchainBytes,
+            baseConfig[6],
+            baseConfig[7],
+          )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.Eddy.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.Eddy.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.Eddy.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.Eddy.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setConfigTypeSafe(
+            newKeepers,
+            newTransmitters,
+            f,
+            config,
+            offchainVersion,
+            offchainBytes,
+            baseConfig[6],
+            baseConfig[7],
+          )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setConfigTypeSafe(
+            signerAddresses,
+            keeperAddresses,
+            f,
+            {
+              checkGasLimit,
+              stalenessSeconds,
+              gasCeilingMultiplier,
+              maxCheckDataSize,
+              maxPerformDataSize,
+              maxRevertDataSize,
+              maxPerformGas,
+              fallbackGasPrice,
+              fallbackLinkPrice,
+              fallbackNativePrice,
+              transcoder: transcoder.address,
+              registrars: [],
+              upkeepPrivilegeManager: upkeepManager,
+              chainModule: moduleBase.address,
+              reorgProtectionEnabled: true,
+              financeAdmin: financeAdminAddress,
+            },
+            offchainVersion,
+            offchainBytes,
+            [linkToken.address],
+            [
+              {
+                gasFeePPB: paymentPremiumPPB,
+                flatFeeMilliCents,
+                priceFeed: linkUSDFeed.address,
+                fallbackPrice: fallbackLinkPrice,
+                minSpend: newMinUpkeepSpend,
+                decimals: 18,
+              },
+            ],
+          )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.balanceOf(
+            await payee1.getAddress(),
+          )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getUpkeep(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.linkAvailableForPayment()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.sub(upkeepBefore)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.sub(amountSpent)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(admin)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.cancelUpkeep(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.balanceOf(
+            await payee1.getAddress(),
+          )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getUpkeep(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.linkAvailableForPayment()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.sub(ownerBefore)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.eq(cancellationFee)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setConfigTypeSafe(
+            signerAddresses,
+            keeperAddresses,
+            f,
+            {
+              checkGasLimit,
+              stalenessSeconds,
+              gasCeilingMultiplier,
+              maxCheckDataSize,
+              maxPerformDataSize,
+              maxRevertDataSize,
+              maxPerformGas,
+              fallbackGasPrice,
+              fallbackLinkPrice,
+              fallbackNativePrice,
+              transcoder: transcoder.address,
+              registrars: [],
+              upkeepPrivilegeManager: upkeepManager,
+              chainModule: moduleBase.address,
+              reorgProtectionEnabled: true,
+              financeAdmin: financeAdminAddress,
+            },
+            offchainVersion,
+            offchainBytes,
+            [linkToken.address],
+            [
+              {
+                gasFeePPB: paymentPremiumPPB,
+                flatFeeMilliCents,
+                priceFeed: linkUSDFeed.address,
+                fallbackPrice: fallbackLinkPrice,
+                minSpend: newMinUpkeepSpend,
+                decimals: 18,
+              },
+            ],
+          )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.balanceOf(
+            await payee1.getAddress(),
+          )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getUpkeep(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.linkAvailableForPayment()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(admin)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.cancelUpkeep(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.balanceOf(
+            await payee1.getAddress(),
+          )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.linkAvailableForPayment()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getUpkeep(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.sub(ownerBefore)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.eq(upkeepBefore)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.from(420)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setConfigTypeSafe(
+            signerAddresses,
+            keeperAddresses,
+            f,
+            {
+              checkGasLimit,
+              stalenessSeconds,
+              gasCeilingMultiplier,
+              maxCheckDataSize,
+              maxPerformDataSize,
+              maxRevertDataSize,
+              maxPerformGas,
+              fallbackGasPrice,
+              fallbackLinkPrice,
+              fallbackNativePrice,
+              transcoder: transcoder.address,
+              registrars: [],
+              upkeepPrivilegeManager: upkeepManager,
+              chainModule: moduleBase.address,
+              reorgProtectionEnabled: true,
+              financeAdmin: financeAdminAddress,
+            },
+            offchainVersion,
+            offchainBytes,
+            [linkToken.address],
+            [
+              {
+                gasFeePPB: paymentPremiumPPB,
+                flatFeeMilliCents,
+                priceFeed: linkUSDFeed.address,
+                fallbackPrice: fallbackLinkPrice,
+                minSpend: newMinUpkeepSpend,
+                decimals: 18,
+              },
+            ],
+          )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.balanceOf(
+            await payee1.getAddress(),
+          )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getUpkeep(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.linkAvailableForPayment()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(admin)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.cancelUpkeep(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.balanceOf(
+            await payee1.getAddress(),
+          )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.linkAvailableForPayment()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getUpkeep(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.eq(payee1After)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(payee2)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.withdrawPayment(
+            await keeper1.getAddress(),
+            await nonkeeper.getAddress(),
+          )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(payee2)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.withdrawPayment(await keeper1.getAddress(), zeroAddress)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getTransmitterInfo(
+        await keeper1.getAddress(),
+      )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getUpkeep(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.balanceOf(to)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.balanceOf(registry.address)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getState()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.linkAvailableForPayment()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(payee1)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.withdrawPayment(await keeper1.getAddress(), to)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getTransmitterInfo(
+        await keeper1.getAddress(),
+      )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getUpkeep(upkeepId)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.balanceOf(to)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.balanceOf(registry.address)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getState()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.linkAvailableForPayment()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.sub(keeperBefore.balance)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.eq(registryLinkAfter)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getTransmitterInfo(await keeper1.getAddress())`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(payee1)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.withdrawPayment(
+          await keeper1.getAddress(),
+          await nonkeeper.getAddress(),
+        )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setShouldRevertCallback(true)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(zeroAddress)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.callStatic.checkCallback(streamsLookupUpkeepId, values, '0x')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.gasUsed.gt(BigNumber.from('0'))`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.from('0')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(zeroAddress)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.callStatic.checkCallback(streamsLookupUpkeepId, values, '0x')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.gasUsed.gt(BigNumber.from('0'))`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.from('0')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setCallbackReturnBool(false)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(zeroAddress)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.callStatic.checkCallback(streamsLookupUpkeepId, values, '0x')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.gasUsed.gt(BigNumber.from('0'))`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.from('0')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(zeroAddress)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.callStatic.checkCallback(streamsLookupUpkeepId, values, '0x')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.utils.defaultAbiCoder.encode(
+        ['bytes[]', 'bytes'],
+        [values, '0x'],
+      )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.gasUsed.gt(BigNumber.from('0'))`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.from('0')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getState()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.div(
+        BigNumber.from(keeperAddresses.length),
+      )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.from(keeperAddresses.length)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getTransmitterInfo(await keeper1.getAddress())`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.sub(premiumPerTransmitter)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getTransmitterInfo(await keeper2.getAddress())`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getState()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.div(
+        BigNumber.from(keeperAddresses.length),
+      )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.from(keeperAddresses.length)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.sub(
+        premiumPerTransmitter,
+      )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getTransmitterInfo(await keeper1.getAddress())`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getTransmitterInfo(await keeper2.getAddress())`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.gt(k2Balance.add(additionalPremium))`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.add(additionalPremium)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getState()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getTransmitterInfo(await keeper1.getAddress())`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getTransmitterInfo(await keeper2.getAddress())`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(payee1)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.withdrawPayment(
+          await keeper1.getAddress(),
+          await nonkeeper.getAddress(),
+        )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getTransmitterInfo(
+        await keeper1.getAddress(),
+      )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getTransmitterInfo(
+        await keeper2.getAddress(),
+      )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.lastCollected.eq(BigNumber.from(0))`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.from(0)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.from('0')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.add(BigNumber.from('31'))`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.from('31')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(payee1)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.withdrawPayment(
+          await keeper1.getAddress(),
+          await nonkeeper.getAddress(),
+        )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(payee2)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.withdrawPayment(
+          await keeper2.getAddress(),
+          await nonkeeper.getAddress(),
+        )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.add(BigNumber.from('31'))`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.from('31')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setConfigTypeSafe(
+        signerAddresses.slice(2, 15), // only use 2-14th index keepers
+        keeperAddresses.slice(2, 15),
+        f,
+        config,
+        offchainVersion,
+        offchainBytes,
+        baseConfig[6],
+        baseConfig[7],
+      )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.slice(2, 15)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.slice(2, 15)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.add(BigNumber.from('13'))`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.from('13')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(payee1)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.withdrawPayment(
+          await keeper1.getAddress(),
+          await nonkeeper.getAddress(),
+        )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(payee3)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.withdrawPayment(
+          await keeper3.getAddress(),
+          await nonkeeper.getAddress(),
+        )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(owner)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.setConfigTypeSafe(
+        signerAddresses.slice(0, 4), // only use 0-3rd index keepers
+        keeperAddresses.slice(0, 4),
+        f,
+        config,
+        offchainVersion,
+        offchainBytes,
+        baseConfig[6],
+        baseConfig[7],
+      )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.slice(0, 4)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.slice(0, 4)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.add(BigNumber.from('4'))`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.from('4')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.add(BigNumber.from('4'))`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.from('4')`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(payee5)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.withdrawPayment(
+          await keeper5.getAddress(),
+          await nonkeeper.getAddress(),
+        )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.connect(payee1)`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.withdrawPayment(
+          await keeper1.getAddress(),
+          await nonkeeper.getAddress(),
+        )`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
+$DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
 $DIR/contracts/test/v0.8/directory.test.ts: `throw new Error(
             `${path.join(dirPath, entry.name)} starts with a number`,
           )`
