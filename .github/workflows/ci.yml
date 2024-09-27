@@ -100,6 +100,15 @@ jobs:
         if: ${{ matrix.test != 'ci' }}
         uses: ./.github/actions/install-testing-tools
 
+      - name: Free up space on Ubuntu
+        if: ${{ matrix.environment == 'ubuntu-latest' }}
+        run: |
+          # https://github.com/actions/runner-images/issues/2606#issuecomment-772683150
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/share/swift
+          # du -sh /usr/*/* 2>/dev/null | sort -h || true
+
       - name: Disable incremental compilation on Windows
         if: ${{ matrix.environment == 'windows-latest' }}
         run: echo 'CARGO_INCREMENTAL=0' >> "$GITHUB_ENV"
