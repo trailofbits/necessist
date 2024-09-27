@@ -12,6 +12,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
+  CARGO_INCREMENTAL: 0
   CARGO_TERM_COLOR: always
 
 jobs:
@@ -99,10 +100,6 @@ jobs:
       - name: Install testing tools
         if: ${{ matrix.test != 'ci' }}
         uses: ./.github/actions/install-testing-tools
-
-      - name: Disable incremental compilation on Windows
-        if: ${{ matrix.environment == 'windows-latest' }}
-        run: echo 'CARGO_INCREMENTAL=0' >> "$GITHUB_ENV"
 
       - name: Enable debug logging
         if: ${{ runner.debug == 1 }}
