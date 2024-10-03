@@ -2733,7 +2733,7 @@ $DIR/cmd/erasure-healing-common_test.go: `t.Run(fmt.Sprintf("case-%d", i), func(
 					test.expectedTime, modTime)
 			}
 			availableDisks, _, _ := disksWithAllParts(ctx, onlineDisks, partsMetadata,
-				test.errs, fi, bucket, object, madmin.HealDeepScan)
+				test.errs, fi, false, bucket, object, madmin.HealDeepScan)
 
 			if test._tamperBackend != noTamper {
 				if tamperedIndex != -1 && availableDisks[tamperedIndex] != nil {
@@ -2828,7 +2828,7 @@ $DIR/cmd/erasure-healing-common_test.go: `t.Run(fmt.Sprintf("case-%d", i), func(
 			}
 
 			availableDisks, _, _ := disksWithAllParts(ctx, onlineDisks, partsMetadata,
-				test.errs, fi, bucket, object, madmin.HealDeepScan)
+				test.errs, fi, false, bucket, object, madmin.HealDeepScan)
 
 			if test._tamperBackend != noTamper {
 				if tamperedIndex != -1 && availableDisks[tamperedIndex] != nil {
@@ -2848,13 +2848,13 @@ $DIR/cmd/erasure-healing-common_test.go: `erasureDisks, _, _ = listOnlineDisks(e
 $DIR/cmd/erasure-healing-common_test.go: `partsMetadata[0].ModTime = partsMetadata[0].ModTime.Add(-1 * time.Hour)`
 $DIR/cmd/erasure-healing-common_test.go: `errs = make([]error, len(erasureDisks))`
 $DIR/cmd/erasure-healing-common_test.go: `filteredDisks, _, _ = disksWithAllParts(ctx, erasureDisks, partsMetadata,
-		errs, fi, bucket, object, madmin.HealDeepScan)`
+		errs, fi, false, bucket, object, madmin.HealDeepScan)`
 $DIR/cmd/erasure-healing-common_test.go: `partsMetadata[0] = partsMetadataBackup`
 $DIR/cmd/erasure-healing-common_test.go: `partsMetadataBackup = partsMetadata[1]`
 $DIR/cmd/erasure-healing-common_test.go: `partsMetadata[1].DataDir = "foo-random"`
 $DIR/cmd/erasure-healing-common_test.go: `errs = make([]error, len(erasureDisks))`
 $DIR/cmd/erasure-healing-common_test.go: `filteredDisks, _, _ = disksWithAllParts(ctx, erasureDisks, partsMetadata,
-		errs, fi, bucket, object, madmin.HealDeepScan)`
+		errs, fi, false, bucket, object, madmin.HealDeepScan)`
 $DIR/cmd/erasure-healing-common_test.go: `partsMetadata[1] = partsMetadataBackup`
 $DIR/cmd/erasure-healing-common_test.go: `diskFailures[0] = "part.1"`
 $DIR/cmd/erasure-healing-common_test.go: `diskFailures[3] = "part.1"`
@@ -2862,7 +2862,7 @@ $DIR/cmd/erasure-healing-common_test.go: `diskFailures[15] = "part.1"`
 $DIR/cmd/erasure-healing-common_test.go: `f.WriteString("oops")`
 $DIR/cmd/erasure-healing-common_test.go: `errs = make([]error, len(erasureDisks))`
 $DIR/cmd/erasure-healing-common_test.go: `filteredDisks, dataErrsPerDisk, _ = disksWithAllParts(ctx, erasureDisks, partsMetadata,
-		errs, fi, bucket, object, madmin.HealDeepScan)`
+		errs, fi, false, bucket, object, madmin.HealDeepScan)`
 $DIR/cmd/erasure-healing-common_test.go: `fi = test.fi2`
 $DIR/cmd/erasure-healing-common_test.go: `metaArr = append(metaArr, fi)`
 $DIR/cmd/erasure-healing-common_test.go: `match++`
@@ -3000,7 +3000,7 @@ $DIR/cmd/erasure-healing-common_test.go: `.Run(fmt.Sprintf("case-%d", i), func(t
 					test.expectedTime, modTime)
 			}
 			availableDisks, _, _ := disksWithAllParts(ctx, onlineDisks, partsMetadata,
-				test.errs, fi, bucket, object, madmin.HealDeepScan)
+				test.errs, fi, false, bucket, object, madmin.HealDeepScan)
 
 			if test._tamperBackend != noTamper {
 				if tamperedIndex != -1 && availableDisks[tamperedIndex] != nil {
@@ -3109,7 +3109,7 @@ $DIR/cmd/erasure-healing-common_test.go: `.Run(fmt.Sprintf("case-%d", i), func(t
 			}
 
 			availableDisks, _, _ := disksWithAllParts(ctx, onlineDisks, partsMetadata,
-				test.errs, fi, bucket, object, madmin.HealDeepScan)
+				test.errs, fi, false, bucket, object, madmin.HealDeepScan)
 
 			if test._tamperBackend != noTamper {
 				if tamperedIndex != -1 && availableDisks[tamperedIndex] != nil {
@@ -16362,6 +16362,46 @@ $DIR/internal/s3select/json/reader_test.go: `.Open(filepath.Join("testdata", fil
 $DIR/internal/s3select/json/reader_test.go: `.Join("testdata", file.Name())`
 $DIR/internal/s3select/json/reader_test.go: `.Name()`
 $DIR/internal/s3select/json/reader_test.go: `.Read(record)`
+$DIR/internal/s3select/jstream/decoder_test.go: `counter++`
+$DIR/internal/s3select/jstream/decoder_test.go: `counter++`
+$DIR/internal/s3select/jstream/decoder_test.go: `counter++`
+$DIR/internal/s3select/jstream/decoder_test.go: `counter++`
+$DIR/internal/s3select/jstream/decoder_test.go: `counter = 0`
+$DIR/internal/s3select/jstream/decoder_test.go: `decoder = NewDecoder(mkReader(body), 1)`
+$DIR/internal/s3select/jstream/decoder_test.go: `kvcounter++`
+$DIR/internal/s3select/jstream/decoder_test.go: `counter++`
+$DIR/internal/s3select/jstream/decoder_test.go: `counter = 0`
+$DIR/internal/s3select/jstream/decoder_test.go: `kvcounter = 0`
+$DIR/internal/s3select/jstream/decoder_test.go: `decoder = NewDecoder(mkReader(body), 1).EmitKV()`
+$DIR/internal/s3select/jstream/decoder_test.go: `kvcounter++`
+$DIR/internal/s3select/jstream/decoder_test.go: `counter++`
+$DIR/internal/s3select/jstream/decoder_test.go: `.NewReader([]byte(s))`
+$DIR/internal/s3select/jstream/decoder_test.go: `.Stream()`
+$DIR/internal/s3select/jstream/decoder_test.go: `.Err()`
+$DIR/internal/s3select/jstream/decoder_test.go: `.Stream()`
+$DIR/internal/s3select/jstream/decoder_test.go: `.Err()`
+$DIR/internal/s3select/jstream/decoder_test.go: `.Stream()`
+$DIR/internal/s3select/jstream/decoder_test.go: `.Err()`
+$DIR/internal/s3select/jstream/decoder_test.go: `.Stream()`
+$DIR/internal/s3select/jstream/decoder_test.go: `.Err()`
+$DIR/internal/s3select/jstream/decoder_test.go: `.Stream()`
+$DIR/internal/s3select/jstream/decoder_test.go: `.Err()`
+$DIR/internal/s3select/jstream/decoder_test.go: `.EmitKV()`
+$DIR/internal/s3select/jstream/decoder_test.go: `.Stream()`
+$DIR/internal/s3select/jstream/decoder_test.go: `.Err()`
+$DIR/internal/s3select/jstream/decoder_test.go: `.Stream()`
+$DIR/internal/s3select/jstream/decoder_test.go: `.Err()`
+$DIR/internal/s3select/jstream/decoder_test.go: `.ReaderErr()`
+$DIR/internal/s3select/jstream/decoder_test.go: `.MaxDepth(test.maxDepth)`
+$DIR/internal/s3select/jstream/decoder_test.go: `.Stream()`
+$DIR/internal/s3select/jstream/decoder_test.go: `.Err()`
+$DIR/internal/s3select/jstream/scanner_test.go: `i++`
+$DIR/internal/s3select/jstream/scanner_test.go: `i++`
+$DIR/internal/s3select/jstream/scanner_test.go: `.NewReader(data)`
+$DIR/internal/s3select/jstream/scanner_test.go: `.LoadInt64(&scanner.end)`
+$DIR/internal/s3select/jstream/scanner_test.go: `.next()`
+$DIR/internal/s3select/jstream/scanner_test.go: `.next()`
+$DIR/internal/s3select/jstream/scanner_test.go: `.next()`
 $DIR/internal/s3select/select_test.go: `t.Run(testCase.name, func(t *testing.T) {
 			// Hack cpuid to the CPU doesn't appear to support AVX2.
 			// Restore whatever happens.
@@ -17678,6 +17718,7 @@ $DIR/internal/s3select/sql/jsonpath_test.go: `fmt.Printf("%#v (%v) != %v (%v)\n"
 $DIR/internal/s3select/sql/jsonpath_test.go: `.NewDecoder(bytes.NewBuffer(b), 0)`
 $DIR/internal/s3select/sql/jsonpath_test.go: `.NewBuffer(b)`
 $DIR/internal/s3select/sql/jsonpath_test.go: `.ObjectAsKVS()`
+$DIR/internal/s3select/sql/jsonpath_test.go: `.MaxDepth(100)`
 $DIR/internal/s3select/sql/jsonpath_test.go: `.Stream()`
 $DIR/internal/s3select/sql/jsonpath_test.go: `.Err()`
 $DIR/internal/s3select/sql/jsonpath_test.go: `.Open(filepath.Join("jsondata", "books.json"))`
