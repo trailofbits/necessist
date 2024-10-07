@@ -67,9 +67,7 @@ impl<'context, 'config, 'backend, 'ast, 'storage>
     }
 }
 
-impl<'context, 'config, 'backend, 'ast, 'storage> Visit
-    for Visitor<'context, 'config, 'backend, 'ast, 'storage>
-{
+impl<'ast> Visit for Visitor<'_, '_, '_, 'ast, '_> {
     fn visit_stmt(&mut self, stmt: &Stmt) {
         // smoelius: Unsafe hack to work around: https://github.com/swc-project/swc/issues/6032
         let stmt = unsafe { std::mem::transmute::<&Stmt, &'ast Stmt>(stmt) };

@@ -113,9 +113,7 @@ impl<'context, 'config, 'backend, 'ast, 'storage>
     }
 }
 
-impl<'context, 'config, 'backend, 'ast, 'storage> Visit<'ast>
-    for Visitor<'context, 'config, 'backend, 'ast, 'storage>
-{
+impl<'ast> Visit<'ast> for Visitor<'_, '_, '_, 'ast, '_> {
     fn visit_item_mod(&mut self, item: &'ast ItemMod) {
         if self.test_ident.is_none() {
             self.storage.borrow_mut().module_path.push(&item.ident);

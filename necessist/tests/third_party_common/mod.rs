@@ -197,7 +197,7 @@ fn read_tests_in(path: impl AsRef<Path>, filter: bool) -> BTreeMap<Key, Vec<(Pat
             continue;
         }
 
-        if filter && !target_os_includes(&test.target_os, consts::OS) {
+        if filter && !target_os_includes(test.target_os.as_ref(), consts::OS) {
             continue;
         }
 
@@ -785,9 +785,9 @@ fn readme_is_current() {
             test.rev.map(|s| s + " ").unwrap_or_default(),
             test.framework.map(|s| s + " ").unwrap_or_default(),
             test.full.to_x_space(),
-            target_os_includes(&test.target_os, "linux").to_x_space(),
-            target_os_includes(&test.target_os, "macos").to_x_space(),
-            target_os_includes(&test.target_os, "windows").to_x_space(),
+            target_os_includes(test.target_os.as_ref(), "linux").to_x_space(),
+            target_os_includes(test.target_os.as_ref(), "macos").to_x_space(),
+            target_os_includes(test.target_os.as_ref(), "windows").to_x_space(),
         ));
     }
     test_lines.sort();
@@ -845,7 +845,7 @@ impl ToXSpace for bool {
     }
 }
 
-fn target_os_includes(target_os: &Option<StringOrVec>, os: &str) -> bool {
+fn target_os_includes(target_os: Option<&StringOrVec>, os: &str) -> bool {
     let Some(target_os) = target_os else {
         return true;
     };

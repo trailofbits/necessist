@@ -185,15 +185,15 @@ pub struct SourceMapped<'ast, T> {
     node: &'ast T,
 }
 
-impl<'ast, T> Clone for SourceMapped<'ast, T> {
+impl<T> Clone for SourceMapped<'_, T> {
     fn clone(&self) -> Self {
         *self
     }
 }
 
-impl<'ast, T> Copy for SourceMapped<'ast, T> {}
+impl<T> Copy for SourceMapped<'_, T> {}
 
-impl<'ast, T: PartialEq> PartialEq for SourceMapped<'ast, T> {
+impl<T: PartialEq> PartialEq for SourceMapped<'_, T> {
     // smoelius: Remove this `#[allow(..)]` once the following pull request appears in nightly:
     // https://github.com/rust-lang/rust-clippy/pull/12137
     #[allow(clippy::unconditional_recursion)]
@@ -202,9 +202,9 @@ impl<'ast, T: PartialEq> PartialEq for SourceMapped<'ast, T> {
     }
 }
 
-impl<'ast, T: Eq> Eq for SourceMapped<'ast, T> {}
+impl<T: Eq> Eq for SourceMapped<'_, T> {}
 
-impl<'ast, T: SwcSpanned> Spanned for SourceMapped<'ast, T> {
+impl<T: SwcSpanned> Spanned for SourceMapped<'_, T> {
     fn span(&self, source_file: &SourceFile) -> Span {
         SwcSpanned::span(self.node).to_internal_span(self.source_map, source_file)
     }
@@ -225,13 +225,13 @@ impl AbstractTypes for Types {
     type MacroCall<'ast> = Infallible;
 }
 
-impl<'ast> Named for Test<'ast> {
+impl Named for Test<'_> {
     fn name(&self) -> String {
         self.it_message.to_string()
     }
 }
 
-impl<'ast> MaybeNamed for <Types as AbstractTypes>::Expression<'ast> {
+impl MaybeNamed for <Types as AbstractTypes>::Expression<'_> {
     fn name(&self) -> Option<String> {
         if let Expr::Ident(ident) = self.node {
             Some(ident.as_ref().to_owned())
@@ -241,7 +241,7 @@ impl<'ast> MaybeNamed for <Types as AbstractTypes>::Expression<'ast> {
     }
 }
 
-impl<'ast> MaybeNamed for <Types as AbstractTypes>::Field<'ast> {
+impl MaybeNamed for <Types as AbstractTypes>::Field<'_> {
     fn name(&self) -> Option<String> {
         if let MemberProp::Ident(ident) = &self.node.prop {
             Some(ident.as_ref().to_owned())
@@ -251,7 +251,7 @@ impl<'ast> MaybeNamed for <Types as AbstractTypes>::Field<'ast> {
     }
 }
 
-impl<'ast> MaybeNamed for <Types as AbstractTypes>::Call<'ast> {
+impl MaybeNamed for <Types as AbstractTypes>::Call<'_> {
     fn name(&self) -> Option<String> {
         if_chain! {
             if let Callee::Expr(callee) = &self.node.callee;

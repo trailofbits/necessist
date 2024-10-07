@@ -94,9 +94,7 @@ impl<'context, 'config, 'backend, 'ast, 'storage>
     }
 }
 
-impl<'context, 'config, 'backend, 'ast, 'storage> visit_fns::Visitor<'ast>
-    for Visitor<'context, 'config, 'backend, 'ast, 'storage>
-{
+impl<'ast> visit_fns::Visitor<'ast> for Visitor<'_, '_, '_, 'ast, '_> {
     type Error = Infallible;
 
     fn visit_function_definition(

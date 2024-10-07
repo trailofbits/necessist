@@ -151,7 +151,7 @@ pub enum MacroCall<'ast> {
     Expr(&'ast syn::ExprMacro),
 }
 
-impl<'ast> MacroCall<'ast> {
+impl MacroCall<'_> {
     fn path(&self) -> &syn::Path {
         match self {
             MacroCall::Stmt(syn::StmtMacro { mac, .. })
@@ -178,7 +178,7 @@ impl AbstractTypes for Types {
 }
 
 // smoelius: See note above re `TEST_PATH_ID_MAP` and `TEST_PATHS`.
-impl<'ast> Named for Test<'ast> {
+impl Named for Test<'_> {
     fn name(&self) -> String {
         let test_paths = TEST_PATHS.read().unwrap();
         test_paths[self.test_path_id].join("::")
@@ -190,7 +190,7 @@ impl<'ast> Named for Test<'ast> {
 // not such a language, it is safe to return `None`.
 // smoelius: "Safe to return `None`" is no longer accurate. The `GenericVisitor` now uses callee
 // names to identify local functions.
-impl<'ast> MaybeNamed for Expression<'ast> {
+impl MaybeNamed for Expression<'_> {
     fn name(&self) -> Option<String> {
         match self {
             Expression::Await(_) | Expression::Other(_) => None,
@@ -202,7 +202,7 @@ impl<'ast> MaybeNamed for Expression<'ast> {
     }
 }
 
-impl<'ast> MaybeNamed for <Types as AbstractTypes>::Field<'ast> {
+impl MaybeNamed for <Types as AbstractTypes>::Field<'_> {
     fn name(&self) -> Option<String> {
         match self {
             Field::Field(field) => {
@@ -217,7 +217,7 @@ impl<'ast> MaybeNamed for <Types as AbstractTypes>::Field<'ast> {
     }
 }
 
-impl<'ast> MaybeNamed for <Types as AbstractTypes>::Call<'ast> {
+impl MaybeNamed for <Types as AbstractTypes>::Call<'_> {
     fn name(&self) -> Option<String> {
         match self {
             Call::FunctionCall(call) => {
@@ -237,13 +237,13 @@ impl<'ast> MaybeNamed for <Types as AbstractTypes>::Call<'ast> {
     }
 }
 
-impl<'ast> Named for <Types as AbstractTypes>::MacroCall<'ast> {
+impl Named for <Types as AbstractTypes>::MacroCall<'_> {
     fn name(&self) -> String {
         self.path().to_token_stream().to_string().replace(' ', "")
     }
 }
 
-impl<'ast> Spanned for <Types as AbstractTypes>::Expression<'ast> {
+impl Spanned for <Types as AbstractTypes>::Expression<'_> {
     fn span(&self, source_file: &SourceFile) -> Span {
         match self {
             Expression::Await(await_) => {
@@ -260,13 +260,13 @@ impl<'ast> Spanned for <Types as AbstractTypes>::Expression<'ast> {
     }
 }
 
-impl<'ast> Spanned for <Types as AbstractTypes>::Statement<'ast> {
+impl Spanned for <Types as AbstractTypes>::Statement<'_> {
     fn span(&self, source_file: &SourceFile) -> Span {
         <_ as syn::spanned::Spanned>::span(self).to_internal_span(source_file)
     }
 }
 
-impl<'ast> Spanned for <Types as AbstractTypes>::Field<'ast> {
+impl Spanned for <Types as AbstractTypes>::Field<'_> {
     fn span(&self, source_file: &SourceFile) -> Span {
         match self {
             Field::Field(field) => {
@@ -279,7 +279,7 @@ impl<'ast> Spanned for <Types as AbstractTypes>::Field<'ast> {
     }
 }
 
-impl<'ast> Spanned for <Types as AbstractTypes>::Call<'ast> {
+impl Spanned for <Types as AbstractTypes>::Call<'_> {
     fn span(&self, source_file: &SourceFile) -> Span {
         match self {
             Call::FunctionCall(call) => {
@@ -292,7 +292,7 @@ impl<'ast> Spanned for <Types as AbstractTypes>::Call<'ast> {
     }
 }
 
-impl<'ast> Spanned for <Types as AbstractTypes>::MacroCall<'ast> {
+impl Spanned for <Types as AbstractTypes>::MacroCall<'_> {
     fn span(&self, source_file: &SourceFile) -> Span {
         match self {
             MacroCall::Stmt(stmt) => {

@@ -50,7 +50,7 @@ pub struct LocalFunction<'ast> {
     function_definition: &'ast FunctionDefinition,
 }
 
-impl<'ast> Hash for LocalFunction<'ast> {
+impl Hash for LocalFunction<'_> {
     fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
         // smoelius: Hack.
         let bytes = serde_json::to_vec(self.function_definition)
@@ -65,7 +65,7 @@ pub struct WithContents<'ast, T> {
     value: T,
 }
 
-impl<'ast, T: LocWithOptionalSemicolon> Spanned for WithContents<'ast, T> {
+impl<T: LocWithOptionalSemicolon> Spanned for WithContents<'_, T> {
     fn span(&self, source_file: &SourceFile) -> Span {
         self.value
             .loc_with_optional_semicolon(self.contents)
@@ -80,7 +80,7 @@ pub struct MemberAccess<'ast> {
     member: &'ast Identifier,
 }
 
-impl<'ast> CodeLocation for MemberAccess<'ast> {
+impl CodeLocation for MemberAccess<'_> {
     fn loc(&self) -> Loc {
         self.loc
     }
@@ -94,7 +94,7 @@ pub struct FunctionCall<'ast> {
     args: &'ast Vec<Expression>,
 }
 
-impl<'ast> CodeLocation for FunctionCall<'ast> {
+impl CodeLocation for FunctionCall<'_> {
     fn loc(&self) -> Loc {
         self.loc
     }
@@ -115,13 +115,13 @@ impl AbstractTypes for Types {
     type MacroCall<'ast> = Infallible;
 }
 
-impl<'ast> Named for <Types as AbstractTypes>::Test<'ast> {
+impl Named for <Types as AbstractTypes>::Test<'_> {
     fn name(&self) -> String {
         self.name.clone()
     }
 }
 
-impl<'ast> MaybeNamed for <Types as AbstractTypes>::Expression<'ast> {
+impl MaybeNamed for <Types as AbstractTypes>::Expression<'_> {
     fn name(&self) -> Option<String> {
         if let Expression::Variable(identifier) = self.value {
             Some(identifier.to_string())
@@ -131,13 +131,13 @@ impl<'ast> MaybeNamed for <Types as AbstractTypes>::Expression<'ast> {
     }
 }
 
-impl<'ast> MaybeNamed for <Types as AbstractTypes>::Field<'ast> {
+impl MaybeNamed for <Types as AbstractTypes>::Field<'_> {
     fn name(&self) -> Option<String> {
         Some(self.value.member.to_string())
     }
 }
 
-impl<'ast> MaybeNamed for <Types as AbstractTypes>::Call<'ast> {
+impl MaybeNamed for <Types as AbstractTypes>::Call<'_> {
     fn name(&self) -> Option<String> {
         if let Expression::Variable(identifier) = self.value.callee {
             Some(identifier.to_string())
@@ -488,9 +488,9 @@ impl<T: LocWithOptionalSemicolon> LocWithOptionalSemicolon for &T {
 
 impl LocWithOptionalSemicolon for Expression {}
 
-impl<'ast> LocWithOptionalSemicolon for MemberAccess<'ast> {}
+impl LocWithOptionalSemicolon for MemberAccess<'_> {}
 
-impl<'ast> LocWithOptionalSemicolon for FunctionCall<'ast> {}
+impl LocWithOptionalSemicolon for FunctionCall<'_> {}
 
 impl LocWithOptionalSemicolon for Statement {
     fn loc_with_optional_semicolon(&self, contents: &str) -> Loc {
