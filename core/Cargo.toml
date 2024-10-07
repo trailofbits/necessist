@@ -24,7 +24,7 @@ indexmap = "2.5"
 indicatif = "0.17"
 itertools = "0.13"
 log = "0.4"
-once_cell = "1.19"
+once_cell = "1.20"
 proc-macro2 = { version = "1.0", features = ["span-locations"] }
 regex = "1.10"
 remain = "0.2"
