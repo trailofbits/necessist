@@ -137,9 +137,7 @@ macro_rules! visit_call_post {
     ($this:expr, $storage:expr) => {};
 }
 
-impl<'context, 'config, 'backend, 'ast, T: ParseLow>
-    GenericVisitor<'context, 'config, 'backend, 'ast, T>
-{
+impl<'ast, T: ParseLow> GenericVisitor<'_, '_, '_, 'ast, T> {
     pub fn next_local_function(
         &mut self,
     ) -> Option<<T::Types as AbstractTypes>::LocalFunction<'ast>> {

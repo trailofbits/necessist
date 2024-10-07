@@ -113,7 +113,7 @@ pub struct NodeWithText<'ast> {
     node: Node<'ast>,
 }
 
-impl<'ast> Spanned for NodeWithText<'ast> {
+impl Spanned for NodeWithText<'_> {
     fn span(&self, source_file: &SourceFile) -> Span {
         self.node.range().to_internal_span(source_file)
     }
@@ -146,37 +146,37 @@ impl AbstractTypes for Types {
     type MacroCall<'ast> = Infallible;
 }
 
-impl<'ast> Named for Test<'ast> {
+impl Named for Test<'_> {
     fn name(&self) -> String {
         self.name.to_string()
     }
 }
 
-impl<'ast> Spanned for Statement<'ast> {
+impl Spanned for Statement<'_> {
     fn span(&self, source_file: &SourceFile) -> Span {
         self.0.span(source_file)
     }
 }
 
-impl<'ast> Spanned for Expression<'ast> {
+impl Spanned for Expression<'_> {
     fn span(&self, source_file: &SourceFile) -> Span {
         self.0.span(source_file)
     }
 }
 
-impl<'ast> Spanned for Field<'ast> {
+impl Spanned for Field<'_> {
     fn span(&self, source_file: &SourceFile) -> Span {
         self.0.span(source_file)
     }
 }
 
-impl<'ast> Spanned for Call<'ast> {
+impl Spanned for Call<'_> {
     fn span(&self, source_file: &SourceFile) -> Span {
         self.0.span(source_file)
     }
 }
 
-impl<'ast> MaybeNamed for <Types as AbstractTypes>::Expression<'ast> {
+impl MaybeNamed for <Types as AbstractTypes>::Expression<'_> {
     fn name(&self) -> Option<String> {
         if self.0.node.kind_id() == *IDENTIFIER_KIND {
             self.0
@@ -190,7 +190,7 @@ impl<'ast> MaybeNamed for <Types as AbstractTypes>::Expression<'ast> {
     }
 }
 
-impl<'ast> MaybeNamed for <Types as AbstractTypes>::Field<'ast> {
+impl MaybeNamed for <Types as AbstractTypes>::Field<'_> {
     fn name(&self) -> Option<String> {
         assert_eq!(*SELECTOR_EXPRESSION_KIND, self.0.node.kind_id());
         self.0
@@ -203,7 +203,7 @@ impl<'ast> MaybeNamed for <Types as AbstractTypes>::Field<'ast> {
     }
 }
 
-impl<'ast> MaybeNamed for <Types as AbstractTypes>::Call<'ast> {
+impl MaybeNamed for <Types as AbstractTypes>::Call<'_> {
     fn name(&self) -> Option<String> {
         assert_eq!(*CALL_EXPRESSION_KIND, self.0.node.kind_id());
         self.0

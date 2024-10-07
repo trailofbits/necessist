@@ -64,7 +64,7 @@ struct Context<'a> {
     progress: Option<&'a ProgressBar>,
 }
 
-impl<'a> Context<'a> {
+impl Context<'_> {
     fn light(&self) -> LightContext {
         LightContext {
             opts: &self.opts,
