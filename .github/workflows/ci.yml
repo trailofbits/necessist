@@ -81,6 +81,10 @@ jobs:
             target/dylint/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
+      - name: Install SQLite on Ubuntu
+        if: ${{ matrix.environment == 'ubuntu-latest' }}
+        run: sudo apt install libsqlite3-dev
+
       - name: Rustup
         run: rustup update
 
