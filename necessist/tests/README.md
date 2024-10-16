@@ -21,6 +21,6 @@
 | pyth                       |                                          | anchor    |      | X     | X     |         | 0         |
 | rusoto                     |                                          |           |      | X     | X     | X       | 1         |
 | seaport                    | 1.6                                      | hardhat   |      | X     | X     | X       | 1         |
+| squads-protocol_v4         |                                          | anchor    | X    | X     | X     |         | 1         |
 | uniswap_v3-core            |                                          |           |      | X     | X     | X       | 0         |
 | uniswap_v3-core_factory    |                                          |           | X    | X     | X     | X       | 1         |
-| xnft                       |                                          | anchor    | X    | X     |       |         | 1         |
