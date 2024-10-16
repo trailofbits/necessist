@@ -88,16 +88,8 @@ impl RunHigh for Anchor {
         self.mocha_adapter.0.statement_prefix_and_suffix(span)
     }
 
-    fn build_source_file(&self, context: &LightContext, _source_file: &Path) -> Result<()> {
-        let mut command = command_to_build_source_file(context);
-
-        debug!("{:?}", command);
-
-        let output = command.output_stripped_of_ansi_escapes()?;
-        if !output.status().success() {
-            return Err(output.into());
-        }
-        Ok(())
+    fn build_source_file(&self, context: &LightContext, source_file: &Path) -> Result<()> {
+        self.check(context, source_file)
     }
 
     fn exec(
@@ -210,15 +202,6 @@ fn parse_test_value(test_value: &mut Value) -> Result<(String, String)> {
         .ok_or_else(|| anyhow!("Failed to parse `test` string: {test_str:?}"))?;
     assert_eq!(3, captures.len());
     Ok((captures[1].to_string(), captures[2].to_string()))
-}
-
-fn command_to_build_source_file(context: &LightContext) -> Command {
-    let mut command = Command::new("anchor");
-    command.arg("build");
-    command.args(&context.opts.args);
-    command.current_dir(context.root.as_path());
-
-    command
 }
 
 fn command_to_run_test(context: &LightContext) -> Command {
