@@ -1,0 +1,175 @@
+41 candidates in 2 tests in 2 source files
+$DIR/tests/suites/examples/create-mint.ts: dry running
+$DIR/tests/suites/examples/create-mint.ts: mutilating
+$DIR/tests/suites/examples/create-mint.ts: `await connection.confirmTransaction(airdropSig);` passed
+$DIR/tests/suites/examples/create-mint.ts: `await connection.confirmTransaction(signature);` failed
+$DIR/tests/suites/examples/create-mint.ts: `signature = await multisig.rpc.proposalCreate({
+      connection,
+      feePayer: members.voter,
+      multisigPda,
+      transactionIndex,
+      creator: members.voter,
+      programId,
+    });` failed
+$DIR/tests/suites/examples/create-mint.ts: `await connection.confirmTransaction(signature);` failed
+$DIR/tests/suites/examples/create-mint.ts: `signature = await multisig.rpc.proposalApprove({
+      connection,
+      feePayer: members.voter,
+      multisigPda,
+      transactionIndex,
+      member: members.voter,
+      memo: "LGTM",
+      programId,
+    });` failed
+$DIR/tests/suites/examples/create-mint.ts: `await connection.confirmTransaction(signature);` passed
+$DIR/tests/suites/examples/create-mint.ts: `signature = await multisig.rpc.proposalApprove({
+      connection,
+      feePayer: members.almighty,
+      multisigPda,
+      transactionIndex,
+      member: members.almighty,
+      memo: "LGTM too",
+      programId,
+    });` failed
+$DIR/tests/suites/examples/create-mint.ts: `await connection.confirmTransaction(signature);` failed
+$DIR/tests/suites/examples/create-mint.ts: `signature = await multisig.rpc.vaultTransactionExecute({
+      connection,
+      feePayer: members.executor,
+      multisigPda,
+      transactionIndex,
+      member: members.executor.publicKey,
+      signers: [members.executor],
+      sendOptions: { skipPreflight: true },
+      programId,
+    });` failed
+$DIR/tests/suites/examples/create-mint.ts: `await connection.confirmTransaction(signature);` failed
+$DIR/tests/suites/examples/create-mint.ts: `.fromAccountAddress(
+      connection,
+      multisigPda
+    )` nonbuildable
+$DIR/tests/suites/examples/create-mint.ts: `.utils.toBigInt(multisigAccount.transactionIndex)` nonbuildable
+$DIR/tests/suites/examples/create-mint.ts: `.getTransactionPda({
+      multisigPda,
+      index: transactionIndex,
+      programId,
+    })` nonbuildable
+$DIR/tests/suites/examples/create-mint.ts: `.getVaultPda({
+      multisigPda,
+      index: 0,
+      programId,
+    })` nonbuildable
+$DIR/tests/suites/examples/create-mint.ts: `.requestAirdrop(
+      vaultPda,
+      lamportsForMintRent
+    )` nonbuildable
+$DIR/tests/suites/examples/create-mint.ts: `.confirmTransaction(airdropSig)` passed
+$DIR/tests/suites/examples/create-mint.ts: `.getEphemeralSignerPda({
+      transactionPda,
+      ephemeralSignerIndex: 0,
+      programId,
+    })` nonbuildable
+$DIR/tests/suites/examples/create-mint.ts: `.getLatestBlockhash()` nonbuildable
+$DIR/tests/suites/examples/create-mint.ts: `.createAccount({
+          fromPubkey: vaultPda,
+          newAccountPubkey: mintPda,
+          space: MINT_SIZE,
+          lamports: lamportsForMintRent,
+          programId: TOKEN_2022_PROGRAM_ID,
+        })` nonbuildable
+$DIR/tests/suites/examples/create-mint.ts: `.rpc.vaultTransactionCreate({
+      connection,
+      feePayer: members.proposer,
+      multisigPda,
+      transactionIndex,
+      creator: members.proposer.publicKey,
+      vaultIndex: 0,
+      ephemeralSigners: 1,
+      transactionMessage: testTransactionMessage,
+      memo: "Create new mint",
+      programId,
+    })` nonbuildable
+$DIR/tests/suites/examples/create-mint.ts: `.confirmTransaction(signature)` failed
+$DIR/tests/suites/examples/create-mint.ts: `.rpc.proposalCreate({
+      connection,
+      feePayer: members.voter,
+      multisigPda,
+      transactionIndex,
+      creator: members.voter,
+      programId,
+    })` nonbuildable
+$DIR/tests/suites/examples/create-mint.ts: `.confirmTransaction(signature)` failed
+$DIR/tests/suites/examples/create-mint.ts: `.rpc.proposalApprove({
+      connection,
+      feePayer: members.voter,
+      multisigPda,
+      transactionIndex,
+      member: members.voter,
+      memo: "LGTM",
+      programId,
+    })` nonbuildable
+$DIR/tests/suites/examples/create-mint.ts: `.confirmTransaction(signature)` passed
+$DIR/tests/suites/examples/create-mint.ts: `.rpc.proposalApprove({
+      connection,
+      feePayer: members.almighty,
+      multisigPda,
+      transactionIndex,
+      member: members.almighty,
+      memo: "LGTM too",
+      programId,
+    })` nonbuildable
+$DIR/tests/suites/examples/create-mint.ts: `.confirmTransaction(signature)` failed
+$DIR/tests/suites/examples/create-mint.ts: `.rpc.vaultTransactionExecute({
+      connection,
+      feePayer: members.executor,
+      multisigPda,
+      transactionIndex,
+      member: members.executor.publicKey,
+      signers: [members.executor],
+      sendOptions: { skipPreflight: true },
+      programId,
+    })` nonbuildable
+$DIR/tests/suites/examples/create-mint.ts: `.confirmTransaction(signature)` failed
+$DIR/tests/suites/examples/immediate-execution.ts: dry running
+$DIR/tests/suites/examples/immediate-execution.ts: mutilating
+$DIR/tests/suites/examples/immediate-execution.ts: `tx.sign([members.almighty]);` failed
+$DIR/tests/suites/examples/immediate-execution.ts: `await connection.confirmTransaction(signature);` failed
+$DIR/tests/suites/examples/immediate-execution.ts: `.instructions.configTransactionCreate({
+      multisigPda,
+      transactionIndex,
+      creator: members.almighty.publicKey,
+      // Change threshold to 2.
+      actions: [{ __kind: "ChangeThreshold", newThreshold: 2 }],
+      programId,
+    })` nonbuildable
+$DIR/tests/suites/examples/immediate-execution.ts: `.instructions.proposalCreate({
+      multisigPda,
+      transactionIndex,
+      creator: members.almighty.publicKey,
+      programId,
+    })` nonbuildable
+$DIR/tests/suites/examples/immediate-execution.ts: `.instructions.proposalApprove({
+      multisigPda,
+      transactionIndex,
+      member: members.almighty.publicKey,
+      programId,
+    })` nonbuildable
+$DIR/tests/suites/examples/immediate-execution.ts: `.instructions.configTransactionExecute(
+      {
+        multisigPda,
+        transactionIndex,
+        member: members.almighty.publicKey,
+        rentPayer: members.almighty.publicKey,
+        programId,
+      }
+    )` nonbuildable
+$DIR/tests/suites/examples/immediate-execution.ts: `.getLatestBlockhash()` nonbuildable
+$DIR/tests/suites/examples/immediate-execution.ts: `.compileToV0Message()` nonbuildable
+$DIR/tests/suites/examples/immediate-execution.ts: `.sign([members.almighty])` failed
+$DIR/tests/suites/examples/immediate-execution.ts: `.sendTransaction(tx, {
+      skipPreflight: true,
+    })` nonbuildable
+$DIR/tests/suites/examples/immediate-execution.ts: `.confirmTransaction(signature)` failed
+$DIR/tests/suites/examples/immediate-execution.ts: `.fromAccountAddress(
+      connection,
+      multisigPda
+    )` nonbuildable

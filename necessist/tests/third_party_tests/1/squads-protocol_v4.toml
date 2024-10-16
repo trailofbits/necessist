@@ -1,0 +1,22 @@
+url = "https://github.com/Squads-Protocol/v4"
+
+target_os = ["linux", "macos"]
+
+# smoelius: `yarn build && yarn pretest` must be run before `anchor test`.
+init = "yarn && yarn build && yarn pretest"
+
+framework = "anchor"
+
+source_files = [
+    "tests/suites/examples/create-mint.ts",
+    "tests/suites/examples/immediate-execution.ts",
+]
+
+full = true
+
+args = [
+    "--allow=instrumentation-nonbuildable",
+    "--",
+    "--",
+    "--features=testing",
+]

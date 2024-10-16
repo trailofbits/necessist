@@ -84,6 +84,10 @@ struct Test {
     #[serde(default)]
     full: bool,
 
+    /// Additional arguments to pass to Necessist; appended at the end of the command
+    #[serde(default)]
+    args: Vec<String>,
+
     /// Check that the spans and urls written to the database are consistent
     #[serde(default)]
     check_sqlite_urls: bool,
@@ -527,6 +531,8 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> (String, Duration) {
                     .join(source_file),
             );
         }
+        exec = exec.args(&test.args);
+
         exec = exec.stdout(Redirection::Pipe);
         exec = exec.stderr(Redirection::Merge);
 

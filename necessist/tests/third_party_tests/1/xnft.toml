@@ -1,8 +1,0 @@
-url = "https://github.com/coral-xyz/xnft"
-init = "make dependencies"
-# smoelius: This test passes for me on a Mac locally, but not in CI. My best guess is it has
-# something to do with the firewall.
-target_os = "linux"
-framework = "anchor"
-source_files = ["tests/collectibles.spec.ts"]
-full = true
