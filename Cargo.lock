@@ -1201,6 +1201,7 @@ dependencies = [
  "remain",
  "serde_json",
  "solang-parser",
+ "streaming-iterator",
  "strip-ansi-escapes",
  "strum",
  "strum_macros",

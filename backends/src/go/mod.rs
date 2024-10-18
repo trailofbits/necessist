@@ -12,6 +12,7 @@ use regex::Regex;
 use std::{
     collections::BTreeMap, convert::Infallible, fs::read_to_string, path::Path, process::Command,
 };
+use streaming_iterator::StreamingIterator;
 use tree_sitter::{
     Language, Node, Parser, Point, Query, QueryCapture, QueryCursor, Range, TextProvider, Tree,
 };
@@ -290,16 +291,15 @@ impl ParseLow for Go {
             test.body,
             storage.borrow().text.as_bytes(),
             |captures| {
-                captures
-                    .into_iter()
-                    .map(|captures| {
-                        assert_eq!(2, captures.len());
-                        Statement(NodeWithText {
-                            text: storage.borrow().text,
-                            node: captures[0].node,
-                        })
-                    })
-                    .collect()
+                let mut statements = Vec::new();
+                while let Some(captures) = captures.next() {
+                    assert_eq!(2, captures.len());
+                    statements.push(Statement(NodeWithText {
+                        text: storage.borrow().text,
+                        node: captures[0].node,
+                    }));
+                }
+                statements
             },
         )
     }
@@ -320,7 +320,7 @@ impl ParseLow for Go {
             &EXPRESSION_STATEMENT_EXPRESSION_QUERY,
             statement.0.node,
             statement.0.text.as_bytes(),
-            |captures| captures.next(),
+            |captures| captures.next().cloned(),
         ) {
             assert_eq!(2, captures.len());
             Some(Expression(NodeWithText {
@@ -597,7 +597,7 @@ fn process_self_captures<'query, 'source, 'tree, T, U>(
     query: &'query Query,
     node: Node<'tree>,
     text_provider: T,
-    f: impl Fn(&mut dyn Iterator<Item = Vec<QueryCapture<'tree>>>) -> U,
+    f: impl Fn(&mut dyn StreamingIterator<Item = Vec<QueryCapture<'tree>>>) -> U,
 ) -> U
 where
     'source: 'tree,
@@ -621,7 +621,7 @@ where
     let mut iter = query_matches
         .map(|query_match| query_match.captures)
         .filter(|captures| captures.iter().any(|capture| capture.node == node))
-        .map(sort_captures);
+        .map(|captures| sort_captures(captures));
 
     f(&mut iter)
 }
