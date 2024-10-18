@@ -8,6 +8,7 @@ use anyhow::Result;
 use necessist_core::framework::{SpanTestMaps, TestSet};
 use once_cell::sync::Lazy;
 use std::{cell::RefCell, collections::BTreeMap};
+use streaming_iterator::StreamingIterator;
 use tree_sitter::{Query, QueryCursor, QueryMatch, Tree};
 
 macro_rules! trace {
@@ -52,11 +53,12 @@ pub(super) fn collect_local_functions<'ast>(
 ) -> Result<BTreeMap<String, Vec<LocalFunction<'ast>>>> {
     let mut function_declarations = BTreeMap::<_, Vec<_>>::new();
     let mut cursor = QueryCursor::new();
-    for query_match in cursor.matches(
+    let mut query_matches = cursor.matches(
         &FUNCTION_DECLARATION_QUERY,
         tree.root_node(),
         text.as_bytes(),
-    ) {
+    );
+    while let Some(query_match) = query_matches.next() {
         let captures = query_match.captures;
         assert_eq!(2, captures.len());
         let name = captures[0].node.utf8_text(text.as_bytes())?;
@@ -106,12 +108,13 @@ impl<'context, 'config, 'backend, 'ast, 'storage>
 
     fn visit_tree(&mut self, tree: &'ast Tree) -> Result<()> {
         let mut cursor = QueryCursor::new();
-        for query_match in cursor.matches(
+        let mut query_matches = cursor.matches(
             &TEST_FUNCTION_DECLARATION_QUERY,
             tree.root_node(),
             self.storage.borrow().text.as_bytes(),
-        ) {
-            self.visit_test_function_declaration(&query_match)?;
+        );
+        while let Some(query_match) = query_matches.next() {
+            self.visit_test_function_declaration(query_match)?;
         }
 
         Ok(())
