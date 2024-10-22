@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.7.1
+
+- Update `tree-sitter` to version 0.24 ([#1326](https://github.com/trailofbits/necessist/pull/1326))
+- Update `swc_core` to version 1.0 ([#1327](https://github.com/trailofbits/necessist/pull/1327))
+- Update documentation ([#1328](https://github.com/trailofbits/necessist/pull/1328))
+- Fix a bug in the Anchor backend causing it to rebuild only Rust source files and not TypeScript source files ([cf36b40](https://github.com/trailofbits/necessist/commit/cf36b40ce2b11e59cf427ae8f86f1eef86c8f06d))
+
 ## 0.7.0
 
 - Update `libsqlite3-sys` to version 0.30 ([#1260](https://github.com/trailofbits/necessist/pull/1260))
