@@ -1389,26 +1389,6 @@ $DIR/cmd/data-usage-cache_gen_test.go: `msgp.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go: `buf.Reset()`
 $DIR/cmd/data-usage-cache_gen_test.go: `msgp.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/data-usage-cache_gen_test.go: `left, err = msgp.Skip(bts)`
-$DIR/cmd/data-usage-cache_gen_test.go: `msgp.Encode(&buf, &v)`
-$DIR/cmd/data-usage-cache_gen_test.go: `buf.Reset()`
-$DIR/cmd/data-usage-cache_gen_test.go: `msgp.Encode(&buf, &v)`
-$DIR/cmd/data-usage-cache_gen_test.go: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/data-usage-cache_gen_test.go: `left, err = msgp.Skip(bts)`
-$DIR/cmd/data-usage-cache_gen_test.go: `msgp.Encode(&buf, &v)`
-$DIR/cmd/data-usage-cache_gen_test.go: `buf.Reset()`
-$DIR/cmd/data-usage-cache_gen_test.go: `msgp.Encode(&buf, &v)`
-$DIR/cmd/data-usage-cache_gen_test.go: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/data-usage-cache_gen_test.go: `left, err = msgp.Skip(bts)`
-$DIR/cmd/data-usage-cache_gen_test.go: `msgp.Encode(&buf, &v)`
-$DIR/cmd/data-usage-cache_gen_test.go: `buf.Reset()`
-$DIR/cmd/data-usage-cache_gen_test.go: `msgp.Encode(&buf, &v)`
-$DIR/cmd/data-usage-cache_gen_test.go: `err = msgp.NewReader(&buf).Skip()`
-$DIR/cmd/data-usage-cache_gen_test.go: `left, err = msgp.Skip(bts)`
-$DIR/cmd/data-usage-cache_gen_test.go: `msgp.Encode(&buf, &v)`
-$DIR/cmd/data-usage-cache_gen_test.go: `buf.Reset()`
-$DIR/cmd/data-usage-cache_gen_test.go: `msgp.Encode(&buf, &v)`
-$DIR/cmd/data-usage-cache_gen_test.go: `err = msgp.NewReader(&buf).Skip()`
 $DIR/cmd/data-usage-cache_gen_test.go: `.MarshalMsg(nil)`
 $DIR/cmd/data-usage-cache_gen_test.go: `.UnmarshalMsg(bts)`
 $DIR/cmd/data-usage-cache_gen_test.go: `.Encode(&buf, &v)`
@@ -1419,38 +1399,6 @@ $DIR/cmd/data-usage-cache_gen_test.go: `.Reset()`
 $DIR/cmd/data-usage-cache_gen_test.go: `.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go: `.MarshalMsg(nil)`
 $DIR/cmd/data-usage-cache_gen_test.go: `.UnmarshalMsg(bts)`
-$DIR/cmd/data-usage-cache_gen_test.go: `.MarshalMsg(nil)`
-$DIR/cmd/data-usage-cache_gen_test.go: `.UnmarshalMsg(bts)`
-$DIR/cmd/data-usage-cache_gen_test.go: `.Encode(&buf, &v)`
-$DIR/cmd/data-usage-cache_gen_test.go: `.Msgsize()`
-$DIR/cmd/data-usage-cache_gen_test.go: `.Len()`
-$DIR/cmd/data-usage-cache_gen_test.go: `.Decode(&buf, &vn)`
-$DIR/cmd/data-usage-cache_gen_test.go: `.Reset()`
-$DIR/cmd/data-usage-cache_gen_test.go: `.Encode(&buf, &v)`
-$DIR/cmd/data-usage-cache_gen_test.go: `.MarshalMsg(nil)`
-$DIR/cmd/data-usage-cache_gen_test.go: `.UnmarshalMsg(bts)`
-$DIR/cmd/data-usage-cache_gen_test.go: `.Encode(&buf, &v)`
-$DIR/cmd/data-usage-cache_gen_test.go: `.Msgsize()`
-$DIR/cmd/data-usage-cache_gen_test.go: `.Len()`
-$DIR/cmd/data-usage-cache_gen_test.go: `.Decode(&buf, &vn)`
-$DIR/cmd/data-usage-cache_gen_test.go: `.Reset()`
-$DIR/cmd/data-usage-cache_gen_test.go: `.Encode(&buf, &v)`
-$DIR/cmd/data-usage-cache_gen_test.go: `.MarshalMsg(nil)`
-$DIR/cmd/data-usage-cache_gen_test.go: `.UnmarshalMsg(bts)`
-$DIR/cmd/data-usage-cache_gen_test.go: `.Encode(&buf, &v)`
-$DIR/cmd/data-usage-cache_gen_test.go: `.Msgsize()`
-$DIR/cmd/data-usage-cache_gen_test.go: `.Len()`
-$DIR/cmd/data-usage-cache_gen_test.go: `.Decode(&buf, &vn)`
-$DIR/cmd/data-usage-cache_gen_test.go: `.Reset()`
-$DIR/cmd/data-usage-cache_gen_test.go: `.Encode(&buf, &v)`
-$DIR/cmd/data-usage-cache_gen_test.go: `.MarshalMsg(nil)`
-$DIR/cmd/data-usage-cache_gen_test.go: `.UnmarshalMsg(bts)`
-$DIR/cmd/data-usage-cache_gen_test.go: `.Encode(&buf, &v)`
-$DIR/cmd/data-usage-cache_gen_test.go: `.Msgsize()`
-$DIR/cmd/data-usage-cache_gen_test.go: `.Len()`
-$DIR/cmd/data-usage-cache_gen_test.go: `.Decode(&buf, &vn)`
-$DIR/cmd/data-usage-cache_gen_test.go: `.Reset()`
-$DIR/cmd/data-usage-cache_gen_test.go: `.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go: `.MarshalMsg(nil)`
 $DIR/cmd/data-usage-cache_gen_test.go: `.UnmarshalMsg(bts)`
 $DIR/cmd/data-usage-cache_gen_test.go: `.Encode(&buf, &v)`
@@ -1843,17 +1791,6 @@ $DIR/cmd/data-usage_test.go: `sizeS.totalSize = s.Size()`
 $DIR/cmd/data-usage_test.go: `xls.diskInfoCache.InitOnce(time.Second, cachevalue.Opts{}, func(ctx context.Context) (DiskInfo, error) {
 		return DiskInfo{Total: 1 << 40, Free: 1 << 40}, nil
 	})`
-$DIR/cmd/data-usage_test.go: `e.ReplicationStats = &replicationAllStats{
-		Targets: map[string]replicationStats{
-			"arn": {
-				PendingSize:    1,
-				ReplicatedSize: 2,
-				FailedSize:     3,
-				FailedCount:    5,
-				PendingCount:   6,
-			},
-		},
-	}`
 $DIR/cmd/data-usage_test.go: `want.replace("abucket/dir2", "", *e)`
 $DIR/cmd/data-usage_test.go: `err = want.serializeTo(&buf)`
 $DIR/cmd/data-usage_test.go: `err = got.deserialize(&buf)`
@@ -8385,6 +8322,7 @@ $DIR/cmd/sts-handlers_test.go: `t.Run(
 				suite.TestLDAPSTSServiceAccountsWithGroups(c)
 				suite.TestLDAPAttributesLookup(c)
 				suite.TestLDAPCyrillicUser(c)
+				suite.TestLDAPSlashDN(c)
 				suite.TearDownSuite(c)
 			},
 		)`
@@ -8398,6 +8336,7 @@ $DIR/cmd/sts-handlers_test.go: `suite.TestLDAPSTSServiceAccountsWithUsername(c)`
 $DIR/cmd/sts-handlers_test.go: `suite.TestLDAPSTSServiceAccountsWithGroups(c)`
 $DIR/cmd/sts-handlers_test.go: `suite.TestLDAPAttributesLookup(c)`
 $DIR/cmd/sts-handlers_test.go: `suite.TestLDAPCyrillicUser(c)`
+$DIR/cmd/sts-handlers_test.go: `suite.TestLDAPSlashDN(c)`
 $DIR/cmd/sts-handlers_test.go: `suite.TearDownSuite(c)`
 $DIR/cmd/sts-handlers_test.go: `t.Run(
 			fmt.Sprintf("Test: %d, ServerType: %s", i+1, testCase.ServerTypeDescription),
@@ -8418,6 +8357,7 @@ $DIR/cmd/sts-handlers_test.go: `t.Run(
 				suite.TestLDAPSTSServiceAccounts(c)
 				suite.TestLDAPSTSServiceAccountsWithUsername(c)
 				suite.TestLDAPSTSServiceAccountsWithGroups(c)
+				suite.TestLDAPSlashDN(c)
 				suite.TearDownSuite(c)
 			},
 		)`
@@ -8429,6 +8369,7 @@ $DIR/cmd/sts-handlers_test.go: `suite.TestLDAPUnicodeVariations(c)`
 $DIR/cmd/sts-handlers_test.go: `suite.TestLDAPSTSServiceAccounts(c)`
 $DIR/cmd/sts-handlers_test.go: `suite.TestLDAPSTSServiceAccountsWithUsername(c)`
 $DIR/cmd/sts-handlers_test.go: `suite.TestLDAPSTSServiceAccountsWithGroups(c)`
+$DIR/cmd/sts-handlers_test.go: `suite.TestLDAPSlashDN(c)`
 $DIR/cmd/sts-handlers_test.go: `suite.TearDownSuite(c)`
 $DIR/cmd/sts-handlers_test.go: `t.Run(
 			fmt.Sprintf("Test: %d, ServerType: %s", i+1, testCase.ServerTypeDescription),
@@ -8690,6 +8631,7 @@ $DIR/cmd/sts-handlers_test.go: `.Run(
 				suite.TestLDAPSTSServiceAccountsWithGroups(c)
 				suite.TestLDAPAttributesLookup(c)
 				suite.TestLDAPCyrillicUser(c)
+				suite.TestLDAPSlashDN(c)
 				suite.TearDownSuite(c)
 			},
 		)`
@@ -8705,6 +8647,7 @@ $DIR/cmd/sts-handlers_test.go: `.TestLDAPSTSServiceAccountsWithUsername(c)`
 $DIR/cmd/sts-handlers_test.go: `.TestLDAPSTSServiceAccountsWithGroups(c)`
 $DIR/cmd/sts-handlers_test.go: `.TestLDAPAttributesLookup(c)`
 $DIR/cmd/sts-handlers_test.go: `.TestLDAPCyrillicUser(c)`
+$DIR/cmd/sts-handlers_test.go: `.TestLDAPSlashDN(c)`
 $DIR/cmd/sts-handlers_test.go: `.TearDownSuite(c)`
 $DIR/cmd/sts-handlers_test.go: `.Run(
 			fmt.Sprintf("Test: %d, ServerType: %s", i+1, testCase.ServerTypeDescription),
@@ -8725,6 +8668,7 @@ $DIR/cmd/sts-handlers_test.go: `.Run(
 				suite.TestLDAPSTSServiceAccounts(c)
 				suite.TestLDAPSTSServiceAccountsWithUsername(c)
 				suite.TestLDAPSTSServiceAccountsWithGroups(c)
+				suite.TestLDAPSlashDN(c)
 				suite.TearDownSuite(c)
 			},
 		)`
@@ -8738,6 +8682,7 @@ $DIR/cmd/sts-handlers_test.go: `.TestLDAPUnicodeVariations(c)`
 $DIR/cmd/sts-handlers_test.go: `.TestLDAPSTSServiceAccounts(c)`
 $DIR/cmd/sts-handlers_test.go: `.TestLDAPSTSServiceAccountsWithUsername(c)`
 $DIR/cmd/sts-handlers_test.go: `.TestLDAPSTSServiceAccountsWithGroups(c)`
+$DIR/cmd/sts-handlers_test.go: `.TestLDAPSlashDN(c)`
 $DIR/cmd/sts-handlers_test.go: `.TearDownSuite(c)`
 $DIR/cmd/sts-handlers_test.go: `.Run(
 			fmt.Sprintf("Test: %d, ServerType: %s", i+1, testCase.ServerTypeDescription),
