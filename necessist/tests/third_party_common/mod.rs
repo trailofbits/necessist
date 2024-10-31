@@ -522,7 +522,7 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> (String, Duration) {
         if test.full {
             exec = exec.arg("--verbose");
         } else {
-            exec = exec.arg("--dump-candidates");
+            exec = exec.args(&["--dump-candidates", "--emit-test-names"]);
         }
         for source_file in &test.source_files {
             exec = exec.arg(

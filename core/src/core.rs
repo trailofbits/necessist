@@ -88,6 +88,7 @@ pub struct Necessist {
     pub deny: Vec<Warning>,
     pub dump: bool,
     pub dump_candidates: bool,
+    pub emit_test_names: bool,
     pub no_dry_run: bool,
     pub no_local_functions: bool,
     pub no_sqlite: bool,
@@ -550,22 +551,26 @@ fn dump_candidates(
     context: &LightContext,
     source_file_span_test_map: &SourceFileSpanTestMap,
 ) -> Result<()> {
-    for span in source_file_span_test_map
-        .values()
-        .flat_map(|span_test_maps| {
-            span_test_maps
-                .statement
-                .keys()
-                .chain(span_test_maps.method_call.keys())
-        })
-    {
-        let text = span.source_text()?;
+    for span_test_maps in source_file_span_test_map.values() {
+        let mut test_names_last = None;
+        for (span, test_names) in span_test_maps
+            .statement
+            .iter()
+            .chain(span_test_maps.method_call.iter())
+        {
+            if context.opts.emit_test_names && test_names_last != Some(test_names) {
+                (context.println)(&format!("{test_names:?}"));
+                test_names_last = Some(test_names);
+            }
 
-        (context.println)(&format!(
-            "{}: `{}`",
-            span.to_console_string(),
-            text.replace('\r', "")
-        ));
+            let text = span.source_text()?;
+
+            (context.println)(&format!(
+                "{}: `{}`",
+                span.to_console_string(),
+                text.replace('\r', "")
+            ));
+        }
     }
 
     Ok(())

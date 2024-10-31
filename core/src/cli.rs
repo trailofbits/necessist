@@ -32,6 +32,8 @@ pub struct Opts<Identifier: Clone + Send + Sync + ValueEnum + 'static> {
     dump: bool,
     #[clap(long, help = "Dump removal candidates and exit (for debugging)")]
     dump_candidates: bool,
+    #[clap(long, hide = true)]
+    emit_test_names: bool,
     #[clap(long, help = "Assume testing framework is <FRAMEWORK>")]
     framework: Option<framework::Auto<Identifier>>,
     #[clap(long, help = "Do not perform dry runs")]
@@ -75,6 +77,7 @@ impl<Identifier: Clone + Send + Sync + ValueEnum> From<Opts<Identifier>>
             deny,
             dump,
             dump_candidates,
+            emit_test_names,
             framework,
             no_dry_run,
             no_local_functions,
@@ -99,6 +102,7 @@ impl<Identifier: Clone + Send + Sync + ValueEnum> From<Opts<Identifier>>
                 deny,
                 dump,
                 dump_candidates,
+                emit_test_names,
                 no_dry_run,
                 no_local_functions,
                 no_sqlite,
