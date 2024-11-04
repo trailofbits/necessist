@@ -1007,11 +1007,6 @@ $DIR/config/management/src/validator_config.rs: `.map_err(|err| {
         ))
     })`
 $DIR/config/management/src/validator_config.rs: `.len()`
-$DIR/config/seed-peer-generator/src/utils.rs: `warn!(
-                        "Unable to generate seed for validator {} {}",
-                        validator_info.account_address(),
-                        error
-                    );`
 $DIR/config/seed-peer-generator/src/utils.rs: `addresses.push(network_address);`
 $DIR/config/seed-peer-generator/src/utils.rs: `expected_peers.insert(peer_id, Peer::from_addrs(role, fullnode_addresses));`
 $DIR/config/seed-peer-generator/src/utils.rs: `.payload()`
@@ -1498,7 +1493,6 @@ $DIR/consensus/src/experimental/tests/commit_phase_tests.rs: `commit_tx
                 ))
                 .await
                 .ok();`
-$DIR/consensus/src/experimental/tests/commit_phase_tests.rs: `debug!("Let's see if we can reach here.");`
 $DIR/consensus/src/experimental/tests/commit_phase_tests.rs: `runtime.spawn(commit_phase.start());`
 $DIR/consensus/src/experimental/tests/commit_phase_tests.rs: `commit_tx
                 .send(CommitChannelType(
@@ -1980,28 +1974,10 @@ $DIR/consensus/src/network_tests.rs: `.request_block(
                 )`
 $DIR/consensus/src/network_tests.rs: `.push((peer_id, protocol_id), bad_msg)`
 $DIR/consensus/src/network_tests.rs: `.push((peer_id, protocol_id), liveness_check_msg)`
-$DIR/consensus/src/pending_votes.rs: `error!(
-                    SecurityEvent::ConsensusEquivocatingVote,
-                    remote_peer = vote.author(),
-                    vote = vote,
-                    previous_vote = previously_seen_vote
-                );`
 $DIR/consensus/src/pending_votes.rs: `self.author_to_vote.insert(vote.author(), vote.clone());`
 $DIR/consensus/src/pending_votes.rs: `li_with_sig.add_signature(vote.author(), vote.signature().clone());`
-$DIR/consensus/src/pending_votes.rs: `error!(
-                        "MUST_FIX: vote received could not be added: {}, vote: {}",
-                        error, vote
-                    );`
 $DIR/consensus/src/pending_votes.rs: `partial_tc.add_signature(vote.author(), timeout_signature.clone());`
-$DIR/consensus/src/pending_votes.rs: `error!(
-                        "MUST_FIX: timeout vote received could not be added: {}, vote: {}",
-                        error, vote
-                    );`
 $DIR/consensus/src/pending_votes.rs: `partial_tc.add(vote.author(), timeout.clone(), signature.clone());`
-$DIR/consensus/src/pending_votes.rs: `error!(
-                        "MUST_FIX: 2-chain timeout vote received could not be added: {}, vote: {}",
-                        error, vote
-                    );`
 $DIR/consensus/src/pending_votes.rs: `::diem_logger::Logger::init_for_testing();`
 $DIR/consensus/src/pending_votes.rs: `::diem_logger::Logger::init_for_testing();`
 $DIR/consensus/src/pending_votes.rs: `vote1_author_0.add_timeout_signature(signature);`
@@ -3483,31 +3459,7 @@ $DIR/crates/diem-infallible/src/rwlock.rs: `.write()`
 $DIR/crates/diem-infallible/src/rwlock.rs: `.join()`
 $DIR/crates/diem-infallible/src/rwlock.rs: `.join()`
 $DIR/crates/diem-logger/src/diem_logger.rs: `crate::logger::set_global_logger(logger);`
-$DIR/crates/diem-logger/src/diem_logger.rs: `info!(
-            TestSchema {
-                foo: 5,
-                bar: &Enum::FooBar
-            },
-            test = true,
-            category = "name",
-            KeyValue::new("display", Value::from_display(&number)),
-            "This is a log"
-        );`
-$DIR/crates/diem-logger/src/diem_logger.rs: `error!("This is an error log");`
-$DIR/crates/diem-logger/src/diem_logger.rs: `trace!("trace");`
-$DIR/crates/diem-logger/src/diem_logger.rs: `debug!("debug");`
-$DIR/crates/diem-logger/src/diem_logger.rs: `info!("info");`
-$DIR/crates/diem-logger/src/diem_logger.rs: `warn!("warn");`
-$DIR/crates/diem-logger/src/diem_logger.rs: `error!("error");`
 $DIR/crates/diem-logger/src/diem_logger.rs: `handler.join().unwrap();`
-$DIR/crates/diem-logger/src/diem_logger.rs: `error!(identifier = ?debug_struct, "Debug test");`
-$DIR/crates/diem-logger/src/diem_logger.rs: `error!(identifier = ?debug_struct, other = "value", "Debug2 test");`
-$DIR/crates/diem-logger/src/diem_logger.rs: `error!(identifier = %display_struct, "Display test");`
-$DIR/crates/diem-logger/src/diem_logger.rs: `error!(identifier = %display_struct, other = "value", "Display2 test");`
-$DIR/crates/diem-logger/src/diem_logger.rs: `error!("Literal" = ?debug_struct, "Debug test");`
-$DIR/crates/diem-logger/src/diem_logger.rs: `error!("Literal" = ?debug_struct, other = "value", "Debug test");`
-$DIR/crates/diem-logger/src/diem_logger.rs: `error!("Literal" = %display_struct, "Display test");`
-$DIR/crates/diem-logger/src/diem_logger.rs: `error!("Literal" = %display_struct, other = "value", "Display2 test");`
 $DIR/crates/diem-logger/src/diem_logger.rs: `.recv()`
 $DIR/crates/diem-logger/src/diem_logger.rs: `.recv()`
 $DIR/crates/diem-logger/src/diem_logger.rs: `.recv()`
@@ -3584,8 +3536,6 @@ $DIR/crates/diem-logger/tests/logger.rs: `DiemLogger::builder()
         .is_async(false)
         .printer(Box::new(writer))
         .build();`
-$DIR/crates/diem-logger/tests/logger.rs: `info!("Hello");`
-$DIR/crates/diem-logger/tests/logger.rs: `info!(foo = 5, bar = 10, foobar = 15);`
 $DIR/crates/diem-logger/tests/logger.rs: `.logs.write()`
 $DIR/crates/diem-logger/tests/logger.rs: `.is_async(false)`
 $DIR/crates/diem-logger/tests/logger.rs: `.printer(Box::new(writer))`
@@ -3613,7 +3563,6 @@ $DIR/crates/diem-logger/tests/logger_custom_format.rs: `write!(w, "0000-00-00")?
 $DIR/crates/diem-logger/tests/logger_custom_format.rs: `write!(w, " [{}]", entry.metadata().level())?;`
 $DIR/crates/diem-logger/tests/logger_custom_format.rs: `write!(w, " {}", message)?;`
 $DIR/crates/diem-logger/tests/logger_custom_format.rs: `write!(w, " {}", serde_json::to_string(&entry.data()).unwrap())?;`
-$DIR/crates/diem-logger/tests/logger_custom_format.rs: `info!("Hello");`
 $DIR/crates/diem-logger/tests/logger_custom_format.rs: `.logs.write()`
 $DIR/crates/diem-logger/tests/logger_custom_format.rs: `.is_async(false)`
 $DIR/crates/diem-logger/tests/logger_custom_format.rs: `.printer(Box::new(writer))`
@@ -3637,9 +3586,6 @@ $DIR/crates/diem-logger/tests/logger_custom_format.rs: `.build()`
 $DIR/crates/diem-logger/tests/logger_custom_format.rs: `.remove(0)`
 $DIR/crates/diem-logger/tests/remote.rs: `std::env::set_var("RUST_LOG_REMOTE", "debug");`
 $DIR/crates/diem-logger/tests/remote.rs: `DiemLogger::builder().address(addr).is_async(true).build();`
-$DIR/crates/diem-logger/tests/remote.rs: `error!("Hello");`
-$DIR/crates/diem-logger/tests/remote.rs: `trace!("Hello");`
-$DIR/crates/diem-logger/tests/remote.rs: `debug!("Hello");`
 $DIR/crates/diem-logger/tests/remote.rs: `diem_logger::flush();`
 $DIR/crates/diem-logger/tests/remote.rs: `stream.read_until(b'\n', &mut buf).unwrap();`
 $DIR/crates/diem-logger/tests/remote.rs: `stream.read_until(b'\n', &mut buf).unwrap();`
@@ -3747,20 +3693,6 @@ $DIR/crates/diem-metrics/src/unit_tests/lib_test.rs: `.inc()`
 $DIR/crates/diem-metrics/src/unit_tests/lib_test.rs: `.gather()`
 $DIR/crates/diem-metrics/src/unit_tests/lib_test.rs: `.get(0)`
 $DIR/crates/diem-metrics/src/unit_tests/lib_test.rs: `.get_metric()`
-$DIR/crates/diem-rate-limiter/src/rate_limit.rs: `debug!(
-                    throttle_label = self.label,
-                    throttle_log_info = self.log_info,
-                    throttle_key = self.key,
-                    num_allowed_in_period = self.allowed_in_period,
-                    num_throttled_in_period = self.throttled_in_period,
-                    "{}-{}-{}={}/{}",
-                    self.label,
-                    self.log_info,
-                    self.key,
-                    self.allowed_in_period,
-                    self.allowed_in_period
-                        .saturating_add(self.throttled_in_period),
-                );`
 $DIR/crates/diem-rate-limiter/src/rate_limit.rs: `metrics
                     .with_label_values(&[self.label.as_str(), "allowed"])
                     .observe(self.allowed_in_period as f64);`
@@ -4361,45 +4293,11 @@ $DIR/json-rpc/src/stream_rpc/connection/client_connection.rs: `counters::INVALID
                 &self.connection_context.sdk_info.version.to_string(),
             ])
             .inc();`
-$DIR/json-rpc/src/stream_rpc/connection/client_connection.rs: `debug!(
-                    logging::StreamRpcLog {
-                        transport: self.connection_context.transport.as_str(),
-                        remote_addr: self.connection_context.remote_addr.as_deref(),
-                        user_agent: None,
-                        action: logging::StreamRpcAction::ClientConnectionLog(
-                            logging::ClientConnectionLog {
-                                client_id: Some(self.id),
-                                forwarded: None,
-                                rpc_method: Some(request.method_name()),
-                            }
-                        ),
-                    },
-                    "subscription request"
-                );`
 $DIR/json-rpc/src/stream_rpc/connection/client_connection.rs: `self.send_error(Some(request.method_request.method()), Some(request.id), err)
                         .await
                         .ok();`
-$DIR/json-rpc/src/stream_rpc/connection/client_connection.rs: `debug!(
-                    logging::StreamRpcLog {
-                        transport: self.connection_context.transport.as_str(),
-                        remote_addr: self.connection_context.remote_addr.as_deref(),
-                        user_agent: None,
-                        action: logging::StreamRpcAction::ClientConnectionLog(
-                            logging::ClientConnectionLog {
-                                client_id: Some(self.id),
-                                forwarded: None,
-                                rpc_method: method.map(|v| v.as_str()),
-                            }
-                        ),
-                    },
-                    "failed to parse subscription request ({})", &err
-                );`
 $DIR/json-rpc/src/stream_rpc/connection/client_connection.rs: `self.send_error(method, id, err).await.ok();`
 $DIR/json-rpc/src/stream_rpc/connection/client_connection.rs: `self.unsubscribe(&request.id);`
-$DIR/json-rpc/src/stream_rpc/connection/client_connection.rs: `debug!(
-                "Client#{} already has a subscription for '{}'",
-                self.id, &request.id
-            );`
 $DIR/json-rpc/src/stream_rpc/connection/client_connection.rs: `tasks.insert(request.id.clone(), Task(task));`
 $DIR/json-rpc/src/stream_rpc/connection/client_connection.rs: `metric_subscription_rpc_received(
                     self,
@@ -4466,12 +4364,6 @@ $DIR/json-rpc/src/stream_rpc/connection/client_connection.rs: `.get("result")`
 $DIR/json-rpc/src/stream_rpc/connection/client_connection.rs: `.get("unsubscribe")`
 $DIR/json-rpc/src/stream_rpc/connection/client_connection.rs: `.recv()`
 $DIR/json-rpc/src/stream_rpc/subscription_types.rs: `self.backoff = create_backoff(config.poll_interval_ms, config.max_poll_interval_ms);`
-$DIR/json-rpc/src/stream_rpc/subscription_types.rs: `debug!(
-            "Client#{} Sleeping for {:?}ms as no results for {}",
-            self.client.id,
-            sleepy_time,
-            self.method.as_str()
-        );`
 $DIR/json-rpc/src/stream_rpc/subscription_types.rs: `tokio::time::sleep(sleepy_time).await;`
 $DIR/json-rpc/src/stream_rpc/subscription_types.rs: `results.push(elapsed - last);`
 $DIR/json-rpc/src/stream_rpc/subscription_types.rs: `last = elapsed;`
@@ -11478,33 +11370,18 @@ $DIR/network/src/application/tests.rs: `.write(peer_id, |entry| match entry {
         })`
 $DIR/network/src/application/tests.rs: `.get_mut()`
 $DIR/network/src/connectivity_manager/test.rs: `peer.addresses = vec![addr.clone()];`
-$DIR/network/src/connectivity_manager/test.rs: `info!("Advance time to trigger connectivity check");`
 $DIR/network/src/connectivity_manager/test.rs: `self.mock_time
             .advance_async(CONNECTIVITY_CHECK_INTERVAL)
             .await;`
-$DIR/network/src/connectivity_manager/test.rs: `info!("Advance time to trigger dial");`
 $DIR/network/src/connectivity_manager/test.rs: `self.mock_time.advance_async(MAX_DELAY_WITH_JITTER).await;`
-$DIR/network/src/connectivity_manager/test.rs: `info!("Sending ConnectivityRequest::GetDialQueueSize");`
-$DIR/network/src/connectivity_manager/test.rs: `info!(
-            "Sending NewPeer notification for peer: {}",
-            peer_id.short_str()
-        );`
 $DIR/network/src/connectivity_manager/test.rs: `metadata.addr = address;`
-$DIR/network/src/connectivity_manager/test.rs: `info!(
-            "Sending LostPeer notification for peer: {}",
-            peer_id.short_str()
-        );`
 $DIR/network/src/connectivity_manager/test.rs: `metadata.addr = address;`
 $DIR/network/src/connectivity_manager/test.rs: `self.connection_notifs_tx
             .push_with_feedback(peer_id, notif, Some(delivered_tx))
             .unwrap();`
-$DIR/network/src/connectivity_manager/test.rs: `info!("Waiting to receive disconnect request");`
 $DIR/network/src/connectivity_manager/test.rs: `result_tx.send(result).unwrap();`
-$DIR/network/src/connectivity_manager/test.rs: `info!("Waiting for dial queue to be empty");`
 $DIR/network/src/connectivity_manager/test.rs: `while self.get_dial_queue_size().await > 0 {}`
-$DIR/network/src/connectivity_manager/test.rs: `info!("Waiting to receive dial request");`
 $DIR/network/src/connectivity_manager/test.rs: `result_tx.send(result).unwrap();`
-$DIR/network/src/connectivity_manager/test.rs: `info!("Sending UpdateDiscoveredPeers");`
 $DIR/network/src/connectivity_manager/test.rs: `peer.keys = HashSet::new();`
 $DIR/network/src/connectivity_manager/test.rs: `peer.addresses = vec![network_address(DEFAULT_BASE_ADDR)];`
 $DIR/network/src/connectivity_manager/test.rs: `peer.keys = HashSet::new();`
@@ -11595,11 +11472,6 @@ $DIR/network/src/noise/fuzzing.rs: `.read(&mut buffer)`
 $DIR/network/src/noise/handshake.rs: `client_message[..PeerId::LENGTH].copy_from_slice(self.network_context.peer_id().as_ref());`
 $DIR/network/src/noise/handshake.rs: `client_message[PeerId::LENGTH..Self::PROLOGUE_SIZE]
             .copy_from_slice(remote_public_key.as_slice());`
-$DIR/network/src/noise/handshake.rs: `trace!(
-            "{} noise client: handshake write: remote_public_key: {}",
-            self.network_context,
-            remote_public_key,
-        );`
 $DIR/network/src/noise/handshake.rs: `socket
             .write_all(&client_message)
             .await
@@ -11608,41 +11480,20 @@ $DIR/network/src/noise/handshake.rs: `socket
             .flush()
             .await
             .map_err(NoiseHandshakeError::ClientFlushFailed)?;`
-$DIR/network/src/noise/handshake.rs: `trace!(
-            "{} noise client: handshake read: remote_public_key: {}",
-            self.network_context,
-            remote_public_key,
-        );`
 $DIR/network/src/noise/handshake.rs: `socket
             .read_exact(&mut server_response)
             .await
             .map_err(NoiseHandshakeError::ClientReadFailed)?;`
-$DIR/network/src/noise/handshake.rs: `trace!(
-            "{} noise client: handshake finalize: remote_public_key: {}",
-            self.network_context,
-            remote_public_key,
-        );`
-$DIR/network/src/noise/handshake.rs: `trace!("{} noise server: handshake read", self.network_context);`
 $DIR/network/src/noise/handshake.rs: `socket
             .read_exact(&mut client_message)
             .await
             .map_err(NoiseHandshakeError::ServerReadFailed)?;`
 $DIR/network/src/noise/handshake.rs: `client_timestamp.copy_from_slice(&payload);`
 $DIR/network/src/noise/handshake.rs: `anti_replay_timestamps.store_timestamp(remote_public_key, client_timestamp);`
-$DIR/network/src/noise/handshake.rs: `trace!(
-            "{} noise server: handshake write: remote_peer_id: {}",
-            self.network_context,
-            remote_peer_short,
-        );`
 $DIR/network/src/noise/handshake.rs: `socket
             .write_all(&server_response)
             .await
             .map_err(|err| NoiseHandshakeError::ServerWriteFailed(remote_peer_short, err))?;`
-$DIR/network/src/noise/handshake.rs: `trace!(
-            "{} noise server: handshake finalize: remote_peer_id: {}",
-            self.network_context,
-            remote_peer_short,
-        );`
 $DIR/network/src/noise/handshake.rs: `client.noise_config = noise::NoiseConfig::new(client_private_key);`
 $DIR/network/src/noise/handshake.rs: `::diem_logger::Logger::init_for_testing();`
 $DIR/network/src/noise/handshake.rs: `client.network_context = NetworkContext::mock_with_peer_id(PeerId::random());`
@@ -13053,51 +12904,13 @@ $DIR/secure/key-manager/src/tests.rs: `.key_manager
         .storage
         .set(OWNER_ACCOUNT, "00000000000000000000000000000001")`
 $DIR/secure/key-manager/src/tests.rs: `.key_manager.execute_once()`
-$DIR/secure/net/src/lib.rs: `warn!(SecureNetLogSchema::new(
-                self.service,
-                NetworkMode::Client,
-                LogEvent::DisconnectedPeerOnRead,
-            )
-            .error(err)
-            .remote_peer(&self.server));`
 $DIR/secure/net/src/lib.rs: `self.stream = None;`
-$DIR/secure/net/src/lib.rs: `info!(SecureNetLogSchema::new(
-            self.service,
-            NetworkMode::Client,
-            LogEvent::Shutdown,
-        ));`
 $DIR/secure/net/src/lib.rs: `stream.shutdown()?;`
-$DIR/secure/net/src/lib.rs: `warn!(SecureNetLogSchema::new(
-                self.service,
-                NetworkMode::Client,
-                LogEvent::DisconnectedPeerOnWrite,
-            )
-            .error(err)
-            .remote_peer(&self.server));`
 $DIR/secure/net/src/lib.rs: `self.stream = None;`
-$DIR/secure/net/src/lib.rs: `info!(SecureNetLogSchema::new(
-                self.service,
-                NetworkMode::Client,
-                LogEvent::ConnectionAttempt,
-            )
-            .remote_peer(&self.server));`
-$DIR/secure/net/src/lib.rs: `warn!(SecureNetLogSchema::new(
-                    self.service,
-                    NetworkMode::Client,
-                    LogEvent::ConnectionFailed,
-                )
-                .error(&err.into())
-                .remote_peer(&self.server));`
 $DIR/secure/net/src/lib.rs: `thread::sleep(sleeptime);`
 $DIR/secure/net/src/lib.rs: `stream = TcpStream::connect_timeout(&self.server, timeout);`
 $DIR/secure/net/src/lib.rs: `stream.set_nodelay(true)?;`
 $DIR/secure/net/src/lib.rs: `self.stream = Some(NetworkStream::new(stream, self.server, self.timeout_ms));`
-$DIR/secure/net/src/lib.rs: `info!(SecureNetLogSchema::new(
-                self.service,
-                NetworkMode::Client,
-                LogEvent::ConnectionSuccessful,
-            )
-            .remote_peer(&self.server));`
 $DIR/secure/net/src/lib.rs: `client.write(&data).unwrap();`
 $DIR/secure/net/src/lib.rs: `server.write(&data).unwrap();`
 $DIR/secure/net/src/lib.rs: `client.write(&data).unwrap();`
@@ -13337,13 +13150,6 @@ $DIR/state-sync/inter-component/mempool-notifications/src/lib.rs: `.freeze()`
 $DIR/state-sync/inter-component/mempool-notifications/src/lib.rs: `.enable_all()`
 $DIR/state-sync/inter-component/mempool-notifications/src/lib.rs: `.build()`
 $DIR/state-sync/state-sync-v1/src/coordinator.rs: `self.request_manager.enable_peer(peer, metadata)?;`
-$DIR/state-sync/state-sync-v1/src/coordinator.rs: `error!(
-                        LogSchema::event_log(LogEntry::ProcessChunkRequest, LogEvent::Fail)
-                            .peer(&peer)
-                            .error(&error.clone())
-                            .local_li_version(self.local_state.committed_version())
-                            .chunk_request(*request)
-                    );`
 $DIR/state-sync/state-sync-v1/src/coordinator.rs: `counters::PROCESS_CHUNK_REQUEST_COUNT
                         .with_label_values(&[
                             &peer.raw_network_id().to_string(),
@@ -13359,9 +13165,6 @@ $DIR/state-sync/state-sync-v1/src/coordinator.rs: `counters::PROCESS_CHUNK_REQUE
                         ])
                         .inc();`
 $DIR/state-sync/state-sync-v1/src/coordinator.rs: `counters::STORAGE_READ_FAIL_COUNT.inc();`
-$DIR/state-sync/state-sync-v1/src/coordinator.rs: `info!(LogSchema::new(LogEntry::EpochChange)
-                .old_epoch(self.local_state.trusted_epoch())
-                .new_epoch(new_state.trusted_epoch()));`
 $DIR/state-sync/state-sync-v1/src/coordinator.rs: `self.local_state = new_state;`
 $DIR/state-sync/state-sync-v1/src/coordinator.rs: `Self::send_initialization_callback(cb_sender)?;`
 $DIR/state-sync/state-sync-v1/src/coordinator.rs: `self.initialization_listener = Some(cb_sender);`
@@ -13370,11 +13173,6 @@ $DIR/state-sync/state-sync-v1/src/coordinator.rs: `fail_point!("state_sync_v1::p
                 "Injected error in process_sync_request_message".into(),
             ))
         });`
-$DIR/state-sync/state-sync-v1/src/coordinator.rs: `info!(
-            LogSchema::event_log(LogEntry::SyncRequest, LogEvent::Received)
-                .target_version(target_version)
-                .local_li_version(local_li_version)
-        );`
 $DIR/state-sync/state-sync-v1/src/coordinator.rs: `self.sync_state_with_local_storage()?;`
 $DIR/state-sync/state-sync-v1/src/coordinator.rs: `self.send_sync_req_callback(
                 request,
@@ -13387,8 +13185,6 @@ $DIR/state-sync/state-sync-v1/src/coordinator.rs: `counters::COMMIT_FLOW_FAIL
                 .inc();`
 $DIR/state-sync/state-sync-v1/src/coordinator.rs: `self.sync_state_with_local_storage()?;`
 $DIR/state-sync/state-sync-v1/src/coordinator.rs: `self.update_sync_state_metrics_and_logs()?;`
-$DIR/state-sync/state-sync-v1/src/coordinator.rs: `error!(LogSchema::new(LogEntry::CommitFlow).error(&error));`
-$DIR/state-sync/state-sync-v1/src/coordinator.rs: `error!(LogSchema::new(LogEntry::CommitFlow).error(&error));`
 $DIR/state-sync/state-sync-v1/src/coordinator.rs: `self.request_manager.remove_requests(synced_version);`
 $DIR/state-sync/state-sync-v1/src/coordinator.rs: `self.request_manager.process_success_response(peer);`
 $DIR/state-sync/state-sync-v1/src/coordinator.rs: `req.last_commit_timestamp = SystemTime::now();`
@@ -13397,18 +13193,7 @@ $DIR/state-sync/state-sync-v1/src/coordinator.rs: `self.check_initialized_or_syn
 $DIR/state-sync/state-sync-v1/src/coordinator.rs: `counters::RECONFIG_PUBLISH_COUNT
                 .with_label_values(&[counters::FAIL_LABEL])
                 .inc();`
-$DIR/state-sync/state-sync-v1/src/coordinator.rs: `error!(LogSchema::event_log(LogEntry::Reconfig, LogEvent::Fail).error(&error));`
-$DIR/state-sync/state-sync-v1/src/coordinator.rs: `info!(LogSchema::event_log(LogEntry::Waypoint, LogEvent::Complete)
-                    .local_li_version(committed_version)
-                    .local_synced_version(synced_version)
-                    .local_epoch(local_epoch));`
 $DIR/state-sync/state-sync-v1/src/coordinator.rs: `Self::send_initialization_callback(initialization_listener)?;`
-$DIR/state-sync/state-sync-v1/src/coordinator.rs: `info!(
-                    LogSchema::event_log(LogEntry::SyncRequest, LogEvent::Complete)
-                        .local_li_version(committed_version)
-                        .local_synced_version(synced_version)
-                        .local_epoch(local_epoch)
-                );`
 $DIR/state-sync/state-sync-v1/src/coordinator.rs: `counters::SYNC_REQUEST_RESULT
                     .with_label_values(&[counters::COMPLETE_LABEL])
                     .inc();`
@@ -13432,17 +13217,7 @@ $DIR/state-sync/state-sync-v1/src/coordinator.rs: `counters::set_timestamp(
             counters::TimestampType::Real,
             diem_infallible::duration_since_epoch().as_micros() as u64,
         );`
-$DIR/state-sync/state-sync-v1/src/coordinator.rs: `debug!(LogSchema::new(LogEntry::LocalState)
-            .local_li_version(committed_version)
-            .local_synced_version(synced_version)
-            .local_epoch(local_epoch));`
 $DIR/state-sync/state-sync-v1/src/coordinator.rs: `self.sync_state_with_local_storage()?;`
-$DIR/state-sync/state-sync-v1/src/coordinator.rs: `debug!(
-            LogSchema::event_log(LogEntry::ProcessChunkRequest, LogEvent::Received)
-                .peer(&peer)
-                .chunk_request(request.clone())
-                .local_li_version(self.local_state.committed_version())
-        );`
 $DIR/state-sync/state-sync-v1/src/coordinator.rs: `fail_point!("state_sync_v1::process_chunk_request", |_| {
             Err(crate::error::Error::UnexpectedError(
                 "Injected error in process_chunk_request".into(),
@@ -13450,9 +13225,6 @@ $DIR/state-sync/state-sync-v1/src/coordinator.rs: `fail_point!("state_sync_v1::p
         });`
 $DIR/state-sync/state-sync-v1/src/coordinator.rs: `self.sync_state_with_local_storage()?;`
 $DIR/state-sync/state-sync-v1/src/coordinator.rs: `self.request_manager.process_invalid_chunk_request(&peer);`
-$DIR/state-sync/state-sync-v1/src/coordinator.rs: `error!(LogSchema::new(LogEntry::ProcessChunkResponse,)
-                .peer(peer)
-                .error(&error));`
 $DIR/state-sync/state-sync-v1/src/coordinator.rs: `self.verify_chunk_response_is_valid(peer, &response)?;`
 $DIR/state-sync/state-sync-v1/src/coordinator.rs: `counters::APPLY_CHUNK_COUNT
                     .with_label_values(&[
@@ -13461,12 +13233,6 @@ $DIR/state-sync/state-sync-v1/src/coordinator.rs: `counters::APPLY_CHUNK_COUNT
                         counters::SUCCESS_LABEL,
                     ])
                     .inc();`
-$DIR/state-sync/state-sync-v1/src/coordinator.rs: `error!(LogSchema::event_log(
-                    LogEntry::ProcessChunkResponse,
-                    LogEvent::ApplyChunkFail
-                )
-                .peer(peer)
-                .error(&error));`
 $DIR/state-sync/state-sync-v1/src/coordinator.rs: `counters::APPLY_CHUNK_COUNT
                     .with_label_values(&[
                         &peer.raw_network_id().to_string(),
@@ -13474,28 +13240,10 @@ $DIR/state-sync/state-sync-v1/src/coordinator.rs: `counters::APPLY_CHUNK_COUNT
                         counters::FAIL_LABEL,
                     ])
                     .inc();`
-$DIR/state-sync/state-sync-v1/src/coordinator.rs: `error!(
-                LogSchema::event_log(LogEntry::ProcessChunkResponse, LogEvent::PostCommitFail)
-                    .peer(peer)
-                    .error(&error)
-            );`
 $DIR/state-sync/state-sync-v1/src/coordinator.rs: `counters::SYNC_REQUEST_RESULT
                     .with_label_values(&[counters::TIMEOUT_LABEL])
                     .inc();`
-$DIR/state-sync/state-sync-v1/src/coordinator.rs: `warn!(LogSchema::event_log(
-                    LogEntry::SyncRequest,
-                    LogEvent::Timeout
-                ));`
-$DIR/state-sync/state-sync-v1/src/coordinator.rs: `error!(
-                            LogSchema::event_log(LogEntry::SyncRequest, LogEvent::CallbackFail)
-                                .error(&e)
-                        );`
 $DIR/state-sync/state-sync-v1/src/coordinator.rs: `counters::TIMEOUT.inc();`
-$DIR/state-sync/state-sync-v1/src/coordinator.rs: `warn!(LogSchema::new(LogEntry::Timeout).version(known_version));`
-$DIR/state-sync/state-sync-v1/src/coordinator.rs: `warn!(LogSchema::event_log(
-                LogEntry::SendChunkRequest,
-                LogEvent::MissingPeers
-            ));`
 $DIR/state-sync/state-sync-v1/src/coordinator.rs: `counters::set_version(counters::VersionType::Target, target_version);`
 $DIR/state-sync/state-sync-v1/src/coordinator.rs: `self.subscriptions.retain(|peer, request_info| {
             // filter out expired peer requests
@@ -13532,9 +13280,6 @@ $DIR/state-sync/state-sync-v1/src/coordinator.rs: `ready.into_iter().for_each(|(
                 ])
                 .inc();
         });`
-$DIR/state-sync/state-sync-v1/src/coordinator.rs: `error!(LogSchema::new(LogEntry::SubscriptionDeliveryFail)
-                    .peer(&peer)
-                    .error(&err));`
 $DIR/state-sync/state-sync-v1/src/coordinator.rs: `counters::SUBSCRIPTION_DELIVERY_COUNT
                 .with_label_values(&[
                     &peer.raw_network_id().to_string(),
@@ -13835,34 +13580,10 @@ $DIR/state-sync/state-sync-v1/src/coordinator.rs: `.peer_id()`
 $DIR/state-sync/state-sync-v1/src/coordinator.rs: `.peer_id()`
 $DIR/state-sync/state-sync-v1/src/coordinator.rs: `.network_id()`
 $DIR/state-sync/state-sync-v1/src/executor_proxy.rs: `timer.stop_and_record();`
-$DIR/state-sync/state-sync-v1/src/executor_proxy.rs: `error!(
-                LogSchema::event_log(LogEntry::Reconfig, LogEvent::Fail).error(&e),
-                "Failed to publish reconfig updates in execute_chunk"
-            );`
 $DIR/state-sync/state-sync-v1/src/executor_proxy.rs: `counters::RECONFIG_PUBLISH_COUNT
                 .with_label_values(&[counters::FAIL_LABEL])
                 .inc();`
-$DIR/state-sync/state-sync-v1/src/executor_proxy.rs: `info!(LogSchema::new(LogEntry::Reconfig)
-            .count(events.len())
-            .reconfig_events(events.clone()));`
-$DIR/state-sync/state-sync-v1/src/executor_proxy.rs: `info!(
-                        LogSchema::event_log(LogEntry::Reconfig, LogEvent::Received),
-                        "Found a new on-chain config, for config id: {}", config_id
-                    );`
 $DIR/state-sync/state-sync-v1/src/executor_proxy.rs: `publish_success = false;`
-$DIR/state-sync/state-sync-v1/src/executor_proxy.rs: `error!(
-                        LogSchema::event_log(LogEntry::Reconfig, LogEvent::PublishError)
-                            .subscription_name(subscription.name.clone())
-                            .error(&Error::UnexpectedError(e.to_string())),
-                        "Failed to publish reconfig notification to subscription {}",
-                        subscription.name
-                    );`
-$DIR/state-sync/state-sync-v1/src/executor_proxy.rs: `info!(
-                        LogSchema::event_log(LogEntry::Reconfig, LogEvent::Success)
-                            .subscription_name(subscription.name.clone()),
-                        "Successfully published reconfig notification to subscription {}",
-                        subscription.name
-                    );`
 $DIR/state-sync/state-sync-v1/src/executor_proxy.rs: `self.on_chain_configs = new_configs;`
 $DIR/state-sync/state-sync-v1/src/executor_proxy.rs: `counters::RECONFIG_PUBLISH_COUNT
                 .with_label_values(&[counters::SUCCESS_LABEL])
@@ -13996,26 +13717,16 @@ $DIR/state-sync/state-sync-v1/src/executor_proxy.rs: `.committed_block_id()`
 $DIR/state-sync/state-sync-v1/src/executor_proxy.rs: `.into()`
 $DIR/state-sync/state-sync-v1/src/executor_proxy.rs: `.commit_blocks(vec![block_hash], ledger_info_with_sigs.clone())`
 $DIR/state-sync/state-sync-v1/src/executor_proxy.rs: `.reconfig_events()`
-$DIR/state-sync/state-sync-v1/src/request_manager.rs: `info!(LogSchema::new(LogEntry::NewPeer)
-            .peer(&peer)
-            .is_valid_peer(true));`
 $DIR/state-sync/state-sync-v1/src/request_manager.rs: `counters::ACTIVE_UPSTREAM_PEERS
             .with_label_values(&[&peer.raw_network_id().to_string()])
             .inc();`
-$DIR/state-sync/state-sync-v1/src/request_manager.rs: `warn!(LogSchema::new(LogEntry::NewPeerAlreadyExists).peer(occupied_entry.key()));`
 $DIR/state-sync/state-sync-v1/src/request_manager.rs: `vacant_entry.insert(peer_score);`
-$DIR/state-sync/state-sync-v1/src/request_manager.rs: `info!(LogSchema::new(LogEntry::LostPeer).peer(peer));`
 $DIR/state-sync/state-sync-v1/src/request_manager.rs: `counters::ACTIVE_UPSTREAM_PEERS
                 .with_label_values(&[&peer.raw_network_id().to_string()])
                 .dec();`
 $DIR/state-sync/state-sync-v1/src/request_manager.rs: `self.peer_scores.remove(peer);`
-$DIR/state-sync/state-sync-v1/src/request_manager.rs: `warn!(LogSchema::new(LogEntry::LostPeerNotKnown).peer(peer));`
 $DIR/state-sync/state-sync-v1/src/request_manager.rs: `*score = new_score;`
 $DIR/state-sync/state-sync-v1/src/request_manager.rs: `eligible_peers.push((*peer).clone());`
-$DIR/state-sync/state-sync-v1/src/request_manager.rs: `error!(
-                            "Failed to compute weighted index for eligible peers: {:?}",
-                            error
-                        );`
 $DIR/state-sync/state-sync-v1/src/request_manager.rs: `new_multicast_network_level = Some(network_level.clone());`
 $DIR/state-sync/state-sync-v1/src/request_manager.rs: `prev_request.multicast_level = self.multicast_network_level.clone();`
 $DIR/state-sync/state-sync-v1/src/request_manager.rs: `prev_request.multicast_start_time = now;`
@@ -14025,7 +13736,6 @@ $DIR/state-sync/state-sync-v1/src/request_manager.rs: `self.requests.insert(vers
 $DIR/state-sync/state-sync-v1/src/request_manager.rs: `self.requests.remove(&v);`
 $DIR/state-sync/state-sync-v1/src/request_manager.rs: `self.multicast_network_level = new_level.clone();`
 $DIR/state-sync/state-sync-v1/src/request_manager.rs: `log_event = log_event.request_version(version);`
-$DIR/state-sync/state-sync-v1/src/request_manager.rs: `info!(log_event);`
 $DIR/state-sync/state-sync-v1/src/request_manager.rs: `counters::MULTICAST_LEVEL.set(network_counter_value);`
 $DIR/state-sync/state-sync-v1/src/request_manager.rs: `request_manager.disable_peer(&validator_0).unwrap();`
 $DIR/state-sync/state-sync-v1/src/request_manager.rs: `request_manager
@@ -14780,7 +14490,6 @@ $DIR/storage/backup/backup-cli/src/utils/read_record_bytes.rs: `.pop()`
 $DIR/storage/backup/backup-cli/src/utils/read_record_bytes.rs: `.to_be_bytes()`
 $DIR/storage/backup/backup-cli/src/utils/read_record_bytes.rs: `.push(0u8)`
 $DIR/storage/backup/backup-service/src/lib.rs: `runtime.handle().spawn(server);`
-$DIR/storage/backup/backup-service/src/lib.rs: `info!("Backup service spawned.");`
 $DIR/storage/backup/backup-service/src/lib.rs: `.get_backup_handler()`
 $DIR/storage/backup/backup-service/src/lib.rs: `.thread_name("backup")`
 $DIR/storage/backup/backup-service/src/lib.rs: `.enable_all()`

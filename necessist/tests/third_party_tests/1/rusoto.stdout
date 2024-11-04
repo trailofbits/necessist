@@ -543,12 +543,7 @@ $DIR/integration_tests/tests/eks.rs: `.list_clusters(request)`
 $DIR/integration_tests/tests/elasticache.rs: `.describe_cache_clusters(request)`
 $DIR/integration_tests/tests/elasticbeanstalk.rs: `.describe_applications(request)`
 $DIR/integration_tests/tests/elastictranscoder.rs: `location.remove(0);`
-$DIR/integration_tests/tests/elastictranscoder.rs: `info!("Created S3 bucket: {}", location);`
-$DIR/integration_tests/tests/elastictranscoder.rs: `info!("Created preset with id: {:?}", &id);`
 $DIR/integration_tests/tests/elastictranscoder.rs: `tokio::time::sleep(std::time::Duration::from_secs(2)).await;`
-$DIR/integration_tests/tests/elastictranscoder.rs: `info!("Got list of presets.");`
-$DIR/integration_tests/tests/elastictranscoder.rs: `info!("Preset: {:?}", preset.name);`
-$DIR/integration_tests/tests/elastictranscoder.rs: `info!("Got preset: {:?}", preset.name);`
 $DIR/integration_tests/tests/elastictranscoder.rs: `.create_bucket(create_bucket_req)`
 $DIR/integration_tests/tests/elastictranscoder.rs: `.remove(0)`
 $DIR/integration_tests/tests/elastictranscoder.rs: `.delete_bucket(delete_bucket_req)`
@@ -663,7 +658,6 @@ $DIR/integration_tests/tests/logs.rs: `client
                 }
             }
         });`
-$DIR/integration_tests/tests/logs.rs: `warn!("CreateLogGroupError::ResourceAlreadyExists: {}", err);`
 $DIR/integration_tests/tests/logs.rs: `client
         .create_log_stream(create_log_stream_req)
         .await
@@ -678,7 +672,6 @@ $DIR/integration_tests/tests/logs.rs: `client
                 }
             }
         });`
-$DIR/integration_tests/tests/logs.rs: `warn!("CreateLogStreamError::ResourceAlreadyExists: {}", err);`
 $DIR/integration_tests/tests/logs.rs: `desc_streams_req.log_group_name = log_group.to_owned();`
 $DIR/integration_tests/tests/logs.rs: `desc_streams_req.log_stream_name_prefix = Some(log_stream.to_owned());`
 $DIR/integration_tests/tests/logs.rs: `input_events.push(input_event.clone());`
@@ -690,10 +683,6 @@ $DIR/integration_tests/tests/logs.rs: `get_log_req.log_group_name = log_group.to
 $DIR/integration_tests/tests/logs.rs: `get_log_req.log_stream_name = log_stream.to_owned();`
 $DIR/integration_tests/tests/logs.rs: `get_log_req.start_time = Some(input_event.timestamp - 1);`
 $DIR/integration_tests/tests/logs.rs: `get_log_req.end_time = Some(input_event.timestamp + 1);`
-$DIR/integration_tests/tests/logs.rs: `info!(
-            "Trying to get log events: {} out of {} times",
-            i, retry_count
-        );`
 $DIR/integration_tests/tests/logs.rs: `i = i + 1;`
 $DIR/integration_tests/tests/logs.rs: `thread::sleep(time::Duration::from_secs(1));`
 $DIR/integration_tests/tests/logs.rs: `client
@@ -4156,11 +4145,6 @@ $DIR/rusoto/signature/src/signature.rs: `self.remove_header("x-amz-content-sha25
 $DIR/rusoto/signature/src/signature.rs: `self.remove_header("authorization");`
 $DIR/rusoto/signature/src/signature.rs: `headers.append(&name, value);`
 $DIR/rusoto/signature/src/signature.rs: `final_uri = final_uri + &format!("?{}", self.canonical_query_string());`
-$DIR/rusoto/signature/src/signature.rs: `debug!(
-                "Full request: \n method: {}\n final_uri: {}\n payload: {}\nHeaders:\n",
-                method, final_uri, payload
-            );`
-$DIR/rusoto/signature/src/signature.rs: `debug!("{}:{:?}", h.as_str(), v);`
 $DIR/rusoto/signature/src/signature.rs: `*request.headers_mut() = headers;`
 $DIR/rusoto/signature/src/signature.rs: `output.push_str("&");`
 $DIR/rusoto/signature/src/signature.rs: `output.push_str(&encode_uri_strict(&key));`
