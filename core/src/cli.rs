@@ -36,7 +36,7 @@ pub struct Opts<Identifier: Clone + Send + Sync + ValueEnum + 'static> {
     framework: Option<framework::Auto<Identifier>>,
     #[clap(long, help = "Do not perform dry runs")]
     no_dry_run: bool,
-    #[clap(long, help = "Do not walk local functions")]
+    #[clap(long, hide = true)]
     no_local_functions: bool,
     #[clap(long, help = "Do not output to an sqlite database")]
     no_sqlite: bool,

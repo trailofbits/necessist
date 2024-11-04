@@ -135,6 +135,15 @@ pub fn necessist<Identifier: Applicable + Display + IntoEnumIterator + ToImpleme
         context.println = &println;
     }
 
+    if opts.no_local_functions {
+        warn(
+            &context,
+            Warning::OptionDeprecated,
+            "--no-local-functions is now the default; hence, this option is deprecated",
+            WarnFlags::empty(),
+        )?;
+    }
+
     let Some((backend, n_spans, source_file_span_test_map)) = prepare(&context, framework)? else {
         return Ok(());
     };

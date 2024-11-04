@@ -399,9 +399,7 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
 
             let storage = RefCell::new(self.0.storage_from_file(&file));
 
-            let walkable_functions = if context.opts.no_local_functions {
-                BTreeMap::default()
-            } else {
+            let walkable_functions = {
                 let mut local_functions = self.0.local_functions(&storage, &file)?;
                 local_functions.retain(|name, _| config.is_walkable_function(name));
                 local_functions
