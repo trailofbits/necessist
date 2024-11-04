@@ -297,13 +297,18 @@ The ignored functions and methods are the same as for Anchor TS above.
 - `assert_eq`
 - `assert_matches`
 - `assert_ne`
+- `debug`
 - `eprint`
 - `eprintln`
+- `error`
+- `info`
 - `panic`
 - `print`
 - `println`
+- `trace`
 - `unimplemented`
 - `unreachable`
+- `warn`
 
 #### Ignored methods\*
 
