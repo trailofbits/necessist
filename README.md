@@ -171,7 +171,6 @@ Options:
       --dump-candidates        Dump removal candidates and exit (for debugging)
       --framework <FRAMEWORK>  Assume testing framework is <FRAMEWORK> [possible values: anchor, auto, foundry, go, hardhat, rust]
       --no-dry-run             Do not perform dry runs
-      --no-local-functions     Do not walk local functions
       --no-sqlite              Do not output to an sqlite database
       --quiet                  Do not output to the console
       --reset                  Discard sqlite database contents
@@ -387,6 +386,8 @@ A configuration file allows one to tailor Necessist's behavior with respect to a
   - `Method`: Ignore only if the path matches an `ignored_methods` pattern.
 
 - `ignored_tests`: A list of strings. A test whose name exactly matches a string in the list is ignored. For Mocha-based frameworks (e.g., Anchor and Hardhat), a test name is consider to be a message passed to `it`.
+
+- `walkable_functions`: A list of strings interpreted as [patterns]. If a test calls a function that matches the pattern, and the function is declared in the same file as the test, then statements and method calls are removed from the function as though it were a test.
 
 ### Patterns
 
