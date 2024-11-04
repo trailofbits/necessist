@@ -17,6 +17,7 @@ pub struct Compiled {
     ignored_methods: Vec<Regex>,
     ignored_path_disambiguation: IgnoredPathDisambiguation,
     ignored_tests: Vec<String>,
+    walkable_functions: Vec<Regex>,
 }
 
 impl Compiled {
@@ -40,6 +41,10 @@ impl Compiled {
     pub fn is_ignored_test(&self, name: &str) -> bool {
         self.ignored_tests.iter().any(|s| name == s)
     }
+    #[must_use]
+    pub fn is_walkable_function(&self, name: &str) -> bool {
+        self.walkable_functions.iter().any(|re| re.is_match(name))
+    }
 }
 
 #[derive(Default, serde::Deserialize, serde::Serialize)]
@@ -54,6 +59,8 @@ pub struct Toml {
     pub ignored_path_disambiguation: Option<IgnoredPathDisambiguation>,
     #[serde(default)]
     pub ignored_tests: Vec<String>,
+    #[serde(default)]
+    pub walkable_functions: Vec<String>,
     #[serde(flatten)]
     pub other: BTreeMap<String, toml::Value>,
 }
@@ -87,6 +94,7 @@ impl Toml {
             ignored_methods,
             ignored_path_disambiguation,
             ignored_tests,
+            walkable_functions,
             other: _,
         } = other;
 
@@ -105,6 +113,8 @@ impl Toml {
         self.ignored_path_disambiguation = *ignored_path_disambiguation;
 
         self.ignored_tests.extend_from_slice(ignored_tests);
+        self.walkable_functions
+            .extend_from_slice(walkable_functions);
 
         Some(self)
     }
@@ -116,12 +126,14 @@ impl Toml {
             ignored_methods,
             ignored_path_disambiguation,
             ignored_tests,
+            walkable_functions,
             other: _,
         } = self;
 
-        let ignored_functions = compile_ignored(ignored_functions, false)?;
-        let ignored_macros = compile_ignored(ignored_macros, false)?;
-        let ignored_methods = compile_ignored(ignored_methods, true)?;
+        let ignored_functions = compile_patterns(ignored_functions, false)?;
+        let ignored_macros = compile_patterns(ignored_macros, false)?;
+        let ignored_methods = compile_patterns(ignored_methods, true)?;
+        let walkable_functions = compile_patterns(walkable_functions, false)?;
 
         Ok(Compiled {
             ignored_functions,
@@ -129,11 +141,12 @@ impl Toml {
             ignored_methods,
             ignored_path_disambiguation: ignored_path_disambiguation.unwrap_or_default(),
             ignored_tests,
+            walkable_functions,
         })
     }
 }
 
-fn compile_ignored(
+fn compile_patterns(
     ignored: impl IntoIterator<Item = impl AsRef<str>>,
     methods: bool,
 ) -> Result<Vec<Regex>> {
