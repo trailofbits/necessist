@@ -38,7 +38,7 @@ pub struct GenericVisitor<'context, 'config, 'backend, 'ast, T: ParseLow> {
     pub context: &'context LightContext<'context>,
     pub config: &'config config::Compiled,
     pub backend: &'backend mut T,
-    pub local_functions: BTreeMap<String, Vec<<T::Types as AbstractTypes>::LocalFunction<'ast>>>,
+    pub walkable_functions: BTreeMap<String, Vec<<T::Types as AbstractTypes>::LocalFunction<'ast>>>,
     pub source_file: SourceFile,
     pub test_names: BTreeSet<String>,
     pub last_statement_in_test: Option<<T::Types as AbstractTypes>::Statement<'ast>>,
@@ -273,7 +273,7 @@ impl<'ast, T: ParseLow> GenericVisitor<'_, '_, '_, 'ast, T> {
         call: <T::Types as AbstractTypes>::Call<'ast>,
     ) -> bool {
         if_chain! {
-            if let Some((name, local_functions)) = self.callee_is_local_function(storage, call);
+            if let Some((name, local_functions)) = self.callee_is_walkable_function(storage, call);
             let ambiguous = local_functions.len() >= 2;
             // smoelius: As mentioned above, a new call to a local function `foo` could be
             // discovered while walking a local function `bar`. In such a case, `foo` may already be
@@ -575,7 +575,7 @@ impl<'ast, T: ParseLow> GenericVisitor<'_, '_, '_, 'ast, T> {
         }
     }
 
-    fn callee_is_local_function(
+    fn callee_is_walkable_function(
         &self,
         storage: &RefCell<<T::Types as AbstractTypes>::Storage<'ast>>,
         call: <T::Types as AbstractTypes>::Call<'ast>,
@@ -585,8 +585,8 @@ impl<'ast, T: ParseLow> GenericVisitor<'_, '_, '_, 'ast, T> {
     )> {
         let expression = self.backend.call_callee(storage, call);
         let name = expression.name()?;
-        let local_functions = self.local_functions.get(&name)?;
-        Some((name, local_functions.clone()))
+        let walkable_functions = self.walkable_functions.get(&name)?;
+        Some((name, walkable_functions.clone()))
     }
 
     fn callee_is_named_field(

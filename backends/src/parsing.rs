@@ -213,6 +213,8 @@ impl<T: ParseLow> ParseLow for Rc<RefCell<T>> {
     ) -> <Self::Types as AbstractTypes>::Storage<'ast> {
         self.borrow().storage_from_file(file)
     }
+    /// Returns a [`BTreeMap`] mapping local function names to `LocalFunction`s as defined in the
+    /// backend's [`AbstractTypes`]
     fn local_functions<'ast>(
         &self,
         storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
@@ -229,7 +231,7 @@ impl<T: ParseLow> ParseLow for Rc<RefCell<T>> {
             context,
             config,
             backend,
-            local_functions,
+            walkable_functions,
             source_file,
             test_names,
             last_statement_in_test,
@@ -247,7 +249,7 @@ impl<T: ParseLow> ParseLow for Rc<RefCell<T>> {
             context,
             config,
             backend: &mut backend,
-            local_functions,
+            walkable_functions,
             source_file,
             test_names,
             last_statement_in_test,
@@ -397,10 +399,12 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
 
             let storage = RefCell::new(self.0.storage_from_file(&file));
 
-            let local_functions = if context.opts.no_local_functions {
+            let walkable_functions = if context.opts.no_local_functions {
                 BTreeMap::default()
             } else {
-                self.0.local_functions(&storage, &file)?
+                let mut local_functions = self.0.local_functions(&storage, &file)?;
+                local_functions.retain(|name, _| config.is_walkable_function(name));
+                local_functions
             };
 
             let source_file = SourceFile::new(context.root.clone(), source_file.to_path_buf())?;
@@ -409,7 +413,7 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
                 context,
                 config: &config,
                 backend: &mut self.0,
-                local_functions,
+                walkable_functions,
                 source_file: source_file.clone(),
                 test_names: BTreeSet::default(),
                 last_statement_in_test: None,
