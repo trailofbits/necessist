@@ -26,6 +26,7 @@ pub enum Warning {
     ItMessageNotFound,
     LocalFunctionAmbiguous,
     ModulePathUnknown,
+    OptionDeprecated,
     OutputInvalid,
     ParsingFailed,
     RunTestFailed,
@@ -185,6 +186,7 @@ fn may_be_bug(warning: Warning) -> bool {
         | Warning::IgnoredMethodsUnsupported
         | Warning::ItMessageNotFound
         | Warning::LocalFunctionAmbiguous
+        | Warning::OptionDeprecated
         | Warning::OutputInvalid
         | Warning::ParsingFailed => false,
         Warning::InstrumentationNonbuildable
