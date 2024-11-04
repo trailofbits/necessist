@@ -1043,13 +1043,11 @@ $DIR/src/storage.rs: `.try_collect::<Vec<_>>()`
 $DIR/src/storage.rs: `.store.put(&path.into(), Bytes::new())`
 $DIR/src/storage.rs: `.into()`
 $DIR/src/storage.rs: `.path()`
-$DIR/src/swirl/runner.rs: `warn!("Initial transaction depth is not 1. This is very unexpected");`
 $DIR/src/swirl/runner.rs: `tx.set_status(match result.is_ok() {
                     true => sentry::protocol::SpanStatus::Ok,
                     false => sentry::protocol::SpanStatus::UnknownError,
                 });`
 $DIR/src/swirl/runner.rs: `tx.finish();`
-$DIR/src/swirl/runner.rs: `warn!("Rolling back a transaction due to a panic in a background task");`
 $DIR/src/swirl/runner.rs: `AnsiTransactionManager::rollback_transaction(conn)?;`
 $DIR/src/swirl/runner.rs: `storage::update_failed_job(conn, job_id);`
 $DIR/src/swirl/runner.rs: `self.thread_pool.join();`
@@ -7417,19 +7415,15 @@ $DIR/src/worker/dump_db.rs: `.join("data")`
 $DIR/src/worker/dump_db.rs: `.join("users.csv")`
 $DIR/src/worker/dump_db.rs: `.entries()`
 $DIR/src/worker/dump_db.rs: `.enumerate()`
-$DIR/src/worker/update_downloads.rs: `info!(rows = rows.len(), "Updating versions");`
 $DIR/src/worker/update_downloads.rs: `collect(conn, &rows)?;`
-$DIR/src/worker/update_downloads.rs: `info!("Finished updating versions");`
 $DIR/src/worker/update_downloads.rs: `diesel::update(version_downloads)
         .set(processed.eq(true))
         .filter(date.lt(diesel::dsl::date(now)))
         .filter(downloads.eq(counted))
         .filter(processed.eq(false))
         .execute(conn)?;`
-$DIR/src/worker/update_downloads.rs: `info!("Finished freezing old version_downloads");`
 $DIR/src/worker/update_downloads.rs: `sql_function!(fn refresh_recent_crate_downloads());`
 $DIR/src/worker/update_downloads.rs: `select(refresh_recent_crate_downloads()).execute(conn)?;`
-$DIR/src/worker/update_downloads.rs: `info!("Finished running refresh_recent_crate_downloads");`
 $DIR/src/worker/update_downloads.rs: `update(crates::table.find(crate_id))
                 .set(crates::downloads.eq(crates::downloads + amt))
                 .execute(conn)?;`
