@@ -315,13 +315,18 @@ impl ParseLow for Rust {
         "assert_eq",
         "assert_matches",
         "assert_ne",
+        "debug",
         "eprint",
         "eprintln",
+        "error",
+        "info",
         "panic",
         "print",
         "println",
+        "trace",
         "unimplemented",
         "unreachable",
+        "warn",
     ]);
 
     const IGNORED_METHODS: Option<&'static [&'static str]> = Some(&[
