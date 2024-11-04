@@ -23,3 +23,29 @@ impl<'a, K: Ord, V, E> TryInsert<'a, V, E> for Entry<'a, K, V> {
         }
     }
 }
+
+#[cfg(test)]
+mod test {
+    use super::*;
+    use anyhow::Result;
+    use std::{collections::BTreeMap, path::PathBuf};
+
+    #[test]
+    fn or_try_insert_with() {
+        let mut map = BTreeMap::new();
+        let path_buf = PathBuf::from("/");
+        let _: &mut bool = map
+            .entry(path_buf.clone())
+            .or_try_insert_with(|| -> Result<bool> { Ok(true) })
+            .unwrap();
+
+        // smoelius: Ensure `path_buf` is in `map`.
+        assert!(map.contains_key(&path_buf));
+
+        // smoelius: Ensure a second call to `or_try_insert_with` does not invoke the closure.
+        let _: &mut bool = map
+            .entry(path_buf)
+            .or_try_insert_with(|| -> Result<bool> { panic!() })
+            .unwrap();
+    }
+}
