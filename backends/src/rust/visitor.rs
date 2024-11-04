@@ -66,10 +66,10 @@ pub(super) fn visit<'ast>(
     if let Some(error) = storage.borrow_mut().error.take() {
         return Err(error);
     }
-    let _: &Vec<String> = visitor.generic_visitor.backend.cached_source_file_flags(
-        &mut storage.borrow_mut().source_file_package_cache,
-        &visitor.generic_visitor.source_file,
-    )?;
+    let _: &Vec<String> = visitor
+        .generic_visitor
+        .backend
+        .cached_source_file_flags(&visitor.generic_visitor.source_file)?;
     visitor.generic_visitor.results()
 }
 
@@ -136,6 +136,11 @@ impl<'ast> Visit<'ast> for Visitor<'_, '_, '_, 'ast, '_> {
 
             if let Some(test) = Test::new(
                 self.storage,
+                &mut self
+                    .generic_visitor
+                    .backend
+                    .source_file_fs_module_path_cache,
+                &mut self.generic_visitor.backend.source_file_package_cache,
                 &mut self.generic_visitor.backend.directory_metadata_cache,
                 &self.generic_visitor.source_file,
                 item,
