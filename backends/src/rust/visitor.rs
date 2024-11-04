@@ -134,7 +134,12 @@ impl<'ast> Visit<'ast> for Visitor<'_, '_, '_, 'ast, '_> {
             assert!(self.test_ident.is_none());
             self.test_ident = Some(ident);
 
-            if let Some(test) = Test::new(self.storage, &self.generic_visitor.source_file, item) {
+            if let Some(test) = Test::new(
+                self.storage,
+                &mut self.generic_visitor.backend.directory_metadata_cache,
+                &self.generic_visitor.source_file,
+                item,
+            ) {
                 let walk = self.generic_visitor.visit_test(self.storage, test);
 
                 if walk {

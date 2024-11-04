@@ -3,7 +3,7 @@ use super::{
     WalkDirResult,
 };
 use anyhow::Result;
-use cargo_metadata::Package;
+use cargo_metadata::{Metadata, Package};
 use necessist_core::{
     framework::{SpanTestMaps, TestSet},
     LightContext, SourceFile, Span, ToInternalSpan, __Rewriter as Rewriter,
@@ -31,6 +31,7 @@ use visitor::{collect_local_functions, visit};
 
 #[derive(Debug)]
 pub struct Rust {
+    directory_metadata_cache: BTreeMap<PathBuf, Metadata>,
     source_file_flags_cache: BTreeMap<PathBuf, Vec<String>>,
 }
 
@@ -45,6 +46,7 @@ impl Rust {
 
     pub fn new() -> Self {
         Self {
+            directory_metadata_cache: BTreeMap::new(),
             source_file_flags_cache: BTreeMap::new(),
         }
     }
@@ -59,13 +61,17 @@ pub struct Test<'ast> {
 impl<'ast> Test<'ast> {
     fn new(
         storage: &RefCell<Storage>,
+        directory_metadata_map: &mut BTreeMap<PathBuf, Metadata>,
         source_file: &SourceFile,
         item_fn: &'ast syn::ItemFn,
     ) -> Option<Self> {
         // smoelius: If the module path cannot be determined, return `None` to prevent the
         // `GenericVisitor` from walking the test.
         let test_name = item_fn.sig.ident.to_string();
-        let result = storage.borrow_mut().test_path(source_file, &test_name);
+        let result =
+            storage
+                .borrow_mut()
+                .test_path(directory_metadata_map, source_file, &test_name);
         let test_path = match result {
             Ok(test_path) => test_path,
             Err(error) => {
@@ -666,7 +672,11 @@ impl Rust {
         self.source_file_flags_cache
             .entry(source_file.to_path_buf())
             .or_try_insert_with(|| {
-                let package = cached_source_file_package(source_file_package_map, source_file)?;
+                let package = cached_source_file_package(
+                    source_file_package_map,
+                    &mut self.directory_metadata_cache,
+                    source_file,
+                )?;
 
                 let mut flags = vec![
                     "--manifest-path".to_owned(),

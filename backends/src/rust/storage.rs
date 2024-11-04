@@ -1,6 +1,6 @@
 use super::TryInsert;
 use anyhow::{anyhow, Error, Result};
-use cargo_metadata::{MetadataCommand, Package};
+use cargo_metadata::{Metadata, MetadataCommand, Package};
 use necessist_core::{util, SourceFile};
 use std::{
     collections::BTreeMap,
@@ -12,6 +12,8 @@ use syn::{File, Ident};
 /// Structures needed during parsing but not after.
 pub struct Storage<'ast> {
     pub module_path: Vec<&'ast Ident>,
+    // smoelius: I think putting the next two maps in `Storage` may be a bug. A `Storage` lasts
+    // only as long as one source file.
     pub source_file_fs_module_path_cache: BTreeMap<PathBuf, Vec<String>>,
     pub source_file_package_cache: BTreeMap<PathBuf, Package>,
     pub tests_needing_warnings: BTreeMap<String, Vec<Error>>,
@@ -29,10 +31,16 @@ impl<'ast> Storage<'ast> {
         }
     }
 
-    pub fn test_path(&mut self, source_file: &SourceFile, name: &str) -> Result<Vec<String>> {
+    pub fn test_path(
+        &mut self,
+        directory_metadata_map: &mut BTreeMap<PathBuf, Metadata>,
+        source_file: &SourceFile,
+        name: &str,
+    ) -> Result<Vec<String>> {
         let mut test_path = cached_source_file_fs_module_path(
             &mut self.source_file_fs_module_path_cache,
             &mut self.source_file_package_cache,
+            directory_metadata_map,
             source_file,
         )
         .cloned()?;
@@ -46,12 +54,17 @@ impl<'ast> Storage<'ast> {
 pub(super) fn cached_source_file_fs_module_path<'a>(
     source_file_fs_module_path_map: &'a mut BTreeMap<PathBuf, Vec<String>>,
     source_file_package_map: &mut BTreeMap<PathBuf, Package>,
+    directory_metadata_map: &mut BTreeMap<PathBuf, Metadata>,
     source_file: &Path,
 ) -> Result<&'a Vec<String>> {
     source_file_fs_module_path_map
         .entry(source_file.to_path_buf())
         .or_try_insert_with(|| {
-            let package = cached_source_file_package(source_file_package_map, source_file)?;
+            let package = cached_source_file_package(
+                source_file_package_map,
+                directory_metadata_map,
+                source_file,
+            )?;
 
             let manifest_dir = package
                 .manifest_path
@@ -88,6 +101,7 @@ pub(super) fn cached_source_file_fs_module_path<'a>(
 #[cfg_attr(dylint_lib = "general", allow(non_local_effect_before_error_return))]
 pub(super) fn cached_source_file_package<'a>(
     source_file_package_map: &'a mut BTreeMap<PathBuf, Package>,
+    directory_metadata_map: &mut BTreeMap<PathBuf, Metadata>,
     source_file: &Path,
 ) -> Result<&'a Package> {
     source_file_package_map
@@ -97,14 +111,11 @@ pub(super) fn cached_source_file_package<'a>(
                 .parent()
                 .ok_or_else(|| anyhow!("Failed to get parent directory"))?;
 
-            let metadata = MetadataCommand::new()
-                .current_dir(parent)
-                .no_deps()
-                .exec()?;
+            let metadata = cached_directory_metadata(directory_metadata_map, parent)?;
 
             // smoelius: Use the package whose manifest directory is nearest to the source file.
             let mut package_near: Option<Package> = None;
-            for package_curr in metadata.packages {
+            for package_curr in &metadata.packages {
                 let manifest_dir = package_curr
                     .manifest_path
                     .parent()
@@ -116,14 +127,30 @@ pub(super) fn cached_source_file_package<'a>(
                     if package_prev.manifest_path.components().count()
                         < package_curr.manifest_path.components().count()
                     {
-                        package_near = Some(package_curr);
+                        package_near = Some(package_curr.clone());
                     }
                 } else {
-                    package_near = Some(package_curr);
+                    package_near = Some(package_curr.clone());
                 }
             }
 
             package_near.ok_or_else(|| anyhow!("Failed to determine package"))
+        })
+        .map(|value| value as &_)
+}
+
+fn cached_directory_metadata<'a>(
+    directory_metadata_map: &'a mut BTreeMap<PathBuf, Metadata>,
+    path: &Path,
+) -> Result<&'a Metadata> {
+    directory_metadata_map
+        .entry(path.to_path_buf())
+        .or_try_insert_with(|| {
+            MetadataCommand::new()
+                .current_dir(path)
+                .no_deps()
+                .exec()
+                .map_err(Into::into)
         })
         .map(|value| value as &_)
 }
