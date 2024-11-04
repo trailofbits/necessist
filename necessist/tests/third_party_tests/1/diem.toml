@@ -1,3 +1,5 @@
 # https://www.reddit.com/r/rust/comments/s6olun/comment/ht5l2kj
 url = "https://github.com/diem/diem"
 rev = "diem-core-v1.4.4"
+args = ["--dump-candidates"]
+full = true

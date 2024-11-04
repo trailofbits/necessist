@@ -2,3 +2,5 @@ url = "https://github.com/pyth-network/pyth-crosschain"
 target_os = ["linux", "macos"]
 subdir = "pythnet/message_buffer"
 framework = "anchor"
+source_files = ["tests/message_buffer.ts"]
+full = true

@@ -1,6 +1,8 @@
 url = "https://github.com/ProjectOpenSea/seaport"
 rev = "1.6"
 framework = "hardhat"
+source_files = ["test/advanced.spec.ts"]
+full = true
 
 [config]
 ignored_functions = ["checkExpectedEvents"]

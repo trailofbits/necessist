@@ -1,4 +1,6 @@
 url = "https://github.com/Uniswap/v3-core"
+source_files = ["test/UniswapV3Pool.spec.ts"]
+full = true
 
 [config]
 ignored_functions = ["checkObservationEquals", "snapshotGasCost"]
