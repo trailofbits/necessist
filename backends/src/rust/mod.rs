@@ -31,6 +31,8 @@ use visitor::{collect_local_functions, visit};
 
 #[derive(Debug)]
 pub struct Rust {
+    source_file_fs_module_path_cache: BTreeMap<PathBuf, Vec<String>>,
+    source_file_package_cache: BTreeMap<PathBuf, Package>,
     directory_metadata_cache: BTreeMap<PathBuf, Metadata>,
     source_file_flags_cache: BTreeMap<PathBuf, Vec<String>>,
 }
@@ -46,6 +48,8 @@ impl Rust {
 
     pub fn new() -> Self {
         Self {
+            source_file_fs_module_path_cache: BTreeMap::new(),
+            source_file_package_cache: BTreeMap::new(),
             directory_metadata_cache: BTreeMap::new(),
             source_file_flags_cache: BTreeMap::new(),
         }
@@ -61,6 +65,8 @@ pub struct Test<'ast> {
 impl<'ast> Test<'ast> {
     fn new(
         storage: &RefCell<Storage>,
+        source_file_fs_module_path_cache: &mut BTreeMap<PathBuf, Vec<String>>,
+        source_file_package_cache: &mut BTreeMap<PathBuf, Package>,
         directory_metadata_map: &mut BTreeMap<PathBuf, Metadata>,
         source_file: &SourceFile,
         item_fn: &'ast syn::ItemFn,
@@ -68,10 +74,13 @@ impl<'ast> Test<'ast> {
         // smoelius: If the module path cannot be determined, return `None` to prevent the
         // `GenericVisitor` from walking the test.
         let test_name = item_fn.sig.ident.to_string();
-        let result =
-            storage
-                .borrow_mut()
-                .test_path(directory_metadata_map, source_file, &test_name);
+        let result = storage.borrow_mut().test_path(
+            source_file_fs_module_path_cache,
+            source_file_package_cache,
+            directory_metadata_map,
+            source_file,
+            &test_name,
+        );
         let test_path = match result {
             Ok(test_path) => test_path,
             Err(error) => {
@@ -664,16 +673,12 @@ impl Rust {
     }
 
     #[cfg_attr(dylint_lib = "general", allow(non_local_effect_before_error_return))]
-    fn cached_source_file_flags(
-        &mut self,
-        source_file_package_map: &mut BTreeMap<PathBuf, Package>,
-        source_file: &Path,
-    ) -> Result<&Vec<String>> {
+    fn cached_source_file_flags(&mut self, source_file: &Path) -> Result<&Vec<String>> {
         self.source_file_flags_cache
             .entry(source_file.to_path_buf())
             .or_try_insert_with(|| {
                 let package = cached_source_file_package(
-                    source_file_package_map,
+                    &mut self.source_file_package_cache,
                     &mut self.directory_metadata_cache,
                     source_file,
                 )?;

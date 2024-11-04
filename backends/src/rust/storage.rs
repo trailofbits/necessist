@@ -12,10 +12,6 @@ use syn::{File, Ident};
 /// Structures needed during parsing but not after.
 pub struct Storage<'ast> {
     pub module_path: Vec<&'ast Ident>,
-    // smoelius: I think putting the next two maps in `Storage` may be a bug. A `Storage` lasts
-    // only as long as one source file.
-    pub source_file_fs_module_path_cache: BTreeMap<PathBuf, Vec<String>>,
-    pub source_file_package_cache: BTreeMap<PathBuf, Package>,
     pub tests_needing_warnings: BTreeMap<String, Vec<Error>>,
     pub error: Option<Error>,
 }
@@ -24,8 +20,6 @@ impl<'ast> Storage<'ast> {
     pub fn new(_file: &'ast File) -> Self {
         Self {
             module_path: Vec::new(),
-            source_file_fs_module_path_cache: BTreeMap::new(),
-            source_file_package_cache: BTreeMap::new(),
             tests_needing_warnings: BTreeMap::new(),
             error: None,
         }
@@ -33,13 +27,15 @@ impl<'ast> Storage<'ast> {
 
     pub fn test_path(
         &mut self,
+        source_file_fs_module_path_map: &mut BTreeMap<PathBuf, Vec<String>>,
+        source_file_package_map: &mut BTreeMap<PathBuf, Package>,
         directory_metadata_map: &mut BTreeMap<PathBuf, Metadata>,
         source_file: &SourceFile,
         name: &str,
     ) -> Result<Vec<String>> {
         let mut test_path = cached_source_file_fs_module_path(
-            &mut self.source_file_fs_module_path_cache,
-            &mut self.source_file_package_cache,
+            source_file_fs_module_path_map,
+            source_file_package_map,
             directory_metadata_map,
             source_file,
         )
