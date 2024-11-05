@@ -1,5 +1,5 @@
 url = "https://github.com/smartcontractkit/chainlink"
-rev = "v2.17.0"
+rev = "v2.18.0"
 subdir = "contracts"
 framework = "foundry"
 source_files = ["src/v0.8/transmission/test/EIP_712_1014_4337.t.sol"]
