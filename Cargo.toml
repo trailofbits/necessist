@@ -30,12 +30,4 @@ libraries = [
 ]
 
 [workspace.metadata.unmaintained]
-ignore = [
-    "adler",
-    "ascii-canvas",
-    "bit-set",
-    "getset",
-    "num_cpus",
-    "proc-macro-error",
-    "solang-parser",
-]
+ignore = ["ascii-canvas", "bit-set", "num_cpus", "paste", "solang-parser"]
