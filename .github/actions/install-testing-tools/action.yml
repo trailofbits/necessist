@@ -6,10 +6,7 @@ runs:
     - name: Install Solana
       if: ${{ runner.os != 'Windows' }}
       run: |
-        # smoelius: The latest stable (1.16) seems to cause problems for the xNFT tests. I suspect
-        # this is the reason:
-        # https://github.com/solana-labs/solana/issues/31960#issuecomment-1668682153
-        sh -c "$(curl -sSfL https://release.solana.com/v1.14.29/install)"
+        sh -c "$(curl -sSfL https://release.solana.com/v1.18.18/install)"
         echo "$HOME/.local/share/solana/install/active_release/bin" >> "$GITHUB_PATH"
       shell: bash
 
