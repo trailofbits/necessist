@@ -1,4 +1,4 @@
-args = ["--no-sqlite", "--root=fixtures/valid_pattern", "--no-local-functions"]
+args = ["--no-sqlite", "--root=fixtures/valid_pattern"]
 stderr = ""
 
 [bin]

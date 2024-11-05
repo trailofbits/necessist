@@ -1,7 +1,6 @@
 args = [
     "--no-sqlite",
     "--root=fixtures/block_ending_in_expression",
-    "--no-local-functions",
     "--verbose",
 ]
 stderr = ""
