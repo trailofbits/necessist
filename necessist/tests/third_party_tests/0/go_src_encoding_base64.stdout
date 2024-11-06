@@ -1,12 +1,33 @@
-81 candidates in 17 tests in 2 source files
+102 candidates in 17 tests in 2 source files
 $DIR/src/encoding/base64/base64_test.go: dry running
 $DIR/src/encoding/base64/base64_test.go: mutilating
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, "Encode(%q) = %q, want %q", p.decoded, got, tt.conv(p.encoded))` passed
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, `AppendEncode("lead", %q) = %q, want %q`, p.decoded, string(dst), "lead"+tt.conv(p.encoded))` passed
 $DIR/src/encoding/base64/base64_test.go: `encoder.Write([]byte(p.decoded))` failed
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, "Encode(%q) = %q, want %q", p.decoded, bb.String(), p.encoded)` passed
 $DIR/src/encoding/base64/base64_test.go: `end = len(input)` failed
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, "Write(%q) gave error %v, want %v", input[pos:end], err, error(nil))` passed
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, "Write(%q) gave length %v, want %v", input[pos:end], n, end-pos)` passed
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, "Close gave error %v, want %v", err, error(nil))` passed
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, "Encoding/%d of %q = %q, want %q", bs, bigtest.decoded, bb.String(), bigtest.encoded)` passed
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, "Decode(%q) = error %v, want %v", encoded, err, error(nil))` passed
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, "Decode(%q) = length %v, want %v", encoded, count, len(p.decoded))` passed
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, "Decode(%q) = %q, want %q", encoded, string(dbuf[0:count]), p.decoded)` passed
 $DIR/src/encoding/base64/base64_test.go: `dbuf, err = tt.enc.DecodeString(encoded)` failed
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, "DecodeString(%q) = error %v, want %v", encoded, err, error(nil))` passed
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, "DecodeString(%q) = %q, want %q", encoded, string(dbuf), p.decoded)` passed
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, "AppendDecode(%q) = error %v, want %v", p.encoded, err, error(nil))` passed
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, `AppendDecode("lead", %q) = %q, want %q`, p.encoded, string(dst), "lead"+p.decoded)` passed
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, "AppendDecode(%q) = error %v, want %v", p.encoded, err, error(nil))` passed
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, `AppendDecode("", %q) = %q, want %q`, p.encoded, string(dst2), p.decoded)` passed
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, "Read from %q = length %v, want %v", p.encoded, count, len(p.decoded))` passed
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, "Decoding of %q = %q, want %q", p.encoded, string(dbuf[0:count]), p.decoded)` passed
 $DIR/src/encoding/base64/base64_test.go: `_, err = decoder.Read(dbuf)` failed
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, "Read from %q = %v, want %v", p.encoded, err, io.EOF)` passed
 $DIR/src/encoding/base64/base64_test.go: `n, err = decoder.Read(buf[total : total+bs])` timed-out
 $DIR/src/encoding/base64/base64_test.go: `total += n` failed
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, "Decoding/%d of %q = %q, want %q", bs, bigtest.encoded, string(buf[0:total]), bigtest.decoded)` passed
+$DIR/src/encoding/base64/base64_test.go: `testEqual(t, "Corruption in %q at offset %v, want %v", tc.input, int(err), tc.offset)` passed
 $DIR/src/encoding/base64/base64_test.go: `tests = append(tests, test{RawStdEncoding, (math.MaxInt-5)/8 + 1, 357913942})` passed
 $DIR/src/encoding/base64/base64_test.go: `tests = append(tests, test{RawStdEncoding, math.MaxInt/4*3 + 2, math.MaxInt})` passed
 $DIR/src/encoding/base64/base64_test.go: `tests = append(tests, test{RawStdEncoding, (math.MaxInt-5)/8 + 1, 1537228672809129302})` passed

@@ -1,22 +1,13 @@
-183 candidates in 32 tests in 3 source files
+154 candidates in 32 tests in 3 source files
 $DIR/src/encoding/binary/binary_test.go: dry running
 $DIR/src/encoding/binary/binary_test.go: mutilating
-$DIR/src/encoding/binary/binary_test.go: `t.Run(dec.name, func(t *testing.T) {
-			var s2 Struct
-			err := dec.fn(order, &s2, b)
-			checkResult(t, dec.name, order, err, s2, s1)
-		})` passed
-$DIR/src/encoding/binary/binary_test.go: `checkResult(t, dec.name, order, err, s2, s1)` passed
-$DIR/src/encoding/binary/binary_test.go: `t.Run(enc.name, func(t *testing.T) {
-			buf, err := enc.fn(order, s1)
-			checkResult(t, enc.name, order, err, buf, b)
-		})` passed
-$DIR/src/encoding/binary/binary_test.go: `checkResult(t, enc.name, order, err, buf, b)` passed
 $DIR/src/encoding/binary/binary_test.go: `t.Run("Read", func(t *testing.T) {
 		slice := make([]int32, 2)
 		err := Read(bytes.NewReader(src), BigEndian, slice)
 		checkResult(t, "ReadSlice", BigEndian, err, slice, res)
 	})` passed
+$DIR/src/encoding/binary/binary_test.go: `checkResult(t, "ReadSlice", BigEndian, err, slice, res)` passed
+$DIR/src/encoding/binary/binary_test.go: `checkResult(t, "ReadSlice", BigEndian, err, slice, res)` passed
 $DIR/src/encoding/binary/binary_test.go: `t.Run(dec.name, func(t *testing.T) {
 			var res bool
 			var err error
@@ -30,15 +21,19 @@ $DIR/src/encoding/binary/binary_test.go: `t.Run(dec.name, func(t *testing.T) {
 			checkResult(t, dec.name, BigEndian, err, res, true)
 		})` passed
 $DIR/src/encoding/binary/binary_test.go: `err = dec.fn(BigEndian, &res, []byte{0})` passed
+$DIR/src/encoding/binary/binary_test.go: `checkResult(t, dec.name, BigEndian, err, res, false)` passed
 $DIR/src/encoding/binary/binary_test.go: `res = false` passed
 $DIR/src/encoding/binary/binary_test.go: `err = dec.fn(BigEndian, &res, []byte{1})` failed
+$DIR/src/encoding/binary/binary_test.go: `checkResult(t, dec.name, BigEndian, err, res, true)` passed
 $DIR/src/encoding/binary/binary_test.go: `res = false` passed
 $DIR/src/encoding/binary/binary_test.go: `err = dec.fn(BigEndian, &res, []byte{2})` failed
+$DIR/src/encoding/binary/binary_test.go: `checkResult(t, dec.name, BigEndian, err, res, true)` passed
 $DIR/src/encoding/binary/binary_test.go: `t.Run(dec.name, func(t *testing.T) {
 			slice := make([]bool, 4)
 			err := dec.fn(BigEndian, slice, []byte{0, 1, 2, 255})
 			checkResult(t, dec.name, BigEndian, err, slice, []bool{false, true, true, true})
 		})` passed
+$DIR/src/encoding/binary/binary_test.go: `checkResult(t, dec.name, BigEndian, err, slice, []bool{false, true, true, true})` passed
 $DIR/src/encoding/binary/binary_test.go: `t.Run(fmt.Sprintf("%s,%s", enc.name, dec.name), func(t *testing.T) {
 				for _, array := range intArrays {
 					src := reflect.ValueOf(array).Elem()
@@ -201,16 +196,13 @@ $DIR/src/encoding/binary/binary_test.go: `read(&p)` passed
 $DIR/src/encoding/binary/binary_test.go: `errWant = io.EOF` failed
 $DIR/src/encoding/binary/binary_test.go: `errWant = nil` passed
 $DIR/src/encoding/binary/binary_test.go: `errWant = io.ErrUnexpectedEOF` failed
-$DIR/src/encoding/binary/binary_test.go: `panicked = recover() != nil` failed
-$DIR/src/encoding/binary/binary_test.go: `LittleEndian.Uint64(b[:4])` failed
-$DIR/src/encoding/binary/binary_test.go: `panicked = recover() != nil` failed
-$DIR/src/encoding/binary/binary_test.go: `LittleEndian.PutUint64(b[:4], 0x0102030405060708)` failed
 $DIR/src/encoding/binary/binary_test.go: `order.PutUint16(buf[:2], want16)` failed
 $DIR/src/encoding/binary/binary_test.go: `buf = order.AppendUint16(buf[:offset], want16)` failed
 $DIR/src/encoding/binary/binary_test.go: `order.PutUint32(buf[:4], want32)` failed
 $DIR/src/encoding/binary/binary_test.go: `buf = order.AppendUint32(buf[:offset], want32)` failed
 $DIR/src/encoding/binary/binary_test.go: `order.PutUint64(buf[:8], want64)` failed
 $DIR/src/encoding/binary/binary_test.go: `buf = order.AppendUint64(buf[:offset], want64)` failed
+$DIR/src/encoding/binary/binary_test.go: `testReadInvalidDestination(t, BigEndian)` passed
 $DIR/src/encoding/binary/binary_test.go: `t.Run(enc.name, func(t *testing.T) {
 			_, err := enc.fn(LittleEndian, &person)
 			if err == nil {
@@ -234,18 +226,6 @@ $DIR/src/encoding/binary/binary_test.go: `t.Run(fmt.Sprintf("%T", data), func(t 
 			}
 		})` passed
 $DIR/src/encoding/binary/binary_test.go: `_ = Size(data)` passed
-$DIR/src/encoding/binary/binary_test.go: `.DeepEqual(have, want)` nonbuildable
-$DIR/src/encoding/binary/binary_test.go: `.Run(dec.name, func(t *testing.T) {
-			var s2 Struct
-			err := dec.fn(order, &s2, b)
-			checkResult(t, dec.name, order, err, s2, s1)
-		})` nonbuildable
-$DIR/src/encoding/binary/binary_test.go: `.fn(order, &s2, b)` nonbuildable
-$DIR/src/encoding/binary/binary_test.go: `.Run(enc.name, func(t *testing.T) {
-			buf, err := enc.fn(order, s1)
-			checkResult(t, enc.name, order, err, buf, b)
-		})` nonbuildable
-$DIR/src/encoding/binary/binary_test.go: `.fn(order, s1)` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Run("Read", func(t *testing.T) {
 		slice := make([]int32, 2)
 		err := Read(bytes.NewReader(src), BigEndian, slice)
@@ -469,8 +449,6 @@ $DIR/src/encoding/binary/binary_test.go: `.TypeOf(data)` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.String()` passed
 $DIR/src/encoding/binary/binary_test.go: `.NewReader(data[:i])` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.NewReader(data[:i])` nonbuildable
-$DIR/src/encoding/binary/binary_test.go: `.Uint64(b[:4])` nonbuildable
-$DIR/src/encoding/binary/binary_test.go: `.PutUint64(b[:4], 0x0102030405060708)` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Float64bits(math.Pi)` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Float64bits(math.E)` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.PutUint16(buf[:2], want16)` nonbuildable
@@ -485,8 +463,6 @@ $DIR/src/encoding/binary/binary_test.go: `.PutUint64(buf[:8], want64)` nonbuilda
 $DIR/src/encoding/binary/binary_test.go: `.Uint64(buf[:8])` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.AppendUint64(buf[:offset], want64)` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Uint64(buf[offset:])` nonbuildable
-$DIR/src/encoding/binary/binary_test.go: `.NewReader([]byte{1, 2, 3, 4, 5, 6, 7, 8})` nonbuildable
-$DIR/src/encoding/binary/binary_test.go: `.Sprintf("binary.Read: invalid type %T", dst)` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Run(enc.name, func(t *testing.T) {
 			_, err := enc.fn(LittleEndian, &person)
 			if err == nil {
@@ -523,8 +499,14 @@ $DIR/src/encoding/binary/binary_test.go: `.Sizeof(i)` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Uint32(s)` nonbuildable
 $DIR/src/encoding/binary/varint_test.go: dry running
 $DIR/src/encoding/binary/varint_test.go: mutilating
-$DIR/src/encoding/binary/varint_test.go: `buf2 = AppendVarint(buf2, x)` failed
-$DIR/src/encoding/binary/varint_test.go: `buf2 = AppendUvarint(buf2, x)` failed
+$DIR/src/encoding/binary/varint_test.go: `testConstant(t, 16, MaxVarintLen16)` passed
+$DIR/src/encoding/binary/varint_test.go: `testConstant(t, 32, MaxVarintLen32)` passed
+$DIR/src/encoding/binary/varint_test.go: `testVarint(t, x)` passed
+$DIR/src/encoding/binary/varint_test.go: `testVarint(t, -x)` passed
+$DIR/src/encoding/binary/varint_test.go: `testVarint(t, x)` passed
+$DIR/src/encoding/binary/varint_test.go: `testVarint(t, -x)` passed
+$DIR/src/encoding/binary/varint_test.go: `testUvarint(t, uint64(x))` passed
+$DIR/src/encoding/binary/varint_test.go: `testUvarint(t, x)` passed
 $DIR/src/encoding/binary/varint_test.go: `wantErr = io.ErrUnexpectedEOF` failed
 $DIR/src/encoding/binary/varint_test.go: `b[i] = 0xff` failed
 $DIR/src/encoding/binary/varint_test.go: `b[999] = 0` passed
@@ -537,8 +519,8 @@ $DIR/src/encoding/binary/varint_test.go: `t.Run(tt.name, func(t *testing.T) {
 				t.Errorf("value=%d, want=%d", g, w)
 			}
 		})` passed
-$DIR/src/encoding/binary/varint_test.go: `.NewReader(buf)` nonbuildable
-$DIR/src/encoding/binary/varint_test.go: `.NewReader(buf)` nonbuildable
+$DIR/src/encoding/binary/varint_test.go: `testOverflow(t, []byte{0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x2}, 0, -10, errOverflow)` passed
+$DIR/src/encoding/binary/varint_test.go: `testOverflow(t, []byte{0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x1, 0, 0}, 0, -11, errOverflow)` passed
 $DIR/src/encoding/binary/varint_test.go: `.NewReader(buf)` nonbuildable
 $DIR/src/encoding/binary/varint_test.go: `.Run(tt.name, func(t *testing.T) {
 			value, n := Uvarint(tt.in)
@@ -549,6 +531,3 @@ $DIR/src/encoding/binary/varint_test.go: `.Run(tt.name, func(t *testing.T) {
 				t.Errorf("value=%d, want=%d", g, w)
 			}
 		})` nonbuildable
-$DIR/src/encoding/binary/varint_test.go: `.NewReader(buf)` nonbuildable
-$DIR/src/encoding/binary/varint_test.go: `.Len()` nonbuildable
-$DIR/src/encoding/binary/varint_test.go: `.Len()` nonbuildable

@@ -1,4 +1,4 @@
-12 candidates in 12 tests in 5 source files
+16 candidates in 12 tests in 5 source files
 $DIR/src/os/user/lookup_unix_test.go: dry running
 $DIR/src/os/user/lookup_unix_test.go: mutilating
 $DIR/src/os/user/lookup_unix_test.go: Warning: Failed to run test `TestFindGroupName`: code=0
@@ -72,6 +72,10 @@ $DIR/src/os/user/user_test.go: dry running
 $DIR/src/os/user/user_test.go: mutilating
 $DIR/src/os/user/user_test.go: `userBuffer = old` passed
 $DIR/src/os/user/user_test.go: `userBuffer = 1` passed
+$DIR/src/os/user/user_test.go: `checkUser(t)` passed
+$DIR/src/os/user/user_test.go: `checkUser(t)` passed
 $DIR/src/os/user/user_test.go: `groupBuffer = old` passed
 $DIR/src/os/user/user_test.go: `groupBuffer = 1` passed
+$DIR/src/os/user/user_test.go: `checkGroup(t)` passed
+$DIR/src/os/user/user_test.go: `checkGroupList(t)` passed
 $DIR/src/os/user/user_test.go: `.GroupIds()` nonbuildable

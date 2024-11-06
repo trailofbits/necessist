@@ -77,47 +77,6 @@ Warning: Failed to determine module path for test `text_with_script_tag`: [
 Warning: Failed to determine module path for test `text_with_unknown_tag`: [
     Failed to determine relative path of source file "$DIR/crates_io_markdown/lib.rs",
 ]
-Warning: Found multiple functions with the following names in `$DIR/crates_io_tarball/src/manifest.rs`: {
-    "is_inherited",
-}
-Silence this warning with: --allow local-function-ambiguous
-Warning: Found multiple functions with the following names in `$DIR/src/controllers/util.rs`: {
-    "extensions",
-    "extensions_mut",
-    "headers",
-    "method",
-    "uri",
-    "version",
-}
-Warning: Found multiple functions with the following names in `$DIR/src/headers.rs`: {
-    "as_str",
-}
-Warning: Found multiple functions with the following names in `$DIR/src/models/krate.rs`: {
-    "all_versions",
-}
-Warning: Found multiple functions with the following names in `$DIR/src/models/team.rs`: {
-    "create_or_update",
-}
-Warning: Found multiple functions with the following names in `$DIR/src/tests/builders/publish.rs`: {
-    "none_or_filled",
-}
-Warning: Found multiple functions with the following names in `$DIR/src/tests/util/test_app.rs`: {
-    "with_proxy",
-}
-Warning: Found multiple functions with the following names in `$DIR/src/tests/util.rs`: {
-    "app",
-    "request_builder",
-}
-Warning: Found multiple functions with the following names in `$DIR/src/util/errors/json.rs`: {
-    "fmt",
-}
-Warning: Found multiple functions with the following names in `$DIR/src/util/errors.rs`: {
-    "cause",
-    "response",
-}
-Warning: Found multiple functions with the following names in `$DIR/src/worker/dump_db/gen_scripts.rs`: {
-    "template_context",
-}
 $DIR/crates_io_tarball/src/lib.rs: `assert_none!(tarball_info.vcs_info);`
 $DIR/crates_io_tarball/src/lib.rs: `want.sort();`
 $DIR/crates_io_tarball/src/lib.rs: `.add_file(
@@ -218,31 +177,6 @@ $DIR/crates_io_tarball/src/lib.rs: `.map(|file| PathBuf::from("foo-0.0.1").join(
 $DIR/crates_io_tarball/src/lib.rs: `.join(file)`
 $DIR/crates_io_tarball/src/lib.rs: `.collect()`
 $DIR/crates_io_tarball/src/lib.rs: `.sort()`
-$DIR/src/admin/render_readmes.rs: `file.read_to_string(&mut contents)
-        .context("Failed to read file contents")?;`
-$DIR/src/admin/render_readmes.rs: `.entries()`
-$DIR/src/admin/render_readmes.rs: `.context("Invalid tar archive entries")`
-$DIR/src/admin/render_readmes.rs: `.context("Failed to read Cargo.toml file")`
-$DIR/src/admin/render_readmes.rs: `.context("Failed to parse manifest file")`
-$DIR/src/admin/render_readmes.rs: `.and_then(|p| p.readme.as_ref())`
-$DIR/src/admin/render_readmes.rs: `.and_then(|r| r.as_ref().as_local())`
-$DIR/src/admin/render_readmes.rs: `.as_local()`
-$DIR/src/admin/render_readmes.rs: `.join(&readme_path)`
-$DIR/src/admin/render_readmes.rs: `.with_context(|| format!("Failed to read {} file", readme_path.display()))`
-$DIR/src/admin/render_readmes.rs: `.and_then(|p| p.repository.as_ref())`
-$DIR/src/admin/render_readmes.rs: `.and_then(|r| r.as_ref().as_local())`
-$DIR/src/admin/render_readmes.rs: `.as_local()`
-$DIR/src/admin/render_readmes.rs: `.map(|s| s.as_str())`
-$DIR/src/admin/render_readmes.rs: `.filter_map(|entry| entry.ok())`
-$DIR/src/admin/render_readmes.rs: `.ok()`
-$DIR/src/admin/render_readmes.rs: `.find(|file| match file.path() {
-            Ok(p) => p == path,
-            Err(_) => false,
-        })`
-$DIR/src/admin/render_readmes.rs: `.path()`
-$DIR/src/admin/render_readmes.rs: `.ok_or_else(|| anyhow!("Failed to find tarball entry: {}", path.display()))`
-$DIR/src/admin/render_readmes.rs: `.read_to_string(&mut contents)`
-$DIR/src/admin/render_readmes.rs: `.context("Failed to read file contents")`
 $DIR/src/admin/render_readmes.rs: `.add_file(
                 "foo-0.0.1/Cargo.toml",
                 br#"
@@ -298,6 +232,14 @@ $DIR/src/admin/render_readmes.rs: `.add_file(
                 b"docs/readme [link](./Other.md)",
             )`
 $DIR/src/admin/render_readmes.rs: `.build_unzipped()`
+$DIR/src/auth.rs: `.with_endpoint_scope(EndpointScope::PublishNew)`
+$DIR/src/auth.rs: `.for_crate("tokio-console")`
+$DIR/src/auth.rs: `.with_endpoint_scope(EndpointScope::PublishUpdate)`
+$DIR/src/auth.rs: `.for_crate("tokio-console")`
+$DIR/src/auth.rs: `.with_endpoint_scope(EndpointScope::Yank)`
+$DIR/src/auth.rs: `.for_crate("tokio-console")`
+$DIR/src/auth.rs: `.with_endpoint_scope(EndpointScope::ChangeOwners)`
+$DIR/src/auth.rs: `.for_crate("tokio-console")`
 $DIR/src/config/server.rs: `assert_ok_eq!(
         parse_cidr_block("127.0.0.1/24"),
         "127.0.0.1/24".parse::<IpNetwork>().unwrap()
@@ -308,14 +250,8 @@ $DIR/src/config/server.rs: `assert_ok_eq!(
             .parse::<IpNetwork>()
             .unwrap()
     );`
-$DIR/src/config/server.rs: `.split_terminator(',')`
-$DIR/src/config/server.rs: `.split_once('=')`
 $DIR/src/config/server.rs: `.collect::<Vec<_>>()`
 $DIR/src/config/server.rs: `.collect::<Vec<_>>()`
-$DIR/src/controllers/helpers/pagination.rs: `self.enable_pages = enable;`
-$DIR/src/controllers/helpers/pagination.rs: `self.enable_seek = enable;`
-$DIR/src/controllers/helpers/pagination.rs: `req.request_log().add("bot", "suspected");`
-$DIR/src/controllers/helpers/pagination.rs: `req.request_log().add("cause", "large page offset");`
 $DIR/src/controllers/helpers/pagination.rs: `assert_error("page=", "cannot parse integer from empty string");`
 $DIR/src/controllers/helpers/pagination.rs: `assert_error("page=not_a_number", "invalid digit found in string");`
 $DIR/src/controllers/helpers/pagination.rs: `assert_error("page=1.0", "invalid digit found in string");`
@@ -324,132 +260,71 @@ $DIR/src/controllers/helpers/pagination.rs: `assert_error("per_page=", "cannot p
 $DIR/src/controllers/helpers/pagination.rs: `assert_error("per_page=not_a_number", "invalid digit found in string");`
 $DIR/src/controllers/helpers/pagination.rs: `assert_error("per_page=1.0", "invalid digit found in string");`
 $DIR/src/controllers/helpers/pagination.rs: `assert_error("per_page=101", "cannot request more than 100 items");`
+$DIR/src/controllers/helpers/pagination.rs: `assert_pagination_error(
+            PaginationOptions::builder(),
+            "seek=OTg",
+            "?seek= is not supported for this request",
+        );`
 $DIR/src/controllers/helpers/pagination.rs: `assert_ok_eq!(raw.decode::<i32>(), 98);`
+$DIR/src/controllers/helpers/pagination.rs: `assert_pagination_error(
+            PaginationOptions::builder(),
+            "page=1&seek=OTg",
+            "providing both ?page= and ?seek= is unsupported",
+        );`
 $DIR/src/controllers/helpers/pagination.rs: `assert_ok_eq!(encode_seek(98), "OTg");`
 $DIR/src/controllers/helpers/pagination.rs: `assert_ok_eq!(encode_seek(("foo", 42)), "WyJmb28iLDQyXQ");`
 $DIR/src/controllers/helpers/pagination.rs: `assert_ok_eq!(decode_seek::<i32>(&encode_seek(98).unwrap()), 98);`
-$DIR/src/controllers/helpers/pagination.rs: `.query()`
-$DIR/src/controllers/helpers/pagination.rs: `.get("page")`
-$DIR/src/controllers/helpers/pagination.rs: `.get("seek")`
-$DIR/src/controllers/helpers/pagination.rs: `.is_some()`
-$DIR/src/controllers/helpers/pagination.rs: `.is_some()`
-$DIR/src/controllers/helpers/pagination.rs: `.parse()`
-$DIR/src/controllers/helpers/pagination.rs: `.map_err(|e| bad_request(&e))`
-$DIR/src/controllers/helpers/pagination.rs: `.request_log()`
-$DIR/src/controllers/helpers/pagination.rs: `.add("bot", "suspected")`
-$DIR/src/controllers/helpers/pagination.rs: `.app()`
-$DIR/src/controllers/helpers/pagination.rs: `.headers()`
-$DIR/src/controllers/helpers/pagination.rs: `.request_log()`
-$DIR/src/controllers/helpers/pagination.rs: `.add("cause", "large page offset")`
-$DIR/src/controllers/helpers/pagination.rs: `.get("per_page")`
-$DIR/src/controllers/helpers/pagination.rs: `.map(|s| s.parse().map_err(|e| bad_request(&e)))`
-$DIR/src/controllers/helpers/pagination.rs: `.parse()`
-$DIR/src/controllers/helpers/pagination.rs: `.map_err(|e| bad_request(&e))`
-$DIR/src/controllers/helpers/pagination.rs: `.unwrap_or(Ok(DEFAULT_PER_PAGE))`
-$DIR/src/controllers/helpers/pagination.rs: `.get_str_or_default(header::USER_AGENT)`
-$DIR/src/controllers/helpers/pagination.rs: `.get_str_or_default("x-real-ip")`
-$DIR/src/controllers/helpers/pagination.rs: `.any(|blocked| user_agent.contains(blocked))`
-$DIR/src/controllers/helpers/pagination.rs: `.contains(blocked)`
-$DIR/src/controllers/helpers/pagination.rs: `.any(|blocked| blocked.contains(client_ip))`
-$DIR/src/controllers/helpers/pagination.rs: `.contains(client_ip)`
-$DIR/src/controllers/helpers/pagination.rs: `.method(Method::GET)`
-$DIR/src/controllers/helpers/pagination.rs: `.uri(format!("/?{query}"))`
-$DIR/src/controllers/helpers/pagination.rs: `.body(())`
-$DIR/src/controllers/helpers/pagination.rs: `.response()`
-$DIR/src/controllers/user/session.rs: `.name.as_deref()`
-$DIR/src/controllers/user/session.rs: `.avatar_url.as_deref()`
-$DIR/src/controllers/user/session.rs: `.create_or_update(user.email.as_deref(), emails, conn)`
-$DIR/src/controllers/user/session.rs: `.email.as_deref()`
-$DIR/src/controllers/user/session.rs: `.map_err(Into::into)`
-$DIR/src/controllers/user/session.rs: `.is::<ReadOnlyMode>()`
-$DIR/src/controllers/user/session.rs: `.filter(users::gh_id.eq(user.id))`
-$DIR/src/controllers/user/session.rs: `.eq(user.id)`
-$DIR/src/controllers/user/session.rs: `.first(conn)`
-$DIR/src/controllers/user/session.rs: `.optional()`
+$DIR/src/controllers/helpers/pagination.rs: `.gather(&mock(""))`
+$DIR/src/controllers/helpers/pagination.rs: `.gather(&mock("page=5"))`
+$DIR/src/controllers/helpers/pagination.rs: `.gather(&mock("per_page=5"))`
+$DIR/src/controllers/helpers/pagination.rs: `.enable_seek(true)`
+$DIR/src/controllers/helpers/pagination.rs: `.gather(&mock("seek=OTg"))`
+$DIR/src/controllers/helpers/pagination.rs: `.enable_seek(true)`
+$DIR/src/controllers/helpers/pagination.rs: `.enable_pages(false)`
 $DIR/src/controllers/user/session.rs: `.into()`
 $DIR/src/controllers/user/session.rs: `.into()`
 $DIR/src/controllers/user/session.rs: `.into()`
-$DIR/src/downloads_counter.rs: `self.pending_count.fetch_add(1, Ordering::SeqCst);`
-$DIR/src/downloads_counter.rs: `counter.value().fetch_add(1, Ordering::SeqCst);`
-$DIR/src/downloads_counter.rs: `self.inner
-                .entry(version_id)
-                .and_modify(|counter| {
-                    // Handle the version being inserted by another thread while we were waiting
-                    // for the write lock on the shard.
-                    counter.fetch_add(1, Ordering::SeqCst);
-                })
-                .or_insert_with(|| AtomicUsize::new(1));`
-$DIR/src/downloads_counter.rs: `counter.fetch_add(1, Ordering::SeqCst);`
-$DIR/src/downloads_counter.rs: `stats = stats.merge(self.persist_shard(conn, shard.iter())?);`
-$DIR/src/downloads_counter.rs: `stats.shard = Some(idx);`
+$DIR/src/downloads_counter.rs: `counter.increment(v1);`
+$DIR/src/downloads_counter.rs: `counter.increment(v2);`
+$DIR/src/downloads_counter.rs: `state.assert_downloads_count(conn, v1, 10);`
+$DIR/src/downloads_counter.rs: `state.assert_downloads_count(conn, v2, 5);`
 $DIR/src/downloads_counter.rs: `v2 = state.new_version(conn);`
+$DIR/src/downloads_counter.rs: `counter.increment(v1);`
+$DIR/src/downloads_counter.rs: `counter.increment(v2);`
 $DIR/src/downloads_counter.rs: `pending -= 10;`
+$DIR/src/downloads_counter.rs: `state.assert_downloads_count(conn, v1, 10);`
 $DIR/src/downloads_counter.rs: `pending -= 5;`
-$DIR/src/downloads_counter.rs: `v2 += 1;`
-$DIR/src/downloads_counter.rs: `self.next_version += 1;`
-$DIR/src/downloads_counter.rs: `.pending_count.fetch_add(1, Ordering::SeqCst)`
-$DIR/src/downloads_counter.rs: `.inner.get(&version_id)`
-$DIR/src/downloads_counter.rs: `.value()`
-$DIR/src/downloads_counter.rs: `.fetch_add(1, Ordering::SeqCst)`
-$DIR/src/downloads_counter.rs: `.inner
-                .entry(version_id)`
-$DIR/src/downloads_counter.rs: `.and_modify(|counter| {
-                    // Handle the version being inserted by another thread while we were waiting
-                    // for the write lock on the shard.
-                    counter.fetch_add(1, Ordering::SeqCst);
-                })`
-$DIR/src/downloads_counter.rs: `.fetch_add(1, Ordering::SeqCst)`
-$DIR/src/downloads_counter.rs: `.or_insert_with(|| AtomicUsize::new(1))`
-$DIR/src/downloads_counter.rs: `.inner.shards()`
-$DIR/src/downloads_counter.rs: `.write()`
-$DIR/src/downloads_counter.rs: `.merge(self.persist_shard(conn, shard.iter())?)`
-$DIR/src/downloads_counter.rs: `.persist_shard(conn, shard.iter())`
-$DIR/src/downloads_counter.rs: `.inner.shards()`
-$DIR/src/downloads_counter.rs: `.shard_idx.fetch_add(1, Ordering::SeqCst)`
-$DIR/src/downloads_counter.rs: `.len()`
-$DIR/src/downloads_counter.rs: `.write()`
-$DIR/src/downloads_counter.rs: `.persist_shard(conn, shard.iter())`
-$DIR/src/downloads_counter.rs: `.inner.shards()`
+$DIR/src/downloads_counter.rs: `state.assert_downloads_count(conn, v1, 10);`
+$DIR/src/downloads_counter.rs: `.new_version(conn)`
+$DIR/src/downloads_counter.rs: `.new_version(conn)`
+$DIR/src/downloads_counter.rs: `.new_version(conn)`
+$DIR/src/downloads_counter.rs: `.increment(v1)`
+$DIR/src/downloads_counter.rs: `.increment(v2)`
+$DIR/src/downloads_counter.rs: `.persist_all_shards_with_conn(conn)`
+$DIR/src/downloads_counter.rs: `.assert_downloads_count(conn, v1, 10)`
+$DIR/src/downloads_counter.rs: `.assert_downloads_count(conn, v2, 5)`
+$DIR/src/downloads_counter.rs: `.new_version(conn)`
 $DIR/src/downloads_counter.rs: `.inner.determine_map(&v1)`
+$DIR/src/downloads_counter.rs: `.new_version(conn)`
 $DIR/src/downloads_counter.rs: `.inner.determine_map(&v2)`
+$DIR/src/downloads_counter.rs: `.new_version(conn)`
 $DIR/src/downloads_counter.rs: `.inner.determine_map(&v2)`
+$DIR/src/downloads_counter.rs: `.increment(v1)`
+$DIR/src/downloads_counter.rs: `.increment(v2)`
+$DIR/src/downloads_counter.rs: `.shards_count()`
+$DIR/src/downloads_counter.rs: `.persist_next_shard_with_conn(conn)`
+$DIR/src/downloads_counter.rs: `.assert_downloads_count(conn, v1, 10)`
+$DIR/src/downloads_counter.rs: `.assert_downloads_count(conn, v1, 10)`
 $DIR/src/downloads_counter.rs: `.determine_map(&v1)`
 $DIR/src/downloads_counter.rs: `.determine_map(&v2)`
 $DIR/src/downloads_counter.rs: `.determine_map(&v1)`
 $DIR/src/downloads_counter.rs: `.determine_map(&v2)`
-$DIR/src/downloads_counter.rs: `.save(conn, "ghost@example.com")`
-$DIR/src/downloads_counter.rs: `.select(sum(downloads))`
-$DIR/src/downloads_counter.rs: `.filter(version_id.eq(version))`
-$DIR/src/downloads_counter.rs: `.eq(version)`
-$DIR/src/downloads_counter.rs: `.first(conn)`
 $DIR/src/licenses.rs: `assert_ok!(parse_license_expr("MIT"));`
 $DIR/src/licenses.rs: `assert_ok!(parse_license_expr("MIT OR Apache-2.0"));`
 $DIR/src/licenses.rs: `assert_ok!(parse_license_expr("MIT/Apache-2.0"));`
 $DIR/src/licenses.rs: `assert_ok!(parse_license_expr("MIT AND Apache-2.0"));`
 $DIR/src/licenses.rs: `assert_ok!(parse_license_expr("MIT OR (Apache-2.0 AND MIT)"));`
 $DIR/src/licenses.rs: `assert_ok!(parse_license_expr("GPL-3.0+"));`
-$DIR/src/metrics/log_encoder.rs: `dest.write_all(b"crates-io-heroku-metrics:ingest ")?;`
-$DIR/src/metrics/log_encoder.rs: `dest.write_all(&chunk)?;`
-$DIR/src/metrics/log_encoder.rs: `dest.write_all(b"\n")?;`
-$DIR/src/metrics/log_encoder.rs: `buckets.push(bucket.get_upper_bound());`
-$DIR/src/metrics/log_encoder.rs: `counts.push(bucket.get_cumulative_count() - last_cumulative_count);`
-$DIR/src/metrics/log_encoder.rs: `last_cumulative_count = bucket.get_cumulative_count();`
-$DIR/src/metrics/log_encoder.rs: `events.push(VectorEvent {
-                metric: VectorMetric {
-                    data,
-                    kind: "absolute",
-                    name: family.get_name(),
-                    tags: metric
-                        .get_label()
-                        .iter()
-                        .map(|p| (p.get_name(), p.get_value()))
-                        .collect(),
-                },
-            });`
-$DIR/src/metrics/log_encoder.rs: `seq.serialize_element(next)?;`
-$DIR/src/metrics/log_encoder.rs: `seq.end()?;`
-$DIR/src/metrics/log_encoder.rs: `drop(serializer);`
-$DIR/src/metrics/log_encoder.rs: `result.push(writer.buffer);`
 $DIR/src/metrics/log_encoder.rs: `registry.register(Box::new(counter.clone()))?;`
 $DIR/src/metrics/log_encoder.rs: `counter.inc_by(42);`
 $DIR/src/metrics/log_encoder.rs: `registry.register(Box::new(gauge.clone()))?;`
@@ -462,52 +337,6 @@ $DIR/src/metrics/log_encoder.rs: `gauge_vec.with_label_values(&["foo", "1"]).set
 $DIR/src/metrics/log_encoder.rs: `gauge_vec.with_label_values(&["bar", "2"]).set(98);`
 $DIR/src/metrics/log_encoder.rs: `registry.register(Box::new(gauge))?;`
 $DIR/src/metrics/log_encoder.rs: `LogEncoder::new().encode(&registry.gather(), &mut output)?;`
-$DIR/src/metrics/log_encoder.rs: `.map_err(|e| Error::Msg(e.to_string()))`
-$DIR/src/metrics/log_encoder.rs: `.write_all(b"crates-io-heroku-metrics:ingest ")`
-$DIR/src/metrics/log_encoder.rs: `.write_all(&chunk)`
-$DIR/src/metrics/log_encoder.rs: `.write_all(b"\n")`
-$DIR/src/metrics/log_encoder.rs: `.get_metric()`
-$DIR/src/metrics/log_encoder.rs: `.get_field_type()`
-$DIR/src/metrics/log_encoder.rs: `.get_counter()`
-$DIR/src/metrics/log_encoder.rs: `.get_value()`
-$DIR/src/metrics/log_encoder.rs: `.get_gauge()`
-$DIR/src/metrics/log_encoder.rs: `.get_value()`
-$DIR/src/metrics/log_encoder.rs: `.get_histogram()`
-$DIR/src/metrics/log_encoder.rs: `.get_bucket()`
-$DIR/src/metrics/log_encoder.rs: `.push(bucket.get_upper_bound())`
-$DIR/src/metrics/log_encoder.rs: `.get_upper_bound()`
-$DIR/src/metrics/log_encoder.rs: `.push(bucket.get_cumulative_count() - last_cumulative_count)`
-$DIR/src/metrics/log_encoder.rs: `.get_cumulative_count()`
-$DIR/src/metrics/log_encoder.rs: `.get_cumulative_count()`
-$DIR/src/metrics/log_encoder.rs: `.get_sample_count()`
-$DIR/src/metrics/log_encoder.rs: `.get_sample_sum()`
-$DIR/src/metrics/log_encoder.rs: `.push(VectorEvent {
-                metric: VectorMetric {
-                    data,
-                    kind: "absolute",
-                    name: family.get_name(),
-                    tags: metric
-                        .get_label()
-                        .iter()
-                        .map(|p| (p.get_name(), p.get_value()))
-                        .collect(),
-                },
-            })`
-$DIR/src/metrics/log_encoder.rs: `.get_name()`
-$DIR/src/metrics/log_encoder.rs: `.get_label()`
-$DIR/src/metrics/log_encoder.rs: `.map(|p| (p.get_name(), p.get_value()))`
-$DIR/src/metrics/log_encoder.rs: `.get_name()`
-$DIR/src/metrics/log_encoder.rs: `.get_value()`
-$DIR/src/metrics/log_encoder.rs: `.collect()`
-$DIR/src/metrics/log_encoder.rs: `.peekable()`
-$DIR/src/metrics/log_encoder.rs: `.peek()`
-$DIR/src/metrics/log_encoder.rs: `.is_some()`
-$DIR/src/metrics/log_encoder.rs: `.serialize_seq(None)`
-$DIR/src/metrics/log_encoder.rs: `.next()`
-$DIR/src/metrics/log_encoder.rs: `.serialize_element(next)`
-$DIR/src/metrics/log_encoder.rs: `.get()`
-$DIR/src/metrics/log_encoder.rs: `.end()`
-$DIR/src/metrics/log_encoder.rs: `.push(writer.buffer)`
 $DIR/src/metrics/log_encoder.rs: `.register(Box::new(counter.clone()))`
 $DIR/src/metrics/log_encoder.rs: `.inc_by(42)`
 $DIR/src/metrics/log_encoder.rs: `.register(Box::new(gauge.clone()))`
@@ -520,64 +349,16 @@ $DIR/src/metrics/log_encoder.rs: `.set(42)`
 $DIR/src/metrics/log_encoder.rs: `.with_label_values(&["bar", "2"])`
 $DIR/src/metrics/log_encoder.rs: `.set(98)`
 $DIR/src/metrics/log_encoder.rs: `.register(Box::new(gauge))`
+$DIR/src/metrics/log_encoder.rs: `.encode(&registry.gather(), &mut output)`
 $DIR/src/metrics/log_encoder.rs: `.gather()`
 $DIR/src/metrics/log_encoder.rs: `.collect::<Vec<_>>()`
 $DIR/src/metrics/log_encoder.rs: `.collect::<Vec<_>>()`
-$DIR/src/middleware/normalize_path.rs: `result.pop();`
-$DIR/src/middleware/normalize_path.rs: `result.push(Component::RootDir);`
-$DIR/src/middleware/normalize_path.rs: `parts.path_and_query = new_path_and_query;`
-$DIR/src/middleware/normalize_path.rs: `*req.uri_mut() = new_uri;`
-$DIR/src/middleware/normalize_path.rs: `req.extensions_mut().insert(original_path);`
-$DIR/src/middleware/normalize_path.rs: `.uri()`
-$DIR/src/middleware/normalize_path.rs: `.path()`
-$DIR/src/middleware/normalize_path.rs: `.contains("//")`
-$DIR/src/middleware/normalize_path.rs: `.contains("/.")`
-$DIR/src/middleware/normalize_path.rs: `.components()`
-$DIR/src/middleware/normalize_path.rs: `.fold(
-                PathBuf::with_capacity(path.len()),
-                |mut result, p| match p {
-                    Component::Normal(x) => {
-                        if !x.is_empty() {
-                            result.push(x)
-                        };
-                        result
-                    }
-                    Component::ParentDir => {
-                        result.pop();
-                        result
-                    }
-                    Component::RootDir => {
-                        result.push(Component::RootDir);
-                        result
-                    }
-                    _ => result,
-                },
-            )`
-$DIR/src/middleware/normalize_path.rs: `.len()`
-$DIR/src/middleware/normalize_path.rs: `.is_empty()`
-$DIR/src/middleware/normalize_path.rs: `.pop()`
-$DIR/src/middleware/normalize_path.rs: `.push(Component::RootDir)`
-$DIR/src/middleware/normalize_path.rs: `.to_string_lossy()`
-$DIR/src/middleware/normalize_path.rs: `.path_and_query()`
-$DIR/src/middleware/normalize_path.rs: `.map(|path_and_query| {
-            match path_and_query.query() {
-                Some(query) => format!("{path}?{query}"),
-                None => path,
-            }
-            .parse()
-            .unwrap()
-        })`
-$DIR/src/middleware/normalize_path.rs: `.query()`
-$DIR/src/middleware/normalize_path.rs: `.parse()`
-$DIR/src/middleware/normalize_path.rs: `.into_parts()`
-$DIR/src/middleware/normalize_path.rs: `.uri_mut()`
-$DIR/src/middleware/normalize_path.rs: `.extensions_mut()`
-$DIR/src/middleware/normalize_path.rs: `.insert(original_path)`
+$DIR/src/middleware/normalize_path.rs: `normalize_path_inner(&mut req);`
+$DIR/src/middleware/normalize_path.rs: `normalize_path_inner(&mut req);`
+$DIR/src/middleware/normalize_path.rs: `normalize_path_inner(&mut req);`
 $DIR/src/middleware/normalize_path.rs: `.body(())`
 $DIR/src/middleware/normalize_path.rs: `.body(())`
 $DIR/src/middleware/normalize_path.rs: `.body(())`
-$DIR/src/models/category.rs: `conn.batch_execute("BEGIN; LOCK categories IN ACCESS EXCLUSIVE MODE")
-            .unwrap();`
 $DIR/src/models/category.rs: `insert_into(categories)
             .values(&vec![
                 (category.eq("Cat 2"), slug.eq("cat2")),
@@ -680,9 +461,6 @@ $DIR/src/models/category.rs: `insert_into(categories)
             ])
             .execute(conn)
             .unwrap();`
-$DIR/src/models/category.rs: `.bind::<Text, _>(&self.category)`
-$DIR/src/models/category.rs: `.bind::<Text, _>(&self.slug)`
-$DIR/src/models/category.rs: `.batch_execute("BEGIN; LOCK categories IN ACCESS EXCLUSIVE MODE")`
 $DIR/src/models/category.rs: `.values(&vec![
                 (category.eq("Cat 2"), slug.eq("cat2")),
                 (category.eq("Cat 1"), slug.eq("cat1")),
@@ -795,6 +573,8 @@ $DIR/src/models/category.rs: `.values(&vec![
             ])`
 $DIR/src/models/category.rs: `.execute(conn)`
 $DIR/src/models/category.rs: `.first(conn)`
+$DIR/src/models/category.rs: `.subcategories(conn)`
+$DIR/src/models/category.rs: `.parent_categories(conn)`
 $DIR/src/models/keyword.rs: `diesel::insert_into(keywords::table)
             .values(keywords::keyword.eq("NO"))
             .execute(conn)
@@ -884,48 +664,6 @@ $DIR/src/rate_limiter.rs: `diesel::insert_into(publish_rate_overrides::table)
                 publish_rate_overrides::burst.eq(20),
             ))
             .execute(conn)?;`
-$DIR/src/rate_limiter.rs: `config.insert(
-                self.action,
-                RateLimiterConfig {
-                    rate: self.rate,
-                    burst: self.burst,
-                },
-            );`
-$DIR/src/rate_limiter.rs: `.config_for_action(performed_action)`
-$DIR/src/rate_limiter.rs: `.rate.as_millis()`
-$DIR/src/rate_limiter.rs: `.milliseconds()`
-$DIR/src/rate_limiter.rs: `.find((uploader, performed_action))`
-$DIR/src/rate_limiter.rs: `.filter(
-                publish_rate_overrides::expires_at
-                    .is_null()
-                    .or(publish_rate_overrides::expires_at.gt(now)),
-            )`
-$DIR/src/rate_limiter.rs: `.is_null()`
-$DIR/src/rate_limiter.rs: `.or(publish_rate_overrides::expires_at.gt(now))`
-$DIR/src/rate_limiter.rs: `.gt(now)`
-$DIR/src/rate_limiter.rs: `.select(publish_rate_overrides::burst)`
-$DIR/src/rate_limiter.rs: `.first(conn)`
-$DIR/src/rate_limiter.rs: `.optional()`
-$DIR/src/rate_limiter.rs: `.unwrap_or(config.burst)`
-$DIR/src/rate_limiter.rs: `.values((
-                user_id.eq(uploader),
-                action.eq(performed_action),
-                tokens.eq(burst),
-                last_refill.eq(now),
-            ))`
-$DIR/src/rate_limiter.rs: `.eq(uploader)`
-$DIR/src/rate_limiter.rs: `.eq(performed_action)`
-$DIR/src/rate_limiter.rs: `.eq(burst)`
-$DIR/src/rate_limiter.rs: `.eq(now)`
-$DIR/src/rate_limiter.rs: `.on_conflict((user_id, action))`
-$DIR/src/rate_limiter.rs: `.do_update()`
-$DIR/src/rate_limiter.rs: `.set((
-                tokens.eq(least(burst, greatest(0, tokens - 1) + tokens_to_add)),
-                last_refill.eq(last_refill + refill_rate.into_sql::<Interval>() * tokens_to_add),
-            ))`
-$DIR/src/rate_limiter.rs: `.eq(least(burst, greatest(0, tokens - 1) + tokens_to_add))`
-$DIR/src/rate_limiter.rs: `.eq(last_refill + refill_rate.into_sql::<Interval>() * tokens_to_add)`
-$DIR/src/rate_limiter.rs: `.into_sql::<Interval>()`
 $DIR/src/rate_limiter.rs: `.insert(
                 *action,
                 RateLimiterConfig {
@@ -933,12 +671,51 @@ $DIR/src/rate_limiter.rs: `.insert(
                     burst: action.default_burst(),
                 },
             )`
+$DIR/src/rate_limiter.rs: `.default_rate_seconds()`
+$DIR/src/rate_limiter.rs: `.default_burst()`
+$DIR/src/rate_limiter.rs: `.take_token(user_id, action, publish_time, conn)`
 $DIR/src/rate_limiter.rs: `.push(bucket.last_refill)`
 $DIR/src/rate_limiter.rs: `.push(publish_time)`
+$DIR/src/rate_limiter.rs: `.take_token(user_id, action, publish_time, conn)`
 $DIR/src/rate_limiter.rs: `.push(bucket.last_refill)`
 $DIR/src/rate_limiter.rs: `.push(publish_time)`
+$DIR/src/rate_limiter.rs: `.take_token(user_id, action, publish_time, conn)`
 $DIR/src/rate_limiter.rs: `.push(bucket.last_refill)`
 $DIR/src/rate_limiter.rs: `.push(publish_time)`
+$DIR/src/rate_limiter.rs: `.create()`
+$DIR/src/rate_limiter.rs: `.take_token(
+            new_user(conn, "user1")?,
+            LimitedAction::PublishNew,
+            now,
+            conn,
+        )`
+$DIR/src/rate_limiter.rs: `.create()`
+$DIR/src/rate_limiter.rs: `.take_token(
+            new_user(conn, "user2")?,
+            LimitedAction::PublishNew,
+            now,
+            conn,
+        )`
+$DIR/src/rate_limiter.rs: `.create()`
+$DIR/src/rate_limiter.rs: `.take_token(user_id, LimitedAction::PublishNew, now, conn)`
+$DIR/src/rate_limiter.rs: `.create()`
+$DIR/src/rate_limiter.rs: `.take_token(user_id, LimitedAction::PublishNew, refill_time, conn)`
+$DIR/src/rate_limiter.rs: `.create()`
+$DIR/src/rate_limiter.rs: `.take_token(user_id, LimitedAction::PublishNew, refill_time, conn)`
+$DIR/src/rate_limiter.rs: `.create()`
+$DIR/src/rate_limiter.rs: `.take_token(
+            user_id,
+            LimitedAction::PublishNew,
+            now + chrono::Duration::milliseconds(250),
+            conn,
+        )`
+$DIR/src/rate_limiter.rs: `.create()`
+$DIR/src/rate_limiter.rs: `.take_token(user_id, LimitedAction::PublishNew, now, conn)`
+$DIR/src/rate_limiter.rs: `.take_token(user_id, LimitedAction::PublishNew, now, conn)`
+$DIR/src/rate_limiter.rs: `.create()`
+$DIR/src/rate_limiter.rs: `.take_token(user_id, LimitedAction::PublishNew, refill_time, conn)`
+$DIR/src/rate_limiter.rs: `.create()`
+$DIR/src/rate_limiter.rs: `.take_token(user_id, LimitedAction::PublishNew, refill_time, conn)`
 $DIR/src/rate_limiter.rs: `.insert(
             LimitedAction::PublishNew,
             RateLimiterConfig {
@@ -953,6 +730,7 @@ $DIR/src/rate_limiter.rs: `.insert(
                 burst: 20,
             },
         )`
+$DIR/src/rate_limiter.rs: `.create()`
 $DIR/src/rate_limiter.rs: `.values((
                 publish_rate_overrides::user_id.eq(user_id),
                 publish_rate_overrides::action.eq(LimitedAction::PublishNew),
@@ -962,6 +740,9 @@ $DIR/src/rate_limiter.rs: `.eq(user_id)`
 $DIR/src/rate_limiter.rs: `.eq(LimitedAction::PublishNew)`
 $DIR/src/rate_limiter.rs: `.eq(20)`
 $DIR/src/rate_limiter.rs: `.execute(conn)`
+$DIR/src/rate_limiter.rs: `.take_token(user_id, LimitedAction::PublishNew, now, conn)`
+$DIR/src/rate_limiter.rs: `.take_token(other_user_id, LimitedAction::PublishNew, now, conn)`
+$DIR/src/rate_limiter.rs: `.create()`
 $DIR/src/rate_limiter.rs: `.values((
                 publish_rate_overrides::user_id.eq(user_id),
                 publish_rate_overrides::action.eq(LimitedAction::PublishNew),
@@ -973,11 +754,15 @@ $DIR/src/rate_limiter.rs: `.eq(LimitedAction::PublishNew)`
 $DIR/src/rate_limiter.rs: `.eq(20)`
 $DIR/src/rate_limiter.rs: `.eq(now + chrono::Duration::days(30))`
 $DIR/src/rate_limiter.rs: `.execute(conn)`
+$DIR/src/rate_limiter.rs: `.take_token(user_id, LimitedAction::PublishNew, now, conn)`
+$DIR/src/rate_limiter.rs: `.take_token(other_user_id, LimitedAction::PublishNew, now, conn)`
 $DIR/src/rate_limiter.rs: `.set(publish_rate_overrides::expires_at.eq(now - chrono::Duration::days(30)))`
 $DIR/src/rate_limiter.rs: `.eq(now - chrono::Duration::days(30))`
 $DIR/src/rate_limiter.rs: `.filter(publish_rate_overrides::user_id.eq(user_id))`
 $DIR/src/rate_limiter.rs: `.eq(user_id)`
 $DIR/src/rate_limiter.rs: `.execute(conn)`
+$DIR/src/rate_limiter.rs: `.take_token(user_id, LimitedAction::PublishNew, now, conn)`
+$DIR/src/rate_limiter.rs: `.take_token(other_user_id, LimitedAction::PublishNew, now, conn)`
 $DIR/src/rate_limiter.rs: `.insert(
                 action,
                 RateLimiterConfig {
@@ -994,178 +779,85 @@ $DIR/src/rate_limiter.rs: `.eq(user_id)`
 $DIR/src/rate_limiter.rs: `.eq(LimitedAction::PublishNew)`
 $DIR/src/rate_limiter.rs: `.eq(20)`
 $DIR/src/rate_limiter.rs: `.execute(conn)`
-$DIR/src/rate_limiter.rs: `.create_or_update(None, &Emails::new_in_memory(), conn)`
-$DIR/src/rate_limiter.rs: `.values(Bucket {
-                user_id: new_user(conn, "new_user")?,
-                tokens,
-                last_refill: now,
-                action: LimitedAction::PublishNew,
-            })`
-$DIR/src/rate_limiter.rs: `.insert(
-                self.action,
-                RateLimiterConfig {
-                    rate: self.rate,
-                    burst: self.burst,
-                },
-            )`
-$DIR/src/rate_limiter.rs: `.naive_utc()`
-$DIR/src/rate_limiter.rs: `.timestamp_subsec_nanos()`
-$DIR/src/rate_limiter.rs: `.into()`
 $DIR/src/router.rs: `.parse::<u8>()`
 $DIR/src/router.rs: `.map_err(|err| err.chain(internal("middle error")))`
 $DIR/src/router.rs: `.chain(internal("middle error"))`
 $DIR/src/router.rs: `.map_err(|err| err.chain(bad_request("outer user facing error")))`
 $DIR/src/router.rs: `.chain(bad_request("outer user facing error"))`
 $DIR/src/router.rs: `.into_response()`
-$DIR/src/storage.rs: `store.abort_multipart(&path, &id).await?;`
-$DIR/src/storage.rs: `writer.shutdown().await?;`
-$DIR/src/storage.rs: `self.store
-            .delete_stream(locations)
-            .try_collect::<Vec<_>>()
-            .await?;`
 $DIR/src/storage.rs: `config.cdn_prefix = Some("static.crates.io".to_string());`
-$DIR/src/storage.rs: `.into()`
-$DIR/src/storage.rs: `.into()`
-$DIR/src/storage.rs: `.into()`
-$DIR/src/storage.rs: `.into()`
-$DIR/src/storage.rs: `.into()`
-$DIR/src/storage.rs: `.put_multipart(&path)`
-$DIR/src/storage.rs: `.abort_multipart(&path, &id)`
-$DIR/src/storage.rs: `.into()`
-$DIR/src/storage.rs: `.shutdown()`
-$DIR/src/storage.rs: `.store.list(Some(prefix))`
-$DIR/src/storage.rs: `.map(|meta| meta.map(|m| m.location))`
-$DIR/src/storage.rs: `.map(|m| m.location)`
-$DIR/src/storage.rs: `.boxed()`
-$DIR/src/storage.rs: `.store
-            .delete_stream(locations)`
-$DIR/src/storage.rs: `.try_collect::<Vec<_>>()`
-$DIR/src/storage.rs: `.store.put(&path.into(), Bytes::new())`
-$DIR/src/storage.rs: `.into()`
+$DIR/src/storage.rs: `.delete_all_crate_files("foo")`
+$DIR/src/storage.rs: `.delete_all_readmes("foo")`
+$DIR/src/storage.rs: `.delete_crate_file("foo", "1.2.3")`
+$DIR/src/storage.rs: `.delete_readme("foo", "1.2.3")`
+$DIR/src/storage.rs: `.upload_crate_file("foo", "1.2.3", Bytes::new())`
+$DIR/src/storage.rs: `.upload_crate_file("foo", "2.0.0+foo", Bytes::new())`
+$DIR/src/storage.rs: `.upload_readme("foo", "1.2.3", bytes.clone())`
+$DIR/src/storage.rs: `.upload_readme("foo", "2.0.0+foo", bytes)`
+$DIR/src/storage.rs: `.sync_index("foo", Some(content))`
+$DIR/src/storage.rs: `.sync_index("foo", None)`
+$DIR/src/storage.rs: `.upload_db_dump(target, file.path())`
 $DIR/src/storage.rs: `.path()`
-$DIR/src/swirl/runner.rs: `tx.set_status(match result.is_ok() {
-                    true => sentry::protocol::SpanStatus::Ok,
-                    false => sentry::protocol::SpanStatus::UnknownError,
-                });`
-$DIR/src/swirl/runner.rs: `tx.finish();`
-$DIR/src/swirl/runner.rs: `AnsiTransactionManager::rollback_transaction(conn)?;`
-$DIR/src/swirl/runner.rs: `storage::update_failed_job(conn, job_id);`
-$DIR/src/swirl/runner.rs: `self.thread_pool.join();`
+$DIR/src/swirl/runner.rs: `runner.get_single_job(dummy_sender(), move |job, _| {
+            fetch_barrier.0.wait(); // Tell thread 2 it can lock its job
+            assert_eq!(first_job_id, job.id);
+            return_barrier.0.wait(); // Wait for thread 2 to lock its job
+            Ok(())
+        });`
 $DIR/src/swirl/runner.rs: `fetch_barrier.0.wait();`
 $DIR/src/swirl/runner.rs: `return_barrier.0.wait();`
 $DIR/src/swirl/runner.rs: `fetch_barrier2.0.wait();`
+$DIR/src/swirl/runner.rs: `runner.get_single_job(dummy_sender(), move |job, _| {
+            assert_eq!(second_job_id, job.id);
+            return_barrier2.0.wait(); // Tell thread 1 it can unlock its job
+            Ok(())
+        });`
 $DIR/src/swirl/runner.rs: `return_barrier2.0.wait();`
+$DIR/src/swirl/runner.rs: `create_dummy_job(&runner);`
+$DIR/src/swirl/runner.rs: `runner.get_single_job(dummy_sender(), |_, _| Ok(()));`
 $DIR/src/swirl/runner.rs: `runner.wait_for_jobs().unwrap();`
+$DIR/src/swirl/runner.rs: `create_dummy_job(&runner);`
+$DIR/src/swirl/runner.rs: `runner.get_single_job(dummy_sender(), move |_, state| {
+            state.conn.transaction(|_| {
+                barrier.0.wait();
+                // The job should go back into the queue after a panic
+                panic!();
+            })
+        });`
 $DIR/src/swirl/runner.rs: `barrier.0.wait();`
 $DIR/src/swirl/runner.rs: `barrier2.0.wait();`
+$DIR/src/swirl/runner.rs: `runner.get_single_job(dummy_sender(), |_, _| panic!());`
 $DIR/src/swirl/runner.rs: `runner.wait_for_jobs().unwrap();`
-$DIR/src/swirl/runner.rs: `.get()`
-$DIR/src/swirl/runner.rs: `.send(Event::FailedToAcquireConnection(e))`
-$DIR/src/swirl/runner.rs: `.transaction::<_, diesel::result::Error, _>(|conn| {
-                let job = match storage::find_next_unlocked_job(conn).optional() {
-                    Ok(Some(j)) => {
-                        let _ = sender.send(Event::Working);
-                        j
-                    }
-                    Ok(None) => {
-                        let _ = sender.send(Event::NoJobAvailable);
-                        return Ok(());
-                    }
-                    Err(e) => {
-                        let _ = sender.send(Event::ErrorLoadingJob(e));
-                        return Err(RollbackTransaction);
-                    }
-                };
-                let job_id = job.id;
-
-                let initial_depth = get_transaction_depth(conn)?;
-                if initial_depth != 1 {
-                    warn!("Initial transaction depth is not 1. This is very unexpected");
-                }
-
-                let tx_ctx = sentry::TransactionContext::new(&job.job_type, "swirl.perform");
-                let tx = sentry::start_transaction(tx_ctx);
-
-                let result = sentry::with_scope(
-                    |scope| scope.set_span(Some(tx.clone().into())),
-                    || {
-                        conn.transaction(|conn| {
-                            let pool = pool.to_real_pool();
-                            let state = AssertUnwindSafe(PerformState { conn, pool });
-                            catch_unwind(|| {
-                                // Ensure the whole `AssertUnwindSafe(_)` is moved
-                                let state = state;
-                                f(job, state.0)
-                            })
-                            .map_err(|e| try_to_extract_panic_info(&e))
-                        })
-                        // TODO: Replace with flatten() once that stabilizes
-                        .and_then(std::convert::identity)
-                    },
-                );
-
-                tx.set_status(match result.is_ok() {
-                    true => sentry::protocol::SpanStatus::Ok,
-                    false => sentry::protocol::SpanStatus::UnknownError,
-                });
-                tx.finish();
-
-                // If the job panics it could leave the connection inside an inner transaction(s).
-                // Attempt to roll those back so we can mark the job as failed, but if the rollback
-                // fails then there isn't much we can do at this point so return early. `r2d2` will
-                // detect the bad state and drop it from the pool.
-                loop {
-                    let depth = get_transaction_depth(conn)?;
-                    if depth == initial_depth {
-                        break;
-                    }
-                    warn!("Rolling back a transaction due to a panic in a background task");
-                    AnsiTransactionManager::rollback_transaction(conn)?;
-                }
-
-                match result {
-                    Ok(_) => storage::delete_successful_job(conn, job_id)?,
-                    Err(e) => {
-                        eprintln!("Job {job_id} failed to run: {e}");
-                        storage::update_failed_job(conn, job_id);
-                    }
-                }
-                Ok(())
-            })`
-$DIR/src/swirl/runner.rs: `.optional()`
-$DIR/src/swirl/runner.rs: `.send(Event::Working)`
-$DIR/src/swirl/runner.rs: `.send(Event::NoJobAvailable)`
-$DIR/src/swirl/runner.rs: `.send(Event::ErrorLoadingJob(e))`
-$DIR/src/swirl/runner.rs: `.set_span(Some(tx.clone().into()))`
-$DIR/src/swirl/runner.rs: `.into()`
-$DIR/src/swirl/runner.rs: `.transaction(|conn| {
-                            let pool = pool.to_real_pool();
-                            let state = AssertUnwindSafe(PerformState { conn, pool });
-                            catch_unwind(|| {
-                                // Ensure the whole `AssertUnwindSafe(_)` is moved
-                                let state = state;
-                                f(job, state.0)
-                            })
-                            .map_err(|e| try_to_extract_panic_info(&e))
-                        })`
-$DIR/src/swirl/runner.rs: `.to_real_pool()`
-$DIR/src/swirl/runner.rs: `.set_status(match result.is_ok() {
-                    true => sentry::protocol::SpanStatus::Ok,
-                    false => sentry::protocol::SpanStatus::UnknownError,
-                })`
-$DIR/src/swirl/runner.rs: `.is_ok()`
-$DIR/src/swirl/runner.rs: `.finish()`
-$DIR/src/swirl/runner.rs: `.connection_pool.get()`
-$DIR/src/swirl/runner.rs: `.thread_pool.join()`
-$DIR/src/swirl/runner.rs: `.thread_pool.panic_count()`
-$DIR/src/swirl/runner.rs: `.into()`
+$DIR/src/swirl/runner.rs: `.get_single_job(dummy_sender(), move |job, _| {
+            fetch_barrier.0.wait(); // Tell thread 2 it can lock its job
+            assert_eq!(first_job_id, job.id);
+            return_barrier.0.wait(); // Wait for thread 2 to lock its job
+            Ok(())
+        })`
 $DIR/src/swirl/runner.rs: `.wait()`
 $DIR/src/swirl/runner.rs: `.wait()`
 $DIR/src/swirl/runner.rs: `.wait()`
+$DIR/src/swirl/runner.rs: `.get_single_job(dummy_sender(), move |job, _| {
+            assert_eq!(second_job_id, job.id);
+            return_barrier2.0.wait(); // Tell thread 1 it can unlock its job
+            Ok(())
+        })`
 $DIR/src/swirl/runner.rs: `.wait()`
+$DIR/src/swirl/runner.rs: `.wait_for_jobs()`
+$DIR/src/swirl/runner.rs: `.get_single_job(dummy_sender(), |_, _| Ok(()))`
+$DIR/src/swirl/runner.rs: `.wait_for_jobs()`
 $DIR/src/swirl/runner.rs: `.count()`
 $DIR/src/swirl/runner.rs: `.get_result(&mut *runner.connection().unwrap())`
+$DIR/src/swirl/runner.rs: `.connection()`
+$DIR/src/swirl/runner.rs: `.get_single_job(dummy_sender(), move |_, state| {
+            state.conn.transaction(|_| {
+                barrier.0.wait();
+                // The job should go back into the queue after a panic
+                panic!();
+            })
+        })`
 $DIR/src/swirl/runner.rs: `.wait()`
+$DIR/src/swirl/runner.rs: `.connection()`
 $DIR/src/swirl/runner.rs: `.wait()`
 $DIR/src/swirl/runner.rs: `.select(id)`
 $DIR/src/swirl/runner.rs: `.filter(retries.eq(0))`
@@ -1175,58 +867,17 @@ $DIR/src/swirl/runner.rs: `.load::<i64>(conn)`
 $DIR/src/swirl/runner.rs: `.select(id)`
 $DIR/src/swirl/runner.rs: `.for_update()`
 $DIR/src/swirl/runner.rs: `.load::<i64>(conn)`
+$DIR/src/swirl/runner.rs: `.wait_for_jobs()`
+$DIR/src/swirl/runner.rs: `.get_single_job(dummy_sender(), |_, _| panic!())`
+$DIR/src/swirl/runner.rs: `.wait_for_jobs()`
 $DIR/src/swirl/runner.rs: `.find(job_id)`
 $DIR/src/swirl/runner.rs: `.select(retries)`
 $DIR/src/swirl/runner.rs: `.for_update()`
 $DIR/src/swirl/runner.rs: `.first::<i32>(&mut *runner.connection().unwrap())`
-$DIR/src/swirl/runner.rs: `.values((job_type.eq("Foo"), data.eq(serde_json::json!(null))))`
-$DIR/src/swirl/runner.rs: `.eq("Foo")`
-$DIR/src/swirl/runner.rs: `.eq(serde_json::json!(null))`
-$DIR/src/swirl/runner.rs: `.returning((id, job_type, data))`
-$DIR/src/swirl/runner.rs: `.get_result(&mut *runner.connection().unwrap())`
-$DIR/src/tests/account_lock.rs: `app.db(|conn| {
-        use crates_io::schema::users;
-        use diesel::prelude::*;
-
-        diesel::update(users::table)
-            .set((
-                users::account_lock_reason.eq(LOCK_REASON),
-                users::account_lock_until.eq(until),
-            ))
-            .filter(users::id.eq(user_id))
-            .execute(conn)
-            .unwrap();
-    });`
-$DIR/src/tests/account_lock.rs: `diesel::update(users::table)
-            .set((
-                users::account_lock_reason.eq(LOCK_REASON),
-                users::account_lock_until.eq(until),
-            ))
-            .filter(users::id.eq(user_id))
-            .execute(conn)
-            .unwrap();`
-$DIR/src/tests/account_lock.rs: `.db(|conn| {
-        use crates_io::schema::users;
-        use diesel::prelude::*;
-
-        diesel::update(users::table)
-            .set((
-                users::account_lock_reason.eq(LOCK_REASON),
-                users::account_lock_until.eq(until),
-            ))
-            .filter(users::id.eq(user_id))
-            .execute(conn)
-            .unwrap();
-    })`
-$DIR/src/tests/account_lock.rs: `.set((
-                users::account_lock_reason.eq(LOCK_REASON),
-                users::account_lock_until.eq(until),
-            ))`
-$DIR/src/tests/account_lock.rs: `.eq(LOCK_REASON)`
-$DIR/src/tests/account_lock.rs: `.eq(until)`
-$DIR/src/tests/account_lock.rs: `.filter(users::id.eq(user_id))`
-$DIR/src/tests/account_lock.rs: `.eq(user_id)`
-$DIR/src/tests/account_lock.rs: `.execute(conn)`
+$DIR/src/swirl/runner.rs: `.connection()`
+$DIR/src/tests/account_lock.rs: `lock_account(&app, user.as_model().id, None);`
+$DIR/src/tests/account_lock.rs: `lock_account(&app, user.as_model().id, Some(until));`
+$DIR/src/tests/account_lock.rs: `lock_account(&app, user.as_model().id, Some(until));`
 $DIR/src/tests/account_lock.rs: `.with_user()`
 $DIR/src/tests/account_lock.rs: `.as_model()`
 $DIR/src/tests/account_lock.rs: `.get::<()>(URL)`
@@ -1314,16 +965,11 @@ $DIR/src/tests/blocked_routes.rs: `.version(VersionBuilder::new("1.0.0"))`
 $DIR/src/tests/blocked_routes.rs: `.expect_build(conn)`
 $DIR/src/tests/blocked_routes.rs: `.get::<()>("/api/v1/crates/foo/1.0.0/download")`
 $DIR/src/tests/blocked_routes.rs: `.status()`
-$DIR/src/tests/categories.rs: `conn.begin_test_transaction().unwrap();`
 $DIR/src/tests/categories.rs: `::crates_io::boot::categories::sync_with_connection(ALGORITHMS_AND_SUCH, conn).unwrap();`
 $DIR/src/tests/categories.rs: `::crates_io::boot::categories::sync_with_connection(ALGORITHMS_AND_SUCH, conn).unwrap();`
 $DIR/src/tests/categories.rs: `::crates_io::boot::categories::sync_with_connection(ALGORITHMS, conn).unwrap();`
 $DIR/src/tests/categories.rs: `::crates_io::boot::categories::sync_with_connection(ALGORITHMS_AND_SUCH, conn).unwrap();`
 $DIR/src/tests/categories.rs: `::crates_io::boot::categories::sync_with_connection(ALGORITHMS_AND_ANOTHER, conn).unwrap();`
-$DIR/src/tests/categories.rs: `.begin_test_transaction()`
-$DIR/src/tests/categories.rs: `.select(categories::slug)`
-$DIR/src/tests/categories.rs: `.order(categories::slug)`
-$DIR/src/tests/categories.rs: `.load(conn)`
 $DIR/src/tests/dump_db.rs: `crates_io::util::tracing::init_for_test();`
 $DIR/src/tests/dump_db.rs: `directory.populate(&database_url).unwrap();`
 $DIR/src/tests/dump_db.rs: `.populate(&database_url)`
@@ -2730,7 +2376,6 @@ $DIR/src/tests/krate/yanking.rs: `cookie.yank("fyk", "1.0.0").good();`
 $DIR/src/tests/krate/yanking.rs: `assert_some_eq!(crates[0].yanked, true);`
 $DIR/src/tests/krate/yanking.rs: `cookie.unyank("fyk", "1.0.0").good();`
 $DIR/src/tests/krate/yanking.rs: `assert_some_eq!(crates[0].yanked, false);`
-$DIR/src/tests/krate/yanking.rs: `assert_some_eq!(crates[0].yanked, is_yanked);`
 $DIR/src/tests/krate/yanking.rs: `app.db(|conn| {
         // Ratelimit bucket should next refill in about a year
         let far_future = Utc::now().naive_utc() + Duration::from_secs(60 * 60 * 24 * 365);
@@ -2762,6 +2407,7 @@ $DIR/src/tests/krate/yanking.rs: `app.db(|conn| {
             .expect("Failed to set fake ratelimit")
     });`
 $DIR/src/tests/krate/yanking.rs: `token.publish_crate(crate_to_publish).good();`
+$DIR/src/tests/krate/yanking.rs: `check_yanked(&app, false);`
 $DIR/src/tests/krate/yanking.rs: `token.yank("yankable", "1.0.0").good();`
 $DIR/src/tests/krate/yanking.rs: `token.publish_crate(crate_to_publish).good();`
 $DIR/src/tests/krate/yanking.rs: `token.yank("fyk_max", "1.0.0").good();`
@@ -2794,7 +2440,6 @@ $DIR/src/tests/krate/yanking.rs: `.unyank("fyk", "1.0.0")`
 $DIR/src/tests/krate/yanking.rs: `.good()`
 $DIR/src/tests/krate/yanking.rs: `.crates_from_index_head("fyk")`
 $DIR/src/tests/krate/yanking.rs: `.show_version("fyk", "1.0.0")`
-$DIR/src/tests/krate/yanking.rs: `.crates_from_index_head("yankable")`
 $DIR/src/tests/krate/yanking.rs: `.with_rate_limit(LimitedAction::YankUnyank, Duration::from_millis(500), 1)`
 $DIR/src/tests/krate/yanking.rs: `.with_token()`
 $DIR/src/tests/krate/yanking.rs: `.db(|conn| {
@@ -2938,10 +2583,14 @@ $DIR/src/tests/not_found_error.rs: `.empty()`
 $DIR/src/tests/not_found_error.rs: `.get::<()>("/api/v1/does-not-exist")`
 $DIR/src/tests/owners.rs: `token.publish_crate(crate_to_publish).good();`
 $DIR/src/tests/owners.rs: `token.add_user_owner("foo_owner", "BAR");`
-$DIR/src/tests/owners.rs: `token.add_user_owner(&krate.name, username);`
+$DIR/src/tests/owners.rs: `user2.accept_ownership_invitation("foo_owner", krate.id);`
+$DIR/src/tests/owners.rs: `create_and_add_owner(&app, &token, "secondowner", &krate);`
+$DIR/src/tests/owners.rs: `user2.accept_ownership_invitation(&krate.name, krate.id);`
+$DIR/src/tests/owners.rs: `user3.accept_ownership_invitation(&krate.name, krate.id);`
 $DIR/src/tests/owners.rs: `app.db_new_user("invited_user");`
 $DIR/src/tests/owners.rs: `app.db(|conn| CrateBuilder::new("crate_name", owner.as_model().user_id).expect_build(conn));`
 $DIR/src/tests/owners.rs: `app.db_new_user("invited_user");`
+$DIR/src/tests/owners.rs: `expire_invitation(&app, krate.id);`
 $DIR/src/tests/owners.rs: `add_team_to_crate(&t, &krate, user, conn).unwrap();`
 $DIR/src/tests/owners.rs: `add_team_to_crate(&t, &krate, user, conn).unwrap();`
 $DIR/src/tests/owners.rs: `app.db(|conn| {
@@ -2952,27 +2601,20 @@ $DIR/src/tests/owners.rs: `krate.owner_remove(conn, &user.gh_login).unwrap();`
 $DIR/src/tests/owners.rs: `token.add_user_owner("invited_crate", "invited_user");`
 $DIR/src/tests/owners.rs: `token.add_user_owner("invited_crate_1", "invited_user");`
 $DIR/src/tests/owners.rs: `token.add_user_owner("invited_crate_2", "invited_user");`
+$DIR/src/tests/owners.rs: `expire_invitation(&app, krate1.id);`
 $DIR/src/tests/owners.rs: `owner_token.add_user_owner("accept_invitation", "user_bar");`
+$DIR/src/tests/owners.rs: `invited_user.accept_ownership_invitation(&krate.name, krate.id);`
 $DIR/src/tests/owners.rs: `owner_token.add_user_owner("decline_invitation", "user_bar");`
+$DIR/src/tests/owners.rs: `invited_user.decline_ownership_invitation(&krate.name, krate.id);`
 $DIR/src/tests/owners.rs: `owner_token.add_user_owner("accept_invitation", "user_bar");`
-$DIR/src/tests/owners.rs: `app.db(|conn| {
-        let expiration = app.as_inner().config.ownership_invitations_expiration_days as i64;
-        let created_at = (Utc::now() - Duration::days(expiration)).naive_utc();
-
-        diesel::update(crate_owner_invitations::table)
-            .set(crate_owner_invitations::created_at.eq(created_at))
-            .filter(crate_owner_invitations::crate_id.eq(crate_id))
-            .execute(conn)
-            .expect("failed to override the creation time");
-    });`
-$DIR/src/tests/owners.rs: `diesel::update(crate_owner_invitations::table)
-            .set(crate_owner_invitations::created_at.eq(created_at))
-            .filter(crate_owner_invitations::crate_id.eq(crate_id))
-            .execute(conn)
-            .expect("failed to override the creation time");`
+$DIR/src/tests/owners.rs: `anon.accept_ownership_invitation_by_token(&invite_token);`
 $DIR/src/tests/owners.rs: `owner_token.add_user_owner("demo_crate", "demo_user");`
+$DIR/src/tests/owners.rs: `expire_invitation(&app, krate.id);`
 $DIR/src/tests/owners.rs: `owner_token.add_user_owner("demo_crate", "demo_user");`
+$DIR/src/tests/owners.rs: `expire_invitation(&app, krate.id);`
+$DIR/src/tests/owners.rs: `invited_user.decline_ownership_invitation(&krate.name, krate.id);`
 $DIR/src/tests/owners.rs: `owner_token.add_user_owner("demo_crate", "demo_user");`
+$DIR/src/tests/owners.rs: `expire_invitation(&app, krate.id);`
 $DIR/src/tests/owners.rs: `app.db(|conn| {
         NewUser {
             gh_id: -1,
@@ -3007,6 +2649,7 @@ $DIR/src/tests/owners.rs: `token.add_user_owner("crate_1", "user_2");`
 $DIR/src/tests/owners.rs: `token.add_user_owner("crate_2", "user_1");`
 $DIR/src/tests/owners.rs: `token.add_user_owner("crate_1", "invited_user");`
 $DIR/src/tests/owners.rs: `token.add_user_owner("crate_2", "invited_user");`
+$DIR/src/tests/owners.rs: `expire_invitation(&app, crate1.id);`
 $DIR/src/tests/owners.rs: `token.add_user_owner("crate_1", "invited_user");`
 $DIR/src/tests/owners.rs: `token.add_user_owner("crate_2", "invited_user");`
 $DIR/src/tests/owners.rs: `app.db(|conn| {
@@ -3015,11 +2658,6 @@ $DIR/src/tests/owners.rs: `app.db(|conn| {
     });`
 $DIR/src/tests/owners.rs: `CrateBuilder::new("crate_1", owner.as_model().id).expect_build(conn);`
 $DIR/src/tests/owners.rs: `CrateBuilder::new("crate_2", other_user.as_model().id).expect_build(conn);`
-$DIR/src/tests/owners.rs: `.good()`
-$DIR/src/tests/owners.rs: `.put(&url, body.to_string())`
-$DIR/src/tests/owners.rs: `.good()`
-$DIR/src/tests/owners.rs: `.get("/api/v1/me/crate_owner_invitations")`
-$DIR/src/tests/owners.rs: `.good()`
 $DIR/src/tests/owners.rs: `.with_token()`
 $DIR/src/tests/owners.rs: `.publish_crate(crate_to_publish)`
 $DIR/src/tests/owners.rs: `.good()`
@@ -3027,12 +2665,11 @@ $DIR/src/tests/owners.rs: `.db_new_user("Bar")`
 $DIR/src/tests/owners.rs: `.add_user_owner("foo_owner", "BAR")`
 $DIR/src/tests/owners.rs: `.db(|conn| Crate::by_name("foo_owner").first(conn).unwrap())`
 $DIR/src/tests/owners.rs: `.first(conn)`
+$DIR/src/tests/owners.rs: `.accept_ownership_invitation("foo_owner", krate.id)`
 $DIR/src/tests/owners.rs: `.search_by_user_id(user2.as_model().id)`
 $DIR/src/tests/owners.rs: `.as_model()`
 $DIR/src/tests/owners.rs: `.db_new_token("bar_token")`
 $DIR/src/tests/owners.rs: `.publish_crate(crate_to_publish)`
-$DIR/src/tests/owners.rs: `.db_new_user(username)`
-$DIR/src/tests/owners.rs: `.add_user_owner(&krate.name, username)`
 $DIR/src/tests/owners.rs: `.with_token()`
 $DIR/src/tests/owners.rs: `.as_model()`
 $DIR/src/tests/owners.rs: `.db(|conn| CrateBuilder::new("owners_selfremove", user.as_model().id).expect_build(conn))`
@@ -3050,6 +2687,8 @@ $DIR/src/tests/owners.rs: `.remove_named_owners("owners_multiple", &[username, "
 $DIR/src/tests/owners.rs: `.remove_named_owners("owners_multiple", &["user2", "user3"])`
 $DIR/src/tests/owners.rs: `.add_named_owners("owners_multiple", &["user2", username])`
 $DIR/src/tests/owners.rs: `.add_named_owners("owners_multiple", &["user2", "user3"])`
+$DIR/src/tests/owners.rs: `.accept_ownership_invitation(&krate.name, krate.id)`
+$DIR/src/tests/owners.rs: `.accept_ownership_invitation(&krate.name, krate.id)`
 $DIR/src/tests/owners.rs: `.with_user()`
 $DIR/src/tests/owners.rs: `.db_new_user("user-2")`
 $DIR/src/tests/owners.rs: `.as_model()`
@@ -3156,6 +2795,7 @@ $DIR/src/tests/owners.rs: `.owner_remove(conn, &user.gh_login)`
 $DIR/src/tests/owners.rs: `.get("/api/v1/crates/foo_my_packages/owner_user")`
 $DIR/src/tests/owners.rs: `.good()`
 $DIR/src/tests/owners.rs: `.with_user()`
+$DIR/src/tests/owners.rs: `.list_invitations()`
 $DIR/src/tests/owners.rs: `.with_token()`
 $DIR/src/tests/owners.rs: `.get("/api/v1/me/crate_owner_invitations")`
 $DIR/src/tests/owners.rs: `.with_token()`
@@ -3165,6 +2805,7 @@ $DIR/src/tests/owners.rs: `.expect_build(conn)`
 $DIR/src/tests/owners.rs: `.db_new_user("invited_user")`
 $DIR/src/tests/owners.rs: `.add_user_owner("invited_crate", "invited_user")`
 $DIR/src/tests/owners.rs: `.get::<()>("/api/v1/me/crate_owner_invitations")`
+$DIR/src/tests/owners.rs: `.list_invitations()`
 $DIR/src/tests/owners.rs: `.with_token()`
 $DIR/src/tests/owners.rs: `.as_model()`
 $DIR/src/tests/owners.rs: `.db_new_user("invited_user")`
@@ -3174,12 +2815,15 @@ $DIR/src/tests/owners.rs: `.db(|conn| CrateBuilder::new("invited_crate_2", owner
 $DIR/src/tests/owners.rs: `.expect_build(conn)`
 $DIR/src/tests/owners.rs: `.add_user_owner("invited_crate_1", "invited_user")`
 $DIR/src/tests/owners.rs: `.add_user_owner("invited_crate_2", "invited_user")`
+$DIR/src/tests/owners.rs: `.list_invitations()`
 $DIR/src/tests/owners.rs: `.with_token()`
 $DIR/src/tests/owners.rs: `.as_model()`
 $DIR/src/tests/owners.rs: `.db_new_user("user_bar")`
 $DIR/src/tests/owners.rs: `.db(|conn| CrateBuilder::new("accept_invitation", owner.id).expect_build(conn))`
 $DIR/src/tests/owners.rs: `.expect_build(conn)`
 $DIR/src/tests/owners.rs: `.add_user_owner("accept_invitation", "user_bar")`
+$DIR/src/tests/owners.rs: `.accept_ownership_invitation(&krate.name, krate.id)`
+$DIR/src/tests/owners.rs: `.list_invitations()`
 $DIR/src/tests/owners.rs: `.show_crate_owners("accept_invitation")`
 $DIR/src/tests/owners.rs: `.with_token()`
 $DIR/src/tests/owners.rs: `.as_model()`
@@ -3187,6 +2831,8 @@ $DIR/src/tests/owners.rs: `.db_new_user("user_bar")`
 $DIR/src/tests/owners.rs: `.db(|conn| CrateBuilder::new("decline_invitation", owner.id).expect_build(conn))`
 $DIR/src/tests/owners.rs: `.expect_build(conn)`
 $DIR/src/tests/owners.rs: `.add_user_owner("decline_invitation", "user_bar")`
+$DIR/src/tests/owners.rs: `.decline_ownership_invitation(&krate.name, krate.id)`
+$DIR/src/tests/owners.rs: `.list_invitations()`
 $DIR/src/tests/owners.rs: `.show_crate_owners("decline_invitation")`
 $DIR/src/tests/owners.rs: `.with_token()`
 $DIR/src/tests/owners.rs: `.as_model()`
@@ -3195,30 +2841,16 @@ $DIR/src/tests/owners.rs: `.db(|conn| CrateBuilder::new("accept_invitation", own
 $DIR/src/tests/owners.rs: `.expect_build(conn)`
 $DIR/src/tests/owners.rs: `.add_user_owner("accept_invitation", "user_bar")`
 $DIR/src/tests/owners.rs: `.as_inner()`
+$DIR/src/tests/owners.rs: `.accept_ownership_invitation_by_token(&invite_token)`
+$DIR/src/tests/owners.rs: `.list_invitations()`
 $DIR/src/tests/owners.rs: `.show_crate_owners("accept_invitation")`
-$DIR/src/tests/owners.rs: `.db(|conn| {
-        let expiration = app.as_inner().config.ownership_invitations_expiration_days as i64;
-        let created_at = (Utc::now() - Duration::days(expiration)).naive_utc();
-
-        diesel::update(crate_owner_invitations::table)
-            .set(crate_owner_invitations::created_at.eq(created_at))
-            .filter(crate_owner_invitations::crate_id.eq(crate_id))
-            .execute(conn)
-            .expect("failed to override the creation time");
-    })`
-$DIR/src/tests/owners.rs: `.as_inner()`
-$DIR/src/tests/owners.rs: `.naive_utc()`
-$DIR/src/tests/owners.rs: `.set(crate_owner_invitations::created_at.eq(created_at))`
-$DIR/src/tests/owners.rs: `.eq(created_at)`
-$DIR/src/tests/owners.rs: `.filter(crate_owner_invitations::crate_id.eq(crate_id))`
-$DIR/src/tests/owners.rs: `.eq(crate_id)`
-$DIR/src/tests/owners.rs: `.execute(conn)`
 $DIR/src/tests/owners.rs: `.with_token()`
 $DIR/src/tests/owners.rs: `.as_model()`
 $DIR/src/tests/owners.rs: `.db_new_user("demo_user")`
 $DIR/src/tests/owners.rs: `.db(|conn| CrateBuilder::new("demo_crate", owner.id).expect_build(conn))`
 $DIR/src/tests/owners.rs: `.expect_build(conn)`
 $DIR/src/tests/owners.rs: `.add_user_owner("demo_crate", "demo_user")`
+$DIR/src/tests/owners.rs: `.try_accept_ownership_invitation::<()>(&krate.name, krate.id)`
 $DIR/src/tests/owners.rs: `.show_crate_owners("demo_crate")`
 $DIR/src/tests/owners.rs: `.with_token()`
 $DIR/src/tests/owners.rs: `.as_model()`
@@ -3226,6 +2858,7 @@ $DIR/src/tests/owners.rs: `.db_new_user("demo_user")`
 $DIR/src/tests/owners.rs: `.db(|conn| CrateBuilder::new("demo_crate", owner.id).expect_build(conn))`
 $DIR/src/tests/owners.rs: `.expect_build(conn)`
 $DIR/src/tests/owners.rs: `.add_user_owner("demo_crate", "demo_user")`
+$DIR/src/tests/owners.rs: `.decline_ownership_invitation(&krate.name, krate.id)`
 $DIR/src/tests/owners.rs: `.show_crate_owners("demo_crate")`
 $DIR/src/tests/owners.rs: `.with_token()`
 $DIR/src/tests/owners.rs: `.as_model()`
@@ -3234,6 +2867,7 @@ $DIR/src/tests/owners.rs: `.db(|conn| CrateBuilder::new("demo_crate", owner.id).
 $DIR/src/tests/owners.rs: `.expect_build(conn)`
 $DIR/src/tests/owners.rs: `.add_user_owner("demo_crate", "demo_user")`
 $DIR/src/tests/owners.rs: `.as_inner()`
+$DIR/src/tests/owners.rs: `.try_accept_ownership_invitation_by_token::<()>(&invite_token)`
 $DIR/src/tests/owners.rs: `.show_crate_owners("demo_crate")`
 $DIR/src/tests/owners.rs: `.with_token()`
 $DIR/src/tests/owners.rs: `.as_model()`
@@ -3254,6 +2888,7 @@ $DIR/src/tests/owners.rs: `.as_inner()`
 $DIR/src/tests/owners.rs: `.expect_build(conn)`
 $DIR/src/tests/owners.rs: `.db_new_user(invited_gh_login)`
 $DIR/src/tests/owners.rs: `.add_user_owner(krate_name, "user_bar")`
+$DIR/src/tests/owners.rs: `.list_invitations()`
 $DIR/src/tests/owners.rs: `.with_token()`
 $DIR/src/tests/owners.rs: `.as_model()`
 $DIR/src/tests/owners.rs: `.db_new_user(invited_gh_login)`
@@ -3263,17 +2898,7 @@ $DIR/src/tests/owners.rs: `.db(|conn| {
     })`
 $DIR/src/tests/owners.rs: `.expect_build(conn)`
 $DIR/src/tests/owners.rs: `.add_user_owner(krate_name, "user_bar")`
-$DIR/src/tests/owners.rs: `.mails_in_memory()`
-$DIR/src/tests/owners.rs: `.into_iter()`
-$DIR/src/tests/owners.rs: `.find(|m| m.subject.contains("invitation"))`
-$DIR/src/tests/owners.rs: `.subject.contains("invitation")`
-$DIR/src/tests/owners.rs: `.find(before_token)`
-$DIR/src/tests/owners.rs: `.len()`
-$DIR/src/tests/owners.rs: `.find(after_token)`
-$DIR/src/tests/owners.rs: `.get_with_query::<CrateOwnerInvitationsResponse>(
-        "/api/private/crate_owner_invitations",
-        query,
-    )`
+$DIR/src/tests/owners.rs: `.list_invitations()`
 $DIR/src/tests/owners.rs: `.with_token()`
 $DIR/src/tests/owners.rs: `.db(|conn| {
         (
@@ -3393,8 +3018,6 @@ $DIR/src/tests/read_only_mode.rs: `CrateBuilder::new("foo_download_read_only", u
             .expect_build(conn);`
 $DIR/src/tests/read_only_mode.rs: `set_read_only(conn).unwrap();`
 $DIR/src/tests/read_only_mode.rs: `assert_ok_eq!(dl_count, None);`
-$DIR/src/tests/read_only_mode.rs: `diesel::sql_query("SET TRANSACTION READ ONLY").execute(conn)?;`
-$DIR/src/tests/read_only_mode.rs: `diesel::sql_query("SAVEPOINT test_post_readonly").execute(conn)?;`
 $DIR/src/tests/read_only_mode.rs: `.empty()`
 $DIR/src/tests/read_only_mode.rs: `.db(set_read_only)`
 $DIR/src/tests/read_only_mode.rs: `.get::<()>("/api/v1/crates")`
@@ -3423,8 +3046,6 @@ $DIR/src/tests/read_only_mode.rs: `.expect_build(conn)`
 $DIR/src/tests/read_only_mode.rs: `.get::<()>("/api/v1/crates/foo_download_read_only/1.0.0/download")`
 $DIR/src/tests/read_only_mode.rs: `.select(sum(downloads))`
 $DIR/src/tests/read_only_mode.rs: `.get_result(conn)`
-$DIR/src/tests/read_only_mode.rs: `.execute(conn)`
-$DIR/src/tests/read_only_mode.rs: `.execute(conn)`
 $DIR/src/tests/routes/categories/get.rs: `anon.get(url).assert_not_found();`
 $DIR/src/tests/routes/categories/get.rs: `app.db(|conn| {
         assert_ok!(new_category("Foo Bar", "foo-bar", "Foo Bar crates").create_or_update(conn));
@@ -3553,11 +3174,6 @@ $DIR/src/tests/routes/category_slugs/list.rs: `.create_or_update(conn)`
 $DIR/src/tests/routes/category_slugs/list.rs: `.create_or_update(conn)`
 $DIR/src/tests/routes/category_slugs/list.rs: `.get("/api/v1/category_slugs")`
 $DIR/src/tests/routes/category_slugs/list.rs: `.good()`
-$DIR/src/tests/routes/crates/downloads.rs: `app.as_inner()
-        .downloads_counter
-        .persist_all_shards(app.as_inner())
-        .expect("failed to persist downloads count")
-        .log();`
 $DIR/src/tests/routes/crates/downloads.rs: `app.db(|conn| {
         CrateBuilder::new("foo_download", user.id)
             .version(VersionBuilder::new("1.0.0"))
@@ -3567,16 +3183,17 @@ $DIR/src/tests/routes/crates/downloads.rs: `CrateBuilder::new("foo_download", us
             .version(VersionBuilder::new("1.0.0"))
             .expect_build(conn);`
 $DIR/src/tests/routes/crates/downloads.rs: `download("foo_download/1.0.0");`
+$DIR/src/tests/routes/crates/downloads.rs: `assert_dl_count(&anon, "foo_download/1.0.0", None, 0);`
+$DIR/src/tests/routes/crates/downloads.rs: `assert_dl_count(&anon, "foo_download", None, 0);`
+$DIR/src/tests/routes/crates/downloads.rs: `persist_downloads_count(&app);`
+$DIR/src/tests/routes/crates/downloads.rs: `assert_dl_count(&anon, "foo_download/1.0.0", None, 1);`
+$DIR/src/tests/routes/crates/downloads.rs: `assert_dl_count(&anon, "foo_download", None, 1);`
 $DIR/src/tests/routes/crates/downloads.rs: `download("FOO_DOWNLOAD/1.0.0");`
-$DIR/src/tests/routes/crates/downloads.rs: `.as_inner()`
-$DIR/src/tests/routes/crates/downloads.rs: `.downloads_counter
-        .persist_all_shards(app.as_inner())`
-$DIR/src/tests/routes/crates/downloads.rs: `.as_inner()`
-$DIR/src/tests/routes/crates/downloads.rs: `.log()`
-$DIR/src/tests/routes/crates/downloads.rs: `.get_with_query(&url, query)`
-$DIR/src/tests/routes/crates/downloads.rs: `.get(&url)`
-$DIR/src/tests/routes/crates/downloads.rs: `.map(|vd| vd.downloads)`
-$DIR/src/tests/routes/crates/downloads.rs: `.sum::<i32>()`
+$DIR/src/tests/routes/crates/downloads.rs: `persist_downloads_count(&app);`
+$DIR/src/tests/routes/crates/downloads.rs: `assert_dl_count(&anon, "FOO_DOWNLOAD/1.0.0", None, 2);`
+$DIR/src/tests/routes/crates/downloads.rs: `assert_dl_count(&anon, "FOO_DOWNLOAD", None, 2);`
+$DIR/src/tests/routes/crates/downloads.rs: `assert_dl_count(&anon, "FOO_DOWNLOAD/1.0.0", Some(&query), 0);`
+$DIR/src/tests/routes/crates/downloads.rs: `assert_dl_count(&anon, "FOO_DOWNLOAD/1.0.0", Some(&query), 2);`
 $DIR/src/tests/routes/crates/downloads.rs: `.with_user()`
 $DIR/src/tests/routes/crates/downloads.rs: `.as_model()`
 $DIR/src/tests/routes/crates/downloads.rs: `.db(|conn| {
@@ -4939,7 +4556,6 @@ $DIR/src/tests/routes/crates/reverse_dependencies.rs: `CrateBuilder::new("c2", u
             // ...has a patch version at the limits of what the semver crate supports
             .version(VersionBuilder::new(&large_but_valid_version_number).dependency(&c1, None))
             .expect_build(conn);`
-$DIR/src/tests/routes/crates/reverse_dependencies.rs: `.get(&url)`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.with_user()`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.as_model()`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.db(|conn| {
@@ -4964,6 +4580,8 @@ $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.version(
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.dependency(&c1, None)`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.dependency(&c1, Some("foo"))`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.expect_build(conn)`
+$DIR/src/tests/routes/crates/reverse_dependencies.rs: `.reverse_dependencies("c1")`
+$DIR/src/tests/routes/crates/reverse_dependencies.rs: `.reverse_dependencies("c2")`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.with_user()`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.as_model()`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.db(|conn| {
@@ -4981,6 +4599,7 @@ $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.version("1.0.0")`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.version(VersionBuilder::new("2.0.0").dependency(&c1, None))`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.dependency(&c1, None)`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.expect_build(conn)`
+$DIR/src/tests/routes/crates/reverse_dependencies.rs: `.reverse_dependencies("c1")`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.with_user()`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.as_model()`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.db(|conn| {
@@ -4998,6 +4617,7 @@ $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.version(VersionBuilder::
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.dependency(&c1, None)`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.version("2.0.0")`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.expect_build(conn)`
+$DIR/src/tests/routes/crates/reverse_dependencies.rs: `.reverse_dependencies("c1")`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.with_user()`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.as_model()`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.db(|conn| {
@@ -5020,6 +4640,7 @@ $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.version(VersionBuilder::
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.dependency(&c1, None)`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.version("1.1.0-pre")`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.expect_build(conn)`
+$DIR/src/tests/routes/crates/reverse_dependencies.rs: `.reverse_dependencies("c1")`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.with_user()`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.as_model()`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.db(|conn| {
@@ -5037,6 +4658,7 @@ $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.version("1.0.0")`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.version(VersionBuilder::new("2.0.0").dependency(&c1, None))`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.dependency(&c1, None)`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.expect_build(conn)`
+$DIR/src/tests/routes/crates/reverse_dependencies.rs: `.reverse_dependencies("c1")`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.db(|conn| {
         use crates_io::schema::versions;
         use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
@@ -5051,6 +4673,7 @@ $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.eq("2.0.0")`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.set(versions::yanked.eq(true))`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.eq(true)`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.execute(conn)`
+$DIR/src/tests/routes/crates/reverse_dependencies.rs: `.reverse_dependencies("c1")`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.with_user()`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.as_model()`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.db(|conn| {
@@ -5088,6 +4711,7 @@ $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.execute(conn)`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.version(VersionBuilder::new("3.0.0").dependency(&c1, None))`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.dependency(&c1, None)`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.expect_build(conn)`
+$DIR/src/tests/routes/crates/reverse_dependencies.rs: `.reverse_dependencies("c1")`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.find(|v| v.krate == "c2")`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.find(|v| v.krate == "c3")`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.with_user()`
@@ -5105,6 +4729,7 @@ $DIR/src/tests/routes/crates/reverse_dependencies.rs: `// ...has a patch version
             .version(VersionBuilder::new(&large_but_valid_version_number).dependency(&c1, None))`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.dependency(&c1, None)`
 $DIR/src/tests/routes/crates/reverse_dependencies.rs: `.expect_build(conn)`
+$DIR/src/tests/routes/crates/reverse_dependencies.rs: `.reverse_dependencies("c1")`
 $DIR/src/tests/routes/crates/versions/authors.rs: `app.db(|conn| {
         CrateBuilder::new("foo_authors", user.id)
             .version("1.0.0")
@@ -5325,8 +4950,6 @@ $DIR/src/tests/routes/crates/versions/read.rs: `.eq(none)`
 $DIR/src/tests/routes/crates/versions/read.rs: `.execute(conn)`
 $DIR/src/tests/routes/crates/versions/read.rs: `.get(url)`
 $DIR/src/tests/routes/crates/versions/read.rs: `.good()`
-$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `self.app().run_pending_background_jobs();`
-$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `self.app().run_pending_background_jobs();`
 $DIR/src/tests/routes/crates/versions/yank_unyank.rs: `app.db(|conn| {
         CrateBuilder::new("foo_not", another_user.id)
             .version("1.0.0")
@@ -5340,13 +4963,6 @@ $DIR/src/tests/routes/crates/versions/yank_unyank.rs: `token.yank("fyk", "1.0.0"
 $DIR/src/tests/routes/crates/versions/yank_unyank.rs: `token.publish_crate(crate_to_publish).good();`
 $DIR/src/tests/routes/crates/versions/yank_unyank.rs: `token.yank("fyk", "1.0.0").good();`
 $DIR/src/tests/routes/crates/versions/yank_unyank.rs: `token.unyank("fyk", "1.0.0").good();`
-$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `cookie.publish_crate(pb).good();`
-$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.delete(&url)`
-$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.app()`
-$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.run_pending_background_jobs()`
-$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.put(&url, &[] as &[u8])`
-$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.app()`
-$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.run_pending_background_jobs()`
 $DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.with_token()`
 $DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.db_new_user("bar")`
 $DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.as_model()`
@@ -5357,56 +4973,79 @@ $DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.db(|conn| {
     })`
 $DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.version("1.0.0")`
 $DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.expect_build(conn)`
+$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.yank("foo_not", "1.0.0")`
 $DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.with_token()`
 $DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.publish_crate(crate_to_publish)`
 $DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.good()`
+$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.yank("fyk", "1.0.0")`
 $DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.good()`
 $DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.show_version("fyk", "1.0.0")`
 $DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.with_token()`
 $DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.publish_crate(crate_to_publish)`
 $DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.good()`
+$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.yank("fyk", "1.0.0")`
 $DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.good()`
+$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.unyank("fyk", "1.0.0")`
 $DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.good()`
 $DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.show_version("fyk", "1.0.0")`
-$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.with_user()`
-$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.publish_crate(pb)`
-$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.good()`
+$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.yank(CRATE_NAME, CRATE_VERSION)`
+$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.unyank(CRATE_NAME, CRATE_VERSION)`
+$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.yank(CRATE_NAME, CRATE_VERSION)`
+$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.unyank(CRATE_NAME, CRATE_VERSION)`
 $DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.db_new_token("test-token")`
+$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.yank(CRATE_NAME, CRATE_VERSION)`
+$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.unyank(CRATE_NAME, CRATE_VERSION)`
 $DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.db_new_scoped_token("test-token", None, None, Some(expired_at.naive_utc()))`
 $DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.naive_utc()`
+$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.yank(CRATE_NAME, CRATE_VERSION)`
+$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.unyank(CRATE_NAME, CRATE_VERSION)`
 $DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.db_new_scoped_token("test-token", None, None, Some(expired_at.naive_utc()))`
 $DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.naive_utc()`
+$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.yank(CRATE_NAME, CRATE_VERSION)`
+$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.unyank(CRATE_NAME, CRATE_VERSION)`
 $DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.db_new_scoped_token("test-token", None, Some(vec![EndpointScope::Yank]), None)`
+$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.yank(CRATE_NAME, CRATE_VERSION)`
+$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.unyank(CRATE_NAME, CRATE_VERSION)`
 $DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.db_new_scoped_token(
             "test-token",
             None,
             Some(vec![EndpointScope::PublishUpdate]),
             None,
         )`
+$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.yank(CRATE_NAME, CRATE_VERSION)`
+$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.unyank(CRATE_NAME, CRATE_VERSION)`
 $DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.db_new_scoped_token(
             "test-token",
             Some(vec![CrateScope::try_from(CRATE_NAME).unwrap()]),
             None,
             None,
         )`
+$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.yank(CRATE_NAME, CRATE_VERSION)`
+$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.unyank(CRATE_NAME, CRATE_VERSION)`
 $DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.db_new_scoped_token(
             "test-token",
             Some(vec![CrateScope::try_from(wildcard).unwrap()]),
             None,
             None,
         )`
+$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.yank(CRATE_NAME, CRATE_VERSION)`
+$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.unyank(CRATE_NAME, CRATE_VERSION)`
 $DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.db_new_scoped_token(
             "test-token",
             Some(vec![CrateScope::try_from("foo").unwrap()]),
             None,
             None,
         )`
+$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.yank(CRATE_NAME, CRATE_VERSION)`
+$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.unyank(CRATE_NAME, CRATE_VERSION)`
 $DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.db_new_scoped_token(
             "test-token",
             Some(vec![CrateScope::try_from("foo*").unwrap()]),
             None,
             None,
         )`
+$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.yank(CRATE_NAME, CRATE_VERSION)`
+$DIR/src/tests/routes/crates/versions/yank_unyank.rs: `.unyank(CRATE_NAME, CRATE_VERSION)`
 $DIR/src/tests/routes/keywords/list.rs: `app.db(|conn| {
         Keyword::find_or_create_all(conn, &["foo"]).unwrap();
     });`
@@ -5496,7 +5135,28 @@ $DIR/src/tests/routes/keywords/read.rs: `.db(|conn| {
 $DIR/src/tests/routes/keywords/read.rs: `.db(|conn| {
         Keyword::update_crate(conn, &krate, &[]).unwrap();
     })`
-$DIR/src/tests/routes/me/email_notifications.rs: `.put("/api/v1/me/email_notifications", json!(updates).to_string())`
+$DIR/src/tests/routes/me/email_notifications.rs: `user.update_email_notifications(vec![EmailNotificationsUpdate {
+        id: a_id,
+        email_notifications: false,
+    }]);`
+$DIR/src/tests/routes/me/email_notifications.rs: `user.update_email_notifications(vec![EmailNotificationsUpdate {
+        id: b_id,
+        email_notifications: false,
+    }]);`
+$DIR/src/tests/routes/me/email_notifications.rs: `user.update_email_notifications(vec![
+        EmailNotificationsUpdate {
+            id: a_id,
+            email_notifications: true,
+        },
+        EmailNotificationsUpdate {
+            id: b_id,
+            email_notifications: true,
+        },
+    ]);`
+$DIR/src/tests/routes/me/email_notifications.rs: `user.update_email_notifications(vec![EmailNotificationsUpdate {
+        id: not_my_crate.id,
+        email_notifications: false,
+    }]);`
 $DIR/src/tests/routes/me/email_notifications.rs: `.with_user()`
 $DIR/src/tests/routes/me/email_notifications.rs: `.db(|conn| {
         vec![
@@ -5506,8 +5166,26 @@ $DIR/src/tests/routes/me/email_notifications.rs: `.db(|conn| {
     })`
 $DIR/src/tests/routes/me/email_notifications.rs: `.get(0)`
 $DIR/src/tests/routes/me/email_notifications.rs: `.get(1)`
+$DIR/src/tests/routes/me/email_notifications.rs: `.update_email_notifications(vec![EmailNotificationsUpdate {
+        id: a_id,
+        email_notifications: false,
+    }])`
 $DIR/src/tests/routes/me/email_notifications.rs: `.show_me()`
+$DIR/src/tests/routes/me/email_notifications.rs: `.update_email_notifications(vec![EmailNotificationsUpdate {
+        id: b_id,
+        email_notifications: false,
+    }])`
 $DIR/src/tests/routes/me/email_notifications.rs: `.show_me()`
+$DIR/src/tests/routes/me/email_notifications.rs: `.update_email_notifications(vec![
+        EmailNotificationsUpdate {
+            id: a_id,
+            email_notifications: true,
+        },
+        EmailNotificationsUpdate {
+            id: b_id,
+            email_notifications: true,
+        },
+    ])`
 $DIR/src/tests/routes/me/email_notifications.rs: `.show_me()`
 $DIR/src/tests/routes/me/email_notifications.rs: `.with_user()`
 $DIR/src/tests/routes/me/email_notifications.rs: `.db(|conn| {
@@ -5518,6 +5196,10 @@ $DIR/src/tests/routes/me/email_notifications.rs: `.db(|conn| {
     })`
 $DIR/src/tests/routes/me/email_notifications.rs: `.create_or_update(None, &app.as_inner().emails, conn)`
 $DIR/src/tests/routes/me/email_notifications.rs: `.as_inner()`
+$DIR/src/tests/routes/me/email_notifications.rs: `.update_email_notifications(vec![EmailNotificationsUpdate {
+        id: not_my_crate.id,
+        email_notifications: false,
+    }])`
 $DIR/src/tests/routes/me/email_notifications.rs: `.db(|conn| {
             crate_owners::table
                 .select(crate_owners::email_notifications)
@@ -5538,17 +5220,18 @@ $DIR/src/tests/routes/me/get.rs: `app.db(|conn| {
         krate.owner_remove(conn, &user_model.gh_login).unwrap();
     });`
 $DIR/src/tests/routes/me/get.rs: `krate.owner_remove(conn, &user_model.gh_login).unwrap();`
-$DIR/src/tests/routes/me/get.rs: `.get(url)`
 $DIR/src/tests/routes/me/get.rs: `.empty()`
 $DIR/src/tests/routes/me/get.rs: `.get(url)`
 $DIR/src/tests/routes/me/get.rs: `.assert_forbidden()`
 $DIR/src/tests/routes/me/get.rs: `.db_new_user("foo")`
+$DIR/src/tests/routes/me/get.rs: `.show_me()`
 $DIR/src/tests/routes/me/get.rs: `.db(|conn| {
         CrateBuilder::new("foo_my_packages", user.as_model().id).expect_build(conn);
         assert_eq!(json.user.email, user.as_model().email(conn).unwrap());
     })`
 $DIR/src/tests/routes/me/get.rs: `.as_model()`
 $DIR/src/tests/routes/me/get.rs: `.expect_build(conn)`
+$DIR/src/tests/routes/me/get.rs: `.show_me()`
 $DIR/src/tests/routes/me/get.rs: `.with_user()`
 $DIR/src/tests/routes/me/get.rs: `.as_model()`
 $DIR/src/tests/routes/me/get.rs: `.db(|conn| {
@@ -5557,6 +5240,7 @@ $DIR/src/tests/routes/me/get.rs: `.db(|conn| {
     })`
 $DIR/src/tests/routes/me/get.rs: `.expect_build(conn)`
 $DIR/src/tests/routes/me/get.rs: `.owner_remove(conn, &user_model.gh_login)`
+$DIR/src/tests/routes/me/get.rs: `.show_me()`
 $DIR/src/tests/routes/me/tokens/create.rs: `app.db(|conn| {
         for i in 0..1000 {
             assert_ok!(ApiToken::insert(conn, id, &format!("token {i}")));
@@ -5919,7 +5603,6 @@ $DIR/src/tests/routes/me/updates.rs: `.good()`
 $DIR/src/tests/routes/me/updates.rs: `.get_with_query("/api/v1/me/updates", "page=2&per_page=1")`
 $DIR/src/tests/routes/me/updates.rs: `.good()`
 $DIR/src/tests/routes/me/updates.rs: `.get_with_query::<()>("/api/v1/me/updates", "page=0")`
-$DIR/src/tests/routes/metrics.rs: `req.header("Authorization", &format!("Bearer {token}"));`
 $DIR/src/tests/routes/metrics.rs: `.with_config(|config| config.metrics_authorization_token = Some("foobar".into()))`
 $DIR/src/tests/routes/metrics.rs: `.into()`
 $DIR/src/tests/routes/metrics.rs: `.empty()`
@@ -5928,8 +5611,6 @@ $DIR/src/tests/routes/metrics.rs: `.into()`
 $DIR/src/tests/routes/metrics.rs: `.empty()`
 $DIR/src/tests/routes/metrics.rs: `.with_config(|config| config.metrics_authorization_token = None)`
 $DIR/src/tests/routes/metrics.rs: `.empty()`
-$DIR/src/tests/routes/metrics.rs: `.get_request(&format!("/api/private/metrics/{kind}"))`
-$DIR/src/tests/routes/metrics.rs: `.header("Authorization", &format!("Bearer {token}"))`
 $DIR/src/tests/routes/session/authorize.rs: `.empty()`
 $DIR/src/tests/routes/session/authorize.rs: `.get::<()>("/api/private/session/authorize")`
 $DIR/src/tests/routes/session/begin.rs: `.empty()`
@@ -6424,9 +6105,6 @@ $DIR/src/tests/routes/versions/read.rs: `.get(&url)`
 $DIR/src/tests/routes/versions/read.rs: `.good()`
 $DIR/src/tests/schema_details.rs: `.definition.contains("ON DELETE CASCADE")`
 $DIR/src/tests/schema_details.rs: `.definition.contains("ON DELETE CASCADE")`
-$DIR/src/tests/schema_details.rs: `.empty()`
-$DIR/src/tests/schema_details.rs: `.bind::<Text, _>(column_name)`
-$DIR/src/tests/schema_details.rs: `.load(conn)`
 $DIR/src/tests/server.rs: `req.header(header::USER_AGENT, "");`
 $DIR/src/tests/server.rs: `app.db(|conn| {
         CrateBuilder::new("dl_no_ua", user.as_model().id).expect_build(conn);
@@ -6495,39 +6173,16 @@ $DIR/src/tests/server.rs: `.header(
         "1value-must-match-exactly-this-is-allowed",
     )`
 $DIR/src/tests/server.rs: `.run::<()>(req)`
+$DIR/src/tests/server_binary.rs: `initialize_dummy_crate(&mut server_bin.db().unwrap());`
+$DIR/src/tests/server_binary.rs: `initialize_dummy_crate(&mut server_bin.db().unwrap());`
 $DIR/src/tests/server_binary.rs: `server_bin.chaosproxy.break_networking();`
-$DIR/src/tests/server_binary.rs: `CrateBuilder::new("foo", user.id)
-        .version("1.0.0")
-        .build(conn)
-        .expect("failed to create dummy crate");`
-$DIR/src/tests/server_binary.rs: `stream_processor(process.stdout.take().unwrap(), "stdout", Some(port_send));`
-$DIR/src/tests/server_binary.rs: `stream_processor(process.stderr.take().unwrap(), "stderr", None);`
+$DIR/src/tests/server_binary.rs: `.db()`
+$DIR/src/tests/server_binary.rs: `.start()`
+$DIR/src/tests/server_binary.rs: `.get("api/v1/crates/FOO/1.0.0/download")`
+$DIR/src/tests/server_binary.rs: `.db()`
 $DIR/src/tests/server_binary.rs: `.chaosproxy.break_networking()`
-$DIR/src/tests/server_binary.rs: `.values(NewUser {
-            gh_id: 0,
-            gh_login: "user",
-            ..NewUser::default()
-        })`
-$DIR/src/tests/server_binary.rs: `.get_result(conn)`
-$DIR/src/tests/server_binary.rs: `.version("1.0.0")`
-$DIR/src/tests/server_binary.rs: `.build(conn)`
-$DIR/src/tests/server_binary.rs: `.env_clear()`
-$DIR/src/tests/server_binary.rs: `.envs(self.env)`
-$DIR/src/tests/server_binary.rs: `.env("RUST_LOG", "info")`
-$DIR/src/tests/server_binary.rs: `.stdout(Stdio::piped())`
-$DIR/src/tests/server_binary.rs: `.stderr(Stdio::piped())`
-$DIR/src/tests/server_binary.rs: `.spawn()`
-$DIR/src/tests/server_binary.rs: `.stdout.take()`
-$DIR/src/tests/server_binary.rs: `.stderr.take()`
-$DIR/src/tests/server_binary.rs: `.recv_timeout(Duration::from_secs(SERVER_BOOT_TIMEOUT_SECONDS))`
-$DIR/src/tests/server_binary.rs: `.context("the server took too much time to initialize")`
-$DIR/src/tests/server_binary.rs: `.parse()`
-$DIR/src/tests/server_binary.rs: `.redirect(reqwest::redirect::Policy::none())`
-$DIR/src/tests/server_binary.rs: `.build()`
-$DIR/src/tests/server_binary.rs: `.http
-            .get(format!("http://127.0.0.1:{}/{}", self.port, url))`
-$DIR/src/tests/server_binary.rs: `.header("User-Agent", "crates.io test suite")`
-$DIR/src/tests/server_binary.rs: `.send()`
+$DIR/src/tests/server_binary.rs: `.start()`
+$DIR/src/tests/server_binary.rs: `.get("api/v1/crates/FOO/1.0.0/download")`
 $DIR/src/tests/team.rs: `app.db(|conn| {
         CrateBuilder::new("foo_not_github", user.as_model().id).expect_build(conn);
     });`
@@ -6731,6 +6386,7 @@ $DIR/src/tests/team.rs: `.expect_build(conn)`
 $DIR/src/tests/team.rs: `.create_or_update(conn)`
 $DIR/src/tests/team.rs: `.add_named_owner("foo_renamed_team", "github:test-org:core")`
 $DIR/src/tests/team.rs: `.good()`
+$DIR/src/tests/team.rs: `.crate_owner_teams("foo_renamed_team")`
 $DIR/src/tests/team.rs: `.good()`
 $DIR/src/tests/team.rs: `.empty()`
 $DIR/src/tests/team.rs: `.db_new_user("user-all-teams")`
@@ -6751,6 +6407,7 @@ $DIR/src/tests/team.rs: `.db(|conn| {
     })`
 $DIR/src/tests/team.rs: `.first(conn)`
 $DIR/src/tests/team.rs: `.owners(conn)`
+$DIR/src/tests/team.rs: `.crate_owner_teams("foo_mixed_case")`
 $DIR/src/tests/team.rs: `.good()`
 $DIR/src/tests/team.rs: `.empty()`
 $DIR/src/tests/team.rs: `.db_new_user("user-org-owner")`
@@ -6771,6 +6428,7 @@ $DIR/src/tests/team.rs: `.db(|conn| {
     })`
 $DIR/src/tests/team.rs: `.first(conn)`
 $DIR/src/tests/team.rs: `.owners(conn)`
+$DIR/src/tests/team.rs: `.crate_owner_teams("foo_org_owner")`
 $DIR/src/tests/team.rs: `.good()`
 $DIR/src/tests/team.rs: `.empty()`
 $DIR/src/tests/team.rs: `.db_new_user("user-one-team")`
@@ -6955,27 +6613,12 @@ $DIR/src/tests/unhealthy_database.rs: `app.db(|conn| {
             .expect_build(conn)
     });`
 $DIR/src/tests/unhealthy_database.rs: `app.primary_db_chaosproxy().break_networking();`
+$DIR/src/tests/unhealthy_database.rs: `assert_unconditional_redirects(&anon);`
 $DIR/src/tests/unhealthy_database.rs: `app.primary_db_chaosproxy().restore_networking();`
 $DIR/src/tests/unhealthy_database.rs: `app.as_inner()
         .primary_database
         .wait_until_healthy(DB_HEALTHY_TIMEOUT)
         .expect("the database did not return healthy");`
-$DIR/src/tests/unhealthy_database.rs: `anon.get::<()>("/api/v1/crates/crate_name/1.0.0/download")
-        .assert_redirect_ends_with("/crate_name/crate_name-1.0.0.crate");`
-$DIR/src/tests/unhealthy_database.rs: `anon.get::<()>("/api/v1/crates/Crate-Name/1.0.0/download")
-        .assert_redirect_ends_with("/crate_name/crate_name-1.0.0.crate");`
-$DIR/src/tests/unhealthy_database.rs: `anon.get::<()>("/api/v1/crates/crate_name/2.0.0/download")
-        .assert_not_found();`
-$DIR/src/tests/unhealthy_database.rs: `anon.get::<()>("/api/v1/crates/awesome-project/1.0.0/download")
-        .assert_not_found();`
-$DIR/src/tests/unhealthy_database.rs: `anon.get::<()>("/api/v1/crates/crate_name/1.0.0/download")
-        .assert_redirect_ends_with("/crate_name/crate_name-1.0.0.crate");`
-$DIR/src/tests/unhealthy_database.rs: `anon.get::<()>("/api/v1/crates/Crate-Name/1.0.0/download")
-        .assert_redirect_ends_with("/Crate-Name/Crate-Name-1.0.0.crate");`
-$DIR/src/tests/unhealthy_database.rs: `anon.get::<()>("/api/v1/crates/crate_name/2.0.0/download")
-        .assert_redirect_ends_with("/crate_name/crate_name-2.0.0.crate");`
-$DIR/src/tests/unhealthy_database.rs: `anon.get::<()>("/api/v1/crates/awesome-project/1.0.0/download")
-        .assert_redirect_ends_with("/awesome-project/awesome-project-1.0.0.crate");`
 $DIR/src/tests/unhealthy_database.rs: `app.primary_db_chaosproxy().break_networking();`
 $DIR/src/tests/unhealthy_database.rs: `app.primary_db_chaosproxy().restore_networking();`
 $DIR/src/tests/unhealthy_database.rs: `app.as_inner()
@@ -7020,22 +6663,6 @@ $DIR/src/tests/unhealthy_database.rs: `.restore_networking()`
 $DIR/src/tests/unhealthy_database.rs: `.as_inner()`
 $DIR/src/tests/unhealthy_database.rs: `.primary_database
         .wait_until_healthy(DB_HEALTHY_TIMEOUT)`
-$DIR/src/tests/unhealthy_database.rs: `.get::<()>("/api/v1/crates/crate_name/1.0.0/download")`
-$DIR/src/tests/unhealthy_database.rs: `.assert_redirect_ends_with("/crate_name/crate_name-1.0.0.crate")`
-$DIR/src/tests/unhealthy_database.rs: `.get::<()>("/api/v1/crates/Crate-Name/1.0.0/download")`
-$DIR/src/tests/unhealthy_database.rs: `.assert_redirect_ends_with("/crate_name/crate_name-1.0.0.crate")`
-$DIR/src/tests/unhealthy_database.rs: `.get::<()>("/api/v1/crates/crate_name/2.0.0/download")`
-$DIR/src/tests/unhealthy_database.rs: `.assert_not_found()`
-$DIR/src/tests/unhealthy_database.rs: `.get::<()>("/api/v1/crates/awesome-project/1.0.0/download")`
-$DIR/src/tests/unhealthy_database.rs: `.assert_not_found()`
-$DIR/src/tests/unhealthy_database.rs: `.get::<()>("/api/v1/crates/crate_name/1.0.0/download")`
-$DIR/src/tests/unhealthy_database.rs: `.assert_redirect_ends_with("/crate_name/crate_name-1.0.0.crate")`
-$DIR/src/tests/unhealthy_database.rs: `.get::<()>("/api/v1/crates/Crate-Name/1.0.0/download")`
-$DIR/src/tests/unhealthy_database.rs: `.assert_redirect_ends_with("/Crate-Name/Crate-Name-1.0.0.crate")`
-$DIR/src/tests/unhealthy_database.rs: `.get::<()>("/api/v1/crates/crate_name/2.0.0/download")`
-$DIR/src/tests/unhealthy_database.rs: `.assert_redirect_ends_with("/crate_name/crate_name-2.0.0.crate")`
-$DIR/src/tests/unhealthy_database.rs: `.get::<()>("/api/v1/crates/awesome-project/1.0.0/download")`
-$DIR/src/tests/unhealthy_database.rs: `.assert_redirect_ends_with("/awesome-project/awesome-project-1.0.0.crate")`
 $DIR/src/tests/unhealthy_database.rs: `.with_database(TestDatabase::SlowRealPool { replica: false })`
 $DIR/src/tests/unhealthy_database.rs: `.empty()`
 $DIR/src/tests/unhealthy_database.rs: `.get::<()>("/api/v1/summary")`
@@ -7100,13 +6727,13 @@ $DIR/src/tests/user.rs: `assert_ok!(
         );`
 $DIR/src/tests/user.rs: `user_without_github_email.update_email("apricot@apricots.apricot");`
 $DIR/src/tests/user.rs: `user.update_email("mango@mangos.mango");`
+$DIR/src/tests/user.rs: `user.confirm_email(&email_token);`
 $DIR/src/tests/user.rs: `update(Email::belonging_to(&u))
             // Users created before we added verification will have
             // `NULL` in the `token_generated_at` column.
             .set(emails::token_generated_at.eq(None::<NaiveDateTime>))
             .execute(conn)
             .unwrap();`
-$DIR/src/tests/user.rs: `.put(&url, &[] as &[u8])`
 $DIR/src/tests/user.rs: `.with_token()`
 $DIR/src/tests/user.rs: `.as_model()`
 $DIR/src/tests/user.rs: `.plaintext()`
@@ -7201,6 +6828,7 @@ $DIR/src/tests/user.rs: `.db(|conn| {
     })`
 $DIR/src/tests/user.rs: `.select(emails::token)`
 $DIR/src/tests/user.rs: `.first(conn)`
+$DIR/src/tests/user.rs: `.confirm_email(&email_token)`
 $DIR/src/tests/user.rs: `.show_me()`
 $DIR/src/tests/user.rs: `.empty()`
 $DIR/src/tests/user.rs: `.db(|conn| {
@@ -7226,15 +6854,12 @@ $DIR/src/tests/user.rs: `// Users created before we added verification will have
 $DIR/src/tests/user.rs: `.eq(None::<NaiveDateTime>)`
 $DIR/src/tests/user.rs: `.execute(conn)`
 $DIR/src/tests/user.rs: `.show_me()`
-$DIR/src/tests/util/mock_request.rs: `self.headers_mut()
-            .insert(name, HeaderValue::from_str(value).unwrap());`
 $DIR/src/tests/util/mock_request.rs: `*req.body_mut() = Bytes::from_static(b"Hello world");`
-$DIR/src/tests/util/mock_request.rs: `.headers_mut()`
-$DIR/src/tests/util/mock_request.rs: `.insert(name, HeaderValue::from_str(value).unwrap())`
-$DIR/src/tests/util/mock_request.rs: `.method(&method)`
-$DIR/src/tests/util/mock_request.rs: `.uri(path)`
-$DIR/src/tests/util/mock_request.rs: `.body(Bytes::new())`
+$DIR/src/tests/util/mock_request.rs: `req.header(header::USER_AGENT, "lulz");`
+$DIR/src/tests/util/mock_request.rs: `req.header(header::DNT, "1");`
 $DIR/src/tests/util/mock_request.rs: `.body_mut()`
+$DIR/src/tests/util/mock_request.rs: `.header(header::USER_AGENT, "lulz")`
+$DIR/src/tests/util/mock_request.rs: `.header(header::DNT, "1")`
 $DIR/src/tests/version.rs: `Version::record_readme_rendering(version.id, conn).unwrap();`
 $DIR/src/tests/version.rs: `Version::record_readme_rendering(version.id, conn).unwrap();`
 $DIR/src/tests/version.rs: `.with_user()`
@@ -7294,23 +6919,14 @@ $DIR/src/tests/worker/git.rs: `.db(|conn| {
         assert_ok!(Job::enqueue_sync_to_index("serde", conn));
     })`
 $DIR/src/tests/worker/git.rs: `.run_pending_background_jobs()`
-$DIR/src/util/bytes_request.rs: `quit_rx.await.ok();`
 $DIR/src/util/bytes_request.rs: `quit_tx.send(()).unwrap();`
 $DIR/src/util/bytes_request.rs: `server.await.unwrap().unwrap();`
-$DIR/src/util/bytes_request.rs: `.into()`
-$DIR/src/util/bytes_request.rs: `.fallback(bytes_request)`
-$DIR/src/util/bytes_request.rs: `.layer(DefaultBodyLimit::max(4096))`
-$DIR/src/util/bytes_request.rs: `.into_make_service()`
-$DIR/src/util/bytes_request.rs: `.serve(make_service)`
-$DIR/src/util/bytes_request.rs: `.with_graceful_shutdown(async {
-            quit_rx.await.ok();
-        })`
-$DIR/src/util/bytes_request.rs: `.ok()`
 $DIR/src/util/bytes_request.rs: `.send_data(vec![0; ACTUAL_BODY_SIZE].into())`
 $DIR/src/util/bytes_request.rs: `.into()`
 $DIR/src/util/bytes_request.rs: `.body(body)`
 $DIR/src/util/bytes_request.rs: `.request(req)`
 $DIR/src/util/bytes_request.rs: `.send(())`
+$DIR/src/util/token.rs: `.expose_secret()`
 $DIR/src/views.rs: `assert_some!(json
             .as_str()
             .find(r#""updated_at":"2017-01-06T14:23:11+00:00""#));`
@@ -7332,36 +6948,12 @@ $DIR/src/views.rs: `.and_hms_opt(14, 23, 11)`
 $DIR/src/views.rs: `.and_hms_opt(14, 23, 12)`
 $DIR/src/views.rs: `.and_hms_opt(14, 23, 11)`
 $DIR/src/views.rs: `.and_hms_opt(16, 30, 00)`
-$DIR/src/worker/dump_db/configuration.rs: `num_deps.insert(table.as_str(), config.dependencies.len());`
-$DIR/src/worker/dump_db/configuration.rs: `rev_deps
-                    .entry(dep.as_str())
-                    .or_default()
-                    .push(table.as_str());`
-$DIR/src/worker/dump_db/configuration.rs: `result.push(table);`
-$DIR/src/worker/dump_db/configuration.rs: `*num_deps.get_mut(dep).unwrap() -= 1;`
-$DIR/src/worker/dump_db/configuration.rs: `ready.push_back(dep);`
 $DIR/src/worker/dump_db/configuration.rs: `tables.insert("a".to_owned(), table_config_with_deps(&["b", "c"]));`
 $DIR/src/worker/dump_db/configuration.rs: `tables.insert("b".to_owned(), table_config_with_deps(&["c", "d"]));`
 $DIR/src/worker/dump_db/configuration.rs: `tables.insert("c".to_owned(), table_config_with_deps(&["d"]));`
 $DIR/src/worker/dump_db/configuration.rs: `config.0.insert("d".to_owned(), table_config_with_deps(&[]));`
 $DIR/src/worker/dump_db/configuration.rs: `tables.insert("a".to_owned(), table_config_with_deps(&["b"]));`
 $DIR/src/worker/dump_db/configuration.rs: `tables.insert("b".to_owned(), table_config_with_deps(&["a"]));`
-$DIR/src/worker/dump_db/configuration.rs: `.insert(table.as_str(), config.dependencies.len())`
-$DIR/src/worker/dump_db/configuration.rs: `.dependencies.len()`
-$DIR/src/worker/dump_db/configuration.rs: `.entry(dep.as_str())`
-$DIR/src/worker/dump_db/configuration.rs: `.or_default()`
-$DIR/src/worker/dump_db/configuration.rs: `.push(table.as_str())`
-$DIR/src/worker/dump_db/configuration.rs: `.filter(|(_, &count)| count == 0)`
-$DIR/src/worker/dump_db/configuration.rs: `.map(|(&table, _)| table)`
-$DIR/src/worker/dump_db/configuration.rs: `.collect()`
-$DIR/src/worker/dump_db/configuration.rs: `.len()`
-$DIR/src/worker/dump_db/configuration.rs: `.pop_front()`
-$DIR/src/worker/dump_db/configuration.rs: `.push(table)`
-$DIR/src/worker/dump_db/configuration.rs: `.flatten()`
-$DIR/src/worker/dump_db/configuration.rs: `.get_mut(dep)`
-$DIR/src/worker/dump_db/configuration.rs: `.push_back(dep)`
-$DIR/src/worker/dump_db/configuration.rs: `.map(ToOwned::to_owned)`
-$DIR/src/worker/dump_db/configuration.rs: `.collect()`
 $DIR/src/worker/dump_db/configuration.rs: `.insert("a".to_owned(), table_config_with_deps(&["b", "c"]))`
 $DIR/src/worker/dump_db/configuration.rs: `.insert("b".to_owned(), table_config_with_deps(&["c", "d"]))`
 $DIR/src/worker/dump_db/configuration.rs: `.insert("c".to_owned(), table_config_with_deps(&["d"]))`
@@ -7390,11 +6982,6 @@ $DIR/src/worker/dump_db/gen_scripts.rs: `.difference(&db_columns)`
 $DIR/src/worker/dump_db/gen_scripts.rs: `.push(format!(
                 "Column {table_name}.{column_name} does not exist in the database."
             ))`
-$DIR/src/worker/dump_db/gen_scripts.rs: `.select((table_name, column_name))`
-$DIR/src/worker/dump_db/gen_scripts.rs: `.filter(table_schema.eq("public"))`
-$DIR/src/worker/dump_db/gen_scripts.rs: `.eq("public")`
-$DIR/src/worker/dump_db/gen_scripts.rs: `.order_by((table_name, ordinal_position))`
-$DIR/src/worker/dump_db/gen_scripts.rs: `.load(conn)`
 $DIR/src/worker/dump_db.rs: `fs::create_dir(&p).unwrap();`
 $DIR/src/worker/dump_db.rs: `fs::write(p.join("README.md"), "# crates.io Database Dump\n").unwrap();`
 $DIR/src/worker/dump_db.rs: `fs::create_dir(p.join("data")).unwrap();`
@@ -7415,24 +7002,6 @@ $DIR/src/worker/dump_db.rs: `.join("data")`
 $DIR/src/worker/dump_db.rs: `.join("users.csv")`
 $DIR/src/worker/dump_db.rs: `.entries()`
 $DIR/src/worker/dump_db.rs: `.enumerate()`
-$DIR/src/worker/update_downloads.rs: `collect(conn, &rows)?;`
-$DIR/src/worker/update_downloads.rs: `diesel::update(version_downloads)
-        .set(processed.eq(true))
-        .filter(date.lt(diesel::dsl::date(now)))
-        .filter(downloads.eq(counted))
-        .filter(processed.eq(false))
-        .execute(conn)?;`
-$DIR/src/worker/update_downloads.rs: `sql_function!(fn refresh_recent_crate_downloads());`
-$DIR/src/worker/update_downloads.rs: `select(refresh_recent_crate_downloads()).execute(conn)?;`
-$DIR/src/worker/update_downloads.rs: `update(crates::table.find(crate_id))
-                .set(crates::downloads.eq(crates::downloads + amt))
-                .execute(conn)?;`
-$DIR/src/worker/update_downloads.rs: `update(metadata::table)
-                .set(metadata::total_downloads.eq(metadata::total_downloads + i64::from(amt)))
-                .execute(conn)?;`
-$DIR/src/worker/update_downloads.rs: `update(version_downloads::table.find(download.id()))
-                .set(version_downloads::counted.eq(version_downloads::counted + amt))
-                .execute(conn)?;`
 $DIR/src/worker/update_downloads.rs: `insert_into(version_downloads::table)
             .values(version_downloads::version_id.eq(version.id))
             .execute(conn)
@@ -7515,67 +7084,6 @@ $DIR/src/worker/update_downloads.rs: `insert_into(version_downloads::table)
             .execute(conn)
             .unwrap();`
 $DIR/src/worker/update_downloads.rs: `super::update(conn).unwrap();`
-$DIR/src/worker/update_downloads.rs: `.filter(processed.eq(false))`
-$DIR/src/worker/update_downloads.rs: `.eq(false)`
-$DIR/src/worker/update_downloads.rs: `.filter(downloads.ne(counted))`
-$DIR/src/worker/update_downloads.rs: `.ne(counted)`
-$DIR/src/worker/update_downloads.rs: `.load(conn)`
-$DIR/src/worker/update_downloads.rs: `.set(processed.eq(true))`
-$DIR/src/worker/update_downloads.rs: `.eq(true)`
-$DIR/src/worker/update_downloads.rs: `.filter(date.lt(diesel::dsl::date(now)))`
-$DIR/src/worker/update_downloads.rs: `.lt(diesel::dsl::date(now))`
-$DIR/src/worker/update_downloads.rs: `.filter(downloads.eq(counted))`
-$DIR/src/worker/update_downloads.rs: `.eq(counted)`
-$DIR/src/worker/update_downloads.rs: `.filter(processed.eq(false))`
-$DIR/src/worker/update_downloads.rs: `.eq(false)`
-$DIR/src/worker/update_downloads.rs: `.execute(conn)`
-$DIR/src/worker/update_downloads.rs: `.execute(conn)`
-$DIR/src/worker/update_downloads.rs: `.transaction::<_, diesel::result::Error, _>(|conn| {
-            // Update the total number of version downloads
-            let crate_id: i32 = update(versions::table.find(download.version_id))
-                .set(versions::downloads.eq(versions::downloads + amt))
-                .returning(versions::crate_id)
-                .get_result(conn)?;
-
-            // Update the total number of crate downloads
-            update(crates::table.find(crate_id))
-                .set(crates::downloads.eq(crates::downloads + amt))
-                .execute(conn)?;
-
-            // Update the global counter of total downloads
-            update(metadata::table)
-                .set(metadata::total_downloads.eq(metadata::total_downloads + i64::from(amt)))
-                .execute(conn)?;
-
-            // Record that these downloads have been propagated to the other tables.  This is done
-            // last, immediately before the transaction is committed, to minimize lock contention
-            // with counting new downloads.
-            update(version_downloads::table.find(download.id()))
-                .set(version_downloads::counted.eq(version_downloads::counted + amt))
-                .execute(conn)?;
-
-            Ok(())
-        })`
-$DIR/src/worker/update_downloads.rs: `.find(download.version_id)`
-$DIR/src/worker/update_downloads.rs: `.set(versions::downloads.eq(versions::downloads + amt))`
-$DIR/src/worker/update_downloads.rs: `.eq(versions::downloads + amt)`
-$DIR/src/worker/update_downloads.rs: `.returning(versions::crate_id)`
-$DIR/src/worker/update_downloads.rs: `.get_result(conn)`
-$DIR/src/worker/update_downloads.rs: `.find(crate_id)`
-$DIR/src/worker/update_downloads.rs: `.set(crates::downloads.eq(crates::downloads + amt))`
-$DIR/src/worker/update_downloads.rs: `.eq(crates::downloads + amt)`
-$DIR/src/worker/update_downloads.rs: `.execute(conn)`
-$DIR/src/worker/update_downloads.rs: `.set(metadata::total_downloads.eq(metadata::total_downloads + i64::from(amt)))`
-$DIR/src/worker/update_downloads.rs: `.eq(metadata::total_downloads + i64::from(amt))`
-$DIR/src/worker/update_downloads.rs: `.execute(conn)`
-$DIR/src/worker/update_downloads.rs: `.find(download.id())`
-$DIR/src/worker/update_downloads.rs: `.id()`
-$DIR/src/worker/update_downloads.rs: `.set(version_downloads::counted.eq(version_downloads::counted + amt))`
-$DIR/src/worker/update_downloads.rs: `.eq(version_downloads::counted + amt)`
-$DIR/src/worker/update_downloads.rs: `.execute(conn)`
-$DIR/src/worker/update_downloads.rs: `.create_or_update(None, &Emails::new_in_memory(), conn)`
-$DIR/src/worker/update_downloads.rs: `.create(conn, user_id)`
-$DIR/src/worker/update_downloads.rs: `.save(conn, "someone@example.com")`
 $DIR/src/worker/update_downloads.rs: `.values(version_downloads::version_id.eq(version.id))`
 $DIR/src/worker/update_downloads.rs: `.eq(version.id)`
 $DIR/src/worker/update_downloads.rs: `.execute(conn)`

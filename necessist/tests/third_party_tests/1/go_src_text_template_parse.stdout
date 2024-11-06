@@ -1,23 +1,9 @@
-71 candidates in 16 tests in 2 source files
-$DIR/src/text/template/parse/lex_test.go: dry running
-$DIR/src/text/template/parse/lex_test.go: mutilating
-$DIR/src/text/template/parse/lex_test.go: `l.options = lexOptions{
-		emitComment: true,
-		breakOK:     true,
-		continueOK:  true,
-	}` failed
-$DIR/src/text/template/parse/lex_test.go: `items = append(items, item)` failed
-$DIR/src/text/template/parse/lex_test.go: `.nextItem()` nonbuildable
+36 candidates in 16 tests in 2 source files
 $DIR/src/text/template/parse/parse_test.go: dry running
 $DIR/src/text/template/parse/parse_test.go: mutilating
 $DIR/src/text/template/parse/parse_test.go: `typ = itemCharConstant` failed
 $DIR/src/text/template/parse/parse_test.go: `typ = itemComplex` failed
 $DIR/src/text/template/parse/parse_test.go: `fmt.Printf("%s\n\t%s\n", test.text, err)` passed
-$DIR/src/text/template/parse/parse_test.go: `textFormat = "%q"` failed
-$DIR/src/text/template/parse/parse_test.go: `textFormat = "%s"` passed
-$DIR/src/text/template/parse/parse_test.go: `fmt.Printf("%s: %s\n\t%s\n", test.name, test.input, err)` passed
-$DIR/src/text/template/parse/parse_test.go: `result = tmpl.Root.Copy().String()` failed
-$DIR/src/text/template/parse/parse_test.go: `result = tmpl.Root.String()` failed
 $DIR/src/text/template/parse/parse_test.go: `textFormat = "%q"` failed
 $DIR/src/text/template/parse/parse_test.go: `textFormat = "%s"` passed
 $DIR/src/text/template/parse/parse_test.go: `t.Run(test.name, func(t *testing.T) {
@@ -49,11 +35,6 @@ $DIR/src/text/template/parse/parse_test.go: `t.Run(test.name, func(t *testing.T)
 $DIR/src/text/template/parse/parse_test.go: `.Sscan(test.text, &c)` nonbuildable
 $DIR/src/text/template/parse/parse_test.go: `.newNumber(0, test.text, typ)` nonbuildable
 $DIR/src/text/template/parse/parse_test.go: `.Printf("%s\n\t%s\n", test.text, err)` nonbuildable
-$DIR/src/text/template/parse/parse_test.go: `.Parse(test.input, "", "", make(map[string]*Tree), builtins)` nonbuildable
-$DIR/src/text/template/parse/parse_test.go: `.Printf("%s: %s\n\t%s\n", test.name, test.input, err)` nonbuildable
-$DIR/src/text/template/parse/parse_test.go: `.Root.Copy()` nonbuildable
-$DIR/src/text/template/parse/parse_test.go: `.String()` nonbuildable
-$DIR/src/text/template/parse/parse_test.go: `.Root.String()` nonbuildable
 $DIR/src/text/template/parse/parse_test.go: `.Run(test.name, func(t *testing.T) {
 			tr := New(test.name)
 			tr.Mode = ParseComments
