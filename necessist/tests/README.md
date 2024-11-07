@@ -6,7 +6,7 @@
 | chainlink_foundry          | v2.18.0                                  | foundry   | X    | X     | X     | X       | 1         |
 | chainlink_hardhat          | v2.18.0                                  | hardhat   |      | X     | X     | X       | 0         |
 | crates_io                  | 5643e3fb5d53d3b8cc5620d583068ae17e82b5c3 |           |      | X     | X     | X       | 0         |
-| diem                       | diem-core-v1.4.4                         |           |      | X     | X     | X       | 0         |
+| diem                       | diem-core-v1.4.4                         |           |      | X     | X     | X       | 1         |
 | go_src_encoding_base64     | go1.23.0                                 | go        | X    | X     | X     | X       | 0         |
 | go_src_encoding_binary     | go1.23.0                                 | go        | X    | X     | X     |         | 0         |
 | go_src_mime                | go1.23.0                                 | go        | X    | X     | X     |         | 0         |
