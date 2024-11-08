@@ -2,7 +2,7 @@
 
 | Name                       | Version                                  | Framework | Full | Linux | macOS | Windows | Partition |
 | -------------------------- | ---------------------------------------- | --------- | ---- | ----- | ----- | ------- | --------- |
-| chainlink                  | v2.18.0                                  |           |      | X     | X     | X       | 0         |
+| chainlink                  | v2.18.0                                  |           | X    | X     | X     | X       | 0         |
 | chainlink_foundry          | v2.18.0                                  | foundry   | X    | X     | X     | X       | 1         |
 | chainlink_hardhat          | v2.18.0                                  | hardhat   |      | X     | X     | X       | 0         |
 | crates_io                  | 5643e3fb5d53d3b8cc5620d583068ae17e82b5c3 |           |      | X     | X     | X       | 0         |
