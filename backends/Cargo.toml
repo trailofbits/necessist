@@ -63,7 +63,7 @@ syn = { version = "2.0", features = ["extra-traits", "full", "visit"] }
 
 [dev-dependencies]
 curl = "0.4"
-tempfile = "3.13"
+tempfile = "3.14"
 
 [build-dependencies]
 heck = "0.5"
