@@ -6,6 +6,5 @@ rev = "go1.23.0"
 target_os = ["linux", "macos"]
 
 framework = "go"
-full = true
 
 subdir = "src/encoding/binary"

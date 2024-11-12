@@ -1,5 +1,6 @@
 url = "https://github.com/ProjectOpenSea/operator-filter-registry"
 rev = "v1.4.2"
+parsing_only = true
 
 [config]
 ignored_functions = ["vm.prank", "vm.startPrank", "vm.stopPrank"]

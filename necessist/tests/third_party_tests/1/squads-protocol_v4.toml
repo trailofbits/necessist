@@ -12,8 +12,6 @@ source_files = [
     "tests/suites/examples/immediate-execution.ts",
 ]
 
-full = true
-
 args = [
     "--allow=instrumentation-nonbuildable",
     "--",
