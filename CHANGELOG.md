@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.0
+
+- Fix caching in the Rust backend. The backend was recomputing data that was supposed to be cached. ([#1343](https://github.com/trailofbits/necessist/pull/1343))
+- Ignore [`log`](https://crates.io/crates/log) macros (`debug!`, `error!`, `info!`, `trace!`, and `warn!`) in the Rust backend ([#1344](https://github.com/trailofbits/necessist/pull/1344))
+- Update `swc_core` to version 4 ([#1345](https://github.com/trailofbits/necessist/pull/1345))
+- BREAKING CHANGE: Make walking local functions opt-in rather than the default. Version 0.7.0 made walking local functions the default. However, this caused problems in languages such as Rust, where test and non-test functions could be declared within the same file. Specifically, the non-test functions would be walked, creating unnecessary noise. [PR #1351](https://github.com/trailofbits/necessist/pull/1351) requires users to name the functions that should be walked, rather than assume they all should be. ([#1351](https://github.com/trailofbits/necessist/pull/1351))
+
 ## 0.7.1
 
 - Update `tree-sitter` to version 0.24 ([#1326](https://github.com/trailofbits/necessist/pull/1326))
