@@ -16332,6 +16332,11 @@ $DIR/internal/store/queuestore_test.go: `items = append(items, TestItem{
 			Name:     fmt.Sprintf("test-item-%d", i),
 			Property: "property",
 		})`
+$DIR/internal/store/queuestore_test.go: `keys = store.List()`
+$DIR/internal/store/queuestore_test.go: `items = append(items, TestItem{
+			Name:     fmt.Sprintf("test-item-%d", i),
+			Property: "property",
+		})`
 $DIR/internal/store/queuestore_test.go: `items = append(items, item)`
 $DIR/internal/store/queuestore_test.go: `resultItems = append(resultItems, items...)`
 $DIR/internal/store/queuestore_test.go: `resultItems = append(resultItems, item)`
@@ -16352,6 +16357,18 @@ $DIR/internal/store/queuestore_test.go: `.Put(testItem)`
 $DIR/internal/store/queuestore_test.go: `.List()`
 $DIR/internal/store/queuestore_test.go: `.List()`
 $DIR/internal/store/queuestore_test.go: `.Len()`
+$DIR/internal/store/queuestore_test.go: `.Del(key)`
+$DIR/internal/store/queuestore_test.go: `.List()`
+$DIR/internal/store/queuestore_test.go: `.Sprintf("test-item-%d", i)`
+$DIR/internal/store/queuestore_test.go: `.Get()`
+$DIR/internal/store/queuestore_test.go: `.Put(buf)`
+$DIR/internal/store/queuestore_test.go: `.ConfigCompatibleWithStandardLibrary.NewEncoder(buf)`
+$DIR/internal/store/queuestore_test.go: `.Encode(items[i])`
+$DIR/internal/store/queuestore_test.go: `.PutMultiple(items)`
+$DIR/internal/store/queuestore_test.go: `.List()`
+$DIR/internal/store/queuestore_test.go: `.GetRaw(key)`
+$DIR/internal/store/queuestore_test.go: `.Equal(buf.Bytes(), raw)`
+$DIR/internal/store/queuestore_test.go: `.Bytes()`
 $DIR/internal/store/queuestore_test.go: `.Del(key)`
 $DIR/internal/store/queuestore_test.go: `.List()`
 $DIR/internal/store/queuestore_test.go: `.Sprintf("test-item-%d", i)`
