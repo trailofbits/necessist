@@ -3,4 +3,3 @@ url = "https://github.com/proptest-rs/proptest"
 rev = "b71253807372932f72a71b1af7975371a41e7c88"
 subdir = "proptest"
 source_files = ["src/sample.rs"]
-full = true

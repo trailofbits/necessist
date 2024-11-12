@@ -11,6 +11,7 @@ use std::{
     fmt::Write as _,
     fs::{read_dir, read_to_string, remove_file, write},
     io::{stderr, Read, Write},
+    ops::Not,
     panic::{set_hook, take_hook},
     path::{Path, PathBuf},
     process::{exit, Command},
@@ -79,10 +80,10 @@ struct Test {
     #[serde(default)]
     source_files: Vec<String>,
 
-    /// If false (the default), Necessist dumps removal candidates and exits (i.e.,
-    /// --dump-candidates is passed to Necessist); if true, Necessist is run with --verbose
+    /// If true, Necessist dumps removal candidates and exits (i.e., --dump-candidates is passed to
+    /// Necessist); if false (the default), Necessist is run with --verbose
     #[serde(default)]
-    full: bool,
+    parsing_only: bool,
 
     /// Additional arguments to pass to Necessist; appended at the end of the command
     #[serde(default)]
@@ -519,10 +520,10 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> (String, Duration) {
         if let Some(framework) = &test.framework {
             exec = exec.args(&["--framework", framework]);
         }
-        if test.full {
-            exec = exec.arg("--verbose");
-        } else {
+        if test.parsing_only {
             exec = exec.arg("--dump-candidates");
+        } else {
+            exec = exec.arg("--verbose");
         }
         for source_file in &test.source_files {
             exec = exec.arg(
@@ -587,7 +588,7 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> (String, Duration) {
 
         if test.check_sqlite_urls {
             assert!(test.rev.is_some());
-            assert!(test.full);
+            assert!(!test.parsing_only);
             check_sqlite_urls(tempdir, &root, test);
         }
     }
@@ -790,7 +791,7 @@ fn readme_is_current() {
             name.to_string_lossy(),
             test.rev.map(|s| s + " ").unwrap_or_default(),
             test.framework.map(|s| s + " ").unwrap_or_default(),
-            test.full.to_x_space(),
+            test.parsing_only.not().to_x_space(),
             target_os_includes(test.target_os.as_ref(), "linux").to_x_space(),
             target_os_includes(test.target_os.as_ref(), "macos").to_x_space(),
             target_os_includes(test.target_os.as_ref(), "windows").to_x_space(),

@@ -1,6 +1,7 @@
 url = "https://github.com/ProjectOpenSea/seaport"
 rev = "1.6"
 framework = "hardhat"
+parsing_only = true
 
 [config]
 ignored_functions = ["checkExpectedEvents"]

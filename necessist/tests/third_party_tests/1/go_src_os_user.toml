@@ -1,7 +1,6 @@
 url = "https://github.com/golang/go"
 rev = "go1.23.0"
 framework = "go"
-full = true
 config_mandatory = true
 
 subdir = "src/os/user"
