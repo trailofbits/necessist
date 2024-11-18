@@ -316,7 +316,7 @@ impl<'ast, T: ParseLow> GenericVisitor<'_, '_, '_, 'ast, T> {
         } else {
             let is_ignored_as_call = call
                 .name()
-                .map_or(false, |name| self.config.is_ignored_function(&name));
+                .is_some_and(|name| self.config.is_ignored_function(&name));
             visit_maybe_macro_call! {
                 self,
                 (VisitMaybeMacroCallArgs::<'_, '_, '_, T> {
@@ -505,7 +505,7 @@ impl<'ast, T: ParseLow> GenericVisitor<'_, '_, '_, 'ast, T> {
                     let name = call.name();
                     let is_ignored = name
                         .as_ref()
-                        .map_or(false, |name| self.config.is_ignored_function(name));
+                        .is_some_and(|name| self.config.is_ignored_function(name));
                     CallInfo {
                         span: call.span(&self.source_file),
                         is_method: false,
