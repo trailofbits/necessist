@@ -181,9 +181,7 @@ fn read_tests_in(path: impl AsRef<Path>, filter: bool) -> BTreeMap<Key, Vec<(Pat
         // smoelius: `TESTNAME` is what Clippy uses:
         // https://github.com/rust-lang/rust-clippy/blame/f8f9d01c2ad0dff565bdd60feeb4cbd09dada8cd/book/src/development/adding_lints.md#L99
         if filter
-            && var("TESTNAME").ok().map_or(false, |testname| {
-                path.file_stem() != Some(OsStr::new(&testname))
-            })
+            && var("TESTNAME").is_ok_and(|testname| path.file_stem() != Some(OsStr::new(&testname)))
         {
             continue;
         }
@@ -682,7 +680,7 @@ fn permutation_ignoring_timeouts(expected: &str, actual: &str) -> bool {
                 expected_line == actual_line
                     || actual_line
                         .strip_suffix("timed-out")
-                        .map_or(false, |prefix| expected_line.starts_with(prefix))
+                        .is_some_and(|prefix| expected_line.starts_with(prefix))
             })
 }
 
@@ -860,5 +858,5 @@ fn target_os_includes(target_os: Option<&StringOrVec>, os: &str) -> bool {
 }
 
 fn enabled(key: &str) -> bool {
-    var(key).map_or(false, |value| value != "0")
+    var(key).is_ok_and(|value| value != "0")
 }

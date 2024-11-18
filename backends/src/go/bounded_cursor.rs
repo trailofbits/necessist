@@ -70,6 +70,6 @@ impl<'tree> BoundedCursor<'tree> {
     fn at_current_bound(&self) -> bool {
         self.bounds
             .last()
-            .map_or(false, |&bound| bound == self.cursor.node())
+            .is_some_and(|&bound| bound == self.cursor.node())
     }
 }

@@ -285,7 +285,7 @@ impl ParseLow for Foundry {
             // the the `Param`s `ty` fields to hold the variables being assigned to.
             if params
                 .iter()
-                .any(|(_, param)| param.as_ref().map_or(false, |param| param.name.is_some()));
+                .any(|(_, param)| param.as_ref().is_some_and(|param| param.name.is_some()));
             then {
                 true
             } else {
@@ -498,7 +498,7 @@ impl LocWithOptionalSemicolon for Statement {
         match loc {
             Loc::File(file_no, start, mut end) => {
                 let mut chars = contents.chars().skip(end).peekable();
-                while chars.peek().copied().map_or(false, char::is_whitespace) {
+                while chars.peek().copied().is_some_and(char::is_whitespace) {
                     end += 1;
                     let _: Option<char> = chars.next();
                 }

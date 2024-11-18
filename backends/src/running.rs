@@ -254,5 +254,5 @@ fn read_file_to_end(mut file: File) -> Result<Vec<u8>> {
 }
 
 fn enabled(key: &str) -> bool {
-    var(key).map_or(false, |value| value != "0")
+    var(key).is_ok_and(|value| value != "0")
 }

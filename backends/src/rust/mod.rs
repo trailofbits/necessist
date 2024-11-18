@@ -478,7 +478,7 @@ impl ParseLow for Rust {
             syn::Stmt::Expr(expr, _) => Some(expr),
             _ => None,
         }
-        .map_or(false, |expr| {
+        .is_some_and(|expr| {
             matches!(
                 expr,
                 syn::Expr::Break(_) | syn::Expr::Continue(_) | syn::Expr::Return(_)

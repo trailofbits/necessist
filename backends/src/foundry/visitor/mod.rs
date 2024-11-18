@@ -193,7 +193,7 @@ fn filter_statements<'ast, I: IntoIterator<Item = &'ast Statement>>(
     statements.into_iter().map(move |statement| {
         // smoelius: If the previous statement was a "prefix cheatcode," then replace the current
         // statement with a `continue`, so that the statement is ignored.
-        let next = if prev.map_or(false, is_prefix_cheatcode) {
+        let next = if prev.is_some_and(is_prefix_cheatcode) {
             &FAUX_CONTINUE
         } else {
             statement

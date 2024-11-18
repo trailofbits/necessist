@@ -403,7 +403,7 @@ fn lock_root(root: &Path) -> Result<std::fs::File> {
 
 #[cfg(feature = "lock_root")]
 fn enabled(key: &str) -> bool {
-    var(key).map_or(false, |value| value != "0")
+    var(key).is_ok_and(|value| value != "0")
 }
 
 fn default_config(_context: &LightContext, root: &Path) -> Result<()> {
