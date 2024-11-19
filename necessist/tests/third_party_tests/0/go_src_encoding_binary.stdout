@@ -342,7 +342,7 @@ $DIR/src/encoding/binary/binary_test.go: `.fn(BigEndian, dstSlice.Interface(), b
 $DIR/src/encoding/binary/binary_test.go: `.Interface()` failed
 $DIR/src/encoding/binary/binary_test.go: `.DeepEqual(src.Interface(), dst.Interface())` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Interface()` timed-out
-$DIR/src/encoding/binary/binary_test.go: `.Interface()` timed-out
+$DIR/src/encoding/binary/binary_test.go: `.Interface()` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Run(enc.name, func(t *testing.T) {
 			ts := T{}
 			if _, err := enc.fn(BigEndian, ts); err == nil {
@@ -366,12 +366,12 @@ $DIR/src/encoding/binary/binary_test.go: `.fn(BigEndian, ts)` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Indirect(reflect.ValueOf(ts))` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.ValueOf(ts)` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.NumField()` nonbuildable
-$DIR/src/encoding/binary/binary_test.go: `.Field(i)` failed
-$DIR/src/encoding/binary/binary_test.go: `.Type()` failed
+$DIR/src/encoding/binary/binary_test.go: `.Field(i)` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.Type()` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.String()` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.fn(BigEndian, tv.Field(i).Interface())` nonbuildable
-$DIR/src/encoding/binary/binary_test.go: `.Field(i)` failed
-$DIR/src/encoding/binary/binary_test.go: `.Interface()` failed
+$DIR/src/encoding/binary/binary_test.go: `.Field(i)` nonbuildable
+$DIR/src/encoding/binary/binary_test.go: `.Interface()` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Contains(err.Error(), typ)` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Run(enc.name, func(t *testing.T) {
 			b1 := BlankFields{A: 1234567890, B: 2.718281828, C: 42}
@@ -446,7 +446,7 @@ $DIR/src/encoding/binary/binary_test.go: `.Run(dec.name, func(t *testing.T) {
 $DIR/src/encoding/binary/binary_test.go: `.fn(LittleEndian, data, nil)` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Sprintf("binary.%s: invalid type %s", dec.name, reflect.TypeOf(data).String())` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.TypeOf(data)` nonbuildable
-$DIR/src/encoding/binary/binary_test.go: `.String()` passed
+$DIR/src/encoding/binary/binary_test.go: `.String()` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.NewReader(data[:i])` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.NewReader(data[:i])` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Float64bits(math.Pi)` nonbuildable
@@ -499,16 +499,32 @@ $DIR/src/encoding/binary/binary_test.go: `.Sizeof(i)` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Uint32(s)` nonbuildable
 $DIR/src/encoding/binary/varint_test.go: dry running
 $DIR/src/encoding/binary/varint_test.go: mutilating
-$DIR/src/encoding/binary/varint_test.go: `testConstant(t, 16, MaxVarintLen16)` passed
-$DIR/src/encoding/binary/varint_test.go: `testConstant(t, 32, MaxVarintLen32)` passed
-$DIR/src/encoding/binary/varint_test.go: `testVarint(t, x)` passed
-$DIR/src/encoding/binary/varint_test.go: `testVarint(t, -x)` passed
-$DIR/src/encoding/binary/varint_test.go: `testVarint(t, x)` passed
-$DIR/src/encoding/binary/varint_test.go: `testVarint(t, -x)` passed
-$DIR/src/encoding/binary/varint_test.go: `testUvarint(t, uint64(x))` passed
-$DIR/src/encoding/binary/varint_test.go: `testUvarint(t, x)` passed
-$DIR/src/encoding/binary/varint_test.go: `wantErr = io.ErrUnexpectedEOF` failed
-$DIR/src/encoding/binary/varint_test.go: `b[i] = 0xff` failed
+Warning: Instrumentation caused `$DIR/src/encoding/binary/varint_test.go` to be nonbuildable: code=1
+stdout=```
+FAILstd/encoding/binary [build failed]
+FAIL
+```
+
+stderr=```
+# std/encoding/binary [std/encoding/binary.test]
+compile: writing output: write $WORK/b098/_pkg_.a: no space left on device
+```
+
+
+
+This may indicate a bug in Necessist. Consider opening an issue at: https://github.com/trailofbits/necessist/issues
+
+Silence this warning with: --allow instrumentation-nonbuildable
+$DIR/src/encoding/binary/varint_test.go: `testConstant(t, 16, MaxVarintLen16)` nonbuildable
+$DIR/src/encoding/binary/varint_test.go: `testConstant(t, 32, MaxVarintLen32)` nonbuildable
+$DIR/src/encoding/binary/varint_test.go: `testVarint(t, x)` nonbuildable
+$DIR/src/encoding/binary/varint_test.go: `testVarint(t, -x)` nonbuildable
+$DIR/src/encoding/binary/varint_test.go: `testVarint(t, x)` nonbuildable
+$DIR/src/encoding/binary/varint_test.go: `testVarint(t, -x)` nonbuildable
+$DIR/src/encoding/binary/varint_test.go: `testUvarint(t, uint64(x))` nonbuildable
+$DIR/src/encoding/binary/varint_test.go: `testUvarint(t, x)` nonbuildable
+$DIR/src/encoding/binary/varint_test.go: `wantErr = io.ErrUnexpectedEOF` nonbuildable
+$DIR/src/encoding/binary/varint_test.go: `b[i] = 0xff` nonbuildable
 $DIR/src/encoding/binary/varint_test.go: `b[999] = 0` passed
 $DIR/src/encoding/binary/varint_test.go: `t.Run(tt.name, func(t *testing.T) {
 			value, n := Uvarint(tt.in)
@@ -518,7 +534,7 @@ $DIR/src/encoding/binary/varint_test.go: `t.Run(tt.name, func(t *testing.T) {
 			if g, w := value, tt.wantValue; g != w {
 				t.Errorf("value=%d, want=%d", g, w)
 			}
-		})` passed
+		})` nonbuildable
 $DIR/src/encoding/binary/varint_test.go: `testOverflow(t, []byte{0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x2}, 0, -10, errOverflow)` passed
 $DIR/src/encoding/binary/varint_test.go: `testOverflow(t, []byte{0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x1, 0, 0}, 0, -11, errOverflow)` passed
 $DIR/src/encoding/binary/varint_test.go: `.NewReader(buf)` nonbuildable
