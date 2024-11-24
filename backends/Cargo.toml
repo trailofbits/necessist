@@ -45,9 +45,7 @@ solang-parser = { version = "=0.3.4", features = ["pt-serde"] }
 # Go
 streaming-iterator = "0.1"
 tree-sitter = "0.24"
-# smoelius: Pin to version 0.23.1 until the following issue is resolved:
-# https://github.com/tree-sitter/tree-sitter-go/issues/155
-tree-sitter-go = "=0.23.1"
+tree-sitter-go = "0.23"
 
 # Hardhat TS
 swc_core = { version = "4.0", features = [
