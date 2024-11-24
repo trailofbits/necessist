@@ -1,5 +1,7 @@
 url = "https://github.com/Squads-Protocol/v4"
 
+rev = "19597dc082986d7d95a89ee124dc23625b1b0039"
+
 target_os = ["linux", "macos"]
 
 # smoelius: `yarn build && yarn pretest` must be run before `anchor test`.
