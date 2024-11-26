@@ -113,9 +113,13 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
 
         debug!("{:?}", command);
 
-        let output = command.output_stripped_of_ansi_escapes()?;
-        if !output.status().success() {
-            return Err(output.into());
+        let output = command.output()?;
+        println!(
+            "BEGIN STDERR\n{}\nEND STDERR",
+            std::str::from_utf8(&output.stderr).unwrap()
+        );
+        if !output.status.success() {
+            return Err(OutputError::new(output).into());
         }
         Ok(())
     }
@@ -254,5 +258,5 @@ fn read_file_to_end(mut file: File) -> Result<Vec<u8>> {
 }
 
 fn enabled(key: &str) -> bool {
-    var(key).is_ok_and(|value| value != "0")
+    var(key).map_or(false, |value| value != "0")
 }
