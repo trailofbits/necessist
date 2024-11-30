@@ -1,7 +1,7 @@
 3 candidates in 1 test in 1 source file
 fixtures/invalid_utf8/src/lib.rs: dry running
 fixtures/invalid_utf8/src/lib.rs: mutilating
-fixtures/invalid_utf8/src/lib.rs:8:5-8:19: Warning: invalid utf-8 sequence of 1 bytes from index 0: "/xFE"`
+fixtures/invalid_utf8/src/lib.rs:8:5-8:19: Warning: invalid utf-8 sequence of 1 bytes from index 0: "/xfe"`
 Silence this warning with: --allow output-invalid
 fixtures/invalid_utf8/src/lib.rs:8:5-8:19: `write = false;` passed
 fixtures/invalid_utf8/src/lib.rs:11:9-11:49: `stdout().write(&[0xfe, b'/n']).unwrap();` passed
