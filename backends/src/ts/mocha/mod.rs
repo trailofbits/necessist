@@ -62,7 +62,7 @@ impl Default for ItMessageState {
 static LINE_WITH_TIME_RE: Lazy<Regex> = Lazy::new(|| {
     // smoelius: The initial `.` is the check mark.
     #[allow(clippy::unwrap_used)]
-    Regex::new(r"^\s*. (.*) \(.*\)$").unwrap()
+    Regex::new(r"^\s*. (.*) \([0-9]+ms\)$").unwrap()
 });
 
 static LINE_WITHOUT_TIME_RE: Lazy<Regex> = Lazy::new(|| {
