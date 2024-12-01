@@ -281,7 +281,9 @@ impl ParseLow for Mocha {
                 .into_iter()
                 .filter_entry(|entry| {
                     let path = entry.path();
-                    !path.is_file() || path.extension() == Some(OsStr::new("ts"))
+                    !path.is_file()
+                        || path.extension() == Some(OsStr::new("js"))
+                        || path.extension() == Some(OsStr::new("ts"))
                 }),
         )
     }
