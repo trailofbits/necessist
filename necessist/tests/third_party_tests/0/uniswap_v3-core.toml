@@ -1,5 +1,0 @@
-url = "https://github.com/Uniswap/v3-core"
-parsing_only = true
-
-[config]
-ignored_functions = ["checkObservationEquals", "snapshotGasCost"]
