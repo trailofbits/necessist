@@ -1,2 +1,0 @@
-url = "https://github.com/Uniswap/v3-core"
-source_files = ["test/UniswapV3Factory.spec.ts"]
