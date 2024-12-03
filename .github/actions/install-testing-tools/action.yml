@@ -22,7 +22,7 @@ runs:
 
     - name: Install Foundry
       run: |
-        cargo install forge --git https://github.com/smoelius/foundry --debug --locked
+        cargo install forge --git https://github.com/smoelius/foundry --branch inspect-err
       shell: bash
 
     - name: Install Go

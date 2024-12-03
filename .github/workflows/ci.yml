@@ -132,7 +132,10 @@ jobs:
       - name: Test
         run: |
           if [[ '${{ matrix.test }}' != 'other' ]]; then
-            cargo test -p necessist --test ${{ matrix.test }} -- --nocapture
+            for i in `seq 0 9`; do
+              rm -rf ~/.local/share/svm
+              cargo test -p necessist --test ${{ matrix.test }} -- --nocapture
+            done
           else
             cargo test -p necessist --test general
             cargo test -p necessist-backends
