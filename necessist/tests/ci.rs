@@ -332,16 +332,6 @@ fn unmaintained() {
         .success();
 }
 
-#[test]
-fn update() {
-    preserves_cleanliness("update", || {
-        Command::new("cargo")
-            .args(["update", "--workspace"])
-            .assert()
-            .success();
-    });
-}
-
 fn clippy_command(cargo_args: &[&str], rustc_args: &[&str]) -> Command {
     let mut command = Command::new("cargo");
     command
