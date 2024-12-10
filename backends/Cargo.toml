@@ -56,7 +56,7 @@ swc_core = { version = "6.0", features = [
 ] }
 
 # Rust
-cargo_metadata = "0.18"
+cargo_metadata = "0.19"
 proc-macro2 = "1.0"
 quote = "1.0"
 syn = { version = "2.0", features = ["extra-traits", "full", "visit"] }
