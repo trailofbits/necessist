@@ -24,7 +24,7 @@ subprocess = "0.2"
 
 [dev-dependencies]
 assert_cmd = "2.0"
-cargo_metadata = "0.18"
+cargo_metadata = "0.19"
 ctor = "0.2"
 curl = "0.4"
 dunce = "1.0"
