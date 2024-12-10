@@ -3,7 +3,7 @@ use super::{
     WalkDirResult,
 };
 use anyhow::Result;
-use cargo_metadata::{Metadata, Package};
+use cargo_metadata::{Metadata, Package, TargetKind};
 use necessist_core::{
     framework::{SpanTestMaps, TestSet},
     LightContext, SourceFile, Span, ToInternalSpan, __Rewriter as Rewriter,
@@ -696,12 +696,12 @@ impl Rust {
                     let mut bin = false;
                     let mut lib = false;
                     for kind in package.targets.iter().flat_map(|target| &target.kind) {
-                        match kind.as_ref() {
-                            "bin" if !bin => {
+                        match kind {
+                            TargetKind::Bin if !bin => {
                                 flags.push("--bins".to_owned());
                                 bin = true;
                             }
-                            "lib" if !lib => {
+                            TargetKind::Lib if !lib => {
                                 flags.push("--lib".to_owned());
                                 lib = true;
                             }
@@ -721,7 +721,7 @@ fn source_file_test<'a>(package: &'a Package, source_file: &Path) -> Option<&'a 
         .targets
         .iter()
         .filter_map(|target| {
-            if target.kind == ["test"] && target.src_path == source_file {
+            if target.kind == [TargetKind::Test] && target.src_path == source_file {
                 Some(&target.name)
             } else {
                 None
