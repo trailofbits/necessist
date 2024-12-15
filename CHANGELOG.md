@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.1
+
+- Upgrade `tree-sitter-go` to version 0.23.4 ([#1371](https://github.com/trailofbits/necessist/pull/1371))
+- Upgrade `swc_core` to version 9 ([#1376](https://github.com/trailofbits/necessist/pull/1376) and [#1393](https://github.com/trailofbits/necessist/pull/1393))
+- Refine regular expression used to identify times in Mocha logs ([#1378](https://github.com/trailofbits/necessist/pull/1378))
+- Allow Mocha test files to have `.js` extensions ([#1379](https://github.com/trailofbits/necessist/pull/1379))
+- Upgrade `cargo_metadata` to version 0.19 ([#1388](https://github.com/trailofbits/necessist/pull/1388))
+
 ## 1.0.0
 
 - Fix caching in the Rust backend. The backend was recomputing data that was supposed to be cached. ([#1343](https://github.com/trailofbits/necessist/pull/1343))
