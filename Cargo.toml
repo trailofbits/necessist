@@ -38,5 +38,6 @@ ignore = [
     "icu_locid_transform_data",
     "num_cpus",
     "paste",
+    "phf_shared",
     "solang-parser",
 ]
