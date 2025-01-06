@@ -131,7 +131,7 @@ fn github() {
 #[test]
 fn hack_feature_powerset_udeps() {
     Command::new("rustup")
-        .env("RUSTFLAGS", "-D warnings")
+        .env("RUSTFLAGS", "-D warnings --check-cfg cfg(test)")
         .args([
             "run",
             "nightly",
