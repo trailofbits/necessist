@@ -34,7 +34,7 @@ sha2 = "0.10"
 strum = "0.26"
 strum_macros = "0.26"
 subprocess = "0.2"
-tempfile = "3.14"
+tempfile = "3.15"
 toml = "0.8"
 
 [target.'cfg(unix)'.dependencies]
