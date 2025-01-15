@@ -17,7 +17,7 @@ clap = { version = "4.5", features = ["cargo", "derive"], optional = true }
 ctrlc = "3.4"
 diesel = { version = "2.2", features = ["sqlite"] }
 dunce = "1.0"
-git2 = "0.19"
+git2 = "0.20"
 heck = "0.5"
 hex = "0.4"
 indexmap = "2.7"
