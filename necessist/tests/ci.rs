@@ -334,6 +334,9 @@ fn unmaintained() {
 
 fn clippy_command(cargo_args: &[&str], rustc_args: &[&str]) -> Command {
     let mut command = Command::new("cargo");
+    // smoelius: Remove `CARGO` environment variable to work around:
+    // https://github.com/rust-lang/rust/pull/131729
+    command.env_remove("CARGO");
     command
         .args(["+nightly", "clippy", "--all-features", "--all-targets"])
         .args(cargo_args)
