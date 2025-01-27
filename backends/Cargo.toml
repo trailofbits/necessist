@@ -48,7 +48,7 @@ tree-sitter = "0.24"
 tree-sitter-go = "0.23"
 
 # Hardhat TS
-swc_core = { version = "9.0", features = [
+swc_core = { version = "11.0", features = [
     "common",
     "ecma_ast",
     "ecma_parser",
