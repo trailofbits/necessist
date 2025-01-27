@@ -4,6 +4,7 @@
   ],
   "ignorePatterns": [
     {
+      "pattern": "^https://ieeexplore.ieee.org/document/10675888$",
       "pattern": "^https://www\\.cs\\.cmu\\.edu/~aldrich/courses/15-819O-13sp/resources/hoare-logic\\.pdf$"
     }
   ]
