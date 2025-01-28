@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.2
+
+- Upgrade `git2` to version 0.20 ([#1409](https://github.com/trailofbits/necessist/pull/1409))
+- Change "Test Harness Mutilation" paper url. The `ieeexplore.ieee.org` url was returning invalid HTTP response codes. ([#1423](https://github.com/trailofbits/necessist/pull/1423))
+- Upgrade `swc_core` to version 11 ([#1422](https://github.com/trailofbits/necessist/pull/1422))
+
 ## 1.0.1
 
 - Upgrade `tree-sitter-go` to version 0.23.4 ([#1371](https://github.com/trailofbits/necessist/pull/1371))
