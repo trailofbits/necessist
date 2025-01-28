@@ -464,7 +464,7 @@ Necessist is licensed and distributed under the AGPLv3 license. [Contact us](mai
 [Aldrich 2013]: https://www.cs.cmu.edu/~aldrich/courses/15-819O-13sp/resources/hoare-logic.pdf
 [Chainlink]: https://github.com/smartcontractkit/chainlink/blob/a39e54e157b57d5fc3dba0aed6ac9d58382953b2/contracts/test/v0.7/Operator.test.ts#L1725-L1728
 [Configuration files]: #configuration-files
-[Test Harness Mutilation]: https://ieeexplore.ieee.org/document/10675888
+[Test Harness Mutilation]: https://www.computer.org/csdl/proceedings-article/icstw/2024/447900a247/20jqkUDi8Ny
 [`assert_cmd::assert::Assert::success`]: https://docs.rs/assert_cmd/latest/assert_cmd/assert/struct.Assert.html#method.success
 [`glob`]: https://man7.org/linux/man-pages/man7/glob.7.html
 [`rust-openssl`]: https://github.com/sfackler/rust-openssl
