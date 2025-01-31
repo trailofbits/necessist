@@ -7,10 +7,10 @@ use necessist_core::{
     framework::{SpanTestMaps, TestSet},
     util, LightContext, LineColumn, SourceFile, Span, __Rewriter as Rewriter,
 };
-use once_cell::sync::Lazy;
 use regex::Regex;
 use std::{
     collections::BTreeMap, convert::Infallible, fs::read_to_string, path::Path, process::Command,
+    sync::LazyLock,
 };
 use streaming_iterator::StreamingIterator;
 use tree_sitter::{
@@ -42,37 +42,43 @@ const EXPRESSION_STATEMENT_EXPRESSION_SOURCE: &str = r"
 ) @expression_statement
 ";
 
-static LANGUAGE: Lazy<Language> = Lazy::new(|| Language::from(tree_sitter_go::LANGUAGE));
-static BLOCK_STATEMENTS_QUERY: Lazy<Query> = Lazy::new(|| valid_query(BLOCK_STATEMENTS_SOURCE));
-static EXPRESSION_STATEMENT_EXPRESSION_QUERY: Lazy<Query> =
-    Lazy::new(|| valid_query(EXPRESSION_STATEMENT_EXPRESSION_SOURCE));
+static LANGUAGE: LazyLock<Language> = LazyLock::new(|| Language::from(tree_sitter_go::LANGUAGE));
+static BLOCK_STATEMENTS_QUERY: LazyLock<Query> =
+    LazyLock::new(|| valid_query(BLOCK_STATEMENTS_SOURCE));
+static EXPRESSION_STATEMENT_EXPRESSION_QUERY: LazyLock<Query> =
+    LazyLock::new(|| valid_query(EXPRESSION_STATEMENT_EXPRESSION_SOURCE));
 
 fn valid_query(source: &str) -> Query {
     #[allow(clippy::unwrap_used)]
     Query::new(&LANGUAGE, source).unwrap()
 }
 
-static FIELD_FIELD: Lazy<u16> = Lazy::new(|| valid_field_id("field"));
-static FUNCTION_FIELD: Lazy<u16> = Lazy::new(|| valid_field_id("function"));
-static OPERAND_FIELD: Lazy<u16> = Lazy::new(|| valid_field_id("operand"));
+static FIELD_FIELD: LazyLock<u16> = LazyLock::new(|| valid_field_id("field"));
+static FUNCTION_FIELD: LazyLock<u16> = LazyLock::new(|| valid_field_id("function"));
+static OPERAND_FIELD: LazyLock<u16> = LazyLock::new(|| valid_field_id("operand"));
 
 fn valid_field_id(field_name: &str) -> u16 {
     LANGUAGE.field_id_for_name(field_name).unwrap().into()
 }
 
-static BLOCK_KIND: Lazy<u16> = Lazy::new(|| non_zero_kind_id("block"));
-static BREAK_STATEMENT_KIND: Lazy<u16> = Lazy::new(|| non_zero_kind_id("break_statement"));
-static CALL_EXPRESSION_KIND: Lazy<u16> = Lazy::new(|| non_zero_kind_id("call_expression"));
-static CONST_DECLARATION_KIND: Lazy<u16> = Lazy::new(|| non_zero_kind_id("const_declaration"));
-static CONTINUE_STATEMENT_KIND: Lazy<u16> = Lazy::new(|| non_zero_kind_id("continue_statement"));
-static DEFER_STATEMENT_KIND: Lazy<u16> = Lazy::new(|| non_zero_kind_id("defer_statement"));
-static IDENTIFIER_KIND: Lazy<u16> = Lazy::new(|| non_zero_kind_id("identifier"));
-static RETURN_STATEMENT_KIND: Lazy<u16> = Lazy::new(|| non_zero_kind_id("return_statement"));
-static SELECTOR_EXPRESSION_KIND: Lazy<u16> = Lazy::new(|| non_zero_kind_id("selector_expression"));
-static SHORT_VAR_DECLARATION_KIND: Lazy<u16> =
-    Lazy::new(|| non_zero_kind_id("short_var_declaration"));
-static TYPE_DECLARATION_KIND: Lazy<u16> = Lazy::new(|| non_zero_kind_id("type_declaration"));
-static VAR_DECLARATION_KIND: Lazy<u16> = Lazy::new(|| non_zero_kind_id("var_declaration"));
+static BLOCK_KIND: LazyLock<u16> = LazyLock::new(|| non_zero_kind_id("block"));
+static BREAK_STATEMENT_KIND: LazyLock<u16> = LazyLock::new(|| non_zero_kind_id("break_statement"));
+static CALL_EXPRESSION_KIND: LazyLock<u16> = LazyLock::new(|| non_zero_kind_id("call_expression"));
+static CONST_DECLARATION_KIND: LazyLock<u16> =
+    LazyLock::new(|| non_zero_kind_id("const_declaration"));
+static CONTINUE_STATEMENT_KIND: LazyLock<u16> =
+    LazyLock::new(|| non_zero_kind_id("continue_statement"));
+static DEFER_STATEMENT_KIND: LazyLock<u16> = LazyLock::new(|| non_zero_kind_id("defer_statement"));
+static IDENTIFIER_KIND: LazyLock<u16> = LazyLock::new(|| non_zero_kind_id("identifier"));
+static RETURN_STATEMENT_KIND: LazyLock<u16> =
+    LazyLock::new(|| non_zero_kind_id("return_statement"));
+static SELECTOR_EXPRESSION_KIND: LazyLock<u16> =
+    LazyLock::new(|| non_zero_kind_id("selector_expression"));
+static SHORT_VAR_DECLARATION_KIND: LazyLock<u16> =
+    LazyLock::new(|| non_zero_kind_id("short_var_declaration"));
+static TYPE_DECLARATION_KIND: LazyLock<u16> =
+    LazyLock::new(|| non_zero_kind_id("type_declaration"));
+static VAR_DECLARATION_KIND: LazyLock<u16> = LazyLock::new(|| non_zero_kind_id("var_declaration"));
 
 fn non_zero_kind_id(kind: &str) -> u16 {
     let kind_id = LANGUAGE.id_for_node_kind(kind, true);
@@ -531,14 +537,14 @@ const PREFIX: &str = r"\([^)]*";
 const NAME: &str = r"(\.|[A-Za-z_][0-9A-Za-z_]*)( )?";
 const SUFFIX: &str = r"[^)]*\)";
 
-static IMPORT_NAMED_OS_RE: Lazy<Regex> =
-    Lazy::new(|| Regex::new(&import_os_re("", NAME, "")).unwrap());
-static IMPORT_UNNAMED_OS_RE: Lazy<Regex> =
-    Lazy::new(|| Regex::new(&import_os_re("", "", "")).unwrap());
-static PARENTHESIZED_IMPORT_NAMED_OS_RE: Lazy<Regex> =
-    Lazy::new(|| Regex::new(&import_os_re(PREFIX, NAME, SUFFIX)).unwrap());
-static PARENTHESIZED_IMPORT_UNNAMED_OS_RE: Lazy<Regex> =
-    Lazy::new(|| Regex::new(&import_os_re(PREFIX, "", SUFFIX)).unwrap());
+static IMPORT_NAMED_OS_RE: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(&import_os_re("", NAME, "")).unwrap());
+static IMPORT_UNNAMED_OS_RE: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(&import_os_re("", "", "")).unwrap());
+static PARENTHESIZED_IMPORT_NAMED_OS_RE: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(&import_os_re(PREFIX, NAME, SUFFIX)).unwrap());
+static PARENTHESIZED_IMPORT_UNNAMED_OS_RE: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(&import_os_re(PREFIX, "", SUFFIX)).unwrap());
 
 fn import_os_re(prefix: &str, name: &str, suffix: &str) -> String {
     format!(r#"\bimport {prefix}{name}"os"{suffix}"#)

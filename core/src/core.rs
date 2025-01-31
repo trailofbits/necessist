@@ -807,13 +807,12 @@ fn sqlite_and_past_removals_init_lazy(
 #[cfg(all(feature = "limit_threads", unix))]
 mod rlimit {
     use anyhow::Result;
-    use once_cell::sync::Lazy;
     pub use rlimit::Resource;
     use rlimit::{getrlimit, setrlimit};
-    use std::process::Command;
+    use std::{process::Command, sync::LazyLock};
 
     #[allow(clippy::unwrap_used)]
-    pub static NPROC_INIT: Lazy<u64> = Lazy::new(|| {
+    pub static NPROC_INIT: LazyLock<u64> = LazyLock::new(|| {
         let output = Command::new("ps").arg("-eL").output().unwrap();
         let stdout = std::str::from_utf8(&output.stdout).unwrap();
         stdout.lines().count().try_into().unwrap()

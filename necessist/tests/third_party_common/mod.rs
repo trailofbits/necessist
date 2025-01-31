@@ -1,6 +1,5 @@
 use assert_cmd::output::OutputError;
 use necessist_core::{util, Span};
-use once_cell::sync::Lazy;
 use regex::Regex;
 use serde::Deserialize;
 use similar_asserts::SimpleDiff;
@@ -16,7 +15,7 @@ use std::{
     path::{Path, PathBuf},
     process::{exit, Command},
     rc::Rc,
-    sync::mpsc::channel,
+    sync::{mpsc::channel, LazyLock},
     thread::{available_parallelism, spawn},
     time::{Duration, Instant},
 };
@@ -651,8 +650,8 @@ fn normalize_paths(mut s: &str, path: &Path) -> String {
     buf
 }
 
-static LINE_COLUMN_RE: Lazy<Regex> =
-    Lazy::new(|| Regex::new(r"(?m)^\$DIR/([^:]*):[0-9]+:[0-9]+-[0-9]+:[0-9]+:").unwrap());
+static LINE_COLUMN_RE: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"(?m)^\$DIR/([^:]*):[0-9]+:[0-9]+-[0-9]+:[0-9]+:").unwrap());
 
 fn remove_line_columns(s: &str) -> String {
     LINE_COLUMN_RE.replace_all(s, r"$$DIR/$1:").to_string()
@@ -661,7 +660,7 @@ fn remove_line_columns(s: &str) -> String {
 // smoelius: Don't put a `\b` at the start of this pattern. `assert_cmd::output::OutputError`
 // escapes control characters (e.g., `\t`) and its output appears in the stdout files. So adding a
 // `\b` could introduce false negatives.
-static TIMING_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r"[0-9]+\.[0-9]+(m?)s\b").unwrap());
+static TIMING_RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"[0-9]+\.[0-9]+(m?)s\b").unwrap());
 
 fn remove_timings(s: &str) -> String {
     TIMING_RE.replace_all(s, "[..]${1}s").to_string()
@@ -736,7 +735,7 @@ fn subsequence<'a, 'b>(
     true
 }
 
-static BIN_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r"/[^/]*-[0-9a-f]{16}\b").unwrap());
+static BIN_RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"/[^/]*-[0-9a-f]{16}\b").unwrap());
 
 pub fn stdout_files_are_sanitary_in(path: impl AsRef<Path>) {
     for entry in read_dir(path).unwrap() {
@@ -757,8 +756,8 @@ pub fn stdout_files_are_sanitary_in(path: impl AsRef<Path>) {
     }
 }
 
-static SPACE_RE: Lazy<Regex> = Lazy::new(|| Regex::new(" +").unwrap());
-static DASH_RE: Lazy<Regex> = Lazy::new(|| Regex::new("-+").unwrap());
+static SPACE_RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(" +").unwrap());
+static DASH_RE: LazyLock<Regex> = LazyLock::new(|| Regex::new("-+").unwrap());
 
 #[cfg_attr(dylint_lib = "general", allow(non_thread_safe_call_in_test))]
 #[test]

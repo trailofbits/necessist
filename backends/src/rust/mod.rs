@@ -8,7 +8,7 @@ use necessist_core::{
     framework::{SpanTestMaps, TestSet},
     LightContext, SourceFile, Span, ToInternalSpan, __Rewriter as Rewriter,
 };
-use once_cell::sync::{Lazy, OnceCell};
+use once_cell::sync::OnceCell;
 use quote::ToTokens;
 use std::{
     cell::RefCell,
@@ -17,7 +17,7 @@ use std::{
     fs::read_to_string,
     path::{Path, PathBuf},
     process::Command,
-    sync::RwLock,
+    sync::{LazyLock, RwLock},
 };
 
 mod storage;
@@ -103,8 +103,8 @@ impl<'ast> Test<'ast> {
 
 // smoelius: `TEST_PATH_ID_MAP` and `TEST_PATHS` cannot go in `Storage` because they are used by
 // `Test`'s implementation of `Named`.
-static TEST_PATH_ID_MAP: RwLock<Lazy<HashMap<Vec<String>, usize>>> =
-    RwLock::new(Lazy::new(HashMap::new));
+static TEST_PATH_ID_MAP: RwLock<LazyLock<HashMap<Vec<String>, usize>>> =
+    RwLock::new(LazyLock::new(HashMap::new));
 static TEST_PATHS: RwLock<Vec<Vec<String>>> = RwLock::new(Vec::new());
 
 fn reserve_test_path_id(test_path: Vec<String>) -> usize {

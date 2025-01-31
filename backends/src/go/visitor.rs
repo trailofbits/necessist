@@ -6,8 +6,7 @@ use super::{
 };
 use anyhow::Result;
 use necessist_core::framework::{SpanTestMaps, TestSet};
-use once_cell::sync::Lazy;
-use std::{cell::RefCell, collections::BTreeMap};
+use std::{cell::RefCell, collections::BTreeMap, sync::LazyLock};
 use streaming_iterator::StreamingIterator;
 use tree_sitter::{Query, QueryCursor, QueryMatch, Tree};
 
@@ -41,11 +40,11 @@ const STATEMENT_SOURCE: &str = r"
 (_statement) @statement
 ";
 
-static FUNCTION_DECLARATION_QUERY: Lazy<Query> =
-    Lazy::new(|| valid_query(FUNCTION_DECLARATION_SOURCE));
-static TEST_FUNCTION_DECLARATION_QUERY: Lazy<Query> =
-    Lazy::new(|| valid_query(TEST_FUNCTION_DECLARATION_SOURCE));
-static STATEMENT_QUERY: Lazy<Query> = Lazy::new(|| valid_query(STATEMENT_SOURCE));
+static FUNCTION_DECLARATION_QUERY: LazyLock<Query> =
+    LazyLock::new(|| valid_query(FUNCTION_DECLARATION_SOURCE));
+static TEST_FUNCTION_DECLARATION_QUERY: LazyLock<Query> =
+    LazyLock::new(|| valid_query(TEST_FUNCTION_DECLARATION_SOURCE));
+static STATEMENT_QUERY: LazyLock<Query> = LazyLock::new(|| valid_query(STATEMENT_SOURCE));
 
 pub(super) fn collect_local_functions<'ast>(
     text: &'ast str,

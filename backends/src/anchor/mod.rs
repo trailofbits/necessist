@@ -5,12 +5,12 @@ use necessist_core::{
     framework::{Interface, Postprocess, SourceFileSpanTestMap},
     LightContext, SourceFile, Span, __Backup as Backup, __Rewriter as Rewriter,
 };
-use once_cell::sync::Lazy;
 use regex::Regex;
 use std::{
     fs::{read_to_string, write},
     path::{Path, PathBuf},
     process::Command,
+    sync::LazyLock,
 };
 use subprocess::Exec;
 use toml_edit::{DocumentMut, Value};
@@ -165,7 +165,7 @@ impl Anchor {
     }
 }
 
-static TEST_RE: Lazy<Regex> = Lazy::new(|| {
+static TEST_RE: LazyLock<Regex> = LazyLock::new(|| {
     // smoelius: If the space in the first capture group `(.* )` is replaced with `\b`, then the
     // capture group captures too much.
     #[allow(clippy::unwrap_used)]

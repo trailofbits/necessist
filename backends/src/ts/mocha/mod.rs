@@ -9,7 +9,6 @@ use necessist_core::{
     framework::{Postprocess, SpanTestMaps, TestSet},
     source_warn, util, LightContext, LineColumn, SourceFile, Span, WarnFlags, Warning,
 };
-use once_cell::sync::Lazy;
 use regex::Regex;
 use std::{
     cell::RefCell,
@@ -19,6 +18,7 @@ use std::{
     path::{Path, PathBuf},
     process::Command,
     rc::Rc,
+    sync::LazyLock,
 };
 use subprocess::{Exec, NullFile};
 use swc_core::{
@@ -59,13 +59,13 @@ impl Default for ItMessageState {
     }
 }
 
-static LINE_WITH_TIME_RE: Lazy<Regex> = Lazy::new(|| {
+static LINE_WITH_TIME_RE: LazyLock<Regex> = LazyLock::new(|| {
     // smoelius: The initial `.` is the check mark.
     #[allow(clippy::unwrap_used)]
     Regex::new(r"^\s*. (.*) \([0-9]+ms\)$").unwrap()
 });
 
-static LINE_WITHOUT_TIME_RE: Lazy<Regex> = Lazy::new(|| {
+static LINE_WITHOUT_TIME_RE: LazyLock<Regex> = LazyLock::new(|| {
     #[allow(clippy::unwrap_used)]
     Regex::new(r"^\s*. (.*)$").unwrap()
 });
