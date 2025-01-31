@@ -1,5 +1,4 @@
-use once_cell::sync::Lazy;
-use std::{env::temp_dir, io::Result, path::PathBuf};
+use std::{env::temp_dir, io::Result, path::PathBuf, sync::LazyLock};
 use tempfile::tempdir_in;
 
 pub use tempfile::TempDir;
@@ -7,7 +6,7 @@ pub use tempfile::TempDir;
 // smoelius: macOS requires the paths to be canonicalized, because `/tmp` is symlinked to
 // `private/tmp`.
 #[allow(clippy::disallowed_methods)]
-static TEMPDIR_ROOT: Lazy<PathBuf> = Lazy::new(|| dunce::canonicalize(temp_dir()).unwrap());
+static TEMPDIR_ROOT: LazyLock<PathBuf> = LazyLock::new(|| dunce::canonicalize(temp_dir()).unwrap());
 
 /// Canonicalizes [`std::env::temp_dir`] and creates a directory therein.
 ///

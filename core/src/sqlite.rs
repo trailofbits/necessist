@@ -8,7 +8,6 @@ use crate::{util, warn, LightContext, Outcome, Span, WarnFlags, Warning};
 use anyhow::{bail, Context, Result};
 use diesel::{insert_into, prelude::*, sql_query};
 use git2::{Oid, Repository, RepositoryOpenFlags};
-use once_cell::sync::Lazy;
 use regex::Regex;
 use std::{
     ffi::OsStr,
@@ -17,6 +16,7 @@ use std::{
     iter::empty,
     path::{Path, PathBuf},
     rc::Rc,
+    sync::LazyLock,
 };
 
 pub(crate) struct Sqlite {
@@ -177,7 +177,7 @@ pub(crate) fn insert(sqlite: &mut Sqlite, removal: &crate::Removal) -> Result<()
     Ok(())
 }
 
-static SSH_RE: Lazy<Regex> = Lazy::new(|| {
+static SSH_RE: LazyLock<Regex> = LazyLock::new(|| {
     #[allow(clippy::unwrap_used)]
     Regex::new(r"^[^@]*@([^:]*):(.*)$").unwrap()
 });

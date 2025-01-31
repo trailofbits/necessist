@@ -1286,7 +1286,6 @@ dependencies = [
  "heck",
  "necessist-backends",
  "necessist-core",
- "once_cell",
  "predicates",
  "regex",
  "remain",

@@ -1,9 +1,8 @@
 use crate::{Backup, Rewriter, SourceFile, __ToConsoleString as ToConsoleString};
 use anyhow::{anyhow, Result};
-use once_cell::sync::Lazy;
 use regex::Regex;
 use sha2::{Digest, Sha256};
-use std::{fs::OpenOptions, io::Write, path::PathBuf, rc::Rc};
+use std::{fs::OpenOptions, io::Write, path::PathBuf, rc::Rc, sync::LazyLock};
 
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct Span {
@@ -42,7 +41,7 @@ impl ToConsoleString for Span {
     }
 }
 
-static SPAN_RE: Lazy<Regex> = Lazy::new(|| {
+static SPAN_RE: LazyLock<Regex> = LazyLock::new(|| {
     #[allow(clippy::unwrap_used)]
     Regex::new(r"^([^:]*):([^:]*):([^-]*)-([^:]*):(.*)$").unwrap()
 });
