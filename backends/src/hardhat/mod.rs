@@ -106,6 +106,6 @@ fn compile(context: &LightContext) -> Result<()> {
     let output = command.output_stripped_of_ansi_escapes()?;
     if !output.status().success() {
         return Err(output.into());
-    };
+    }
     Ok(())
 }
