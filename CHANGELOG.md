@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.3
+
+- Upgrade `itertools` to version 0.14 ([#1426](https://github.com/trailofbits/necessist/pull/1426))
+- Upgrade `swc_core` to version 12 ([#1427](https://github.com/trailofbits/necessist/pull/1427))
+
 ## 1.0.2
 
 - Upgrade `git2` to version 0.20 ([#1409](https://github.com/trailofbits/necessist/pull/1409))

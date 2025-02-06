@@ -17,13 +17,13 @@ cd "$WORKSPACE"
 
 scripts/lint_changelog_commits.sh
 
-find . -name Cargo.toml ! -path './fixtures/*' -exec sed -i "{
+find . -name Cargo.toml ! -path './fixtures/*' -exec gsed -i "{
 s/^version = \"[^\"]*\"$/$VERSION/
 }" {} \;
 
 REQ="${VERSION/\"/\"=}"
 
-find . -name Cargo.toml -exec sed -i "/^necessist/{
+find . -name Cargo.toml -exec gsed -i "/^necessist/{
 s/^\(.*\)\<version = \"[^\"]*\"\(.*\)$/\1$REQ\2/
 }" {} \;
 
