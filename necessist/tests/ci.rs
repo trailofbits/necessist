@@ -229,14 +229,18 @@ fn noninvasive_siblings() {
 #[test]
 fn prettier() {
     const ARGS: &[&str] = &[
-        "{}/../**/*.json",
-        "{}/../**/*.md",
-        "{}/../**/*.yml",
-        "!{}/../fixtures/**",
-        "!{}/../backends/src/anchor/rfc8032_test_vector.json",
-        "!{}/../target/**",
-        "!{}/../warnings.json",
+        "{}/**/*.json",
+        "{}/**/*.md",
+        "{}/**/*.yml",
+        "!{}/fixtures/**",
+        "!{}/backends/src/anchor/rfc8032_test_vector.json",
+        "!{}/target/**",
+        "!{}/warnings.json",
     ];
+
+    // smoelius: Prettier's handling of `..` seems to have changed between versions 3.4 and 3.5.
+    // Manually collapsing the `..` avoids the problem.
+    let parent = Path::new(env!("CARGO_MANIFEST_DIR")).parent().unwrap();
 
     let tempdir = tempdir().unwrap();
 
@@ -250,7 +254,7 @@ fn prettier() {
         .args(["prettier", "--check"])
         .args(
             ARGS.iter()
-                .map(|s| s.replace("{}", env!("CARGO_MANIFEST_DIR"))),
+                .map(|s| s.replace("{}", &parent.to_string_lossy())),
         )
         .current_dir(&tempdir)
         .assert()
