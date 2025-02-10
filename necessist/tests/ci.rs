@@ -4,7 +4,7 @@ use regex::Regex;
 use std::{
     env::{remove_var, set_current_dir, var},
     ffi::OsStr,
-    fs::{read_to_string, OpenOptions},
+    fs::read_to_string,
     io::{stderr, Write},
     path::Path,
     process::{exit, Command},
@@ -28,7 +28,14 @@ fn initialize() {
 
 #[test]
 fn clippy() {
-    clippy_command(&[], &["--deny=warnings"]).assert().success();
+    let mut command = Command::new("cargo");
+    // smoelius: Remove `CARGO` environment variable to work around:
+    // https://github.com/rust-lang/rust/pull/131729
+    command.env_remove("CARGO");
+    command
+        .args(["+nightly", "clippy", "--all-features", "--all-targets"])
+        .args(["--", "--deny=warnings"]);
+    command.assert().success();
 }
 
 #[test]
@@ -42,28 +49,6 @@ fn doc() {
 
 #[test]
 fn dylint() {
-    // smoelius: Generate `warnings.json` and run Clippy for `overscoped_allow`.
-    let file = OpenOptions::new()
-        .create(true)
-        .write(true)
-        .truncate(true)
-        .open("warnings.json")
-        .unwrap();
-
-    clippy_command(
-        &["--message-format=json"],
-        &[
-            "--force-warn=clippy::all",
-            "--force-warn=clippy::pedantic",
-            "--force-warn=clippy::expect_used",
-            "--force-warn=clippy::unwrap_used",
-            "--force-warn=clippy::panic",
-        ],
-    )
-    .stdout(file)
-    .assert()
-    .success();
-
     Command::new("cargo")
         .args(["dylint", "--all", "--", "--all-features", "--all-targets"])
         .env("DYLINT_RUSTFLAGS", "--deny warnings")
@@ -235,7 +220,6 @@ fn prettier() {
         "!{}/fixtures/**",
         "!{}/backends/src/anchor/rfc8032_test_vector.json",
         "!{}/target/**",
-        "!{}/warnings.json",
     ];
 
     // smoelius: Prettier's handling of `..` seems to have changed between versions 3.4 and 3.5.
@@ -334,19 +318,6 @@ fn unmaintained() {
         .args(["unmaintained", "--color=never", "--fail-fast"])
         .assert()
         .success();
-}
-
-fn clippy_command(cargo_args: &[&str], rustc_args: &[&str]) -> Command {
-    let mut command = Command::new("cargo");
-    // smoelius: Remove `CARGO` environment variable to work around:
-    // https://github.com/rust-lang/rust/pull/131729
-    command.env_remove("CARGO");
-    command
-        .args(["+nightly", "clippy", "--all-features", "--all-targets"])
-        .args(cargo_args)
-        .args(["--"])
-        .args(rustc_args);
-    command
 }
 
 static MUTEX: Mutex<()> = Mutex::new(());
