@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.4
+
+- Upgrade `tree-sitter` to version 0.25 ([#1435](https://github.com/trailofbits/necessist/pull/1435))
+
 ## 1.0.3
 
 - Upgrade `itertools` to version 0.14 ([#1426](https://github.com/trailofbits/necessist/pull/1426))
