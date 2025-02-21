@@ -22,7 +22,9 @@ fn initialize() {
     if cfg!(not(target_os = "linux")) && var("CI").is_ok() {
         exit(0);
     }
-    remove_var("CARGO_TERM_COLOR");
+    unsafe {
+        remove_var("CARGO_TERM_COLOR");
+    }
     set_current_dir("..").unwrap();
 }
 
