@@ -180,6 +180,7 @@ pub fn necessist<Identifier: Applicable + Display + IntoEnumIterator + ToImpleme
 }
 
 #[allow(clippy::type_complexity)]
+#[cfg_attr(dylint_lib = "supplementary", allow(commented_code))]
 fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementation>(
     context: &LightContext,
     framework: framework::Auto<Identifier>,
@@ -228,17 +229,47 @@ fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementatio
         return Ok(None);
     }
 
-    (context.println)({
-        let n_source_files = source_file_span_test_map.keys().len();
-        &format!(
-            "{} candidates in {} test{} in {} source file{}",
-            n_spans,
-            n_tests,
-            if n_tests == 1 { "" } else { "s" },
-            n_source_files,
-            if n_source_files == 1 { "" } else { "s" }
-        )
-    });
+    // smoelius: Curious. The code used to look like:
+    // ```
+    //     (context.println)({
+    //         let n_source_files = source_file_span_test_map.keys().len();
+    //         &format!(
+    //             ...
+    //         )
+    //     });
+    // ```
+    // But with Rust Edition 2024, that would cause the compiler to say:
+    // ```
+    // error[E0716]: temporary value dropped while borrowed
+    //    --> core/src/core.rs:233:10
+    //     |
+    // 233 |            &format!(
+    //     |   _________-^
+    //     |  |__________|
+    // 234 | ||             "{} candidates in {} test{} in {} source file{}",
+    // 235 | ||             n_spans,
+    // 236 | ||             n_tests,
+    // ...   ||
+    // 239 | ||             if n_source_files == 1 { "" } else { "s" }
+    // 240 | ||         )
+    //     | ||         ^
+    //     | ||         |
+    //     | ||_________temporary value is freed at the end of this statement
+    //     |  |_________creates a temporary value which is freed while still in use
+    //     |            borrow later used here
+    //     |
+    //     = note: consider using a `let` binding to create a longer lived value
+    //     = note: this error originates in the macro `format` (in Nightly builds, run with -Z macro-backtrace for more info)
+    // ```
+    let n_source_files = source_file_span_test_map.keys().len();
+    (context.println)(&format!(
+        "{} candidates in {} test{} in {} source file{}",
+        n_spans,
+        n_tests,
+        if n_tests == 1 { "" } else { "s" },
+        n_source_files,
+        if n_source_files == 1 { "" } else { "s" }
+    ));
 
     Ok(Some((backend, n_spans, source_file_span_test_map)))
 }

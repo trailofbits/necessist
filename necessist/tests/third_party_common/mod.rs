@@ -145,7 +145,9 @@ struct Task {
 }
 
 pub fn all_tests_in(path: impl AsRef<Path>) {
-    set_var("CARGO_TERM_COLOR", "never");
+    unsafe {
+        set_var("CARGO_TERM_COLOR", "never");
+    }
 
     let mut tests = read_tests_in(path, true);
     let n_tests = tests.values().map(Vec::len).sum();
