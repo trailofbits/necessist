@@ -9,6 +9,7 @@ test dry_run_failed ... FAILED
 failures:
 
 ---- dry_run_failed stdout ----
+
 thread /'dry_run_failed/' panicked at [..]/a.rs:5:5:
 assertion failed: n >= 2
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
