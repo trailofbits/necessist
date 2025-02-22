@@ -1,11 +1,11 @@
-use super::{rust, ts, OutputAccessors, OutputStrippedOfAnsiScapes, RunHigh};
-use anyhow::{anyhow, Error, Result};
+use super::{OutputAccessors, OutputStrippedOfAnsiScapes, RunHigh, rust, ts};
+use anyhow::{Error, Result, anyhow};
 use assert_cmd::output::OutputError;
-use bstr::{io::BufReadExt, BStr};
+use bstr::{BStr, io::BufReadExt};
 use log::debug;
 use necessist_core::{
-    framework::Postprocess, source_warn, util, LightContext, SourceFile, Span, WarnFlags, Warning,
-    __Rewriter as Rewriter,
+    __Rewriter as Rewriter, LightContext, SourceFile, Span, WarnFlags, Warning,
+    framework::Postprocess, source_warn, util,
 };
 use std::{
     cell::RefCell,

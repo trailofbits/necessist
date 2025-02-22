@@ -2,10 +2,11 @@ use super::{
     AbstractTypes, GenericVisitor, MaybeNamed, Named, ParseLow, ProcessLines, RunLow, Spanned,
     WalkDirResult,
 };
-use anyhow::{anyhow, bail, Context, Result};
+use anyhow::{Context, Result, anyhow, bail};
 use necessist_core::{
+    __Rewriter as Rewriter, LightContext, LineColumn, SourceFile, Span,
     framework::{SpanTestMaps, TestSet},
-    util, LightContext, LineColumn, SourceFile, Span, __Rewriter as Rewriter,
+    util,
 };
 use regex::Regex;
 use std::{

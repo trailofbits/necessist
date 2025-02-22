@@ -25,9 +25,9 @@ use anyhow::{Context, Result};
 use heck::ToKebabCase;
 use indexmap::IndexMap;
 use necessist_core::{
-    config,
+    LightContext, SourceFile, Span, WarnFlags, Warning, config,
     framework::{SourceFileSpanTestMap, SpanTestMaps, TestSet},
-    util, warn, LightContext, SourceFile, Span, WarnFlags, Warning,
+    util, warn,
 };
 use paste::paste;
 use std::{
@@ -102,7 +102,7 @@ pub trait ParseLow: Sized {
     }
     fn walk_dir(&self, root: &Path) -> Box<dyn Iterator<Item = WalkDirResult>>;
     fn parse_source_file(&self, source_file: &Path)
-        -> Result<<Self::Types as AbstractTypes>::File>;
+    -> Result<<Self::Types as AbstractTypes>::File>;
     fn storage_from_file<'ast>(
         &self,
         file: &'ast <Self::Types as AbstractTypes>::File,

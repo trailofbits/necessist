@@ -2,12 +2,13 @@ use crate::{
     AbstractTypes, GenericVisitor, MaybeNamed, Named, OutputAccessors, OutputStrippedOfAnsiScapes,
     ParseLow, Spanned, WalkDirResult,
 };
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use if_chain::if_chain;
 use log::debug;
 use necessist_core::{
+    LightContext, LineColumn, SourceFile, Span, WarnFlags, Warning,
     framework::{Postprocess, SpanTestMaps, TestSet},
-    source_warn, util, LightContext, LineColumn, SourceFile, Span, WarnFlags, Warning,
+    source_warn, util,
 };
 use regex::Regex;
 use std::{
@@ -29,7 +30,7 @@ use swc_core::{
             FnDecl, Invalid, Lit, MemberExpr, MemberProp, Module, Stmt, Str,
         },
         atoms::JsWord,
-        parser::{lexer::Lexer, Parser, StringInput, Syntax, TsSyntax},
+        parser::{Parser, StringInput, Syntax, TsSyntax, lexer::Lexer},
     },
 };
 

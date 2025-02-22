@@ -1,5 +1,5 @@
-use crate::{framework, Necessist, Warning};
-use clap::{crate_version, ArgAction, Parser, ValueEnum};
+use crate::{Necessist, Warning, framework};
+use clap::{ArgAction, Parser, ValueEnum, crate_version};
 use std::path::PathBuf;
 
 #[allow(clippy::struct_excessive_bools)]

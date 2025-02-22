@@ -1,17 +1,18 @@
 use super::{Call, GenericVisitor, MacroCall, Rust, Storage, Test};
 use anyhow::{Error, Result};
 use necessist_core::{
+    WarnFlags, Warning,
     framework::{SpanTestMaps, TestSet},
-    warn, WarnFlags, Warning,
+    warn,
 };
 use std::{cell::RefCell, collections::BTreeMap, fmt::Write};
 use syn::{
-    visit::{
-        visit_block, visit_expr_call, visit_expr_macro, visit_expr_method_call, visit_item_fn,
-        visit_item_mod, visit_stmt, visit_stmt_macro, Visit,
-    },
     Block, ExprCall, ExprMacro, ExprMethodCall, File, Ident, ImplItemFn, ItemFn, ItemMod,
     PathSegment, Stmt, StmtMacro,
+    visit::{
+        Visit, visit_block, visit_expr_call, visit_expr_macro, visit_expr_method_call,
+        visit_item_fn, visit_item_mod, visit_stmt, visit_stmt_macro,
+    },
 };
 
 pub(super) fn collect_local_functions(file: &File) -> BTreeMap<String, Vec<&Block>> {
@@ -263,7 +264,7 @@ mod test {
     use crate::ParseLow;
     use if_chain::if_chain;
     use std::fs::read_to_string;
-    use syn::{parse_file, Expr, ExprArray, ExprLit, ExprReference, Item, ItemConst, Lit};
+    use syn::{Expr, ExprArray, ExprLit, ExprReference, Item, ItemConst, Lit, parse_file};
 
     const UNNECESSARY_CONVERSION_FOR_TRAIT_URL: &str = "https://raw.githubusercontent.com/trailofbits/dylint/master/examples/supplementary/unnecessary_conversion_for_trait/src/lib.rs";
 

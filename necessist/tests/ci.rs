@@ -5,9 +5,9 @@ use std::{
     env::{remove_var, set_current_dir, var},
     ffi::OsStr,
     fs::read_to_string,
-    io::{stderr, Write},
+    io::{Write, stderr},
     path::Path,
-    process::{exit, Command},
+    process::{Command, exit},
     sync::Mutex,
 };
 use walkdir::WalkDir;
@@ -295,13 +295,15 @@ fn readme_toc_is_accurate() {
         line.strip_prefix("## ")
             .map(|suffix| format!("- [{suffix}](#{})", suffix.to_lowercase().replace(' ', "-")))
     });
-    assert!(readme.contains(
-        &std::iter::once(String::new())
-            .chain(expected_toc)
-            .chain(std::iter::once(String::new()))
-            .map(|s| format!("{s}\n"))
-            .collect::<String>()
-    ));
+    assert!(
+        readme.contains(
+            &std::iter::once(String::new())
+                .chain(expected_toc)
+                .chain(std::iter::once(String::new()))
+                .map(|s| format!("{s}\n"))
+                .collect::<String>()
+        )
+    );
 }
 
 #[test]

@@ -1,9 +1,9 @@
-use super::{ts, OutputAccessors, OutputStrippedOfAnsiScapes, ParseAdapter, ParseHigh, RunHigh};
-use anyhow::{anyhow, Context, Result};
+use super::{OutputAccessors, OutputStrippedOfAnsiScapes, ParseAdapter, ParseHigh, RunHigh, ts};
+use anyhow::{Context, Result, anyhow};
 use log::debug;
 use necessist_core::{
+    __Backup as Backup, __Rewriter as Rewriter, LightContext, SourceFile, Span,
     framework::{Interface, Postprocess, SourceFileSpanTestMap},
-    LightContext, SourceFile, Span, __Backup as Backup, __Rewriter as Rewriter,
 };
 use regex::Regex;
 use std::{

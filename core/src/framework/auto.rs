@@ -1,11 +1,11 @@
 use super::{Applicable, Interface, ToImplementation, Union};
 use crate::LightContext;
-use anyhow::{ensure, Result};
+use anyhow::{Result, ensure};
 use std::fmt::Display;
 use strum::IntoEnumIterator;
 
 #[cfg(feature = "clap")]
-use clap::{builder::PossibleValue, ValueEnum};
+use clap::{ValueEnum, builder::PossibleValue};
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq)]
 #[cfg_attr(feature = "clap", derive(ValueEnum))]

@@ -1,10 +1,10 @@
 use std::{
     env::var,
-    fs::{read_to_string, File, OpenOptions},
+    fs::{File, OpenOptions, read_to_string},
     io::{Error, Write},
     path::Path,
 };
-use syn::{parse_file, Fields, File as SynFile, Ident, Item, ItemEnum, ItemStruct, Variant};
+use syn::{Fields, File as SynFile, Ident, Item, ItemEnum, ItemStruct, Variant, parse_file};
 
 pub fn emit() {
     let out_dir = var("OUT_DIR").unwrap();

@@ -5,7 +5,7 @@
 use anyhow::Result;
 use clap::Parser;
 use necessist_backends::Identifier;
-use necessist_core::{cli, framework::Auto, necessist, Necessist};
+use necessist_core::{Necessist, cli, framework::Auto, necessist};
 use std::env::args;
 
 mod backends;

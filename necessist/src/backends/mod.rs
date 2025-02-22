@@ -2,8 +2,8 @@ use anyhow::Result;
 use clap::ValueEnum;
 use heck::ToKebabCase;
 use necessist_core::{
-    framework::{Interface, ToImplementation},
     LightContext,
+    framework::{Interface, ToImplementation},
 };
 use strum_macros::EnumIter;
 

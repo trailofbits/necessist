@@ -1,5 +1,5 @@
 use crate::utils::{OutputAccessors, OutputStrippedOfAnsiScapes};
-use anyhow::{ensure, Result};
+use anyhow::{Result, ensure};
 use log::debug;
 use necessist_core::LightContext;
 use std::process::Command;

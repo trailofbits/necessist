@@ -1,15 +1,14 @@
 use crate::{
-    config,
+    __ToConsoleString, Backup, Outcome, Rewriter, SourceFile, Span, WarnFlags, Warning, config,
     framework::{self, Applicable, Postprocess, SourceFileSpanTestMap, SpanKind, ToImplementation},
-    note, source_warn, sqlite, util, warn, Backup, Outcome, Rewriter, SourceFile, Span, WarnFlags,
-    Warning, __ToConsoleString,
+    note, source_warn, sqlite, util, warn,
 };
 use ansi_term::Style;
-use anyhow::{anyhow, bail, ensure, Context as _, Result};
+use anyhow::{Context as _, Result, anyhow, bail, ensure};
 use heck::ToKebabCase;
 use indexmap::IndexSet;
 use indicatif::ProgressBar;
-use itertools::{peek_nth, PeekNth};
+use itertools::{PeekNth, peek_nth};
 use log::debug;
 use once_cell::sync::OnceCell;
 use std::{

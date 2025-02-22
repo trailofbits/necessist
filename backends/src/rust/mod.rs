@@ -5,8 +5,8 @@ use super::{
 use anyhow::Result;
 use cargo_metadata::{Metadata, Package, TargetKind};
 use necessist_core::{
+    __Rewriter as Rewriter, LightContext, SourceFile, Span, ToInternalSpan,
     framework::{SpanTestMaps, TestSet},
-    LightContext, SourceFile, Span, ToInternalSpan, __Rewriter as Rewriter,
 };
 use once_cell::sync::OnceCell;
 use quote::ToTokens;
@@ -21,7 +21,7 @@ use std::{
 };
 
 mod storage;
-use storage::{cached_source_file_package, Storage};
+use storage::{Storage, cached_source_file_package};
 
 mod try_insert;
 use try_insert::TryInsert;
