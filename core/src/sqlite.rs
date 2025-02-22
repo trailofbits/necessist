@@ -4,8 +4,8 @@
     allow(inconsistent_qualification)
 )]
 
-use crate::{util, warn, LightContext, Outcome, Span, WarnFlags, Warning};
-use anyhow::{bail, Context, Result};
+use crate::{LightContext, Outcome, Span, WarnFlags, Warning, util, warn};
+use anyhow::{Context, Result, bail};
 use diesel::{insert_into, prelude::*, sql_query};
 use git2::{Oid, Repository, RepositoryOpenFlags};
 use regex::Regex;

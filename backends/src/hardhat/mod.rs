@@ -1,9 +1,9 @@
-use super::{ts, OutputAccessors, OutputStrippedOfAnsiScapes, ParseAdapter, ParseHigh, RunHigh};
+use super::{OutputAccessors, OutputStrippedOfAnsiScapes, ParseAdapter, ParseHigh, RunHigh, ts};
 use anyhow::Result;
 use log::debug;
 use necessist_core::{
+    __Rewriter as Rewriter, LightContext, SourceFile, Span,
     framework::{Interface, Postprocess, SourceFileSpanTestMap},
-    LightContext, SourceFile, Span, __Rewriter as Rewriter,
 };
 use std::path::Path;
 use subprocess::Exec;

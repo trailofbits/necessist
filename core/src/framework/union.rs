@@ -4,7 +4,7 @@ use anyhow::Result;
 use std::marker::PhantomData;
 
 #[cfg(feature = "clap")]
-use clap::{builder::PossibleValue, ValueEnum};
+use clap::{ValueEnum, builder::PossibleValue};
 
 pub trait IntoEnumIterator: Sized {
     type Iterator: Iterator<Item = Self>;

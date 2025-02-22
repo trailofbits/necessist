@@ -1,11 +1,11 @@
 use proc_macro2::{TokenStream, TokenTree};
 use std::{
     env::var,
-    fs::{read_to_string, File, OpenOptions},
+    fs::{File, OpenOptions, read_to_string},
     io::{Error, Write},
     path::Path,
 };
-use syn::{parse2, parse_file, File as SynFile, Item, ItemMacro, ItemStruct, Type, TypePath};
+use syn::{File as SynFile, Item, ItemMacro, ItemStruct, Type, TypePath, parse_file, parse2};
 
 pub fn emit() {
     let out_dir = var("OUT_DIR").unwrap();

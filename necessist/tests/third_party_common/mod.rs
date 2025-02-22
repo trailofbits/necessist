@@ -1,5 +1,5 @@
 use assert_cmd::output::OutputError;
-use necessist_core::{util, Span};
+use necessist_core::{Span, util};
 use regex::Regex;
 use serde::Deserialize;
 use similar_asserts::SimpleDiff;
@@ -9,13 +9,13 @@ use std::{
     ffi::OsStr,
     fmt::Write as _,
     fs::{read_dir, read_to_string, remove_file, write},
-    io::{stderr, Read, Write},
+    io::{Read, Write, stderr},
     ops::Not,
     panic::{set_hook, take_hook},
     path::{Path, PathBuf},
-    process::{exit, Command},
+    process::{Command, exit},
     rc::Rc,
-    sync::{mpsc::channel, LazyLock},
+    sync::{LazyLock, mpsc::channel},
     thread::{available_parallelism, spawn},
     time::{Duration, Instant},
 };
@@ -26,7 +26,7 @@ use string_or_vec::StringOrVec;
 
 #[path = "../tempfile_util.rs"]
 mod tempfile_util;
-use tempfile_util::{tempdir, TempDir};
+use tempfile_util::{TempDir, tempdir};
 
 // smoelius: `ERROR_EXIT_CODE` is from:
 // https://github.com/rust-lang/rust/blob/12397e9dd5a97460d76c884d449ca1c2d26da8ed/src/libtest/lib.rs#L94
@@ -818,18 +818,22 @@ fn readme_is_current() {
     if enabled("BLESS") {
         write(&path_readme, readme_expected).unwrap();
         let tempdir = tempdir().unwrap();
-        assert!(Command::new("npm")
-            .args(["install", "prettier"])
-            .current_dir(&tempdir)
-            .status()
-            .unwrap()
-            .success());
-        assert!(Command::new("npx")
-            .args(["prettier", "--write", &path_readme.to_string_lossy()])
-            .current_dir(&tempdir)
-            .status()
-            .unwrap()
-            .success());
+        assert!(
+            Command::new("npm")
+                .args(["install", "prettier"])
+                .current_dir(&tempdir)
+                .status()
+                .unwrap()
+                .success()
+        );
+        assert!(
+            Command::new("npx")
+                .args(["prettier", "--write", &path_readme.to_string_lossy()])
+                .current_dir(&tempdir)
+                .status()
+                .unwrap()
+                .success()
+        );
     } else {
         assert_eq!(readme_expected, readme_normalized);
     }
@@ -841,11 +845,7 @@ trait ToXSpace {
 
 impl ToXSpace for bool {
     fn to_x_space(&self) -> &'static str {
-        if *self {
-            "X "
-        } else {
-            ""
-        }
+        if *self { "X " } else { "" }
     }
 }
 

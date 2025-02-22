@@ -2,7 +2,7 @@ use ansi_term::{
     Color::{Blue, Green, Red, Yellow},
     Style,
 };
-use anyhow::{anyhow, Error};
+use anyhow::{Error, anyhow};
 use heck::ToKebabCase;
 use std::str::FromStr;
 use strum::IntoEnumIterator;

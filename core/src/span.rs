@@ -1,5 +1,5 @@
-use crate::{Backup, Rewriter, SourceFile, __ToConsoleString as ToConsoleString};
-use anyhow::{anyhow, Result};
+use crate::{__ToConsoleString as ToConsoleString, Backup, Rewriter, SourceFile};
+use anyhow::{Result, anyhow};
 use regex::Regex;
 use sha2::{Digest, Sha256};
 use std::{fs::OpenOptions, io::Write, path::PathBuf, rc::Rc, sync::LazyLock};

@@ -1,4 +1,4 @@
-use super::{is_it_call_expr, is_it_call_stmt, GenericVisitor, Mocha, SourceMapped, Storage};
+use super::{GenericVisitor, Mocha, SourceMapped, Storage, is_it_call_expr, is_it_call_stmt};
 use anyhow::Result;
 use necessist_core::framework::{SpanTestMaps, TestSet};
 use std::{cell::RefCell, collections::BTreeMap};

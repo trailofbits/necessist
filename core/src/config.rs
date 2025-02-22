@@ -1,5 +1,5 @@
 use crate::LightContext;
-use anyhow::{bail, Result};
+use anyhow::{Result, bail};
 use regex::Regex;
 use std::{collections::BTreeMap, fs::read_to_string, path::Path};
 

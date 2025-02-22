@@ -19,7 +19,7 @@ pub mod config;
 
 mod core;
 use crate::core::Removal;
-pub use crate::core::{necessist, LightContext, Necessist};
+pub use crate::core::{LightContext, Necessist, necessist};
 
 #[cfg(feature = "lock_root")]
 mod flock;
@@ -56,4 +56,4 @@ pub mod util;
 
 mod warn;
 use warn::note;
-pub use warn::{source_warn, warn, Flags as WarnFlags, Warning};
+pub use warn::{Flags as WarnFlags, Warning, source_warn, warn};

@@ -1,6 +1,6 @@
 use std::{
     env::var,
-    io::{stderr, Write},
+    io::{Write, stderr},
     process::exit,
 };
 

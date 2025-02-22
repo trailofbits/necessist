@@ -1,8 +1,8 @@
 #![cfg_attr(dylint_lib = "general", allow(non_local_effect_before_error_return))]
 
 use super::{
-    bounded_cursor, process_self_captures, valid_query, Call, GenericVisitor, Go, LocalFunction,
-    Statement, Storage, Test, BLOCK_KIND, CALL_EXPRESSION_KIND,
+    BLOCK_KIND, CALL_EXPRESSION_KIND, Call, GenericVisitor, Go, LocalFunction, Statement, Storage,
+    Test, bounded_cursor, process_self_captures, valid_query,
 };
 use anyhow::Result;
 use necessist_core::framework::{SpanTestMaps, TestSet};

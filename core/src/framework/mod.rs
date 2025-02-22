@@ -1,4 +1,4 @@
-use crate::{config, rewriter::Rewriter, LightContext, SourceFile, Span};
+use crate::{LightContext, SourceFile, Span, config, rewriter::Rewriter};
 use anyhow::Result;
 use indexmap::IndexSet;
 use std::{

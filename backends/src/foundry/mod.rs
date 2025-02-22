@@ -2,11 +2,12 @@ use super::{
     AbstractTypes, GenericVisitor, MaybeNamed, Named, ParseLow, ProcessLines, RunLow, Spanned,
     WalkDirResult,
 };
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use if_chain::if_chain;
 use necessist_core::{
+    __Rewriter as Rewriter, LightContext, LineColumn, SourceFile, Span,
     framework::{SpanTestMaps, TestSet},
-    util, LightContext, LineColumn, SourceFile, Span, __Rewriter as Rewriter,
+    util,
 };
 use solang_parser::pt::{
     CodeLocation, Expression, FunctionDefinition, Identifier, Loc, SourceUnit, Statement,
@@ -20,7 +21,7 @@ mod storage;
 use storage::Storage;
 
 mod visitor;
-use visitor::{collect_local_functions, visit, Statements};
+use visitor::{Statements, collect_local_functions, visit};
 
 #[derive(Debug)]
 pub struct Foundry;

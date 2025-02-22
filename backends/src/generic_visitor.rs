@@ -24,9 +24,9 @@ use anyhow::Result;
 use if_chain::if_chain;
 use indexmap::IndexMap;
 use necessist_core::{
-    config,
+    __ToConsoleString, LightContext, SourceFile, Span, WarnFlags, Warning, config,
     framework::{SpanKind, SpanTestMaps, TestSet},
-    warn, LightContext, SourceFile, Span, WarnFlags, Warning, __ToConsoleString,
+    warn,
 };
 use paste::paste;
 use std::{

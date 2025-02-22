@@ -1,6 +1,6 @@
 use crate::{
-    offset_calculator::OffsetCalculator, to_console_string::ToConsoleString, util, LineColumn,
-    Rewriter, Span,
+    LineColumn, Rewriter, Span, offset_calculator::OffsetCalculator,
+    to_console_string::ToConsoleString, util,
 };
 use anyhow::Result;
 use std::{

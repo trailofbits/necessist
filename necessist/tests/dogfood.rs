@@ -1,7 +1,7 @@
 #![cfg(feature = "dogfood")]
 
 use assert_cmd::Command;
-use std::io::{stderr, Write};
+use std::io::{Write, stderr};
 
 const TIMEOUT: &str = "5";
 

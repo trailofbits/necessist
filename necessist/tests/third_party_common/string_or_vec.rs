@@ -4,7 +4,7 @@
     allow(inconsistent_qualification)
 )]
 
-use serde::{de, Serialize};
+use serde::{Serialize, de};
 use serde_untagged::UntaggedEnumVisitor;
 
 // smoelius: `StringOrVec::get` does not appear in the original.

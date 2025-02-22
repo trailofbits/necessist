@@ -1,9 +1,9 @@
-use crate::{LightContext, __ToConsoleString as ToConsoleString};
+use crate::{__ToConsoleString as ToConsoleString, LightContext};
 use ansi_term::{
     Color::{Green, Yellow},
     Style,
 };
-use anyhow::{bail, Result};
+use anyhow::{Result, bail};
 use bitflags::bitflags;
 use heck::ToKebabCase;
 use std::{collections::BTreeMap, io::IsTerminal, sync::Mutex};

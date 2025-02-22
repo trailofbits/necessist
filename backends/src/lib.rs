@@ -2,11 +2,11 @@ use anyhow::Result;
 use clap::ValueEnum;
 use heck::ToKebabCase;
 use necessist_core::{
+    __Rewriter as Rewriter, LightContext, SourceFile, Span,
     framework::{
         Applicable, AsParse, AsRun, Interface, Parse as ParseHigh, Postprocess, Run as RunHigh,
         ToImplementation,
     },
-    LightContext, SourceFile, Span, __Rewriter as Rewriter,
 };
 use std::{cell::RefCell, path::Path, rc::Rc};
 use strum_macros::EnumIter;
