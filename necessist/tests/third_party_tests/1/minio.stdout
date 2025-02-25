@@ -2558,11 +2558,11 @@ $DIR/cmd/erasure-healing-common_test.go: `t.Run(fmt.Sprintf("case-%d", i), func(
 				t.Fatalf("Expected modTime to be equal to %v but was found to be %v",
 					test.expectedTime, modTime)
 			}
-			availableDisks, _, _ := disksWithAllParts(ctx, onlineDisks, partsMetadata,
+			_, _ = checkObjectWithAllParts(ctx, onlineDisks, partsMetadata,
 				test.errs, fi, false, bucket, object, madmin.HealDeepScan)
 
 			if test._tamperBackend != noTamper {
-				if tamperedIndex != -1 && availableDisks[tamperedIndex] != nil {
+				if tamperedIndex != -1 && onlineDisks[tamperedIndex] != nil {
 					t.Fatalf("Drive (%v) with part.1 missing is not a drive with available data",
 						erasureDisks[tamperedIndex])
 				}
@@ -2573,6 +2573,8 @@ $DIR/cmd/erasure-healing-common_test.go: `partsMetadata[j].ModTime = test.modTim
 $DIR/cmd/erasure-healing-common_test.go: `tamperedIndex = index`
 $DIR/cmd/erasure-healing-common_test.go: `tamperedIndex = index`
 $DIR/cmd/erasure-healing-common_test.go: `f.WriteString("oops")`
+$DIR/cmd/erasure-healing-common_test.go: `_, _ = checkObjectWithAllParts(ctx, onlineDisks, partsMetadata,
+				test.errs, fi, false, bucket, object, madmin.HealDeepScan)`
 $DIR/cmd/erasure-healing-common_test.go: `setObjectLayer(obj)`
 $DIR/cmd/erasure-healing-common_test.go: `modTimesThreeFour[i] = fourNanoSecs`
 $DIR/cmd/erasure-healing-common_test.go: `modTimesThreeNone[i] = timeSentinel`
@@ -2653,11 +2655,11 @@ $DIR/cmd/erasure-healing-common_test.go: `t.Run(fmt.Sprintf("case-%d", i), func(
 					test.expectedTime, modTime)
 			}
 
-			availableDisks, _, _ := disksWithAllParts(ctx, onlineDisks, partsMetadata,
+			_, _ = checkObjectWithAllParts(ctx, onlineDisks, partsMetadata,
 				test.errs, fi, false, bucket, object, madmin.HealDeepScan)
 
 			if test._tamperBackend != noTamper {
-				if tamperedIndex != -1 && availableDisks[tamperedIndex] != nil {
+				if tamperedIndex != -1 && onlineDisks[tamperedIndex] != nil {
 					t.Fatalf("Drive (%v) with part.1 missing is not a drive with available data",
 						erasureDisks[tamperedIndex])
 				}
@@ -2667,27 +2669,33 @@ $DIR/cmd/erasure-healing-common_test.go: `partsMetadata[j].ModTime = test.modTim
 $DIR/cmd/erasure-healing-common_test.go: `tamperedIndex = index`
 $DIR/cmd/erasure-healing-common_test.go: `tamperedIndex = index`
 $DIR/cmd/erasure-healing-common_test.go: `f.WriteString("oops")`
+$DIR/cmd/erasure-healing-common_test.go: `_, _ = checkObjectWithAllParts(ctx, onlineDisks, partsMetadata,
+				test.errs, fi, false, bucket, object, madmin.HealDeepScan)`
 $DIR/cmd/erasure-healing-common_test.go: `setObjectLayer(obj)`
 $DIR/cmd/erasure-healing-common_test.go: `err = obj.MakeBucket(ctx, "bucket", MakeBucketOptions{})`
 $DIR/cmd/erasure-healing-common_test.go: `_, err = obj.PutObject(ctx, bucket, object, mustGetPutObjReader(t, bytes.NewReader(data), int64(len(data)), "", ""), ObjectOptions{})`
+$DIR/cmd/erasure-healing-common_test.go: `erasureDisks = s.getDisks()`
 $DIR/cmd/erasure-healing-common_test.go: `erasureDisks, _, _ = listOnlineDisks(erasureDisks, partsMetadata, errs, readQuorum)`
+$DIR/cmd/erasure-healing-common_test.go: `erasureDisks = s.getDisks()`
 $DIR/cmd/erasure-healing-common_test.go: `partsMetadata[0].ModTime = partsMetadata[0].ModTime.Add(-1 * time.Hour)`
 $DIR/cmd/erasure-healing-common_test.go: `errs = make([]error, len(erasureDisks))`
-$DIR/cmd/erasure-healing-common_test.go: `filteredDisks, _, _ = disksWithAllParts(ctx, erasureDisks, partsMetadata,
+$DIR/cmd/erasure-healing-common_test.go: `_, _ = checkObjectWithAllParts(ctx, erasureDisks, partsMetadata,
 		errs, fi, false, bucket, object, madmin.HealDeepScan)`
 $DIR/cmd/erasure-healing-common_test.go: `partsMetadata[0] = partsMetadataBackup`
+$DIR/cmd/erasure-healing-common_test.go: `erasureDisks = s.getDisks()`
 $DIR/cmd/erasure-healing-common_test.go: `partsMetadataBackup = partsMetadata[1]`
 $DIR/cmd/erasure-healing-common_test.go: `partsMetadata[1].DataDir = "foo-random"`
 $DIR/cmd/erasure-healing-common_test.go: `errs = make([]error, len(erasureDisks))`
-$DIR/cmd/erasure-healing-common_test.go: `filteredDisks, _, _ = disksWithAllParts(ctx, erasureDisks, partsMetadata,
+$DIR/cmd/erasure-healing-common_test.go: `_, _ = checkObjectWithAllParts(ctx, erasureDisks, partsMetadata,
 		errs, fi, false, bucket, object, madmin.HealDeepScan)`
 $DIR/cmd/erasure-healing-common_test.go: `partsMetadata[1] = partsMetadataBackup`
+$DIR/cmd/erasure-healing-common_test.go: `erasureDisks = s.getDisks()`
 $DIR/cmd/erasure-healing-common_test.go: `diskFailures[0] = "part.1"`
 $DIR/cmd/erasure-healing-common_test.go: `diskFailures[3] = "part.1"`
 $DIR/cmd/erasure-healing-common_test.go: `diskFailures[15] = "part.1"`
 $DIR/cmd/erasure-healing-common_test.go: `f.WriteString("oops")`
 $DIR/cmd/erasure-healing-common_test.go: `errs = make([]error, len(erasureDisks))`
-$DIR/cmd/erasure-healing-common_test.go: `filteredDisks, dataErrsPerDisk, _ = disksWithAllParts(ctx, erasureDisks, partsMetadata,
+$DIR/cmd/erasure-healing-common_test.go: `dataErrsPerDisk, _ = checkObjectWithAllParts(ctx, erasureDisks, partsMetadata,
 		errs, fi, false, bucket, object, madmin.HealDeepScan)`
 $DIR/cmd/erasure-healing-common_test.go: `fi = test.fi2`
 $DIR/cmd/erasure-healing-common_test.go: `metaArr = append(metaArr, fi)`
@@ -2820,11 +2828,11 @@ $DIR/cmd/erasure-healing-common_test.go: `.Run(fmt.Sprintf("case-%d", i), func(t
 				t.Fatalf("Expected modTime to be equal to %v but was found to be %v",
 					test.expectedTime, modTime)
 			}
-			availableDisks, _, _ := disksWithAllParts(ctx, onlineDisks, partsMetadata,
+			_, _ = checkObjectWithAllParts(ctx, onlineDisks, partsMetadata,
 				test.errs, fi, false, bucket, object, madmin.HealDeepScan)
 
 			if test._tamperBackend != noTamper {
-				if tamperedIndex != -1 && availableDisks[tamperedIndex] != nil {
+				if tamperedIndex != -1 && onlineDisks[tamperedIndex] != nil {
 					t.Fatalf("Drive (%v) with part.1 missing is not a drive with available data",
 						erasureDisks[tamperedIndex])
 				}
@@ -2929,11 +2937,11 @@ $DIR/cmd/erasure-healing-common_test.go: `.Run(fmt.Sprintf("case-%d", i), func(t
 					test.expectedTime, modTime)
 			}
 
-			availableDisks, _, _ := disksWithAllParts(ctx, onlineDisks, partsMetadata,
+			_, _ = checkObjectWithAllParts(ctx, onlineDisks, partsMetadata,
 				test.errs, fi, false, bucket, object, madmin.HealDeepScan)
 
 			if test._tamperBackend != noTamper {
-				if tamperedIndex != -1 && availableDisks[tamperedIndex] != nil {
+				if tamperedIndex != -1 && onlineDisks[tamperedIndex] != nil {
 					t.Fatalf("Drive (%v) with part.1 missing is not a drive with available data",
 						erasureDisks[tamperedIndex])
 				}
@@ -2961,7 +2969,11 @@ $DIR/cmd/erasure-healing-common_test.go: `.getDisks()`
 $DIR/cmd/erasure-healing-common_test.go: `.MakeBucket(ctx, "bucket", MakeBucketOptions{})`
 $DIR/cmd/erasure-healing-common_test.go: `.PutObject(ctx, bucket, object, mustGetPutObjReader(t, bytes.NewReader(data), int64(len(data)), "", ""), ObjectOptions{})`
 $DIR/cmd/erasure-healing-common_test.go: `.NewReader(data)`
+$DIR/cmd/erasure-healing-common_test.go: `.getDisks()`
+$DIR/cmd/erasure-healing-common_test.go: `.getDisks()`
 $DIR/cmd/erasure-healing-common_test.go: `.ModTime.Add(-1 * time.Hour)`
+$DIR/cmd/erasure-healing-common_test.go: `.getDisks()`
+$DIR/cmd/erasure-healing-common_test.go: `.getDisks()`
 $DIR/cmd/erasure-healing-common_test.go: `.Sprintf("part.%d", i+1)`
 $DIR/cmd/erasure-healing-common_test.go: `.String()`
 $DIR/cmd/erasure-healing-common_test.go: `.OpenFile(filePath, os.O_WRONLY|os.O_SYNC, 0)`
@@ -3445,7 +3457,7 @@ $DIR/cmd/erasure-healing_test.go: `.erasureDisksMu.Unlock()`
 $DIR/cmd/erasure-healing_test.go: `.DeleteObject(ctx, bucket, object, ObjectOptions{Versioned: true})`
 $DIR/cmd/erasure-healing_test.go: `.ReadVersion(context.Background(), "", bucket, object, "", ReadOptions{ReadData: false, Healing: true})`
 $DIR/cmd/erasure-healing_test.go: `.Background()`
-$DIR/cmd/erasure-healing_test.go: `.HealObjects(ctx, bucket, "", madmin.HealOpts{Remove: true},
+$DIR/cmd/erasure-healing_test.go: `.HealObjects(ctx, bucket, "", madmin.HealOpts{Recursive: true, Remove: true},
 		func(bucket, object, vid string, scanMode madmin.HealScanMode) error {
 			_, err := objLayer.HealObject(ctx, bucket, object, vid, madmin.HealOpts{ScanMode: scanMode, Remove: true})
 			return err
@@ -3463,7 +3475,7 @@ $DIR/cmd/erasure-healing_test.go: `.PutObject(ctx, bucket, object, rd, ObjectOpt
 	})`
 $DIR/cmd/erasure-healing_test.go: `.ReadVersion(context.Background(), "", bucket, object, "", ReadOptions{ReadData: false, Healing: true})`
 $DIR/cmd/erasure-healing_test.go: `.Background()`
-$DIR/cmd/erasure-healing_test.go: `.HealObjects(ctx, bucket, "", madmin.HealOpts{Remove: true},
+$DIR/cmd/erasure-healing_test.go: `.HealObjects(ctx, bucket, "", madmin.HealOpts{Recursive: true, Remove: true},
 		func(bucket, object, vid string, scanMode madmin.HealScanMode) error {
 			_, err := objLayer.HealObject(ctx, bucket, object, vid, madmin.HealOpts{ScanMode: scanMode, Remove: true})
 			return err
@@ -3481,7 +3493,7 @@ $DIR/cmd/erasure-healing_test.go: `.DeleteObject(ctx, bucket, object, ObjectOpti
 	})`
 $DIR/cmd/erasure-healing_test.go: `.ReadVersion(context.Background(), "", bucket, object, "", ReadOptions{ReadData: false, Healing: true})`
 $DIR/cmd/erasure-healing_test.go: `.Background()`
-$DIR/cmd/erasure-healing_test.go: `.HealObjects(ctx, bucket, "", madmin.HealOpts{Remove: true},
+$DIR/cmd/erasure-healing_test.go: `.HealObjects(ctx, bucket, "", madmin.HealOpts{Recursive: true, Remove: true},
 		func(bucket, object, vid string, scanMode madmin.HealScanMode) error {
 			_, err := objLayer.HealObject(ctx, bucket, object, vid, madmin.HealOpts{ScanMode: scanMode, Remove: true})
 			return err
@@ -4023,6 +4035,10 @@ $DIR/cmd/erasure-object_test.go: `t.Run("", func(t *testing.T) {
 $DIR/cmd/erasure-object_test.go: `err = obj.MakeBucket(ctx, bucketName, MakeBucketOptions{
 		VersioningEnabled: true,
 	})`
+$DIR/cmd/erasure-object_test.go: `versions[i] = objInfo.VersionID`
+$DIR/cmd/erasure-object_test.go: `err = obj.MakeBucket(ctx, bucketName, MakeBucketOptions{
+		VersioningEnabled: true,
+	})`
 $DIR/cmd/erasure-object_test.go: `names[i] = ObjectToDelete{
 			ObjectV: ObjectV{
 				ObjectName: objInfo.Name,
@@ -4206,6 +4222,23 @@ $DIR/cmd/erasure-object_test.go: `.Run("", func(t *testing.T) {
 		})`
 $DIR/cmd/erasure-object_test.go: `.GetObjectInfo(ctx, "bucket", "dir/obj", ObjectOptions{})`
 $DIR/cmd/erasure-object_test.go: `.DeleteObject(ctx, test.bucket, test.object, ObjectOptions{})`
+$DIR/cmd/erasure-object_test.go: `.WithCancel(context.Background())`
+$DIR/cmd/erasure-object_test.go: `.Background()`
+$DIR/cmd/erasure-object_test.go: `.RemoveAll(dir)`
+$DIR/cmd/erasure-object_test.go: `.MakeBucket(ctx, bucketName, MakeBucketOptions{
+		VersioningEnabled: true,
+	})`
+$DIR/cmd/erasure-object_test.go: `.PutObject(ctx, bucketName, objectName,
+			mustGetPutObjReader(t, bytes.NewReader([]byte("abcd")), int64(len("abcd")), "", ""), ObjectOptions{
+				Versioned: true,
+			})`
+$DIR/cmd/erasure-object_test.go: `.NewReader([]byte("abcd"))`
+$DIR/cmd/erasure-object_test.go: `.DeleteObjects(ctx, bucketName, names, ObjectOptions{
+			Versioned: true,
+		})`
+$DIR/cmd/erasure-object_test.go: `.GetObjectInfo(ctx, bucketName, objectName, ObjectOptions{
+				VersionID: names[i].ObjectV.VersionID,
+			})`
 $DIR/cmd/erasure-object_test.go: `.WithCancel(context.Background())`
 $DIR/cmd/erasure-object_test.go: `.Background()`
 $DIR/cmd/erasure-object_test.go: `.RemoveAll(dir)`
@@ -6076,6 +6109,21 @@ $DIR/cmd/metrics-v2_gen_test.go: `.UnmarshalMsg(bts)`
 $DIR/cmd/metrics-v2_gen_test.go: `.MarshalMsg(nil)`
 $DIR/cmd/metrics-v2_gen_test.go: `.UnmarshalMsg(bts)`
 $DIR/cmd/metrics-v2_test.go: `ttfbHist.With(prometheus.Labels{"api": obs.label}).Observe(obs.val)`
+$DIR/cmd/metrics-v2_test.go: `metrics = getHistogramMetrics(ttfbHist, getBucketTTFBDistributionMD(), true)`
+$DIR/cmd/metrics-v2_test.go: `ttfbHist.With(prometheus.Labels{"api": obs.label}).Observe(obs.val)`
+$DIR/cmd/metrics-v2_test.go: `capitalPutObjects = append(capitalPutObjects, metric)`
+$DIR/cmd/metrics-v2_test.go: `slices.SortFunc(capitalPutObjects, func(a MetricV2, b MetricV2) int {
+		le1 := a.VariableLabels["le"]
+		le2 := a.VariableLabels["le"]
+		return strings.Compare(le1, le2)
+	})`
+$DIR/cmd/metrics-v2_test.go: `metrics = getHistogramMetrics(ttfbHist, getBucketTTFBDistributionMD(), true)`
+$DIR/cmd/metrics-v2_test.go: `lowerCopyObjects = append(lowerCopyObjects, metric)`
+$DIR/cmd/metrics-v2_test.go: `slices.SortFunc(lowerCopyObjects, func(a MetricV2, b MetricV2) int {
+		le1 := a.VariableLabels["le"]
+		le2 := a.VariableLabels["le"]
+		return strings.Compare(le1, le2)
+	})`
 $DIR/cmd/metrics-v2_test.go: `.NewHistogramVec(
 		prometheus.HistogramOpts{
 			Name:    "s3_ttfb_seconds",
@@ -6088,6 +6136,30 @@ $DIR/cmd/metrics-v2_test.go: `.NewTicker(1 * time.Millisecond)`
 $DIR/cmd/metrics-v2_test.go: `.Stop()`
 $DIR/cmd/metrics-v2_test.go: `.With(prometheus.Labels{"api": obs.label})`
 $DIR/cmd/metrics-v2_test.go: `.Observe(obs.val)`
+$DIR/cmd/metrics-v2_test.go: `.NewHistogramVec(
+		prometheus.HistogramOpts{
+			Name:    "s3_ttfb_seconds",
+			Help:    "Time taken by requests served by current MinIO server instance",
+			Buckets: histBuckets,
+		},
+		[]string{"api"},
+	)`
+$DIR/cmd/metrics-v2_test.go: `.NewTicker(1 * time.Millisecond)`
+$DIR/cmd/metrics-v2_test.go: `.Stop()`
+$DIR/cmd/metrics-v2_test.go: `.With(prometheus.Labels{"api": obs.label})`
+$DIR/cmd/metrics-v2_test.go: `.Observe(obs.val)`
+$DIR/cmd/metrics-v2_test.go: `.SortFunc(capitalPutObjects, func(a MetricV2, b MetricV2) int {
+		le1 := a.VariableLabels["le"]
+		le2 := a.VariableLabels["le"]
+		return strings.Compare(le1, le2)
+	})`
+$DIR/cmd/metrics-v2_test.go: `.Compare(le1, le2)`
+$DIR/cmd/metrics-v2_test.go: `.SortFunc(lowerCopyObjects, func(a MetricV2, b MetricV2) int {
+		le1 := a.VariableLabels["le"]
+		le2 := a.VariableLabels["le"]
+		return strings.Compare(le1, le2)
+	})`
+$DIR/cmd/metrics-v2_test.go: `.Compare(le1, le2)`
 $DIR/cmd/mrf_gen_test.go: `left, err = msgp.Skip(bts)`
 $DIR/cmd/mrf_gen_test.go: `msgp.Encode(&buf, &v)`
 $DIR/cmd/mrf_gen_test.go: `buf.Reset()`
@@ -6670,20 +6742,54 @@ $DIR/cmd/postpolicyform_test.go: `pp.SetBucket("testbucket")`
 $DIR/cmd/postpolicyform_test.go: `pp.SetContentType("image/jpeg")`
 $DIR/cmd/postpolicyform_test.go: `pp.SetUserMetadata("uuid", "14365123651274")`
 $DIR/cmd/postpolicyform_test.go: `pp.SetKeyStartsWith("user/user1/filename")`
-$DIR/cmd/postpolicyform_test.go: `pp.SetContentLengthRange(1048579, 10485760)`
+$DIR/cmd/postpolicyform_test.go: `pp.SetContentLengthRange(100, 999999)`
 $DIR/cmd/postpolicyform_test.go: `pp.SetSuccessStatusAction("201")`
-$DIR/cmd/postpolicyform_test.go: `formValues.Set("Bucket", tt.Bucket)`
-$DIR/cmd/postpolicyform_test.go: `formValues.Set("Key", tt.Key)`
-$DIR/cmd/postpolicyform_test.go: `formValues.Set("Content-Type", tt.ContentType)`
-$DIR/cmd/postpolicyform_test.go: `formValues.Set("X-Amz-Date", tt.XAmzDate)`
-$DIR/cmd/postpolicyform_test.go: `formValues.Set("X-Amz-Meta-Uuid", tt.XAmzMetaUUID)`
-$DIR/cmd/postpolicyform_test.go: `formValues.Set("X-Amz-Algorithm", tt.XAmzAlgorithm)`
-$DIR/cmd/postpolicyform_test.go: `formValues.Set("X-Amz-Credential", tt.XAmzCredential)`
+$DIR/cmd/postpolicyform_test.go: `pp.SetCondition("eq", "X-Amz-Credential", "KVGKMDUQ23TCZXTLTHLP/20160727/us-east-1/s3/aws4_request")`
+$DIR/cmd/postpolicyform_test.go: `pp.SetCondition("eq", "X-Amz-Algorithm", "AWS4-HMAC-SHA256")`
+$DIR/cmd/postpolicyform_test.go: `pp.SetCondition("eq", xhttp.AmzDate, "20160727T000000Z")`
+$DIR/cmd/postpolicyform_test.go: `defaultFormVals.Set("Bucket", "testbucket")`
+$DIR/cmd/postpolicyform_test.go: `defaultFormVals.Set("Content-Type", "image/jpeg")`
+$DIR/cmd/postpolicyform_test.go: `defaultFormVals.Set(xhttp.AmzMetaUUID, "14365123651274")`
+$DIR/cmd/postpolicyform_test.go: `defaultFormVals.Set("Key", "user/user1/filename/${filename}/myfile.txt")`
+$DIR/cmd/postpolicyform_test.go: `defaultFormVals.Set("X-Amz-Credential", "KVGKMDUQ23TCZXTLTHLP/20160727/us-east-1/s3/aws4_request")`
+$DIR/cmd/postpolicyform_test.go: `defaultFormVals.Set("X-Amz-Algorithm", "AWS4-HMAC-SHA256")`
+$DIR/cmd/postpolicyform_test.go: `defaultFormVals.Set(xhttp.AmzDate, "20160727T000000Z")`
+$DIR/cmd/postpolicyform_test.go: `defaultFormVals.Set("Success_action_status", "201")`
+$DIR/cmd/postpolicyform_test.go: `t.Run(tt.name, func(t *testing.T) {
+			if tt.expired {
+				// Expired already.
+				pp.SetExpires(UTCNow().AddDate(0, 0, -10))
+			} else {
+				// Expires in 10 days.
+				pp.SetExpires(UTCNow().AddDate(0, 0, 10))
+			}
+
+			tt.fv.Set("Policy", base64.StdEncoding.EncodeToString([]byte(pp.String())))
+
+			policyBytes, err := base64.StdEncoding.DecodeString(base64.StdEncoding.EncodeToString([]byte(pp.String())))
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			postPolicyForm, err := parsePostPolicyForm(bytes.NewReader(policyBytes))
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			errStr := ""
+			err = checkPostPolicy(tt.fv.Header, postPolicyForm)
+			if err != nil {
+				errStr = err.Error()
+			}
+			if errStr != tt.wantErr {
+				t.Errorf("test: '%s', want error: '%s', got error: '%s'", tt.name, tt.wantErr, errStr)
+			}
+		})`
 $DIR/cmd/postpolicyform_test.go: `pp.SetExpires(UTCNow().AddDate(0, 0, -10))`
 $DIR/cmd/postpolicyform_test.go: `pp.SetExpires(UTCNow().AddDate(0, 0, 10))`
-$DIR/cmd/postpolicyform_test.go: `formValues.Set("Policy", base64.StdEncoding.EncodeToString([]byte(pp.String())))`
-$DIR/cmd/postpolicyform_test.go: `formValues.Set("Success_action_status", tt.SuccessActionStatus)`
-$DIR/cmd/postpolicyform_test.go: `err = checkPostPolicy(formValues, postPolicyForm)`
+$DIR/cmd/postpolicyform_test.go: `tt.fv.Set("Policy", base64.StdEncoding.EncodeToString([]byte(pp.String())))`
+$DIR/cmd/postpolicyform_test.go: `err = checkPostPolicy(tt.fv.Header, postPolicyForm)`
+$DIR/cmd/postpolicyform_test.go: `errStr = err.Error()`
 $DIR/cmd/postpolicyform_test.go: `.Run("", func(t *testing.T) {
 			_, err := parsePostPolicyForm(strings.NewReader(testCase.policy))
 			if testCase.success && err != nil {
@@ -6699,23 +6805,117 @@ $DIR/cmd/postpolicyform_test.go: `.SetBucket("testbucket")`
 $DIR/cmd/postpolicyform_test.go: `.SetContentType("image/jpeg")`
 $DIR/cmd/postpolicyform_test.go: `.SetUserMetadata("uuid", "14365123651274")`
 $DIR/cmd/postpolicyform_test.go: `.SetKeyStartsWith("user/user1/filename")`
-$DIR/cmd/postpolicyform_test.go: `.SetContentLengthRange(1048579, 10485760)`
+$DIR/cmd/postpolicyform_test.go: `.SetContentLengthRange(100, 999999)`
 $DIR/cmd/postpolicyform_test.go: `.SetSuccessStatusAction("201")`
-$DIR/cmd/postpolicyform_test.go: `.Set("Bucket", tt.Bucket)`
-$DIR/cmd/postpolicyform_test.go: `.Set("Key", tt.Key)`
-$DIR/cmd/postpolicyform_test.go: `.Set("Content-Type", tt.ContentType)`
-$DIR/cmd/postpolicyform_test.go: `.Set("X-Amz-Date", tt.XAmzDate)`
-$DIR/cmd/postpolicyform_test.go: `.Set("X-Amz-Meta-Uuid", tt.XAmzMetaUUID)`
-$DIR/cmd/postpolicyform_test.go: `.Set("X-Amz-Algorithm", tt.XAmzAlgorithm)`
-$DIR/cmd/postpolicyform_test.go: `.Set("X-Amz-Credential", tt.XAmzCredential)`
+$DIR/cmd/postpolicyform_test.go: `.SetCondition("eq", "X-Amz-Credential", "KVGKMDUQ23TCZXTLTHLP/20160727/us-east-1/s3/aws4_request")`
+$DIR/cmd/postpolicyform_test.go: `.SetCondition("eq", "X-Amz-Algorithm", "AWS4-HMAC-SHA256")`
+$DIR/cmd/postpolicyform_test.go: `.SetCondition("eq", xhttp.AmzDate, "20160727T000000Z")`
+$DIR/cmd/postpolicyform_test.go: `.Set("Bucket", "testbucket")`
+$DIR/cmd/postpolicyform_test.go: `.Set("Content-Type", "image/jpeg")`
+$DIR/cmd/postpolicyform_test.go: `.Set(xhttp.AmzMetaUUID, "14365123651274")`
+$DIR/cmd/postpolicyform_test.go: `.Set("Key", "user/user1/filename/${filename}/myfile.txt")`
+$DIR/cmd/postpolicyform_test.go: `.Set("X-Amz-Credential", "KVGKMDUQ23TCZXTLTHLP/20160727/us-east-1/s3/aws4_request")`
+$DIR/cmd/postpolicyform_test.go: `.Set("X-Amz-Algorithm", "AWS4-HMAC-SHA256")`
+$DIR/cmd/postpolicyform_test.go: `.Set(xhttp.AmzDate, "20160727T000000Z")`
+$DIR/cmd/postpolicyform_test.go: `.Set("Success_action_status", "201")`
+$DIR/cmd/postpolicyform_test.go: `.Clone()`
+$DIR/cmd/postpolicyform_test.go: `.Clone()`
+$DIR/cmd/postpolicyform_test.go: `.Clone()`
+$DIR/cmd/postpolicyform_test.go: `.Set(xhttp.AmzDate, "2017T000000Z")`
+$DIR/cmd/postpolicyform_test.go: `.Clone()`
+$DIR/cmd/postpolicyform_test.go: `.Set(xhttp.AmzDate, "incorrect")`
+$DIR/cmd/postpolicyform_test.go: `.Clone()`
+$DIR/cmd/postpolicyform_test.go: `.Set("Key", "myfile.txt")`
+$DIR/cmd/postpolicyform_test.go: `.Clone()`
+$DIR/cmd/postpolicyform_test.go: `.Set("Key", "incorrect")`
+$DIR/cmd/postpolicyform_test.go: `.Clone()`
+$DIR/cmd/postpolicyform_test.go: `.Set("Bucket", "incorrect")`
+$DIR/cmd/postpolicyform_test.go: `.Clone()`
+$DIR/cmd/postpolicyform_test.go: `.Set(xhttp.ContentType, "incorrect")`
+$DIR/cmd/postpolicyform_test.go: `.Clone()`
+$DIR/cmd/postpolicyform_test.go: `.Set(xhttp.AmzAlgorithm, "incorrect")`
+$DIR/cmd/postpolicyform_test.go: `.Clone()`
+$DIR/cmd/postpolicyform_test.go: `.Set(xhttp.AmzCredential, "incorrect")`
+$DIR/cmd/postpolicyform_test.go: `.Clone()`
+$DIR/cmd/postpolicyform_test.go: `.Set(xhttp.AmzMetaUUID, "151274")`
+$DIR/cmd/postpolicyform_test.go: `.Clone()`
+$DIR/cmd/postpolicyform_test.go: `.Set(xhttp.AmzMetaName, "my-name")`
+$DIR/cmd/postpolicyform_test.go: `.Clone()`
+$DIR/cmd/postpolicyform_test.go: `.Set(http.CanonicalHeaderKey(xhttp.AmzChecksumAlgo), "algo-val")`
+$DIR/cmd/postpolicyform_test.go: `.CanonicalHeaderKey(xhttp.AmzChecksumAlgo)`
+$DIR/cmd/postpolicyform_test.go: `.Clone()`
+$DIR/cmd/postpolicyform_test.go: `.Set(http.CanonicalHeaderKey(xhttp.AmzChecksumCRC32), "crc32-val")`
+$DIR/cmd/postpolicyform_test.go: `.CanonicalHeaderKey(xhttp.AmzChecksumCRC32)`
+$DIR/cmd/postpolicyform_test.go: `.Clone()`
+$DIR/cmd/postpolicyform_test.go: `.Set(http.CanonicalHeaderKey(xhttp.AmzChecksumCRC32C), "crc32c-val")`
+$DIR/cmd/postpolicyform_test.go: `.CanonicalHeaderKey(xhttp.AmzChecksumCRC32C)`
+$DIR/cmd/postpolicyform_test.go: `.Clone()`
+$DIR/cmd/postpolicyform_test.go: `.Set(http.CanonicalHeaderKey(xhttp.AmzChecksumSHA1), "sha1-val")`
+$DIR/cmd/postpolicyform_test.go: `.CanonicalHeaderKey(xhttp.AmzChecksumSHA1)`
+$DIR/cmd/postpolicyform_test.go: `.Clone()`
+$DIR/cmd/postpolicyform_test.go: `.Set(http.CanonicalHeaderKey(xhttp.AmzChecksumSHA256), "sha256-val")`
+$DIR/cmd/postpolicyform_test.go: `.CanonicalHeaderKey(xhttp.AmzChecksumSHA256)`
+$DIR/cmd/postpolicyform_test.go: `.Clone()`
+$DIR/cmd/postpolicyform_test.go: `.Set(http.CanonicalHeaderKey(xhttp.AmzChecksumMode), "mode-val")`
+$DIR/cmd/postpolicyform_test.go: `.CanonicalHeaderKey(xhttp.AmzChecksumMode)`
+$DIR/cmd/postpolicyform_test.go: `.Clone()`
+$DIR/cmd/postpolicyform_test.go: `.Set(http.CanonicalHeaderKey(xhttp.ContentEncoding), "encoding-val")`
+$DIR/cmd/postpolicyform_test.go: `.CanonicalHeaderKey(xhttp.ContentEncoding)`
+$DIR/cmd/postpolicyform_test.go: `.Clone()`
+$DIR/cmd/postpolicyform_test.go: `.Add("Bucket", "anotherbucket")`
+$DIR/cmd/postpolicyform_test.go: `.Clone()`
+$DIR/cmd/postpolicyform_test.go: `.Set(xhttp.AmzSignature, "my-signature")`
+$DIR/cmd/postpolicyform_test.go: `.Clone()`
+$DIR/cmd/postpolicyform_test.go: `.Set("X-Ignore-Foo", "my-foo-value")`
+$DIR/cmd/postpolicyform_test.go: `.Clone()`
+$DIR/cmd/postpolicyform_test.go: `.Set("File", "file-value")`
+$DIR/cmd/postpolicyform_test.go: `.Clone()`
+$DIR/cmd/postpolicyform_test.go: `.Set(xhttp.AmzSignatureV2, "signature-value")`
+$DIR/cmd/postpolicyform_test.go: `.Clone()`
+$DIR/cmd/postpolicyform_test.go: `.Set(xhttp.AmzAccessKeyID, "access")`
+$DIR/cmd/postpolicyform_test.go: `.Set(xhttp.AmzSignatureV2, "signature-value")`
+$DIR/cmd/postpolicyform_test.go: `.Clone()`
+$DIR/cmd/postpolicyform_test.go: `.
+				Set(xhttp.AmzServerSideEncryptionKmsContext, "context-val")`
+$DIR/cmd/postpolicyform_test.go: `.
+				Set(xhttp.AmzServerSideEncryptionCustomerAlgorithm, "algo-val")`
+$DIR/cmd/postpolicyform_test.go: `.Run(tt.name, func(t *testing.T) {
+			if tt.expired {
+				// Expired already.
+				pp.SetExpires(UTCNow().AddDate(0, 0, -10))
+			} else {
+				// Expires in 10 days.
+				pp.SetExpires(UTCNow().AddDate(0, 0, 10))
+			}
+
+			tt.fv.Set("Policy", base64.StdEncoding.EncodeToString([]byte(pp.String())))
+
+			policyBytes, err := base64.StdEncoding.DecodeString(base64.StdEncoding.EncodeToString([]byte(pp.String())))
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			postPolicyForm, err := parsePostPolicyForm(bytes.NewReader(policyBytes))
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			errStr := ""
+			err = checkPostPolicy(tt.fv.Header, postPolicyForm)
+			if err != nil {
+				errStr = err.Error()
+			}
+			if errStr != tt.wantErr {
+				t.Errorf("test: '%s', want error: '%s', got error: '%s'", tt.name, tt.wantErr, errStr)
+			}
+		})`
 $DIR/cmd/postpolicyform_test.go: `.SetExpires(UTCNow().AddDate(0, 0, -10))`
 $DIR/cmd/postpolicyform_test.go: `.AddDate(0, 0, -10)`
 $DIR/cmd/postpolicyform_test.go: `.SetExpires(UTCNow().AddDate(0, 0, 10))`
 $DIR/cmd/postpolicyform_test.go: `.AddDate(0, 0, 10)`
-$DIR/cmd/postpolicyform_test.go: `.Set("Policy", base64.StdEncoding.EncodeToString([]byte(pp.String())))`
+$DIR/cmd/postpolicyform_test.go: `.fv.Set("Policy", base64.StdEncoding.EncodeToString([]byte(pp.String())))`
 $DIR/cmd/postpolicyform_test.go: `.StdEncoding.EncodeToString([]byte(pp.String()))`
 $DIR/cmd/postpolicyform_test.go: `.String()`
-$DIR/cmd/postpolicyform_test.go: `.Set("Success_action_status", tt.SuccessActionStatus)`
 $DIR/cmd/postpolicyform_test.go: `.StdEncoding.DecodeString(base64.StdEncoding.EncodeToString([]byte(pp.String())))`
 $DIR/cmd/postpolicyform_test.go: `.StdEncoding.EncodeToString([]byte(pp.String()))`
 $DIR/cmd/postpolicyform_test.go: `.String()`
@@ -8937,11 +9137,37 @@ $DIR/cmd/xl-storage-format-v2_test.go: `data, err = xl.AppendTo(nil)`
 $DIR/cmd/xl-storage-format-v2_test.go: `xl = xlMetaV2{}`
 $DIR/cmd/xl-storage-format-v2_test.go: `err = xl.Load(data)`
 $DIR/cmd/xl-storage-format-v2_test.go: `test(t, &xl)`
+$DIR/cmd/xl-storage-format-v2_test.go: `t.Run("write-timestamp", func(t *testing.T) {
+		var xl xlMetaV2
+		err = xl.Load(data)
+		if err != nil {
+			t.Fatal(err)
+		}
+		ventry := xlMetaV2Version{
+			Type: DeleteType,
+			DeleteMarker: &xlMetaV2DeleteMarker{
+				VersionID: uuid.New(),
+				ModTime:   time.Now().UnixNano(),
+				MetaSys:   map[string][]byte{ReservedMetadataPrefixLower + ReplicationTimestamp: []byte("2022-10-27T15:40:53.195813291+08:00"), ReservedMetadataPrefixLower + ReplicaTimestamp: []byte("2022-10-27T15:40:53.195813291+08:00")},
+			},
+			WrittenByVersion: globalVersionUnix,
+		}
+		xl.data = nil
+		xl.versions = xl.versions[:2]
+		xl.addVersion(ventry)
+
+		data, err = xl.AppendTo(nil)
+		if err != nil {
+			t.Fatal(err)
+		}
+		// t.Logf("data := %#v\n", data)
+	})`
 $DIR/cmd/xl-storage-format-v2_test.go: `err = xl.Load(data)`
 $DIR/cmd/xl-storage-format-v2_test.go: `xl.data = nil`
 $DIR/cmd/xl-storage-format-v2_test.go: `xl.versions = xl.versions[:2]`
 $DIR/cmd/xl-storage-format-v2_test.go: `xl.addVersion(ventry)`
 $DIR/cmd/xl-storage-format-v2_test.go: `data, err = xl.AppendTo(nil)`
+$DIR/cmd/xl-storage-format-v2_test.go: `err = xl.Load(data)`
 $DIR/cmd/xl-storage-format-v2_test.go: `got = string(v.DeleteMarker.MetaSys[ReservedMetadataPrefixLower+ReplicaTimestamp])`
 $DIR/cmd/xl-storage-format-v2_test.go: `err = xl.LoadOrConvert(buf)`
 $DIR/cmd/xl-storage-format-v2_test.go: `vers = append(vers, xl.versions)`
@@ -9343,12 +9569,40 @@ $DIR/cmd/xl-storage-format-v2_test.go: `.Run("roundtrip", func(t *testing.T) {
 $DIR/cmd/xl-storage-format-v2_test.go: `.Load(data)`
 $DIR/cmd/xl-storage-format-v2_test.go: `.AppendTo(nil)`
 $DIR/cmd/xl-storage-format-v2_test.go: `.Load(data)`
+$DIR/cmd/xl-storage-format-v2_test.go: `.Run("write-timestamp", func(t *testing.T) {
+		var xl xlMetaV2
+		err = xl.Load(data)
+		if err != nil {
+			t.Fatal(err)
+		}
+		ventry := xlMetaV2Version{
+			Type: DeleteType,
+			DeleteMarker: &xlMetaV2DeleteMarker{
+				VersionID: uuid.New(),
+				ModTime:   time.Now().UnixNano(),
+				MetaSys:   map[string][]byte{ReservedMetadataPrefixLower + ReplicationTimestamp: []byte("2022-10-27T15:40:53.195813291+08:00"), ReservedMetadataPrefixLower + ReplicaTimestamp: []byte("2022-10-27T15:40:53.195813291+08:00")},
+			},
+			WrittenByVersion: globalVersionUnix,
+		}
+		xl.data = nil
+		xl.versions = xl.versions[:2]
+		xl.addVersion(ventry)
+
+		data, err = xl.AppendTo(nil)
+		if err != nil {
+			t.Fatal(err)
+		}
+		// t.Logf("data := %#v\n", data)
+	})`
 $DIR/cmd/xl-storage-format-v2_test.go: `.Load(data)`
 $DIR/cmd/xl-storage-format-v2_test.go: `.New()`
 $DIR/cmd/xl-storage-format-v2_test.go: `.Now()`
 $DIR/cmd/xl-storage-format-v2_test.go: `.UnixNano()`
 $DIR/cmd/xl-storage-format-v2_test.go: `.addVersion(ventry)`
 $DIR/cmd/xl-storage-format-v2_test.go: `.AppendTo(nil)`
+$DIR/cmd/xl-storage-format-v2_test.go: `.StdEncoding.DecodeString(`WEwyIAEAAwDGAAACKgMCAcQml8QQAAAAAAAAAAAAAAAAAAAAANMYGu+UIK7akcQEofwXhAECCAjFAfyDpFR5cGUBpVYyT2Jq3gASoklExBAAAAAAAAAAAAAAAAAAAAAApEREaXLEEFTyKFqhkkXVoWn+8R1Lr2ymRWNBbGdvAaNFY00Io0VjTginRWNCU2l6ZdIAEAAAp0VjSW5kZXgBpkVjRGlzdNwAEAECAwQFBgcICQoLDA0ODxCoQ1N1bUFsZ28BqFBhcnROdW1zkgECqVBhcnRFVGFnc8CpUGFydFNpemVzktIAFtgq0gAGvb+qUGFydEFTaXplc5LSAFKb69IAGZg0p1BhcnRJZHiSxFqKm+4h9J7JCYCAgAFEABSPlBzH5g6z9gah3wOPnwLDlAGeD+os0xbjFd8O8w+TBoM8rz6bHO0KzQWtBu4GwgGSBocH6QPUSu8J5A/8gwSWtQPOtgL0euoMmAPEAKRTaXpl0gAdlemlTVRpbWXTGBrvlCCu2pGnTWV0YVN5c4K8WC1NaW5pby1JbnRlcm5hbC1hY3R1YWwtc2l6ZcQHNzA5MTIzMbxYLU1pbmlvLUludGVybmFsLWNvbXByZXNzaW9uxBVrbGF1c3Bvc3QvY29tcHJlc3MvczKnTWV0YVVzcoKsY29udGVudC10eXBlqHRleHQvY3N2pGV0YWfZIjEzYmYyMDU0NGVjN2VmY2YxNzhiYWRmNjc4NzNjODg2LTKhds5mYYMqzv8Vdtk=`)`
+$DIR/cmd/xl-storage-format-v2_test.go: `.Load(data)`
+$DIR/cmd/xl-storage-format-v2_test.go: `.BigEndian.Uint32(v.header.Signature[:])`
 $DIR/cmd/xl-storage-format-v2_test.go: `.Load(data)`
 $DIR/cmd/xl-storage-format-v2_test.go: `.getIdx(0)`
 $DIR/cmd/xl-storage-format-v2_test.go: `.ReadFile("testdata/xl-meta-consist.zip")`
@@ -11148,6 +11402,7 @@ $DIR/internal/bucket/object/lock/lock_test.go: `.New("expected element type <Sta
 $DIR/internal/bucket/object/lock/lock_test.go: `.New("expected element type <LegalHold>/<ObjectLockLegalHold> but have <UnknownLegalHold>")`
 $DIR/internal/bucket/object/lock/lock_test.go: `.NewReader(tt.value)`
 $DIR/internal/bucket/object/lock/lock_test.go: `.DeepEqual(o, tt.expected)`
+$DIR/internal/bucket/object/lock/lock_test.go: `.c.String()`
 $DIR/internal/bucket/replication/replication_test.go: `t.Run(fmt.Sprintf("Test %d", i+1), func(t *testing.T) {
 			cfg, err := ParseConfig(bytes.NewReader([]byte(tc.inputConfig)))
 			if err != nil && tc.expectedParsingErr != nil && err.Error() != tc.expectedParsingErr.Error() {
@@ -11678,6 +11933,20 @@ $DIR/internal/deadlineconn/deadlineconn_test.go: `received = string(b)`
 $DIR/internal/deadlineconn/deadlineconn_test.go: `_, terr = io.WriteString(deadlineconn, "messages received\n")`
 $DIR/internal/deadlineconn/deadlineconn_test.go: `_, err = io.WriteString(c, "message one\n")`
 $DIR/internal/deadlineconn/deadlineconn_test.go: `_, err = io.WriteString(c, "message two\n")`
+$DIR/internal/deadlineconn/deadlineconn_test.go: `wg.Add(1)`
+$DIR/internal/deadlineconn/deadlineconn_test.go: `cerr = fmt.Errorf("failed to accept new connection. %v", terr)`
+$DIR/internal/deadlineconn/deadlineconn_test.go: `deadlineconn.WithReadDeadline(time.Second)`
+$DIR/internal/deadlineconn/deadlineconn_test.go: `deadlineconn.WithWriteDeadline(time.Second)`
+$DIR/internal/deadlineconn/deadlineconn_test.go: `_, terr = deadlineconn.Read(b)`
+$DIR/internal/deadlineconn/deadlineconn_test.go: `cerr = fmt.Errorf("failed to read from client. %v", terr)`
+$DIR/internal/deadlineconn/deadlineconn_test.go: `cerr = fmt.Errorf(`server: expected: "message one\n", got: %v`, received)`
+$DIR/internal/deadlineconn/deadlineconn_test.go: `deadlineconn.SetReadDeadline(time.Unix(1, 0))`
+$DIR/internal/deadlineconn/deadlineconn_test.go: `time.Sleep(updateInterval * 2)`
+$DIR/internal/deadlineconn/deadlineconn_test.go: `_, terr = deadlineconn.Read(b)`
+$DIR/internal/deadlineconn/deadlineconn_test.go: `cerr = fmt.Errorf("could read from client, expected error, got %v", terr)`
+$DIR/internal/deadlineconn/deadlineconn_test.go: `_, err = io.WriteString(c, "message one\n")`
+$DIR/internal/deadlineconn/deadlineconn_test.go: `_, _ = io.WriteString(c, "message two\n")`
+$DIR/internal/deadlineconn/deadlineconn_test.go: `wg.Wait()`
 $DIR/internal/deadlineconn/deadlineconn_test.go: `.Listen("tcp", "localhost:0")`
 $DIR/internal/deadlineconn/deadlineconn_test.go: `.Addr()`
 $DIR/internal/deadlineconn/deadlineconn_test.go: `.String()`
@@ -11695,6 +11964,23 @@ $DIR/internal/deadlineconn/deadlineconn_test.go: `.WriteString(c, "message one\n
 $DIR/internal/deadlineconn/deadlineconn_test.go: `.WriteString(c, "message two\n")`
 $DIR/internal/deadlineconn/deadlineconn_test.go: `.NewReader(c)`
 $DIR/internal/deadlineconn/deadlineconn_test.go: `.ReadString('\n')`
+$DIR/internal/deadlineconn/deadlineconn_test.go: `.Listen("tcp", "localhost:0")`
+$DIR/internal/deadlineconn/deadlineconn_test.go: `.Addr()`
+$DIR/internal/deadlineconn/deadlineconn_test.go: `.String()`
+$DIR/internal/deadlineconn/deadlineconn_test.go: `.Add(1)`
+$DIR/internal/deadlineconn/deadlineconn_test.go: `.Done()`
+$DIR/internal/deadlineconn/deadlineconn_test.go: `.AcceptTCP()`
+$DIR/internal/deadlineconn/deadlineconn_test.go: `.WithReadDeadline(time.Second)`
+$DIR/internal/deadlineconn/deadlineconn_test.go: `.WithWriteDeadline(time.Second)`
+$DIR/internal/deadlineconn/deadlineconn_test.go: `.Read(b)`
+$DIR/internal/deadlineconn/deadlineconn_test.go: `.SetReadDeadline(time.Unix(1, 0))`
+$DIR/internal/deadlineconn/deadlineconn_test.go: `.Unix(1, 0)`
+$DIR/internal/deadlineconn/deadlineconn_test.go: `.Sleep(updateInterval * 2)`
+$DIR/internal/deadlineconn/deadlineconn_test.go: `.Read(b)`
+$DIR/internal/deadlineconn/deadlineconn_test.go: `.Dial("tcp", serverAddr)`
+$DIR/internal/deadlineconn/deadlineconn_test.go: `.WriteString(c, "message one\n")`
+$DIR/internal/deadlineconn/deadlineconn_test.go: `.WriteString(c, "message two\n")`
+$DIR/internal/deadlineconn/deadlineconn_test.go: `.Wait()`
 $DIR/internal/disk/disk_test.go: `.GetInfo(t.TempDir(), true)`
 $DIR/internal/disk/disk_test.go: `.TempDir()`
 $DIR/internal/disk/stat_test.go: `t.Run("", func(t *testing.T) {
