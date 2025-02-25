@@ -205,6 +205,443 @@ $DIR/src/os/os_test.go: `t.Run(fmt.Sprintf("length=%d", sz), func(t *testing.T) 
 				}
 			}
 		})` passed
-thread 'main' panicked at core/src/core.rs:344:29:
-Instrumentation failed to build after it was verified to
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+$DIR/src/os/os_test.go: `names = append(names, "symlink.txt")` passed
+$DIR/src/os/os_test.go: `names = append(names, "link.txt")` passed
+$DIR/src/os/os_test.go: `err = Chmod(path, dir.Mode())` passed
+$DIR/src/os/os_test.go: `err = p2.Kill()` timed-out
+$DIR/src/os/os_test.go: `t.Run("file", testDoubleCloseError(filepath.Join(sfdir, sfname)))` passed
+$DIR/src/os/os_test.go: `f, err = OpenFile(name, O_WRONLY|O_CREATE|O_TRUNC, 0)` failed
+$DIR/src/os/os_test.go: `forceMFTUpdateOnWindows(t, "./testdata/dirfs")` passed
+$DIR/src/os/os_test.go: `_, err = d.Open(`testdata\dirfs`)` passed
+$DIR/src/os/os_test.go: `_, err = d.Open(`NUL`)` passed
+$DIR/src/os/os_test.go: `cwd = cwd[len(filepath.VolumeName(cwd)):]` passed
+$DIR/src/os/os_test.go: `cwd = filepath.ToSlash(cwd)` passed
+$DIR/src/os/os_test.go: `cwd = strings.TrimPrefix(cwd, "/")` failed
+$DIR/src/os/os_test.go: `f.WriteString("I will not allocate when passed a string longer than 32 bytes.\n")` passed
+$DIR/src/os/os_test.go: `forceMFTUpdateOnWindows(t, "./testdata/dirfs")` passed
+$DIR/src/os/os_test.go: `forceMFTUpdateOnWindows(t, tmpDir)` passed
+$DIR/src/os/os_test.go: `fsys = fstest.MapFS{
+		"william":    {Data: []byte("Shakespeare\n")},
+		"carl":       {Data: []byte("Gauss\n")},
+		"daVinci":    {Data: []byte("Leonardo\n")},
+		"einstein":   {Data: []byte("Albert\n")},
+		"dir/newton": {Data: []byte("Sir Isaac\n")},
+	}` failed
+$DIR/src/os/os_test.go: `tmpDir = t.TempDir()` passed
+$DIR/src/os/os_test.go: `forceMFTUpdateOnWindows(t, tmpDir)` passed
+$DIR/src/os/os_test.go: `tmpFsys = DirFS(tmpDir)` failed
+$DIR/src/os/os_test.go: `testenv.MustHaveSymlink(t)` passed
+$DIR/src/os/os_test.go: `forceMFTUpdateOnWindows(t, insideDir)` passed
+$DIR/src/os/os_test.go: `forceMFTUpdateOnWindows(t, tmpDupDir)` passed
+$DIR/src/os/os_test.go: `target = outsideFile` passed
+$DIR/src/os/os_test.go: `target = insideFile` passed
+$DIR/src/os/os_test.go: `.Name()` nonbuildable
+$DIR/src/os/os_test.go: `.Size()` nonbuildable
+$DIR/src/os/os_test.go: `.MustHaveSymlink(t)` nonbuildable
+$DIR/src/os/os_test.go: `.MustHaveSymlink(t)` nonbuildable
+$DIR/src/os/os_test.go: `.Stat()` nonbuildable
+$DIR/src/os/os_test.go: `.Name()` nonbuildable
+$DIR/src/os/os_test.go: `.Size()` nonbuildable
+$DIR/src/os/os_test.go: `.Name()` nonbuildable
+$DIR/src/os/os_test.go: `.Mode()` nonbuildable
+$DIR/src/os/os_test.go: `.Size()` nonbuildable
+$DIR/src/os/os_test.go: `.Read(b)` nonbuildable
+$DIR/src/os/os_test.go: `.Read(b)` nonbuildable
+$DIR/src/os/os_test.go: `.Read(b)` nonbuildable
+$DIR/src/os/os_test.go: `.Run(".", testReaddirnames(".", dot))` nonbuildable
+$DIR/src/os/os_test.go: `.Run("sysdir", testReaddirnames(sysdir.name, sysdir.files))` nonbuildable
+$DIR/src/os/os_test.go: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go: `.Run(".", testReaddir(".", dot))` nonbuildable
+$DIR/src/os/os_test.go: `.Run("sysdir", testReaddir(sysdir.name, sysdir.files))` nonbuildable
+$DIR/src/os/os_test.go: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go: `.Run(".", testReadDir(".", dot))` nonbuildable
+$DIR/src/os/os_test.go: `.Run("sysdir", testReadDir(sysdir.name, sysdir.files))` nonbuildable
+$DIR/src/os/os_test.go: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go: `.Short()` nonbuildable
+$DIR/src/os/os_test.go: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go: `.Join(dir, fmt.Sprintf("%d", i))` nonbuildable
+$DIR/src/os/os_test.go: `.Sprintf("%d", i)` nonbuildable
+$DIR/src/os/os_test.go: `.Write([]byte(strings.Repeat("X", i)))` nonbuildable
+$DIR/src/os/os_test.go: `.Repeat("X", i)` nonbuildable
+$DIR/src/os/os_test.go: `.Readdir(n)` nonbuildable
+$DIR/src/os/os_test.go: `.ReadDir(n)` nonbuildable
+$DIR/src/os/os_test.go: `.Readdirnames(n)` nonbuildable
+$DIR/src/os/os_test.go: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go: `.Write([]byte("foo"))` nonbuildable
+$DIR/src/os/os_test.go: `.Name()` nonbuildable
+$DIR/src/os/os_test.go: `.Readdirnames(-1)` nonbuildable
+$DIR/src/os/os_test.go: `.As(err, &pe)` nonbuildable
+$DIR/src/os/os_test.go: `.Name()` nonbuildable
+$DIR/src/os/os_test.go: `.MustHaveLink(t)` nonbuildable
+$DIR/src/os/os_test.go: `.MustHaveSymlink(t)` nonbuildable
+$DIR/src/os/os_test.go: `.Mode()` nonbuildable
+$DIR/src/os/os_test.go: `.Mode()` nonbuildable
+$DIR/src/os/os_test.go: `.Name()` nonbuildable
+$DIR/src/os/os_test.go: `.Mode()` nonbuildable
+$DIR/src/os/os_test.go: `.MustHaveSymlink(t)` nonbuildable
+$DIR/src/os/os_test.go: `.Size()` nonbuildable
+$DIR/src/os/os_test.go: `.Run(test.name, func(t *testing.T) {
+			defer chtmpdir(t)()
+
+			if err := test.create(); err != nil {
+				t.Fatalf("failed to create test file: %s", err)
+			}
+
+			if _, err := Stat(to); err != nil {
+				// Sanity check that the underlying filesystem is not case sensitive.
+				if IsNotExist(err) {
+					t.Skipf("case sensitive filesystem")
+				}
+				t.Fatalf("stat %q, got: %q", to, err)
+			}
+
+			if err := Rename(from, to); err != nil {
+				t.Fatalf("unexpected error when renaming from %q to %q: %s", from, to, err)
+			}
+
+			fd, err := Open(".")
+			if err != nil {
+				t.Fatalf("Open .: %s", err)
+			}
+
+			// Stat does not return the real case of the file (it returns what the called asked for)
+			// So we have to use readdir to get the real name of the file.
+			dirNames, err := fd.Readdirnames(-1)
+			fd.Close()
+			if err != nil {
+				t.Fatalf("readdirnames: %s", err)
+			}
+
+			if dirNamesLen := len(dirNames); dirNamesLen != 1 {
+				t.Fatalf("unexpected dirNames len, got %q, want %q", dirNamesLen, 1)
+			}
+
+			if dirNames[0] != to {
+				t.Errorf("unexpected name, got %q, want %q", dirNames[0], to)
+			}
+		})` nonbuildable
+$DIR/src/os/os_test.go: `.create()` nonbuildable
+$DIR/src/os/os_test.go: `.Readdirnames(-1)` nonbuildable
+$DIR/src/os/os_test.go: `.Name()` nonbuildable
+$DIR/src/os/os_test.go: `.Name()` nonbuildable
+$DIR/src/os/os_test.go: `.Chmod(fm)` nonbuildable
+$DIR/src/os/os_test.go: `.Name()` nonbuildable
+$DIR/src/os/os_test.go: `.Write([]byte("hello, world\n"))` nonbuildable
+$DIR/src/os/os_test.go: `.Truncate(10)` nonbuildable
+$DIR/src/os/os_test.go: `.Truncate(1024)` nonbuildable
+$DIR/src/os/os_test.go: `.Truncate(0)` nonbuildable
+$DIR/src/os/os_test.go: `.Write([]byte("surprise!"))` nonbuildable
+$DIR/src/os/os_test.go: `.Write([]byte("hello, world\n"))` nonbuildable
+$DIR/src/os/os_test.go: `.Name()` nonbuildable
+$DIR/src/os/os_test.go: `.Name()` nonbuildable
+$DIR/src/os/os_test.go: `.Name()` nonbuildable
+$DIR/src/os/os_test.go: `.Write([]byte("surprise!"))` nonbuildable
+$DIR/src/os/os_test.go: `.Join(t.TempDir(), "nonexistent")` nonbuildable
+$DIR/src/os/os_test.go: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go: `.Write([]byte("hello, world\n"))` nonbuildable
+$DIR/src/os/os_test.go: `.Name()` nonbuildable
+$DIR/src/os/os_test.go: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go: `.Name()` nonbuildable
+$DIR/src/os/os_test.go: `.Write([]byte("hi"))` nonbuildable
+$DIR/src/os/os_test.go: `.Unix(0, 0)` nonbuildable
+$DIR/src/os/os_test.go: `.ModTime()` nonbuildable
+$DIR/src/os/os_test.go: `.Chdir()` nonbuildable
+$DIR/src/os/os_test.go: `.Stat()` nonbuildable
+$DIR/src/os/os_test.go: `.WriteString(f, data)` nonbuildable
+$DIR/src/os/os_test.go: `.Seek(tt.in, tt.whence)` nonbuildable
+$DIR/src/os/os_test.go: `.Contains(string(mounts), "reiserfs")` nonbuildable
+$DIR/src/os/os_test.go: `.Seek(0, 0)` nonbuildable
+$DIR/src/os/os_test.go: `.Seek(0, 0)` nonbuildable
+$DIR/src/os/os_test.go: `.Replace(tt.error.Error(), "file ", "", 1)` nonbuildable
+$DIR/src/os/os_test.go: `.HasSuffix(syscallErrStr, expectedErrStr)` nonbuildable
+$DIR/src/os/os_test.go: `.HasSuffix(syscallErrStr, syscall.EACCES.Error())` nonbuildable
+$DIR/src/os/os_test.go: `.Contains(hostname, "\x00")` nonbuildable
+$DIR/src/os/os_test.go: `.MustHaveExec(t)` nonbuildable
+$DIR/src/os/os_test.go: `.Cut(hostname, ".")` nonbuildable
+$DIR/src/os/os_test.go: `.WriteString(f, data)` nonbuildable
+$DIR/src/os/os_test.go: `.ReadAt(b, 7)` nonbuildable
+$DIR/src/os/os_test.go: `.WriteString(f, data)` nonbuildable
+$DIR/src/os/os_test.go: `.Seek(0, 0)` nonbuildable
+$DIR/src/os/os_test.go: `.ReadAt(b, 7)` nonbuildable
+$DIR/src/os/os_test.go: `.Read(b)` nonbuildable
+$DIR/src/os/os_test.go: `.WriteString(f, data)` nonbuildable
+$DIR/src/os/os_test.go: `.Seek(0, 0)` nonbuildable
+$DIR/src/os/os_test.go: `.ReadAt(b, -10)` nonbuildable
+$DIR/src/os/os_test.go: `.Contains(fmt.Sprint(err), wantsub)` nonbuildable
+$DIR/src/os/os_test.go: `.Sprint(err)` nonbuildable
+$DIR/src/os/os_test.go: `.WriteString(f, data)` nonbuildable
+$DIR/src/os/os_test.go: `.WriteAt([]byte("WORLD"), 7)` nonbuildable
+$DIR/src/os/os_test.go: `.Name()` nonbuildable
+$DIR/src/os/os_test.go: `.WriteAt([]byte("WORLD"), -10)` nonbuildable
+$DIR/src/os/os_test.go: `.Contains(fmt.Sprint(err), wantsub)` nonbuildable
+$DIR/src/os/os_test.go: `.Sprint(err)` nonbuildable
+$DIR/src/os/os_test.go: `.WriteAt([]byte(""), 1)` nonbuildable
+$DIR/src/os/os_test.go: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go: `.String()` nonbuildable
+$DIR/src/os/os_test.go: `.Write(b)` nonbuildable
+$DIR/src/os/os_test.go: `.Write(b)` nonbuildable
+$DIR/src/os/os_test.go: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go: `.Mode()` nonbuildable
+$DIR/src/os/os_test.go: `.MustHaveSymlink(t)` nonbuildable
+$DIR/src/os/os_test.go: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go: `.Join(tmpdir, "target")` nonbuildable
+$DIR/src/os/os_test.go: `.Stat()` nonbuildable
+$DIR/src/os/os_test.go: `.Join(tmpdir, "link")` nonbuildable
+$DIR/src/os/os_test.go: `.Base(target)` nonbuildable
+$DIR/src/os/os_test.go: `.VolumeName(target)` nonbuildable
+$DIR/src/os/os_test.go: `.ReadAt(make([]byte, 10), 0)` nonbuildable
+$DIR/src/os/os_test.go: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go: `.Run(fmt.Sprintf("length=%d", sz), func(t *testing.T) {
+			sizedTempDir := tmpdir[:sz-1] + "x" // Ensure it does not end with a slash.
+
+			// The various sized runs are for this call to trigger the boundary
+			// condition.
+			if err := MkdirAll(sizedTempDir, 0755); err != nil {
+				t.Fatalf("MkdirAll failed: %v", err)
+			}
+			data := []byte("hello world\n")
+			if err := WriteFile(sizedTempDir+"/foo.txt", data, 0644); err != nil {
+				t.Fatalf("os.WriteFile() failed: %v", err)
+			}
+			if err := Rename(sizedTempDir+"/foo.txt", sizedTempDir+"/bar.txt"); err != nil {
+				t.Fatalf("Rename failed: %v", err)
+			}
+			mtime := time.Now().Truncate(time.Minute)
+			if err := Chtimes(sizedTempDir+"/bar.txt", mtime, mtime); err != nil {
+				t.Fatalf("Chtimes failed: %v", err)
+			}
+			names := []string{"bar.txt"}
+			if testenv.HasSymlink() {
+				if err := Symlink(sizedTempDir+"/bar.txt", sizedTempDir+"/symlink.txt"); err != nil {
+					t.Fatalf("Symlink failed: %v", err)
+				}
+				names = append(names, "symlink.txt")
+			}
+			if testenv.HasLink() {
+				if err := Link(sizedTempDir+"/bar.txt", sizedTempDir+"/link.txt"); err != nil {
+					t.Fatalf("Link failed: %v", err)
+				}
+				names = append(names, "link.txt")
+			}
+			for _, wantSize := range []int64{int64(len(data)), 0} {
+				for _, name := range names {
+					path := sizedTempDir + "/" + name
+					dir, err := Stat(path)
+					if err != nil {
+						t.Fatalf("Stat(%q) failed: %v", path, err)
+					}
+					filesize := size(path, t)
+					if dir.Size() != filesize || filesize != wantSize {
+						t.Errorf("Size(%q) is %d, len(ReadFile()) is %d, want %d", path, dir.Size(), filesize, wantSize)
+					}
+					if runtime.GOOS != "wasip1" { // Chmod is not supported on wasip1
+						err = Chmod(path, dir.Mode())
+						if err != nil {
+							t.Fatalf("Chmod(%q) failed: %v", path, err)
+						}
+					}
+				}
+				if err := Truncate(sizedTempDir+"/bar.txt", 0); err != nil {
+					t.Fatalf("Truncate failed: %v", err)
+				}
+			}
+		})` nonbuildable
+$DIR/src/os/os_test.go: `.Sprintf("length=%d", sz)` nonbuildable
+$DIR/src/os/os_test.go: `.Now()` nonbuildable
+$DIR/src/os/os_test.go: `.Truncate(time.Minute)` passed
+$DIR/src/os/os_test.go: `.HasSymlink()` nonbuildable
+$DIR/src/os/os_test.go: `.HasLink()` nonbuildable
+$DIR/src/os/os_test.go: `.Size()` nonbuildable
+$DIR/src/os/os_test.go: `.Mode()` nonbuildable
+$DIR/src/os/os_test.go: `.Kill()` timed-out
+$DIR/src/os/os_test.go: `.Kill()` nonbuildable
+$DIR/src/os/os_test.go: `.f(file)` nonbuildable
+$DIR/src/os/os_test.go: `.Run("file", testDoubleCloseError(filepath.Join(sfdir, sfname)))` nonbuildable
+$DIR/src/os/os_test.go: `.Join(sfdir, sfname)` nonbuildable
+$DIR/src/os/os_test.go: `.IsDir()` nonbuildable
+$DIR/src/os/os_test.go: `.IsDir()` nonbuildable
+$DIR/src/os/os_test.go: `.IsDir()` nonbuildable
+$DIR/src/os/os_test.go: `.Readdirnames(0)` nonbuildable
+$DIR/src/os/os_test.go: `.Seek(0, 0)` nonbuildable
+$DIR/src/os/os_test.go: `.Readdirnames(0)` nonbuildable
+$DIR/src/os/os_test.go: `.Join(wd, "testdata", "issue37161")` nonbuildable
+$DIR/src/os/os_test.go: `.Readdirnames(1)` nonbuildable
+$DIR/src/os/os_test.go: `.Seek(0, 0)` nonbuildable
+$DIR/src/os/os_test.go: `.Readdirnames(0)` nonbuildable
+$DIR/src/os/os_test.go: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go: `.Join(dir, "x")` nonbuildable
+$DIR/src/os/os_test.go: `.Stat()` nonbuildable
+$DIR/src/os/os_test.go: `.Mode()` nonbuildable
+$DIR/src/os/os_test.go: `.Mode()` nonbuildable
+$DIR/src/os/os_test.go: `.TestFS(fsys, "a", "b", "dir/x")` nonbuildable
+$DIR/src/os/os_test.go: `.ReadDir("nonexistent")` nonbuildable
+$DIR/src/os/os_test.go: `.Open(nonesuch)` nonbuildable
+$DIR/src/os/os_test.go: `.Contains(err.Error(), nonesuch)` nonbuildable
+$DIR/src/os/os_test.go: `.Contains(err.(*PathError).Path, "testdata")` nonbuildable
+$DIR/src/os/os_test.go: `.Open(`testdata\dirfs`)` nonbuildable
+$DIR/src/os/os_test.go: `.Open(`NUL`)` nonbuildable
+$DIR/src/os/os_test.go: `.VolumeName(cwd)` nonbuildable
+$DIR/src/os/os_test.go: `.ToSlash(cwd)` nonbuildable
+$DIR/src/os/os_test.go: `.TrimPrefix(cwd, "/")` nonbuildable
+$DIR/src/os/os_test.go: `.Open(cwd + "/testdata/dirfs/a")` nonbuildable
+$DIR/src/os/os_test.go: `.ToSlash(cwd)` nonbuildable
+$DIR/src/os/os_test.go: `.Open(path)` nonbuildable
+$DIR/src/os/os_test.go: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go: `.Join(d, "control.txt")` nonbuildable
+$DIR/src/os/os_test.go: `.Join(d, `e:xperi\ment.txt`)` nonbuildable
+$DIR/src/os/os_test.go: `.WalkDir(fsys, ".", func(path string, e fs.DirEntry, err error) error {
+		if fs.ValidPath(e.Name()) {
+			t.Logf("%q ok", e.Name())
+		} else {
+			t.Errorf("%q INVALID", e.Name())
+		}
+		return nil
+	})` nonbuildable
+$DIR/src/os/os_test.go: `.ValidPath(e.Name())` nonbuildable
+$DIR/src/os/os_test.go: `.Name()` nonbuildable
+$DIR/src/os/os_test.go: `.Stat(fsys, name)` nonbuildable
+$DIR/src/os/os_test.go: `.ReadFile(fsys, name)` nonbuildable
+$DIR/src/os/os_test.go: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go: `.Join(d, "whiteboard.txt")` nonbuildable
+$DIR/src/os/os_test.go: `.AllocsPerRun(100, func() {
+		f.WriteString("I will not allocate when passed a string longer than 32 bytes.\n")
+	})` nonbuildable
+$DIR/src/os/os_test.go: `.WriteString("I will not allocate when passed a string longer than 32 bytes.\n")` nonbuildable
+$DIR/src/os/os_test.go: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go: `.Base(dir)` nonbuildable
+$DIR/src/os/os_test.go: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go: `.Base(f.Name())` nonbuildable
+$DIR/src/os/os_test.go: `.Name()` nonbuildable
+$DIR/src/os/os_test.go: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go: `.TestFS(tmpFsys, "a", "b", "dir/x")` nonbuildable
+$DIR/src/os/os_test.go: `.WalkDir(fsys, ".", func(path string, d fs.DirEntry, err error) error {
+		if d.IsDir() {
+			return nil
+		}
+
+		data, err := fs.ReadFile(fsys, path)
+		if err != nil {
+			return err
+		}
+		newData, err := fs.ReadFile(tmpFsys, path)
+		if err != nil {
+			return err
+		}
+		if !bytes.Equal(data, newData) {
+			return errors.New("file " + path + " contents differ")
+		}
+		return nil
+	})` nonbuildable
+$DIR/src/os/os_test.go: `.IsDir()` nonbuildable
+$DIR/src/os/os_test.go: `.ReadFile(fsys, path)` nonbuildable
+$DIR/src/os/os_test.go: `.ReadFile(tmpFsys, path)` nonbuildable
+$DIR/src/os/os_test.go: `.Equal(data, newData)` nonbuildable
+$DIR/src/os/os_test.go: `.New("file " + path + " contents differ")` nonbuildable
+$DIR/src/os/os_test.go: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go: `.TestFS(tmpFsys, "william", "carl", "daVinci", "einstein", "dir/newton")` nonbuildable
+$DIR/src/os/os_test.go: `.WalkDir(fsys, ".", func(path string, d fs.DirEntry, err error) error {
+		if d.IsDir() {
+			return nil
+		}
+
+		data, err := fs.ReadFile(fsys, path)
+		if err != nil {
+			return err
+		}
+		newData, err := fs.ReadFile(tmpFsys, path)
+		if err != nil {
+			return err
+		}
+		if !bytes.Equal(data, newData) {
+			return errors.New("file " + path + " contents differ")
+		}
+		return nil
+	})` nonbuildable
+$DIR/src/os/os_test.go: `.IsDir()` nonbuildable
+$DIR/src/os/os_test.go: `.ReadFile(fsys, path)` nonbuildable
+$DIR/src/os/os_test.go: `.ReadFile(tmpFsys, path)` nonbuildable
+$DIR/src/os/os_test.go: `.Equal(data, newData)` nonbuildable
+$DIR/src/os/os_test.go: `.New("file " + path + " contents differ")` nonbuildable
+$DIR/src/os/os_test.go: `.MustHaveSymlink(t)` nonbuildable
+$DIR/src/os/os_test.go: `.TempDir()` nonbuildable
+$DIR/src/os/os_test.go: `.Join(outsideDir, "file.out.txt")` nonbuildable
+$DIR/src/os/os_test.go: `.Join(insideDir, "file.in.txt")` nonbuildable
+$DIR/src/os/os_test.go: `.Join(insideDir, "in_symlinks")` nonbuildable
+$DIR/src/os/os_test.go: `.Join(insideDir, "out_symlinks")` nonbuildable
+$DIR/src/os/os_test.go: `.Join(linkOutDir, "file.abs.out.link")` nonbuildable
+$DIR/src/os/os_test.go: `.Rel(filepath.Join(linkOutDir, "."), outsideFile)` nonbuildable
+$DIR/src/os/os_test.go: `.Join(linkOutDir, ".")` nonbuildable
+$DIR/src/os/os_test.go: `.Join(linkOutDir, "file.rel.out.link")` nonbuildable
+$DIR/src/os/os_test.go: `.Rel(filepath.Join(linkInDir, "."), insideFile)` nonbuildable
+$DIR/src/os/os_test.go: `.Join(linkInDir, ".")` nonbuildable
+$DIR/src/os/os_test.go: `.Join(linkInDir, "file.rel.in.link")` nonbuildable
+$DIR/src/os/os_test.go: `.Is(err, ErrInvalid)` nonbuildable
+$DIR/src/os/os_test.go: `.TestFS(tmpFsys, "file.in.txt", "out_symlinks/file.abs.out.link", "out_symlinks/file.rel.out.link", "in_symlinks/file.rel.in.link")` nonbuildable
+$DIR/src/os/os_test.go: `.WalkDir(fsys, ".", func(path string, d fs.DirEntry, err error) error {
+		if d.IsDir() {
+			return nil
+		}
+
+		fi, err := d.Info()
+		if err != nil {
+			return err
+		}
+		if filepath.Ext(path) == ".link" {
+			if fi.Mode()&ModeSymlink == 0 {
+				return errors.New("original file " + path + " should be a symlink")
+			}
+			tmpfi, err := fs.Stat(tmpFsys, path)
+			if err != nil {
+				return err
+			}
+			if tmpfi.Mode()&ModeSymlink != 0 {
+				return errors.New("copied file " + path + " should not be a symlink")
+			}
+		}
+
+		data, err := fs.ReadFile(fsys, path)
+		if err != nil {
+			return err
+		}
+		newData, err := fs.ReadFile(tmpFsys, path)
+		if err != nil {
+			return err
+		}
+		if !bytes.Equal(data, newData) {
+			return errors.New("file " + path + " contents differ")
+		}
+
+		var target string
+		switch fileName := filepath.Base(path); fileName {
+		case "file.abs.out.link", "file.rel.out.link":
+			target = outsideFile
+		case "file.rel.in.link":
+			target = insideFile
+		}
+		if len(target) > 0 {
+			targetData, err := ReadFile(target)
+			if err != nil {
+				return err
+			}
+			if !bytes.Equal(targetData, newData) {
+				return errors.New("file " + path + " contents differ from target")
+			}
+		}
+
+		return nil
+	})` nonbuildable
+$DIR/src/os/os_test.go: `.IsDir()` nonbuildable
+$DIR/src/os/os_test.go: `.Info()` nonbuildable
+$DIR/src/os/os_test.go: `.Ext(path)` nonbuildable
+$DIR/src/os/os_test.go: `.Mode()` nonbuildable
+$DIR/src/os/os_test.go: `.New("original file " + path + " should be a symlink")` nonbuildable
+$DIR/src/os/os_test.go: `.Stat(tmpFsys, path)` nonbuildable
+$DIR/src/os/os_test.go: `.Mode()` nonbuildable
+$DIR/src/os/os_test.go: `.New("copied file " + path + " should not be a symlink")` nonbuildable
+$DIR/src/os/os_test.go: `.ReadFile(fsys, path)` nonbuildable
+$DIR/src/os/os_test.go: `.ReadFile(tmpFsys, path)` nonbuildable
+$DIR/src/os/os_test.go: `.Equal(data, newData)` nonbuildable
+$DIR/src/os/os_test.go: `.New("file " + path + " contents differ")` nonbuildable
+$DIR/src/os/os_test.go: `.Base(path)` nonbuildable
+$DIR/src/os/os_test.go: `.Equal(targetData, newData)` nonbuildable
+$DIR/src/os/os_test.go: `.New("file " + path + " contents differ from target")` nonbuildable
