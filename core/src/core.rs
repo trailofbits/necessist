@@ -428,7 +428,7 @@ fn lock_root(root: &Path) -> Result<std::fs::File> {
     } else {
         crate::flock::try_lock_path(root)
     }
-    .with_context(|| format!("Failed to lock {root:?}"))
+    .with_context(|| format!("Failed to lock `{}`", root.display()))
 }
 
 #[cfg(feature = "lock_root")]
@@ -478,7 +478,7 @@ fn canonicalize_source_files(context: &LightContext) -> Result<Vec<PathBuf>> {
         .iter()
         .map(|path| {
             let path_buf = dunce::canonicalize(path)
-                .with_context(|| format!("Failed to canonicalize {path:?}"))?;
+                .with_context(|| format!("Failed to canonicalize `{}`", path.display()))?;
             ensure!(
                 path_buf.starts_with(context.root.as_path()),
                 "{:?} is not in {:?}",

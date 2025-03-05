@@ -752,11 +752,20 @@ pub(crate) fn check_mtimes(context: &LightContext) -> Result<()> {
     let mtime_map = mtime_map(metadata.target_directory.as_std_path())?;
     let existing = MTIME_MAP.get_or_init(|| mtime_map.clone());
     for (path, mtime) in existing {
-        assert_eq!(Some(mtime), mtime_map.get(path), "failed for {path:?}");
+        assert_eq!(
+            Some(mtime),
+            mtime_map.get(path),
+            "failed for `{}`",
+            path.display()
+        );
     }
     // smoelius: Verify no new paths were created.
     for path in mtime_map.keys() {
-        assert!(existing.contains_key(path), "failed for {path:?}");
+        assert!(
+            existing.contains_key(path),
+            "failed for `{}`",
+            path.display()
+        );
     }
     Ok(())
 }
