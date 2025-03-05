@@ -194,7 +194,8 @@ fn read_tests_in(path: impl AsRef<Path>, filter: bool) -> BTreeMap<Key, Vec<(Pat
             #[allow(clippy::explicit_write)]
             writeln!(
                 stderr(),
-                "Skipping {path:?} as ssh-agent is not running or has no identities",
+                "Skipping `{}` as ssh-agent is not running or has no identities",
+                path.display()
             )
             .unwrap();
 
@@ -492,7 +493,7 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> (String, Duration) {
         };
 
         let stdout_expected = read_to_string(&path_stdout)
-            .map_err(|error| format!("Failed to read {path_stdout:?}: {error:?}"))
+            .map_err(|error| format!("Failed to read `{}`: {error:?}", path_stdout.display()))
             .unwrap();
 
         let root = test
@@ -752,9 +753,14 @@ pub fn stdout_files_are_sanitary_in(path: impl AsRef<Path>) {
 
         assert!(
             !TIMING_RE.is_match(&contents),
-            "{path:?} matches `TIMING_RE`"
+            "`{}` matches `TIMING_RE`",
+            path.display()
         );
-        assert!(!BIN_RE.is_match(&contents), "{path:?} matches `BIN_RE`");
+        assert!(
+            !BIN_RE.is_match(&contents),
+            "`{}` matches `BIN_RE`",
+            path.display()
+        );
     }
 }
 

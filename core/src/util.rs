@@ -81,8 +81,10 @@ pub fn strip_prefix<'a>(path: &'a Path, base: &Path) -> Result<&'a Path> {
         format!(
             "\
 `base` is not a prefix of `path`
-base: {base:?}
-path: {path:?}"
+base: `{}`
+path: `{}`",
+            base.display(),
+            path.display()
         )
     })
 }
