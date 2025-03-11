@@ -23,7 +23,9 @@ use std::{
 };
 use subprocess::{Exec, NullFile};
 use swc_core::{
-    common::{BytePos, Loc, SourceMap, Span as SwcSpan, Spanned as SwcSpanned},
+    common::{
+        BytePos, Loc, SourceMap, Span as SwcSpan, Spanned as SwcSpanned, source_map::SmallPos,
+    },
     ecma::{
         ast::{
             ArrowExpr, AwaitExpr, BlockStmtOrExpr, CallExpr, Callee, EsVersion, Expr, ExprStmt,
@@ -536,12 +538,10 @@ trait ToLineColumn {
 
 impl ToLineColumn for BytePos {
     fn to_line_column(&self, source_map: &SourceMap) -> LineColumn {
-        let Loc {
-            line, col_display, ..
-        } = source_map.lookup_char_pos(*self);
+        let Loc { line, col, .. } = source_map.lookup_char_pos(*self);
         LineColumn {
             line,
-            column: col_display,
+            column: col.to_usize(),
         }
     }
 }
