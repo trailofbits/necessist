@@ -33,9 +33,9 @@ strip-ansi-escapes = "0.2"
 subprocess = "0.2"
 walkdir = "2.5"
 
-# Anchor TS
+# Anchor
 toml_edit = "0.22"
-# Also, swc_core, listed below under Hardhat TS.
+# Also, swc_core, listed below under Hardhat.
 
 # Foundry
 # smoelius: New `solang-parser` releases may contain breaking changes:
@@ -47,7 +47,7 @@ streaming-iterator = "0.1"
 tree-sitter = "0.25"
 tree-sitter-go = "0.23"
 
-# Hardhat TS
+# Hardhat
 swc_core = { version = "14.0", features = [
     "common",
     "ecma_ast",
