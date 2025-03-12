@@ -2,7 +2,7 @@
 
 Run tests with statements and method calls removed to help identify broken tests
 
-Necessist currently supports Anchor (TS), Foundry, Go, Hardhat (TS), and Rust.
+Necessist currently supports Anchor, Foundry, Go, Hardhat, and Rust.
 
 A paper on Necessist ([Test Harness Mutilation]) appeared in Mutation 2024. ([slides], [preprint])
 
@@ -212,7 +212,7 @@ Similarly, Necessist will not attempt to remove a method call if:
 Also, for some frameworks, certain statements and methods are ignored. Click on a framework to see its specifics.
 
 <details>
-<summary>Anchor TS</summary>
+<summary>Anchor</summary>
 
 #### Ignored functions
 
@@ -281,9 +281,9 @@ In addition to the below, the Go framework ignores:
 </details>
 
 <details>
-<summary>Hardhat TS</summary>
+<summary>Hardhat</summary>
 
-The ignored functions and methods are the same as for Anchor TS above.
+The ignored functions and methods are the same as for Anchor above.
 
 </details>
 
