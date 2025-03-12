@@ -375,7 +375,7 @@ impl ParseLow for Mocha {
     ) -> bool {
         matches!(
             statement.node,
-            Stmt::Break(_) | Stmt::Continue(_) | Stmt::Return(_)
+            Stmt::Break(_) | Stmt::Continue(_) | Stmt::Return(_) | Stmt::Throw(_)
         )
     }
 
