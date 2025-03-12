@@ -7423,9 +7423,6 @@ $DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.withd
         )`
 $DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
 $DIR/contracts/test/v0.8/automation/ZKSyncAutomationRegistry2_3.test.ts: `.getAddress()`
-$DIR/contracts/test/v0.8/directory.test.ts: `throw new Error(
-            `${path.join(dirPath, entry.name)} starts with a number`,
-          )`
 $DIR/contracts/test/v0.8/directory.test.ts: `noNumbersAsFirstChar(newPath)`
 $DIR/contracts/test/v0.8/directory.test.ts: `.join(__dirname, '..', '..', 'src')`
 $DIR/contracts/test/v0.8/directory.test.ts: `.readdirSync(dirPath, { withFileTypes: true })`
