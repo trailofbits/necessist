@@ -168,6 +168,7 @@ Options:
       --default-config         Create a default necessist.toml file in the project's root directory
       --deny <WARNING>         Treat <WARNING> as an error; `--deny all` treats all warnings as errors
       --dump                   Dump sqlite database contents to the console
+      --dump-candidate-counts  Dump number of removal candidates in each file and exit
       --dump-candidates        Dump removal candidates and exit (for debugging)
       --framework <FRAMEWORK>  Assume testing framework is <FRAMEWORK> [possible values: anchor, auto, foundry, go, hardhat, rust]
       --no-sqlite              Do not output to an sqlite database

@@ -86,6 +86,7 @@ pub struct Necessist {
     pub default_config: bool,
     pub deny: Vec<Warning>,
     pub dump: bool,
+    pub dump_candidate_counts: bool,
     pub dump_candidates: bool,
     pub no_local_functions: bool,
     pub no_sqlite: bool,
@@ -225,6 +226,11 @@ fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementatio
 
     if context.opts.dump_candidates {
         dump_candidates(context, &source_file_span_test_map)?;
+        return Ok(None);
+    }
+
+    if context.opts.dump_candidate_counts {
+        dump_candidate_counts(context, &source_file_span_test_map);
         return Ok(None);
     }
 
@@ -605,6 +611,38 @@ fn dump_candidates(
     }
 
     Ok(())
+}
+
+fn dump_candidate_counts(
+    context: &LightContext,
+    source_file_span_test_map: &SourceFileSpanTestMap,
+) {
+    let mut candidate_counts = source_file_span_test_map
+        .iter()
+        .map(|(source_file, span_test_maps)| {
+            (
+                span_test_maps.statement.keys().count() + span_test_maps.method_call.keys().count(),
+                source_file,
+            )
+        })
+        .collect::<Vec<_>>();
+
+    candidate_counts.sort();
+
+    let Some(width) = candidate_counts
+        .iter()
+        .map(|(count, _)| count.to_string().len())
+        .max()
+    else {
+        return;
+    };
+
+    for (count, source_file) in candidate_counts {
+        (context.println)(&format!(
+            "{count:width$} {}",
+            source_file.to_console_string(),
+        ));
+    }
 }
 
 fn instrument_statements<'a, I>(
