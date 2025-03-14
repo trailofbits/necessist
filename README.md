@@ -170,7 +170,6 @@ Options:
       --dump                   Dump sqlite database contents to the console
       --dump-candidates        Dump removal candidates and exit (for debugging)
       --framework <FRAMEWORK>  Assume testing framework is <FRAMEWORK> [possible values: anchor, auto, foundry, go, hardhat, rust]
-      --no-dry-run             Do not perform dry runs
       --no-sqlite              Do not output to an sqlite database
       --quiet                  Do not output to the console
       --reset                  Discard sqlite database contents

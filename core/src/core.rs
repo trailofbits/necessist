@@ -87,7 +87,6 @@ pub struct Necessist {
     pub deny: Vec<Warning>,
     pub dump: bool,
     pub dump_candidates: bool,
-    pub no_dry_run: bool,
     pub no_local_functions: bool,
     pub no_sqlite: bool,
     pub quiet: bool,
@@ -292,33 +291,31 @@ fn run(mut context: Context, source_file_span_test_map: SourceFileSpanTestMap) -
             continue;
         }
 
-        if !context.opts.no_dry_run {
-            (context.println)(&format!(
-                "{}: dry running",
-                util::strip_current_dir(&source_file).to_string_lossy()
-            ));
+        (context.println)(&format!(
+            "{}: dry running",
+            util::strip_current_dir(&source_file).to_string_lossy()
+        ));
 
-            let result = context.backend.dry_run(&context.light(), &source_file);
+        let result = context.backend.dry_run(&context.light(), &source_file);
 
-            if let Err(error) = &result {
-                source_warn(
-                    &context.light(),
-                    Warning::DryRunFailed,
-                    &source_file,
-                    &format!("dry run failed: {error:?}"),
-                    WarnFlags::empty(),
-                )?;
-            }
+        if let Err(error) = &result {
+            source_warn(
+                &context.light(),
+                Warning::DryRunFailed,
+                &source_file,
+                &format!("dry run failed: {error:?}"),
+                WarnFlags::empty(),
+            )?;
+        }
 
-            if CTRLC.load(Ordering::SeqCst) {
-                bail!("Ctrl-C detected");
-            }
+        if CTRLC.load(Ordering::SeqCst) {
+            bail!("Ctrl-C detected");
+        }
 
-            if result.is_err() {
-                let n = skip_present_spans(&context, span_test_iter)?;
-                update_progress(&context, None, n)?;
-                continue;
-            }
+        if result.is_err() {
+            let n = skip_present_spans(&context, span_test_iter)?;
+            update_progress(&context, None, n)?;
+            continue;
         }
 
         (context.println)(&format!(
