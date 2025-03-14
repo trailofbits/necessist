@@ -17,7 +17,7 @@
 | minio                      | RELEASE.2025-02-07T23-21-09Z             |           |      | X     | X     | X       | 1         |
 | operator-filter-registry   | v1.4.2                                   |           |      | X     | X     | X       | 0         |
 | proptest_https             | b71253807372932f72a71b1af7975371a41e7c88 |           | X    | X     | X     | X       | 0         |
-| pyth                       |                                          | anchor    |      | X     | X     |         | 0         |
+| pyth                       | pyth-price-pusher-v9.1.1                 | anchor    |      | X     | X     |         | 0         |
 | seaport_foundry            | 1.6                                      | foundry   | X    | X     | X     | X       | 1         |
 | seaport_hardhat            | 1.6                                      | hardhat   |      | X     | X     | X       | 1         |
 | squads-protocol_v4         | 19597dc082986d7d95a89ee124dc23625b1b0039 | anchor    | X    | X     | X     |         | 1         |
