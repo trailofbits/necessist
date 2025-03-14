@@ -1,0 +1,545 @@
+118 candidates in 15 tests in 1 source file
+$DIR/test/foundry/new/ExpectedBalances.t.sol: dry running
+$DIR/test/foundry/new/ExpectedBalances.t.sol: mutilating
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `erc20.mint(alice, 500);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `erc721.mint(bob, 1);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `erc1155.mint(bob, 1, 100);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `vm.deal(alice, 1 ether);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `executions[0] = Execution({
+            offerer: alice,
+            conduitKey: bytes32(0),
+            item: ReceivedItem(
+                ItemType.NATIVE,
+                address(0),
+                0,
+                0.5 ether,
+                payable(bob)
+            )
+        });` passed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `executions[1] = Execution({
+            offerer: alice,
+            conduitKey: bytes32(0),
+            item: ReceivedItem(
+                ItemType.ERC20,
+                address(erc20),
+                0,
+                250,
+                payable(bob)
+            )
+        });` passed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `executions[2] = Execution({
+            offerer: bob,
+            conduitKey: bytes32(0),
+            item: ReceivedItem(
+                ItemType.ERC721,
+                address(erc721),
+                1,
+                1,
+                payable(alice)
+            )
+        });` passed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `executions[3] = Execution({
+            offerer: bob,
+            conduitKey: bytes32(0),
+            item: ReceivedItem(
+                ItemType.ERC1155,
+                address(erc1155),
+                1,
+                50,
+                payable(alice)
+            )
+        });` passed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `balances.addTransfers(executions);` passed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `vm.prank(alice);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `vm.prank(bob);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `vm.prank(bob);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `vm.prank(alice);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `erc20.mint(alice, 500);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `erc721.mint(bob, 1);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `erc1155.mint(bob, 1, 100);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `vm.deal(alice, 1 ether);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `balances.addTransfer(
+            Execution({
+                offerer: alice,
+                conduitKey: bytes32(0),
+                item: ReceivedItem(
+                    ItemType.NATIVE,
+                    address(0),
+                    0,
+                    0.5 ether,
+                    payable(bob)
+                )
+            })
+        );` passed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `balances.addTransfer(
+            Execution({
+                offerer: alice,
+                conduitKey: bytes32(0),
+                item: ReceivedItem(
+                    ItemType.ERC20,
+                    address(erc20),
+                    0,
+                    250,
+                    payable(bob)
+                )
+            })
+        );` passed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `balances.addTransfer(
+            Execution({
+                offerer: bob,
+                conduitKey: bytes32(0),
+                item: ReceivedItem(
+                    ItemType.ERC721,
+                    address(erc721),
+                    1,
+                    1,
+                    payable(alice)
+                )
+            })
+        );` passed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `balances.addTransfer(
+            Execution({
+                offerer: bob,
+                conduitKey: bytes32(0),
+                item: ReceivedItem(
+                    ItemType.ERC1155,
+                    address(erc1155),
+                    1,
+                    50,
+                    payable(alice)
+                )
+            })
+        );` passed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `vm.prank(alice);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `vm.prank(bob);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `vm.prank(bob);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `vm.prank(alice);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `vm.deal(alice, 0.5 ether);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `balances.addTransfer(
+            Execution({
+                offerer: alice,
+                conduitKey: bytes32(0),
+                item: ReceivedItem(
+                    ItemType.NATIVE,
+                    address(0),
+                    0,
+                    0.5 ether,
+                    payable(bob)
+                )
+            })
+        );` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `vm.deal(bob, 0.5 ether);` passed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `vm.deal(alice, 0.5 ether);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `balances.addTransfer(
+            Execution({
+                offerer: alice,
+                conduitKey: bytes32(0),
+                item: ReceivedItem(
+                    ItemType.NATIVE,
+                    address(0),
+                    0,
+                    0.5 ether,
+                    payable(bob)
+                )
+            })
+        );` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `vm.prank(alice);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `erc20.mint(alice, 10);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `balances.addTransfer(
+            Execution({
+                offerer: alice,
+                conduitKey: bytes32(0),
+                item: ReceivedItem(
+                    ItemType.ERC20,
+                    address(erc20),
+                    0,
+                    5,
+                    payable(bob)
+                )
+            })
+        );` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `vm.prank(alice);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `erc20.mint(alice, 1);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `erc20.mint(alice, 10);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `balances.addTransfer(
+            Execution({
+                offerer: alice,
+                conduitKey: bytes32(0),
+                item: ReceivedItem(
+                    ItemType.ERC20,
+                    address(erc20),
+                    0,
+                    5,
+                    payable(bob)
+                )
+            })
+        );` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `erc20.mint(alice, 100);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `erc20.mint(bob, 200);` passed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `balances.addTransfer(
+            Execution({
+                offerer: alice,
+                conduitKey: bytes32(0),
+                item: ReceivedItem(
+                    ItemType.ERC20,
+                    address(erc20),
+                    0,
+                    50,
+                    payable(bob)
+                )
+            })
+        );` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `balances.addTransfer(
+            Execution({
+                offerer: bob,
+                conduitKey: bytes32(0),
+                item: ReceivedItem(
+                    ItemType.ERC20,
+                    address(erc20),
+                    0,
+                    50,
+                    payable(alice)
+                )
+            })
+        );` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `erc721.mint(alice, 1);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `balances.addTransfer(
+            Execution({
+                offerer: alice,
+                conduitKey: bytes32(0),
+                item: ReceivedItem(
+                    ItemType.ERC721,
+                    address(erc721),
+                    1,
+                    1,
+                    payable(bob)
+                )
+            })
+        );` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `erc721.mint(alice, 2);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `erc721.mint(alice, 1);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `balances.addTransfer(
+            Execution({
+                offerer: alice,
+                conduitKey: bytes32(0),
+                item: ReceivedItem(
+                    ItemType.ERC721,
+                    address(erc721),
+                    1,
+                    1,
+                    payable(bob)
+                )
+            })
+        );` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `erc721.mint(bob, 2);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `vm.prank(alice);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `erc721.mint(alice, 1);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `erc721.mint(alice, 2);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `balances.addTransfer(
+            Execution({
+                offerer: alice,
+                conduitKey: bytes32(0),
+                item: ReceivedItem(
+                    ItemType.ERC721,
+                    address(erc721),
+                    1,
+                    1,
+                    payable(bob)
+                )
+            })
+        );` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `balances.addTransfer(
+            Execution({
+                offerer: alice,
+                conduitKey: bytes32(0),
+                item: ReceivedItem(
+                    ItemType.ERC721,
+                    address(erc721),
+                    2,
+                    1,
+                    payable(bob)
+                )
+            })
+        );` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `vm.prank(alice);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `vm.prank(alice);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `erc1155.mint(alice, 1, 10);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `balances.addTransfer(
+            Execution({
+                offerer: alice,
+                conduitKey: bytes32(0),
+                item: ReceivedItem(
+                    ItemType.ERC1155,
+                    address(erc1155),
+                    1,
+                    5,
+                    payable(bob)
+                )
+            })
+        );` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `vm.prank(alice);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `erc1155.mint(alice, 1, 1);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `erc1155.mint(alice, 1, 10);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `balances.addTransfer(
+            Execution({
+                offerer: alice,
+                conduitKey: bytes32(0),
+                item: ReceivedItem(
+                    ItemType.ERC1155,
+                    address(erc1155),
+                    1,
+                    5,
+                    payable(bob)
+                )
+            })
+        );` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `vm.prank(alice);` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.mint(alice, 500)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.mint(bob, 1)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.mint(bob, 1, 100)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.deal(alice, 1 ether)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.addTransfers(executions)` passed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.prank(alice)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.prank(bob)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.prank(bob)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.prank(alice)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.mint(alice, 500)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.mint(bob, 1)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.mint(bob, 1, 100)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.deal(alice, 1 ether)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.addTransfer(
+            Execution({
+                offerer: alice,
+                conduitKey: bytes32(0),
+                item: ReceivedItem(
+                    ItemType.NATIVE,
+                    address(0),
+                    0,
+                    0.5 ether,
+                    payable(bob)
+                )
+            })
+        )` passed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.addTransfer(
+            Execution({
+                offerer: alice,
+                conduitKey: bytes32(0),
+                item: ReceivedItem(
+                    ItemType.ERC20,
+                    address(erc20),
+                    0,
+                    250,
+                    payable(bob)
+                )
+            })
+        )` passed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.addTransfer(
+            Execution({
+                offerer: bob,
+                conduitKey: bytes32(0),
+                item: ReceivedItem(
+                    ItemType.ERC721,
+                    address(erc721),
+                    1,
+                    1,
+                    payable(alice)
+                )
+            })
+        )` passed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.addTransfer(
+            Execution({
+                offerer: bob,
+                conduitKey: bytes32(0),
+                item: ReceivedItem(
+                    ItemType.ERC1155,
+                    address(erc1155),
+                    1,
+                    50,
+                    payable(alice)
+                )
+            })
+        )` passed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.prank(alice)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.prank(bob)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.prank(bob)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.prank(alice)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.deal(alice, 0.5 ether)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.addTransfer(
+            Execution({
+                offerer: alice,
+                conduitKey: bytes32(0),
+                item: ReceivedItem(
+                    ItemType.NATIVE,
+                    address(0),
+                    0,
+                    0.5 ether,
+                    payable(bob)
+                )
+            })
+        )` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.deal(bob, 0.5 ether)` passed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.deal(alice, 0.5 ether)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.addTransfer(
+            Execution({
+                offerer: alice,
+                conduitKey: bytes32(0),
+                item: ReceivedItem(
+                    ItemType.NATIVE,
+                    address(0),
+                    0,
+                    0.5 ether,
+                    payable(bob)
+                )
+            })
+        )` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.prank(alice)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.mint(alice, 10)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.addTransfer(
+            Execution({
+                offerer: alice,
+                conduitKey: bytes32(0),
+                item: ReceivedItem(
+                    ItemType.ERC20,
+                    address(erc20),
+                    0,
+                    5,
+                    payable(bob)
+                )
+            })
+        )` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.prank(alice)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.mint(alice, 1)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.mint(alice, 10)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.addTransfer(
+            Execution({
+                offerer: alice,
+                conduitKey: bytes32(0),
+                item: ReceivedItem(
+                    ItemType.ERC20,
+                    address(erc20),
+                    0,
+                    5,
+                    payable(bob)
+                )
+            })
+        )` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.mint(alice, 100)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.mint(bob, 200)` passed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.addTransfer(
+            Execution({
+                offerer: alice,
+                conduitKey: bytes32(0),
+                item: ReceivedItem(
+                    ItemType.ERC20,
+                    address(erc20),
+                    0,
+                    50,
+                    payable(bob)
+                )
+            })
+        )` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.addTransfer(
+            Execution({
+                offerer: bob,
+                conduitKey: bytes32(0),
+                item: ReceivedItem(
+                    ItemType.ERC20,
+                    address(erc20),
+                    0,
+                    50,
+                    payable(alice)
+                )
+            })
+        )` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.mint(alice, 1)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.addTransfer(
+            Execution({
+                offerer: alice,
+                conduitKey: bytes32(0),
+                item: ReceivedItem(
+                    ItemType.ERC721,
+                    address(erc721),
+                    1,
+                    1,
+                    payable(bob)
+                )
+            })
+        )` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.mint(alice, 2)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.mint(alice, 1)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.addTransfer(
+            Execution({
+                offerer: alice,
+                conduitKey: bytes32(0),
+                item: ReceivedItem(
+                    ItemType.ERC721,
+                    address(erc721),
+                    1,
+                    1,
+                    payable(bob)
+                )
+            })
+        )` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.mint(bob, 2)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.prank(alice)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.mint(alice, 1)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.mint(alice, 2)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.addTransfer(
+            Execution({
+                offerer: alice,
+                conduitKey: bytes32(0),
+                item: ReceivedItem(
+                    ItemType.ERC721,
+                    address(erc721),
+                    1,
+                    1,
+                    payable(bob)
+                )
+            })
+        )` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.addTransfer(
+            Execution({
+                offerer: alice,
+                conduitKey: bytes32(0),
+                item: ReceivedItem(
+                    ItemType.ERC721,
+                    address(erc721),
+                    2,
+                    1,
+                    payable(bob)
+                )
+            })
+        )` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.prank(alice)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.prank(alice)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.mint(alice, 1, 10)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.addTransfer(
+            Execution({
+                offerer: alice,
+                conduitKey: bytes32(0),
+                item: ReceivedItem(
+                    ItemType.ERC1155,
+                    address(erc1155),
+                    1,
+                    5,
+                    payable(bob)
+                )
+            })
+        )` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.prank(alice)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.mint(alice, 1, 1)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.mint(alice, 1, 10)` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.addTransfer(
+            Execution({
+                offerer: alice,
+                conduitKey: bytes32(0),
+                item: ReceivedItem(
+                    ItemType.ERC1155,
+                    address(erc1155),
+                    1,
+                    5,
+                    payable(bob)
+                )
+            })
+        )` failed
+$DIR/test/foundry/new/ExpectedBalances.t.sol: `.prank(alice)` failed

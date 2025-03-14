@@ -1,0 +1,4 @@
+url = "https://github.com/ProjectOpenSea/seaport"
+rev = "1.6"
+framework = "foundry"
+source_files = ["test/foundry/new/ExpectedBalances.t.sol"]

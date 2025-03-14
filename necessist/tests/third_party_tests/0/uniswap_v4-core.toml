@@ -1,0 +1,13 @@
+url = "https://github.com/Uniswap/v4-core"
+target_os = ["linux", "macos"]
+source_files = ["test/Sync.t.sol"]
+config_mandatory = true
+
+[config]
+# smoelius: Removing the `vm.startSnapshotGas` call causes:
+# ```
+# Error: Unexpected exit status: Signaled(6)
+# ```
+ignored_functions = ["vm.startSnapshotGas"]
+
+ignored_methods = ["balanceOf"]
