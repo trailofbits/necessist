@@ -1,0 +1,147 @@
+144 candidates in 12 tests in 1 source file
+$DIR/test/Sync.t.sol: dry running
+$DIR/test/Sync.t.sol: mutilating
+$DIR/test/Sync.t.sol: `manager.sync(currency1);` failed
+$DIR/test/Sync.t.sol: `manager.sync(currency0);` failed
+$DIR/test/Sync.t.sol: `actions[0] = Actions.SYNC;` passed
+$DIR/test/Sync.t.sol: `params[0] = abi.encode(currency2);` failed
+$DIR/test/Sync.t.sol: `actions[1] = Actions.ASSERT_RESERVES_EQUALS;` passed
+$DIR/test/Sync.t.sol: `params[1] = abi.encode(0);` failed
+$DIR/test/Sync.t.sol: `actionsRouter.executeActions(actions, params);` passed
+$DIR/test/Sync.t.sol: `actions[0] = Actions.ASSERT_RESERVES_EQUALS;` passed
+$DIR/test/Sync.t.sol: `params[0] = abi.encode(0);` failed
+$DIR/test/Sync.t.sol: `actions[1] = Actions.SYNC;` failed
+$DIR/test/Sync.t.sol: `params[1] = abi.encode(currency0);` failed
+$DIR/test/Sync.t.sol: `actions[2] = Actions.ASSERT_RESERVES_EQUALS;` passed
+$DIR/test/Sync.t.sol: `params[2] = abi.encode(currency0Balance);` failed
+$DIR/test/Sync.t.sol: `actionsRouter.executeActions(actions, params);` passed
+$DIR/test/Sync.t.sol: `swapRouter.swap(key, SWAP_PARAMS, testSettings, new bytes(0));` passed
+$DIR/test/Sync.t.sol: `actions[0] = Actions.SYNC;` failed
+$DIR/test/Sync.t.sol: `params[0] = abi.encode(currency0);` failed
+$DIR/test/Sync.t.sol: `actions[1] = Actions.ASSERT_RESERVES_EQUALS;` passed
+$DIR/test/Sync.t.sol: `params[1] = abi.encode(balanceCurrency0);` failed
+$DIR/test/Sync.t.sol: `manager.initialize(key2, SQRT_PRICE_1_1);` failed
+$DIR/test/Sync.t.sol: `modifyLiquidityRouter.modifyLiquidity(key2, IPoolManager.ModifyLiquidityParams(-60, 60, 100, 0), new bytes(0));` passed
+$DIR/test/Sync.t.sol: `actions[0] = Actions.SYNC;` failed
+$DIR/test/Sync.t.sol: `params[0] = abi.encode(currency2);` failed
+$DIR/test/Sync.t.sol: `actions[1] = Actions.ASSERT_RESERVES_EQUALS;` passed
+$DIR/test/Sync.t.sol: `params[1] = abi.encode(balanceCurrency2);` failed
+$DIR/test/Sync.t.sol: `vm.assume(taker != address(actionsRouter));` passed
+$DIR/test/Sync.t.sol: `amount = bound(amount, 1, uint256(int256(type(int128).max)));` failed
+$DIR/test/Sync.t.sol: `MockERC20(Currency.unwrap(currency2)).approve(address(actionsRouter), type(uint256).max);` passed
+$DIR/test/Sync.t.sol: `MockERC20(Currency.unwrap(currency2)).mint(address(manager), amount);` failed
+$DIR/test/Sync.t.sol: `actions[0] = Actions.PRANK_TAKE_FROM;` failed
+$DIR/test/Sync.t.sol: `params[0] = abi.encode(currency2, taker, taker, amount);` failed
+$DIR/test/Sync.t.sol: `actions[1] = Actions.ASSERT_DELTA_EQUALS;` passed
+$DIR/test/Sync.t.sol: `params[1] = abi.encode(currency2, taker, int256(amount) * -1);` failed
+$DIR/test/Sync.t.sol: `actions[2] = Actions.SYNC;` failed
+$DIR/test/Sync.t.sol: `params[2] = abi.encode(currency2);` failed
+$DIR/test/Sync.t.sol: `actions[3] = Actions.TRANSFER_FROM;` failed
+$DIR/test/Sync.t.sol: `params[3] = abi.encode(currency2, address(this), address(manager), amount);` failed
+$DIR/test/Sync.t.sol: `actions[4] = Actions.SETTLE_FOR;` failed
+$DIR/test/Sync.t.sol: `params[4] = abi.encode(taker);` failed
+$DIR/test/Sync.t.sol: `actions[5] = Actions.ASSERT_DELTA_EQUALS;` passed
+$DIR/test/Sync.t.sol: `params[5] = abi.encode(currency2, taker, 0);` failed
+$DIR/test/Sync.t.sol: `actions[0] = Actions.SYNC;` passed
+$DIR/test/Sync.t.sol: `params[0] = abi.encode(currency2);` failed
+$DIR/test/Sync.t.sol: `actions[1] = Actions.ASSERT_RESERVES_EQUALS;` passed
+$DIR/test/Sync.t.sol: `params[1] = abi.encode(0);` failed
+$DIR/test/Sync.t.sol: `actions[2] = Actions.SETTLE;` passed
+$DIR/test/Sync.t.sol: `actions[3] = Actions.ASSERT_DELTA_EQUALS;` passed
+$DIR/test/Sync.t.sol: `params[3] = abi.encode(currency2, address(actionsRouter), 0);` failed
+$DIR/test/Sync.t.sol: `actions[0] = Actions.ASSERT_RESERVES_EQUALS;` passed
+$DIR/test/Sync.t.sol: `params[0] = abi.encode(0);` failed
+$DIR/test/Sync.t.sol: `actions[1] = Actions.SYNC;` failed
+$DIR/test/Sync.t.sol: `params[1] = abi.encode(currency0);` failed
+$DIR/test/Sync.t.sol: `actions[2] = Actions.ASSERT_RESERVES_EQUALS;` passed
+$DIR/test/Sync.t.sol: `params[2] = abi.encode(currency0Balance);` failed
+$DIR/test/Sync.t.sol: `actions[3] = Actions.SETTLE;` passed
+$DIR/test/Sync.t.sol: `actions[4] = Actions.ASSERT_DELTA_EQUALS;` passed
+$DIR/test/Sync.t.sol: `params[4] = abi.encode(currency0, address(actionsRouter), 0);` failed
+$DIR/test/Sync.t.sol: `MockERC20(Currency.unwrap(currency0)).approve(address(actionsRouter), type(uint256).max);` passed
+$DIR/test/Sync.t.sol: `vm.stopSnapshotGas();` passed
+$DIR/test/Sync.t.sol: `actions[0] = Actions.TAKE;` failed
+$DIR/test/Sync.t.sol: `params[0] = abi.encode(currency0, address(this), 10);` failed
+$DIR/test/Sync.t.sol: `actions[1] = Actions.ASSERT_DELTA_EQUALS;` passed
+$DIR/test/Sync.t.sol: `params[1] = abi.encode(currency0, address(actionsRouter), -10);` failed
+$DIR/test/Sync.t.sol: `actions[2] = Actions.TRANSFER_FROM;` failed
+$DIR/test/Sync.t.sol: `params[2] = abi.encode(currency0, address(this), manager, 10);` failed
+$DIR/test/Sync.t.sol: `actions[3] = Actions.SETTLE;` passed
+$DIR/test/Sync.t.sol: `actions[4] = Actions.ASSERT_DELTA_EQUALS;` passed
+$DIR/test/Sync.t.sol: `params[4] = abi.encode(currency0, address(actionsRouter), -10);` failed
+$DIR/test/Sync.t.sol: `actions[5] = Actions.SYNC;` failed
+$DIR/test/Sync.t.sol: `params[5] = abi.encode(currency0);` failed
+$DIR/test/Sync.t.sol: `actions[6] = Actions.TRANSFER_FROM;` failed
+$DIR/test/Sync.t.sol: `params[6] = abi.encode(currency0, address(this), manager, 10);` failed
+$DIR/test/Sync.t.sol: `actions[7] = Actions.SETTLE;` passed
+$DIR/test/Sync.t.sol: `actions[8] = Actions.ASSERT_DELTA_EQUALS;` passed
+$DIR/test/Sync.t.sol: `params[8] = abi.encode(currency0, address(actionsRouter), 0);` failed
+$DIR/test/Sync.t.sol: `actionsRouter.executeActions(actions, params);` failed
+$DIR/test/Sync.t.sol: `value = bound(value, 1, uint256(int256(type(int128).max / 2)));` passed
+$DIR/test/Sync.t.sol: `vm.deal(address(this), value);` passed
+$DIR/test/Sync.t.sol: `vm.deal(address(manager), value);` passed
+$DIR/test/Sync.t.sol: `actions[0] = Actions.SYNC;` failed
+$DIR/test/Sync.t.sol: `params[0] = abi.encode(nativeERC20);` failed
+$DIR/test/Sync.t.sol: `actions[1] = Actions.ASSERT_RESERVES_EQUALS;` failed
+$DIR/test/Sync.t.sol: `params[1] = abi.encode(nativeERC20Balance);` failed
+$DIR/test/Sync.t.sol: `actions[2] = Actions.SETTLE_NATIVE;` failed
+$DIR/test/Sync.t.sol: `params[2] = abi.encode(value);` failed
+$DIR/test/Sync.t.sol: `currency2Balance = bound(currency2Balance, 1, uint256(int256(type(int128).max / 2)));` passed
+$DIR/test/Sync.t.sol: `ethBalance = bound(ethBalance, 1, uint256(int256(type(int128).max / 2)));` failed
+$DIR/test/Sync.t.sol: `vm.deal(address(this), ethBalance);` failed
+$DIR/test/Sync.t.sol: `currency2.transfer(address(manager), currency2Balance);` failed
+$DIR/test/Sync.t.sol: `actions[0] = Actions.ASSERT_RESERVES_EQUALS;` passed
+$DIR/test/Sync.t.sol: `params[0] = abi.encode(0);` failed
+$DIR/test/Sync.t.sol: `actions[1] = Actions.SYNC;` failed
+$DIR/test/Sync.t.sol: `params[1] = abi.encode(currency2);` failed
+$DIR/test/Sync.t.sol: `actions[2] = Actions.ASSERT_RESERVES_EQUALS;` passed
+$DIR/test/Sync.t.sol: `params[2] = abi.encode(currency2Balance);` failed
+$DIR/test/Sync.t.sol: `actions[3] = Actions.SYNC;` passed
+$DIR/test/Sync.t.sol: `params[3] = abi.encode(CurrencyLibrary.ADDRESS_ZERO);` failed
+$DIR/test/Sync.t.sol: `actions[4] = Actions.ASSERT_RESERVES_EQUALS;` passed
+$DIR/test/Sync.t.sol: `params[4] = abi.encode(0);` failed
+$DIR/test/Sync.t.sol: `actions[5] = Actions.SETTLE_NATIVE;` failed
+$DIR/test/Sync.t.sol: `params[5] = abi.encode(ethBalance);` failed
+$DIR/test/Sync.t.sol: `actions[6] = Actions.ASSERT_DELTA_EQUALS;` passed
+$DIR/test/Sync.t.sol: `params[6] = abi.encode(CurrencyLibrary.ADDRESS_ZERO, address(actionsRouter), ethBalance);` failed
+$DIR/test/Sync.t.sol: `actions[7] = Actions.TAKE;` failed
+$DIR/test/Sync.t.sol: `params[7] = abi.encode(CurrencyLibrary.ADDRESS_ZERO, address(this), ethBalance);` failed
+$DIR/test/Sync.t.sol: `value = bound(value, 1, uint256(int256(type(int128).max / 2)));` passed
+$DIR/test/Sync.t.sol: `currency2.transfer(address(manager), value);` failed
+$DIR/test/Sync.t.sol: `actions[0] = Actions.SYNC;` failed
+$DIR/test/Sync.t.sol: `params[0] = abi.encode(currency2);` failed
+$DIR/test/Sync.t.sol: `actions[1] = Actions.ASSERT_RESERVES_EQUALS;` failed
+$DIR/test/Sync.t.sol: `params[1] = abi.encode(value);` failed
+$DIR/test/Sync.t.sol: `actions[2] = Actions.TRANSFER_FROM;` failed
+$DIR/test/Sync.t.sol: `params[2] = abi.encode(currency2, address(this), address(manager), value);` failed
+$DIR/test/Sync.t.sol: `actions[3] = Actions.SETTLE;` passed
+$DIR/test/Sync.t.sol: `actions[4] = Actions.ASSERT_DELTA_EQUALS;` passed
+$DIR/test/Sync.t.sol: `params[4] = abi.encode(currency2, address(actionsRouter), value);` failed
+$DIR/test/Sync.t.sol: `actions[5] = Actions.TAKE;` failed
+$DIR/test/Sync.t.sol: `params[5] = abi.encode(currency2, address(this), value);` failed
+$DIR/test/Sync.t.sol: `actions[6] = Actions.SETTLE;` passed
+$DIR/test/Sync.t.sol: `actions[7] = Actions.ASSERT_DELTA_EQUALS;` passed
+$DIR/test/Sync.t.sol: `params[7] = abi.encode(CurrencyLibrary.ADDRESS_ZERO, address(actionsRouter), 0);` failed
+$DIR/test/Sync.t.sol: `.sync(currency1)` failed
+$DIR/test/Sync.t.sol: `.sync(currency0)` failed
+$DIR/test/Sync.t.sol: `.unwrap(currency0)` nonbuildable
+$DIR/test/Sync.t.sol: `.unwrap(manager.getSyncedCurrency())` nonbuildable
+$DIR/test/Sync.t.sol: `.getSyncedCurrency()` nonbuildable
+$DIR/test/Sync.t.sol: `.executeActions(actions, params)` passed
+$DIR/test/Sync.t.sol: `.executeActions(actions, params)` passed
+$DIR/test/Sync.t.sol: `.swap(key, SWAP_PARAMS, testSettings, new bytes(0))` passed
+$DIR/test/Sync.t.sol: `.initialize(key2, SQRT_PRICE_1_1)` failed
+$DIR/test/Sync.t.sol: `.modifyLiquidity(key2, IPoolManager.ModifyLiquidityParams(-60, 60, 100, 0), new bytes(0))` passed
+$DIR/test/Sync.t.sol: `.ModifyLiquidityParams(-60, 60, 100, 0)` nonbuildable
+$DIR/test/Sync.t.sol: `.assume(taker != address(actionsRouter))` passed
+$DIR/test/Sync.t.sol: `.approve(address(actionsRouter), type(uint256).max)` passed
+$DIR/test/Sync.t.sol: `.mint(address(manager), amount)` failed
+$DIR/test/Sync.t.sol: `.approve(address(actionsRouter), type(uint256).max)` passed
+$DIR/test/Sync.t.sol: `.getSyncedReserves()` nonbuildable
+$DIR/test/Sync.t.sol: `.stopSnapshotGas()` passed
+$DIR/test/Sync.t.sol: `.executeActions(actions, params)` failed
+$DIR/test/Sync.t.sol: `.deal(address(this), value)` passed
+$DIR/test/Sync.t.sol: `.deal(address(manager), value)` passed
+$DIR/test/Sync.t.sol: `.deal(address(this), ethBalance)` failed
+$DIR/test/Sync.t.sol: `.transfer(address(manager), currency2Balance)` failed
+$DIR/test/Sync.t.sol: `.transfer(address(manager), value)` failed
