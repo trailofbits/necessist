@@ -34,8 +34,6 @@ pub struct Opts<Identifier: Clone + Send + Sync + ValueEnum + 'static> {
     dump_candidates: bool,
     #[clap(long, help = "Assume testing framework is <FRAMEWORK>")]
     framework: Option<framework::Auto<Identifier>>,
-    #[clap(long, help = "Do not perform dry runs")]
-    no_dry_run: bool,
     #[clap(long, hide = true)]
     no_local_functions: bool,
     #[clap(long, help = "Do not output to an sqlite database")]
@@ -76,7 +74,6 @@ impl<Identifier: Clone + Send + Sync + ValueEnum> From<Opts<Identifier>>
             dump,
             dump_candidates,
             framework,
-            no_dry_run,
             no_local_functions,
             no_sqlite,
             quiet,
@@ -99,7 +96,6 @@ impl<Identifier: Clone + Send + Sync + ValueEnum> From<Opts<Identifier>>
                 deny,
                 dump,
                 dump_candidates,
-                no_dry_run,
                 no_local_functions,
                 no_sqlite,
                 quiet,
