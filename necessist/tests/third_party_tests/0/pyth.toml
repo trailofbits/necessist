@@ -1,4 +1,5 @@
 url = "https://github.com/pyth-network/pyth-crosschain"
+rev = "pyth-price-pusher-v9.1.1"
 target_os = ["linux", "macos"]
 subdir = "pythnet/message_buffer"
 framework = "anchor"
