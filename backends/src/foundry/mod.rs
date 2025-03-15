@@ -373,9 +373,9 @@ impl ParseLow for Foundry {
         _storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
         call: <Self::Types as AbstractTypes>::Call<'ast>,
     ) -> <Self::Types as AbstractTypes>::Expression<'ast> {
-        // smoelius: `call_callee` now iterative peels `FunctionCallBlock` expressions. To the best
-        // of my knowledge, this is the only `call_callee` implementation that is iterative in this
-        // way.
+        // smoelius: This `call_callee` implementation now iterative peels `FunctionCallBlock`
+        // expressions. To the best of my knowledge, it is the only `call_callee` implementation
+        // that is iterative in this way.
         let mut callee = call.value.callee;
         while let Expression::FunctionCallBlock(_loc, block_callee, _statement) = callee {
             callee = block_callee;
