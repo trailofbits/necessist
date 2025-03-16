@@ -73,16 +73,31 @@ static LINE_WITHOUT_TIME_RE: LazyLock<Regex> = LazyLock::new(|| {
     Regex::new(r"^\s*. (.*)$").unwrap()
 });
 
+#[allow(clippy::type_complexity)]
 pub struct Mocha {
     subdir: PathBuf,
+    path_predicate: Option<&'static dyn Fn(&Path) -> bool>,
+    it_message_extractor: Option<&'static dyn Fn(&[u8]) -> Result<Vec<String>>>,
     source_map: Rc<SourceMap>,
     source_file_it_message_state_map: RefCell<BTreeMap<PathBuf, BTreeMap<String, ItMessageState>>>,
 }
 
 impl Mocha {
-    pub fn new(subdir: impl AsRef<Path>) -> Self {
+    // smoelius: `path_predicate` and `it_message_extractor` are hacks to support Vitest:
+    // - `path_predicate` allows filtering out paths of the form `*.test-d.ts`, which are "type"
+    //   tests. See: https://vitest.dev/guide/testing-types.html#testing-types
+    // - `it_message_extractor` allows parsing JSON output from Vitest.
+    // We should look into producing JSON from Mocha as well, though.
+    #[allow(clippy::type_complexity)]
+    pub fn new(
+        subdir: impl AsRef<Path>,
+        path_predicate: Option<&'static dyn Fn(&Path) -> bool>,
+        it_message_extractor: Option<&'static dyn Fn(&[u8]) -> Result<Vec<String>>>,
+    ) -> Self {
         Self {
             subdir: subdir.as_ref().to_path_buf(),
+            path_predicate,
+            it_message_extractor,
             source_map: Rc::default(),
             source_file_it_message_state_map: RefCell::new(BTreeMap::new()),
         }
@@ -107,14 +122,20 @@ impl Mocha {
             .entry(source_file.to_path_buf())
             .or_default();
 
-        let stdout = std::str::from_utf8(output.stdout())?;
-        for line in stdout.lines() {
-            if let Some(captures) = LINE_WITH_TIME_RE
-                .captures(line)
-                .or_else(|| LINE_WITHOUT_TIME_RE.captures(line))
-            {
-                assert_eq!(2, captures.len());
-                it_message_state_map.insert(captures[1].to_string(), ItMessageState::Found);
+        if let Some(it_message_extractor) = self.it_message_extractor {
+            for it_message in it_message_extractor(output.stdout())? {
+                it_message_state_map.insert(it_message, ItMessageState::Found);
+            }
+        } else {
+            let stdout = std::str::from_utf8(output.stdout())?;
+            for line in stdout.lines() {
+                if let Some(captures) = LINE_WITH_TIME_RE
+                    .captures(line)
+                    .or_else(|| LINE_WITHOUT_TIME_RE.captures(line))
+                {
+                    assert_eq!(2, captures.len());
+                    it_message_state_map.insert(captures[1].to_string(), ItMessageState::Found);
+                }
             }
         }
 
@@ -279,14 +300,22 @@ impl ParseLow for Mocha {
     const IGNORED_METHODS: Option<&'static [&'static str]> = Some(&["toNumber", "toString"]);
 
     fn walk_dir(&self, root: &Path) -> Box<dyn Iterator<Item = WalkDirResult>> {
+        let path_predicate = self.path_predicate;
         Box::new(
             walkdir::WalkDir::new(root.join(&self.subdir))
                 .into_iter()
-                .filter_entry(|entry| {
+                .filter_entry(move |entry| {
                     let path = entry.path();
-                    !path.is_file()
-                        || path.extension() == Some(OsStr::new("js"))
-                        || path.extension() == Some(OsStr::new("ts"))
+                    if !path.is_file() {
+                        return true;
+                    }
+                    (path.extension() == Some(OsStr::new("js"))
+                        || path.extension() == Some(OsStr::new("ts")))
+                        && if let Some(path_predicate) = path_predicate {
+                            path_predicate(path)
+                        } else {
+                            true
+                        }
                 }),
         )
     }

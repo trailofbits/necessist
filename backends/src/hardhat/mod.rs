@@ -23,7 +23,7 @@ impl Hardhat {
 
     pub fn new() -> Self {
         Self {
-            mocha_adapter: ParseAdapter(ts::mocha::Mocha::new("test")),
+            mocha_adapter: ParseAdapter(ts::mocha::Mocha::new("test", None, None)),
         }
     }
 }
