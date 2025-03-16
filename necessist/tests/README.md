@@ -21,6 +21,7 @@
 | seaport_foundry            | 1.6                                      | foundry   | X    | X     | X     | X       | 1         |
 | seaport_hardhat            | 1.6                                      | hardhat   |      | X     | X     | X       | 1         |
 | squads-protocol_v4         | 19597dc082986d7d95a89ee124dc23625b1b0039 | anchor    | X    | X     | X     |         | 1         |
+| storybook                  |                                          |           | X    | X     | X     | X       | 0         |
 | uniswap_v3-core            |                                          |           |      | X     | X     | X       | 0         |
 | uniswap_v3-core_factory    |                                          |           | X    | X     | X     | X       | 1         |
 | uniswap_v4-core            |                                          |           | X    | X     | X     |         | 0         |

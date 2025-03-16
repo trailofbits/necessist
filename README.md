@@ -2,7 +2,7 @@
 
 Run tests with statements and method calls removed to help identify broken tests
 
-Necessist currently supports Anchor, Foundry, Go, Hardhat, and Rust.
+Necessist currently supports Anchor, Foundry, Go, Hardhat, Rust, and Vitest.
 
 A paper on Necessist ([Test Harness Mutilation]) appeared in Mutation 2024. ([slides], [preprint])
 
@@ -170,7 +170,7 @@ Options:
       --dump                   Dump sqlite database contents to the console
       --dump-candidate-counts  Dump number of removal candidates in each file and exit
       --dump-candidates        Dump removal candidates and exit (for debugging)
-      --framework <FRAMEWORK>  Assume testing framework is <FRAMEWORK> [possible values: anchor, auto, foundry, go, hardhat, rust]
+      --framework <FRAMEWORK>  Assume testing framework is <FRAMEWORK> [possible values: anchor, auto, foundry, go, hardhat, rust, vitest]
       --no-sqlite              Do not output to an sqlite database
       --quiet                  Do not output to the console
       --reset                  Discard sqlite database contents
@@ -366,6 +366,13 @@ The ignored functions and methods are the same as for Anchor above.
 - `success` (e.g. [`assert_cmd::assert::Assert::success`])
 - `unwrap` (e.g. [`std::option::Option::unwrap`])
 - `unwrap_err` (e.g. [`std::result::Result::unwrap_err`])
+
+</details>
+
+<details>
+<summary>Vitest</summary>
+
+The ignored functions and methods are the same as for Anchor above.
 
 </details>
 

@@ -39,7 +39,7 @@ impl Anchor {
         let mut document = contents.parse::<DocumentMut>()?;
         let (prefix, suffix) = edit_test_script(&mut document, parse_test_value)?;
         Ok(Self {
-            mocha_adapter: ParseAdapter(ts::mocha::Mocha::new("tests")),
+            mocha_adapter: ParseAdapter(ts::mocha::Mocha::new("tests", None, None)),
             anchor_toml,
             document,
             prefix,

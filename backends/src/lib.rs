@@ -29,6 +29,9 @@ use hardhat::Hardhat;
 mod rust;
 use rust::Rust;
 
+mod vitest;
+use vitest::Vitest;
+
 // Other modules
 
 mod parsing;
@@ -56,6 +59,7 @@ pub enum Identifier {
     #[value(alias("hardhat-ts"))]
     Hardhat,
     Rust,
+    Vitest,
 }
 
 impl Applicable for Identifier {
@@ -66,13 +70,14 @@ impl Applicable for Identifier {
             Self::Go => Go::applicable(context),
             Self::Hardhat => Hardhat::applicable(context),
             Self::Rust => Rust::applicable(context),
+            Self::Vitest => Vitest::applicable(context),
         }
     }
 }
 
 impl ToImplementation for Identifier {
-    // smoelius: `Anchor` and `Hardhat` implement the `ParseLow` interface indirectly through
-    // `ts::Mocha`. They implement the high-level `Run` interface directly.
+    // smoelius: `Anchor`, `Hardhat`, and `Vitest` implement the `ParseLow` interface indirectly
+    // through `ts::Mocha`. They implement the high-level `Run` interface directly.
     fn to_implementation(&self, context: &LightContext) -> Result<Option<Box<dyn Interface>>> {
         match *self {
             Self::Anchor => {
@@ -93,6 +98,8 @@ impl ToImplementation for Identifier {
             Self::Rust => Ok(Some(implementation_as_interface(ParseRunAdapter::new)(
                 Rust::new(),
             ))),
+
+            Self::Vitest => Ok(Some(Box::new(Vitest::new()))),
         }
     }
 }

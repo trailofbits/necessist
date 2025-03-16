@@ -1,0 +1,8 @@
+url = "https://github.com/storybookjs/storybook"
+init = "cd code/core && yarn"
+subdir = "code/core"
+
+source_files = [
+    "src/manager-api/tests/store.test.js",
+    "src/manager-api/tests/versions.test.js",
+]
