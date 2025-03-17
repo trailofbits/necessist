@@ -331,13 +331,10 @@ If you do not see a panic message above, check that you passed --nocapture to th
         if children_idle.len() < n_children {
             let (key, i, output, path, elapsed) = rx_output.recv().unwrap();
 
+            // smoelius: The next `writeln!` used to prepend a blank line to the child's output.
+            // However, now that `git` is invoked with `--quiet`, this is no longer necessary.
             #[allow(clippy::explicit_write)]
-            write!(
-                stderr(),
-                "
-{output}"
-            )
-            .unwrap();
+            write!(stderr(), "{output}").unwrap();
 
             children_idle.insert(i);
 
@@ -403,10 +400,17 @@ fn display_summary(mut summary: BTreeMap<Key, (Vec<(PathBuf, Duration)>, Duratio
     }
 }
 
+#[cfg_attr(dylint_lib = "supplementary", allow(commented_code))]
 #[must_use]
 fn init_tempdir(tempdir: &Path, key: &Key) -> String {
     let mut command = Command::new("git");
-    command.args(["clone", "--recursive", &key.url, &tempdir.to_string_lossy()]);
+    command.args([
+        "clone",
+        "--recursive",
+        "--quiet",
+        &key.url,
+        &tempdir.to_string_lossy(),
+    ]);
     if key.rev.is_none() {
         command.arg("--depth=1");
     }
@@ -417,7 +421,7 @@ fn init_tempdir(tempdir: &Path, key: &Key) -> String {
 
     if let Some(rev) = &key.rev {
         let output = Command::new("git")
-            .args(["checkout", rev])
+            .args(["checkout", "--quiet", rev])
             .current_dir(tempdir)
             .output()
             .unwrap();
@@ -437,11 +441,15 @@ fn init_tempdir(tempdir: &Path, key: &Key) -> String {
         output_combined += std::str::from_utf8(&output.stderr).unwrap();
     }
 
-    writeln!(output_combined).unwrap();
+    // smoelius: The next `writeln!` used to append a blank line to `git`'s output. However, now
+    // that `git` is invoked with `--quiet`, this is no longer necessary. In fact, I would expect
+    // `git`'s output to be empty in most cases.
+    // writeln!(output_combined).unwrap();
 
     output_combined
 }
 
+#[cfg_attr(dylint_lib = "supplementary", allow(commented_code))]
 #[allow(clippy::too_many_lines)]
 fn run_test(tempdir: &Path, path: &Path, test: &Test) -> (String, Duration) {
     let mut output = String::new();
@@ -455,11 +463,13 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> (String, Duration) {
         vec![None, Some(&test.config)]
     };
 
-    for (i, config) in configs.iter().enumerate() {
-        if i > 0 {
+    for config in configs {
+        // smoelius: The next `writeln!` used to interpose blank lines between task descriptions.
+        // However, now that `git` is invoked with `--quiet`, this is no longer necessary.
+        /* if i > 0 {
             #[allow(clippy::explicit_write)]
             writeln!(output).unwrap();
-        }
+        } */
 
         #[allow(clippy::explicit_write)]
         writeln!(
