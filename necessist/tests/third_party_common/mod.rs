@@ -383,6 +383,9 @@ fn display_summary(mut summary: BTreeMap<Key, (Vec<(PathBuf, Duration)>, Duratio
             std::cmp::max(width, elapsed.as_secs().to_string().len())
         });
 
+    // smoelius: Prepend the summary with a blank line.
+    println!();
+
     for (key, (pairs, total)) in summary {
         println!("{key:?}");
         for (path, elapsed) in pairs {
