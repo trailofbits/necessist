@@ -1,5 +1,15 @@
 url = "https://github.com/storybookjs/storybook"
 init = "cd code/core && yarn"
+
+# smoelius: On Windows, I get:
+# ```
+# Windows Subsystem for Linux has no installed distributions.
+# Distributions can be installed by visiting the Microsoft Store:
+# https://aka.ms/wslstore
+# ```
+# I haven't dug into why.
+target_os = ["linux", "macos"]
+
 subdir = "code/core"
 
 source_files = [
