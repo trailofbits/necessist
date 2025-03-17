@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.0.0
+
+- Update `strum` to version 0.27 ([#1439](https://github.com/trailofbits/necessist/pull/1439))
+- Update `strum_macros` to version 0.27 ([#1442](https://github.com/trailofbits/necessist/pull/1442))
+- Fix a bug that caused TypeScript files with tab characters to be mishandled ([#1464](https://github.com/trailofbits/necessist/pull/1464))
+- Ignore `throw` statements in Mocha-based tests ([efae165](https://github.com/trailofbits/necessist/commit/efae16577f99f358a1025d5a17710a318e4e0a52))
+- Peel `FunctionCallBlock` expressions in Foundry backend ([36c4855](https://github.com/trailofbits/necessist/commit/36c4855d81a23a59ffb5cc945e426cfa7cc912d0))
+- BREAKING CHANGE: Eliminate `--no-dry-run` option. During a dry run, Necessist records which tests execute which spans. This information facilitates testing span removals, because only the test(s) relevant to a span must be executed. ([#1472](https://github.com/trailofbits/necessist/pull/1472))
+- Add experimental `--dump-candidate-counts` option ([#1468](https://github.com/trailofbits/necessist/pull/1468))
+- Update `libsqlite3-sys` to version 0.31 ([#1479](https://github.com/trailofbits/necessist/pull/1479))
+- Add support for the Vitest framework ([#1475](https://github.com/trailofbits/necessist/pull/1475))
+- Update `swc_core` to version 0.16 ([#1478](https://github.com/trailofbits/necessist/pull/1478))
+
 ## 1.0.4
 
 - Upgrade `tree-sitter` to version 0.25 ([#1435](https://github.com/trailofbits/necessist/pull/1435))
