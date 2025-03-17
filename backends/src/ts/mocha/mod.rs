@@ -31,7 +31,7 @@ use swc_core::{
             ArrowExpr, AwaitExpr, BlockStmtOrExpr, CallExpr, Callee, EsVersion, Expr, ExprStmt,
             FnDecl, Invalid, Lit, MemberExpr, MemberProp, Module, Stmt, Str,
         },
-        atoms::JsWord,
+        atoms::Atom,
         parser::{Parser, StringInput, Syntax, TsSyntax, lexer::Lexer},
     },
 };
@@ -200,7 +200,7 @@ impl Mocha {
 
 #[derive(Clone, Copy)]
 pub struct Test<'ast> {
-    it_message: &'ast JsWord,
+    it_message: &'ast Atom,
     stmts: &'ast Vec<Stmt>,
 }
 
