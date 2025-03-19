@@ -52,11 +52,9 @@ use utils::{OutputAccessors, OutputStrippedOfAnsiScapes};
 #[non_exhaustive]
 #[remain::sorted]
 pub enum Identifier {
-    #[value(alias("anchor-ts"))]
     Anchor,
     Foundry,
     Go,
-    #[value(alias("hardhat-ts"))]
     Hardhat,
     Rust,
     Vitest,
