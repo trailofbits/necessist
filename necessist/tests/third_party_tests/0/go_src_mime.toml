@@ -1,5 +1,7 @@
 url = "https://github.com/golang/go"
 rev = "go1.23.0"
+init = "cd src && ./make.bash"
+path_prefix = "bin"
 target_os = ["linux", "macos"]
 framework = "go"
 config_mandatory = true
