@@ -111,7 +111,7 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
         let mut command = self.0.command_to_run_source_file(context, source_file);
         command.args(&context.opts.args);
 
-        debug!("{:?}", command);
+        debug!("{command:?}");
 
         let output = command.output_stripped_of_ansi_escapes()?;
         if !output.status().success() {
@@ -139,7 +139,7 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
         let mut command = self.0.command_to_build_source_file(context, source_file);
         command.args(&context.opts.args);
 
-        debug!("{:?}", command);
+        debug!("{command:?}");
 
         let output = command.output_stripped_of_ansi_escapes()?;
         if !output.status().success() {
@@ -158,11 +158,11 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
             let mut command = self.0.command_to_build_test(context, test_name, span);
             command.args(&context.opts.args);
 
-            debug!("{:?}", command);
+            debug!("{command:?}");
 
             let output = command.output_stripped_of_ansi_escapes()?;
             if !output.status().success() {
-                debug!("{}", output);
+                debug!("{output}");
                 return Ok(None);
             }
         }

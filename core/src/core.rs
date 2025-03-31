@@ -733,7 +733,7 @@ fn perform_exec(
     exec: Exec,
     postprocess: Option<Box<Postprocess>>,
 ) -> Result<Option<Outcome>> {
-    debug!("{:?}", exec);
+    debug!("{exec:?}");
 
     #[cfg(all(feature = "limit_threads", unix))]
     let nprocs_prev = rlimit::set_soft_rlimit(

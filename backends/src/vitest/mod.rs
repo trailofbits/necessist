@@ -112,7 +112,7 @@ impl RunHigh for Vitest {
     fn build_source_file(&self, context: &LightContext, source_file: &Path) -> Result<()> {
         let mut command = command_to_run_test(context, source_file);
 
-        debug!("{:?}", command);
+        debug!("{command:?}");
 
         let output = command.output_stripped_of_ansi_escapes()?;
         if !output.status().success() {

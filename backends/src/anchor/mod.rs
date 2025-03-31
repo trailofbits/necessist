@@ -99,7 +99,7 @@ impl RunHigh for Anchor {
         span: &Span,
     ) -> Result<Option<(Exec, Option<Box<Postprocess>>)>> {
         if let Err(error) = self.check(context, &span.source_file) {
-            debug!("{}", error);
+            debug!("{error}");
             return Ok(None);
         }
 
@@ -133,7 +133,7 @@ impl Anchor {
 
         let mut command = command_to_run_test(context);
 
-        debug!("{:?}", command);
+        debug!("{command:?}");
 
         let output = command.output_stripped_of_ansi_escapes()?;
         if !output.status().success() {
