@@ -80,7 +80,7 @@ impl RunHigh for Hardhat {
         span: &Span,
     ) -> Result<Option<(Exec, Option<Box<Postprocess>>)>> {
         if let Err(error) = compile(context) {
-            debug!("{}", error);
+            debug!("{error}");
             return Ok(None);
         }
 
@@ -101,7 +101,7 @@ fn compile(context: &LightContext) -> Result<()> {
     command.args(["hardhat", "compile"]);
     command.args(&context.opts.args);
 
-    debug!("{:?}", command);
+    debug!("{command:?}");
 
     let output = command.output_stripped_of_ansi_escapes()?;
     if !output.status().success() {

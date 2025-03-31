@@ -109,7 +109,7 @@ impl Mocha {
         source_file: &Path,
         mut command: Command,
     ) -> Result<()> {
-        debug!("{:?}", command);
+        debug!("{command:?}");
 
         let output = command.output_stripped_of_ansi_escapes()?;
         if !output.status().success() {
@@ -192,7 +192,7 @@ impl Mocha {
         exec = exec.stdout(NullFile);
         exec = exec.stderr(NullFile);
 
-        debug!("{:?}", exec);
+        debug!("{exec:?}");
 
         Ok(Some((exec, None)))
     }
