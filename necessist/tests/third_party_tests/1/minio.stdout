@@ -1048,7 +1048,7 @@ $DIR/cmd/bucket-stats_gen_test.go: `.Decode(&buf, &vn)`
 $DIR/cmd/bucket-stats_gen_test.go: `.Reset()`
 $DIR/cmd/bucket-stats_gen_test.go: `.Encode(&buf, &v)`
 $DIR/cmd/common-main_test.go: `t.Run("", func(t *testing.T) {
-			tmpfile, err := os.CreateTemp("", "testfile")
+			tmpfile, err := os.CreateTemp(t.TempDir(), "testfile")
 			if err != nil {
 				t.Error(err)
 			}
@@ -1070,7 +1070,7 @@ $DIR/cmd/common-main_test.go: `t.Run("", func(t *testing.T) {
 $DIR/cmd/common-main_test.go: `tmpfile.WriteString(testCase.content)`
 $DIR/cmd/common-main_test.go: `tmpfile.Sync()`
 $DIR/cmd/common-main_test.go: `t.Run("", func(t *testing.T) {
-			tmpfile, err := os.CreateTemp("", "testfile")
+			tmpfile, err := os.CreateTemp(t.TempDir(), "testfile")
 			if err != nil {
 				t.Error(err)
 			}
@@ -1097,7 +1097,7 @@ $DIR/cmd/common-main_test.go: `t.Run("", func(t *testing.T) {
 $DIR/cmd/common-main_test.go: `tmpfile.WriteString(testCase.content)`
 $DIR/cmd/common-main_test.go: `tmpfile.Sync()`
 $DIR/cmd/common-main_test.go: `.Run("", func(t *testing.T) {
-			tmpfile, err := os.CreateTemp("", "testfile")
+			tmpfile, err := os.CreateTemp(t.TempDir(), "testfile")
 			if err != nil {
 				t.Error(err)
 			}
@@ -1116,12 +1116,13 @@ $DIR/cmd/common-main_test.go: `.Run("", func(t *testing.T) {
 				t.Errorf("Expected %s, got %s", testCase.expectedValue, value)
 			}
 		})`
-$DIR/cmd/common-main_test.go: `.CreateTemp("", "testfile")`
+$DIR/cmd/common-main_test.go: `.CreateTemp(t.TempDir(), "testfile")`
+$DIR/cmd/common-main_test.go: `.TempDir()`
 $DIR/cmd/common-main_test.go: `.WriteString(testCase.content)`
 $DIR/cmd/common-main_test.go: `.Sync()`
 $DIR/cmd/common-main_test.go: `.Name()`
 $DIR/cmd/common-main_test.go: `.Run("", func(t *testing.T) {
-			tmpfile, err := os.CreateTemp("", "testfile")
+			tmpfile, err := os.CreateTemp(t.TempDir(), "testfile")
 			if err != nil {
 				t.Error(err)
 			}
@@ -1145,7 +1146,8 @@ $DIR/cmd/common-main_test.go: `.Run("", func(t *testing.T) {
 				t.Errorf("expected %v, got %v", testCase.expectedEkvs, ekvs)
 			}
 		})`
-$DIR/cmd/common-main_test.go: `.CreateTemp("", "testfile")`
+$DIR/cmd/common-main_test.go: `.CreateTemp(t.TempDir(), "testfile")`
+$DIR/cmd/common-main_test.go: `.TempDir()`
 $DIR/cmd/common-main_test.go: `.WriteString(testCase.content)`
 $DIR/cmd/common-main_test.go: `.Sync()`
 $DIR/cmd/common-main_test.go: `.Name()`
@@ -2549,7 +2551,6 @@ $DIR/cmd/erasure-healing-common_test.go: `t.Run(fmt.Sprintf("case-%d", i), func(
 					f.Close()
 					break
 				}
-
 			}
 
 			rQuorum := len(errs) - z.serverPools[0].sets[0].defaultParityCount
@@ -2645,7 +2646,6 @@ $DIR/cmd/erasure-healing-common_test.go: `t.Run(fmt.Sprintf("case-%d", i), func(
 					f.Close()
 					break
 				}
-
 			}
 
 			rQuorum := len(errs) - z.serverPools[0].sets[0].defaultParityCount
@@ -2819,7 +2819,6 @@ $DIR/cmd/erasure-healing-common_test.go: `.Run(fmt.Sprintf("case-%d", i), func(t
 					f.Close()
 					break
 				}
-
 			}
 
 			rQuorum := len(errs) - z.serverPools[0].sets[0].defaultParityCount
@@ -2927,7 +2926,6 @@ $DIR/cmd/erasure-healing-common_test.go: `.Run(fmt.Sprintf("case-%d", i), func(t
 					f.Close()
 					break
 				}
-
 			}
 
 			rQuorum := len(errs) - z.serverPools[0].sets[0].defaultParityCount
@@ -6109,7 +6107,7 @@ $DIR/cmd/metrics-v2_gen_test.go: `.UnmarshalMsg(bts)`
 $DIR/cmd/metrics-v2_gen_test.go: `.MarshalMsg(nil)`
 $DIR/cmd/metrics-v2_gen_test.go: `.UnmarshalMsg(bts)`
 $DIR/cmd/metrics-v2_test.go: `ttfbHist.With(prometheus.Labels{"api": obs.label}).Observe(obs.val)`
-$DIR/cmd/metrics-v2_test.go: `metrics = getHistogramMetrics(ttfbHist, getBucketTTFBDistributionMD(), true)`
+$DIR/cmd/metrics-v2_test.go: `metrics = getHistogramMetrics(ttfbHist, getBucketTTFBDistributionMD(), true, false)`
 $DIR/cmd/metrics-v2_test.go: `ttfbHist.With(prometheus.Labels{"api": obs.label}).Observe(obs.val)`
 $DIR/cmd/metrics-v2_test.go: `capitalPutObjects = append(capitalPutObjects, metric)`
 $DIR/cmd/metrics-v2_test.go: `slices.SortFunc(capitalPutObjects, func(a MetricV2, b MetricV2) int {
@@ -6117,7 +6115,7 @@ $DIR/cmd/metrics-v2_test.go: `slices.SortFunc(capitalPutObjects, func(a MetricV2
 		le2 := a.VariableLabels["le"]
 		return strings.Compare(le1, le2)
 	})`
-$DIR/cmd/metrics-v2_test.go: `metrics = getHistogramMetrics(ttfbHist, getBucketTTFBDistributionMD(), true)`
+$DIR/cmd/metrics-v2_test.go: `metrics = getHistogramMetrics(ttfbHist, getBucketTTFBDistributionMD(), true, false)`
 $DIR/cmd/metrics-v2_test.go: `lowerCopyObjects = append(lowerCopyObjects, metric)`
 $DIR/cmd/metrics-v2_test.go: `slices.SortFunc(lowerCopyObjects, func(a MetricV2, b MetricV2) int {
 		le1 := a.VariableLabels["le"]
@@ -7015,6 +7013,7 @@ $DIR/cmd/sftp-server_test.go: `t.Run(
 
 				suite.SFTPPublicKeyAuthentication(c)
 				suite.SFTPFailedPublicKeyAuthenticationInvalidKey(c)
+				suite.SFTPPublicKeyAuthNoPubKey(c)
 
 				suite.TearDownSuite(c)
 			},
@@ -7030,6 +7029,7 @@ $DIR/cmd/sftp-server_test.go: `suite.SFTPFailedAuthDueToInvalidPassword(c)`
 $DIR/cmd/sftp-server_test.go: `suite.SFTPValidLDAPLoginWithPassword(c)`
 $DIR/cmd/sftp-server_test.go: `suite.SFTPPublicKeyAuthentication(c)`
 $DIR/cmd/sftp-server_test.go: `suite.SFTPFailedPublicKeyAuthenticationInvalidKey(c)`
+$DIR/cmd/sftp-server_test.go: `suite.SFTPPublicKeyAuthNoPubKey(c)`
 $DIR/cmd/sftp-server_test.go: `suite.TearDownSuite(c)`
 $DIR/cmd/sftp-server_test.go: `.Run(
 			fmt.Sprintf("Test: %d, ServerType: %s", i+1, testCase.ServerTypeDescription),
@@ -7059,6 +7059,7 @@ $DIR/cmd/sftp-server_test.go: `.Run(
 
 				suite.SFTPPublicKeyAuthentication(c)
 				suite.SFTPFailedPublicKeyAuthenticationInvalidKey(c)
+				suite.SFTPPublicKeyAuthNoPubKey(c)
 
 				suite.TearDownSuite(c)
 			},
@@ -7076,6 +7077,7 @@ $DIR/cmd/sftp-server_test.go: `.SFTPFailedAuthDueToInvalidPassword(c)`
 $DIR/cmd/sftp-server_test.go: `.SFTPValidLDAPLoginWithPassword(c)`
 $DIR/cmd/sftp-server_test.go: `.SFTPPublicKeyAuthentication(c)`
 $DIR/cmd/sftp-server_test.go: `.SFTPFailedPublicKeyAuthenticationInvalidKey(c)`
+$DIR/cmd/sftp-server_test.go: `.SFTPPublicKeyAuthNoPubKey(c)`
 $DIR/cmd/sftp-server_test.go: `.TearDownSuite(c)`
 $DIR/cmd/signature-v2_test.go: `copy(sortedResourceList, resourceList)`
 $DIR/cmd/signature-v2_test.go: `sort.Strings(sortedResourceList)`
@@ -8688,7 +8690,8 @@ $DIR/cmd/update_test.go: `.Setenv("MESOS_CONTAINER_NAME", "mesos-1111")`
 $DIR/cmd/update_test.go: `.Unsetenv("MESOS_CONTAINER_NAME")`
 $DIR/cmd/update_test.go: `.Setenv("KUBERNETES_SERVICE_HOST", "10.11.148.5")`
 $DIR/cmd/update_test.go: `.Unsetenv("KUBERNETES_SERVICE_HOST")`
-$DIR/cmd/update_test.go: `.CreateTemp("", "helm-testfile-")`
+$DIR/cmd/update_test.go: `.CreateTemp(t.TempDir(), "helm-testfile-")`
+$DIR/cmd/update_test.go: `.TempDir()`
 $DIR/cmd/update_test.go: `.WriteString(content)`
 $DIR/cmd/update_test.go: `.Name()`
 $DIR/cmd/update_test.go: `.Remove(filename)`
@@ -11984,7 +11987,7 @@ $DIR/internal/deadlineconn/deadlineconn_test.go: `.Wait()`
 $DIR/internal/disk/disk_test.go: `.GetInfo(t.TempDir(), true)`
 $DIR/internal/disk/disk_test.go: `.TempDir()`
 $DIR/internal/disk/stat_test.go: `t.Run("", func(t *testing.T) {
-			tmpfile, err := os.CreateTemp("", "testfile")
+			tmpfile, err := os.CreateTemp(t.TempDir(), "testfile")
 			if err != nil {
 				t.Error(err)
 			}
@@ -12006,7 +12009,7 @@ $DIR/internal/disk/stat_test.go: `t.Run("", func(t *testing.T) {
 $DIR/internal/disk/stat_test.go: `tmpfile.WriteString(testCase.stat)`
 $DIR/internal/disk/stat_test.go: `tmpfile.Sync()`
 $DIR/internal/disk/stat_test.go: `.Run("", func(t *testing.T) {
-			tmpfile, err := os.CreateTemp("", "testfile")
+			tmpfile, err := os.CreateTemp(t.TempDir(), "testfile")
 			if err != nil {
 				t.Error(err)
 			}
@@ -12025,7 +12028,8 @@ $DIR/internal/disk/stat_test.go: `.Run("", func(t *testing.T) {
 				t.Fatalf("expected iostats: %v but got %v", testCase.expectedIOStats, iostats)
 			}
 		})`
-$DIR/internal/disk/stat_test.go: `.CreateTemp("", "testfile")`
+$DIR/internal/disk/stat_test.go: `.CreateTemp(t.TempDir(), "testfile")`
+$DIR/internal/disk/stat_test.go: `.TempDir()`
 $DIR/internal/disk/stat_test.go: `.WriteString(testCase.stat)`
 $DIR/internal/disk/stat_test.go: `.Sync()`
 $DIR/internal/disk/stat_test.go: `.Name()`
@@ -13479,6 +13483,9 @@ $DIR/internal/grid/types_test.go: `.DeepEqual(v, v2)`
 $DIR/internal/grid/types_test.go: `.MarshalMsg(nil)`
 $DIR/internal/grid/types_test.go: `.UnmarshalMsg(bts)`
 $DIR/internal/grid/types_test.go: `.DeepEqual(v, v2)`
+$DIR/internal/handlers/proxy_test.go: `enableXFFHeader = false`
+$DIR/internal/handlers/proxy_test.go: `enableXFFHeader = true`
+$DIR/internal/handlers/proxy_test.go: `res = GetSourceIP(req)`
 $DIR/internal/hash/reader_test.go: `_, err = io.Copy(io.Discard, r)`
 $DIR/internal/hash/reader_test.go: `t.Run(fmt.Sprintf("case-%d", i+1), func(t *testing.T) {
 			r, err := NewReader(context.Background(), testCase.src, testCase.size, testCase.md5hex, testCase.sha256hex, testCase.actualSize)
@@ -13664,7 +13671,7 @@ $DIR/internal/ioutil/ioutil_test.go: `w = NewDeadlineWriter(&sleepWriter{timeout
 $DIR/internal/ioutil/ioutil_test.go: `writer.Write(nil)`
 $DIR/internal/ioutil/ioutil_test.go: `writer = WriteOnClose(io.Discard)`
 $DIR/internal/ioutil/ioutil_test.go: `f.WriteString("aaaaaaaaaa")`
-$DIR/internal/ioutil/ioutil_test.go: `f, err = os.CreateTemp("", "")`
+$DIR/internal/ioutil/ioutil_test.go: `f, err = os.CreateTemp(t.TempDir(), "")`
 $DIR/internal/ioutil/ioutil_test.go: `f.WriteString("bbbbbbbbbb")`
 $DIR/internal/ioutil/ioutil_test.go: `fi2, err = os.Stat(tmpFile)`
 $DIR/internal/ioutil/ioutil_test.go: `f.Seek(0, io.SeekStart)`
@@ -13687,11 +13694,13 @@ $DIR/internal/ioutil/ioutil_test.go: `.HasWritten()`
 $DIR/internal/ioutil/ioutil_test.go: `.Write(nil)`
 $DIR/internal/ioutil/ioutil_test.go: `.HasWritten()`
 $DIR/internal/ioutil/ioutil_test.go: `.HasWritten()`
-$DIR/internal/ioutil/ioutil_test.go: `.CreateTemp("", "")`
+$DIR/internal/ioutil/ioutil_test.go: `.CreateTemp(t.TempDir(), "")`
+$DIR/internal/ioutil/ioutil_test.go: `.TempDir()`
 $DIR/internal/ioutil/ioutil_test.go: `.Name()`
 $DIR/internal/ioutil/ioutil_test.go: `.Remove(name1)`
 $DIR/internal/ioutil/ioutil_test.go: `.WriteString("aaaaaaaaaa")`
-$DIR/internal/ioutil/ioutil_test.go: `.CreateTemp("", "")`
+$DIR/internal/ioutil/ioutil_test.go: `.CreateTemp(t.TempDir(), "")`
+$DIR/internal/ioutil/ioutil_test.go: `.TempDir()`
 $DIR/internal/ioutil/ioutil_test.go: `.Name()`
 $DIR/internal/ioutil/ioutil_test.go: `.Remove(name2)`
 $DIR/internal/ioutil/ioutil_test.go: `.WriteString("bbbbbbbbbb")`
@@ -13704,7 +13713,8 @@ $DIR/internal/ioutil/ioutil_test.go: `.NewBuffer([]byte("abc"))`
 $DIR/internal/ioutil/ioutil_test.go: `.NewBuffer([]byte("abc"))`
 $DIR/internal/ioutil/ioutil_test.go: `.NewBuffer([]byte("abc"))`
 $DIR/internal/ioutil/ioutil_test.go: `.ReadAll(r)`
-$DIR/internal/ioutil/ioutil_test.go: `.CreateTemp("", "")`
+$DIR/internal/ioutil/ioutil_test.go: `.CreateTemp(t.TempDir(), "")`
+$DIR/internal/ioutil/ioutil_test.go: `.TempDir()`
 $DIR/internal/ioutil/ioutil_test.go: `.Name()`
 $DIR/internal/ioutil/ioutil_test.go: `.Remove(f.Name())`
 $DIR/internal/ioutil/ioutil_test.go: `.Name()`
@@ -13712,7 +13722,8 @@ $DIR/internal/ioutil/ioutil_test.go: `.Stat(tmpFile)`
 $DIR/internal/ioutil/ioutil_test.go: `.Stat(tmpFile)`
 $DIR/internal/ioutil/ioutil_test.go: `.WriteFile(tmpFile, []byte("aaa"), 0o644)`
 $DIR/internal/ioutil/ioutil_test.go: `.Stat(tmpFile)`
-$DIR/internal/ioutil/ioutil_test.go: `.CreateTemp("", "")`
+$DIR/internal/ioutil/ioutil_test.go: `.CreateTemp(t.TempDir(), "")`
+$DIR/internal/ioutil/ioutil_test.go: `.TempDir()`
 $DIR/internal/ioutil/ioutil_test.go: `.Remove(f.Name())`
 $DIR/internal/ioutil/ioutil_test.go: `.Name()`
 $DIR/internal/ioutil/ioutil_test.go: `.NewReader("hello world")`
@@ -13797,7 +13808,7 @@ $DIR/internal/jwt/parser_test.go: `.Run(data.name, func(t *testing.T) {
 			}
 		})`
 $DIR/internal/kms/config_test.go: `os.Clearenv()`
-$DIR/internal/kms/config_test.go: `os.Setenv(k, v)`
+$DIR/internal/kms/config_test.go: `t.Setenv(k, v)`
 $DIR/internal/kms/config_test.go: `.Clearenv()`
 $DIR/internal/kms/config_test.go: `.Setenv(k, v)`
 $DIR/internal/kms/dek_test.go: `.Key.MarshalText()`
@@ -13829,12 +13840,14 @@ $DIR/internal/lock/lock_test.go: `isClosed = rlk.IsClosed()`
 $DIR/internal/lock/lock_test.go: `_, err = newRLockedFile(nil)`
 $DIR/internal/lock/lock_test.go: `err = os.Remove(f.Name())`
 $DIR/internal/lock/lock_test.go: `locked <- struct{}{}`
-$DIR/internal/lock/lock_test.go: `.CreateTemp("", "lock")`
+$DIR/internal/lock/lock_test.go: `.CreateTemp(t.TempDir(), "lock")`
+$DIR/internal/lock/lock_test.go: `.TempDir()`
 $DIR/internal/lock/lock_test.go: `.Remove(f.Name())`
 $DIR/internal/lock/lock_test.go: `.Name()`
 $DIR/internal/lock/lock_test.go: `.Name()`
 $DIR/internal/lock/lock_test.go: `.TempDir()`
-$DIR/internal/lock/lock_test.go: `.CreateTemp("", "lock")`
+$DIR/internal/lock/lock_test.go: `.CreateTemp(t.TempDir(), "lock")`
+$DIR/internal/lock/lock_test.go: `.TempDir()`
 $DIR/internal/lock/lock_test.go: `.Remove(f.Name())`
 $DIR/internal/lock/lock_test.go: `.Name()`
 $DIR/internal/lock/lock_test.go: `.Name()`
@@ -13843,7 +13856,8 @@ $DIR/internal/lock/lock_test.go: `.IncLockRef()`
 $DIR/internal/lock/lock_test.go: `.IsClosed()`
 $DIR/internal/lock/lock_test.go: `.IsClosed()`
 $DIR/internal/lock/lock_test.go: `.IsClosed()`
-$DIR/internal/lock/lock_test.go: `.CreateTemp("", "lock")`
+$DIR/internal/lock/lock_test.go: `.CreateTemp(t.TempDir(), "lock")`
+$DIR/internal/lock/lock_test.go: `.TempDir()`
 $DIR/internal/lock/lock_test.go: `.Remove(f.Name())`
 $DIR/internal/lock/lock_test.go: `.Name()`
 $DIR/internal/lock/lock_test.go: `.Name()`
