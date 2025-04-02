@@ -39,6 +39,7 @@ use std::{
     path::Path,
     rc::Rc,
 };
+use std::rc::Rc as Lrc;
 
 pub trait Named {
     fn name(&self) -> String;
@@ -370,14 +371,12 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
         let mut n_tests = 0;
         let mut source_file_span_test_map = SourceFileSpanTestMap::new();
 
-        let walk_dir_results = self.0.walk_dir(context.root);
-
-        let mut visit_source_file = |source_file: &Path| -> Result<()> {
+        let visit_source_file = |source_file: &Path, backend: &mut T, n_tests: &mut usize, source_file_span_test_map: &mut SourceFileSpanTestMap, context: &LightContext, config: &config::Compiled| -> Result<()> {
             assert!(source_file.is_absolute());
             assert!(source_file.starts_with(context.root.as_path()));
 
             #[allow(clippy::unwrap_used)]
-            let file = match self.0.parse_source_file(source_file) {
+            let file = match backend.parse_source_file(source_file) {
                 Ok(file) => file,
                 Err(error) => {
                     warn(
@@ -397,10 +396,10 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
                 }
             };
 
-            let storage = RefCell::new(self.0.storage_from_file(&file));
+            let storage = RefCell::new(backend.storage_from_file(&file));
 
             let walkable_functions = {
-                let mut local_functions = self.0.local_functions(&storage, &file)?;
+                let mut local_functions = backend.local_functions(&storage, &file)?;
                 local_functions.retain(|name, _| config.is_walkable_function(name));
                 local_functions
             };
@@ -409,8 +408,8 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
 
             let generic_visitor = GenericVisitor {
                 context,
-                config: &config,
-                backend: &mut self.0,
+                config,
+                backend,
                 walkable_functions,
                 source_file: source_file.clone(),
                 test_names: BTreeSet::default(),
@@ -427,36 +426,28 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
 
             let (test_set, span_test_map) = T::visit_file(generic_visitor, &storage, &file)?;
 
-            n_tests += test_set.len();
-            extend(&mut source_file_span_test_map, source_file, span_test_map);
+            *n_tests += test_set.len();
+            extend(source_file_span_test_map, source_file, span_test_map);
 
             Ok(())
         };
 
+        let mut queue = Vec::new();
         if source_files.is_empty() {
-            #[cfg(sort_walk_dir_results)]
-            let walk_dir_results = {
-                let mut walk_dir_results = walk_dir_results
-                    .collect::<walkdir::Result<Vec<_>>>()
-                    .with_context(|| format!(r#"Failed to walk "{}""#, context.root.display()))?;
-                walk_dir_results.sort_by(|x, y| x.path().cmp(y.path()));
-                walk_dir_results.into_iter().map(walkdir::Result::Ok)
-            };
-
-            for entry in walk_dir_results {
-                let entry = entry
-                    .with_context(|| format!(r#"Failed to walk "{}""#, context.root.display()))?;
-                let path = entry.path();
-
-                if !path.is_file() {
-                    continue;
-                }
-
-                visit_source_file(path)?;
-            }
+            queue.push(context.root.clone());
         } else {
-            for path in source_files {
-                visit_source_file(path)?;
+            queue.extend(source_files.iter().map(|p| Lrc::new(p.to_path_buf())));
+        }
+
+        while let Some(path) = queue.pop() {
+            if path.is_file() {
+                visit_source_file(&path, &mut self.0, &mut n_tests, &mut source_file_span_test_map, context, &config)?;
+            } else if path.is_dir() {
+                let walk_dir_results = self.0.walk_dir(&path);
+                for entry in walk_dir_results {
+                    let entry = entry.with_context(|| format!(r#"Failed to walk "{}""#, path.display()))?;
+                    queue.push(Lrc::new(entry.path().to_path_buf()));
+                }
             }
         }
 
