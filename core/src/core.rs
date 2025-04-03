@@ -173,7 +173,7 @@ pub fn necessist<Identifier: Applicable + Display + IntoEnumIterator + ToImpleme
         progress.as_ref().unwrap().println(msg);
     };
 
-    // Only set this function as the printer when progress exists
+    // Only set this function as the printer when `progress` exists
     if progress.is_some() {
         context.println = &progress_println;
         context.progress = progress.as_ref();
