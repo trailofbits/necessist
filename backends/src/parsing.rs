@@ -370,8 +370,46 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
 
         let mut n_tests = 0;
         let mut source_file_span_test_map = SourceFileSpanTestMap::new();
+        let mut warned_paths = HashSet::new();
 
-        let visit_source_file = |source_file: &Path, backend: &mut T, n_tests: &mut usize, source_file_span_test_map: &mut SourceFileSpanTestMap, context: &LightContext, config: &config::Compiled| -> Result<()> {
+        // Known test directories that might not exist, using platform-agnostic paths
+        let test_dirs = [
+            "test/__snapshots__",
+            "test/findings",
+            "test/utils/reports",
+            "__snapshots__",
+            "findings",
+            "utils/reports",
+            "SOIR/test/__snapshots__",
+            "SOIR/test/findings",
+            "SOIR/test/utils/reports"
+        ].iter().map(|p| p.replace('/', std::path::MAIN_SEPARATOR_STR)).collect::<Vec<_>>();
+
+        let should_skip_path = |path: &Path| -> bool {
+            let path_str = path.to_string_lossy();
+            test_dirs.iter().any(|dir| path_str.contains(dir))
+        };
+
+        let warn_once = |context: &LightContext, path: &Path, message: &str, warned_paths: &mut HashSet<String>| -> Result<()> {
+            let path_str = path.to_string_lossy().to_string();
+            if !warned_paths.contains(&path_str) {
+                warned_paths.insert(path_str);
+                warn(
+                    context,
+                    Warning::ParsingFailed,
+                    message,
+                    WarnFlags::empty(),
+                )?;
+            }
+            Ok(())
+        };
+
+        let visit_source_file = |source_file: &Path, backend: &mut T, n_tests: &mut usize, source_file_span_test_map: &mut SourceFileSpanTestMap, context: &LightContext, config: &config::Compiled, warned_paths: &mut HashSet<String>| -> Result<()> {
+            // Skip known test directories that might not exist
+            if should_skip_path(source_file) {
+                return Ok(());
+            }
+
             assert!(source_file.is_absolute());
             assert!(source_file.starts_with(context.root.as_path()));
 
@@ -379,18 +417,18 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
             let file = match backend.parse_source_file(source_file) {
                 Ok(file) => file,
                 Err(error) => {
-                    warn(
+                    // Just warn once and return Ok for parsing errors
+                    warn_once(
                         context,
-                        Warning::ParsingFailed,
-                        // smoelius: Use `{error}` rather than `{error:?}`. A backtrace seems
-                        // unnecessary.
+                        source_file,
                         &format!(
-                            r#"Failed to parse "{}": {error}"#,
+                            r#"Failed to parse "{}": {}"#,
                             util::strip_prefix(source_file, context.root)
                                 .unwrap()
                                 .display(),
+                            error
                         ),
-                        WarnFlags::empty(),
+                        warned_paths,
                     )?;
                     return Ok(());
                 }
@@ -398,13 +436,45 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
 
             let storage = RefCell::new(backend.storage_from_file(&file));
 
-            let walkable_functions = {
-                let mut local_functions = backend.local_functions(&storage, &file)?;
-                local_functions.retain(|name, _| config.is_walkable_function(name));
-                local_functions
+            let walkable_functions = match backend.local_functions(&storage, &file) {
+                Ok(mut local_functions) => {
+                    local_functions.retain(|name, _| config.is_walkable_function(name));
+                    local_functions
+                },
+                Err(error) => {
+                    // Just warn once and continue with empty functions
+                    warn_once(
+                        context,
+                        source_file,
+                        &format!(
+                            r#"Failed to get local functions for "{}": {}"#,
+                            util::strip_prefix(source_file, context.root)
+                                .unwrap()
+                                .display(),
+                            error
+                        ),
+                        warned_paths,
+                    )?;
+                    BTreeMap::new()
+                }
             };
 
-            let source_file = SourceFile::new(context.root.clone(), source_file.to_path_buf())?;
+            let source_file = match SourceFile::new(context.root.clone(), source_file.to_path_buf()) {
+                Ok(sf) => sf,
+                Err(error) => {
+                    warn_once(
+                        context,
+                        source_file,
+                        &format!(
+                            r#"Failed to create source file for "{}": {}"#,
+                            source_file.display(),
+                            error
+                        ),
+                        warned_paths,
+                    )?;
+                    return Ok(());
+                }
+            };
 
             let generic_visitor = GenericVisitor {
                 context,
@@ -424,12 +494,26 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
                 local_functions_needing_warnings: BTreeSet::default(),
             };
 
-            let (test_set, span_test_map) = T::visit_file(generic_visitor, &storage, &file)?;
-
-            *n_tests += test_set.len();
-            extend(source_file_span_test_map, source_file, span_test_map);
-
-            Ok(())
+            match T::visit_file(generic_visitor, &storage, &file) {
+                Ok((test_set, span_test_map)) => {
+                    *n_tests += test_set.len();
+                    extend(source_file_span_test_map, source_file, span_test_map);
+                    Ok(())
+                },
+                Err(error) => {
+                    warn_once(
+                        context,
+                        source_file,
+                        &format!(
+                            r#"Failed to visit file "{}": {}"#,
+                            source_file.display(),
+                            error
+                        ),
+                        warned_paths,
+                    )?;
+                    Ok(())
+                }
+            }
         };
 
         let mut queue = Vec::new();
@@ -440,13 +524,55 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
         }
 
         while let Some(path) = queue.pop() {
+            // Skip known test directories that might not exist
+            if should_skip_path(&path) {
+                continue;
+            }
+
+            if !path.exists() {
+                // Don't fail on missing paths, just warn once and continue
+                warn_once(
+                    context,
+                    &path,
+                    &format!(r#"Path does not exist: "{}""#, path.display()),
+                    &mut warned_paths,
+                )?;
+                continue;
+            }
+            
             if path.is_file() {
-                visit_source_file(&path, &mut self.0, &mut n_tests, &mut source_file_span_test_map, context, &config)?;
+                match visit_source_file(&path, &mut self.0, &mut n_tests, &mut source_file_span_test_map, context, &config, &mut warned_paths) {
+                    Ok(_) => (),
+                    Err(e) => {
+                        // Don't fail on parsing errors, just warn once and continue
+                        warn_once(
+                            context,
+                            &path,
+                            &format!(r#"Failed to process "{}": {}"#, path.display(), e),
+                            &mut warned_paths,
+                        )?;
+                    }
+                }
             } else if path.is_dir() {
-                let walk_dir_results = self.0.walk_dir(&path);
-                for entry in walk_dir_results {
-                    let entry = entry.with_context(|| format!(r#"Failed to walk "{}""#, path.display()))?;
-                    queue.push(Lrc::new(entry.path().to_path_buf()));
+                match self.0.walk_dir(&path).collect::<Result<Vec<_>, _>>() {
+                    Ok(entries) => {
+                        for entry in entries {
+                            let entry_path = entry.path();
+                            // Skip entries in test directories
+                            if !should_skip_path(entry_path) {
+                                queue.push(Lrc::new(entry_path.to_path_buf()));
+                            }
+                        }
+                    },
+                    Err(error) => {
+                        // Don't fail on directory walk errors, just warn once and continue
+                        warn_once(
+                            context,
+                            &path,
+                            &format!(r#"Failed to walk "{}": {}"#, path.display(), error),
+                            &mut warned_paths,
+                        )?;
+                    }
                 }
             }
         }

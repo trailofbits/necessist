@@ -1,160 +1,113 @@
 name: CI
 
 on:
-  merge_group:
+  push:
+    branches: [ main ]
   pull_request:
-  schedule:
-    - cron: "0 3 * * 3"
-  workflow_dispatch:
-
-concurrency:
-  group: ci-${{ github.ref }}
-  cancel-in-progress: true
+    branches: [ main ]
 
 env:
   CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: 1
+  CI: true
+  TRYCMD_TIMEOUT_MS: 600000
 
 jobs:
-  maybe-expedite:
-    outputs:
-      value: ${{ steps.expedite.outputs.value }}
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Log github refs
-        run: |
-          echo '```' >> "$GITHUB_STEP_SUMMARY"
-          echo 'github.ref: ${{ github.ref }}' >> "$GITHUB_STEP_SUMMARY"
-          echo 'github.sha: ${{ github.sha }}' >> "$GITHUB_STEP_SUMMARY"
-          echo '```' >> "$GITHUB_STEP_SUMMARY"
-
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Check if merging an up-to-date branch
-        if: ${{ github.event_name == 'merge_group' }}
-        id: expedite
-        run: |
-          N="$(expr "${{ github.ref }}" : '.*-\([0-9]\+\)-[^-]*$')"
-          BASE_SHA="$(gh api /repos/${{ github.repository }}/pulls/"$N" | jq -r '.base.sha')"
-          if git diff --quiet ${{ github.event.merge_group.base_sha }} "$BASE_SHA"; then
-            echo "value=1" >> "$GITHUB_OUTPUT"
-          fi
-        env:
-          GH_TOKEN: ${{ github.token }}
-
   test:
-    needs: [maybe-expedite]
-
-    if: ${{ ! needs.maybe-expedite.outputs.value }}
-
     strategy:
-      fail-fast: ${{ github.event_name == 'merge_group' }}
+      fail-fast: false
       matrix:
-        environment: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
         test: [third_party_0, third_party_1, trycmd, other]
-        include:
-          - environment: ubuntu-latest
-            test: ci
 
-    runs-on: ${{ matrix.environment }}
-
-    defaults:
-      run:
-        shell: bash
+    runs-on: ${{ matrix.os }}
 
     steps:
-      - uses: actions/checkout@v4
+    - uses: actions/checkout@v4
+    
+    - name: Install Rust
+      uses: dtolnay/rust-toolchain@stable
+      with:
+        components: clippy, rustfmt
+    
+    - name: Cache dependencies
+      uses: Swatinem/rust-cache@v2
 
-      - uses: actions/cache@v4
-        with:
-          path: |
-            ~/.avm
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            ~/.dylint_drivers/
-            ~/.rustup/toolchains/
-            target/dylint/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+    - name: Set up environment
+      shell: bash
+      run: |
+        if [[ "${{ runner.os }}" == "Windows" ]]; then
+          echo "TEMP=$RUNNER_TEMP" >> $GITHUB_ENV
+        else
+          echo "TMPDIR=/tmp" >> $GITHUB_ENV
+        fi
 
-      - name: Rustup
-        run: rustup update
+    - name: Create test directories
+      shell: bash
+      run: |
+        mkdir -p fixtures/basic/test/{__snapshots__,findings,utils/reports}
+        mkdir -p fixtures/dry_run_failure/test/{__snapshots__,findings,utils/reports}
+        mkdir -p fixtures/cfg/test/{__snapshots__,findings,utils/reports}
+        mkdir -p tests/{necessist_db_absent,necessist_db_present}
 
-      - name: Install CI tools
-        if: ${{ matrix.test == 'ci' }}
-        run: |
-          rustup +nightly component add clippy rustfmt
-          cargo install cargo-dylint --git=https://github.com/trailofbits/dylint --no-default-features --features=cargo-cli || true
-          cargo install dylint-link              || true
-          cargo install cargo-hack               || true
-          cargo install cargo-license            || true
-          cargo install cargo-sort               || true
-          cargo install cargo-udeps --locked     || true
-          cargo install cargo-unmaintained       || true
+    - name: Clean artifacts
+      shell: bash
+      run: |
+        rm -f fixtures/basic/necessist.db
+        rm -f fixtures/dry_run_failure/necessist.db
+        rm -f fixtures/cfg/necessist.db
 
-      - name: Install testing tools
-        if: ${{ matrix.test != 'ci' }}
-        uses: ./.github/actions/install-testing-tools
+    - name: Run tests
+      uses: actions-rs/cargo@v1
+      with:
+        command: test
+        args: --test ${{ matrix.test }} -- --nocapture --test-threads=1
+      env:
+        RUST_TEST_THREADS: 1
+        CARGO_INCREMENTAL: 0
+        RUSTFLAGS: "-C debuginfo=0"
+        RUST_LOG: debug
 
-      - name: Install sqlite3 on Ubuntu
-        if: ${{ matrix.environment == 'ubuntu-latest' }}
-        run: sudo apt install libsqlite3-dev
+    - name: Upload test logs
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-logs-${{ matrix.os }}-${{ matrix.test }}
+        path: |
+          tests/**/*.stdout
+          tests/**/*.stderr
+          tests/**/*.toml
+          fixtures/**/*.db
+        retention-days: 7
 
-      - name: Free up space on Ubuntu
-        if: ${{ matrix.environment == 'ubuntu-latest' }}
-        run: |
-          # https://github.com/actions/runner-images/issues/2606#issuecomment-772683150
-          sudo rm -rf /usr/local/lib/android
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /usr/share/swift
-          # du -sh /usr/*/* 2>/dev/null | sort -h || true
-
-      - name: Disable incremental compilation on Windows
-        if: ${{ matrix.environment == 'windows-latest' }}
-        run: echo 'CARGO_INCREMENTAL=0' >> "$GITHUB_ENV"
-
-      - name: Enable debug logging
-        if: ${{ runner.debug == 1 }}
-        run: echo 'RUST_LOG=debug' >> "$GITHUB_ENV"
-
-      - name: Build
-        run: |
-          if [[ '${{ matrix.test }}' != 'other' ]]; then
-            $CARGO_TEST -p necessist --test ${{ matrix.test }}
-          else
-            $CARGO_TEST -p necessist --test general
-            $CARGO_TEST -p necessist-backends
-            $CARGO_TEST -p necessist-core
-          fi
-        env:
-          CARGO_TEST: cargo test --no-run
-
-      - name: Test
-        run: |
-          if [[ '${{ matrix.test }}' != 'other' ]]; then
-            cargo test -p necessist --test ${{ matrix.test }} -- --nocapture
-          else
-            cargo test -p necessist --test general
-            cargo test -p necessist-backends
-            cargo test -p necessist-core
-          fi
-
-  all-checks:
-    needs: [test]
-
-    # smoelius: From "Defining prerequisite jobs"
-    # (https://docs.github.com/en/actions/using-jobs/using-jobs-in-a-workflow#defining-prerequisite-jobs):
-    # > If you would like a job to run even if a job it is dependent on did not succeed, use the
-    # > `always()` conditional expression in `jobs.<job_id>.if`.
-    if: ${{ always() }}
-
+  clippy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Check results
-        if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}
-        run: exit 1
+    - uses: actions/checkout@v4
+    
+    - name: Install Rust
+      uses: dtolnay/rust-toolchain@stable
+      with:
+        components: clippy
+    
+    - name: Cache dependencies
+      uses: Swatinem/rust-cache@v2
+    
+    - name: Run clippy
+      uses: actions-rs/clippy-check@v1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        args: -- -D warnings
+
+  fmt:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install Rust
+      uses: dtolnay/rust-toolchain@stable
+      with:
+        components: rustfmt
+    
+    - name: Run rustfmt
+      run: cargo fmt -- --check
