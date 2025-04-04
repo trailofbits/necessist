@@ -167,10 +167,13 @@ pub fn necessist<Identifier: Applicable + Display + IntoEnumIterator + ToImpleme
         };
 
     let progress_println = |msg: &dyn AsRef<str>| {
+        // SAFETY: This closure should only be called when `progress` is `Some`.
+        // The unwrap is intentional - we want to panic if this invariant is violated.
         #[allow(clippy::unwrap_used)]
         progress.as_ref().unwrap().println(msg);
     };
 
+    // Only set this function as the printer when `progress` exists
     if progress.is_some() {
         context.println = &progress_println;
         context.progress = progress.as_ref();
