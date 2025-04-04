@@ -6,6 +6,11 @@ updates:
       interval: weekly
       day: monday
       time: "03:00"
+    open-pull-requests-limit: 10
+    rebase-strategy: auto
+    labels:
+      - dependencies
+      - github-actions
 
   - package-ecosystem: cargo
     directory: /
@@ -15,7 +20,16 @@ updates:
       time: "03:00"
     allow:
       - dependency-type: direct
+    open-pull-requests-limit: 10
+    rebase-strategy: auto
+    labels:
+      - dependencies
+      - rust
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-patch"]
 
+  # Uncomment if you want to enable crates_io directory updates
   # - package-ecosystem: cargo
   #   directory: /crates_io
   #   schedule:

@@ -3,42 +3,50 @@
 
 name: Dependabot workflow
 
-on: [pull_request]
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [main]
 
 jobs:
   dependabot:
-    # smoelius: Note that `github.event.pull_request.user.login` is the user that opened the pull
-    # request, which may be different from the user that triggered the action.
-    if: ${{ github.actor == 'dependabot[bot]' }}
-
+    if: |
+      github.actor == 'dependabot[bot]' ||
+      github.event_name == 'push'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
 
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
 
       - name: Check updated files
-        # smoelius: Dependabot should update only manifest and/or lockfiles. Hard error otherwise.
+        if: github.event_name == 'pull_request'
         run: |
           git diff --name-only ${{ github.event.pull_request.base.sha }} | grep .
           ! git diff --name-only ${{ github.event.pull_request.base.sha }} | grep -v '^\.github/workflows/\|\(^\|/\)Cargo\.\(lock\|toml\)$'
 
       - name: Add `requires release` label
+        if: github.event_name == 'pull_request'
         run: |
           PACKAGE="$(expr '${{ github.event.pull_request.title }}' : '^Bump \([^ ]*\) from [^ ]* to [^ ]*$')"
           OLD_VERSION="$(expr '${{ github.event.pull_request.title }}' : '^Bump [^ ]* from \([^ ]*\) to [^ ]*$')"
           NEW_VERSION="$(expr '${{ github.event.pull_request.title }}' : '^Bump [^ ]* from [^ ]* to \([^ ]*\)$')"
-          test -n "$PACKAGE"
-          test -n "$OLD_VERSION"
-          test -n "$NEW_VERSION"
-          git reset --hard HEAD~1
+          if [ -z "$PACKAGE" ] || [ -z "$OLD_VERSION" ] || [ -z "$NEW_VERSION" ]; then
+            echo "Skipping label check - not a version bump PR"
+            exit 0
+          fi
           if ! cargo update "$PACKAGE@$OLD_VERSION" --precise "$NEW_VERSION"; then
             gh pr edit '${{ github.event.pull_request.number }}' --add-label 'requires release'
           fi
         env:
-          # smoelius: The `DEPENDABOT_REPO_TOKEN` requires SSO authorization and the following
-          # scopes: `public_repo`, `read:org`, and `read:discussion`.
-          GH_TOKEN: ${{ secrets.DEPENDABOT_REPO_TOKEN }}
-          GH_REPO: ${{ github.repository }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
