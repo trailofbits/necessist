@@ -157,11 +157,11 @@ To be clear, Necessist does not apply (`*`) formally, e.g., Necessist does not a
 ## Usage
 
 ```
-Usage: necessist [OPTIONS] [TEST_FILES]... [-- <ARGS>...]
+Usage: necessist [OPTIONS] [TEST_FILES_OR_DIRS]... [-- <ARGS>...]
 
 Arguments:
-  [TEST_FILES]...  Test files to mutilate (optional)
-  [ARGS]...        Additional arguments to pass to each test command
+  [TEST_FILES_OR_DIRS]...  Test files or directories to mutilate (optional)
+  [ARGS]...                Additional arguments to pass to each test command
 
 Options:
       --allow <WARNING>        Silence <WARNING>; `--allow all` silences all warnings
