@@ -405,6 +405,9 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
             }
         }
 
+        // Sort the collected files for deterministic processing order
+        source_files_to_process.sort();
+
         // Process all collected source files
         for source_file_path in source_files_to_process {
             let mut visit_source_file = |source_file: &Path| -> Result<()> {
