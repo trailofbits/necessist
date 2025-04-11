@@ -356,6 +356,7 @@ impl<T: ParseLow> ParseLow for Rc<RefCell<T>> {
     }
 }
 
+/// Implements [`ParseHigh`] for `T`, given that `T` implements [`ParseLow`]
 pub struct ParseAdapter<T>(pub T);
 
 impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
