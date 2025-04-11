@@ -98,6 +98,7 @@ impl<T: RunLow> RunLow for Rc<RefCell<T>> {
     }
 }
 
+/// Implements [`RunHigh`] for `T`, given that `T` implements [`RunLow`]
 pub struct RunAdapter<T>(pub T);
 
 impl<T: RunLow> RunHigh for RunAdapter<T> {
