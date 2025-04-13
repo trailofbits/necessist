@@ -34,7 +34,7 @@ use std::{
     collections::{BTreeMap, BTreeSet, HashSet},
 };
 
-pub struct GenericVisitor<'context, 'config, 'backend, 'ast, T: ParseLow> {
+pub struct GenericVisitor<'context, 'config, 'backend, 'ast, T: ParseLow + ?Sized> {
     pub context: &'context LightContext<'context>,
     pub config: &'config config::Compiled,
     pub backend: &'backend mut T,

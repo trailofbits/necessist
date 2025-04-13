@@ -88,7 +88,7 @@ pub trait AbstractTypes {
 
 pub type WalkDirResult = walkdir::Result<walkdir::DirEntry>;
 
-pub trait ParseLow: Sized {
+pub trait ParseLow {
     type Types: AbstractTypes;
 
     const IGNORED_FUNCTIONS: Option<&'static [&'static str]>;
