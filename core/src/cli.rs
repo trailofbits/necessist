@@ -55,7 +55,10 @@ pub struct Opts<Identifier: Clone + Send + Sync + ValueEnum + 'static> {
     timeout: Option<u64>,
     #[clap(long, help = "Show test outcomes besides `passed`")]
     verbose: bool,
-    #[clap(value_name = "TEST_FILES", help = "Test files to mutilate (optional)")]
+    #[clap(
+        value_name = "TEST_FILES_OR_DIRS",
+        help = "Test files or directories to mutilate (optional)"
+    )]
     zsource_files: Vec<String>,
     #[clap(
         last = true,

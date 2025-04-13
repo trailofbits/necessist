@@ -253,8 +253,8 @@ impl<T: ParseLow> ParseLow for Rc<RefCell<T>> {
             source_file,
             test_names,
             last_statement_in_test,
-            n_before,
             n_statement_leaves_visited,
+            n_before,
             call_statement,
             test_set,
             span_test_maps,
@@ -371,14 +371,13 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
         let mut n_tests = 0;
         let mut source_file_span_test_map = SourceFileSpanTestMap::new();
 
-        let walk_dir_results = self.0.walk_dir(context.root);
-
-        let mut visit_source_file = |source_file: &Path| -> Result<()> {
+        // Define a closure that takes backend as a parameter to avoid borrowing conflicts
+        let mut visit_source_file = |backend: &mut T, source_file: &Path| -> Result<()> {
             assert!(source_file.is_absolute());
             assert!(source_file.starts_with(context.root.as_path()));
 
             #[allow(clippy::unwrap_used)]
-            let file = match self.0.parse_source_file(source_file) {
+            let file = match backend.parse_source_file(source_file) {
                 Ok(file) => file,
                 Err(error) => {
                     warn(
@@ -398,10 +397,10 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
                 }
             };
 
-            let storage = RefCell::new(self.0.storage_from_file(&file));
+            let storage = RefCell::new(backend.storage_from_file(&file));
 
             let walkable_functions = {
-                let mut local_functions = self.0.local_functions(&storage, &file)?;
+                let mut local_functions = backend.local_functions(&storage, &file)?;
                 local_functions.retain(|name, _| config.is_walkable_function(name));
                 local_functions
             };
@@ -411,7 +410,7 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
             let generic_visitor = GenericVisitor {
                 context,
                 config: &config,
-                backend: &mut self.0,
+                backend,
                 walkable_functions,
                 source_file: source_file.clone(),
                 test_names: BTreeSet::default(),
@@ -434,21 +433,30 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
             Ok(())
         };
 
-        if source_files.is_empty() {
-            for entry in walk_dir_results {
-                let entry = entry
-                    .with_context(|| format!(r#"Failed to walk "{}""#, context.root.display()))?;
-                let path = entry.path();
-
-                if !path.is_file() {
-                    continue;
-                }
-
-                visit_source_file(path)?;
-            }
+        // Use a reference to either the root path or provided source files
+        let root = vec![context.root.as_path()];
+        let source_files_to_process = if source_files.is_empty() {
+            &root
         } else {
-            for path in source_files {
-                visit_source_file(path)?;
+            source_files
+        };
+
+        // Process each specified path (file or directory)
+        for path in source_files_to_process {
+            if path.is_dir() {
+                // If it's a directory, get all files in it via walk_dir
+                let dir_walk = self.0.walk_dir(path);
+                for entry in dir_walk {
+                    let entry =
+                        entry.with_context(|| format!(r#"Failed to walk "{}""#, path.display()))?;
+                    let entry_path = entry.path();
+                    if entry_path.is_file() {
+                        visit_source_file(&mut self.0, entry_path)?;
+                    }
+                }
+            } else if path.is_file() {
+                // If it's a file, process it directly
+                visit_source_file(&mut self.0, path)?;
             }
         }
 
