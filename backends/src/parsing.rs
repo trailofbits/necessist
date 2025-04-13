@@ -107,6 +107,8 @@ pub trait ParseLow: Sized {
         &self,
         file: &'ast <Self::Types as AbstractTypes>::File,
     ) -> <Self::Types as AbstractTypes>::Storage<'ast>;
+    /// Returns a [`BTreeMap`] mapping local function names to `LocalFunction`s as defined in the
+    /// backend's [`AbstractTypes`]
     // smoelius: A `local_functions` value can contain more than one `LocalFunction` when the one
     // that should be used cannot be determined. In such cases, the `GenericVisitor` will use the
     // first one and emit a warning.
@@ -213,8 +215,6 @@ impl<T: ParseLow> ParseLow for Rc<RefCell<T>> {
     ) -> <Self::Types as AbstractTypes>::Storage<'ast> {
         self.borrow().storage_from_file(file)
     }
-    /// Returns a [`BTreeMap`] mapping local function names to `LocalFunction`s as defined in the
-    /// backend's [`AbstractTypes`]
     fn local_functions<'ast>(
         &self,
         storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
