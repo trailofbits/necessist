@@ -15,10 +15,16 @@ use std::{
 use subprocess::Exec;
 use toml_edit::{DocumentMut, Value};
 
+enum TestRunner {
+    Mocha,
+    Vitest,
+}
+
 pub struct Anchor {
-    mocha_adapter: ParseAdapter<ts::mocha::Mocha>,
+    mocha_adapter: ParseAdapter<Box<dyn ts::MochaLike>>,
     anchor_toml: PathBuf,
     document: DocumentMut,
+    test_runner: TestRunner,
     prefix: String,
     suffix: String,
 }
@@ -37,15 +43,45 @@ impl Anchor {
         let contents = read_to_string(&anchor_toml)
             .with_context(|| format!(r#"Failed to read "{}""#, anchor_toml.display()))?;
         let mut document = contents.parse::<DocumentMut>()?;
-        let (prefix, suffix) = edit_test_script(&mut document, parse_test_value)?;
+        let (test_runner, prefix, suffix) = edit_test_script(&mut document, parse_test_value)?;
+        let parser_adapter_inner: Box<dyn ts::MochaLike> = match test_runner {
+            TestRunner::Mocha => Box::new(ts::Mocha::new("tests")),
+            TestRunner::Vitest => Box::new(ts::Vitest::new("tests", Some(&json_extractor))),
+        };
         Ok(Self {
-            mocha_adapter: ParseAdapter(ts::mocha::Mocha::new("tests", None, None)),
+            mocha_adapter: ParseAdapter(parser_adapter_inner),
             anchor_toml,
             document,
+            test_runner,
             prefix,
             suffix,
         })
     }
+}
+
+const N_LINES_TO_SKIP: usize = 5;
+
+fn json_extractor(stdout: &str) -> Result<&str> {
+    #[rustfmt::skip]
+    // smoelius: The five lines that are skipped have the following form:
+    // ```
+    //
+    // Found a 'test' script in the Anchor.toml. Running it as a test suite!
+    //
+    // Running test suite: "..."
+    //
+    // ```
+    let mut index = 0;
+    for i in 0..N_LINES_TO_SKIP {
+        let Some(newline_index) = stdout[index..].find('\n') else {
+            return Err(anyhow!(
+                "Failed to find {}th newline in vitest output: {stdout:?}",
+                i + 1
+            ));
+        };
+        index += newline_index + 1;
+    }
+    Ok(&stdout[index..])
 }
 
 impl Interface for Anchor {}
@@ -147,13 +183,19 @@ impl Anchor {
 
         let mut document = self.document.clone();
 
+        let args = match (&self.test_runner, check) {
+            (TestRunner::Mocha, true) => " --dry-run",
+            (TestRunner::Mocha, false) => "",
+            (TestRunner::Vitest, _) => ts::VITEST_COMMAND_SUFFIX,
+        };
+
         edit_test_script(&mut document, |test| {
             *test = Value::from(format!(
                 "{}{}{}{}",
                 self.prefix,
                 source_file.to_string_lossy(),
                 self.suffix,
-                if check { " --dry-run" } else { "" }
+                args
             ));
             Ok(())
         })
@@ -164,13 +206,6 @@ impl Anchor {
         Ok(backup)
     }
 }
-
-static TEST_RE: LazyLock<Regex> = LazyLock::new(|| {
-    // smoelius: If the space in the first capture group `(.* )` is replaced with `\b`, then the
-    // capture group captures too much.
-    #[allow(clippy::unwrap_used)]
-    Regex::new(r"^(.* )[^ ]*\.ts\b(.*)$").unwrap()
-});
 
 #[cfg_attr(dylint_lib = "general", allow(non_local_effect_before_error_return))]
 fn edit_test_script<T>(
@@ -193,7 +228,17 @@ fn edit_test_script<T>(
     f(test_value)
 }
 
-fn parse_test_value(test_value: &mut Value) -> Result<(String, String)> {
+static TEST_RE: LazyLock<Regex> = LazyLock::new(|| {
+    // smoelius: If the space in the first capture group `(.* )` is replaced with `\b`, then the
+    // capture group captures too much.
+    #[allow(clippy::unwrap_used)]
+    Regex::new(r"^(.* )[^ ]*\.ts\b(.*)$").unwrap()
+});
+
+static MOCHA_RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\<mocha\>|\<ts-mocha\>").unwrap());
+static VITEST_RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\<vitest\>").unwrap());
+
+fn parse_test_value(test_value: &mut Value) -> Result<(TestRunner, String, String)> {
     let test_str = test_value
         .as_str()
         .ok_or_else(|| anyhow!("`test` is not a string"))?;
@@ -201,7 +246,18 @@ fn parse_test_value(test_value: &mut Value) -> Result<(String, String)> {
         .captures(test_str)
         .ok_or_else(|| anyhow!("Failed to parse `test` string: {test_str:?}"))?;
     assert_eq!(3, captures.len());
-    Ok((captures[1].to_string(), captures[2].to_string()))
+    let prefix = captures[1].to_string();
+    let suffix = captures[2].to_string();
+    let test_runner = if MOCHA_RE.is_match(&prefix) {
+        TestRunner::Mocha
+    } else if VITEST_RE.is_match(&prefix) {
+        TestRunner::Vitest
+    } else {
+        return Err(anyhow!(
+            "Failed to determine test runner from `test` string: {test_str:?}"
+        ));
+    };
+    Ok((test_runner, prefix, suffix))
 }
 
 fn command_to_run_test(context: &LightContext) -> Command {
