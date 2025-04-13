@@ -9,7 +9,7 @@ use std::path::Path;
 use subprocess::Exec;
 
 pub struct Hardhat {
-    mocha_adapter: ParseAdapter<ts::mocha::Mocha>,
+    mocha_adapter: ParseAdapter<Box<dyn ts::MochaLike>>,
 }
 
 impl Hardhat {
@@ -23,7 +23,7 @@ impl Hardhat {
 
     pub fn new() -> Self {
         Self {
-            mocha_adapter: ParseAdapter(ts::mocha::Mocha::new("test", None, None)),
+            mocha_adapter: ParseAdapter(Box::new(ts::Mocha::new("test"))),
         }
     }
 }

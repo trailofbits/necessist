@@ -1,4 +1,4 @@
-use super::{GenericVisitor, Mocha, SourceMapped, Storage, is_it_call_expr, is_it_call_stmt};
+use super::{GenericVisitor, Inner, SourceMapped, Storage, is_it_call_expr, is_it_call_stmt};
 use anyhow::Result;
 use necessist_core::framework::{SpanTestMaps, TestSet};
 use std::{cell::RefCell, collections::BTreeMap};
@@ -32,7 +32,7 @@ impl<'ast> Visit for FnDeclCollector<'ast> {
 
 #[allow(clippy::unnecessary_wraps)]
 pub(super) fn visit<'ast>(
-    generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Mocha>,
+    generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Inner>,
     storage: &RefCell<Storage<'ast>>,
     module: &Module,
 ) -> Result<(TestSet, SpanTestMaps)> {
@@ -45,7 +45,7 @@ pub(super) fn visit<'ast>(
 }
 
 struct Visitor<'context, 'config, 'backend, 'ast, 'storage> {
-    generic_visitor: GenericVisitor<'context, 'config, 'backend, 'ast, Mocha>,
+    generic_visitor: GenericVisitor<'context, 'config, 'backend, 'ast, Inner>,
     storage: &'storage RefCell<Storage<'ast>>,
 }
 
@@ -53,7 +53,7 @@ impl<'context, 'config, 'backend, 'ast, 'storage>
     Visitor<'context, 'config, 'backend, 'ast, 'storage>
 {
     fn new(
-        generic_visitor: GenericVisitor<'context, 'config, 'backend, 'ast, Mocha>,
+        generic_visitor: GenericVisitor<'context, 'config, 'backend, 'ast, Inner>,
         storage: &'storage RefCell<Storage<'ast>>,
     ) -> Self {
         Self {

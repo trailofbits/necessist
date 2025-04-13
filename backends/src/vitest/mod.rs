@@ -1,53 +1,15 @@
 use super::{OutputAccessors, OutputStrippedOfAnsiScapes, ParseAdapter, ParseHigh, RunHigh, ts};
-use anyhow::{Result, bail};
+use anyhow::Result;
 use log::debug;
 use necessist_core::{
     __Rewriter as Rewriter, LightContext, SourceFile, Span,
     framework::{Interface, Postprocess, SourceFileSpanTestMap},
 };
-use serde_json::Value;
-use std::{ffi::OsStr, path::Path, process::Command};
+use std::{path::Path, process::Command};
 use subprocess::Exec;
 
-fn path_predicate(path: &Path) -> bool {
-    path.file_name()
-        .and_then(OsStr::to_str)
-        .is_none_or(|filename| !filename.ends_with(".test-d.ts"))
-}
-
-fn it_message_extractor(bytes: &[u8]) -> Result<Vec<String>> {
-    let stdout = std::str::from_utf8(bytes)?;
-    let json = stdout.parse::<Value>()?;
-    let Some(test_results) = json
-        .as_object()
-        .and_then(|object| object.get("testResults"))
-        .and_then(Value::as_array)
-    else {
-        bail!("Failed to find `testResults` in Vitest JSON output");
-    };
-    let assertion_results = test_results
-        .iter()
-        .filter_map(|value| {
-            value
-                .as_object()
-                .and_then(|object| object.get("assertionResults"))
-                .and_then(Value::as_array)
-        })
-        .flatten();
-    let it_messages = assertion_results
-        .filter_map(|value| {
-            value
-                .as_object()
-                .and_then(|object| object.get("title"))
-                .and_then(Value::as_str)
-                .map(ToOwned::to_owned)
-        })
-        .collect();
-    Ok(it_messages)
-}
-
 pub struct Vitest {
-    mocha_adapter: ParseAdapter<ts::mocha::Mocha>,
+    mocha_adapter: ParseAdapter<Box<dyn ts::MochaLike>>,
 }
 
 impl Vitest {
@@ -61,11 +23,7 @@ impl Vitest {
 
     pub fn new() -> Self {
         Self {
-            mocha_adapter: ParseAdapter(ts::mocha::Mocha::new(
-                ".",
-                Some(&path_predicate),
-                Some(&it_message_extractor),
-            )),
+            mocha_adapter: ParseAdapter(Box::new(ts::Vitest::new(".", None))),
         }
     }
 }
@@ -138,12 +96,8 @@ impl RunHigh for Vitest {
 fn command_to_run_test(context: &LightContext, source_file: &Path) -> Command {
     let mut command = ts::utils::script("npx");
     command.current_dir(context.root.as_path());
-    command.args([
-        "vitest",
-        "run",
-        "--reporter=json",
-        &source_file.to_string_lossy(),
-    ]);
+    command.args(["vitest", "run", &source_file.to_string_lossy()]);
+    command.args(ts::VITEST_COMMAND_SUFFIX.split_ascii_whitespace());
     command.args(&context.opts.args);
 
     command
