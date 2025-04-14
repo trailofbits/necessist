@@ -2273,10 +2273,11 @@ dependencies = [
 
 [[package]]
 name = "swc_common"
-version = "8.0.1"
+version = "8.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9e4a932c152e7142de2d5dba1c393e5523c47cd8fe656e5b0d411954bbaf1810"
+checksum = "7d96ac5d021c7c20acb3073940b4ee59b62989a705f855783c4a452e0737a2e6"
 dependencies = [
+ "anyhow",
  "ast_node",
  "better_scoped_tls",
  "cfg-if",
@@ -2299,9 +2300,9 @@ dependencies = [
 
 [[package]]
 name = "swc_core"
-version = "21.0.1"
+version = "22.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c89e035b38b98cbfa1950ca38f7cae673e3377ce80ed4e1dc58242a0f81dd8b8"
+checksum = "2704508325f4e04ccfdda9839f352797a8689d6588b1554a5464e6b088b0d4ac"
 dependencies = [
  "swc_allocator",
  "swc_atoms",
@@ -2315,14 +2316,16 @@ dependencies = [
 
 [[package]]
 name = "swc_ecma_ast"
-version = "8.1.0"
+version = "8.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "01f80679b1afc52ae0663eed0a2539cc3c108d48c287b5601712f9850d9fa9c2"
+checksum = "5ec3fa609b69d32a8430fb4061ea1106fb8e45f78bdeb472951ebdfa1d2e690a"
 dependencies = [
  "bitflags",
  "is-macro",
  "num-bigint",
+ "once_cell",
  "phf",
+ "rustc-hash",
  "scoped-tls",
  "string_enum",
  "swc_atoms",
@@ -2333,9 +2336,9 @@ dependencies = [
 
 [[package]]
 name = "swc_ecma_parser"
-version = "11.0.0"
+version = "11.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "41e06ecaef86a547831f7f01f342434e4b0d0f363762f8e7a2b84da7a0a5f92e"
+checksum = "5f5dc3b76aa3d2a0051b4aa5c6fde899a16ef0206deaec7b465ef03723323402"
 dependencies = [
  "either",
  "new_debug_unreachable",
@@ -2356,9 +2359,9 @@ dependencies = [
 
 [[package]]
 name = "swc_ecma_transforms_base"
-version = "12.0.0"
+version = "12.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b0b747f04a004d9b56b903305e4567e1d30c9cd226a8310a29cac06f7ac8173a"
+checksum = "e882b2bebaf060c352b42d2bf8ef09bf50a67739c7018755e0483b432ffb2b10"
 dependencies = [
  "better_scoped_tls",
  "bitflags",
