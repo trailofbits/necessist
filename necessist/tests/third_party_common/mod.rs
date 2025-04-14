@@ -127,6 +127,7 @@ struct Repo {
     workdir: TempDir,
     inited: bool,
     busy: bool,
+    n_outstanding_tests: usize,
 }
 
 struct Task {
@@ -246,15 +247,18 @@ If you do not see a panic message above, check that you passed --nocapture to th
 
     let mut repos = BTreeMap::new();
 
-    for key in tests.keys().cloned() {
+    for (key, tests) in &tests {
         let workdir = tempdir().unwrap();
 
+        let n_outstanding_tests = tests.len();
+
         repos.insert(
-            key,
+            key.clone(),
             Repo {
                 workdir,
                 inited: false,
                 busy: false,
+                n_outstanding_tests,
             },
         );
     }
@@ -346,6 +350,14 @@ If you do not see a panic message above, check that you passed --nocapture to th
             let repo = repos.get_mut(&key).unwrap();
             repo.inited = true;
             repo.busy = false;
+            repo.n_outstanding_tests -= 1;
+            if repo.n_outstanding_tests == 0 {
+                let workdir = repo.workdir.path().to_path_buf();
+                #[allow(clippy::explicit_write)]
+                writeln!(stderr(), "--> Removing workdir for {key:?}").unwrap();
+                repos.remove(&key);
+                assert!(!workdir.try_exists().unwrap());
+            }
 
             let value = summary.entry(key).or_default();
             value.0.push((toml_path, elapsed));
