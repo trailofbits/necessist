@@ -28,7 +28,7 @@ use string_or_vec::StringOrVec;
 mod tempfile_util;
 use tempfile_util::{TempDir, tempdir};
 
-const N_PARTITIONS: usize = 2;
+const N_PARTITIONS: usize = 3;
 
 // smoelius: `ERROR_EXIT_CODE` is from:
 // https://github.com/rust-lang/rust/blob/12397e9dd5a97460d76c884d449ca1c2d26da8ed/src/libtest/lib.rs#L94

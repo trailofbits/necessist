@@ -1,0 +1,40 @@
+url = "https://github.com/orca-so/whirlpools"
+
+# smoelius: The use of sed is a hack to avoid running all of the `legacy-sdk` tests and to avoid
+# building the entire npm workspace.
+init = """
+set -e
+ln -s legacy-sdk/whirlpool/tests
+sed -i 's,--globals legacy-sdk,--globals tests/sdk/whirlpools/whirlpool-impl.test.ts,' Anchor.toml
+sed -i '\\,"rust-sdk/\\*",d' package.json
+sed -i '\\,"ts-sdk/\\*",d' package.json
+sed -i 's,"legacy-sdk/\\*".,"legacy-sdk/*",' package.json
+sed -i '\\,"examples/ts-sdk/\\*",d' package.json
+sed -i '\\,"examples/rust-sdk/\\*",d' package.json
+sed -i '\\,"docs/\\*",d' package.json
+YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn
+yarn build
+"""
+
+target_os = "linux"
+
+framework = "anchor"
+
+source_files = ["tests/sdk/whirlpools/whirlpool-impl.test.ts"]
+
+config_mandatory = true
+
+[config]
+# smoelius: One `prependInstruction` removal passes locally but fails in CI. I haven't figured out
+# why.
+ignored_methods = ["prependInstruction"]
+# smoelius: Ignore all tests besides "open and add liquidity to a position, trade against it,
+# transfer position to another wallet, then close the tokens to another wallet".
+ignored_tests = [
+    "open and add liquidity to a position, then close [TokenAmount Slippage]",
+    "open and add liquidity to a position, transfer position to another wallet, then close the tokens to another wallet [TokenAmount Slippage]",
+    "open and add liquidity to a position, then close [Price Slippage]",
+    "open and add liquidity to a position, transfer position to another wallet, then close the tokens to another wallet [Price Slippage]",
+    "open and add liquidity to a position with SOL as token A, trade against it, transfer position to another wallet, then close the tokens to another wallet",
+    "swap with idempotent",
+]
