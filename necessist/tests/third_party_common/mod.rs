@@ -28,6 +28,8 @@ use string_or_vec::StringOrVec;
 mod tempfile_util;
 use tempfile_util::{TempDir, tempdir};
 
+const N_PARTITIONS: usize = 2;
+
 // smoelius: `ERROR_EXIT_CODE` is from:
 // https://github.com/rust-lang/rust/blob/12397e9dd5a97460d76c884d449ca1c2d26da8ed/src/libtest/lib.rs#L94
 const ERROR_EXIT_CODE: i32 = 101;
@@ -792,17 +794,15 @@ fn readme_is_current() {
     let readme_space_normalized = &SPACE_RE.replace_all(&readme_actual, " ");
     let readme_normalized = DASH_RE.replace_all(readme_space_normalized, "-");
 
-    let tests = read_tests_in("tests/third_party_tests/0", false)
-        .into_values()
-        .flatten()
-        .map(|(path, test)| (path, test, 0))
-        .chain(
-            read_tests_in("tests/third_party_tests/1", false)
+    let mut tests = Vec::new();
+    for i in 0..N_PARTITIONS {
+        tests.extend(
+            read_tests_in(format!("tests/third_party_tests/{i}"), false)
                 .into_values()
                 .flatten()
-                .map(|(path, test)| (path, test, 1)),
-        )
-        .collect::<Vec<_>>();
+                .map(|(toml_path, test)| (toml_path, test, i)),
+        );
+    }
 
     let mut test_lines = Vec::new();
     for (toml_path, test, partition) in tests {
