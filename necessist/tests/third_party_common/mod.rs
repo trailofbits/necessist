@@ -144,12 +144,12 @@ struct Task {
     test: Test,
 }
 
-pub fn all_tests_in(path: impl AsRef<Path>) {
+pub fn all_tests_in(dir: impl AsRef<Path>) {
     unsafe {
         set_var("CARGO_TERM_COLOR", "never");
     }
 
-    let mut tests = read_tests_in(path, true);
+    let mut tests = read_tests_in(dir, true);
     let n_tests = tests.values().map(Vec::len).sum();
 
     if n_tests == 1 {
@@ -168,10 +168,10 @@ pub fn all_tests_in(path: impl AsRef<Path>) {
     }
 }
 
-fn read_tests_in(path: impl AsRef<Path>, filter: bool) -> BTreeMap<Key, Vec<(PathBuf, Test)>> {
+fn read_tests_in(dir: impl AsRef<Path>, filter: bool) -> BTreeMap<Key, Vec<(PathBuf, Test)>> {
     let mut tests = BTreeMap::<_, Vec<_>>::new();
 
-    for entry in read_dir(path).unwrap() {
+    for entry in read_dir(dir).unwrap() {
         let entry = entry.unwrap();
         let path = entry.path();
 
@@ -702,8 +702,8 @@ fn permutation_ignoring_timeouts(expected: &str, actual: &str) -> bool {
             })
 }
 
-pub fn stdout_subsequence_in(path: impl AsRef<Path>) {
-    for entry in read_dir(path).unwrap() {
+pub fn stdout_subsequence_in(dir: impl AsRef<Path>) {
+    for entry in read_dir(dir).unwrap() {
         let entry = entry.unwrap();
         let path = entry.path();
 
@@ -756,8 +756,8 @@ fn subsequence<'a, 'b>(
 
 static BIN_RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"/[^/]*-[0-9a-f]{16}\b").unwrap());
 
-pub fn stdout_files_are_sanitary_in(path: impl AsRef<Path>) {
-    for entry in read_dir(path).unwrap() {
+pub fn stdout_files_are_sanitary_in(dir: impl AsRef<Path>) {
+    for entry in read_dir(dir).unwrap() {
         let entry = entry.unwrap();
         let path = entry.path();
 
