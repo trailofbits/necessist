@@ -138,7 +138,7 @@ struct Task {
     inited: bool,
 
     /// Path to toml file describing the test
-    path: PathBuf,
+    toml_path: PathBuf,
 
     /// The [`Test`] itself
     test: Test,
@@ -154,10 +154,10 @@ pub fn all_tests_in(path: impl AsRef<Path>) {
 
     if n_tests == 1 {
         let (key, mut tests) = tests.pop_first().unwrap();
-        let (path, test) = tests.remove(0);
+        let (toml_path, test) = tests.remove(0);
         let workdir = tempdir().unwrap();
         let mut output_combined = init_workdir(workdir.path(), &key);
-        let (output, elapsed) = run_test(workdir.path(), &path, &test);
+        let (output, elapsed) = run_test(workdir.path(), &toml_path, &test);
         output_combined += &output;
         #[allow(clippy::explicit_write)]
         write!(stderr(), "{output}").unwrap();
@@ -179,15 +179,18 @@ fn read_tests_in(path: impl AsRef<Path>, filter: bool) -> BTreeMap<Key, Vec<(Pat
             continue;
         }
 
+        let toml_path = path;
+
         // smoelius: `TESTNAME` is what Clippy uses:
         // https://github.com/rust-lang/rust-clippy/blame/f8f9d01c2ad0dff565bdd60feeb4cbd09dada8cd/book/src/development/adding_lints.md#L99
         if filter
-            && var("TESTNAME").is_ok_and(|testname| path.file_stem() != Some(OsStr::new(&testname)))
+            && var("TESTNAME")
+                .is_ok_and(|testname| toml_path.file_stem() != Some(OsStr::new(&testname)))
         {
             continue;
         }
 
-        let contents = read_to_string(&path).unwrap();
+        let contents = read_to_string(&toml_path).unwrap();
         let test: Test = toml::from_str(&contents).unwrap();
 
         if test.url.starts_with(PREFIX_SSH) && !ssh_agent_is_running() {
@@ -195,7 +198,7 @@ fn read_tests_in(path: impl AsRef<Path>, filter: bool) -> BTreeMap<Key, Vec<(Pat
             writeln!(
                 stderr(),
                 "Skipping `{}` as ssh-agent is not running or has no identities",
-                path.display()
+                toml_path.display()
             )
             .unwrap();
 
@@ -207,7 +210,7 @@ fn read_tests_in(path: impl AsRef<Path>, filter: bool) -> BTreeMap<Key, Vec<(Pat
         }
 
         let key = Key::from_test(&test);
-        tests.entry(key).or_default().push((path, test));
+        tests.entry(key).or_default().push((toml_path, test));
     }
 
     tests
@@ -271,10 +274,10 @@ If you do not see a panic message above, check that you passed --nocapture to th
                     } else {
                         init_workdir(&task.workdir, &task.key)
                     };
-                    let (output, elapsed) = run_test(&task.workdir, &task.path, &task.test);
+                    let (output, elapsed) = run_test(&task.workdir, &task.toml_path, &task.test);
                     output_combined += &output;
                     tx_output
-                        .send((task.key, i, output_combined, task.path, elapsed))
+                        .send((task.key, i, output_combined, task.toml_path, elapsed))
                         .unwrap();
                 }
             }),
@@ -306,13 +309,13 @@ If you do not see a panic message above, check that you passed --nocapture to th
                 }
                 repo.busy = true;
 
-                let (path, test) = tests.pop().unwrap();
+                let (toml_path, test) = tests.pop().unwrap();
 
                 let task = Task {
                     key,
                     workdir: repo.workdir.path().to_path_buf(),
                     inited: repo.inited,
-                    path,
+                    toml_path,
                     test,
                 };
 
@@ -329,7 +332,7 @@ If you do not see a panic message above, check that you passed --nocapture to th
         }
 
         if children_idle.len() < n_children {
-            let (key, i, output, path, elapsed) = rx_output.recv().unwrap();
+            let (key, i, output, toml_path, elapsed) = rx_output.recv().unwrap();
 
             // smoelius: The next `writeln!` used to prepend a blank line to the child's output.
             // However, now that `git` is invoked with `--quiet`, this is no longer necessary.
@@ -343,7 +346,7 @@ If you do not see a panic message above, check that you passed --nocapture to th
             repo.busy = false;
 
             let value = summary.entry(key).or_default();
-            value.0.push((path, elapsed));
+            value.0.push((toml_path, elapsed));
             value.1 += elapsed;
         }
     }
@@ -364,11 +367,11 @@ fn display_summary(mut summary: BTreeMap<Key, (Vec<(PathBuf, Duration)>, Duratio
     let mut summary = summary.into_iter().collect::<Vec<_>>();
     summary.sort_by_key(|&(_, (_, total))| total);
 
-    let width_path = summary
+    let width_toml_path = summary
         .iter()
-        .flat_map(|(_, (pairs, _))| pairs.iter().map(|(path, _)| path))
-        .fold(0, |width, path| {
-            std::cmp::max(width, path.to_string_lossy().len())
+        .flat_map(|(_, (pairs, _))| pairs.iter().map(|(toml_path, _)| toml_path))
+        .fold(0, |width, toml_path| {
+            std::cmp::max(width, toml_path.to_string_lossy().len())
         });
 
     let width_elapsed = summary
@@ -388,15 +391,15 @@ fn display_summary(mut summary: BTreeMap<Key, (Vec<(PathBuf, Duration)>, Duratio
 
     for (key, (pairs, total)) in summary {
         println!("{key:?}");
-        for (path, elapsed) in pairs {
+        for (toml_path, elapsed) in pairs {
             println!(
-                "    {:width_path$}  {:>width_elapsed$}s",
-                path.to_string_lossy(),
+                "    {:width_toml_path$}  {:>width_elapsed$}s",
+                toml_path.to_string_lossy(),
                 elapsed.as_secs(),
             );
         }
         println!(
-            "    {:width_path$}  {:>width_elapsed$}s",
+            "    {:width_toml_path$}  {:>width_elapsed$}s",
             "",
             total.as_secs()
         );
@@ -454,7 +457,7 @@ fn init_workdir(workdir: &Path, key: &Key) -> String {
 
 #[cfg_attr(dylint_lib = "supplementary", allow(commented_code))]
 #[allow(clippy::too_many_lines)]
-fn run_test(workdir: &Path, path: &Path, test: &Test) -> (String, Duration) {
+fn run_test(workdir: &Path, toml_path: &Path, test: &Test) -> (String, Duration) {
     let mut output = String::new();
     let mut elapsed = Duration::default();
 
@@ -498,11 +501,11 @@ fn run_test(workdir: &Path, path: &Path, test: &Test) -> (String, Duration) {
         .unwrap();
 
         let path_stdout = if test.config.is_empty() {
-            path.with_extension("stdout")
+            toml_path.with_extension("stdout")
         } else if config.is_none() {
-            path.with_extension("without_config.stdout")
+            toml_path.with_extension("without_config.stdout")
         } else {
-            path.with_extension("with_config.stdout")
+            toml_path.with_extension("with_config.stdout")
         };
 
         let stdout_expected = read_to_string(&path_stdout)
@@ -802,8 +805,8 @@ fn readme_is_current() {
         .collect::<Vec<_>>();
 
     let mut test_lines = Vec::new();
-    for (path, test, partition) in tests {
-        let name = path.file_stem().unwrap();
+    for (toml_path, test, partition) in tests {
+        let name = toml_path.file_stem().unwrap();
         test_lines.push(format!(
             "| {} | {}| {}| {}| {}| {}| {}| {partition} |",
             name.to_string_lossy(),
