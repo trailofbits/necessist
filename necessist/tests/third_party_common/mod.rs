@@ -122,7 +122,7 @@ impl Key {
 }
 
 struct Repo {
-    tempdir: TempDir,
+    workdir: TempDir,
     inited: bool,
     busy: bool,
 }
@@ -132,7 +132,7 @@ struct Task {
     key: Key,
 
     /// Path to temporary directory to hold the repo
-    tempdir: PathBuf,
+    workdir: PathBuf,
 
     /// Whether the repo has been cloned already
     inited: bool,
@@ -155,9 +155,9 @@ pub fn all_tests_in(path: impl AsRef<Path>) {
     if n_tests == 1 {
         let (key, mut tests) = tests.pop_first().unwrap();
         let (path, test) = tests.remove(0);
-        let tempdir = tempdir().unwrap();
-        let mut output_combined = init_tempdir(tempdir.path(), &key);
-        let (output, elapsed) = run_test(tempdir.path(), &path, &test);
+        let workdir = tempdir().unwrap();
+        let mut output_combined = init_workdir(workdir.path(), &key);
+        let (output, elapsed) = run_test(workdir.path(), &path, &test);
         output_combined += &output;
         #[allow(clippy::explicit_write)]
         write!(stderr(), "{output}").unwrap();
@@ -242,12 +242,12 @@ If you do not see a panic message above, check that you passed --nocapture to th
     let mut repos = BTreeMap::new();
 
     for key in tests.keys().cloned() {
-        let tempdir = tempdir().unwrap();
+        let workdir = tempdir().unwrap();
 
         repos.insert(
             key,
             Repo {
-                tempdir,
+                workdir,
                 inited: false,
                 busy: false,
             },
@@ -269,9 +269,9 @@ If you do not see a panic message above, check that you passed --nocapture to th
                     let mut output_combined = if task.inited {
                         String::new()
                     } else {
-                        init_tempdir(&task.tempdir, &task.key)
+                        init_workdir(&task.workdir, &task.key)
                     };
-                    let (output, elapsed) = run_test(&task.tempdir, &task.path, &task.test);
+                    let (output, elapsed) = run_test(&task.workdir, &task.path, &task.test);
                     output_combined += &output;
                     tx_output
                         .send((task.key, i, output_combined, task.path, elapsed))
@@ -310,7 +310,7 @@ If you do not see a panic message above, check that you passed --nocapture to th
 
                 let task = Task {
                     key,
-                    tempdir: repo.tempdir.path().to_path_buf(),
+                    workdir: repo.workdir.path().to_path_buf(),
                     inited: repo.inited,
                     path,
                     test,
@@ -405,14 +405,14 @@ fn display_summary(mut summary: BTreeMap<Key, (Vec<(PathBuf, Duration)>, Duratio
 
 #[cfg_attr(dylint_lib = "supplementary", allow(commented_code))]
 #[must_use]
-fn init_tempdir(tempdir: &Path, key: &Key) -> String {
+fn init_workdir(workdir: &Path, key: &Key) -> String {
     let mut command = Command::new("git");
     command.args([
         "clone",
         "--recursive",
         "--quiet",
         &key.url,
-        &tempdir.to_string_lossy(),
+        &workdir.to_string_lossy(),
     ]);
     if key.rev.is_none() {
         command.arg("--depth=1");
@@ -425,7 +425,7 @@ fn init_tempdir(tempdir: &Path, key: &Key) -> String {
     if let Some(rev) = &key.rev {
         let output = Command::new("git")
             .args(["checkout", "--quiet", rev])
-            .current_dir(tempdir)
+            .current_dir(workdir)
             .output()
             .unwrap();
         assert!(output.status.success(), "{}", OutputError::new(output));
@@ -436,7 +436,7 @@ fn init_tempdir(tempdir: &Path, key: &Key) -> String {
     if let Some(init) = &key.init {
         let output = Command::new("bash")
             .args(["-c", init])
-            .current_dir(tempdir)
+            .current_dir(workdir)
             .output()
             .unwrap();
         assert!(output.status.success(), "{}", OutputError::new(output));
@@ -454,7 +454,7 @@ fn init_tempdir(tempdir: &Path, key: &Key) -> String {
 
 #[cfg_attr(dylint_lib = "supplementary", allow(commented_code))]
 #[allow(clippy::too_many_lines)]
-fn run_test(tempdir: &Path, path: &Path, test: &Test) -> (String, Duration) {
+fn run_test(workdir: &Path, path: &Path, test: &Test) -> (String, Duration) {
     let mut output = String::new();
     let mut elapsed = Duration::default();
 
@@ -512,7 +512,7 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> (String, Duration) {
         let root = test
             .subdir
             .as_ref()
-            .map_or_else(|| tempdir.to_path_buf(), |subdir| tempdir.join(subdir));
+            .map_or_else(|| workdir.to_path_buf(), |subdir| workdir.join(subdir));
 
         let necessist_toml = root.join("necessist.toml");
         if let Some(config) = config {
@@ -524,10 +524,10 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> (String, Duration) {
         let mut exec = Exec::cmd("../target/debug/necessist");
         exec = exec.args(&["--no-sqlite", "--root", &root.to_string_lossy()]);
         if let Some(prefix) = &test.path_prefix {
-            let prefix_in_tempdir = tempdir.join(prefix);
+            let prefix_in_workdir = workdir.join(prefix);
             let path = var("PATH").unwrap();
             let path_prepended =
-                join_paths(std::iter::once(prefix_in_tempdir).chain(split_paths(&path))).unwrap();
+                join_paths(std::iter::once(prefix_in_workdir).chain(split_paths(&path))).unwrap();
             exec = exec.env("PATH", path_prepended);
         }
         if let Some(framework) = &test.framework {
@@ -540,7 +540,7 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> (String, Duration) {
         }
         for source_file in &test.source_files {
             exec = exec.arg(
-                tempdir
+                workdir
                     .join(test.subdir.as_deref().unwrap_or("."))
                     .join(source_file),
             );
@@ -566,7 +566,7 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> (String, Duration) {
         // smoelius: Removing the line-column information makes comparing diffs easier.
         let stdout_normalized = remove_timings(&remove_line_columns(&normalize_paths(
             stdout_actual,
-            tempdir,
+            workdir,
         )));
 
         if enabled("BLESS") {
@@ -602,14 +602,14 @@ fn run_test(tempdir: &Path, path: &Path, test: &Test) -> (String, Duration) {
         if test.check_sqlite_urls {
             assert!(test.rev.is_some());
             assert!(!test.parsing_only);
-            check_sqlite_urls(tempdir, &root, test);
+            check_sqlite_urls(workdir, &root, test);
         }
     }
 
     (output, elapsed)
 }
 
-fn check_sqlite_urls(tempdir: &Path, root: &Path, test: &Test) {
+fn check_sqlite_urls(workdir: &Path, root: &Path, test: &Test) {
     let root = Rc::new(root.to_path_buf());
 
     let necessist_db = root.join("necessist.db");
@@ -638,7 +638,7 @@ fn check_sqlite_urls(tempdir: &Path, root: &Path, test: &Test) {
                 "{}/blob/{}/{}#L{}-L{}",
                 url_https,
                 test.rev.as_ref().unwrap(),
-                util::strip_prefix(&span.source_file, tempdir)
+                util::strip_prefix(&span.source_file, workdir)
                     .unwrap()
                     .to_string_lossy(),
                 span.start.line,
