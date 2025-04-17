@@ -1,0 +1,1 @@
+fixtures/cli_dir_input/src/target_dir/src/lib.rs:4:5-4:12: `n += 1;`
