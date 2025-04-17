@@ -1,0 +1,11 @@
+args = ["--no-sqlite", "--dump-candidates", "--framework=rust", "--root=fixtures/cli_dir_input", "fixtures/cli_dir_input/src/target_dir", "fixtures/cli_dir_input/src/adjacent_dir/src/lib.rs"]
+stderr = ""
+
+[bin]
+name = "necessist"
+
+[fs]
+cwd = "../../.."
+
+[status]
+code = 0 
