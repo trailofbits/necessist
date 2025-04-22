@@ -29,6 +29,14 @@ jobs:
       - name: Install testing tools
         uses: ./.github/actions/install-testing-tools
 
+      - name: Free up space on Ubuntu
+        run: |
+          # https://github.com/actions/runner-images/issues/2606#issuecomment-772683150
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/share/swift
+          # du -sh /usr/*/* 2>/dev/null | sort -h || true
+
       - name: Update stdout files
         run: cargo test --test third_party_0 --test third_party_1 -- --nocapture
         env:
