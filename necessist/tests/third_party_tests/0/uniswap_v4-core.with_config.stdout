@@ -1,4 +1,4 @@
-144 candidates in 12 tests in 1 source file
+142 candidates in 12 tests in 1 source file
 $DIR/test/Sync.t.sol: dry running
 $DIR/test/Sync.t.sol: mutilating
 $DIR/test/Sync.t.sol: `manager.sync(currency1);` failed
@@ -59,7 +59,6 @@ $DIR/test/Sync.t.sol: `actions[3] = Actions.SETTLE;` passed
 $DIR/test/Sync.t.sol: `actions[4] = Actions.ASSERT_DELTA_EQUALS;` passed
 $DIR/test/Sync.t.sol: `params[4] = abi.encode(currency0, address(actionsRouter), 0);` failed
 $DIR/test/Sync.t.sol: `MockERC20(Currency.unwrap(currency0)).approve(address(actionsRouter), type(uint256).max);` passed
-$DIR/test/Sync.t.sol: `vm.stopSnapshotGas();` passed
 $DIR/test/Sync.t.sol: `actions[0] = Actions.TAKE;` failed
 $DIR/test/Sync.t.sol: `params[0] = abi.encode(currency0, address(this), 10);` failed
 $DIR/test/Sync.t.sol: `actions[1] = Actions.ASSERT_DELTA_EQUALS;` passed
@@ -138,7 +137,6 @@ $DIR/test/Sync.t.sol: `.approve(address(actionsRouter), type(uint256).max)` pass
 $DIR/test/Sync.t.sol: `.mint(address(manager), amount)` failed
 $DIR/test/Sync.t.sol: `.approve(address(actionsRouter), type(uint256).max)` passed
 $DIR/test/Sync.t.sol: `.getSyncedReserves()` nonbuildable
-$DIR/test/Sync.t.sol: `.stopSnapshotGas()` passed
 $DIR/test/Sync.t.sol: `.executeActions(actions, params)` failed
 $DIR/test/Sync.t.sol: `.deal(address(this), value)` passed
 $DIR/test/Sync.t.sol: `.deal(address(manager), value)` passed
