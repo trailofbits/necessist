@@ -158,6 +158,9 @@ impl ParseLow for Foundry {
         "vm.expect*",
         "vm.getLabel",
         "vm.label",
+        // smoelius: Removing a call to `vm.startSnapshotGas` can cause `forge` to panic.
+        "vm.startSnapshotGas",
+        "vm.stopSnapshotGas",
         // tarunbhm: prank is generally used to call contracts with a privileged account so we want
         // to find tests passing after removing them. However, in case prank is used to
         // call contracts with less privileged account then it results in false positives.
