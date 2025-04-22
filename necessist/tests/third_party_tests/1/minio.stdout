@@ -1210,12 +1210,11 @@ $DIR/cmd/data-scanner_test.go: `setObjectLayer(objAPI)`
 $DIR/cmd/data-scanner_test.go: `globalBucketMetadataSys = NewBucketMetadataSys()`
 $DIR/cmd/data-scanner_test.go: `globalBucketObjectLockSys = &BucketObjectLockSys{}`
 $DIR/cmd/data-scanner_test.go: `globalBucketVersioningSys = &BucketVersioningSys{}`
-$DIR/cmd/data-scanner_test.go: `es.workers.Store(&workers)`
-$DIR/cmd/data-scanner_test.go: `globalExpiryState = es`
-$DIR/cmd/data-scanner_test.go: `wg.Add(1)`
-$DIR/cmd/data-scanner_test.go: `expired = append(expired, t.versions...)`
 $DIR/cmd/data-scanner_test.go: `globalBucketMetadataSys.Set(bucket, meta)`
+$DIR/cmd/data-scanner_test.go: `globalExpiryState = es`
 $DIR/cmd/data-scanner_test.go: `uuids[i] = uuid.UUID([16]byte{15: uint8(i + 1)})`
+$DIR/cmd/data-scanner_test.go: `objRetentionMeta[strings.ToLower(xhttp.AmzObjectLockMode)] = string(objectlock.RetCompliance)`
+$DIR/cmd/data-scanner_test.go: `objRetentionMeta[strings.ToLower(xhttp.AmzObjectLockRetainUntilDate)] = amztime.ISO8601Format(now.Add(12 * time.Hour))`
 $DIR/cmd/data-scanner_test.go: `fivs[i] = FileInfo{
 			Volume:      bucket,
 			Name:        obj,
@@ -1225,36 +1224,193 @@ $DIR/cmd/data-scanner_test.go: `fivs[i] = FileInfo{
 			Size:        1 << 10,
 			NumVersions: 5,
 		}`
-$DIR/cmd/data-scanner_test.go: `wants[i] = fi.ToObjectInfo(bucket, obj, versioned)`
+$DIR/cmd/data-scanner_test.go: `objInfos[i] = fivs[i].ToObjectInfo(bucket, obj, true)`
+$DIR/cmd/data-scanner_test.go: `lrObjInfos[3].UserDefined = objRetentionMeta`
+$DIR/cmd/data-scanner_test.go: `lrWants = append(lrWants, lrObjInfos[:4]...)`
+$DIR/cmd/data-scanner_test.go: `replObjInfos[4].VersionPurgeStatus = replication.VersionPurgePending`
+$DIR/cmd/data-scanner_test.go: `replWants = append(replWants, replObjInfos[:3]...)`
+$DIR/cmd/data-scanner_test.go: `replWants = append(replWants, replObjInfos[4])`
+$DIR/cmd/data-scanner_test.go: `allVersExpObjInfos[0].UserTags = "del-all=true"`
+$DIR/cmd/data-scanner_test.go: `close(readyCh)`
+$DIR/cmd/data-scanner_test.go: `expired = append(expired, v.versions...)`
+$DIR/cmd/data-scanner_test.go: `expired = append(expired, ObjectToDelete{
+					ObjectV: ObjectV{
+						ObjectName: v.objInfo.Name,
+						VersionID:  v.objInfo.VersionID,
+					},
+				})`
+$DIR/cmd/data-scanner_test.go: `*gotExpired = expired`
+$DIR/cmd/data-scanner_test.go: `t.Run(fmt.Sprintf("TestApplyNewerNoncurrentVersionsLimit-%d", i), func(t *testing.T) {
+			workers := []chan expiryOp{make(chan expiryOp)}
+			es.workers.Store(&workers)
+			workerReady := make(chan struct{})
+			var wg sync.WaitGroup
+			wg.Add(1)
+			var gotExpired []ObjectToDelete
+			go expiryWorker(&wg, workerReady, workers[0], &gotExpired)
+			<-workerReady
+
+			item := scannerItem{
+				Path:        obj,
+				bucket:      bucket,
+				prefix:      "",
+				objectName:  obj,
+				lifeCycle:   lc,
+				replication: test.replCfg,
+			}
+
+			var (
+				sizeS sizeSummary
+				gots  []ObjectInfo
+			)
+			item.applyActions(context.TODO(), objAPI, test.objInfos, test.lr, &sizeS, func(oi ObjectInfo, sz, _ int64, _ *sizeSummary) {
+				if sz != 0 {
+					gots = append(gots, oi)
+				}
+			})
+
+			if len(gots) != len(test.wants) {
+				t.Fatalf("Expected %d objects but got %d", len(test.wants), len(gots))
+			}
+			if slices.CompareFunc(gots, test.wants, func(g, w ObjectInfo) int {
+				if g.VersionID == w.VersionID {
+					return 0
+				}
+				return -1
+			}) != 0 {
+				t.Fatalf("Expected %v but got %v", test.wants, gots)
+			}
+			// verify the objects to be deleted
+			close(workers[0])
+			wg.Wait()
+			if len(gotExpired) != len(test.wantExpired) {
+				t.Fatalf("Expected expiry of %d objects but got %d", len(test.wantExpired), len(gotExpired))
+			}
+			if slices.CompareFunc(gotExpired, test.wantExpired, func(g, w ObjectToDelete) int {
+				if g.VersionID == w.VersionID {
+					return 0
+				}
+				return -1
+			}) != 0 {
+				t.Fatalf("Expected %v but got %v", test.wantExpired, gotExpired)
+			}
+		})`
+$DIR/cmd/data-scanner_test.go: `es.workers.Store(&workers)`
+$DIR/cmd/data-scanner_test.go: `wg.Add(1)`
+$DIR/cmd/data-scanner_test.go: `go expiryWorker(&wg, workerReady, workers[0], &gotExpired)`
+$DIR/cmd/data-scanner_test.go: `<-workerReady`
+$DIR/cmd/data-scanner_test.go: `item.applyActions(context.TODO(), objAPI, test.objInfos, test.lr, &sizeS, func(oi ObjectInfo, sz, _ int64, _ *sizeSummary) {
+				if sz != 0 {
+					gots = append(gots, oi)
+				}
+			})`
+$DIR/cmd/data-scanner_test.go: `gots = append(gots, oi)`
 $DIR/cmd/data-scanner_test.go: `close(workers[0])`
 $DIR/cmd/data-scanner_test.go: `wg.Wait()`
 $DIR/cmd/data-scanner_test.go: `t.Run(fmt.Sprintf("TestEvalAction-%d", i), func(t *testing.T) {
-			if got := evalActionFromLifecycle(context.TODO(), test.ilm, test.retention, nil, test.obj); got.Action != test.want {
-				t.Fatalf("Expected %v but got %v", test.want, got)
+			gotEvent := evalActionFromLifecycle(context.Background(), test.ilm, *test.retention, nil, test.obj)
+			if gotEvent.Action != test.want {
+				t.Fatalf("Expected %v but got %v", test.want, gotEvent.Action)
 			}
 		})`
 $DIR/cmd/data-scanner_test.go: `.Background()`
-$DIR/cmd/data-scanner_test.go: `.Background()`
-$DIR/cmd/data-scanner_test.go: `.workers.Store(&workers)`
-$DIR/cmd/data-scanner_test.go: `.Add(1)`
-$DIR/cmd/data-scanner_test.go: `.Done()`
-$DIR/cmd/data-scanner_test.go: `.workers.Load()`
-$DIR/cmd/data-scanner_test.go: `.Marshal(lc)`
+$DIR/cmd/data-scanner_test.go: `.ParseLifecycleConfig(strings.NewReader(lcXML))`
+$DIR/cmd/data-scanner_test.go: `.NewReader(lcXML)`
 $DIR/cmd/data-scanner_test.go: `.Marshal(vcfg)`
 $DIR/cmd/data-scanner_test.go: `.Now()`
 $DIR/cmd/data-scanner_test.go: `.Set(bucket, meta)`
-$DIR/cmd/data-scanner_test.go: `.Now()`
+$DIR/cmd/data-scanner_test.go: `.Background()`
+$DIR/cmd/data-scanner_test.go: `.Add(-48 * time.Hour)`
 $DIR/cmd/data-scanner_test.go: `.UUID([16]byte{15: uint8(i + 1)})`
+$DIR/cmd/data-scanner_test.go: `.ToLower(xhttp.AmzObjectLockMode)`
+$DIR/cmd/data-scanner_test.go: `.ToLower(xhttp.AmzObjectLockRetainUntilDate)`
+$DIR/cmd/data-scanner_test.go: `.ISO8601Format(now.Add(12 * time.Hour))`
+$DIR/cmd/data-scanner_test.go: `.Add(12 * time.Hour)`
 $DIR/cmd/data-scanner_test.go: `.String()`
 $DIR/cmd/data-scanner_test.go: `.Add(-1 * time.Duration(i) * time.Minute)`
 $DIR/cmd/data-scanner_test.go: `.Duration(i)`
-$DIR/cmd/data-scanner_test.go: `.ToObjectInfo(bucket, obj, versioned)`
-$DIR/cmd/data-scanner_test.go: `.applyNewerNoncurrentVersionLimit(context.TODO(), objAPI, fivs, es)`
+$DIR/cmd/data-scanner_test.go: `.ToObjectInfo(bucket, obj, true)`
+$DIR/cmd/data-scanner_test.go: `.Clone(objInfos)`
+$DIR/cmd/data-scanner_test.go: `.Clone(objInfos)`
+$DIR/cmd/data-scanner_test.go: `.Clone(objInfos)`
+$DIR/cmd/data-scanner_test.go: `.Done()`
+$DIR/cmd/data-scanner_test.go: `.Run(fmt.Sprintf("TestApplyNewerNoncurrentVersionsLimit-%d", i), func(t *testing.T) {
+			workers := []chan expiryOp{make(chan expiryOp)}
+			es.workers.Store(&workers)
+			workerReady := make(chan struct{})
+			var wg sync.WaitGroup
+			wg.Add(1)
+			var gotExpired []ObjectToDelete
+			go expiryWorker(&wg, workerReady, workers[0], &gotExpired)
+			<-workerReady
+
+			item := scannerItem{
+				Path:        obj,
+				bucket:      bucket,
+				prefix:      "",
+				objectName:  obj,
+				lifeCycle:   lc,
+				replication: test.replCfg,
+			}
+
+			var (
+				sizeS sizeSummary
+				gots  []ObjectInfo
+			)
+			item.applyActions(context.TODO(), objAPI, test.objInfos, test.lr, &sizeS, func(oi ObjectInfo, sz, _ int64, _ *sizeSummary) {
+				if sz != 0 {
+					gots = append(gots, oi)
+				}
+			})
+
+			if len(gots) != len(test.wants) {
+				t.Fatalf("Expected %d objects but got %d", len(test.wants), len(gots))
+			}
+			if slices.CompareFunc(gots, test.wants, func(g, w ObjectInfo) int {
+				if g.VersionID == w.VersionID {
+					return 0
+				}
+				return -1
+			}) != 0 {
+				t.Fatalf("Expected %v but got %v", test.wants, gots)
+			}
+			// verify the objects to be deleted
+			close(workers[0])
+			wg.Wait()
+			if len(gotExpired) != len(test.wantExpired) {
+				t.Fatalf("Expected expiry of %d objects but got %d", len(test.wantExpired), len(gotExpired))
+			}
+			if slices.CompareFunc(gotExpired, test.wantExpired, func(g, w ObjectToDelete) int {
+				if g.VersionID == w.VersionID {
+					return 0
+				}
+				return -1
+			}) != 0 {
+				t.Fatalf("Expected %v but got %v", test.wantExpired, gotExpired)
+			}
+		})`
+$DIR/cmd/data-scanner_test.go: `.Sprintf("TestApplyNewerNoncurrentVersionsLimit-%d", i)`
+$DIR/cmd/data-scanner_test.go: `.workers.Store(&workers)`
+$DIR/cmd/data-scanner_test.go: `.Add(1)`
+$DIR/cmd/data-scanner_test.go: `.applyActions(context.TODO(), objAPI, test.objInfos, test.lr, &sizeS, func(oi ObjectInfo, sz, _ int64, _ *sizeSummary) {
+				if sz != 0 {
+					gots = append(gots, oi)
+				}
+			})`
 $DIR/cmd/data-scanner_test.go: `.TODO()`
+$DIR/cmd/data-scanner_test.go: `.CompareFunc(gots, test.wants, func(g, w ObjectInfo) int {
+				if g.VersionID == w.VersionID {
+					return 0
+				}
+				return -1
+			})`
 $DIR/cmd/data-scanner_test.go: `.Wait()`
-$DIR/cmd/data-scanner_test.go: `.String()`
-$DIR/cmd/data-scanner_test.go: `.String()`
-$DIR/cmd/data-scanner_test.go: `.String()`
+$DIR/cmd/data-scanner_test.go: `.CompareFunc(gotExpired, test.wantExpired, func(g, w ObjectToDelete) int {
+				if g.VersionID == w.VersionID {
+					return 0
+				}
+				return -1
+			})`
 $DIR/cmd/data-scanner_test.go: `.Now()`
 $DIR/cmd/data-scanner_test.go: `.Add(-31 * 24 * time.Hour)`
 $DIR/cmd/data-scanner_test.go: `.New()`
@@ -1268,12 +1424,13 @@ $DIR/cmd/data-scanner_test.go: `.NewReader(deleteAllILM)`
 $DIR/cmd/data-scanner_test.go: `.ParseLifecycleConfig(strings.NewReader(delMarkerILM))`
 $DIR/cmd/data-scanner_test.go: `.NewReader(delMarkerILM)`
 $DIR/cmd/data-scanner_test.go: `.Run(fmt.Sprintf("TestEvalAction-%d", i), func(t *testing.T) {
-			if got := evalActionFromLifecycle(context.TODO(), test.ilm, test.retention, nil, test.obj); got.Action != test.want {
-				t.Fatalf("Expected %v but got %v", test.want, got)
+			gotEvent := evalActionFromLifecycle(context.Background(), test.ilm, *test.retention, nil, test.obj)
+			if gotEvent.Action != test.want {
+				t.Fatalf("Expected %v but got %v", test.want, gotEvent.Action)
 			}
 		})`
 $DIR/cmd/data-scanner_test.go: `.Sprintf("TestEvalAction-%d", i)`
-$DIR/cmd/data-scanner_test.go: `.TODO()`
+$DIR/cmd/data-scanner_test.go: `.Background()`
 $DIR/cmd/data-usage-cache_gen_test.go: `left, err = msgp.Skip(bts)`
 $DIR/cmd/data-usage-cache_gen_test.go: `msgp.Encode(&buf, &v)`
 $DIR/cmd/data-usage-cache_gen_test.go: `buf.Reset()`
@@ -4235,7 +4392,7 @@ $DIR/cmd/erasure-object_test.go: `.DeleteObjects(ctx, bucketName, names, ObjectO
 			Versioned: true,
 		})`
 $DIR/cmd/erasure-object_test.go: `.GetObjectInfo(ctx, bucketName, objectName, ObjectOptions{
-				VersionID: names[i].ObjectV.VersionID,
+				VersionID: names[i].VersionID,
 			})`
 $DIR/cmd/erasure-object_test.go: `.WithCancel(context.Background())`
 $DIR/cmd/erasure-object_test.go: `.Background()`
@@ -4252,7 +4409,7 @@ $DIR/cmd/erasure-object_test.go: `.DeleteObjects(ctx, bucketName, names, ObjectO
 		Versioned: true,
 	})`
 $DIR/cmd/erasure-object_test.go: `.GetObjectInfo(ctx, test.bucket, test.object, ObjectOptions{
-			VersionID: names[i].ObjectV.VersionID,
+			VersionID: names[i].VersionID,
 		})`
 $DIR/cmd/erasure-object_test.go: `.ReadFile(pathJoin(fsDirs[0], bucketName, "dir/obj1", "xl.meta"))`
 $DIR/cmd/erasure-object_test.go: `.WithCancel(context.Background())`
@@ -6106,8 +6263,10 @@ $DIR/cmd/metrics-v2_gen_test.go: `.MarshalMsg(nil)`
 $DIR/cmd/metrics-v2_gen_test.go: `.UnmarshalMsg(bts)`
 $DIR/cmd/metrics-v2_gen_test.go: `.MarshalMsg(nil)`
 $DIR/cmd/metrics-v2_gen_test.go: `.UnmarshalMsg(bts)`
+$DIR/cmd/metrics-v2_test.go: `<-ticker.C`
 $DIR/cmd/metrics-v2_test.go: `ttfbHist.With(prometheus.Labels{"api": obs.label}).Observe(obs.val)`
 $DIR/cmd/metrics-v2_test.go: `metrics = getHistogramMetrics(ttfbHist, getBucketTTFBDistributionMD(), true, false)`
+$DIR/cmd/metrics-v2_test.go: `<-ticker.C`
 $DIR/cmd/metrics-v2_test.go: `ttfbHist.With(prometheus.Labels{"api": obs.label}).Observe(obs.val)`
 $DIR/cmd/metrics-v2_test.go: `capitalPutObjects = append(capitalPutObjects, metric)`
 $DIR/cmd/metrics-v2_test.go: `slices.SortFunc(capitalPutObjects, func(a MetricV2, b MetricV2) int {
@@ -10702,6 +10861,85 @@ $DIR/internal/bucket/lifecycle/delmarker-expiration_test.go: `.Run(fmt.Sprintf("
 		})`
 $DIR/internal/bucket/lifecycle/delmarker-expiration_test.go: `.Sprintf("TestDelMarker-%d", i)`
 $DIR/internal/bucket/lifecycle/delmarker-expiration_test.go: `.Unmarshal([]byte(test.xml), &dexp)`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `lc.Rules = append(lc.Rules, Rule{
+				ID:     ruleID,
+				Status: "Enabled",
+				Filter: Filter{
+					Tag: tag,
+					set: true,
+				},
+				NoncurrentVersionExpiration: NoncurrentVersionExpiration{
+					NewerNoncurrentVersions: retainVersions[i],
+					set:                     true,
+				},
+			})`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `obj.IsLatest = true`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `obj.SuccessorModTime = curModTime.Add(time.Duration(-i+1) * time.Second)`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `objs = append(objs, obj)`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `lc = prepLifecycleCfg([]string{"tag3", "tag4", "tag5"}, []int{1, 2, 3})`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `objs = objs[:len(objs)-1]`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `wantEvents = []Event{
+		{Action: NoneAction},
+		{Action: NoneAction},
+		{Action: DeleteVersionAction},
+		{Action: NoneAction},
+		{Action: DeleteVersionAction},
+		{Action: NoneAction},
+	}`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `evaluator = NewEvaluator(lc)`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `gotEvents = evaluator.eval(objs, now)`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `lc = Lifecycle{
+		Rules: []Rule{
+			{
+				ID:     "AllVersionsExpiration",
+				Status: "Enabled",
+				Filter: Filter{},
+				Expiration: Expiration{
+					Days: 1,
+					DeleteAll: Boolean{
+						val: true,
+						set: true,
+					},
+					set: true,
+				},
+			},
+		},
+	}`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `now = time.Date(2025, time.February, 12, 23, 0, 0, 0, time.UTC)`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `evaluator = NewEvaluator(lc)`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `gotEvents = evaluator.eval(objs, now)`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `wantEvents = []Event{
+		{Action: DeleteAllVersionsAction},
+		{Action: NoneAction},
+		{Action: NoneAction},
+		{Action: NoneAction},
+		{Action: NoneAction},
+		{Action: NoneAction},
+	}`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `obj.IsLatest = true`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `obj.SuccessorModTime = curModTime.Add(time.Duration(-i+1) * time.Second)`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `objs = append(objs, obj)`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `.Sprintf("rule-%d", i)`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `.Date(2025, time.February, 10, 23, 0, 0, 0, time.UTC)`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `.Add(time.Duration(-i) * time.Second)`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `.Duration(-i)`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `.Sprintf("%s=minio", tagKeys[i])`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `.Add(time.Duration(-i+1) * time.Second)`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `.Duration(-i+1)`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `.Date(2025, time.February, 10, 23, 0, 0, 0, time.UTC)`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `.eval(objs, now)`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `.eval(objs, now)`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `.Date(2025, time.February, 12, 23, 0, 0, 0, time.UTC)`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `.eval(objs, now)`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `.Eval(nil)`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `.Date(2025, time.February, 10, 23, 0, 0, 0, time.UTC)`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `.New()`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `.String()`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `.Add(time.Duration(-i) * time.Second)`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `.Duration(-i)`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `.Add(time.Duration(-i+1) * time.Second)`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `.Duration(-i+1)`
+$DIR/internal/bucket/lifecycle/evaluator_test.go: `.Eval(objs)`
 $DIR/internal/bucket/lifecycle/expiration_test.go: `t.Run(fmt.Sprintf("Test %d", i+1), func(t *testing.T) {
 			var expiration Expiration
 			err := xml.Unmarshal([]byte(tc.inputXML), &expiration)
@@ -10876,10 +11114,10 @@ $DIR/internal/bucket/lifecycle/lifecycle_test.go: `t.Run(fmt.Sprintf("Test_%d", 
 		})`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `lc.SetPredictionHeaders(w, tc.obj)`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `now = now.Add(7 * 24 * time.Hour)`
-$DIR/internal/bucket/lifecycle/lifecycle_test.go: `evt = lc.eval(obj2, now)`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `evt = evts[1]`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `now = now.Add(7 * 24 * time.Hour)`
-$DIR/internal/bucket/lifecycle/lifecycle_test.go: `evt = lc.eval(obj2, now)`
-$DIR/internal/bucket/lifecycle/lifecycle_test.go: `evt = lc.eval(obj3, now)`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `evt = evts[1]`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `evt = evts[2]`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `rules = append(rules, Rule{
 			ID:     strconv.Itoa(i),
 			Status: "Enabled",
@@ -10942,7 +11180,9 @@ $DIR/internal/bucket/lifecycle/lifecycle_test.go: `opts = ObjectOpts{
 		DeleteMarker: true,
 		NumVersions:  4,
 	}`
-$DIR/internal/bucket/lifecycle/lifecycle_test.go: `event = lc.eval(opts, time.Time{})`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `evaluator = NewEvaluator(lc)`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `events = evaluator.eval([]ObjectOpts{opts}, time.Time{})`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `event = events[0]`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Run(fmt.Sprintf("Test %d", i+1), func(t *testing.T) {
 			lc, err := ParseLifecycleConfig(bytes.NewReader([]byte(tc.inputConfig)))
 			if err != tc.expectedParsingErr {
@@ -11231,14 +11471,11 @@ $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Format(http.TimeFormat)`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Now()`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.UTC()`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Add(7 * 24 * time.Hour)`
-$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.eval(obj1, now)`
-$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.eval(obj2, now)`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.eval([]ObjectOpts{obj1, obj2}, now)`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Now()`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.UTC()`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Add(7 * 24 * time.Hour)`
-$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.eval(obj1, now)`
-$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.eval(obj2, now)`
-$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.eval(obj3, now)`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.eval([]ObjectOpts{obj1, obj2, obj3}, now)`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Itoa(i)`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.NoncurrentVersionsExpirationLimit(ObjectOpts{Name: "obj"})`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.NewDecoder(strings.NewReader(tc.xml))`
@@ -11306,13 +11543,13 @@ $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.UTC()`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Add(-10 * 24 * time.Hour)`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.New()`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.String()`
-$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.eval(opts, time.Time{})`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.eval([]ObjectOpts{opts}, time.Time{})`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Now()`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.UTC()`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.Add(-10 * 24 * time.Hour)`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.New()`
 $DIR/internal/bucket/lifecycle/lifecycle_test.go: `.String()`
-$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.eval(opts, time.Time{})`
+$DIR/internal/bucket/lifecycle/lifecycle_test.go: `.eval([]ObjectOpts{opts}, time.Time{})`
 $DIR/internal/bucket/lifecycle/noncurrentversion_test.go: `.n.Validate()`
 $DIR/internal/bucket/lifecycle/rule_test.go: `t.Run(fmt.Sprintf("Test %d", i+1), func(t *testing.T) {
 			var rule Rule
