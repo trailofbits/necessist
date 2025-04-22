@@ -1,5 +1,8 @@
 url = "https://github.com/orca-so/whirlpools"
 
+# 0.1.7
+rev = "660a9d6a79bf55e2badf417d621c63b023c4b67e"
+
 # smoelius: The use of sed is a hack to avoid running all of the `legacy-sdk` tests and to avoid
 # building the entire npm workspace.
 init = """
