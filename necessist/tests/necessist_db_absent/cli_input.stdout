@@ -1,0 +1,3 @@
+fixtures/cli_input/src/other_dir/other_file.rs:4:5-4:12: `n += 1;`
+fixtures/cli_input/src/other_dir/some_file.rs:4:5-4:12: `n += 1;`
+fixtures/cli_input/src/some_dir/mod.rs:4:5-4:12: `n += 1;`
