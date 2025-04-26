@@ -197,7 +197,7 @@
 
 ## 0.1.3
 
-- Verify that package.json exists before installing Node modules ([#580](https://github.com/trailofbits/necessist/pull/580))
+- Verify that package.json exists before installing Node modules ([#580](https://github.com/trailofbits/necessist/pull/580))&mdash;thanks [@0xPhaze](https://github.com/0xPhaze)
 
 ## 0.1.2
 
@@ -206,8 +206,8 @@
 
 ## 0.1.1
 
-- Improve Foundry support ([#515](https://github.com/trailofbits/necessist/pull/515))
-- Improve sqlite database handling (e.g., fix [#119](https://github.com/trailofbits/necessist/issues/119)) ([#533](https://github.com/trailofbits/necessist/pull/533))
+- Improve Foundry support ([#515](https://github.com/trailofbits/necessist/pull/515))&mdash;thanks [@tarunbhm](https://github.com/tarunbhm)
+- Improve sqlite database handling (e.g., fix [#119](https://github.com/trailofbits/necessist/issues/119)) ([#533](https://github.com/trailofbits/necessist/pull/533))&mdash;thanks [@tarunbhm](https://github.com/tarunbhm)
 
 ## 0.1.0
 
