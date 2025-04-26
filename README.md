@@ -244,6 +244,8 @@ In addition to the below, the Foundry framework ignores:
 - Anything beginning with `console2.log` (e.g., `console2.log`, `console2.logInt`)
 - `vm.getLabel`
 - `vm.label`
+- `vm.startSnapshotGas`
+- `vm.stopSnapshotGas`
 
 </details>
 
