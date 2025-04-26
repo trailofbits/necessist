@@ -275,6 +275,7 @@ In addition to the below, the Go backend ignores:
 - `FailNow`
 - `Fatal`
 - `Fatalf`
+- `Helper`
 - `Log`
 - `Logf`
 - `Parallel`
