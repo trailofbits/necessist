@@ -214,6 +214,10 @@ Also, for some frameworks, certain statements and methods are ignored. Click on 
 <details>
 <summary>Anchor</summary>
 
+In addition to the below, the Anchor framework ignores:
+
+- `throw` statements
+
 #### Ignored functions
 
 - `assert`
