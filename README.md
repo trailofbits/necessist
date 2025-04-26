@@ -214,7 +214,7 @@ Also, for some frameworks, certain statements and methods are ignored. Click on 
 <details>
 <summary>Anchor</summary>
 
-In addition to the below, the Anchor framework ignores:
+In addition to the below, the Anchor backend ignores:
 
 - `throw` statements
 
@@ -235,7 +235,7 @@ In addition to the below, the Anchor framework ignores:
 <details>
 <summary>Foundry</summary>
 
-In addition to the below, the Foundry framework ignores:
+In addition to the below, the Foundry backend ignores:
 
 - a statement immediately following a use of `vm.prank` or any form of `vm.expect` (e.g., `vm.expectRevert`)
 - an `emit` statement
@@ -256,7 +256,7 @@ In addition to the below, the Foundry framework ignores:
 <details>
 <summary>Go</summary>
 
-In addition to the below, the Go framework ignores:
+In addition to the below, the Go backend ignores:
 
 - `defer` statements
 
@@ -388,7 +388,7 @@ The ignored functions and methods are the same as for Anchor above.
 
 A configuration file allows one to tailor Necessist's behavior with respect to a project. The file must be named `necessist.toml`, appear in the project's root directory, and be [toml] encoded. The file may contain one more of the options listed below.
 
-- `ignored_functions`, `ignored_methods`, `ignored_macros`: A list of strings interpreted as [patterns]. A function, method, or macro (respectively) whose [path] matches a pattern in the list is ignored. Note that `ignored_macros` is used only by the Rust framework currently.
+- `ignored_functions`, `ignored_methods`, `ignored_macros`: A list of strings interpreted as [patterns]. A function, method, or macro (respectively) whose [path] matches a pattern in the list is ignored. Note that `ignored_macros` is used only by the Rust backend currently.
 
 - `ignored_path_disambiguation`: One of the strings `Either`, `Function`, or `Method`. For a [path] that could refer to a function or method ([see below](#paths)), this option influences whether the function or method is ignored.
 
