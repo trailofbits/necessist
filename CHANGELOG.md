@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.1.0
+
+- Remove deprecated `anchor-ts` and `hardhat-ts` framework aliases ([#1483](https://github.com/trailofbits/necessist/pull/1483))
+- FEATURE: Accept directory names on the command line ([#1499](https://github.com/trailofbits/necessist/pull/1499))&mdash;thanks [@turkaturki](https://github.com/turkaturki)
+- Update `libsqlite3-sys` to version 0.30 ([#1514](https://github.com/trailofbits/necessist/pull/1514) and [#1529](https://github.com/trailofbits/necessist/pull/1529))
+- Update `swc_core` to version 22 ([#1516](https://github.com/trailofbits/necessist/pull/1516))
+- FEATURE: Support Vitest as a test runner for Anchor ([#1509](https://github.com/trailofbits/necessist/pull/1509))
+- Ignore calls to `vm.startSnapshotGas` and `vm.stopSnapshotGas` in Forge backend ([#1525](https://github.com/trailofbits/necessist/pull/1525) and [#1530](https://github.com/trailofbits/necessist/pull/1530))
+- Correct two README.md omissions ([#1531](https://github.com/trailofbits/necessist/pull/1531) and [#1533](https://github.com/trailofbits/necessist/pull/1533))
+
 ## 2.0.0
 
 - Update `strum` to version 0.27 ([#1439](https://github.com/trailofbits/necessist/pull/1439))
