@@ -11,7 +11,7 @@
 - Add experimental `--dump-candidate-counts` option ([#1468](https://github.com/trailofbits/necessist/pull/1468))
 - Update `libsqlite3-sys` to version 0.31 ([#1479](https://github.com/trailofbits/necessist/pull/1479))
 - Add support for the Vitest framework ([#1475](https://github.com/trailofbits/necessist/pull/1475))
-- Update `swc_core` to version 0.16 ([#1478](https://github.com/trailofbits/necessist/pull/1478))
+- Update `swc_core` to version 16 ([#1478](https://github.com/trailofbits/necessist/pull/1478))
 
 ## 1.0.4
 
