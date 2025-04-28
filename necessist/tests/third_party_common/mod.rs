@@ -420,7 +420,7 @@ fn display_summary(mut summary: BTreeMap<Key, (Vec<(PathBuf, Duration)>, Duratio
     }
 }
 
-#[cfg_attr(dylint_lib = "supplementary", allow(commented_code))]
+#[cfg_attr(dylint_lib = "supplementary", allow(commented_out_code))]
 #[must_use]
 fn init_workdir(workdir: &Path, key: &Key) -> String {
     let mut command = Command::new("git");
@@ -469,7 +469,7 @@ fn init_workdir(workdir: &Path, key: &Key) -> String {
     output_combined
 }
 
-#[cfg_attr(dylint_lib = "supplementary", allow(commented_code))]
+#[cfg_attr(dylint_lib = "supplementary", allow(commented_out_code))]
 #[allow(clippy::too_many_lines)]
 fn run_test(workdir: &Path, toml_path: &Path, test: &Test) -> (String, Duration) {
     let mut output = String::new();
