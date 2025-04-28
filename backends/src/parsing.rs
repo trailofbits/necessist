@@ -397,6 +397,7 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
                 }
             };
 
+            #[cfg_attr(dylint_lib = "supplementary", allow(local_ref_cell))]
             let storage = RefCell::new(backend.storage_from_file(&file));
 
             let walkable_functions = {
