@@ -183,7 +183,7 @@ pub fn necessist<Identifier: Applicable + Display + IntoEnumIterator + ToImpleme
 }
 
 #[allow(clippy::type_complexity)]
-#[cfg_attr(dylint_lib = "supplementary", allow(commented_code))]
+#[cfg_attr(dylint_lib = "supplementary", allow(commented_out_code))]
 fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementation>(
     context: &LightContext,
     framework: framework::Auto<Identifier>,
@@ -911,7 +911,7 @@ fn timeout(opts: &Necessist) -> Option<Duration> {
     }
 }
 
-#[cfg_attr(dylint_lib = "supplementary", allow(commented_code))]
+#[cfg_attr(dylint_lib = "supplementary", allow(commented_out_code))]
 fn transitive_kill(pid: u32) -> Result<()> {
     let mut pids = vec![(pid, false)];
 
