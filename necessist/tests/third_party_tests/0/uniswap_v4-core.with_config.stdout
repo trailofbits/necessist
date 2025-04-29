@@ -1,4 +1,4 @@
-142 candidates in 12 tests in 1 source file
+141 candidates in 12 tests in 1 source file
 $DIR/test/Sync.t.sol: dry running
 $DIR/test/Sync.t.sol: mutilating
 $DIR/test/Sync.t.sol: `manager.sync(currency1);` failed
@@ -21,7 +21,7 @@ $DIR/test/Sync.t.sol: `params[0] = abi.encode(currency0);` failed
 $DIR/test/Sync.t.sol: `actions[1] = Actions.ASSERT_RESERVES_EQUALS;` passed
 $DIR/test/Sync.t.sol: `params[1] = abi.encode(balanceCurrency0);` failed
 $DIR/test/Sync.t.sol: `manager.initialize(key2, SQRT_PRICE_1_1);` failed
-$DIR/test/Sync.t.sol: `modifyLiquidityRouter.modifyLiquidity(key2, IPoolManager.ModifyLiquidityParams(-60, 60, 100, 0), new bytes(0));` passed
+$DIR/test/Sync.t.sol: `modifyLiquidityRouter.modifyLiquidity(key2, ModifyLiquidityParams(-60, 60, 100, 0), new bytes(0));` passed
 $DIR/test/Sync.t.sol: `actions[0] = Actions.SYNC;` failed
 $DIR/test/Sync.t.sol: `params[0] = abi.encode(currency2);` failed
 $DIR/test/Sync.t.sol: `actions[1] = Actions.ASSERT_RESERVES_EQUALS;` passed
@@ -130,8 +130,7 @@ $DIR/test/Sync.t.sol: `.executeActions(actions, params)` passed
 $DIR/test/Sync.t.sol: `.executeActions(actions, params)` passed
 $DIR/test/Sync.t.sol: `.swap(key, SWAP_PARAMS, testSettings, new bytes(0))` passed
 $DIR/test/Sync.t.sol: `.initialize(key2, SQRT_PRICE_1_1)` failed
-$DIR/test/Sync.t.sol: `.modifyLiquidity(key2, IPoolManager.ModifyLiquidityParams(-60, 60, 100, 0), new bytes(0))` passed
-$DIR/test/Sync.t.sol: `.ModifyLiquidityParams(-60, 60, 100, 0)` nonbuildable
+$DIR/test/Sync.t.sol: `.modifyLiquidity(key2, ModifyLiquidityParams(-60, 60, 100, 0), new bytes(0))` passed
 $DIR/test/Sync.t.sol: `.assume(taker != address(actionsRouter))` passed
 $DIR/test/Sync.t.sol: `.approve(address(actionsRouter), type(uint256).max)` passed
 $DIR/test/Sync.t.sol: `.mint(address(manager), amount)` failed
