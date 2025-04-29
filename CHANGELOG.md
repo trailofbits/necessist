@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.1
+
+- Fix typo in "Configuration files" section of README.md ([#1538](https://github.com/trailofbits/necessist/pull/1538))&mdash;thanks [@jasonpetro](https://github.com/jasonpetro)
+- Upgrade `rewriter` to version 0.2 ([#1540](https://github.com/trailofbits/necessist/pull/1540))
+- Fix typo in "Possible theoretical foundation" section of README.md ([#1542](https://github.com/trailofbits/necessist/pull/1542))&mdash;thanks [@willyross](https://github.com/willyross)
+
 ## 2.1.0
 
 - Remove deprecated `anchor-ts` and `hardhat-ts` framework aliases ([#1483](https://github.com/trailofbits/necessist/pull/1483))
