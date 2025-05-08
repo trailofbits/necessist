@@ -97,7 +97,7 @@ fn verify_untrusted_callback_override_ok() {
 
 Conventional mutation testing tries to identify _gaps in test coverage_, whereas Necessist tries to identify _bugs in existing tests_.
 
-Conventional mutation testing tools (such a [`universalmutator`]) randomly inject faults into source code, and see whether the code's tests still pass. If they do, it could mean the code's tests are inadequate.
+Conventional mutation testing tools (such as [`universalmutator`]) randomly inject faults into source code, and see whether the code's tests still pass. If they do, it could mean the code's tests are inadequate.
 
 Notably, conventional mutation testing is about finding deficiencies in the set of tests as a whole, not in individual tests. That is, for any given test, randomly injecting faults into the code is not especially likely to reveal bugs in that test. This is unfortunate since some tests are more important than others, e.g., because ensuring the correctness of some parts of the code is more important than others.
 
