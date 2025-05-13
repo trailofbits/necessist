@@ -100,7 +100,7 @@ $DIR/src/encoding/binary/binary_test.go: `t.Run(src.Index(0).Type().Name(), func
 $DIR/src/encoding/binary/binary_test.go: `unsigned = true` failed
 $DIR/src/encoding/binary/binary_test.go: `src.Index(i).SetUint(uint64(i * 0x07654321))` passed
 $DIR/src/encoding/binary/binary_test.go: `src.Index(i).SetInt(int64(i * 0x07654321))` passed
-$DIR/src/encoding/binary/binary_test.go: `err = dec.fn(BigEndian, dstSlice.Interface(), buf)` failed
+$DIR/src/encoding/binary/binary_test.go: `err = dec.fn(BigEndian, dstSlice.Interface(), buf)` timed-out
 $DIR/src/encoding/binary/binary_test.go: `t.Run(enc.name, func(t *testing.T) {
 			ts := T{}
 			if _, err := enc.fn(BigEndian, ts); err == nil {
