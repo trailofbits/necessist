@@ -490,6 +490,7 @@ impl<'ast, T: ParseLow> GenericVisitor<'_, '_, '_, 'ast, T> {
             .collect::<Vec<_>>()
             .join(".");
 
+        #[allow(clippy::collapsible_if)]
         if let Some(call) = self.backend.expression_is_call(storage, base) {
             if innermost {
                 return if let Some((field, name)) = self.callee_is_named_field(storage, call) {
