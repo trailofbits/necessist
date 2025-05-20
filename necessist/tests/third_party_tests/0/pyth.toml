@@ -1,5 +1,5 @@
 url = "https://github.com/pyth-network/pyth-crosschain"
-rev = "pyth-price-pusher-v9.3.1"
+rev = "rust-pyth-lazer-publisher-sdk-v0.1.3"
 target_os = ["linux", "macos"]
 subdir = "pythnet/message_buffer"
 framework = "anchor"
