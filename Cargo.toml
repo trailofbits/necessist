@@ -37,6 +37,7 @@ ignore = [
     "icu_provider_macros",
     "paste",
     "smartstring",
+    "solang-parser",
     # https://github.com/alacritty/vte/pull/122#issuecomment-2579278540
     "utf8parse",
 ]
