@@ -541,7 +541,7 @@ where
 
 fn skip_present_spans<'a>(
     context: &Context,
-    span_test_iter: impl Iterator<Item = (&'a Span, SpanKind, &'a IndexSet<String>)>,
+    span_test_iter: impl IntoIterator<Item = (&'a Span, SpanKind, &'a IndexSet<String>)>,
 ) -> Result<usize> {
     let mut n = 0;
 

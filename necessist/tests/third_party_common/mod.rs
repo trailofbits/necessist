@@ -748,12 +748,13 @@ pub fn stdout_subsequence_in(dir: impl AsRef<Path>) {
 }
 
 fn subsequence<'a, 'b>(
-    xs: impl Iterator<Item = &'a str>,
-    mut ys: impl Iterator<Item = &'b str>,
+    xs: impl IntoIterator<Item = &'a str>,
+    ys: impl IntoIterator<Item = &'b str>,
 ) -> bool {
     let re = Regex::new(r"^(\d+) candidates in (\d+) source file(s)?$").unwrap();
 
-    let mut xs = xs.peekable();
+    let mut xs = xs.into_iter().peekable();
+    let mut ys = ys.into_iter();
 
     while let Some(&x) = xs.peek() {
         let Some(y) = ys.next() else {
