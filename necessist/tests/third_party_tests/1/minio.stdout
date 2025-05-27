@@ -12992,6 +12992,18 @@ $DIR/internal/event/target/nats_contrib_test.go: `opts.Username = "testminio"`
 $DIR/internal/event/target/nats_contrib_test.go: `opts.Password = "miniotest"`
 $DIR/internal/event/target/nats_contrib_test.go: `opts.Port = 14223`
 $DIR/internal/event/target/nats_contrib_test.go: `opts.Authorization = "s3cr3t"`
+$DIR/internal/event/target/nats_contrib_test.go: `opts.Port = 14223`
+$DIR/internal/event/target/nats_contrib_test.go: `opts.Nkeys = []*server.NkeyUser{
+		{
+			// Not a real NKey
+			// Taken from https://docs.nats.io/running-a-nats-service/configuration/securing_nats/auth_intro/nkey_auth
+			Nkey: "UDXU4RCSJNZOIQHZNWXHXORDPRTGNJAHAHFRGZNEEJCPQTT2M7NLCNF4",
+		},
+	}`
+$DIR/internal/event/target/nats_contrib_test.go: `.RunServer(&opts)`
+$DIR/internal/event/target/nats_contrib_test.go: `.Shutdown()`
+$DIR/internal/event/target/nats_contrib_test.go: `.Port(opts.Port)`
+$DIR/internal/event/target/nats_contrib_test.go: `.connectNats()`
 $DIR/internal/event/target/nats_contrib_test.go: `.RunServer(&opts)`
 $DIR/internal/event/target/nats_contrib_test.go: `.Shutdown()`
 $DIR/internal/event/target/nats_contrib_test.go: `.Port(opts.Port)`
