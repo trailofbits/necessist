@@ -5,10 +5,8 @@ use std::{
     env::{remove_var, set_current_dir, var},
     ffi::OsStr,
     fs::read_to_string,
-    io::{Write, stderr},
     path::Path,
     process::{Command, exit},
-    sync::Mutex,
 };
 use walkdir::WalkDir;
 
@@ -59,13 +57,11 @@ fn dylint() {
 }
 
 #[test]
-fn format() {
-    preserves_cleanliness("format", || {
-        Command::new("cargo")
-            .args(["+nightly", "fmt"])
-            .assert()
-            .success();
-    });
+fn fmt() {
+    Command::new("cargo")
+        .args(["+nightly", "fmt", "--check"])
+        .assert()
+        .success();
 }
 
 #[test]
@@ -320,39 +316,4 @@ fn unmaintained() {
         .args(["unmaintained", "--color=never", "--fail-fast"])
         .assert()
         .success();
-}
-
-static MUTEX: Mutex<()> = Mutex::new(());
-
-fn preserves_cleanliness(test_name: &str, f: impl FnOnce()) {
-    let _lock = MUTEX.lock().unwrap();
-
-    if var("CI").is_err() && dirty().is_some() {
-        #[allow(clippy::explicit_write)]
-        writeln!(
-            stderr(),
-            "Skipping `{test_name}` test as repository is dirty"
-        )
-        .unwrap();
-        return;
-    }
-
-    f();
-
-    if let Some(stdout) = dirty() {
-        panic!("{}", stdout);
-    }
-}
-
-fn dirty() -> Option<String> {
-    let output = Command::new("git")
-        .args(["diff", "--exit-code"])
-        .output()
-        .unwrap();
-
-    if output.status.success() {
-        None
-    } else {
-        Some(String::from_utf8(output.stdout).unwrap())
-    }
 }
