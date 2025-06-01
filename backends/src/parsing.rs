@@ -188,6 +188,10 @@ pub trait ParseLow {
         storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
         call: <Self::Types as AbstractTypes>::Call<'ast>,
     ) -> <Self::Types as AbstractTypes>::Expression<'ast>;
+    // smoelius: `macro_call_callee` appears to be unused. For comparison, `call_callee` is called
+    // by `GenericVisitor`'s `callee_is_walkable_function` and `callee_is_named_field` methods, both
+    // of which are called by `visit_call`.
+    #[allow(dead_code)]
     fn macro_call_callee<'ast>(
         &self,
         storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
