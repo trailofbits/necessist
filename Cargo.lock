@@ -1355,6 +1355,7 @@ dependencies = [
  "remain",
  "serde",
  "serde-untagged",
+ "serde_json",
  "similar-asserts",
  "strum",
  "strum_macros",

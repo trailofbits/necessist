@@ -93,6 +93,7 @@ jobs:
           cargo install cargo-hack               || true
           cargo install cargo-license            || true
           cargo install cargo-sort               || true
+          cargo install cargo-supply-chain       || true
           cargo install cargo-udeps --locked     || true
           cargo install cargo-unmaintained       || true
 
