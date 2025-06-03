@@ -374,9 +374,9 @@ If you do not see a panic message above, check that you passed --nocapture to th
 }
 
 fn display_summary(mut summary: BTreeMap<Key, (Vec<(PathBuf, Duration)>, Duration)>) {
-    summary
-        .values_mut()
-        .for_each(|(pairs, _)| pairs.sort_by_key(|&(_, elapsed)| elapsed));
+    for (pairs, _) in summary.values_mut() {
+        pairs.sort_by_key(|&(_, elapsed)| elapsed);
+    }
 
     let mut summary = summary.into_iter().collect::<Vec<_>>();
     summary.sort_by_key(|&(_, (_, total))| total);
