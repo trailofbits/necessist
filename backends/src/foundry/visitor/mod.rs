@@ -26,7 +26,7 @@ impl<'ast> Statements<'ast> {
 
 pub(super) fn collect_local_functions(
     source_unit: &SourceUnit,
-) -> BTreeMap<String, Vec<LocalFunction>> {
+) -> BTreeMap<String, Vec<LocalFunction<'_>>> {
     let mut collector = FunctionDefinitionCollector::default();
     collector.visit_source_unit(source_unit).unwrap();
     collector.function_definitions.split_off(&String::new())
