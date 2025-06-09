@@ -64,7 +64,7 @@ struct Context<'a> {
 }
 
 impl Context<'_> {
-    fn light(&self) -> LightContext {
+    fn light(&self) -> LightContext<'_> {
         LightContext {
             opts: &self.opts,
             root: &self.root,
