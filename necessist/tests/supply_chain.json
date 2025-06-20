@@ -332,6 +332,40 @@
         "name": "Nick Fitzgerald"
       }
     ],
+    "bytes": [
+      {
+        "id": 10,
+        "kind": "user",
+        "login": "carllerche",
+        "name": "Carl Lerche"
+      },
+      {
+        "id": 1461,
+        "kind": "team",
+        "login": "github:tokio-rs:core",
+        "name": "Core"
+      },
+      {
+        "id": 6741,
+        "kind": "user",
+        "login": "Darksonn",
+        "name": "Alice Ryhl"
+      }
+    ],
+    "bytes-str": [
+      {
+        "id": 7286,
+        "kind": "user",
+        "login": "kdy1",
+        "name": "Donny/강동윤"
+      },
+      {
+        "id": 179182,
+        "kind": "user",
+        "login": "swc-bot",
+        "name": "SWC Bot"
+      }
+    ],
     "camino": [
       {
         "id": 1139,
