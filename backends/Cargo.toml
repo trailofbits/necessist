@@ -40,7 +40,7 @@ toml_edit = "0.22"
 # Foundry
 # smoelius: New `solang-parser` releases may contain breaking changes:
 # https://github.com/hyperledger/solang/pull/1213
-solang-parser = { version = "=0.3.4", features = ["pt-serde"] }
+solang-parser = { version = "=0.3.5", features = ["pt-serde"] }
 
 # Go
 streaming-iterator = "0.1"
