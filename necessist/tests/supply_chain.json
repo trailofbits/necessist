@@ -2668,6 +2668,14 @@
         "name": "David Tolnay"
       }
     ],
+    "seq-macro": [
+      {
+        "id": 3618,
+        "kind": "user",
+        "login": "dtolnay",
+        "name": "David Tolnay"
+      }
+    ],
     "serde": [
       {
         "id": 3618,
