@@ -392,11 +392,8 @@ A configuration file allows one to tailor Necessist's behavior with respect to a
 - `ignored_functions`, `ignored_methods`, `ignored_macros`: A list of strings interpreted as [patterns]. A function, method, or macro (respectively) whose [path] matches a pattern in the list is ignored. Note that `ignored_macros` is used only by the Rust backend currently.
 
 - `ignored_path_disambiguation`: One of the strings `Either`, `Function`, or `Method`. For a [path] that could refer to a function or method ([see below](#paths)), this option influences whether the function or method is ignored.
-
   - `Either` (default): Ignore if the path matches either an `ignored_functions` or `ignored_methods` pattern.
-
   - `Function`: Ignore only if the path matches an `ignored_functions` pattern.
-
   - `Method`: Ignore only if the path matches an `ignored_methods` pattern.
 
 - `ignored_tests`: A list of strings. A test whose name exactly matches a string in the list is ignored. For Mocha-based frameworks (e.g., Anchor and Hardhat), a test name is considered to be a message passed to `it`.
