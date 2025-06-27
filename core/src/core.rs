@@ -755,10 +755,10 @@ fn perform_exec(
     rlimit::set_soft_rlimit(rlimit::Resource::NPROC, nprocs_prev)?;
 
     if status.is_some() {
-        if let Some(postprocess) = postprocess {
-            if !postprocess(&context.light(), popen)? {
-                return Ok(None);
-            }
+        if let Some(postprocess) = postprocess
+            && !postprocess(&context.light(), popen)?
+        {
+            return Ok(None);
         }
     } else {
         let pid = popen.pid().ok_or_else(|| anyhow!("Failed to get pid"))?;

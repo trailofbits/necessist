@@ -8,4 +8,3 @@ disallowed-methods = [
     { path = "tree_sitter::Node::kind", reason = "use `kind_id`" },
 ]
 ignore-interior-mutability = ["necessist_core::source_file::SourceFile"]
-msrv = "1.87"
