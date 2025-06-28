@@ -1,6 +1,6 @@
 The file solang_parser_pt.rs, in the same directory as this README, is from the following location:
 
-https://github.com/xermicus/solang/blob/6677ff21d607b74037db6f8c4abbd5334ebbddb3/solang-parser/src/pt.rs
+https://github.com/hyperledger-solang/solang/blob/6f9b624573782aa627fb3ee07761d6b52b5619cb/solang-parser/src/pt.rs
 
 The file is used by build.rs to generate a Solang AST visitor implementation.
 
