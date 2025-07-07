@@ -152,6 +152,32 @@
         "name": "maintainers"
       }
     ],
+    "ascii": [
+      {
+        "id": 7,
+        "kind": "user",
+        "login": "SimonSapin",
+        "name": "Simon Sapin"
+      },
+      {
+        "id": 214,
+        "kind": "user",
+        "login": "tomprogrammer",
+        "name": "Thomas Bahn"
+      },
+      {
+        "id": 471,
+        "kind": "user",
+        "login": "tbu-",
+        "name": "Tobias Bucher"
+      },
+      {
+        "id": 3883,
+        "kind": "user",
+        "login": "tormol",
+        "name": "Torbjørn Birch Moltu"
+      }
+    ],
     "ascii-canvas": [
       {
         "id": 356,
@@ -544,6 +570,20 @@
         "kind": "user",
         "login": "djc",
         "name": "Dirkjan Ochtman"
+      }
+    ],
+    "cow-replace": [
+      {
+        "id": 7286,
+        "kind": "user",
+        "login": "kdy1",
+        "name": "Donny/강동윤"
+      },
+      {
+        "id": 179182,
+        "kind": "user",
+        "login": "swc-bot",
+        "name": "SWC Bot"
       }
     ],
     "cpufeatures": [
@@ -2036,20 +2076,6 @@
         "name": "SWC Bot"
       }
     ],
-    "par-iter": [
-      {
-        "id": 7286,
-        "kind": "user",
-        "login": "kdy1",
-        "name": "Donny/강동윤"
-      },
-      {
-        "id": 179182,
-        "kind": "user",
-        "login": "swc-bot",
-        "name": "SWC Bot"
-      }
-    ],
     "parking_lot": [
       {
         "id": 1459,
@@ -2316,22 +2342,6 @@
         "kind": "user",
         "login": "nagisa",
         "name": "Simonas Kazlauskas"
-      }
-    ],
-    "ptr_meta": [
-      {
-        "id": 104949,
-        "kind": "user",
-        "login": "djkoloski",
-        "name": "David Koloski"
-      }
-    ],
-    "ptr_meta_derive": [
-      {
-        "id": 104949,
-        "kind": "user",
-        "login": "djkoloski",
-        "name": "David Koloski"
       }
     ],
     "quote": [
@@ -3510,52 +3520,12 @@
         "name": "Manish Goregaokar"
       }
     ],
-    "typed-arena": [
-      {
-        "id": 7,
-        "kind": "user",
-        "login": "SimonSapin",
-        "name": "Simon Sapin"
-      },
-      {
-        "id": 696,
-        "kind": "user",
-        "login": "fitzgen",
-        "name": "Nick Fitzgerald"
-      },
-      {
-        "id": 1367,
-        "kind": "user",
-        "login": "pczarn",
-        "name": "Peter Blackson"
-      },
-      {
-        "id": 2971,
-        "kind": "user",
-        "login": "jonastepe",
-        "name": "Jonas Tepe"
-      },
-      {
-        "id": 4357,
-        "kind": "user",
-        "login": "thomcc",
-        "name": "Thom Chiovoloni"
-      }
-    ],
     "typenum": [
       {
         "id": 243,
         "kind": "user",
         "login": "paholg",
         "name": "Paho Lurie-Gregg"
-      }
-    ],
-    "unicode-id": [
-      {
-        "id": 147431,
-        "kind": "user",
-        "login": "Boshen",
-        "name": "Boshen"
       }
     ],
     "unicode-id-start": [
