@@ -6,6 +6,8 @@ use std::marker::PhantomData;
 #[cfg(feature = "clap")]
 use clap::{ValueEnum, builder::PossibleValue};
 
+// smoelius: The `IntoEnumIterator` trait and `Iter` enum are currently unused.
+#[allow(dead_code)]
 pub trait IntoEnumIterator: Sized {
     type Iterator: Iterator<Item = Self>;
 
@@ -26,6 +28,7 @@ pub enum Union<L, R> {
     Right(R),
 }
 
+#[allow(dead_code)]
 pub enum Iter<L, R, I, J>
 where
     L: IntoEnumIterator<Iterator = I>,
