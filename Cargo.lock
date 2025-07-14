@@ -286,13 +286,53 @@ dependencies = [
 ]
 
 [[package]]
+name = "cargo-platform"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "84982c6c0ae343635a3a4ee6dedef965513735c8b183caa7289fa6e27399ebd4"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "cargo-util-schemas"
+version = "0.8.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7dc1a6f7b5651af85774ae5a34b4e8be397d9cf4bc063b7e6dbd99a841837830"
+dependencies = [
+ "semver",
+ "serde",
+ "serde-untagged",
+ "serde-value",
+ "thiserror 2.0.12",
+ "toml",
+ "unicode-xid",
+ "url",
+]
+
+[[package]]
 name = "cargo_metadata"
 version = "0.19.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "dd5eb614ed4c27c5d706420e4320fbe3216ab31fa1c33cd8246ac36dae4479ba"
 dependencies = [
  "camino",
- "cargo-platform",
+ "cargo-platform 0.1.9",
+ "semver",
+ "serde",
+ "serde_json",
+ "thiserror 2.0.12",
+]
+
+[[package]]
+name = "cargo_metadata"
+version = "0.21.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5cfca2aaa699835ba88faf58a06342a314a950d2b9686165e038286c30316868"
+dependencies = [
+ "camino",
+ "cargo-platform 0.2.0",
+ "cargo-util-schemas",
  "semver",
  "serde",
  "serde_json",
@@ -1381,7 +1421,7 @@ version = "2.1.1"
 dependencies = [
  "anyhow",
  "assert_cmd",
- "cargo_metadata",
+ "cargo_metadata 0.21.0",
  "clap",
  "ctor",
  "curl",
@@ -1413,7 +1453,7 @@ dependencies = [
  "anyhow",
  "assert_cmd",
  "bstr",
- "cargo_metadata",
+ "cargo_metadata 0.21.0",
  "clap",
  "curl",
  "heck",
@@ -1451,7 +1491,7 @@ dependencies = [
  "anyhow",
  "assert_cmd",
  "bitflags",
- "cargo_metadata",
+ "cargo_metadata 0.21.0",
  "clap",
  "ctrlc",
  "curl",
@@ -1584,6 +1624,15 @@ dependencies = [
  "libc",
  "pkg-config",
  "vcpkg",
+]
+
+[[package]]
+name = "ordered-float"
+version = "2.10.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "68f19d67e5a2795c94e73e0bb1cc1a7edeb2e28efd39e2e1c9b7a40c1108b11c"
+dependencies = [
+ "num-traits",
 ]
 
 [[package]]
@@ -2014,6 +2063,16 @@ dependencies = [
  "erased-serde",
  "serde",
  "typeid",
+]
+
+[[package]]
+name = "serde-value"
+version = "0.7.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f3a1a3341211875ef120e117ea7fd5228530ae7e7036a779fdc9117be6b3282c"
+dependencies = [
+ "ordered-float",
+ "serde",
 ]
 
 [[package]]
@@ -2851,7 +2910,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6b2bf58be11fc9414104c6d3a2e464163db5ef74b12296bda593cac37b6e4777"
 dependencies = [
  "anyhow",
- "cargo_metadata",
+ "cargo_metadata 0.19.2",
  "derive_builder",
  "regex",
  "rustversion",

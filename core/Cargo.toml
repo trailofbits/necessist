@@ -54,7 +54,7 @@ assert_cmd = "2.0"
 predicates = "3.1"
 
 [build-dependencies]
-cargo_metadata = "0.19"
+cargo_metadata = "0.21"
 curl = "0.4"
 heck = "0.5"
 syn = "2.0"
