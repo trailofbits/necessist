@@ -6771,6 +6771,13 @@ $DIR/cmd/object-handlers_test.go: `globalPolicySys = NewPolicySys()`
 $DIR/cmd/object-handlers_test.go: `globalPolicySys = nil`
 $DIR/cmd/object-handlers_test.go: `globalPolicySys = NewPolicySys()`
 $DIR/cmd/object-handlers_test.go: `globalPolicySys = nil`
+$DIR/cmd/object-lambda-handlers_test.go: `t.Run(tc.name, func(t *testing.T) {
+			runObjectLambdaTest(t, tc.statusCode, tc.body, tc.contentType, tc.expectStatus)
+		})`
+$DIR/cmd/object-lambda-handlers_test.go: `runObjectLambdaTest(t, tc.statusCode, tc.body, tc.contentType, tc.expectStatus)`
+$DIR/cmd/object-lambda-handlers_test.go: `.Run(tc.name, func(t *testing.T) {
+			runObjectLambdaTest(t, tc.statusCode, tc.body, tc.contentType, tc.expectStatus)
+		})`
 $DIR/cmd/os-readdir_test.go: `testResults = append(testResults, setupTestReadDirEmpty(t)...)`
 $DIR/cmd/os-readdir_test.go: `testResults = append(testResults, setupTestReadDirFiles(t)...)`
 $DIR/cmd/os-readdir_test.go: `testResults = append(testResults, setupTestReadDirGeneric(t)...)`
@@ -13741,6 +13748,71 @@ $DIR/internal/grid/types_test.go: `.DeepEqual(v, v2)`
 $DIR/internal/handlers/proxy_test.go: `enableXFFHeader = false`
 $DIR/internal/handlers/proxy_test.go: `enableXFFHeader = true`
 $DIR/internal/handlers/proxy_test.go: `res = GetSourceIP(req)`
+$DIR/internal/hash/checksum_test.go: `t.Run(tt.name, func(t *testing.T) {
+			myData := []byte("this-is-a-checksum-data-test")
+			chksm := NewChecksumFromData(tt.checksum, myData)
+			if tt.fullobj {
+				chksm.Type |= ChecksumFullObject
+			}
+
+			w := httptest.NewRecorder()
+			AddChecksumHeader(w, chksm.AsMap())
+			gotChksm, err := GetContentChecksum(w.Result().Header)
+			if err != nil {
+				t.Fatalf("GetContentChecksum failed: %v", err)
+			}
+
+			// In the CRC64NVM case, it is always full object, so add the flag for easier equality comparison
+			if chksm.Type.Base().Is(ChecksumCRC64NVME) {
+				chksm.Type |= ChecksumFullObject
+			}
+			if !chksm.Equal(gotChksm) {
+				t.Fatalf("Checksum mismatch: expected %+v, got %+v", chksm, gotChksm)
+			}
+		})`
+$DIR/internal/hash/checksum_test.go: `chksm.Type |= ChecksumFullObject`
+$DIR/internal/hash/checksum_test.go: `AddChecksumHeader(w, chksm.AsMap())`
+$DIR/internal/hash/checksum_test.go: `chksm.Type |= ChecksumFullObject`
+$DIR/internal/hash/checksum_test.go: `checksumCombined = append(checksumCombined, part1Checksum.Raw...)`
+$DIR/internal/hash/checksum_test.go: `checksumCombined = append(checksumCombined, part2Checksum.Raw...)`
+$DIR/internal/hash/checksum_test.go: `checksumCombined = append(checksumCombined, part3Checksum.Raw...)`
+$DIR/internal/hash/checksum_test.go: `finalChecksum.WantParts = 3`
+$DIR/internal/hash/checksum_test.go: `serialized = finalChecksum.AppendTo(serialized, checksumCombined)`
+$DIR/internal/hash/checksum_test.go: `.Run(tt.name, func(t *testing.T) {
+			myData := []byte("this-is-a-checksum-data-test")
+			chksm := NewChecksumFromData(tt.checksum, myData)
+			if tt.fullobj {
+				chksm.Type |= ChecksumFullObject
+			}
+
+			w := httptest.NewRecorder()
+			AddChecksumHeader(w, chksm.AsMap())
+			gotChksm, err := GetContentChecksum(w.Result().Header)
+			if err != nil {
+				t.Fatalf("GetContentChecksum failed: %v", err)
+			}
+
+			// In the CRC64NVM case, it is always full object, so add the flag for easier equality comparison
+			if chksm.Type.Base().Is(ChecksumCRC64NVME) {
+				chksm.Type |= ChecksumFullObject
+			}
+			if !chksm.Equal(gotChksm) {
+				t.Fatalf("Checksum mismatch: expected %+v, got %+v", chksm, gotChksm)
+			}
+		})`
+$DIR/internal/hash/checksum_test.go: `.NewRecorder()`
+$DIR/internal/hash/checksum_test.go: `.AsMap()`
+$DIR/internal/hash/checksum_test.go: `.Result()`
+$DIR/internal/hash/checksum_test.go: `.Type.Base()`
+$DIR/internal/hash/checksum_test.go: `.Is(ChecksumCRC64NVME)`
+$DIR/internal/hash/checksum_test.go: `.Equal(gotChksm)`
+$DIR/internal/hash/checksum_test.go: `.AppendTo(nil, nil)`
+$DIR/internal/hash/checksum_test.go: `.Matches(myData, 0)`
+$DIR/internal/hash/checksum_test.go: `.Equal(chksm)`
+$DIR/internal/hash/checksum_test.go: `.AppendTo(serialized, checksumCombined)`
+$DIR/internal/hash/checksum_test.go: `.Equal(finalChecksum)`
+$DIR/internal/hash/checksum_test.go: `.AppendTo(nil, checksumCombined)`
+$DIR/internal/hash/checksum_test.go: `.String()`
 $DIR/internal/hash/reader_test.go: `_, err = io.Copy(io.Discard, r)`
 $DIR/internal/hash/reader_test.go: `t.Run(fmt.Sprintf("case-%d", i+1), func(t *testing.T) {
 			r, err := NewReader(t.Context(), testCase.src, testCase.size, testCase.md5hex, testCase.sha256hex, testCase.actualSize)
