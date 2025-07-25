@@ -152,32 +152,6 @@
         "name": "maintainers"
       }
     ],
-    "ascii": [
-      {
-        "id": 7,
-        "kind": "user",
-        "login": "SimonSapin",
-        "name": "Simon Sapin"
-      },
-      {
-        "id": 214,
-        "kind": "user",
-        "login": "tomprogrammer",
-        "name": "Thomas Bahn"
-      },
-      {
-        "id": 471,
-        "kind": "user",
-        "login": "tbu-",
-        "name": "Tobias Bucher"
-      },
-      {
-        "id": 3883,
-        "kind": "user",
-        "login": "tormol",
-        "name": "Torbjørn Birch Moltu"
-      }
-    ],
     "ascii-canvas": [
       {
         "id": 356,
@@ -570,20 +544,6 @@
         "kind": "user",
         "login": "djc",
         "name": "Dirkjan Ochtman"
-      }
-    ],
-    "cow-replace": [
-      {
-        "id": 7286,
-        "kind": "user",
-        "login": "kdy1",
-        "name": "Donny/강동윤"
-      },
-      {
-        "id": 179182,
-        "kind": "user",
-        "login": "swc-bot",
-        "name": "SWC Bot"
       }
     ],
     "cpufeatures": [
@@ -1638,22 +1598,10 @@
         "name": "Alex Crichton"
       },
       {
-        "id": 696,
+        "id": 145038,
         "kind": "user",
-        "login": "fitzgen",
-        "name": "Nick Fitzgerald"
-      },
-      {
-        "id": 1069,
-        "kind": "team",
-        "login": "github:rustwasm:core",
-        "name": "core"
-      },
-      {
-        "id": 8943,
-        "kind": "team",
-        "login": "github:rustwasm:wasm-bindgen-publish",
-        "name": "wasm-bindgen-publish"
+        "login": "guybedford",
+        "name": "Guy Bedford"
       }
     ],
     "lalrpop": [
@@ -3842,22 +3790,10 @@
         "name": "Alex Crichton"
       },
       {
-        "id": 696,
+        "id": 145038,
         "kind": "user",
-        "login": "fitzgen",
-        "name": "Nick Fitzgerald"
-      },
-      {
-        "id": 1069,
-        "kind": "team",
-        "login": "github:rustwasm:core",
-        "name": "core"
-      },
-      {
-        "id": 8943,
-        "kind": "team",
-        "login": "github:rustwasm:wasm-bindgen-publish",
-        "name": "wasm-bindgen-publish"
+        "login": "guybedford",
+        "name": "Guy Bedford"
       }
     ],
     "wasm-bindgen-backend": [
@@ -3868,22 +3804,10 @@
         "name": "Alex Crichton"
       },
       {
-        "id": 696,
+        "id": 145038,
         "kind": "user",
-        "login": "fitzgen",
-        "name": "Nick Fitzgerald"
-      },
-      {
-        "id": 1069,
-        "kind": "team",
-        "login": "github:rustwasm:core",
-        "name": "core"
-      },
-      {
-        "id": 8943,
-        "kind": "team",
-        "login": "github:rustwasm:wasm-bindgen-publish",
-        "name": "wasm-bindgen-publish"
+        "login": "guybedford",
+        "name": "Guy Bedford"
       }
     ],
     "wasm-bindgen-macro": [
@@ -3894,22 +3818,10 @@
         "name": "Alex Crichton"
       },
       {
-        "id": 696,
+        "id": 145038,
         "kind": "user",
-        "login": "fitzgen",
-        "name": "Nick Fitzgerald"
-      },
-      {
-        "id": 1069,
-        "kind": "team",
-        "login": "github:rustwasm:core",
-        "name": "core"
-      },
-      {
-        "id": 8943,
-        "kind": "team",
-        "login": "github:rustwasm:wasm-bindgen-publish",
-        "name": "wasm-bindgen-publish"
+        "login": "guybedford",
+        "name": "Guy Bedford"
       }
     ],
     "wasm-bindgen-macro-support": [
@@ -3920,22 +3832,10 @@
         "name": "Alex Crichton"
       },
       {
-        "id": 696,
+        "id": 145038,
         "kind": "user",
-        "login": "fitzgen",
-        "name": "Nick Fitzgerald"
-      },
-      {
-        "id": 1069,
-        "kind": "team",
-        "login": "github:rustwasm:core",
-        "name": "core"
-      },
-      {
-        "id": 8943,
-        "kind": "team",
-        "login": "github:rustwasm:wasm-bindgen-publish",
-        "name": "wasm-bindgen-publish"
+        "login": "guybedford",
+        "name": "Guy Bedford"
       }
     ],
     "wasm-bindgen-shared": [
@@ -3946,22 +3846,10 @@
         "name": "Alex Crichton"
       },
       {
-        "id": 696,
+        "id": 145038,
         "kind": "user",
-        "login": "fitzgen",
-        "name": "Nick Fitzgerald"
-      },
-      {
-        "id": 1069,
-        "kind": "team",
-        "login": "github:rustwasm:core",
-        "name": "core"
-      },
-      {
-        "id": 8943,
-        "kind": "team",
-        "login": "github:rustwasm:wasm-bindgen-publish",
-        "name": "wasm-bindgen-publish"
+        "login": "guybedford",
+        "name": "Guy Bedford"
       }
     ],
     "web-time": [
