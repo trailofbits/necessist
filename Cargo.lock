@@ -1422,7 +1422,7 @@ dependencies = [
  "swc_core",
  "syn",
  "tempfile",
- "toml_edit 0.22.27",
+ "toml_edit 0.23.1",
  "tree-sitter",
  "tree-sitter-go",
  "walkdir",
