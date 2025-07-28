@@ -3344,7 +3344,35 @@
         "name": null
       }
     ],
+    "toml_parser": [
+      {
+        "id": 6743,
+        "kind": "user",
+        "login": "epage",
+        "name": "Ed Page"
+      },
+      {
+        "id": 6908,
+        "kind": "team",
+        "login": "github:toml-rs:maintainers",
+        "name": "Maintainers"
+      }
+    ],
     "toml_write": [
+      {
+        "id": 6743,
+        "kind": "user",
+        "login": "epage",
+        "name": "Ed Page"
+      },
+      {
+        "id": 6908,
+        "kind": "team",
+        "login": "github:toml-rs:maintainers",
+        "name": "Maintainers"
+      }
+    ],
+    "toml_writer": [
       {
         "id": 6743,
         "kind": "user",
