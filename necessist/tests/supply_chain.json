@@ -1592,12 +1592,6 @@
     ],
     "js-sys": [
       {
-        "id": 1,
-        "kind": "user",
-        "login": "alexcrichton",
-        "name": "Alex Crichton"
-      },
-      {
         "id": 34642,
         "kind": "user",
         "login": "daxpedda",
@@ -3818,12 +3812,6 @@
     ],
     "wasm-bindgen": [
       {
-        "id": 1,
-        "kind": "user",
-        "login": "alexcrichton",
-        "name": "Alex Crichton"
-      },
-      {
         "id": 34642,
         "kind": "user",
         "login": "daxpedda",
@@ -3837,12 +3825,6 @@
       }
     ],
     "wasm-bindgen-backend": [
-      {
-        "id": 1,
-        "kind": "user",
-        "login": "alexcrichton",
-        "name": "Alex Crichton"
-      },
       {
         "id": 34642,
         "kind": "user",
@@ -3858,12 +3840,6 @@
     ],
     "wasm-bindgen-macro": [
       {
-        "id": 1,
-        "kind": "user",
-        "login": "alexcrichton",
-        "name": "Alex Crichton"
-      },
-      {
         "id": 34642,
         "kind": "user",
         "login": "daxpedda",
@@ -3878,12 +3854,6 @@
     ],
     "wasm-bindgen-macro-support": [
       {
-        "id": 1,
-        "kind": "user",
-        "login": "alexcrichton",
-        "name": "Alex Crichton"
-      },
-      {
         "id": 34642,
         "kind": "user",
         "login": "daxpedda",
@@ -3897,12 +3867,6 @@
       }
     ],
     "wasm-bindgen-shared": [
-      {
-        "id": 1,
-        "kind": "user",
-        "login": "alexcrichton",
-        "name": "Alex Crichton"
-      },
       {
         "id": 34642,
         "kind": "user",
