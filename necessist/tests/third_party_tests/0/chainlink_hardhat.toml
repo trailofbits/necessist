@@ -1,8 +1,0 @@
-url = "https://github.com/smartcontractkit/chainlink"
-rev = "v2.26.0"
-subdir = "contracts"
-framework = "hardhat"
-parsing_only = true
-
-[config]
-ignored_functions = ["bigNumEquals", "evmRevert"]
