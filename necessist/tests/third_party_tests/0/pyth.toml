@@ -1,5 +1,5 @@
 url = "https://github.com/pyth-network/pyth-crosschain"
-rev = "rust-pyth-lazer-publisher-sdk-v0.2.1"
+rev = "fortuna-v9.2.0"
 target_os = ["linux", "macos"]
 subdir = "pythnet/message_buffer"
 framework = "anchor"
