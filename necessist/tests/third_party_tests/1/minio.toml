@@ -1,4 +1,4 @@
 # https://blog.kowalczyk.info/article/9afe3485f2204f1bb43217d70f7b87d4/big-projects-written-in-go.html
 url = "https://github.com/minio/minio"
-rev = "RELEASE.2025-07-18T21-56-31Z"
+rev = "RELEASE.2025-07-23T15-54-02Z"
 parsing_only = true
