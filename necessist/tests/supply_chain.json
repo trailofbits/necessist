@@ -3996,16 +3996,10 @@
     ],
     "wit-bindgen-rt": [
       {
-        "id": 1,
+        "id": 73222,
         "kind": "user",
-        "login": "alexcrichton",
-        "name": "Alex Crichton"
-      },
-      {
-        "id": 2633,
-        "kind": "team",
-        "login": "github:bytecodealliance:wasmtime-publish",
-        "name": "wasmtime-publish"
+        "login": "wasmtime-publish",
+        "name": null
       }
     ],
     "write16": [
