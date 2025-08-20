@@ -9,6 +9,7 @@ A paper on Necessist ([Test Harness Mutilation]) appeared in Mutation 2024. ([sl
 **Contents**
 
 - [Installation](#installation)
+- [Running](#running)
 - [Overview](#overview)
 - [Usage](#usage)
 - [Details](#details)
@@ -41,6 +42,23 @@ cargo install necessist
 ```sh
 cargo install --git https://github.com/trailofbits/necessist --branch release
 ```
+
+## Running
+
+`cd` into your project's directory and type `necessist` (with no arguments).
+
+For example, if you `cd` into the [`fixtures/basic`] directory and type `necessist`, you should see the following:
+
+```
+4 candidates in 4 tests in 1 source file
+src/lib.rs: dry running
+src/lib.rs: mutilating
+src/lib.rs:4:5-4:12: `n += 1;` passed
+```
+
+Note that there will be a delay while Necessist runs a test with a timeout.
+
+See [Usage] for options that can be passed to `necessist`.
 
 ## Overview
 
@@ -476,7 +494,9 @@ Necessist is licensed and distributed under the AGPLv3 license. [Contact us](mai
 [Chainlink]: https://github.com/smartcontractkit/chainlink/blob/a39e54e157b57d5fc3dba0aed6ac9d58382953b2/contracts/test/v0.7/Operator.test.ts#L1725-L1728
 [Configuration files]: #configuration-files
 [Test Harness Mutilation]: https://www.computer.org/csdl/proceedings-article/icstw/2024/447900a247/20jqkUDi8Ny
+[Usage]: #usage
 [`assert_cmd::assert::Assert::success`]: https://docs.rs/assert_cmd/latest/assert_cmd/assert/struct.Assert.html#method.success
+[`fixtures/basic`]: https://github.com/trailofbits/necessist/tree/master/fixtures/basic
 [`glob`]: https://man7.org/linux/man-pages/man7/glob.7.html
 [`rust-openssl`]: https://github.com/sfackler/rust-openssl
 [`std::borrow::Cow::into_owned`]: https://doc.rust-lang.org/std/borrow/enum.Cow.html#method.into_owned
