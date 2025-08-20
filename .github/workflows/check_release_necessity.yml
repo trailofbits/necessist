@@ -1,12 +1,12 @@
 # smoelius: This workflow is largely based on:
 # https://docs.github.com/en/actions/managing-issues-and-pull-requests/adding-labels-to-issues#creating-the-workflow
 
-name: Dependabot workflow
+name: Check release necessity
 
 on: [pull_request]
 
 jobs:
-  dependabot:
+  check-release-necessity:
     # smoelius: Note that `github.event.pull_request.user.login` is the user that opened the pull
     # request, which may be different from the user that triggered the action.
     if: ${{ github.actor == 'dependabot[bot]' }}
@@ -30,6 +30,10 @@ jobs:
           PACKAGE="$(expr '${{ github.event.pull_request.title }}' : '^Bump \([^ ]*\) from [^ ]* to [^ ]*$')"
           OLD_VERSION="$(expr '${{ github.event.pull_request.title }}' : '^Bump [^ ]* from \([^ ]*\) to [^ ]*$')"
           NEW_VERSION="$(expr '${{ github.event.pull_request.title }}' : '^Bump [^ ]* from [^ ]* to \([^ ]*\)$')"
+          # smoelius: If `PACKAGE` contains a '/' character, it cannot be a Cargo package.
+          if echo "$PACKAGE" | grep '/'; then
+            exit
+          fi
           test -n "$PACKAGE"
           test -n "$OLD_VERSION"
           test -n "$NEW_VERSION"
