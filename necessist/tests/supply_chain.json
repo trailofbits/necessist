@@ -1480,14 +1480,6 @@
         "name": "Valentin Gosu"
       }
     ],
-    "if_chain": [
-      {
-        "id": 684,
-        "kind": "user",
-        "login": "lambda-fairy",
-        "name": "Chris Wong"
-      }
-    ],
     "indexmap": [
       {
         "id": 356,
