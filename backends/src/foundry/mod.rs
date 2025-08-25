@@ -3,7 +3,6 @@ use super::{
     WalkDirResult,
 };
 use anyhow::{Result, anyhow};
-use if_chain::if_chain;
 use necessist_core::{
     __Rewriter as Rewriter, LightContext, LineColumn, SourceFile, Span,
     framework::{SpanTestMaps, TestSet},
@@ -281,20 +280,18 @@ impl ParseLow for Foundry {
             return true;
         }
 
-        if_chain! {
-            if let Statement::Expression(_, expression) = statement.value;
-            if let Expression::Assign(_, lhs, _) = expression;
-            if let Expression::List(_, params) = &**lhs;
+        if let Statement::Expression(_, expression) = statement.value
+            && let Expression::Assign(_, lhs, _) = expression
+            && let Expression::List(_, params) = &**lhs
             // smoelius: My current belief is: a multiple assignment (i.e., not a declaration) uses
             // the the `Param`s `ty` fields to hold the variables being assigned to.
-            if params
+            && params
                 .iter()
-                .any(|(_, param)| param.as_ref().is_some_and(|param| param.name.is_some()));
-            then {
-                true
-            } else {
-                false
-            }
+                .any(|(_, param)| param.as_ref().is_some_and(|param| param.name.is_some()))
+        {
+            true
+        } else {
+            false
         }
     }
 

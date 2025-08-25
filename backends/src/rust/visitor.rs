@@ -262,7 +262,6 @@ fn is_test(item: &ItemFn) -> Option<&Ident> {
 mod test {
     use super::Rust;
     use crate::ParseLow;
-    use if_chain::if_chain;
     use std::fs::read_to_string;
     use syn::{Expr, ExprArray, ExprLit, ExprReference, Item, ItemConst, Lit, parse_file};
 
@@ -348,30 +347,26 @@ mod test {
             .items
             .into_iter()
             .flat_map(|item| {
-                let elems = if_chain! {
-                    if let Item::Const(ItemConst { ident, expr, .. }) = item;
-                    if ["WATCHED_TRAITS", "WATCHED_INHERENTS"].contains(&ident.to_string().as_str());
-                    if let Expr::Reference(ExprReference { expr, .. }) = *expr;
-                    if let Expr::Array(ExprArray { elems, .. }) = *expr;
-                    then {
-                        elems.iter().cloned().collect::<Vec<_>>()
-                    } else {
-                        Vec::new()
-                    }
+                let elems = if let Item::Const(ItemConst { ident, expr, .. }) = item
+                    && ["WATCHED_TRAITS", "WATCHED_INHERENTS"].contains(&ident.to_string().as_str())
+                    && let Expr::Reference(ExprReference { expr, .. }) = *expr
+                    && let Expr::Array(ExprArray { elems, .. }) = *expr
+                {
+                    elems.iter().cloned().collect::<Vec<_>>()
+                } else {
+                    Vec::new()
                 };
                 elems.into_iter().filter_map(|expr| {
-                    if_chain! {
-                        if let Expr::Reference(ExprReference { expr, .. }) = expr;
-                        if let Expr::Array(ExprArray { elems, .. }) = *expr;
-                        if let Some(Expr::Lit(ExprLit { lit, .. })) = elems.last();
-                        if let Lit::Str(lit_str) = lit;
-                        let s = lit_str.value();
-                        if !REMOVED_METHODS.contains(&s.as_str());
-                        then {
-                            Some(s)
-                        } else {
-                            None
-                        }
+                    if let Expr::Reference(ExprReference { expr, .. }) = expr
+                        && let Expr::Array(ExprArray { elems, .. }) = *expr
+                        && let Some(Expr::Lit(ExprLit { lit, .. })) = elems.last()
+                        && let Lit::Str(lit_str) = lit
+                        && let s = lit_str.value()
+                        && !REMOVED_METHODS.contains(&s.as_str())
+                    {
+                        Some(s)
+                    } else {
+                        None
                     }
                 })
             })
