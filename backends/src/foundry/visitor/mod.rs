@@ -2,7 +2,6 @@
 
 use super::{Foundry, FunctionCall, GenericVisitor, LocalFunction, Storage, Test, WithContents};
 use anyhow::Result;
-use if_chain::if_chain;
 use necessist_core::framework::{SpanTestMaps, TestSet};
 use solang_parser::pt::{Expression, FunctionDefinition, Identifier, Loc, SourceUnit, Statement};
 use std::{cell::RefCell, collections::BTreeMap, convert::Infallible};
@@ -171,18 +170,16 @@ impl<'ast> visit_fns::Visitor<'ast> for Visitor<'_, '_, '_, 'ast, '_> {
 }
 
 fn is_test_function(function_definition: &FunctionDefinition) -> Option<Test<'_>> {
-    if_chain! {
-        if let Some(Identifier { name, .. }) = &function_definition.name;
-        if name.starts_with("test");
-        if let Some(Statement::Block { statements, .. }) = &function_definition.body;
-        then {
-            Some(Test {
-                name,
-                statements: Statements(statements),
-            })
-        } else {
-            None
-        }
+    if let Some(Identifier { name, .. }) = &function_definition.name
+        && name.starts_with("test")
+        && let Some(Statement::Block { statements, .. }) = &function_definition.body
+    {
+        Some(Test {
+            name,
+            statements: Statements(statements),
+        })
+    } else {
+        None
     }
 }
 
@@ -204,18 +201,16 @@ fn filter_statements<'ast, I: IntoIterator<Item = &'ast Statement>>(
 }
 
 fn is_prefix_cheatcode(statement: &Statement) -> bool {
-    if_chain! {
-        if let Statement::Expression(_, expression) = statement;
-        if let Expression::FunctionCall(_loc, callee, _args) = expression;
-        if let Expression::MemberAccess(_, base, Identifier { name: method, .. }) = &**callee;
-        if let Expression::Variable(variable) = &**base;
-        if variable.to_string() == "vm";
-        if method == "prank" || method.starts_with("expect");
-        then {
-            true
-        } else {
-            false
-        }
+    if let Statement::Expression(_, expression) = statement
+        && let Expression::FunctionCall(_loc, callee, _args) = expression
+        && let Expression::MemberAccess(_, base, Identifier { name: method, .. }) = &**callee
+        && let Expression::Variable(variable) = &**base
+        && variable.to_string() == "vm"
+        && (method == "prank" || method.starts_with("expect"))
+    {
+        true
+    } else {
+        false
     }
 }
 

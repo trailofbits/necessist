@@ -21,7 +21,6 @@
 
 use super::{AbstractTypes, MaybeNamed, Named, ParseLow, Spanned};
 use anyhow::Result;
-use if_chain::if_chain;
 use indexmap::IndexMap;
 use necessist_core::{
     __ToConsoleString, LightContext, SourceFile, Span, WarnFlags, Warning, config,
@@ -101,33 +100,30 @@ macro_rules! visit_maybe_macro_call {
     ($this:expr, $args:expr) => {
         paste! {
             let statement = $this.call_statement.take();
-
-            if_chain! {
-                if !$this.test_names.is_empty();
-                if statement.map_or(true, |statement| {
+            if !$this.test_names.is_empty()
+                && statement.map_or(true, |statement| {
                     $this.backend.statement_is_removable(statement)
                         && !$this.is_last_statement_in_test(statement)
-                });
-                then {
-                    if let Some(statement) = statement {
-                        if !$args.is_ignored_as_call {
-                            let span = statement.span(&$this.source_file);
-                            $this.register_span(span, SpanKind::Statement);
-                        }
+                })
+            {
+                if let Some(statement) = statement {
+                    if !$args.is_ignored_as_call {
+                        let span = statement.span(&$this.source_file);
+                        $this.register_span(span, SpanKind::Statement);
                     }
-
-                    // smoelius: If the entire call is ignored, then treat the method call as
-                    // ignored as well.
-                    if !$args.is_ignored_as_call && $args.is_method_call && !$args.is_ignored_as_method_call {
-                        $this.register_span($args.span.clone(), SpanKind::MethodCall);
-                    }
-
-                    // smoelius: Return false (i.e., don't descend into the call arguments) only if
-                    // the call or method call is ignored.
-                    !$args.is_ignored_as_call && !$args.is_ignored_as_method_call
-                } else {
-                    true
                 }
+
+                // smoelius: If the entire call is ignored, then treat the method call as
+                // ignored as well.
+                if !$args.is_ignored_as_call && $args.is_method_call && !$args.is_ignored_as_method_call {
+                    $this.register_span($args.span.clone(), SpanKind::MethodCall);
+                }
+
+                // smoelius: Return false (i.e., don't descend into the call arguments) only if
+                // the call or method call is ignored.
+                !$args.is_ignored_as_call && !$args.is_ignored_as_method_call
+            } else {
+                true
             }
         }
     };
@@ -272,29 +268,27 @@ impl<'ast, T: ParseLow> GenericVisitor<'_, '_, '_, 'ast, T> {
         storage: &RefCell<<T::Types as AbstractTypes>::Storage<'ast>>,
         call: <T::Types as AbstractTypes>::Call<'ast>,
     ) -> bool {
-        if_chain! {
-            if let Some((name, local_functions)) = self.callee_is_walkable_function(storage, call);
-            let ambiguous = local_functions.len() >= 2;
+        if let Some((name, local_functions)) = self.callee_is_walkable_function(storage, call)
+            && let ambiguous = local_functions.len() >= 2
             // smoelius: As mentioned above, a new call to a local function `foo` could be
             // discovered while walking a local function `bar`. In such a case, `foo` may already be
             // in `local_functions_returned` and thus will not be revisited. A downside of this is
             // that not all tests that exercise `foo` will be called when `foo`'s statements /
             // method calls are removed. For now, we ignore this possibility.
-            if let Some(local_function) = local_functions.into_iter().next();
-            if !self.local_functions_returned.contains(&local_function);
-            then {
-                if ambiguous {
-                    self.local_functions_needing_warnings.insert(name);
-                }
-                self.local_functions_pending
-                    .entry(local_function)
-                    .or_default()
-                    .extend(self.test_names.clone());
-                // smoelius: `self.call_statement` would normally be cleared by
-                // `visit_maybe_macro_call!`. But since we're not calling that...
-                self.call_statement = None;
-                return true;
+            && let Some(local_function) = local_functions.into_iter().next()
+            && !self.local_functions_returned.contains(&local_function)
+        {
+            if ambiguous {
+                self.local_functions_needing_warnings.insert(name);
             }
+            self.local_functions_pending
+                .entry(local_function)
+                .or_default()
+                .extend(self.test_names.clone());
+            // smoelius: `self.call_statement` would normally be cleared by
+            // `visit_maybe_macro_call!`. But since we're not calling that...
+            self.call_statement = None;
+            return true;
         }
 
         let call_span = call.span(&self.source_file);
@@ -565,14 +559,12 @@ impl<'ast, T: ParseLow> GenericVisitor<'_, '_, '_, 'ast, T> {
         field: <T::Types as AbstractTypes>::Field<'ast>,
     ) -> Option<(<T::Types as AbstractTypes>::Field<'ast>, String)> {
         let expression = self.backend.field_base(storage, field);
-        if_chain! {
-            if let Some(field) = self.backend.expression_is_field(storage, expression);
-            if let Some(name) = field.name();
-            then {
-                Some((field, name))
-            } else {
-                None
-            }
+        if let Some(field) = self.backend.expression_is_field(storage, expression)
+            && let Some(name) = field.name()
+        {
+            Some((field, name))
+        } else {
+            None
         }
     }
 
@@ -596,14 +588,12 @@ impl<'ast, T: ParseLow> GenericVisitor<'_, '_, '_, 'ast, T> {
         call: <T::Types as AbstractTypes>::Call<'ast>,
     ) -> Option<(<T::Types as AbstractTypes>::Field<'ast>, String)> {
         let expression = self.backend.call_callee(storage, call);
-        if_chain! {
-            if let Some(field) = self.backend.expression_is_field(storage, expression);
-            if let Some(name) = field.name();
-            then {
-                Some((field, name))
-            } else {
-                None
-            }
+        if let Some(field) = self.backend.expression_is_field(storage, expression)
+            && let Some(name) = field.name()
+        {
+            Some((field, name))
+        } else {
+            None
         }
     }
 }
