@@ -1480,14 +1480,6 @@
         "name": "Valentin Gosu"
       }
     ],
-    "if_chain": [
-      {
-        "id": 684,
-        "kind": "user",
-        "login": "lambda-fairy",
-        "name": "Chris Wong"
-      }
-    ],
     "indexmap": [
       {
         "id": 356,
@@ -1571,12 +1563,6 @@
       }
     ],
     "jobserver": [
-      {
-        "id": 1,
-        "kind": "user",
-        "login": "alexcrichton",
-        "name": "Alex Crichton"
-      },
       {
         "id": 1094,
         "kind": "user",
@@ -2400,12 +2386,6 @@
     ],
     "regex": [
       {
-        "id": 1,
-        "kind": "user",
-        "login": "alexcrichton",
-        "name": "Alex Crichton"
-      },
-      {
         "id": 11,
         "kind": "team",
         "login": "github:rust-lang:libs",
@@ -2433,12 +2413,6 @@
       }
     ],
     "regex-syntax": [
-      {
-        "id": 1,
-        "kind": "user",
-        "login": "alexcrichton",
-        "name": "Alex Crichton"
-      },
       {
         "id": 11,
         "kind": "team",

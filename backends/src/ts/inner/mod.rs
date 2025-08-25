@@ -3,7 +3,6 @@ use crate::{
     ParseLow, Spanned, WalkDirResult,
 };
 use anyhow::{Result, anyhow};
-use if_chain::if_chain;
 use log::debug;
 use necessist_core::{
     LightContext, LineColumn, SourceFile, Span, WarnFlags, Warning,
@@ -255,14 +254,12 @@ impl MaybeNamed for <Types as AbstractTypes>::Field<'_> {
 
 impl MaybeNamed for <Types as AbstractTypes>::Call<'_> {
     fn name(&self) -> Option<String> {
-        if_chain! {
-            if let Callee::Expr(callee) = &self.node.callee;
-            if let Expr::Ident(ident) = &**callee;
-            then {
-                Some(ident.as_ref().to_owned())
-            } else {
-                None
-            }
+        if let Callee::Expr(callee) = &self.node.callee
+            && let Expr::Ident(ident) = &**callee
+        {
+            Some(ident.as_ref().to_owned())
+        } else {
+            None
         }
     }
 }
@@ -498,26 +495,24 @@ fn is_it_call_stmt(stmt: &Stmt) -> Option<Test<'_>> {
 }
 
 fn is_it_call_expr(expr: &Expr) -> Option<Test<'_>> {
-    if_chain! {
-        if let Expr::Call(CallExpr {
-            callee: Callee::Expr(callee),
-            args,
-            ..
-        }) = expr;
-        if let Expr::Ident(ident) = &**callee;
-        if ident.as_ref() == "it";
-        if let [arg0, arg1] = args.as_slice();
-        if let Expr::Lit(Lit::Str(Str { value, .. })) = &*arg0.expr;
-        if let Expr::Arrow(ArrowExpr { body, .. }) = &*arg1.expr;
-        if let BlockStmtOrExpr::BlockStmt(block) = &**body;
-        then {
-            Some(Test {
-                it_message: value,
-                stmts: &block.stmts,
-            })
-        } else {
-            None
-        }
+    if let Expr::Call(CallExpr {
+        callee: Callee::Expr(callee),
+        args,
+        ..
+    }) = expr
+        && let Expr::Ident(ident) = &**callee
+        && ident.as_ref() == "it"
+        && let [arg0, arg1] = args.as_slice()
+        && let Expr::Lit(Lit::Str(Str { value, .. })) = &*arg0.expr
+        && let Expr::Arrow(ArrowExpr { body, .. }) = &*arg1.expr
+        && let BlockStmtOrExpr::BlockStmt(block) = &**body
+    {
+        Some(Test {
+            it_message: value,
+            stmts: &block.stmts,
+        })
+    } else {
+        None
     }
 }
 
