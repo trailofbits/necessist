@@ -1,3 +1,3 @@
 url = "https://github.com/smartcontractkit/chainlink-evm"
-rev = "v0.1.0"
+rev = "v0.3.2"
 parsing_only = true
