@@ -2,8 +2,8 @@
 
 | Name                       | Version                                  | Framework | Full | Linux | macOS | Windows | Partition |
 | -------------------------- | ---------------------------------------- | --------- | ---- | ----- | ----- | ------- | --------- |
-| chainlink-evm              | v0.1.0                                   |           |      | X     | X     | X       | 0         |
-| chainlink-evm_hardhat      | v0.1.0                                   | hardhat   |      | X     | X     | X       | 0         |
+| chainlink-evm              | v0.3.2                                   |           |      | X     | X     | X       | 0         |
+| chainlink-evm_hardhat      | v0.3.2                                   | hardhat   |      | X     | X     | X       | 0         |
 | crates_io                  | 5643e3fb5d53d3b8cc5620d583068ae17e82b5c3 |           |      | X     | X     | X       | 0         |
 | diem                       | diem-core-v1.4.4                         |           |      | X     | X     | X       | 1         |
 | go_src_encoding_base64     | go1.23.0                                 | go        | X    | X     | X     | X       | 0         |
@@ -18,7 +18,7 @@
 | operator-filter-registry   | v1.4.2                                   |           |      | X     | X     | X       | 0         |
 | orca-so_whirlpools         | 660a9d6a79bf55e2badf417d621c63b023c4b67e | anchor    | X    | X     |       |         | 2         |
 | proptest_https             | b71253807372932f72a71b1af7975371a41e7c88 |           | X    | X     | X     | X       | 0         |
-| pyth                       | pyth-lazer-agent-v0.4.1                  | anchor    |      | X     | X     |         | 0         |
+| pyth                       | hermes-v0.10.5                           | anchor    |      | X     | X     |         | 0         |
 | seaport_foundry            | 1.6                                      | foundry   | X    | X     | X     | X       | 1         |
 | seaport_hardhat            | 1.6                                      | hardhat   |      | X     | X     | X       | 1         |
 | storybook                  |                                          |           | X    | X     | X     |         | 0         |

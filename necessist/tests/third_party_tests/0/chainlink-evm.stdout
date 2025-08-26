@@ -1,5 +1,4 @@
 $DIR/config_test.go: `.GenerateDocs()`
-$DIR/gethwrappers/abigen_test.go: `.MustNewSimTransactor(t)`
 $DIR/gethwrappers/abigen_test.go: `.NewBackend(types.GenesisAlloc{
 		owner.From: {
 			Balance: big.NewInt(0).Mul(big.NewInt(10), big.NewInt(1e18)),
@@ -33,13 +32,12 @@ $DIR/gethwrappers/generation/generate_link/utils/json_normalization_test.go: `.R
 		})`
 $DIR/gethwrappers/generation/generate_link/utils/json_normalization_test.go: `.Marshal(test.input)`
 $DIR/gethwrappers/generation/generate_link/utils/json_normalization_test.go: `.NormalizedJSON(jsonBytes)`
-$DIR/gethwrappers/go_generate_test.go: `tests.SkipShort(t, "requires compiled artifacts")`
+$DIR/gethwrappers/go_generate_test.go: `SkipShort(t, "requires compiled artifacts")`
 $DIR/gethwrappers/go_generate_test.go: `wd = "<directory containing this test>"`
 $DIR/gethwrappers/go_generate_test.go: `compareCurrentCompilerArtifactAgainstRecordsAndSoliditySources(t, contractVersionInfo)`
-$DIR/gethwrappers/go_generate_test.go: `.SkipShort(t, "requires compiled artifacts")`
 $DIR/gethwrappers/go_generate_test.go: `.Getwd()`
-$DIR/gethwrappers/go_generate_test.go: `.ReadFile(filepath.Join(getProjectRoot(t), "contracts/LinkToken.json"))`
-$DIR/gethwrappers/go_generate_test.go: `.Join(getProjectRoot(t), "contracts/LinkToken.json")`
+$DIR/gethwrappers/go_generate_test.go: `.ReadFile(filepath.Join(getProjectRoot(t), "../contracts/LinkToken.json"))`
+$DIR/gethwrappers/go_generate_test.go: `.Join(getProjectRoot(t), "../contracts/LinkToken.json")`
 $DIR/gethwrappers/go_generate_test.go: `.Sprintf("%x", sha256.Sum256(linkDetails))`
 $DIR/gethwrappers/go_generate_test.go: `.Sum256(linkDetails)`
 $DIR/gethwrappers/utils_test.go: `.BoxOutput("some error %d %s", 123, "foo")`
@@ -145,409 +143,6 @@ $DIR/pkg/assets/wei_test.go: `.Run(tt.input, func(t *testing.T) {
 		})`
 $DIR/pkg/assets/wei_test.go: `.UnmarshalText([]byte(tt.input))`
 $DIR/pkg/assets/wei_test.go: `.MarshalText()`
-$DIR/pkg/bindings/bindings_test.go: `t.Run("real contract", func(t *testing.T) {
-		err := bindings.GenerateBindings(
-			"./testdata/DataStorage_combined.json",
-			"",
-			"bindings",
-			"",
-			"./testdata/bindings.go",
-		)
-		require.NoError(t, err, "Failed to generate bindings from combined JSON")
-	})`
-$DIR/pkg/bindings/bindings_test.go: `_, err = datastorage.NewEmptyContract(nil, nil, nil)`
-$DIR/pkg/bindings/bindings_test.go: `_, err = ds.Codec.EncodeLogAccessMethodCall(logAccess)`
-$DIR/pkg/bindings/bindings_test.go: `_, err = ds.Codec.EncodeOnReportMethodCall(onReport)`
-$DIR/pkg/bindings/bindings_test.go: `_, err = ds.Codec.EncodeReadDataMethodCall(readData)`
-$DIR/pkg/bindings/bindings_test.go: `_, err = ds.Codec.EncodeStoreDataMethodCall(storeData)`
-$DIR/pkg/bindings/bindings_test.go: `_, err = ds.Codec.EncodeStoreUserDataMethodCall(storeUserData)`
-$DIR/pkg/bindings/bindings_test.go: `_, err = ds.Codec.EncodeUpdateDataMethodCall(updateDataInput)`
-$DIR/pkg/bindings/bindings_test.go: `nonIndexed = append(nonIndexed, arg)`
-$DIR/pkg/bindings/bindings_test.go: `client.EXPECT().CallContract(mock.Anything, mock.Anything).Return(
-		sdk.NewBasicPromise(func() (*evm.CallContractReply, error) {
-			// Simulate a successful call with dummy data
-			reply := &evm.CallContractReply{
-				Data: []byte{0x01, 0x02, 0x03, 0x04}, // Example data
-			}
-			return reply, nil
-		})).Once()`
-$DIR/pkg/bindings/bindings_test.go: `runtime.EXPECT().GenerateReport(mock.Anything).Return(
-		sdk.NewBasicPromise(func() (*pb.ReportResponse, error) {
-			return &pb.ReportResponse{
-				RawReport: rawReport,
-			}, nil
-		})).Once()`
-$DIR/pkg/bindings/bindings_test.go: `client.EXPECT().WriteReport(mock.Anything, mock.Anything).
-		Run(func(_ sdk.Runtime, req *evm.WriteReportRequest) {
-			require.Equal(t, []byte("1234"), req.Report.Id)
-		}).
-		Return(
-			sdk.NewBasicPromise(func() (*evm.WriteReportReply, error) {
-				// Simulate a successful write report
-				return &evm.WriteReportReply{
-					TxStatus: evm.TxStatus_TX_STATUS_SUCCESS,
-					TxHash:   []byte{0x01, 0x02, 0x03, 0x04},
-				}, nil
-			})).Once()`
-$DIR/pkg/bindings/bindings_test.go: `t.Run("valid", func(t *testing.T) {
-		errDesc := ds.ABI.Errors["DataNotFound"]
-		encoded := errDesc.ID.Bytes()[:4]
-		args, err := errDesc.Inputs.Pack(requester, key, reason)
-		require.NoError(t, err)
-		encoded = append(encoded, args...)
-
-		unpacked, err := ds.UnpackError(encoded)
-		require.NoError(t, err)
-
-		result, ok := unpacked.(*datastorage.DataNotFound)
-		require.True(t, ok, "Unpacked error should be of type DataNotFoundError")
-
-		require.Equal(t, requester, result.Requester)
-		require.Equal(t, key, result.Key)
-		require.Equal(t, reason, result.Reason)
-	})`
-$DIR/pkg/bindings/bindings_test.go: `encoded = append(encoded, args...)`
-$DIR/pkg/bindings/bindings_test.go: `client.
-		EXPECT().
-		RegisterLogTracking(mock.Anything, mock.Anything).
-		Run(func(_ sdk.Runtime, req *evm.RegisterLogTrackingRequest) {
-			require.Equal(t, req.Filter.Name, "AccessLogged-"+common.Bytes2Hex(ds.Address))
-			require.Equal(t, [][]byte{ds.Address}, req.Filter.Addresses)
-			require.Equal(t, [][]byte{ds.Codec.AccessLoggedLogHash()}, req.Filter.EventSigs)
-			require.Len(t, req.Filter.Topic2, 1)
-			require.Equal(t, req.Filter.Topic2[0], common.HexToHash("0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2").Bytes())
-		}).Return(nil).Once()`
-$DIR/pkg/bindings/bindings_test.go: `client.
-		EXPECT().
-		UnregisterLogTracking(mock.Anything, mock.Anything).
-		Run(func(_ sdk.Runtime, req *evm.UnregisterLogTrackingRequest) {
-			require.Equal(t, req.FilterName, "AccessLogged-"+common.Bytes2Hex(ds.Address))
-		}).
-		Return(nil).Once()`
-$DIR/pkg/bindings/bindings_test.go: `err = ds.RegisterLogTrackingAccessLogged(mocks.NewRuntime(t), &bindings.LogTrackingOptions[datastorage.AccessLogged]{
-		Filters: []datastorage.AccessLogged{
-			{
-				Caller: common.HexToAddress("0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2"),
-			},
-		},
-	})`
-$DIR/pkg/bindings/bindings_test.go: `client.EXPECT().FilterLogs(mock.Anything, mock.Anything).Run(
-		func(_ sdk.Runtime, req *evm.FilterLogsRequest) {
-			require.Equal(t, [][]byte{ds.Address}, req.FilterQuery.Addresses, "Filter should contain the correct address")
-			require.Equal(t, bh, req.FilterQuery.BlockHash, "Filter should contain the correct block hash")
-			require.Equal(t, fb.Bytes(), req.FilterQuery.FromBlock.GetAbsVal(), "Filter should contain the correct from block")
-			require.Equal(t, tb.Bytes(), req.FilterQuery.ToBlock.GetAbsVal(), "Filter should contain the correct to block")
-		}).Return(
-		sdk.NewBasicPromise(func() (*evm.FilterLogsReply, error) {
-			logs := []*evm.Log{
-				{
-					Address: ds.Address,
-					Topics:  [][]byte{ds.Codec.AccessLoggedLogHash()},
-					Data:    []byte("test log data"),
-				},
-			}
-			return &evm.FilterLogsReply{Logs: logs}, nil
-		})).Once()`
-$DIR/pkg/bindings/bindings_test.go: `t.Run("simple event", func(t *testing.T) {
-		ev := ds.ABI.Events["DataStored"]
-		events := []datastorage.DataStored{
-			{
-				Sender: common.HexToAddress("0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2"),
-				Key:    "testKey",
-				Value:  "testValue",
-			},
-			{
-				Sender: common.HexToAddress("0xBb8483F64d9C6d1EcF9b849Ae677dD3315835cb2"),
-				Key:    "testKey",
-				Value:  "testValue",
-			},
-		}
-
-		encoded, err := ds.Codec.EncodeDataStoredTopics(ev, events)
-		require.NoError(t, err, "Encoding DataStored topics should not return an error")
-
-		require.Equal(t, ds.Codec.DataStoredLogHash(), encoded[0].Values[0], "First topic value should be AccessLogged log hash")
-		require.Len(t, encoded[1].Values, 2, "Second topic should have two values")
-		expected1, err := abi.Arguments{ev.Inputs[0]}.Pack(events[0].Sender)
-		require.NoError(t, err)
-		require.Equal(t, expected1, encoded[1].Values[0])
-		expected2, err := abi.Arguments{ev.Inputs[0]}.Pack(events[1].Sender)
-		require.NoError(t, err)
-		require.Equal(t, expected2, encoded[1].Values[1])
-
-		trigger, err := ds.LogTriggerDataStoredLog(1, evm.ConfidenceLevel_CONFIDENCE_LEVEL_FINALIZED, events)
-		require.NotNil(t, trigger)
-		require.NoError(t, err)
-	})`
-$DIR/pkg/bindings/bindings_test.go: `.Run("real contract", func(t *testing.T) {
-		err := bindings.GenerateBindings(
-			"./testdata/DataStorage_combined.json",
-			"",
-			"bindings",
-			"",
-			"./testdata/bindings.go",
-		)
-		require.NoError(t, err, "Failed to generate bindings from combined JSON")
-	})`
-$DIR/pkg/bindings/bindings_test.go: `.GenerateBindings(
-			"./testdata/DataStorage_combined.json",
-			"",
-			"bindings",
-			"",
-			"./testdata/bindings.go",
-		)`
-$DIR/pkg/bindings/bindings_test.go: `.GenerateBindings(
-			"./testdata/EmptyContract_combined.json",
-			"",
-			"bindings",
-			"",
-			"./testdata/emptybindings.go",
-		)`
-$DIR/pkg/bindings/bindings_test.go: `.NewEmptyContract(nil, nil, nil)`
-$DIR/pkg/bindings/bindings_test.go: `.Codec.EncodeDataStorageUserDataStruct(userData)`
-$DIR/pkg/bindings/bindings_test.go: `.Codec.EncodeLogAccessMethodCall(logAccess)`
-$DIR/pkg/bindings/bindings_test.go: `.Codec.EncodeOnReportMethodCall(onReport)`
-$DIR/pkg/bindings/bindings_test.go: `.HexToAddress("0x1234567890abcdef1234567890abcdef12345678")`
-$DIR/pkg/bindings/bindings_test.go: `.Codec.EncodeReadDataMethodCall(readData)`
-$DIR/pkg/bindings/bindings_test.go: `.Codec.EncodeStoreDataMethodCall(storeData)`
-$DIR/pkg/bindings/bindings_test.go: `.Codec.EncodeStoreUserDataMethodCall(storeUserData)`
-$DIR/pkg/bindings/bindings_test.go: `.Codec.EncodeUpdateDataMethodCall(updateDataInput)`
-$DIR/pkg/bindings/bindings_test.go: `.HexToAddress("0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2")`
-$DIR/pkg/bindings/bindings_test.go: `.Codec.AccessLoggedLogHash()`
-$DIR/pkg/bindings/bindings_test.go: `.Bytes()`
-$DIR/pkg/bindings/bindings_test.go: `.Pack(message)`
-$DIR/pkg/bindings/bindings_test.go: `.Codec.DecodeAccessLogged(log)`
-$DIR/pkg/bindings/bindings_test.go: `.NewEVMClient(t)`
-$DIR/pkg/bindings/bindings_test.go: `.NewDataStorage(client, nil, &bindings.ContractInitOptions{})`
-$DIR/pkg/bindings/bindings_test.go: `.EXPECT()`
-$DIR/pkg/bindings/bindings_test.go: `.CallContract(mock.Anything, mock.Anything)`
-$DIR/pkg/bindings/bindings_test.go: `.Return(
-		sdk.NewBasicPromise(func() (*evm.CallContractReply, error) {
-			// Simulate a successful call with dummy data
-			reply := &evm.CallContractReply{
-				Data: []byte{0x01, 0x02, 0x03, 0x04}, // Example data
-			}
-			return reply, nil
-		}))`
-$DIR/pkg/bindings/bindings_test.go: `.NewBasicPromise(func() (*evm.CallContractReply, error) {
-			// Simulate a successful call with dummy data
-			reply := &evm.CallContractReply{
-				Data: []byte{0x01, 0x02, 0x03, 0x04}, // Example data
-			}
-			return reply, nil
-		})`
-$DIR/pkg/bindings/bindings_test.go: `.Once()`
-$DIR/pkg/bindings/bindings_test.go: `.ReadData(nil, datastorage.ReadDataInput{
-		User: common.HexToAddress("0x1234567890abcdef1234567890abcdef12345678"),
-		Key:  "testKey",
-	}, big.NewInt(123))`
-$DIR/pkg/bindings/bindings_test.go: `.HexToAddress("0x1234567890abcdef1234567890abcdef12345678")`
-$DIR/pkg/bindings/bindings_test.go: `.NewInt(123)`
-$DIR/pkg/bindings/bindings_test.go: `.Await()`
-$DIR/pkg/bindings/bindings_test.go: `.NewEVMClient(t)`
-$DIR/pkg/bindings/bindings_test.go: `.NewDataStorage(client, nil, &bindings.ContractInitOptions{})`
-$DIR/pkg/bindings/bindings_test.go: `.NewRuntime(t)`
-$DIR/pkg/bindings/bindings_test.go: `.Encode()`
-$DIR/pkg/bindings/bindings_test.go: `.EXPECT()`
-$DIR/pkg/bindings/bindings_test.go: `.GenerateReport(mock.Anything)`
-$DIR/pkg/bindings/bindings_test.go: `.Return(
-		sdk.NewBasicPromise(func() (*pb.ReportResponse, error) {
-			return &pb.ReportResponse{
-				RawReport: rawReport,
-			}, nil
-		}))`
-$DIR/pkg/bindings/bindings_test.go: `.NewBasicPromise(func() (*pb.ReportResponse, error) {
-			return &pb.ReportResponse{
-				RawReport: rawReport,
-			}, nil
-		})`
-$DIR/pkg/bindings/bindings_test.go: `.Once()`
-$DIR/pkg/bindings/bindings_test.go: `.EXPECT()`
-$DIR/pkg/bindings/bindings_test.go: `.WriteReport(mock.Anything, mock.Anything)`
-$DIR/pkg/bindings/bindings_test.go: `.
-		Run(func(_ sdk.Runtime, req *evm.WriteReportRequest) {
-			require.Equal(t, []byte("1234"), req.Report.Id)
-		})`
-$DIR/pkg/bindings/bindings_test.go: `.
-		Return(
-			sdk.NewBasicPromise(func() (*evm.WriteReportReply, error) {
-				// Simulate a successful write report
-				return &evm.WriteReportReply{
-					TxStatus: evm.TxStatus_TX_STATUS_SUCCESS,
-					TxHash:   []byte{0x01, 0x02, 0x03, 0x04},
-				}, nil
-			}))`
-$DIR/pkg/bindings/bindings_test.go: `.NewBasicPromise(func() (*evm.WriteReportReply, error) {
-				// Simulate a successful write report
-				return &evm.WriteReportReply{
-					TxStatus: evm.TxStatus_TX_STATUS_SUCCESS,
-					TxHash:   []byte{0x01, 0x02, 0x03, 0x04},
-				}, nil
-			})`
-$DIR/pkg/bindings/bindings_test.go: `.Once()`
-$DIR/pkg/bindings/bindings_test.go: `.WriteReportDataStorageUserData(runtime, datastorage.DataStorageUserData{
-		Key:   "testKey",
-		Value: "testValue",
-	}, nil)`
-$DIR/pkg/bindings/bindings_test.go: `.Await()`
-$DIR/pkg/bindings/bindings_test.go: `.NewInt(100)`
-$DIR/pkg/bindings/bindings_test.go: `.NewInt(200)`
-$DIR/pkg/bindings/bindings_test.go: `.Codec.EncodeDataStorageUpdateReservesStruct(str)`
-$DIR/pkg/bindings/bindings_test.go: `.HexToAddress("0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2")`
-$DIR/pkg/bindings/bindings_test.go: `.Run("valid", func(t *testing.T) {
-		errDesc := ds.ABI.Errors["DataNotFound"]
-		encoded := errDesc.ID.Bytes()[:4]
-		args, err := errDesc.Inputs.Pack(requester, key, reason)
-		require.NoError(t, err)
-		encoded = append(encoded, args...)
-
-		unpacked, err := ds.UnpackError(encoded)
-		require.NoError(t, err)
-
-		result, ok := unpacked.(*datastorage.DataNotFound)
-		require.True(t, ok, "Unpacked error should be of type DataNotFoundError")
-
-		require.Equal(t, requester, result.Requester)
-		require.Equal(t, key, result.Key)
-		require.Equal(t, reason, result.Reason)
-	})`
-$DIR/pkg/bindings/bindings_test.go: `.ID.Bytes()`
-$DIR/pkg/bindings/bindings_test.go: `.Inputs.Pack(requester, key, reason)`
-$DIR/pkg/bindings/bindings_test.go: `.UnpackError(encoded)`
-$DIR/pkg/bindings/bindings_test.go: `.UnpackError(invalidCode)`
-$DIR/pkg/bindings/bindings_test.go: `.NewEVMClient(t)`
-$DIR/pkg/bindings/bindings_test.go: `.NewDataStorage(client, nil, &bindings.ContractInitOptions{})`
-$DIR/pkg/bindings/bindings_test.go: `.
-		EXPECT()`
-$DIR/pkg/bindings/bindings_test.go: `.
-		RegisterLogTracking(mock.Anything, mock.Anything)`
-$DIR/pkg/bindings/bindings_test.go: `.
-		Run(func(_ sdk.Runtime, req *evm.RegisterLogTrackingRequest) {
-			require.Equal(t, req.Filter.Name, "AccessLogged-"+common.Bytes2Hex(ds.Address))
-			require.Equal(t, [][]byte{ds.Address}, req.Filter.Addresses)
-			require.Equal(t, [][]byte{ds.Codec.AccessLoggedLogHash()}, req.Filter.EventSigs)
-			require.Len(t, req.Filter.Topic2, 1)
-			require.Equal(t, req.Filter.Topic2[0], common.HexToHash("0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2").Bytes())
-		})`
-$DIR/pkg/bindings/bindings_test.go: `.Return(nil)`
-$DIR/pkg/bindings/bindings_test.go: `.Once()`
-$DIR/pkg/bindings/bindings_test.go: `.
-		EXPECT()`
-$DIR/pkg/bindings/bindings_test.go: `.
-		UnregisterLogTracking(mock.Anything, mock.Anything)`
-$DIR/pkg/bindings/bindings_test.go: `.
-		Run(func(_ sdk.Runtime, req *evm.UnregisterLogTrackingRequest) {
-			require.Equal(t, req.FilterName, "AccessLogged-"+common.Bytes2Hex(ds.Address))
-		})`
-$DIR/pkg/bindings/bindings_test.go: `.
-		Return(nil)`
-$DIR/pkg/bindings/bindings_test.go: `.Once()`
-$DIR/pkg/bindings/bindings_test.go: `.RegisterLogTrackingAccessLogged(mocks.NewRuntime(t), &bindings.LogTrackingOptions[datastorage.AccessLogged]{
-		Filters: []datastorage.AccessLogged{
-			{
-				Caller: common.HexToAddress("0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2"),
-			},
-		},
-	})`
-$DIR/pkg/bindings/bindings_test.go: `.NewRuntime(t)`
-$DIR/pkg/bindings/bindings_test.go: `.HexToAddress("0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2")`
-$DIR/pkg/bindings/bindings_test.go: `.NewRuntime(t)`
-$DIR/pkg/bindings/bindings_test.go: `.NewEVMClient(t)`
-$DIR/pkg/bindings/bindings_test.go: `.NewDataStorage(client, nil, &bindings.ContractInitOptions{})`
-$DIR/pkg/bindings/bindings_test.go: `.NewInt(100)`
-$DIR/pkg/bindings/bindings_test.go: `.NewInt(200)`
-$DIR/pkg/bindings/bindings_test.go: `.EXPECT()`
-$DIR/pkg/bindings/bindings_test.go: `.FilterLogs(mock.Anything, mock.Anything)`
-$DIR/pkg/bindings/bindings_test.go: `.Run(
-		func(_ sdk.Runtime, req *evm.FilterLogsRequest) {
-			require.Equal(t, [][]byte{ds.Address}, req.FilterQuery.Addresses, "Filter should contain the correct address")
-			require.Equal(t, bh, req.FilterQuery.BlockHash, "Filter should contain the correct block hash")
-			require.Equal(t, fb.Bytes(), req.FilterQuery.FromBlock.GetAbsVal(), "Filter should contain the correct from block")
-			require.Equal(t, tb.Bytes(), req.FilterQuery.ToBlock.GetAbsVal(), "Filter should contain the correct to block")
-		})`
-$DIR/pkg/bindings/bindings_test.go: `.Return(
-		sdk.NewBasicPromise(func() (*evm.FilterLogsReply, error) {
-			logs := []*evm.Log{
-				{
-					Address: ds.Address,
-					Topics:  [][]byte{ds.Codec.AccessLoggedLogHash()},
-					Data:    []byte("test log data"),
-				},
-			}
-			return &evm.FilterLogsReply{Logs: logs}, nil
-		}))`
-$DIR/pkg/bindings/bindings_test.go: `.NewBasicPromise(func() (*evm.FilterLogsReply, error) {
-			logs := []*evm.Log{
-				{
-					Address: ds.Address,
-					Topics:  [][]byte{ds.Codec.AccessLoggedLogHash()},
-					Data:    []byte("test log data"),
-				},
-			}
-			return &evm.FilterLogsReply{Logs: logs}, nil
-		})`
-$DIR/pkg/bindings/bindings_test.go: `.Codec.AccessLoggedLogHash()`
-$DIR/pkg/bindings/bindings_test.go: `.Once()`
-$DIR/pkg/bindings/bindings_test.go: `.FilterLogsAccessLogged(mocks.NewRuntime(t), &bindings.FilterOptions{
-		BlockHash: bh,
-		FromBlock: fb,
-		ToBlock:   tb,
-	})`
-$DIR/pkg/bindings/bindings_test.go: `.NewRuntime(t)`
-$DIR/pkg/bindings/bindings_test.go: `.Await()`
-$DIR/pkg/bindings/bindings_test.go: `.NewEVMClient(t)`
-$DIR/pkg/bindings/bindings_test.go: `.NewDataStorage(client, nil, &bindings.ContractInitOptions{})`
-$DIR/pkg/bindings/bindings_test.go: `.Run("simple event", func(t *testing.T) {
-		ev := ds.ABI.Events["DataStored"]
-		events := []datastorage.DataStored{
-			{
-				Sender: common.HexToAddress("0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2"),
-				Key:    "testKey",
-				Value:  "testValue",
-			},
-			{
-				Sender: common.HexToAddress("0xBb8483F64d9C6d1EcF9b849Ae677dD3315835cb2"),
-				Key:    "testKey",
-				Value:  "testValue",
-			},
-		}
-
-		encoded, err := ds.Codec.EncodeDataStoredTopics(ev, events)
-		require.NoError(t, err, "Encoding DataStored topics should not return an error")
-
-		require.Equal(t, ds.Codec.DataStoredLogHash(), encoded[0].Values[0], "First topic value should be AccessLogged log hash")
-		require.Len(t, encoded[1].Values, 2, "Second topic should have two values")
-		expected1, err := abi.Arguments{ev.Inputs[0]}.Pack(events[0].Sender)
-		require.NoError(t, err)
-		require.Equal(t, expected1, encoded[1].Values[0])
-		expected2, err := abi.Arguments{ev.Inputs[0]}.Pack(events[1].Sender)
-		require.NoError(t, err)
-		require.Equal(t, expected2, encoded[1].Values[1])
-
-		trigger, err := ds.LogTriggerDataStoredLog(1, evm.ConfidenceLevel_CONFIDENCE_LEVEL_FINALIZED, events)
-		require.NotNil(t, trigger)
-		require.NoError(t, err)
-	})`
-$DIR/pkg/bindings/bindings_test.go: `.HexToAddress("0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2")`
-$DIR/pkg/bindings/bindings_test.go: `.HexToAddress("0xBb8483F64d9C6d1EcF9b849Ae677dD3315835cb2")`
-$DIR/pkg/bindings/bindings_test.go: `.Codec.EncodeDataStoredTopics(ev, events)`
-$DIR/pkg/bindings/bindings_test.go: `.Pack(events[0].Sender)`
-$DIR/pkg/bindings/bindings_test.go: `.Pack(events[1].Sender)`
-$DIR/pkg/bindings/bindings_test.go: `.LogTriggerDataStoredLog(1, evm.ConfidenceLevel_CONFIDENCE_LEVEL_FINALIZED, events)`
-$DIR/pkg/bindings/bindings_test.go: `.HexToHash("metadata1")`
-$DIR/pkg/bindings/bindings_test.go: `.HexToHash("metadata2")`
-$DIR/pkg/bindings/bindings_test.go: `.Codec.EncodeDynamicEventTopics(ev, events)`
-$DIR/pkg/bindings/bindings_test.go: `.Pack(events[0].UserData)`
-$DIR/pkg/bindings/bindings_test.go: `.Keccak256(packed1)`
-$DIR/pkg/bindings/bindings_test.go: `.Pack(events[1].UserData)`
-$DIR/pkg/bindings/bindings_test.go: `.Keccak256(packed2)`
-$DIR/pkg/bindings/bindings_test.go: `.Metadata.Bytes()`
-$DIR/pkg/bindings/bindings_test.go: `.Metadata.Bytes()`
-$DIR/pkg/bindings/bindings_test.go: `.Pack(events[0].MetadataArray)`
-$DIR/pkg/bindings/bindings_test.go: `.Keccak256(packed3)`
-$DIR/pkg/bindings/bindings_test.go: `.Pack(events[1].MetadataArray)`
-$DIR/pkg/bindings/bindings_test.go: `.Keccak256(packed4)`
-$DIR/pkg/bindings/bindings_test.go: `.LogTriggerDynamicEventLog(1, evm.ConfidenceLevel_CONFIDENCE_LEVEL_FINALIZED, events)`
 $DIR/pkg/chains/chain_kv_test.go: `kv = chains.NewChainsKV[*testChainService](onechain)`
 $DIR/pkg/chains/chain_kv_test.go: `c, err = kv.Get(testChainID)`
 $DIR/pkg/chains/chain_kv_test.go: `cs, err = kv.List()`
@@ -1295,7 +890,7 @@ $DIR/pkg/client/chain_client_test.go: `.EVMChainID.ToInt()`
 $DIR/pkg/client/chain_client_test.go: `.NewInt(1)`
 $DIR/pkg/client/chain_client_test.go: `.Int64()`
 $DIR/pkg/client/chain_client_test.go: `.Int64()`
-$DIR/pkg/client/chain_client_test.go: `.New("RPCClient returned error (eth-primary-rpc-0): not found")`
+$DIR/pkg/client/chain_client_test.go: `.New("RPC call failed: not found")`
 $DIR/pkg/client/chain_client_test.go: `.Run(test.name, func(t *testing.T) {
 			wsURL := testutils.NewWSServer(t, testutils.FixtureChainID, func(method string, params gjson.Result) (resp testutils.JSONRPCResponse) {
 				switch method {
@@ -3093,7 +2688,7 @@ $DIR/pkg/client/rpc_client_internal_test.go: `t.Run(tc.Name, func(t *testing.T) 
 				}
 				return
 			}).WSURL()
-			rpcClient := NewDialedTestRPCClient(t, RPCClientOpts{WS: wsURL, FinalityTagsEnabled: true, ChainID: chainID})
+			rpcClient := NewDialedTestRPCClient(t, RPCClientOpts{HTTP: wsURL, FinalityTagsEnabled: true, ChainID: chainID})
 			var result hexutil.Bytes
 			err := rpcClient.doWithConfidence(t.Context(), rpc.BatchElem{Method: "eth_call", Result: &result}, tc.CallBlockNumber, tc.Confidence)
 			if tc.ExpectedError != "" {
@@ -3195,7 +2790,7 @@ $DIR/pkg/client/rpc_client_internal_test.go: `.Run(tc.Name, func(t *testing.T) {
 				}
 				return
 			}).WSURL()
-			rpcClient := NewDialedTestRPCClient(t, RPCClientOpts{WS: wsURL, FinalityTagsEnabled: true, ChainID: chainID})
+			rpcClient := NewDialedTestRPCClient(t, RPCClientOpts{HTTP: wsURL, FinalityTagsEnabled: true, ChainID: chainID})
 			var result hexutil.Bytes
 			err := rpcClient.doWithConfidence(t.Context(), rpc.BatchElem{Method: "eth_call", Result: &result}, tc.CallBlockNumber, tc.Confidence)
 			if tc.ExpectedError != "" {
@@ -3465,7 +3060,7 @@ $DIR/pkg/client/rpc_client_test.go: `t.Run("Failed SubscribeToHeads returns and 
 		require.NoError(t, rpc.Dial(ctx))
 		server.Close()
 		_, _, err := rpc.SubscribeToHeads(ctx)
-		require.ErrorContains(t, err, "RPCClient returned error (rpc)")
+		require.ErrorContains(t, err, "RPC call failed")
 		tests.AssertLogEventually(t, observed, "evmclient.Client#EthSubscribe RPC call failure")
 	})`
 $DIR/pkg/client/rpc_client_test.go: `tests.AssertLogEventually(t, observed, "evmclient.Client#EthSubscribe RPC call failure")`
@@ -3510,12 +3105,15 @@ $DIR/pkg/client/rpc_client_test.go: `checkClosedRPCClientShouldRemoveExistingSub
 $DIR/pkg/client/rpc_client_test.go: `go server.MustWriteBinaryMessageSync(t, "invalid msg")`
 $DIR/pkg/client/rpc_client_test.go: `t.Run("Failed SubscribeFilterLogs when WSURL is empty", func(t *testing.T) {
 		// ws is optional when LogBroadcaster is disabled, however SubscribeFilterLogs will return error if ws is missing
-		rpcClient := client.NewTestRPCClient(t, client.RPCClientOpts{HTTP: &url.URL{}})
+		httpURL, err := url.Parse("https://valid_url.com")
+		require.NoError(t, err)
+		rpcClient := client.NewTestRPCClient(t, client.RPCClientOpts{HTTP: httpURL})
 		require.NoError(t, rpcClient.Dial(ctx))
 
-		_, err := rpcClient.SubscribeFilterLogs(ctx, ethereum.FilterQuery{}, make(chan types.Log))
+		_, err = rpcClient.SubscribeFilterLogs(ctx, ethereum.FilterQuery{}, make(chan types.Log))
 		require.Equal(t, errors.New("SubscribeFilterLogs is not allowed without ws url"), err)
 	})`
+$DIR/pkg/client/rpc_client_test.go: `_, err = rpcClient.SubscribeFilterLogs(ctx, ethereum.FilterQuery{}, make(chan types.Log))`
 $DIR/pkg/client/rpc_client_test.go: `t.Run("Failed SubscribeFilterLogs logs and returns proper error", func(t *testing.T) {
 		server := testutils.NewWSServer(t, chainID, func(reqMethod string, reqParams gjson.Result) (resp testutils.JSONRPCResponse) {
 			return resp
@@ -3526,7 +3124,7 @@ $DIR/pkg/client/rpc_client_test.go: `t.Run("Failed SubscribeFilterLogs logs and 
 		require.NoError(t, rpc.Dial(ctx))
 		server.Close()
 		_, err := rpc.SubscribeFilterLogs(ctx, ethereum.FilterQuery{}, make(chan types.Log))
-		require.ErrorContains(t, err, "RPCClient returned error (rpc)")
+		require.ErrorContains(t, err, "RPC call failed")
 		tests.AssertLogEventually(t, observed, "evmclient.Client#SubscribeFilterLogs RPC call failure")
 	})`
 $DIR/pkg/client/rpc_client_test.go: `tests.AssertLogEventually(t, observed, "evmclient.Client#SubscribeFilterLogs RPC call failure")`
@@ -3550,7 +3148,7 @@ $DIR/pkg/client/rpc_client_test.go: `t.Run("Subscription error is properly wrapp
 		defer cancel()
 		select {
 		case err = <-sub.Err():
-			require.ErrorContains(t, err, "RPCClient returned error (rpc): invalid character")
+			require.ErrorContains(t, err, "RPC call failed: invalid character 'i' looking for beginning of value")
 		case <-errorCtx.Done():
 			t.Errorf("Expected subscription to return an error, but test timeout instead")
 		}
@@ -3715,15 +3313,69 @@ $DIR/pkg/client/rpc_client_test.go: `t.Run(tc.Name, func(t *testing.T) {
 			require.ErrorContains(t, err, stubErr)
 		})`
 $DIR/pkg/client/rpc_client_test.go: `err = tc.WithOptsCall(t, rpcClient)`
+$DIR/pkg/client/rpc_client_test.go: `t.Run("Happy path", func(t *testing.T) {
+		const expectedResult = "call contract happy path result"
+		wsURL := testutils.NewWSServer(t, testutils.FixtureChainID, func(method string, params gjson.Result) (resp testutils.JSONRPCResponse) {
+			switch method {
+			case "eth_call":
+				resp.Result = fmt.Sprintf(`"%s"`, "0x"+hex.EncodeToString([]byte(expectedResult)))
+			case "eth_getBlockByNumber":
+				require.True(t, params.IsArray())
+				require.Equal(t, "finalized", params.Array()[0].String())
+				resp.Result = client.MakeHeadMsgForNumber(10)
+			default:
+				require.Fail(t, "unexpected method: "+method)
+			}
+			return
+		}).WSURL()
+		rpcClient := client.NewDialedTestRPCClient(t, client.RPCClientOpts{WS: wsURL, FinalityTagsEnabled: true})
+		result, err := rpcClient.CallContractWithOpts(t.Context(), ethereum.CallMsg{}, big.NewInt(9), evmtypes.CallContractOpts{ConfidenceLevel: primitives.Finalized})
+		require.NoError(t, err)
+		require.Equal(t, expectedResult, string(result))
+	})`
 $DIR/pkg/client/rpc_client_test.go: `resp.Result = fmt.Sprintf(`"%s"`, "0x"+hex.EncodeToString([]byte(expectedResult)))`
 $DIR/pkg/client/rpc_client_test.go: `resp.Result = client.MakeHeadMsgForNumber(10)`
+$DIR/pkg/client/rpc_client_test.go: `resp.Result = fmt.Sprintf(`"%s"`, "0x"+hex.EncodeToString(make([]byte, responseLimit+1)))`
+$DIR/pkg/client/rpc_client_test.go: `_, err = rpcClient.CallContractWithOpts(t.Context(), ethereum.CallMsg{}, big.NewInt(9), evmtypes.CallContractOpts{IsExternalRequest: true})`
 $DIR/pkg/client/rpc_client_test.go: `resp.Result = fmt.Sprintf(`"%s"`, hexutil.EncodeBig(expectedResult))`
 $DIR/pkg/client/rpc_client_test.go: `resp.Result = client.MakeHeadMsgForNumber(10)`
+$DIR/pkg/client/rpc_client_test.go: `t.Run("Happy path", func(t *testing.T) {
+
+		wsURL := testutils.NewWSServer(t, testutils.FixtureChainID, func(method string, params gjson.Result) (resp testutils.JSONRPCResponse) {
+			switch method {
+			case "eth_getLogs":
+				logsAsJSON, err := json.Marshal(validLogs)
+				require.NoError(t, err)
+				resp.Result = string(logsAsJSON)
+			case "eth_getBlockByNumber":
+				require.True(t, params.IsArray())
+				require.Equal(t, "finalized", params.Array()[0].String())
+				resp.Result = client.MakeHeadMsgForNumber(10)
+			default:
+				require.Fail(t, "unexpected method: "+method)
+			}
+			return
+		}).WSURL()
+		rpcClient := client.NewDialedTestRPCClient(t, client.RPCClientOpts{WS: wsURL, FinalityTagsEnabled: true})
+		filter := ethereum.FilterQuery{FromBlock: big.NewInt(0), ToBlock: big.NewInt(10), Topics: [][]common.Hash{topics}}
+		result, err := rpcClient.FilterLogsWithOpts(t.Context(), filter, evmtypes.FilterLogsOpts{ConfidenceLevel: primitives.Finalized})
+		require.NoError(t, err)
+		require.Equal(t, validLogs, result)
+	})`
 $DIR/pkg/client/rpc_client_test.go: `resp.Result = string(logsAsJSON)`
 $DIR/pkg/client/rpc_client_test.go: `resp.Result = client.MakeHeadMsgForNumber(10)`
+$DIR/pkg/client/rpc_client_test.go: `resp.Result = string(logsAsJSON)`
+$DIR/pkg/client/rpc_client_test.go: `_, err = rpcClient.FilterLogsWithOpts(t.Context(), filter, evmtypes.FilterLogsOpts{IsExternalRequest: false})`
+$DIR/pkg/client/rpc_client_test.go: `_, err = rpcClient.FilterLogsWithOpts(t.Context(), filter, evmtypes.FilterLogsOpts{IsExternalRequest: true})`
 $DIR/pkg/client/rpc_client_test.go: `resp.Result = client.MakeHeadMsgForNumber(10)`
 $DIR/pkg/client/rpc_client_test.go: `resp.Result = string(asJSON)`
 $DIR/pkg/client/rpc_client_test.go: `head.EVMChainID = ubig.New(chainID)`
+$DIR/pkg/client/rpc_client_test.go: `resp.Result = string(receiptsAsJSON)`
+$DIR/pkg/client/rpc_client_test.go: `_, err = rpcClient.TransactionReceiptGethWithOpts(t.Context(), common.Hash{}, evmtypes.TransactionReceiptOpts{IsExternalRequest: false})`
+$DIR/pkg/client/rpc_client_test.go: `_, err = rpcClient.TransactionReceiptGethWithOpts(t.Context(), common.Hash{}, evmtypes.TransactionReceiptOpts{IsExternalRequest: true})`
+$DIR/pkg/client/rpc_client_test.go: `resp.Result = string(txAsJSON)`
+$DIR/pkg/client/rpc_client_test.go: `_, err = rpcClient.TransactionByHashWithOpts(t.Context(), common.Hash{}, evmtypes.TransactionByHashOpts{IsExternalRequest: false})`
+$DIR/pkg/client/rpc_client_test.go: `_, err = rpcClient.TransactionByHashWithOpts(t.Context(), common.Hash{}, evmtypes.TransactionByHashOpts{IsExternalRequest: true})`
 $DIR/pkg/client/rpc_client_test.go: `.WithTimeout(tests.Context(t), tests.WaitTimeout(t))`
 $DIR/pkg/client/rpc_client_test.go: `.Context(t)`
 $DIR/pkg/client/rpc_client_test.go: `.WaitTimeout(t)`
@@ -3983,7 +3635,7 @@ $DIR/pkg/client/rpc_client_test.go: `.Run("Failed SubscribeToHeads returns and l
 		require.NoError(t, rpc.Dial(ctx))
 		server.Close()
 		_, _, err := rpc.SubscribeToHeads(ctx)
-		require.ErrorContains(t, err, "RPCClient returned error (rpc)")
+		require.ErrorContains(t, err, "RPC call failed")
 		tests.AssertLogEventually(t, observed, "evmclient.Client#EthSubscribe RPC call failure")
 	})`
 $DIR/pkg/client/rpc_client_test.go: `.NewWSServer(t, chainID, func(reqMethod string, reqParams gjson.Result) (resp testutils.JSONRPCResponse) {
@@ -4057,13 +3709,16 @@ $DIR/pkg/client/rpc_client_test.go: `.Context(t)`
 $DIR/pkg/client/rpc_client_test.go: `.WaitTimeout(t)`
 $DIR/pkg/client/rpc_client_test.go: `.Run("Failed SubscribeFilterLogs when WSURL is empty", func(t *testing.T) {
 		// ws is optional when LogBroadcaster is disabled, however SubscribeFilterLogs will return error if ws is missing
-		rpcClient := client.NewTestRPCClient(t, client.RPCClientOpts{HTTP: &url.URL{}})
+		httpURL, err := url.Parse("https://valid_url.com")
+		require.NoError(t, err)
+		rpcClient := client.NewTestRPCClient(t, client.RPCClientOpts{HTTP: httpURL})
 		require.NoError(t, rpcClient.Dial(ctx))
 
-		_, err := rpcClient.SubscribeFilterLogs(ctx, ethereum.FilterQuery{}, make(chan types.Log))
+		_, err = rpcClient.SubscribeFilterLogs(ctx, ethereum.FilterQuery{}, make(chan types.Log))
 		require.Equal(t, errors.New("SubscribeFilterLogs is not allowed without ws url"), err)
 	})`
-$DIR/pkg/client/rpc_client_test.go: `.NewTestRPCClient(t, client.RPCClientOpts{HTTP: &url.URL{}})`
+$DIR/pkg/client/rpc_client_test.go: `.Parse("https://valid_url.com")`
+$DIR/pkg/client/rpc_client_test.go: `.NewTestRPCClient(t, client.RPCClientOpts{HTTP: httpURL})`
 $DIR/pkg/client/rpc_client_test.go: `.SubscribeFilterLogs(ctx, ethereum.FilterQuery{}, make(chan types.Log))`
 $DIR/pkg/client/rpc_client_test.go: `.Run("Failed SubscribeFilterLogs logs and returns proper error", func(t *testing.T) {
 		server := testutils.NewWSServer(t, chainID, func(reqMethod string, reqParams gjson.Result) (resp testutils.JSONRPCResponse) {
@@ -4075,7 +3730,7 @@ $DIR/pkg/client/rpc_client_test.go: `.Run("Failed SubscribeFilterLogs logs and r
 		require.NoError(t, rpc.Dial(ctx))
 		server.Close()
 		_, err := rpc.SubscribeFilterLogs(ctx, ethereum.FilterQuery{}, make(chan types.Log))
-		require.ErrorContains(t, err, "RPCClient returned error (rpc)")
+		require.ErrorContains(t, err, "RPC call failed")
 		tests.AssertLogEventually(t, observed, "evmclient.Client#SubscribeFilterLogs RPC call failure")
 	})`
 $DIR/pkg/client/rpc_client_test.go: `.NewWSServer(t, chainID, func(reqMethod string, reqParams gjson.Result) (resp testutils.JSONRPCResponse) {
@@ -4106,7 +3761,7 @@ $DIR/pkg/client/rpc_client_test.go: `.Run("Subscription error is properly wrappe
 		defer cancel()
 		select {
 		case err = <-sub.Err():
-			require.ErrorContains(t, err, "RPCClient returned error (rpc): invalid character")
+			require.ErrorContains(t, err, "RPC call failed: invalid character 'i' looking for beginning of value")
 		case <-errorCtx.Done():
 			t.Errorf("Expected subscription to return an error, but test timeout instead")
 		}
@@ -4480,6 +4135,26 @@ $DIR/pkg/client/rpc_client_test.go: `.Run(tc.Name, func(t *testing.T) {
 		})`
 $DIR/pkg/client/rpc_client_test.go: `.OriginalCall(t, rpcClient)`
 $DIR/pkg/client/rpc_client_test.go: `.WithOptsCall(t, rpcClient)`
+$DIR/pkg/client/rpc_client_test.go: `.Run("Happy path", func(t *testing.T) {
+		const expectedResult = "call contract happy path result"
+		wsURL := testutils.NewWSServer(t, testutils.FixtureChainID, func(method string, params gjson.Result) (resp testutils.JSONRPCResponse) {
+			switch method {
+			case "eth_call":
+				resp.Result = fmt.Sprintf(`"%s"`, "0x"+hex.EncodeToString([]byte(expectedResult)))
+			case "eth_getBlockByNumber":
+				require.True(t, params.IsArray())
+				require.Equal(t, "finalized", params.Array()[0].String())
+				resp.Result = client.MakeHeadMsgForNumber(10)
+			default:
+				require.Fail(t, "unexpected method: "+method)
+			}
+			return
+		}).WSURL()
+		rpcClient := client.NewDialedTestRPCClient(t, client.RPCClientOpts{WS: wsURL, FinalityTagsEnabled: true})
+		result, err := rpcClient.CallContractWithOpts(t.Context(), ethereum.CallMsg{}, big.NewInt(9), evmtypes.CallContractOpts{ConfidenceLevel: primitives.Finalized})
+		require.NoError(t, err)
+		require.Equal(t, expectedResult, string(result))
+	})`
 $DIR/pkg/client/rpc_client_test.go: `.NewWSServer(t, testutils.FixtureChainID, func(method string, params gjson.Result) (resp testutils.JSONRPCResponse) {
 			switch method {
 			case "eth_call":
@@ -4499,6 +4174,26 @@ $DIR/pkg/client/rpc_client_test.go: `.MakeHeadMsgForNumber(10)`
 $DIR/pkg/client/rpc_client_test.go: `.WSURL()`
 $DIR/pkg/client/rpc_client_test.go: `.NewDialedTestRPCClient(t, client.RPCClientOpts{WS: wsURL, FinalityTagsEnabled: true})`
 $DIR/pkg/client/rpc_client_test.go: `.CallContractWithOpts(t.Context(), ethereum.CallMsg{}, big.NewInt(9), evmtypes.CallContractOpts{ConfidenceLevel: primitives.Finalized})`
+$DIR/pkg/client/rpc_client_test.go: `.Context()`
+$DIR/pkg/client/rpc_client_test.go: `.NewInt(9)`
+$DIR/pkg/client/rpc_client_test.go: `.NewHTTPServer(t, testutils.FixtureChainID, func(method string, params gjson.Result) (resp testutils.JSONRPCResponse) {
+			switch method {
+			case "eth_call":
+				// Simulate a large response that exceeds the limit
+				resp.Result = fmt.Sprintf(`"%s"`, "0x"+hex.EncodeToString(make([]byte, responseLimit+1))) // 10 MB
+			default:
+				require.Fail(t, "unexpected method: "+method)
+			}
+			return
+		})`
+$DIR/pkg/client/rpc_client_test.go: `.Sprintf(`"%s"`, "0x"+hex.EncodeToString(make([]byte, responseLimit+1)))`
+$DIR/pkg/client/rpc_client_test.go: `.EncodeToString(make([]byte, responseLimit+1))`
+$DIR/pkg/client/rpc_client_test.go: `.URL()`
+$DIR/pkg/client/rpc_client_test.go: `.NewDialedTestRPCClient(t, client.RPCClientOpts{HTTP: httpURL, ExternalRequestMaxResponseSize: responseLimit})`
+$DIR/pkg/client/rpc_client_test.go: `.CallContractWithOpts(t.Context(), ethereum.CallMsg{}, big.NewInt(9), evmtypes.CallContractOpts{IsExternalRequest: false})`
+$DIR/pkg/client/rpc_client_test.go: `.Context()`
+$DIR/pkg/client/rpc_client_test.go: `.NewInt(9)`
+$DIR/pkg/client/rpc_client_test.go: `.CallContractWithOpts(t.Context(), ethereum.CallMsg{}, big.NewInt(9), evmtypes.CallContractOpts{IsExternalRequest: true})`
 $DIR/pkg/client/rpc_client_test.go: `.Context()`
 $DIR/pkg/client/rpc_client_test.go: `.NewInt(9)`
 $DIR/pkg/client/rpc_client_test.go: `.NewInt(1234)`
@@ -4531,10 +4226,33 @@ $DIR/pkg/client/rpc_client_test.go: `.BigToAddress(big.NewInt(42))`
 $DIR/pkg/client/rpc_client_test.go: `.NewInt(42)`
 $DIR/pkg/client/rpc_client_test.go: `.BigToAddress(big.NewInt(43))`
 $DIR/pkg/client/rpc_client_test.go: `.NewInt(43)`
+$DIR/pkg/client/rpc_client_test.go: `.Run("Happy path", func(t *testing.T) {
+
+		wsURL := testutils.NewWSServer(t, testutils.FixtureChainID, func(method string, params gjson.Result) (resp testutils.JSONRPCResponse) {
+			switch method {
+			case "eth_getLogs":
+				logsAsJSON, err := json.Marshal(validLogs)
+				require.NoError(t, err)
+				resp.Result = string(logsAsJSON)
+			case "eth_getBlockByNumber":
+				require.True(t, params.IsArray())
+				require.Equal(t, "finalized", params.Array()[0].String())
+				resp.Result = client.MakeHeadMsgForNumber(10)
+			default:
+				require.Fail(t, "unexpected method: "+method)
+			}
+			return
+		}).WSURL()
+		rpcClient := client.NewDialedTestRPCClient(t, client.RPCClientOpts{WS: wsURL, FinalityTagsEnabled: true})
+		filter := ethereum.FilterQuery{FromBlock: big.NewInt(0), ToBlock: big.NewInt(10), Topics: [][]common.Hash{topics}}
+		result, err := rpcClient.FilterLogsWithOpts(t.Context(), filter, evmtypes.FilterLogsOpts{ConfidenceLevel: primitives.Finalized})
+		require.NoError(t, err)
+		require.Equal(t, validLogs, result)
+	})`
 $DIR/pkg/client/rpc_client_test.go: `.NewWSServer(t, testutils.FixtureChainID, func(method string, params gjson.Result) (resp testutils.JSONRPCResponse) {
 			switch method {
 			case "eth_getLogs":
-				logsAsJSON, err := json.Marshal(expectedResult)
+				logsAsJSON, err := json.Marshal(validLogs)
 				require.NoError(t, err)
 				resp.Result = string(logsAsJSON)
 			case "eth_getBlockByNumber":
@@ -4546,13 +4264,31 @@ $DIR/pkg/client/rpc_client_test.go: `.NewWSServer(t, testutils.FixtureChainID, f
 			}
 			return
 		})`
-$DIR/pkg/client/rpc_client_test.go: `.Marshal(expectedResult)`
+$DIR/pkg/client/rpc_client_test.go: `.Marshal(validLogs)`
 $DIR/pkg/client/rpc_client_test.go: `.MakeHeadMsgForNumber(10)`
 $DIR/pkg/client/rpc_client_test.go: `.WSURL()`
 $DIR/pkg/client/rpc_client_test.go: `.NewDialedTestRPCClient(t, client.RPCClientOpts{WS: wsURL, FinalityTagsEnabled: true})`
 $DIR/pkg/client/rpc_client_test.go: `.NewInt(0)`
 $DIR/pkg/client/rpc_client_test.go: `.NewInt(10)`
 $DIR/pkg/client/rpc_client_test.go: `.FilterLogsWithOpts(t.Context(), filter, evmtypes.FilterLogsOpts{ConfidenceLevel: primitives.Finalized})`
+$DIR/pkg/client/rpc_client_test.go: `.Context()`
+$DIR/pkg/client/rpc_client_test.go: `.Marshal(validLogs)`
+$DIR/pkg/client/rpc_client_test.go: `.NewHTTPServer(t, testutils.FixtureChainID, func(method string, params gjson.Result) (resp testutils.JSONRPCResponse) {
+			switch method {
+			case "eth_getLogs":
+				resp.Result = string(logsAsJSON)
+			default:
+				require.Fail(t, "unexpected method: "+method)
+			}
+			return
+		})`
+$DIR/pkg/client/rpc_client_test.go: `.URL()`
+$DIR/pkg/client/rpc_client_test.go: `.NewInt(0)`
+$DIR/pkg/client/rpc_client_test.go: `.NewInt(10)`
+$DIR/pkg/client/rpc_client_test.go: `.NewDialedTestRPCClient(t, client.RPCClientOpts{HTTP: httpURL, ExternalRequestMaxResponseSize: responseSize - 1})`
+$DIR/pkg/client/rpc_client_test.go: `.FilterLogsWithOpts(t.Context(), filter, evmtypes.FilterLogsOpts{IsExternalRequest: false})`
+$DIR/pkg/client/rpc_client_test.go: `.Context()`
+$DIR/pkg/client/rpc_client_test.go: `.FilterLogsWithOpts(t.Context(), filter, evmtypes.FilterLogsOpts{IsExternalRequest: true})`
 $DIR/pkg/client/rpc_client_test.go: `.Context()`
 $DIR/pkg/client/rpc_client_test.go: `.Unix(1000, 0)`
 $DIR/pkg/client/rpc_client_test.go: `.UTC()`
@@ -4579,6 +4315,41 @@ $DIR/pkg/client/rpc_client_test.go: `.HeaderByNumberWithOpts(t.Context(), big.Ne
 $DIR/pkg/client/rpc_client_test.go: `.Context()`
 $DIR/pkg/client/rpc_client_test.go: `.NewInt(10)`
 $DIR/pkg/client/rpc_client_test.go: `.New(chainID)`
+$DIR/pkg/client/rpc_client_test.go: `.Marshal(&types.Receipt{
+			Logs: []*types.Log{},
+		})`
+$DIR/pkg/client/rpc_client_test.go: `.NewHTTPServer(t, testutils.FixtureChainID, func(method string, params gjson.Result) (resp testutils.JSONRPCResponse) {
+			switch method {
+			case "eth_getTransactionReceipt":
+				resp.Result = string(receiptsAsJSON)
+			default:
+				require.Fail(t, "unexpected method: "+method)
+			}
+			return
+		})`
+$DIR/pkg/client/rpc_client_test.go: `.URL()`
+$DIR/pkg/client/rpc_client_test.go: `.NewDialedTestRPCClient(t, client.RPCClientOpts{HTTP: httpURL, ExternalRequestMaxResponseSize: responseSize - 1})`
+$DIR/pkg/client/rpc_client_test.go: `.TransactionReceiptGethWithOpts(t.Context(), common.Hash{}, evmtypes.TransactionReceiptOpts{IsExternalRequest: false})`
+$DIR/pkg/client/rpc_client_test.go: `.Context()`
+$DIR/pkg/client/rpc_client_test.go: `.TransactionReceiptGethWithOpts(t.Context(), common.Hash{}, evmtypes.TransactionReceiptOpts{IsExternalRequest: true})`
+$DIR/pkg/client/rpc_client_test.go: `.Context()`
+$DIR/pkg/client/rpc_client_test.go: `.NewTx(&types.DynamicFeeTx{})`
+$DIR/pkg/client/rpc_client_test.go: `.Marshal(tx)`
+$DIR/pkg/client/rpc_client_test.go: `.NewHTTPServer(t, testutils.FixtureChainID, func(method string, params gjson.Result) (resp testutils.JSONRPCResponse) {
+			switch method {
+			case "eth_getTransactionByHash":
+				resp.Result = string(txAsJSON)
+			default:
+				require.Fail(t, "unexpected method: "+method)
+			}
+			return
+		})`
+$DIR/pkg/client/rpc_client_test.go: `.URL()`
+$DIR/pkg/client/rpc_client_test.go: `.NewDialedTestRPCClient(t, client.RPCClientOpts{HTTP: httpURL, ExternalRequestMaxResponseSize: responseSize - 1})`
+$DIR/pkg/client/rpc_client_test.go: `.TransactionByHashWithOpts(t.Context(), common.Hash{}, evmtypes.TransactionByHashOpts{IsExternalRequest: false})`
+$DIR/pkg/client/rpc_client_test.go: `.Context()`
+$DIR/pkg/client/rpc_client_test.go: `.TransactionByHashWithOpts(t.Context(), common.Hash{}, evmtypes.TransactionByHashOpts{IsExternalRequest: true})`
+$DIR/pkg/client/rpc_client_test.go: `.Context()`
 $DIR/pkg/client/sub_forwarder_test.go: `head.EVMChainID = ubig.New(chainID)`
 $DIR/pkg/client/sub_forwarder_test.go: `t.Run("unsubscribe forwarder", func(t *testing.T) {
 		t.Parallel()
@@ -22149,7 +21920,7 @@ $DIR/pkg/logpoller/log_poller_internal_test.go: `mockBatchCallContext(t, ec)`
 $DIR/pkg/logpoller/log_poller_internal_test.go: `lp.PollAndSaveLogs(t.Context(), 4)`
 $DIR/pkg/logpoller/log_poller_internal_test.go: `.HexToAddress("0x2ab9a2dc53736b361b72d900cdf9f78f9406fbbb")`
 $DIR/pkg/logpoller/log_poller_internal_test.go: `.HexToAddress("0x2ab9a2dc53736b361b72d900cdf9f78f9406fbbc")`
-$DIR/pkg/logpoller/log_poller_internal_test.go: `.TestObserved(t, zapcore.WarnLevel)`
+$DIR/pkg/logpoller/log_poller_internal_test.go: `.TestObserved(t, zapcore.InfoLevel)`
 $DIR/pkg/logpoller/log_poller_internal_test.go: `.NewRandomEVMChainID()`
 $DIR/pkg/logpoller/log_poller_internal_test.go: `.NewSqlxDB(t)`
 $DIR/pkg/logpoller/log_poller_internal_test.go: `.Context(t)`
@@ -22994,9 +22765,11 @@ $DIR/pkg/logpoller/log_poller_test.go: `th.Backend.Commit()`
 $DIR/pkg/logpoller/log_poller_test.go: `th.finalizeThroughBlock(t, firstBatchBlock)`
 $DIR/pkg/logpoller/log_poller_test.go: `th.Backend.Commit()`
 $DIR/pkg/logpoller/log_poller_test.go: `th.finalizeThroughBlock(t, secondBatchBlock)`
+$DIR/pkg/logpoller/log_poller_test.go: `th.AdjustTime(t, delay1)`
 $DIR/pkg/logpoller/log_poller_test.go: `blk, err = th.Client.BlockByNumber(ctx, nil)`
 $DIR/pkg/logpoller/log_poller_test.go: `_, err = th.Emitter1.EmitLog1(th.Owner, []*big.Int{big.NewInt(1)})`
 $DIR/pkg/logpoller/log_poller_test.go: `blk, err = th.Client.BlockByHash(ctx, hash)`
+$DIR/pkg/logpoller/log_poller_test.go: `th.AdjustTime(t, delay2)`
 $DIR/pkg/logpoller/log_poller_test.go: `_, err = th.Emitter2.EmitLog2(th.Owner, []*big.Int{big.NewInt(2)})`
 $DIR/pkg/logpoller/log_poller_test.go: `th.Client.Commit()`
 $DIR/pkg/logpoller/log_poller_test.go: `blk, err = th.Client.BlockByNumber(ctx, nil)`
@@ -23323,7 +23096,7 @@ $DIR/pkg/logpoller/log_poller_test.go: `t.Run(tt.name, func(t *testing.T) {
 			require.NoError(t, err)
 			require.Equal(t, uint64(35), b.NumberU64())
 			blockTimestamp := b.Time()
-			require.NoError(t, th.Backend.AdjustTime(time.Hour))
+			th.AdjustTime(t, time.Hour)
 			th.Backend.Commit()
 
 			b, err = th.Client.BlockByNumber(testutils.Context(t), nil)
@@ -23379,6 +23152,7 @@ $DIR/pkg/logpoller/log_poller_test.go: `th.assertHaveCanonical(t, 32, 36)`
 $DIR/pkg/logpoller/log_poller_test.go: `th.assertDontHave(t, 11, 13)`
 $DIR/pkg/logpoller/log_poller_test.go: `th.assertDontHave(t, 14, 16)`
 $DIR/pkg/logpoller/log_poller_test.go: `b, err = th.Client.BlockByNumber(testutils.Context(t), nil)`
+$DIR/pkg/logpoller/log_poller_test.go: `th.AdjustTime(t, time.Hour)`
 $DIR/pkg/logpoller/log_poller_test.go: `th.Backend.Commit()`
 $DIR/pkg/logpoller/log_poller_test.go: `b, err = th.Client.BlockByNumber(testutils.Context(t), nil)`
 $DIR/pkg/logpoller/log_poller_test.go: `t.Run(tt.name, func(t *testing.T) {
@@ -24261,11 +24035,13 @@ $DIR/pkg/logpoller/log_poller_test.go: `.Context(t)`
 $DIR/pkg/logpoller/log_poller_test.go: `.LogPoller.RegisterFilter(ctx, logpoller.Filter{Name: "convertLogs", EventSigs: events, Addresses: addresses})`
 $DIR/pkg/logpoller/log_poller_test.go: `.Client.BlockByNumber(ctx, nil)`
 $DIR/pkg/logpoller/log_poller_test.go: `.Time()`
+$DIR/pkg/logpoller/log_poller_test.go: `.AdjustTime(t, delay1)`
 $DIR/pkg/logpoller/log_poller_test.go: `.Client.BlockByNumber(ctx, nil)`
 $DIR/pkg/logpoller/log_poller_test.go: `.Emitter1.EmitLog1(th.Owner, []*big.Int{big.NewInt(1)})`
 $DIR/pkg/logpoller/log_poller_test.go: `.NewInt(1)`
 $DIR/pkg/logpoller/log_poller_test.go: `.Backend.Commit()`
 $DIR/pkg/logpoller/log_poller_test.go: `.Client.BlockByHash(ctx, hash)`
+$DIR/pkg/logpoller/log_poller_test.go: `.AdjustTime(t, delay2)`
 $DIR/pkg/logpoller/log_poller_test.go: `.Emitter2.EmitLog2(th.Owner, []*big.Int{big.NewInt(2)})`
 $DIR/pkg/logpoller/log_poller_test.go: `.NewInt(2)`
 $DIR/pkg/logpoller/log_poller_test.go: `.Client.Commit()`
@@ -24742,7 +24518,7 @@ $DIR/pkg/logpoller/log_poller_test.go: `.Run(tt.name, func(t *testing.T) {
 			require.NoError(t, err)
 			require.Equal(t, uint64(35), b.NumberU64())
 			blockTimestamp := b.Time()
-			require.NoError(t, th.Backend.AdjustTime(time.Hour))
+			th.AdjustTime(t, time.Hour)
 			th.Backend.Commit()
 
 			b, err = th.Client.BlockByNumber(testutils.Context(t), nil)
@@ -24847,6 +24623,7 @@ $DIR/pkg/logpoller/log_poller_test.go: `.assertDontHave(t, 14, 16)`
 $DIR/pkg/logpoller/log_poller_test.go: `.Client.BlockByNumber(testutils.Context(t), nil)`
 $DIR/pkg/logpoller/log_poller_test.go: `.Context(t)`
 $DIR/pkg/logpoller/log_poller_test.go: `.Time()`
+$DIR/pkg/logpoller/log_poller_test.go: `.AdjustTime(t, time.Hour)`
 $DIR/pkg/logpoller/log_poller_test.go: `.Backend.Commit()`
 $DIR/pkg/logpoller/log_poller_test.go: `.Client.BlockByNumber(testutils.Context(t), nil)`
 $DIR/pkg/logpoller/log_poller_test.go: `.Context(t)`
