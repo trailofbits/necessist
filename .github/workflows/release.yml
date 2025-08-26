@@ -8,20 +8,33 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     steps:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0
           ssh-key: ${{ secrets.SSH_KEY }}
 
+      # smoelius: Why is this step commented out?
       # - name: Check CHANGELOG.md
       #   run: ./scripts/check_CHANGELOG.sh "${{ github.ref }}"
 
-      - name: Login
-        run: echo ${{ secrets.CRATES_IO_TOKEN }} | cargo login
-
       - name: Publish
-        run: ./scripts/publish.sh
+        run: |
+          # smoelius: Publishing in this order ensures that all dependencies are met.
+          for X in core backends necessist; do
+            # smoelius: Continue if a previous publish attempt failed.
+            TMP="$(mktemp)"
+            cargo publish --manifest-path "$X"/Cargo.toml 2>"$TMP" || (
+              cat "$TMP" |
+              tee /dev/stderr |
+              tail -n 1 |
+              grep '^.*: crate [^`]* already exists on crates.io index$'
+            )
+          done
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ steps.auth.outputs.token }}
 
       - name: Update release branch
         run: git push origin ${{ github.ref }}:release
