@@ -6,7 +6,7 @@ runs:
     - name: Install Agave
       if: ${{ runner.os != 'Windows' }}
       run: |
-        sh -c "$(curl -sSfL https://release.anza.xyz/v1.18.18/install)"
+        sh -c "$(curl -sSfL https://release.anza.xyz/v3.0.0/install)"
         echo "$HOME/.local/share/solana/install/active_release/bin" >> "$GITHUB_PATH"
       shell: bash
 
