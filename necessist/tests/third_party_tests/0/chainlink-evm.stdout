@@ -5933,7 +5933,6 @@ $DIR/pkg/config/toml/config_test.go: `.NewEIP55Address("0x2a3e23c6f242F534532081
 $DIR/pkg/config/toml/config_test.go: `.Run("complete", func(t *testing.T) {
 		configtest.AssertDocsTOMLComplete[EVMConfig](t, docsTOML)
 	})`
-$DIR/pkg/config/toml/config_test.go: `.AssertDocsTOMLComplete[EVMConfig](t, docsTOML)`
 $DIR/pkg/config/toml/config_test.go: `.SetFrom(&fullConfig)`
 $DIR/pkg/forwarders/forwarder_manager_test.go: `t.Cleanup(func() { b.Close() })`
 $DIR/pkg/forwarders/forwarder_manager_test.go: `b.Commit()`

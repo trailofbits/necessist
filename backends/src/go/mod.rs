@@ -32,7 +32,9 @@ use visitor::{collect_local_functions, visit};
 const BLOCK_STATEMENTS_SOURCE: &str = r#"
 (block
     "{"
-    (_statement) @statement
+    (statement_list
+        (_statement) @statement
+    ) @statement_list
     "}"
 ) @block
 "#;
@@ -300,7 +302,7 @@ impl ParseLow for Go {
             |captures| {
                 let mut statements = Vec::new();
                 while let Some(captures) = captures.next() {
-                    assert_eq!(2, captures.len());
+                    assert_eq!(3, captures.len());
                     statements.push(Statement(NodeWithText {
                         text: storage.borrow().text,
                         node: captures[0].node,
