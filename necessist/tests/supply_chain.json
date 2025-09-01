@@ -1026,6 +1026,14 @@
         "name": "Josh Stone"
       }
     ],
+    "erased-serde": [
+      {
+        "id": 3618,
+        "kind": "user",
+        "login": "dtolnay",
+        "name": "David Tolnay"
+      }
+    ],
     "errno": [
       {
         "id": 684,
@@ -1052,6 +1060,20 @@
         "kind": "user",
         "login": "taiki-e",
         "name": "Taiki Endo"
+      }
+    ],
+    "find-msvc-tools": [
+      {
+        "id": 11,
+        "kind": "team",
+        "login": "github:rust-lang:libs",
+        "name": "libs"
+      },
+      {
+        "id": 55123,
+        "kind": "user",
+        "login": "rust-lang-owner",
+        "name": null
       }
     ],
     "fixedbitset": [
@@ -1288,41 +1310,7 @@
         "name": "Shane F. Carr"
       }
     ],
-    "icu_locid": [
-      {
-        "id": 3807,
-        "kind": "team",
-        "login": "github:unicode-org:icu4x-release",
-        "name": "icu4x-release"
-      },
-      {
-        "id": 9648,
-        "kind": "user",
-        "login": "zbraniecki",
-        "name": "Zibi Braniecki"
-      }
-    ],
-    "icu_locid_transform": [
-      {
-        "id": 1139,
-        "kind": "user",
-        "login": "Manishearth",
-        "name": "Manish Goregaokar"
-      },
-      {
-        "id": 3807,
-        "kind": "team",
-        "login": "github:unicode-org:icu4x-release",
-        "name": "icu4x-release"
-      },
-      {
-        "id": 128408,
-        "kind": "user",
-        "login": "sffc",
-        "name": "Shane F. Carr"
-      }
-    ],
-    "icu_locid_transform_data": [
+    "icu_locale_core": [
       {
         "id": 3807,
         "kind": "team",
@@ -1410,26 +1398,6 @@
         "kind": "user",
         "login": "zbraniecki",
         "name": "Zibi Braniecki"
-      }
-    ],
-    "icu_provider_macros": [
-      {
-        "id": 1139,
-        "kind": "user",
-        "login": "Manishearth",
-        "name": "Manish Goregaokar"
-      },
-      {
-        "id": 3807,
-        "kind": "team",
-        "login": "github:unicode-org:icu4x-release",
-        "name": "icu4x-release"
-      },
-      {
-        "id": 128408,
-        "kind": "user",
-        "login": "sffc",
-        "name": "Shane F. Carr"
       }
     ],
     "ident_case": [
@@ -1968,6 +1936,14 @@
         "name": "Michal 'vorner' Vaner"
       }
     ],
+    "once_cell_polyfill": [
+      {
+        "id": 6743,
+        "kind": "user",
+        "login": "epage",
+        "name": "Ed Page"
+      }
+    ],
     "openssl-probe": [
       {
         "id": 1,
@@ -2208,6 +2184,26 @@
         "kind": "user",
         "login": "taiki-e",
         "name": "Taiki Endo"
+      }
+    ],
+    "potential_utf": [
+      {
+        "id": 1139,
+        "kind": "user",
+        "login": "Manishearth",
+        "name": "Manish Goregaokar"
+      },
+      {
+        "id": 3807,
+        "kind": "team",
+        "login": "github:unicode-org:icu4x-release",
+        "name": "icu4x-release"
+      },
+      {
+        "id": 128408,
+        "kind": "user",
+        "login": "sffc",
+        "name": "Shane F. Carr"
       }
     ],
     "powerfmt": [
@@ -3456,6 +3452,14 @@
         "name": "Manish Goregaokar"
       }
     ],
+    "typeid": [
+      {
+        "id": 3618,
+        "kind": "user",
+        "login": "dtolnay",
+        "name": "David Tolnay"
+      }
+    ],
     "typenum": [
       {
         "id": 243,
@@ -3626,14 +3630,6 @@
         "kind": "team",
         "login": "github:servo:rust-url",
         "name": "rust-url"
-      }
-    ],
-    "utf16_iter": [
-      {
-        "id": 4484,
-        "kind": "user",
-        "login": "hsivonen",
-        "name": "Henri Sivonen"
       }
     ],
     "utf8_iter": [
@@ -3880,6 +3876,14 @@
         "name": "Peter Atashian"
       }
     ],
+    "windows-link": [
+      {
+        "id": 64539,
+        "kind": "user",
+        "login": "kennykerr",
+        "name": "Kenny Kerr"
+      }
+    ],
     "windows-sys": [
       {
         "id": 64539,
@@ -3968,20 +3972,12 @@
         "name": "Ed Page"
       }
     ],
-    "wit-bindgen-rt": [
+    "wit-bindgen": [
       {
         "id": 73222,
         "kind": "user",
         "login": "wasmtime-publish",
         "name": null
-      }
-    ],
-    "write16": [
-      {
-        "id": 4484,
-        "kind": "user",
-        "login": "hsivonen",
-        "name": "Henri Sivonen"
       }
     ],
     "writeable": [
@@ -4074,6 +4070,20 @@
         "kind": "team",
         "login": "github:unicode-org:icu4x-release",
         "name": "icu4x-release"
+      }
+    ],
+    "zerotrie": [
+      {
+        "id": 3807,
+        "kind": "team",
+        "login": "github:unicode-org:icu4x-release",
+        "name": "icu4x-release"
+      },
+      {
+        "id": 128408,
+        "kind": "user",
+        "login": "sffc",
+        "name": "Shane F. Carr"
       }
     ],
     "zerovec": [
