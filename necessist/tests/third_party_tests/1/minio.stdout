@@ -1885,7 +1885,6 @@ $DIR/cmd/data-usage_test.go: `err = got.deserialize(&buf)`
 $DIR/cmd/data-usage_test.go: `.TempDir()`
 $DIR/cmd/data-usage_test.go: `.Stat(item.Path)`
 $DIR/cmd/data-usage_test.go: `.Size()`
-$DIR/cmd/data-usage_test.go: `.New[DiskInfo]()`
 $DIR/cmd/data-usage_test.go: `.diskInfoCache.InitOnce(time.Second, cachevalue.Opts{}, func(ctx context.Context) (DiskInfo, error) {
 		return DiskInfo{Total: 1 << 40, Free: 1 << 40}, nil
 	})`
@@ -1957,7 +1956,6 @@ $DIR/cmd/data-usage_test.go: `.TempDir()`
 $DIR/cmd/data-usage_test.go: `.Update(0, 0)`
 $DIR/cmd/data-usage_test.go: `.Stat(item.Path)`
 $DIR/cmd/data-usage_test.go: `.Size()`
-$DIR/cmd/data-usage_test.go: `.New[DiskInfo]()`
 $DIR/cmd/data-usage_test.go: `.diskInfoCache.InitOnce(time.Second, cachevalue.Opts{}, func(ctx context.Context) (DiskInfo, error) {
 		return DiskInfo{Total: 1 << 40, Free: 1 << 40}, nil
 	})`
@@ -2033,7 +2031,6 @@ $DIR/cmd/data-usage_test.go: `.root()`
 $DIR/cmd/data-usage_test.go: `.TempDir()`
 $DIR/cmd/data-usage_test.go: `.Stat(item.Path)`
 $DIR/cmd/data-usage_test.go: `.Size()`
-$DIR/cmd/data-usage_test.go: `.New[DiskInfo]()`
 $DIR/cmd/data-usage_test.go: `.diskInfoCache.InitOnce(time.Second, cachevalue.Opts{}, func(ctx context.Context) (DiskInfo, error) {
 		return DiskInfo{Total: 1 << 40, Free: 1 << 40}, nil
 	})`
