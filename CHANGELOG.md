@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.1.2
+
+- Upgrade dependencies, including:
+  - `indicatif` to version 0.18 ([#1595](https://github.com/trailofbits/necessist/pull/1595))
+  - `libsqlite3-sys` to version 0.35 ([#1610](https://github.com/trailofbits/necessist/pull/1610))
+  - `solang-parser` to version 0.3.5 ([#1587](https://github.com/trailofbits/necessist/pull/1587))
+  - `swc_core` to version 38 ([#1659](https://github.com/trailofbits/necessist/pull/1659))
+  - `toml` to version 0.9 ([#1617](https://github.com/trailofbits/necessist/pull/1617))
+  - `toml_edit` to version 0.23 ([#1609](https://github.com/trailofbits/necessist/pull/1609))
+  - `tree-sitter-go` to version 0.25 ([#1660](https://github.com/trailofbits/necessist/pull/1660))
+  - `windows-sys` to version 0.60 ([#1580](https://github.com/trailofbits/necessist/pull/1580))
+- Add "Running" section to README.md ([#1638](https://github.com/trailofbits/necessist/pull/1638))&mdash;thanks [@fcasal](https://github.com/fcasal) for the suggestion
+- Eliminate use of `if_chain` ([#1645](https://github.com/trailofbits/necessist/pull/1645))
+
 ## 2.1.1
 
 - Fix typo in "Configuration files" section of README.md ([#1538](https://github.com/trailofbits/necessist/pull/1538))&mdash;thanks [@jasonpetro](https://github.com/jasonpetro)
