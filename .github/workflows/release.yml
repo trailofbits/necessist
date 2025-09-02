@@ -16,9 +16,8 @@ jobs:
           fetch-depth: 0
           ssh-key: ${{ secrets.SSH_KEY }}
 
-      # smoelius: Why is this step commented out?
-      # - name: Check CHANGELOG.md
-      #   run: ./scripts/check_CHANGELOG.sh "${{ github.ref }}"
+      - uses: rust-lang/crates-io-auth-action@v1
+        id: auth
 
       - name: Publish
         run: |
