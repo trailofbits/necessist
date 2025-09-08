@@ -46,17 +46,12 @@ static INVALID: Expr = Expr::Invalid(Invalid {
     },
 });
 
-#[derive(Debug, Eq, PartialEq)]
+#[derive(Debug, Default, Eq, PartialEq)]
 enum ItMessageState {
+    #[default]
     NotFound,
     Found,
     WarningEmitted,
-}
-
-impl Default for ItMessageState {
-    fn default() -> Self {
-        Self::NotFound
-    }
 }
 
 #[allow(clippy::type_complexity)]
