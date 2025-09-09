@@ -2128,7 +2128,6 @@ $DIR/cmd/encryption-v1_test.go: `o = cumulativeEncSum + int64(sn)*(pkgSz+32)`
 $DIR/cmd/encryption-v1_test.go: `partDarePkgOffset = partOffset - skip`
 $DIR/cmd/encryption-v1_test.go: `toRead -= currentPartBytes`
 $DIR/cmd/encryption-v1_test.go: `l += getEncSize(currentPartDareBytes)`
-$DIR/cmd/encryption-v1_test.go: `lbPkgEndOffset = v`
 $DIR/cmd/encryption-v1_test.go: `l += getEncSize(currentPartDareBytes - bytesToDrop)`
 $DIR/cmd/encryption-v1_test.go: `cumulativeSum += v`
 $DIR/cmd/encryption-v1_test.go: `cumulativeEncSum += getEncSize(v)`
@@ -3984,7 +3983,7 @@ $DIR/cmd/erasure-metadata-utils_test.go: `t.Run(fmt.Sprintf("%d", x), func(t *te
 			var tmp [16]byte
 			rng.Read(tmp[:])
 			prefix := hex.EncodeToString(tmp[:])
-			for i := 0; i < 10000; i++ {
+			for range 10000 {
 				rng.Read(tmp[:])
 
 				y := hashOrder(fmt.Sprintf("%s/%x", prefix, hex.EncodeToString(tmp[:3])), x)
@@ -4008,7 +4007,7 @@ $DIR/cmd/erasure-metadata-utils_test.go: `.Run(fmt.Sprintf("%d", x), func(t *tes
 			var tmp [16]byte
 			rng.Read(tmp[:])
 			prefix := hex.EncodeToString(tmp[:])
-			for i := 0; i < 10000; i++ {
+			for range 10000 {
 				rng.Read(tmp[:])
 
 				y := hashOrder(fmt.Sprintf("%s/%x", prefix, hex.EncodeToString(tmp[:3])), x)
@@ -5148,12 +5147,12 @@ $DIR/cmd/local-locker_test.go: `t.Run(fmt.Sprintf("%d-locks", locks), func(t *te
 				}
 				t.Run(fmt.Sprintf("%d-read", readers), func(t *testing.T) {
 					l := newLocker()
-					for i := 0; i < locks; i++ {
+					for range locks {
 						var tmp [16]byte
 						rng.Read(tmp[:])
 						res := []string{hex.EncodeToString(tmp[:])}
 
-						for i := 0; i < readers; i++ {
+						for range readers {
 							rng.Read(tmp[:])
 							ok, err := l.RLock(t.Context(), dsync.LockArgs{
 								UID:       uuid.NewString(),
@@ -5215,12 +5214,12 @@ $DIR/cmd/local-locker_test.go: `t.Run(fmt.Sprintf("%d-locks", locks), func(t *te
 		})`
 $DIR/cmd/local-locker_test.go: `t.Run(fmt.Sprintf("%d-read", readers), func(t *testing.T) {
 					l := newLocker()
-					for i := 0; i < locks; i++ {
+					for range locks {
 						var tmp [16]byte
 						rng.Read(tmp[:])
 						res := []string{hex.EncodeToString(tmp[:])}
 
-						for i := 0; i < readers; i++ {
+						for range readers {
 							rng.Read(tmp[:])
 							ok, err := l.RLock(t.Context(), dsync.LockArgs{
 								UID:       uuid.NewString(),
@@ -5297,12 +5296,12 @@ $DIR/cmd/local-locker_test.go: `t.Run(fmt.Sprintf("%d-locks", locks), func(t *te
 				}
 				t.Run(fmt.Sprintf("%d-read", readers), func(t *testing.T) {
 					l := newLocker()
-					for i := 0; i < locks; i++ {
+					for range locks {
 						var tmp [16]byte
 						rng.Read(tmp[:])
 						res := []string{hex.EncodeToString(tmp[:])}
 
-						for i := 0; i < readers; i++ {
+						for range readers {
 							rng.Read(tmp[:])
 							ok, err := l.RLock(t.Context(), dsync.LockArgs{
 								UID:       uuid.NewString(),
@@ -5371,12 +5370,12 @@ $DIR/cmd/local-locker_test.go: `t.Run(fmt.Sprintf("%d-locks", locks), func(t *te
 		})`
 $DIR/cmd/local-locker_test.go: `t.Run(fmt.Sprintf("%d-read", readers), func(t *testing.T) {
 					l := newLocker()
-					for i := 0; i < locks; i++ {
+					for range locks {
 						var tmp [16]byte
 						rng.Read(tmp[:])
 						res := []string{hex.EncodeToString(tmp[:])}
 
-						for i := 0; i < readers; i++ {
+						for range readers {
 							rng.Read(tmp[:])
 							ok, err := l.RLock(t.Context(), dsync.LockArgs{
 								UID:       uuid.NewString(),
@@ -5479,12 +5478,12 @@ $DIR/cmd/local-locker_test.go: `.Run(fmt.Sprintf("%d-locks", locks), func(t *tes
 				}
 				t.Run(fmt.Sprintf("%d-read", readers), func(t *testing.T) {
 					l := newLocker()
-					for i := 0; i < locks; i++ {
+					for range locks {
 						var tmp [16]byte
 						rng.Read(tmp[:])
 						res := []string{hex.EncodeToString(tmp[:])}
 
-						for i := 0; i < readers; i++ {
+						for range readers {
 							rng.Read(tmp[:])
 							ok, err := l.RLock(t.Context(), dsync.LockArgs{
 								UID:       uuid.NewString(),
@@ -5548,12 +5547,12 @@ $DIR/cmd/local-locker_test.go: `.Sprintf("%d-locks", locks)`
 $DIR/cmd/local-locker_test.go: `.Short()`
 $DIR/cmd/local-locker_test.go: `.Run(fmt.Sprintf("%d-read", readers), func(t *testing.T) {
 					l := newLocker()
-					for i := 0; i < locks; i++ {
+					for range locks {
 						var tmp [16]byte
 						rng.Read(tmp[:])
 						res := []string{hex.EncodeToString(tmp[:])}
 
-						for i := 0; i < readers; i++ {
+						for range readers {
 							rng.Read(tmp[:])
 							ok, err := l.RLock(t.Context(), dsync.LockArgs{
 								UID:       uuid.NewString(),
@@ -5650,12 +5649,12 @@ $DIR/cmd/local-locker_test.go: `.Run(fmt.Sprintf("%d-locks", locks), func(t *tes
 				}
 				t.Run(fmt.Sprintf("%d-read", readers), func(t *testing.T) {
 					l := newLocker()
-					for i := 0; i < locks; i++ {
+					for range locks {
 						var tmp [16]byte
 						rng.Read(tmp[:])
 						res := []string{hex.EncodeToString(tmp[:])}
 
-						for i := 0; i < readers; i++ {
+						for range readers {
 							rng.Read(tmp[:])
 							ok, err := l.RLock(t.Context(), dsync.LockArgs{
 								UID:       uuid.NewString(),
@@ -5726,12 +5725,12 @@ $DIR/cmd/local-locker_test.go: `.Sprintf("%d-locks", locks)`
 $DIR/cmd/local-locker_test.go: `.Short()`
 $DIR/cmd/local-locker_test.go: `.Run(fmt.Sprintf("%d-read", readers), func(t *testing.T) {
 					l := newLocker()
-					for i := 0; i < locks; i++ {
+					for range locks {
 						var tmp [16]byte
 						rng.Read(tmp[:])
 						res := []string{hex.EncodeToString(tmp[:])}
 
-						for i := 0; i < readers; i++ {
+						for range readers {
 							rng.Read(tmp[:])
 							ok, err := l.RLock(t.Context(), dsync.LockArgs{
 								UID:       uuid.NewString(),
@@ -8089,8 +8088,8 @@ $DIR/cmd/storage-rest-common_gen_test.go: `.Encode(&buf, &v)`
 $DIR/cmd/streaming-signature-v4_test.go: `tests = append(tests, testCase{in: fmt.Sprintf("%x", i), want: i})`
 $DIR/cmd/streaming-signature-v4_test.go: `.NewReader([]byte("1000;chunk-signature=111123333333333333334444211\r\n"))`
 $DIR/cmd/streaming-signature-v4_test.go: `.NewReader([]byte("1000;"))`
-$DIR/cmd/streaming-signature-v4_test.go: `.NewReader([]byte(fmt.Sprintf("%4097d", 1)))`
-$DIR/cmd/streaming-signature-v4_test.go: `.Sprintf("%4097d", 1)`
+$DIR/cmd/streaming-signature-v4_test.go: `.NewReader(fmt.Appendf(nil, "%4097d", 1))`
+$DIR/cmd/streaming-signature-v4_test.go: `.Appendf(nil, "%4097d", 1)`
 $DIR/cmd/streaming-signature-v4_test.go: `.NewReader([]byte("1000;chunk-signature=111123333333333333334444211\r\n"))`
 $DIR/cmd/streaming-signature-v4_test.go: `.NewReaderSize(readers[0], 16)`
 $DIR/cmd/streaming-signature-v4_test.go: `.NewReader(readers[1])`
@@ -8943,7 +8942,7 @@ $DIR/cmd/xl-storage-format-utils_test.go: `t.Run(tt.name, func(t *testing.T) {
 			const n = 100
 			want := hashDeterministicString(tt.arg)
 			m := tt.arg
-			for i := 0; i < n; i++ {
+			for range n {
 				if got := hashDeterministicString(m); got != want {
 					t.Errorf("hashDeterministicString() = %v, want %v", got, want)
 				}
@@ -9024,7 +9023,7 @@ $DIR/cmd/xl-storage-format-utils_test.go: `.Run(tt.name, func(t *testing.T) {
 			const n = 100
 			want := hashDeterministicString(tt.arg)
 			m := tt.arg
-			for i := 0; i < n; i++ {
+			for range n {
 				if got := hashDeterministicString(m); got != want {
 					t.Errorf("hashDeterministicString() = %v, want %v", got, want)
 				}
@@ -9591,7 +9590,7 @@ $DIR/cmd/xl-storage-format-v2_test.go: `vDelMarker.meta, _ = base64.StdEncoding.
 $DIR/cmd/xl-storage-format-v2_test.go: `vObj.meta, _ = base64.StdEncoding.DecodeString("gqRUeXBlAaVWMk9iat4AEaJJRMQQEkaOteYCSrWB3nqppSIKTqRERGlyxBAO8fXSJ5RI+YEtsp8KneVVpkVjQWxnbwGjRWNNDKNFY04Ep0VjQlNpemXSABAAAKdFY0luZGV4BaZFY0Rpc3TcABAFBgcICQoLDA0ODxABAgMEqENTdW1BbGdvAahQYXJ0TnVtc5EBqVBhcnRFVGFnc8CpUGFydFNpemVzkdEBL6pQYXJ0QVNpemVzkdEBL6RTaXpl0QEvpU1UaW1l0xbgJhIa6ABvp01ldGFTeXOBvHgtbWluaW8taW50ZXJuYWwtaW5saW5lLWRhdGHEBHRydWWnTWV0YVVzcoKsY29udGVudC10eXBluGFwcGxpY2F0aW9uL29jdGV0LXN0cmVhbaRldGFn2SBlYTIxMDE2MmVlYjRhZGMzMWZmOTg0Y2I3NDRkNmFmNg==")`
 $DIR/cmd/xl-storage-format-v2_test.go: `t.Run(test.name, func(t *testing.T) {
 			// Run multiple times, shuffling the input order.
-			for i := int64(0); i < 50; i++ {
+			for i := range int64(50) {
 				t.Run(fmt.Sprint(i), func(t *testing.T) {
 					rng := rand.New(rand.NewSource(i))
 					rng.Shuffle(len(test.input), func(i, j int) {
@@ -10018,7 +10017,7 @@ $DIR/cmd/xl-storage-format-v2_test.go: `.StdEncoding.DecodeString("gqRUeXBlAqZEZ
 $DIR/cmd/xl-storage-format-v2_test.go: `.StdEncoding.DecodeString("gqRUeXBlAaVWMk9iat4AEaJJRMQQEkaOteYCSrWB3nqppSIKTqRERGlyxBAO8fXSJ5RI+YEtsp8KneVVpkVjQWxnbwGjRWNNDKNFY04Ep0VjQlNpemXSABAAAKdFY0luZGV4BaZFY0Rpc3TcABAFBgcICQoLDA0ODxABAgMEqENTdW1BbGdvAahQYXJ0TnVtc5EBqVBhcnRFVGFnc8CpUGFydFNpemVzkdEBL6pQYXJ0QVNpemVzkdEBL6RTaXpl0QEvpU1UaW1l0xbgJhIa6ABvp01ldGFTeXOBvHgtbWluaW8taW50ZXJuYWwtaW5saW5lLWRhdGHEBHRydWWnTWV0YVVzcoKsY29udGVudC10eXBluGFwcGxpY2F0aW9uL29jdGV0LXN0cmVhbaRldGFn2SBlYTIxMDE2MmVlYjRhZGMzMWZmOTg0Y2I3NDRkNmFmNg==")`
 $DIR/cmd/xl-storage-format-v2_test.go: `.Run(test.name, func(t *testing.T) {
 			// Run multiple times, shuffling the input order.
-			for i := int64(0); i < 50; i++ {
+			for i := range int64(50) {
 				t.Run(fmt.Sprint(i), func(t *testing.T) {
 					rng := rand.New(rand.NewSource(i))
 					rng.Shuffle(len(test.input), func(i, j int) {
@@ -11991,7 +11990,7 @@ $DIR/internal/config/identity/openid/jwks_test.go: `.Equal(key1.N.Bytes(), []byt
 	})`
 $DIR/internal/config/identity/openid/jwks_test.go: `.N.Bytes()`
 $DIR/internal/config/identity/openid/jwt_test.go: `t.Run("", func(t *testing.T) {
-			claims := map[string]interface{}{}
+			claims := map[string]any{}
 			claims["exp"] = testCase.exp
 			err := updateClaimsExpiry(testCase.dsecs, claims)
 			if err != nil && !testCase.expectedFailure {
@@ -12014,7 +12013,7 @@ $DIR/internal/config/identity/openid/jwt_test.go: `testKvs.Set(KeyCloakAdminURL,
 $DIR/internal/config/identity/openid/jwt_test.go: `.Number("1574812326")`
 $DIR/internal/config/identity/openid/jwt_test.go: `.Duration(3)`
 $DIR/internal/config/identity/openid/jwt_test.go: `.Run("", func(t *testing.T) {
-			claims := map[string]interface{}{}
+			claims := map[string]any{}
 			claims["exp"] = testCase.exp
 			err := updateClaimsExpiry(testCase.dsecs, claims)
 			if err != nil && !testCase.expectedFailure {
@@ -12989,6 +12988,7 @@ $DIR/internal/event/rulesmap_test.go: `.add([]Name{
 $DIR/internal/event/rulesmap_test.go: `.add([]Name{ObjectRemovedDelete}, "2010*.jpg", TargetID{"1", "webhook"})`
 $DIR/internal/event/rulesmap_test.go: `.DeepEqual(result, testCase.expectedResult)`
 $DIR/internal/event/target/mysql_test.go: `found = true`
+$DIR/internal/event/target/mysql_test.go: `.Contains(sql.Drivers(), "mysql")`
 $DIR/internal/event/target/mysql_test.go: `.Drivers()`
 $DIR/internal/event/target/nats_contrib_test.go: `opts.Port = 14222`
 $DIR/internal/event/target/nats_contrib_test.go: `opts.Port = 14223`
@@ -13062,6 +13062,7 @@ $DIR/internal/event/target/nsq_test.go: `.Run(tt.name, func(t *testing.T) {
 		})`
 $DIR/internal/event/target/nsq_test.go: `.Validate()`
 $DIR/internal/event/target/postgresql_test.go: `found = true`
+$DIR/internal/event/target/postgresql_test.go: `.Contains(sql.Drivers(), "postgres")`
 $DIR/internal/event/target/postgresql_test.go: `.Drivers()`
 $DIR/internal/event/targetid_test.go: `.tid.String()`
 $DIR/internal/event/targetid_test.go: `.tid.ToARN(testCase.region)`
@@ -13281,7 +13282,7 @@ $DIR/internal/grid/grid_test.go: `resp, err = h2.Call(t.Context(), remoteConn, &
 $DIR/internal/grid/grid_test.go: `h2.PutResponse(resp)`
 $DIR/internal/grid/grid_test.go: `errFatal(err)`
 $DIR/internal/grid/grid_test.go: `resp = h1.NewResponse()`
-$DIR/internal/grid/grid_test.go: `(*resp)[k] = v`
+$DIR/internal/grid/grid_test.go: `maps.Copy((*resp), *req)`
 $DIR/internal/grid/grid_test.go: `errFatal(h1.Register(local, handler1))`
 $DIR/internal/grid/grid_test.go: `errFatal(h2.Register(local, handler2))`
 $DIR/internal/grid/grid_test.go: `errFatal(h1.Register(remote, handler1))`
@@ -13539,6 +13540,7 @@ $DIR/internal/grid/grid_test.go: `.PutResponse(resp)`
 $DIR/internal/grid/grid_test.go: `.Since(start)`
 $DIR/internal/grid/grid_test.go: `.T.SetLogTB(t)`
 $DIR/internal/grid/grid_test.go: `.NewResponse()`
+$DIR/internal/grid/grid_test.go: `.Copy((*resp), *req)`
 $DIR/internal/grid/grid_test.go: `.Recycle()`
 $DIR/internal/grid/grid_test.go: `.Get("err")`
 $DIR/internal/grid/grid_test.go: `.Register(local, handler1)`
@@ -13746,62 +13748,147 @@ $DIR/internal/handlers/proxy_test.go: `enableXFFHeader = false`
 $DIR/internal/handlers/proxy_test.go: `enableXFFHeader = true`
 $DIR/internal/handlers/proxy_test.go: `res = GetSourceIP(req)`
 $DIR/internal/hash/checksum_test.go: `t.Run(tt.name, func(t *testing.T) {
+			// Skip invalid cases where SHA1 or SHA256 is used with full object
+			if (tt.checksum.Is(ChecksumSHA1) || tt.checksum.Is(ChecksumSHA256)) && tt.fullobj {
+				// Validate that NewChecksumType correctly marks these as invalid
+				alg := tt.checksum.String()
+				typ := NewChecksumType(alg, xhttp.AmzChecksumTypeFullObject)
+				if !typ.Is(ChecksumInvalid) {
+					t.Fatalf("Expected ChecksumInvalid for %s with full object, got %s", tt.name, typ.StringFull())
+				}
+				return
+			}
 			myData := []byte("this-is-a-checksum-data-test")
 			chksm := NewChecksumFromData(tt.checksum, myData)
+			if chksm == nil {
+				t.Fatalf("NewChecksumFromData failed for %s", tt.name)
+			}
 			if tt.fullobj {
 				chksm.Type |= ChecksumFullObject
 			}
 
-			w := httptest.NewRecorder()
-			AddChecksumHeader(w, chksm.AsMap())
-			gotChksm, err := GetContentChecksum(w.Result().Header)
-			if err != nil {
-				t.Fatalf("GetContentChecksum failed: %v", err)
-			}
-
-			// In the CRC64NVM case, it is always full object, so add the flag for easier equality comparison
+			// CRC64NVME is always full object
 			if chksm.Type.Base().Is(ChecksumCRC64NVME) {
 				chksm.Type |= ChecksumFullObject
 			}
+
+			// Prepare the checksum map with appropriate headers
+			m := chksm.AsMap()
+			m[xhttp.AmzChecksumAlgo] = chksm.Type.String() // Set the algorithm explicitly
+			if chksm.Type.FullObjectRequested() {
+				m[xhttp.AmzChecksumType] = xhttp.AmzChecksumTypeFullObject
+			} else {
+				m[xhttp.AmzChecksumType] = xhttp.AmzChecksumTypeComposite
+			}
+
+			w := httptest.NewRecorder()
+			AddChecksumHeader(w, m)
+			gotChksm, err := GetContentChecksum(w.Result().Header)
+			if tt.wantErr {
+				if err == nil {
+					t.Fatalf("Expected error for %s, got none", tt.name)
+				}
+				return
+			}
+			if err != nil {
+				t.Fatalf("GetContentChecksum failed for %s: %v", tt.name, err)
+			}
+
+			if gotChksm == nil {
+				t.Fatalf("Got nil checksum for %s", tt.name)
+			}
+			// Compare the full checksum structs
 			if !chksm.Equal(gotChksm) {
-				t.Fatalf("Checksum mismatch: expected %+v, got %+v", chksm, gotChksm)
+				t.Errorf("Checksum mismatch for %s: expected %+v, got %+v", tt.name, chksm, gotChksm)
+			}
+			// Verify the checksum type
+			expectedType := chksm.Type
+			if gotChksm.Type != expectedType {
+				t.Errorf("Type mismatch for %s: expected %s, got %s", tt.name, expectedType.StringFull(), gotChksm.Type.StringFull())
 			}
 		})`
 $DIR/internal/hash/checksum_test.go: `chksm.Type |= ChecksumFullObject`
-$DIR/internal/hash/checksum_test.go: `AddChecksumHeader(w, chksm.AsMap())`
 $DIR/internal/hash/checksum_test.go: `chksm.Type |= ChecksumFullObject`
+$DIR/internal/hash/checksum_test.go: `m[xhttp.AmzChecksumAlgo] = chksm.Type.String()`
+$DIR/internal/hash/checksum_test.go: `m[xhttp.AmzChecksumType] = xhttp.AmzChecksumTypeFullObject`
+$DIR/internal/hash/checksum_test.go: `m[xhttp.AmzChecksumType] = xhttp.AmzChecksumTypeComposite`
+$DIR/internal/hash/checksum_test.go: `AddChecksumHeader(w, m)`
 $DIR/internal/hash/checksum_test.go: `checksumCombined = append(checksumCombined, part1Checksum.Raw...)`
 $DIR/internal/hash/checksum_test.go: `checksumCombined = append(checksumCombined, part2Checksum.Raw...)`
 $DIR/internal/hash/checksum_test.go: `checksumCombined = append(checksumCombined, part3Checksum.Raw...)`
 $DIR/internal/hash/checksum_test.go: `finalChecksum.WantParts = 3`
 $DIR/internal/hash/checksum_test.go: `serialized = finalChecksum.AppendTo(serialized, checksumCombined)`
 $DIR/internal/hash/checksum_test.go: `.Run(tt.name, func(t *testing.T) {
+			// Skip invalid cases where SHA1 or SHA256 is used with full object
+			if (tt.checksum.Is(ChecksumSHA1) || tt.checksum.Is(ChecksumSHA256)) && tt.fullobj {
+				// Validate that NewChecksumType correctly marks these as invalid
+				alg := tt.checksum.String()
+				typ := NewChecksumType(alg, xhttp.AmzChecksumTypeFullObject)
+				if !typ.Is(ChecksumInvalid) {
+					t.Fatalf("Expected ChecksumInvalid for %s with full object, got %s", tt.name, typ.StringFull())
+				}
+				return
+			}
 			myData := []byte("this-is-a-checksum-data-test")
 			chksm := NewChecksumFromData(tt.checksum, myData)
+			if chksm == nil {
+				t.Fatalf("NewChecksumFromData failed for %s", tt.name)
+			}
 			if tt.fullobj {
 				chksm.Type |= ChecksumFullObject
 			}
 
-			w := httptest.NewRecorder()
-			AddChecksumHeader(w, chksm.AsMap())
-			gotChksm, err := GetContentChecksum(w.Result().Header)
-			if err != nil {
-				t.Fatalf("GetContentChecksum failed: %v", err)
-			}
-
-			// In the CRC64NVM case, it is always full object, so add the flag for easier equality comparison
+			// CRC64NVME is always full object
 			if chksm.Type.Base().Is(ChecksumCRC64NVME) {
 				chksm.Type |= ChecksumFullObject
 			}
+
+			// Prepare the checksum map with appropriate headers
+			m := chksm.AsMap()
+			m[xhttp.AmzChecksumAlgo] = chksm.Type.String() // Set the algorithm explicitly
+			if chksm.Type.FullObjectRequested() {
+				m[xhttp.AmzChecksumType] = xhttp.AmzChecksumTypeFullObject
+			} else {
+				m[xhttp.AmzChecksumType] = xhttp.AmzChecksumTypeComposite
+			}
+
+			w := httptest.NewRecorder()
+			AddChecksumHeader(w, m)
+			gotChksm, err := GetContentChecksum(w.Result().Header)
+			if tt.wantErr {
+				if err == nil {
+					t.Fatalf("Expected error for %s, got none", tt.name)
+				}
+				return
+			}
+			if err != nil {
+				t.Fatalf("GetContentChecksum failed for %s: %v", tt.name, err)
+			}
+
+			if gotChksm == nil {
+				t.Fatalf("Got nil checksum for %s", tt.name)
+			}
+			// Compare the full checksum structs
 			if !chksm.Equal(gotChksm) {
-				t.Fatalf("Checksum mismatch: expected %+v, got %+v", chksm, gotChksm)
+				t.Errorf("Checksum mismatch for %s: expected %+v, got %+v", tt.name, chksm, gotChksm)
+			}
+			// Verify the checksum type
+			expectedType := chksm.Type
+			if gotChksm.Type != expectedType {
+				t.Errorf("Type mismatch for %s: expected %s, got %s", tt.name, expectedType.StringFull(), gotChksm.Type.StringFull())
 			}
 		})`
-$DIR/internal/hash/checksum_test.go: `.NewRecorder()`
-$DIR/internal/hash/checksum_test.go: `.AsMap()`
-$DIR/internal/hash/checksum_test.go: `.Result()`
+$DIR/internal/hash/checksum_test.go: `.checksum.Is(ChecksumSHA1)`
+$DIR/internal/hash/checksum_test.go: `.checksum.Is(ChecksumSHA256)`
+$DIR/internal/hash/checksum_test.go: `.checksum.String()`
+$DIR/internal/hash/checksum_test.go: `.Is(ChecksumInvalid)`
 $DIR/internal/hash/checksum_test.go: `.Type.Base()`
 $DIR/internal/hash/checksum_test.go: `.Is(ChecksumCRC64NVME)`
+$DIR/internal/hash/checksum_test.go: `.AsMap()`
+$DIR/internal/hash/checksum_test.go: `.Type.String()`
+$DIR/internal/hash/checksum_test.go: `.Type.FullObjectRequested()`
+$DIR/internal/hash/checksum_test.go: `.NewRecorder()`
+$DIR/internal/hash/checksum_test.go: `.Result()`
 $DIR/internal/hash/checksum_test.go: `.Equal(gotChksm)`
 $DIR/internal/hash/checksum_test.go: `.AppendTo(nil, nil)`
 $DIR/internal/hash/checksum_test.go: `.Matches(myData, 0)`
@@ -15303,7 +15390,7 @@ $DIR/internal/s3select/select_test.go: `t.Run(testCase.name, func(t *testing.T) 
 			if len(testReq) == 0 {
 				var escaped bytes.Buffer
 				xml.EscapeText(&escaped, []byte(testCase.query))
-				testReq = []byte(fmt.Sprintf(defRequest, escaped.String()))
+				testReq = fmt.Appendf(nil, defRequest, escaped.String())
 			}
 			s3Select, err := NewS3Select(bytes.NewReader(testReq))
 			if err != nil {
@@ -15343,7 +15430,7 @@ $DIR/internal/s3select/select_test.go: `t.Run(testCase.name, func(t *testing.T) 
 		})`
 $DIR/internal/s3select/select_test.go: `cpuid.CPU.Disable(cpuid.AVX2)`
 $DIR/internal/s3select/select_test.go: `xml.EscapeText(&escaped, []byte(testCase.query))`
-$DIR/internal/s3select/select_test.go: `testReq = []byte(fmt.Sprintf(defRequest, escaped.String()))`
+$DIR/internal/s3select/select_test.go: `testReq = fmt.Appendf(nil, defRequest, escaped.String())`
 $DIR/internal/s3select/select_test.go: `in = testCase.withJSON`
 $DIR/internal/s3select/select_test.go: `s3Select.Evaluate(w)`
 $DIR/internal/s3select/select_test.go: `t.Run("simd-"+testCase.name, func(t *testing.T) {
@@ -15354,7 +15441,7 @@ $DIR/internal/s3select/select_test.go: `t.Run("simd-"+testCase.name, func(t *tes
 			if len(testReq) == 0 {
 				var escaped bytes.Buffer
 				xml.EscapeText(&escaped, []byte(testCase.query))
-				testReq = []byte(fmt.Sprintf(defRequest, escaped.String()))
+				testReq = fmt.Appendf(nil, defRequest, escaped.String())
 			}
 			s3Select, err := NewS3Select(bytes.NewReader(testReq))
 			if err != nil {
@@ -15393,13 +15480,13 @@ $DIR/internal/s3select/select_test.go: `t.Run("simd-"+testCase.name, func(t *tes
 			}
 		})`
 $DIR/internal/s3select/select_test.go: `xml.EscapeText(&escaped, []byte(testCase.query))`
-$DIR/internal/s3select/select_test.go: `testReq = []byte(fmt.Sprintf(defRequest, escaped.String()))`
+$DIR/internal/s3select/select_test.go: `testReq = fmt.Appendf(nil, defRequest, escaped.String())`
 $DIR/internal/s3select/select_test.go: `in = testCase.withJSON`
 $DIR/internal/s3select/select_test.go: `s3Select.Evaluate(w)`
 $DIR/internal/s3select/select_test.go: `t.Run(testCase.name, func(t *testing.T) {
 			testReq := testCase.requestXML
 			if len(testReq) == 0 {
-				testReq = []byte(fmt.Sprintf(defRequest, testCase.query))
+				testReq = fmt.Appendf(nil, defRequest, testCase.query)
 			}
 			s3Select, err := NewS3Select(bytes.NewReader(testReq))
 			if err != nil {
@@ -15433,12 +15520,12 @@ $DIR/internal/s3select/select_test.go: `t.Run(testCase.name, func(t *testing.T) 
 				t.Errorf("received response does not match with expected reply. Query: %s\ngot: %s\nwant:%s", testCase.query, gotS, testCase.wantResult)
 			}
 		})`
-$DIR/internal/s3select/select_test.go: `testReq = []byte(fmt.Sprintf(defRequest, testCase.query))`
+$DIR/internal/s3select/select_test.go: `testReq = fmt.Appendf(nil, defRequest, testCase.query)`
 $DIR/internal/s3select/select_test.go: `s3Select.Evaluate(w)`
 $DIR/internal/s3select/select_test.go: `t.Run(testCase.name, func(t *testing.T) {
 			testReq := testCase.requestXML
 			if len(testReq) == 0 {
-				testReq = []byte(fmt.Sprintf(defRequest, testCase.query))
+				testReq = fmt.Appendf(nil, defRequest, testCase.query)
 			}
 			s3Select, err := NewS3Select(bytes.NewReader(testReq))
 			if err != nil {
@@ -15472,12 +15559,12 @@ $DIR/internal/s3select/select_test.go: `t.Run(testCase.name, func(t *testing.T) 
 				t.Errorf("received response does not match with expected reply. Query: %s\ngot: %s\nwant:%s", testCase.query, gotS, testCase.wantResult)
 			}
 		})`
-$DIR/internal/s3select/select_test.go: `testReq = []byte(fmt.Sprintf(defRequest, testCase.query))`
+$DIR/internal/s3select/select_test.go: `testReq = fmt.Appendf(nil, defRequest, testCase.query)`
 $DIR/internal/s3select/select_test.go: `s3Select.Evaluate(w)`
 $DIR/internal/s3select/select_test.go: `t.Run(testCase.name, func(t *testing.T) {
 			testReq := testCase.requestXML
 			if len(testReq) == 0 {
-				testReq = []byte(fmt.Sprintf(defRequest, testCase.query))
+				testReq = fmt.Appendf(nil, defRequest, testCase.query)
 			}
 			s3Select, err := NewS3Select(bytes.NewReader(testReq))
 			if err != nil {
@@ -15511,7 +15598,7 @@ $DIR/internal/s3select/select_test.go: `t.Run(testCase.name, func(t *testing.T) 
 				t.Errorf("received response does not match with expected reply.\nQuery: %s\n=====\ngot: %s\n=====\nwant: %s\n=====\n", testCase.query, gotS, testCase.wantResult)
 			}
 		})`
-$DIR/internal/s3select/select_test.go: `testReq = []byte(fmt.Sprintf(defRequest, testCase.query))`
+$DIR/internal/s3select/select_test.go: `testReq = fmt.Appendf(nil, defRequest, testCase.query)`
 $DIR/internal/s3select/select_test.go: `s3Select.Evaluate(w)`
 $DIR/internal/s3select/select_test.go: `t.Run(fmt.Sprint(i), func(t *testing.T) {
 			s3Select, err := NewS3Select(bytes.NewReader(testCase.requestXML))
@@ -15773,7 +15860,7 @@ $DIR/internal/s3select/select_test.go: `.Run(testCase.name, func(t *testing.T) {
 			if len(testReq) == 0 {
 				var escaped bytes.Buffer
 				xml.EscapeText(&escaped, []byte(testCase.query))
-				testReq = []byte(fmt.Sprintf(defRequest, escaped.String()))
+				testReq = fmt.Appendf(nil, defRequest, escaped.String())
 			}
 			s3Select, err := NewS3Select(bytes.NewReader(testReq))
 			if err != nil {
@@ -15816,7 +15903,7 @@ $DIR/internal/s3select/select_test.go: `.CPU.Disable(cpuid.AVX2)`
 $DIR/internal/s3select/select_test.go: `.CPU.Enable(cpuid.AVX2)`
 $DIR/internal/s3select/select_test.go: `.SupportedCPU()`
 $DIR/internal/s3select/select_test.go: `.EscapeText(&escaped, []byte(testCase.query))`
-$DIR/internal/s3select/select_test.go: `.Sprintf(defRequest, escaped.String())`
+$DIR/internal/s3select/select_test.go: `.Appendf(nil, defRequest, escaped.String())`
 $DIR/internal/s3select/select_test.go: `.String()`
 $DIR/internal/s3select/select_test.go: `.NewReader(testReq)`
 $DIR/internal/s3select/select_test.go: `.Open(newStringRSC(in))`
@@ -15835,7 +15922,7 @@ $DIR/internal/s3select/select_test.go: `.Run("simd-"+testCase.name, func(t *test
 			if len(testReq) == 0 {
 				var escaped bytes.Buffer
 				xml.EscapeText(&escaped, []byte(testCase.query))
-				testReq = []byte(fmt.Sprintf(defRequest, escaped.String()))
+				testReq = fmt.Appendf(nil, defRequest, escaped.String())
 			}
 			s3Select, err := NewS3Select(bytes.NewReader(testReq))
 			if err != nil {
@@ -15875,7 +15962,7 @@ $DIR/internal/s3select/select_test.go: `.Run("simd-"+testCase.name, func(t *test
 		})`
 $DIR/internal/s3select/select_test.go: `.SupportedCPU()`
 $DIR/internal/s3select/select_test.go: `.EscapeText(&escaped, []byte(testCase.query))`
-$DIR/internal/s3select/select_test.go: `.Sprintf(defRequest, escaped.String())`
+$DIR/internal/s3select/select_test.go: `.Appendf(nil, defRequest, escaped.String())`
 $DIR/internal/s3select/select_test.go: `.String()`
 $DIR/internal/s3select/select_test.go: `.NewReader(testReq)`
 $DIR/internal/s3select/select_test.go: `.Open(newStringRSC(in))`
@@ -15889,7 +15976,7 @@ $DIR/internal/s3select/select_test.go: `.DeepEqual(gotS, testCase.wantResult)`
 $DIR/internal/s3select/select_test.go: `.Run(testCase.name, func(t *testing.T) {
 			testReq := testCase.requestXML
 			if len(testReq) == 0 {
-				testReq = []byte(fmt.Sprintf(defRequest, testCase.query))
+				testReq = fmt.Appendf(nil, defRequest, testCase.query)
 			}
 			s3Select, err := NewS3Select(bytes.NewReader(testReq))
 			if err != nil {
@@ -15923,7 +16010,7 @@ $DIR/internal/s3select/select_test.go: `.Run(testCase.name, func(t *testing.T) {
 				t.Errorf("received response does not match with expected reply. Query: %s\ngot: %s\nwant:%s", testCase.query, gotS, testCase.wantResult)
 			}
 		})`
-$DIR/internal/s3select/select_test.go: `.Sprintf(defRequest, testCase.query)`
+$DIR/internal/s3select/select_test.go: `.Appendf(nil, defRequest, testCase.query)`
 $DIR/internal/s3select/select_test.go: `.NewReader(testReq)`
 $DIR/internal/s3select/select_test.go: `.Open(newStringRSC(input))`
 $DIR/internal/s3select/select_test.go: `.Evaluate(w)`
@@ -15936,7 +16023,7 @@ $DIR/internal/s3select/select_test.go: `.DeepEqual(gotS, testCase.wantResult)`
 $DIR/internal/s3select/select_test.go: `.Run(testCase.name, func(t *testing.T) {
 			testReq := testCase.requestXML
 			if len(testReq) == 0 {
-				testReq = []byte(fmt.Sprintf(defRequest, testCase.query))
+				testReq = fmt.Appendf(nil, defRequest, testCase.query)
 			}
 			s3Select, err := NewS3Select(bytes.NewReader(testReq))
 			if err != nil {
@@ -15970,7 +16057,7 @@ $DIR/internal/s3select/select_test.go: `.Run(testCase.name, func(t *testing.T) {
 				t.Errorf("received response does not match with expected reply. Query: %s\ngot: %s\nwant:%s", testCase.query, gotS, testCase.wantResult)
 			}
 		})`
-$DIR/internal/s3select/select_test.go: `.Sprintf(defRequest, testCase.query)`
+$DIR/internal/s3select/select_test.go: `.Appendf(nil, defRequest, testCase.query)`
 $DIR/internal/s3select/select_test.go: `.NewReader(testReq)`
 $DIR/internal/s3select/select_test.go: `.Open(newBytesRSC(testCase.input))`
 $DIR/internal/s3select/select_test.go: `.Evaluate(w)`
@@ -15983,7 +16070,7 @@ $DIR/internal/s3select/select_test.go: `.DeepEqual(gotS, testCase.wantResult)`
 $DIR/internal/s3select/select_test.go: `.Run(testCase.name, func(t *testing.T) {
 			testReq := testCase.requestXML
 			if len(testReq) == 0 {
-				testReq = []byte(fmt.Sprintf(defRequest, testCase.query))
+				testReq = fmt.Appendf(nil, defRequest, testCase.query)
 			}
 			s3Select, err := NewS3Select(bytes.NewReader(testReq))
 			if err != nil {
@@ -16017,7 +16104,7 @@ $DIR/internal/s3select/select_test.go: `.Run(testCase.name, func(t *testing.T) {
 				t.Errorf("received response does not match with expected reply.\nQuery: %s\n=====\ngot: %s\n=====\nwant: %s\n=====\n", testCase.query, gotS, testCase.wantResult)
 			}
 		})`
-$DIR/internal/s3select/select_test.go: `.Sprintf(defRequest, testCase.query)`
+$DIR/internal/s3select/select_test.go: `.Appendf(nil, defRequest, testCase.query)`
 $DIR/internal/s3select/select_test.go: `.NewReader(testReq)`
 $DIR/internal/s3select/select_test.go: `.Open(newStringRSC(input))`
 $DIR/internal/s3select/select_test.go: `.Evaluate(w)`
