@@ -904,6 +904,14 @@
         "name": "Guillaume Gomez"
       }
     ],
+    "downcast-rs": [
+      {
+        "id": 3135,
+        "kind": "user",
+        "login": "marcianx",
+        "name": "Ashish Myles"
+      }
+    ],
     "dsl_auto_type": [
       {
         "id": 4568,
@@ -1150,6 +1158,14 @@
         "kind": "team",
         "login": "github:servo:rust-url",
         "name": "rust-url"
+      }
+    ],
+    "fragile": [
+      {
+        "id": 39,
+        "kind": "user",
+        "login": "mitsuhiko",
+        "name": "Armin Ronacher"
       }
     ],
     "from_variant": [
@@ -1482,6 +1498,20 @@
         "kind": "user",
         "login": "djc",
         "name": "Dirkjan Ochtman"
+      }
+    ],
+    "io-uring": [
+      {
+        "id": 4286,
+        "kind": "user",
+        "login": "quininer",
+        "name": "quininer"
+      },
+      {
+        "id": 4636,
+        "kind": "team",
+        "login": "github:tokio-rs:uring-core",
+        "name": "uring-core"
       }
     ],
     "is-macro": [
@@ -1838,6 +1868,20 @@
         "kind": "user",
         "login": "Frommi",
         "name": null
+      }
+    ],
+    "mio": [
+      {
+        "id": 10,
+        "kind": "user",
+        "login": "carllerche",
+        "name": "Carl Lerche"
+      },
+      {
+        "id": 1846,
+        "kind": "team",
+        "login": "github:tokio-rs:mio-core",
+        "name": "mio-core"
       }
     ],
     "new_debug_unreachable": [
@@ -2702,6 +2746,20 @@
         "name": "Frank Denis"
       }
     ],
+    "slab": [
+      {
+        "id": 10,
+        "kind": "user",
+        "login": "carllerche",
+        "name": "Carl Lerche"
+      },
+      {
+        "id": 1461,
+        "kind": "team",
+        "login": "github:tokio-rs:core",
+        "name": "Core"
+      }
+    ],
     "smallvec": [
       {
         "id": 5,
@@ -2773,6 +2831,14 @@
         "id": 289900,
         "kind": "user",
         "login": "salaheldinsoliman",
+        "name": null
+      }
+    ],
+    "sqlite-wasm-rs": [
+      {
+        "id": 89675,
+        "kind": "user",
+        "login": "Spxg",
         "name": null
       }
     ],
@@ -3260,6 +3326,26 @@
         "kind": "user",
         "login": "zbraniecki",
         "name": "Zibi Braniecki"
+      }
+    ],
+    "tokio": [
+      {
+        "id": 10,
+        "kind": "user",
+        "login": "carllerche",
+        "name": "Carl Lerche"
+      },
+      {
+        "id": 1461,
+        "kind": "team",
+        "login": "github:tokio-rs:core",
+        "name": "Core"
+      },
+      {
+        "id": 6741,
+        "kind": "user",
+        "login": "Darksonn",
+        "name": "Alice Ryhl"
       }
     ],
     "toml": [
@@ -3774,6 +3860,14 @@
         "name": "Dan Gohman"
       }
     ],
+    "wasm-array-cp": [
+      {
+        "id": 89675,
+        "kind": "user",
+        "login": "Spxg",
+        "name": null
+      }
+    ],
     "wasm-bindgen": [
       {
         "id": 34642,
@@ -3789,6 +3883,20 @@
       }
     ],
     "wasm-bindgen-backend": [
+      {
+        "id": 34642,
+        "kind": "user",
+        "login": "daxpedda",
+        "name": null
+      },
+      {
+        "id": 145038,
+        "kind": "user",
+        "login": "guybedford",
+        "name": "Guy Bedford"
+      }
+    ],
+    "wasm-bindgen-futures": [
       {
         "id": 34642,
         "kind": "user",
@@ -3831,6 +3939,20 @@
       }
     ],
     "wasm-bindgen-shared": [
+      {
+        "id": 34642,
+        "kind": "user",
+        "login": "daxpedda",
+        "name": null
+      },
+      {
+        "id": 145038,
+        "kind": "user",
+        "login": "guybedford",
+        "name": "Guy Bedford"
+      }
+    ],
+    "web-sys": [
       {
         "id": 34642,
         "kind": "user",
