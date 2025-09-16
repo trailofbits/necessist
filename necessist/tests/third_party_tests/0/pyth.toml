@@ -1,5 +1,5 @@
 url = "https://github.com/pyth-network/pyth-crosschain"
-rev = "pyth-solana-receiver-sdk-v1.0.0"
+rev = "pyth-lazer-agent-v0.5.0"
 target_os = ["linux", "macos"]
 subdir = "pythnet/message_buffer"
 framework = "anchor"
