@@ -9,6 +9,9 @@ concurrency:
   group: update-third-party-tests-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: write
+
 jobs:
   update:
     runs-on: ubuntu-latest
