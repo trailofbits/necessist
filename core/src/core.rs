@@ -962,21 +962,11 @@ fn child_processes(pid: u32) -> Result<Vec<String>> {
 
 #[cfg(windows)]
 fn child_processes(pid: u32) -> Result<Vec<String>> {
-    let output = Command::new("wmic")
-        .args([
-            "process",
-            "where",
-            &format!("ParentProcessId={pid}"),
-            "get",
-            "ProcessId",
-        ])
-        .output()?;
+    let mut command = Command::new("powershell");
+    command.arg(format!(
+        r#"(Get-CimInstance -ClassName Win32_Process -Filter "ParentProcessId = {pid}").ProcessId"#
+    ));
+    let output = command.output()?;
     let stdout = String::from_utf8(output.stdout)?;
-    Ok(stdout
-        .lines()
-        .map(str::trim_end)
-        .filter(|line| !line.is_empty())
-        .skip(1)
-        .map(ToOwned::to_owned)
-        .collect())
+    Ok(stdout.lines().map(|s| s.trim_end().to_owned()).collect())
 }
