@@ -5,6 +5,9 @@ name: Check release necessity
 
 on: [pull_request]
 
+permissions:
+  issues: write
+
 jobs:
   check-release-necessity:
     # smoelius: Note that `github.event.pull_request.user.login` is the user that opened the pull
