@@ -28,7 +28,7 @@ pub fn install_node_modules(context: &LightContext) -> Result<()> {
     debug!("{command:?}");
 
     let output = command.output_stripped_of_ansi_escapes()?;
-    ensure!(output.status().success(), "{:#?}", output);
+    ensure!(output.status().success(), "{output:#?}");
     Ok(())
 }
 

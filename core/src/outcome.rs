@@ -34,7 +34,7 @@ impl FromStr for Outcome {
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         Outcome::iter()
             .find(|outcome| outcome.to_string() == s)
-            .ok_or_else(|| anyhow!("Unknown outcome `{}`", s))
+            .ok_or_else(|| anyhow!("Unknown outcome `{s}`"))
     }
 }
 
