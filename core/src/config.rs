@@ -176,8 +176,7 @@ fn escape(pattern: &str) -> Result<String> {
         } else {
             bail!(
                 "Patterns can contain only letters, numbers, '.', '_', or `*`, which does not \
-                 include '{}'",
-                ch
+                 include '{ch}'",
             );
         }
     }

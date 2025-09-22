@@ -446,7 +446,10 @@ fn default_config(_context: &LightContext, root: &Path) -> Result<()> {
     let path_buf = root.join("necessist.toml");
 
     if path_buf.try_exists()? {
-        bail!("A configuration file already exists at {:?}", path_buf);
+        bail!(
+            "A configuration file already exists at `{}`",
+            path_buf.display()
+        );
     }
 
     let toml = toml::to_string(&config::Toml::default())?;
@@ -487,9 +490,9 @@ fn canonicalize_source_files(context: &LightContext) -> Result<Vec<PathBuf>> {
                 .with_context(|| format!("Failed to canonicalize `{}`", path.display()))?;
             ensure!(
                 path_buf.starts_with(context.root.as_path()),
-                "{:?} is not in {:?}",
-                path_buf,
-                context.root
+                "`{}` is not in `{}`",
+                path_buf.display(),
+                context.root.display()
             );
             Ok(path_buf)
         })
