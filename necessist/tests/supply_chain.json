@@ -1160,14 +1160,6 @@
         "name": "rust-url"
       }
     ],
-    "fragile": [
-      {
-        "id": 39,
-        "kind": "user",
-        "login": "mitsuhiko",
-        "name": "Armin Ronacher"
-      }
-    ],
     "from_variant": [
       {
         "id": 7286,
@@ -3500,12 +3492,6 @@
         "name": "core"
       },
       {
-        "id": 13278,
-        "kind": "user",
-        "login": "dcreager",
-        "name": "Douglas Creager"
-      },
-      {
         "id": 21921,
         "kind": "user",
         "login": "maxbrunsfeld",
@@ -3872,14 +3858,6 @@
         "kind": "user",
         "login": "sunfishcode",
         "name": "Dan Gohman"
-      }
-    ],
-    "wasm-array-cp": [
-      {
-        "id": 89675,
-        "kind": "user",
-        "login": "Spxg",
-        "name": null
       }
     ],
     "wasm-bindgen": [
