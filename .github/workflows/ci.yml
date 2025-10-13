@@ -86,7 +86,9 @@ jobs:
 
       - name: Install sqlite3 on Ubuntu
         if: ${{ matrix.environment == 'ubuntu-latest' }}
-        run: sudo apt install libsqlite3-dev
+        run: |
+          sudo apt update
+          sudo apt install libsqlite3-dev
 
       - name: Free up space on Ubuntu
         if: ${{ matrix.environment == 'ubuntu-latest' }}

@@ -12,7 +12,9 @@ runs:
 
     - name: Install Anchor prerequisites on Ubuntu
       if: ${{ runner.os == 'Linux' }}
-      run: sudo apt install libudev-dev
+      run: |
+        sudo apt update
+        sudo apt install libudev-dev
       shell: bash
 
     # smoelius: https://www.anchor-lang.com/docs/installation
