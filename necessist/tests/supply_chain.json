@@ -3860,6 +3860,20 @@
         "name": "Dan Gohman"
       }
     ],
+    "wasip2": [
+      {
+        "id": 1,
+        "kind": "user",
+        "login": "alexcrichton",
+        "name": "Alex Crichton"
+      },
+      {
+        "id": 73222,
+        "kind": "user",
+        "login": "wasmtime-publish",
+        "name": null
+      }
+    ],
     "wasm-bindgen": [
       {
         "id": 34642,
