@@ -31,6 +31,8 @@ $DIR/cmd/admin-handlers-users_test.go: `t.Run(
 				suite.TestGroupAddRemove(c)
 				suite.TestServiceAccountOpsByAdmin(c)
 				suite.TestServiceAccountPrivilegeEscalationBug(c)
+				suite.TestServiceAccountPrivilegeEscalationBug2_2025_10_15(c, true)
+				suite.TestServiceAccountPrivilegeEscalationBug2_2025_10_15(c, false)
 				suite.TestServiceAccountOpsByUser(c)
 				suite.TestServiceAccountDurationSecondsCondition(c)
 				suite.TestAddServiceAccountPerms(c)
@@ -45,6 +47,8 @@ $DIR/cmd/admin-handlers-users_test.go: `suite.TestCannedPolicies(c)`
 $DIR/cmd/admin-handlers-users_test.go: `suite.TestGroupAddRemove(c)`
 $DIR/cmd/admin-handlers-users_test.go: `suite.TestServiceAccountOpsByAdmin(c)`
 $DIR/cmd/admin-handlers-users_test.go: `suite.TestServiceAccountPrivilegeEscalationBug(c)`
+$DIR/cmd/admin-handlers-users_test.go: `suite.TestServiceAccountPrivilegeEscalationBug2_2025_10_15(c, true)`
+$DIR/cmd/admin-handlers-users_test.go: `suite.TestServiceAccountPrivilegeEscalationBug2_2025_10_15(c, false)`
 $DIR/cmd/admin-handlers-users_test.go: `suite.TestServiceAccountOpsByUser(c)`
 $DIR/cmd/admin-handlers-users_test.go: `suite.TestServiceAccountDurationSecondsCondition(c)`
 $DIR/cmd/admin-handlers-users_test.go: `suite.TestAddServiceAccountPerms(c)`
@@ -80,6 +84,8 @@ $DIR/cmd/admin-handlers-users_test.go: `.Run(
 				suite.TestGroupAddRemove(c)
 				suite.TestServiceAccountOpsByAdmin(c)
 				suite.TestServiceAccountPrivilegeEscalationBug(c)
+				suite.TestServiceAccountPrivilegeEscalationBug2_2025_10_15(c, true)
+				suite.TestServiceAccountPrivilegeEscalationBug2_2025_10_15(c, false)
 				suite.TestServiceAccountOpsByUser(c)
 				suite.TestServiceAccountDurationSecondsCondition(c)
 				suite.TestAddServiceAccountPerms(c)
@@ -95,6 +101,8 @@ $DIR/cmd/admin-handlers-users_test.go: `.TestCannedPolicies(c)`
 $DIR/cmd/admin-handlers-users_test.go: `.TestGroupAddRemove(c)`
 $DIR/cmd/admin-handlers-users_test.go: `.TestServiceAccountOpsByAdmin(c)`
 $DIR/cmd/admin-handlers-users_test.go: `.TestServiceAccountPrivilegeEscalationBug(c)`
+$DIR/cmd/admin-handlers-users_test.go: `.TestServiceAccountPrivilegeEscalationBug2_2025_10_15(c, true)`
+$DIR/cmd/admin-handlers-users_test.go: `.TestServiceAccountPrivilegeEscalationBug2_2025_10_15(c, false)`
 $DIR/cmd/admin-handlers-users_test.go: `.TestServiceAccountOpsByUser(c)`
 $DIR/cmd/admin-handlers-users_test.go: `.TestServiceAccountDurationSecondsCondition(c)`
 $DIR/cmd/admin-handlers-users_test.go: `.TestAddServiceAccountPerms(c)`
@@ -4956,6 +4964,57 @@ $DIR/cmd/handler-utils_test.go: `.SetRegion(globalServerConfig, testCase.serverC
 $DIR/cmd/handler-utils_test.go: `.Context()`
 $DIR/cmd/handler-utils_test.go: `.MIMEHeader(testCase.header)`
 $DIR/cmd/handler-utils_test.go: `.DeepEqual(metadata, testCase.metadata)`
+$DIR/cmd/http-tracer_test.go: `wg.Add(1)`
+$DIR/cmd/http-tracer_test.go: `httpStats.updateStats("GetObject", &xhttp.ResponseRecorder{})`
+$DIR/cmd/http-tracer_test.go: `httpStats.totalS3Requests.Inc("PutObject")`
+$DIR/cmd/http-tracer_test.go: `httpStats.totalS3Errors.Inc("DeleteObject")`
+$DIR/cmd/http-tracer_test.go: `httpStats.currentS3Requests.Inc("ListObjects")`
+$DIR/cmd/http-tracer_test.go: `wg.Add(1)`
+$DIR/cmd/http-tracer_test.go: `_ = httpStats.toServerHTTPStats(false)`
+$DIR/cmd/http-tracer_test.go: `_ = httpStats.totalS3Requests.Load(false)`
+$DIR/cmd/http-tracer_test.go: `_ = httpStats.currentS3Requests.Load(false)`
+$DIR/cmd/http-tracer_test.go: `time.Sleep(1 * time.Microsecond)`
+$DIR/cmd/http-tracer_test.go: `wg.Wait()`
+$DIR/cmd/http-tracer_test.go: `totalRequests += v`
+$DIR/cmd/http-tracer_test.go: `wg.Add(1)`
+$DIR/cmd/http-tracer_test.go: `stats.Inc("TestAPI")`
+$DIR/cmd/http-tracer_test.go: `wg.Add(1)`
+$DIR/cmd/http-tracer_test.go: `_ = stats.Load(false)`
+$DIR/cmd/http-tracer_test.go: `wg.Wait()`
+$DIR/cmd/http-tracer_test.go: `wg.Add(1)`
+$DIR/cmd/http-tracer_test.go: `bucketStats.updateHTTPStats(bucketName, "GetObject", nil)`
+$DIR/cmd/http-tracer_test.go: `bucketStats.updateHTTPStats(bucketName, "GetObject", recorder)`
+$DIR/cmd/http-tracer_test.go: `_ = bucketStats.load(bucketName)`
+$DIR/cmd/http-tracer_test.go: `wg.Wait()`
+$DIR/cmd/http-tracer_test.go: `.Add(1)`
+$DIR/cmd/http-tracer_test.go: `.Done()`
+$DIR/cmd/http-tracer_test.go: `.updateStats("GetObject", &xhttp.ResponseRecorder{})`
+$DIR/cmd/http-tracer_test.go: `.totalS3Requests.Inc("PutObject")`
+$DIR/cmd/http-tracer_test.go: `.totalS3Errors.Inc("DeleteObject")`
+$DIR/cmd/http-tracer_test.go: `.currentS3Requests.Inc("ListObjects")`
+$DIR/cmd/http-tracer_test.go: `.Add(1)`
+$DIR/cmd/http-tracer_test.go: `.Done()`
+$DIR/cmd/http-tracer_test.go: `.toServerHTTPStats(false)`
+$DIR/cmd/http-tracer_test.go: `.totalS3Requests.Load(false)`
+$DIR/cmd/http-tracer_test.go: `.currentS3Requests.Load(false)`
+$DIR/cmd/http-tracer_test.go: `.Sleep(1 * time.Microsecond)`
+$DIR/cmd/http-tracer_test.go: `.Wait()`
+$DIR/cmd/http-tracer_test.go: `.toServerHTTPStats(false)`
+$DIR/cmd/http-tracer_test.go: `.Add(1)`
+$DIR/cmd/http-tracer_test.go: `.Done()`
+$DIR/cmd/http-tracer_test.go: `.Inc("TestAPI")`
+$DIR/cmd/http-tracer_test.go: `.Add(1)`
+$DIR/cmd/http-tracer_test.go: `.Done()`
+$DIR/cmd/http-tracer_test.go: `.Load(false)`
+$DIR/cmd/http-tracer_test.go: `.Wait()`
+$DIR/cmd/http-tracer_test.go: `.Load(false)`
+$DIR/cmd/http-tracer_test.go: `.Add(1)`
+$DIR/cmd/http-tracer_test.go: `.Done()`
+$DIR/cmd/http-tracer_test.go: `.updateHTTPStats(bucketName, "GetObject", nil)`
+$DIR/cmd/http-tracer_test.go: `.updateHTTPStats(bucketName, "GetObject", recorder)`
+$DIR/cmd/http-tracer_test.go: `.load(bucketName)`
+$DIR/cmd/http-tracer_test.go: `.Wait()`
+$DIR/cmd/http-tracer_test.go: `.load("test-bucket")`
 $DIR/cmd/httprange_test.go: `rs, err1 = parseRequestRangeSpec(irs)`
 $DIR/cmd/httprange_test.go: `o, l, err2 = rs.GetOffsetLength(resourceSize)`
 $DIR/cmd/httprange_test.go: `.GetOffsetLength(resourceSize)`
