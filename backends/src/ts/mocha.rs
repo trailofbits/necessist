@@ -13,13 +13,19 @@ impl Mocha {
     }
 }
 
+static LINE_WITH_GAS_RE: LazyLock<Regex> = LazyLock::new(|| {
+    // smoelius: The initial `.` is the check mark.
+    #[allow(clippy::unwrap_used)]
+    Regex::new(r"^\s*. (.*) \([0-9]+ gas\)$").unwrap()
+});
+
 static LINE_WITH_TIME_RE: LazyLock<Regex> = LazyLock::new(|| {
     // smoelius: The initial `.` is the check mark.
     #[allow(clippy::unwrap_used)]
     Regex::new(r"^\s*. (.*) \([0-9]+ms\)$").unwrap()
 });
 
-static LINE_WITHOUT_TIME_RE: LazyLock<Regex> = LazyLock::new(|| {
+static LINE_WITHOUT_GAS_OR_TIME_RE: LazyLock<Regex> = LazyLock::new(|| {
     #[allow(clippy::unwrap_used)]
     Regex::new(r"^\s*. (.*)$").unwrap()
 });
@@ -28,9 +34,10 @@ pub fn it_message_extractor(bytes: &[u8]) -> Result<Vec<String>> {
     let stdout = std::str::from_utf8(bytes)?;
     let mut it_messages = Vec::new();
     for line in stdout.lines() {
-        if let Some(captures) = LINE_WITH_TIME_RE
+        if let Some(captures) = LINE_WITH_GAS_RE
             .captures(line)
-            .or_else(|| LINE_WITHOUT_TIME_RE.captures(line))
+            .or_else(|| LINE_WITH_TIME_RE.captures(line))
+            .or_else(|| LINE_WITHOUT_GAS_OR_TIME_RE.captures(line))
         {
             assert_eq!(2, captures.len());
             it_messages.push(captures[1].to_string());
