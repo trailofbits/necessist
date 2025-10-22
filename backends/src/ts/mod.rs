@@ -36,7 +36,7 @@ pub trait MochaLike {
         test_name: &str,
         span: &Span,
         command: &Command,
-    ) -> Result<Option<(Exec, Option<Box<Postprocess>>)>>;
+    ) -> Result<Result<(Exec, Option<Box<Postprocess>>)>>;
 }
 
 impl ParseLow for Box<dyn MochaLike> {

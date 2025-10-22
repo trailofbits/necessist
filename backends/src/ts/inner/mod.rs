@@ -131,7 +131,7 @@ impl Inner {
         test_name: &str,
         span: &Span,
         command: &Command,
-    ) -> Result<Option<(Exec, Option<Box<Postprocess>>)>> {
+    ) -> Result<Result<(Exec, Option<Box<Postprocess>>)>> {
         let mut source_file_it_message_state_map =
             self.source_file_it_message_state_map.borrow_mut();
         #[allow(clippy::expect_used)]
@@ -144,20 +144,21 @@ impl Inner {
             .entry(test_name.to_owned())
             .or_default();
         if *state != ItMessageState::Found {
+            let msg = format!("`it` message {test_name:?} was not found during dry run");
             if *state == ItMessageState::NotFound {
                 source_warn(
                     context,
                     Warning::ItMessageNotFound,
                     span,
-                    &format!("`it` message {test_name:?} was not found during dry run"),
+                    &msg,
                     WarnFlags::empty(),
                 )?;
                 *state = ItMessageState::WarningEmitted;
             }
-            // smoelius: Returning `None` here causes Necessist to associate `Outcome::Nonbuildable`
-            // with this span. This is not ideal, but there is no ideal choice for this situation
-            // currently.
-            return Ok(None);
+            // smoelius: Returning an error here causes Necessist to associate
+            // `Outcome::Nonbuildable` with this span. This is not ideal, but there is no ideal
+            // choice for this situation currently.
+            return Ok(Err(anyhow!(msg)));
         }
 
         let mut exec = util::exec_from_command(command);
@@ -166,7 +167,7 @@ impl Inner {
 
         debug!("{exec:?}");
 
-        Ok(Some((exec, None)))
+        Ok(Ok((exec, None)))
     }
 }
 

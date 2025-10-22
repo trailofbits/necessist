@@ -368,21 +368,25 @@ fn run(mut context: Context, source_file_span_test_map: SourceFileSpanTestMap) -
                             return Ok(outcome);
                         }
 
-                        if let Some((exec, postprocess)) =
-                            context.backend.exec(&context.light(), test_name, span)?
-                        {
-                            // smoelius: Even if the removal is explicit (i.e., not with
-                            // instrumentation), it doesn't hurt to set `NECESSIST_REMOVAL`.
-                            let exec = exec.env("NECESSIST_REMOVAL", span.id());
+                        let result = context.backend.exec(&context.light(), test_name, span)?;
 
-                            perform_exec(&context, exec, postprocess)
-                        } else {
-                            assert!(
-                                explicit_removal,
-                                "Instrumentation failed to build after it was verified to"
-                            );
+                        match result {
+                            Ok((exec, postprocess)) => {
+                                // smoelius: Even if the removal is explicit (i.e., not with
+                                // instrumentation), it doesn't hurt to set `NECESSIST_REMOVAL`.
+                                let exec = exec.env("NECESSIST_REMOVAL", span.id());
 
-                            Ok(Some(Outcome::Nonbuildable))
+                                perform_exec(&context, exec, postprocess)
+                            }
+                            Err(error) => {
+                                assert!(
+                                    explicit_removal,
+                                    "Instrumentation failed to build after it was verified to: \
+                                     {error}"
+                                );
+
+                                Ok(Some(Outcome::Nonbuildable))
+                            }
                         }
                     })?;
 

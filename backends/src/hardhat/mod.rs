@@ -78,10 +78,9 @@ impl RunHigh for Hardhat {
         context: &LightContext,
         test_name: &str,
         span: &Span,
-    ) -> Result<Option<(Exec, Option<Box<Postprocess>>)>> {
+    ) -> Result<Result<(Exec, Option<Box<Postprocess>>)>> {
         if let Err(error) = compile(context) {
-            debug!("{error}");
-            return Ok(None);
+            return Ok(Err(error));
         }
 
         let mut command = ts::utils::script("npx");

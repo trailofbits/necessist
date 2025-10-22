@@ -154,7 +154,7 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
         context: &LightContext,
         test_name: &str,
         span: &Span,
-    ) -> Result<Option<(Exec, Option<Box<Postprocess>>)>> {
+    ) -> Result<Result<(Exec, Option<Box<Postprocess>>)>> {
         {
             let mut command = self.0.command_to_build_test(context, test_name, span);
             command.args(&context.opts.args);
@@ -163,8 +163,7 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
 
             let output = command.output_stripped_of_ansi_escapes()?;
             if !output.status().success() {
-                debug!("{output}");
-                return Ok(None);
+                return Ok(Err(output.into()));
             }
         }
 
@@ -185,7 +184,7 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
         let test_name = test_name.to_owned();
         let span = span.clone();
 
-        Ok(Some((
+        Ok(Ok((
             exec,
             init_f_test.map(|(init, f)| -> Box<Postprocess> {
                 Box::new(move |context: &LightContext, mut popen| {

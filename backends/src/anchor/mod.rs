@@ -133,10 +133,9 @@ impl RunHigh for Anchor {
         context: &LightContext,
         test_name: &str,
         span: &Span,
-    ) -> Result<Option<(Exec, Option<Box<Postprocess>>)>> {
+    ) -> Result<Result<(Exec, Option<Box<Postprocess>>)>> {
         if let Err(error) = self.check(context, &span.source_file) {
-            debug!("{error}");
-            return Ok(None);
+            return Ok(Err(error));
         }
 
         let backup = self.patch_anchor_toml(&span.source_file, false)?;
