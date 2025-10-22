@@ -26,7 +26,7 @@ use swc_core::{
     ecma::{
         ast::{
             ArrowExpr, AwaitExpr, BlockStmtOrExpr, CallExpr, Callee, EsVersion, Expr, ExprStmt,
-            FnDecl, Invalid, Lit, MemberExpr, MemberProp, Module, Stmt, Str,
+            FnDecl, FnExpr, Invalid, Lit, MemberExpr, MemberProp, Module, Stmt, Str,
         },
         atoms::Atom,
         parser::{Parser, StringInput, Syntax, TsSyntax, lexer::Lexer},
@@ -499,13 +499,24 @@ fn is_it_call_expr(expr: &Expr) -> Option<Test<'_>> {
         && ident.as_ref() == "it"
         && let [arg0, arg1] = args.as_slice()
         && let Expr::Lit(Lit::Str(Str { value, .. })) = &*arg0.expr
-        && let Expr::Arrow(ArrowExpr { body, .. }) = &*arg1.expr
-        && let BlockStmtOrExpr::BlockStmt(block) = &**body
     {
-        Some(Test {
-            it_message: value,
-            stmts: &block.stmts,
-        })
+        if let Expr::Arrow(ArrowExpr { body, .. }) = &*arg1.expr
+            && let BlockStmtOrExpr::BlockStmt(block) = &**body
+        {
+            Some(Test {
+                it_message: value,
+                stmts: &block.stmts,
+            })
+        } else if let Expr::Fn(FnExpr { function, .. }) = &*arg1.expr
+            && let Some(block) = &function.body
+        {
+            Some(Test {
+                it_message: value,
+                stmts: &block.stmts,
+            })
+        } else {
+            None
+        }
     } else {
         None
     }
