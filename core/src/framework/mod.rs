@@ -90,12 +90,16 @@ pub trait Run {
     ///
     /// In most cases, just `span.source_file` is used. But in the implementation of `RunLow::exec`,
     /// `span` is used for error reporting.
+    ///
+    /// `Result<Result<..>>` is a questionable return type. The inner `Result` represents the result
+    /// of trying to build the project under test. Having it is useful for when the "Instrumentation
+    /// failed to build after it was verified to" assertion fails.
     fn exec(
         &self,
         context: &LightContext,
         test_name: &str,
         span: &Span,
-    ) -> Result<Option<(Exec, Option<Box<Postprocess>>)>>;
+    ) -> Result<Result<(Exec, Option<Box<Postprocess>>)>>;
 }
 
 pub trait AsParse {
@@ -148,7 +152,7 @@ impl<T: AsRun> Run for T {
         context: &LightContext,
         test_name: &str,
         span: &Span,
-    ) -> Result<Option<(Exec, Option<Box<Postprocess>>)>> {
+    ) -> Result<Result<(Exec, Option<Box<Postprocess>>)>> {
         self.as_run().exec(context, test_name, span)
     }
 }

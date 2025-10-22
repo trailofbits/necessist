@@ -95,7 +95,7 @@ impl MochaLike for Vitest {
         test_name: &str,
         span: &Span,
         command: &Command,
-    ) -> Result<Option<(Exec, Option<Box<Postprocess>>)>> {
+    ) -> Result<Result<(Exec, Option<Box<Postprocess>>)>> {
         self.0.exec(context, test_name, span, command)
     }
 }

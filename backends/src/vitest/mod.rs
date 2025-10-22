@@ -84,7 +84,7 @@ impl RunHigh for Vitest {
         context: &LightContext,
         test_name: &str,
         span: &Span,
-    ) -> Result<Option<(Exec, Option<Box<Postprocess>>)>> {
+    ) -> Result<Result<(Exec, Option<Box<Postprocess>>)>> {
         let command = command_to_run_test(context, &span.source_file);
 
         self.mocha_adapter

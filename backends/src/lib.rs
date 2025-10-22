@@ -140,7 +140,7 @@ impl<T: RunHigh> RunHigh for ParseAdapter<T> {
         context: &LightContext,
         test_name: &str,
         span: &Span,
-    ) -> Result<Option<(Exec, Option<Box<Postprocess>>)>> {
+    ) -> Result<Result<(Exec, Option<Box<Postprocess>>)>> {
         self.0.exec(context, test_name, span)
     }
 }
