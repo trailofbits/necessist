@@ -3,4 +3,3 @@ rev = "pyth-lazer-agent-v0.7.1"
 target_os = ["linux", "macos"]
 subdir = "pythnet/message_buffer"
 framework = "anchor"
-parsing_only = true
