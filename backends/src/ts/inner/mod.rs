@@ -500,19 +500,20 @@ fn is_it_call_expr(expr: &Expr) -> Option<Test<'_>> {
         && ident.as_ref() == "it"
         && let [arg0, arg1] = args.as_slice()
         && let Expr::Lit(Lit::Str(Str { value, .. })) = &*arg0.expr
+        && let Some(atom) = value.as_atom()
     {
         if let Expr::Arrow(ArrowExpr { body, .. }) = &*arg1.expr
             && let BlockStmtOrExpr::BlockStmt(block) = &**body
         {
             Some(Test {
-                it_message: value,
+                it_message: atom,
                 stmts: &block.stmts,
             })
         } else if let Expr::Fn(FnExpr { function, .. }) = &*arg1.expr
             && let Some(block) = &function.body
         {
             Some(Test {
-                it_message: value,
+                it_message: atom,
                 stmts: &block.stmts,
             })
         } else {
