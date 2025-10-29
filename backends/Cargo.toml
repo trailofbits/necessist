@@ -15,7 +15,7 @@ build = "build/main.rs"
 necessist-core = { version = "=2.1.2", path = "../core" }
 
 anyhow = "1.0"
-assert_cmd = "2.0"
+assert_cmd = "2.1"
 bstr = "1.12"
 clap = { version = "4.5", features = ["derive"] }
 heck = "0.5"

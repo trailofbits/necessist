@@ -23,7 +23,7 @@ strum_macros = "0.27"
 subprocess = "0.2"
 
 [dev-dependencies]
-assert_cmd = "2.0"
+assert_cmd = "2.1"
 cargo_metadata = "0.23"
 ctor = "0.6"
 curl = "0.4"
