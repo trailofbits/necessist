@@ -1,4 +1,4 @@
-use assert_cmd::assert::OutputAssertExt;
+use assert_cmd::{assert::OutputAssertExt, cargo::cargo_bin_cmd};
 use cargo_metadata::MetadataCommand;
 use regex::Regex;
 use similar_asserts::SimpleDiff;
@@ -248,10 +248,7 @@ fn prettier() {
 fn readme_contains_usage() {
     let readme = read_to_string("README.md").unwrap();
 
-    let assert = assert_cmd::Command::cargo_bin("necessist")
-        .unwrap()
-        .arg("--help")
-        .assert();
+    let assert = cargo_bin_cmd!("necessist").arg("--help").assert();
     let stdout = &assert.get_output().stdout;
 
     let usage = std::str::from_utf8(stdout).unwrap();
