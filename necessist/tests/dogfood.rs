@@ -1,6 +1,6 @@
 #![cfg(feature = "dogfood")]
 
-use assert_cmd::Command;
+use assert_cmd::{Command, cargo::cargo_bin_cmd};
 use std::io::{Write, stderr};
 
 const TIMEOUT: &str = "5";
@@ -18,8 +18,7 @@ fn dogfood() {
         return;
     }
 
-    Command::cargo_bin("necessist")
-        .unwrap()
+    cargo_bin_cmd!("necessist")
         .args(["--timeout", TIMEOUT, "--verbose"])
         .assert()
         .success();
