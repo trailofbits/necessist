@@ -1,4 +1,4 @@
-use assert_cmd::prelude::*;
+use assert_cmd::cargo::cargo_bin_cmd;
 use necessist_core::util;
 use regex::Regex;
 use std::{
@@ -6,7 +6,6 @@ use std::{
     ffi::OsStr,
     fs::{read_dir, read_to_string},
     path::PathBuf,
-    process::Command,
 };
 use trycmd::TestCases;
 
@@ -26,8 +25,7 @@ fn trycmd() {
         .env("TRYCMD", "1")
         .case("tests/necessist_db_absent/*.toml");
 
-    Command::cargo_bin("necessist")
-        .unwrap()
+    cargo_bin_cmd!("necessist")
         .args(["--root", ROOT, "--timeout", TIMEOUT])
         .assert()
         .success();

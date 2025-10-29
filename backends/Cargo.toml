@@ -15,7 +15,7 @@ build = "build/main.rs"
 necessist-core = { version = "=2.1.2", path = "../core" }
 
 anyhow = "1.0"
-assert_cmd = "2.0"
+assert_cmd = "2.1"
 bstr = "1.12"
 clap = { version = "4.5", features = ["derive"] }
 heck = "0.5"
@@ -47,7 +47,7 @@ tree-sitter = "0.25"
 tree-sitter-go = "0.25"
 
 # Hardhat
-swc_core = { version = "45.0", features = [
+swc_core = { version = "46.0", features = [
     "common",
     "ecma_ast",
     "ecma_parser",

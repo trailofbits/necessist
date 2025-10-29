@@ -1,4 +1,4 @@
-use assert_cmd::prelude::*;
+use assert_cmd::{assert::OutputAssertExt, cargo::cargo_bin_cmd};
 use necessist_core::util;
 use predicates::prelude::*;
 use std::{env::set_current_dir, path::PathBuf, process::Command, sync::Mutex};
@@ -18,8 +18,7 @@ fn initialize() {
 #[test]
 fn necessist_db_can_be_moved() {
     run_basic_test(|| {
-        Command::cargo_bin("necessist")
-            .unwrap()
+        cargo_bin_cmd!("necessist")
             .args(["--root", BASIC_ROOT, "--timeout", TIMEOUT])
             .assert()
             .success();
@@ -31,8 +30,7 @@ fn necessist_db_can_be_moved() {
             .assert()
             .success();
 
-        Command::cargo_bin("necessist")
-            .unwrap()
+        cargo_bin_cmd!("necessist")
             .args([
                 "--root",
                 &tempdir.path().join("basic").to_string_lossy(),
@@ -52,8 +50,7 @@ fn resume_following_dry_run_failure() {
 
     let _remove_file = util::RemoveFile(necessist_db);
 
-    let assert = Command::cargo_bin("necessist")
-        .unwrap()
+    let assert = cargo_bin_cmd!("necessist")
         .args(["--root", DRF_ROOT])
         .assert()
         .success();
@@ -71,8 +68,7 @@ fixtures/dry_run_failure/tests/a.rs: Warning: dry run failed: code=101
         "{stdout_normalized:?}",
     );
 
-    Command::cargo_bin("necessist")
-        .unwrap()
+    cargo_bin_cmd!("necessist")
         .args(["--root", DRF_ROOT, "--resume"])
         .assert()
         .success()
@@ -90,8 +86,18 @@ fn resume_following_ctrl_c() {
     use std::io::{BufRead, BufReader, Read};
 
     fn command() -> Command {
-        let mut command = Command::cargo_bin("necessist").unwrap();
-        command.args(["--root", BASIC_ROOT, "--timeout", TIMEOUT, "--verbose"]);
+        let mut command = Command::new("cargo");
+        command.args([
+            "run",
+            "--bin=necessist",
+            "--quiet",
+            "--",
+            "--root",
+            BASIC_ROOT,
+            "--timeout",
+            TIMEOUT,
+            "--verbose",
+        ]);
         command
     }
 
@@ -154,8 +160,7 @@ fn kill() -> Command {
 #[test]
 fn tests_are_not_rebuilt() {
     run_basic_test(|| {
-        Command::cargo_bin("necessist")
-            .unwrap()
+        cargo_bin_cmd!("necessist")
             .args(["--root", BASIC_ROOT, "--timeout", TIMEOUT])
             .env("NECESSIST_CHECK_MTIMES", "1")
             .assert()
