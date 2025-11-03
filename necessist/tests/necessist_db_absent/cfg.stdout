@@ -18,7 +18,7 @@ warning: function `noop` is never used
 9 | fn noop() {}
   |    ^^^^
   |
-  = note: `#[warn(dead_code)]` on by default
+  = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
 
 warning: `cfg` (lib test) generated 1 warning
     Finished `test` profile [unoptimized + debuginfo] target(s) in [..]s
@@ -47,7 +47,7 @@ warning: function `noop` is never used
 9 | fn noop() {}
   |    ^^^^
   |
-  = note: `#[warn(dead_code)]` on by default
+  = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
 
 warning: `cfg` (lib test) generated 1 warning
     Finished `test` profile [unoptimized + debuginfo] target(s) in [..]s
@@ -72,7 +72,7 @@ warning: function `noop` is never used
 9 | fn noop() {}
   |    ^^^^
   |
-  = note: `#[warn(dead_code)]` on by default
+  = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
 
 warning: `cfg` (lib test) generated 1 warning
     Finished `test` profile [unoptimized + debuginfo] target(s) in [..]s
@@ -97,7 +97,7 @@ warning: function `noop` is never used
 9 | fn noop() {}
   |    ^^^^
   |
-  = note: `#[warn(dead_code)]` on by default
+  = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
 
 warning: `cfg` (lib test) generated 1 warning
     Finished `test` profile [unoptimized + debuginfo] target(s) in [..]s
