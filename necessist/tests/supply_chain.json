@@ -138,20 +138,6 @@
         "name": "David Tolnay"
       }
     ],
-    "arrayvec": [
-      {
-        "id": 356,
-        "kind": "user",
-        "login": "bluss",
-        "name": "bluss"
-      },
-      {
-        "id": 362,
-        "kind": "team",
-        "login": "github:rust-bus:maintainers",
-        "name": "maintainers"
-      }
-    ],
     "ascii-canvas": [
       {
         "id": 356,
@@ -308,6 +294,20 @@
         "kind": "user",
         "login": "newpavlov",
         "name": "Artyom Pavlov"
+      }
+    ],
+    "block2": [
+      {
+        "id": 3246,
+        "kind": "user",
+        "login": "simlay",
+        "name": "simlay"
+      },
+      {
+        "id": 36629,
+        "kind": "user",
+        "login": "madsmtm",
+        "name": "Mads Marquart"
       }
     ],
     "bstr": [
@@ -874,12 +874,24 @@
         "name": "Nathan McCarty"
       }
     ],
-    "dispatch": [
+    "dispatch2": [
       {
-        "id": 404,
+        "id": 3246,
         "kind": "user",
-        "login": "SSheldon",
-        "name": "Steven Sheldon"
+        "login": "simlay",
+        "name": "simlay"
+      },
+      {
+        "id": 20758,
+        "kind": "user",
+        "login": "marysaka",
+        "name": "Mary Guillemard"
+      },
+      {
+        "id": 36629,
+        "kind": "user",
+        "login": "madsmtm",
+        "name": "Mads Marquart"
       }
     ],
     "displaydoc": [
@@ -894,14 +906,6 @@
         "kind": "user",
         "login": "yaahc",
         "name": "Jane Losare-Lusby"
-      }
-    ],
-    "doc-comment": [
-      {
-        "id": 111,
-        "kind": "user",
-        "login": "GuillaumeGomez",
-        "name": "Guillaume Gomez"
       }
     ],
     "downcast-rs": [
@@ -1492,20 +1496,6 @@
         "name": "Dirkjan Ochtman"
       }
     ],
-    "io-uring": [
-      {
-        "id": 4286,
-        "kind": "user",
-        "login": "quininer",
-        "name": "quininer"
-      },
-      {
-        "id": 4636,
-        "kind": "team",
-        "login": "github:tokio-rs:uring-core",
-        "name": "uring-core"
-      }
-    ],
     "is-macro": [
       {
         "id": 7286,
@@ -1862,20 +1852,6 @@
         "name": null
       }
     ],
-    "mio": [
-      {
-        "id": 10,
-        "kind": "user",
-        "login": "carllerche",
-        "name": "Carl Lerche"
-      },
-      {
-        "id": 1846,
-        "kind": "team",
-        "login": "github:tokio-rs:mio-core",
-        "name": "mio-core"
-      }
-    ],
     "new_debug_unreachable": [
       {
         "id": 5,
@@ -1952,6 +1928,34 @@
         "name": "Sean McArthur"
       }
     ],
+    "objc2": [
+      {
+        "id": 3246,
+        "kind": "user",
+        "login": "simlay",
+        "name": "simlay"
+      },
+      {
+        "id": 36629,
+        "kind": "user",
+        "login": "madsmtm",
+        "name": "Mads Marquart"
+      }
+    ],
+    "objc2-encode": [
+      {
+        "id": 3246,
+        "kind": "user",
+        "login": "simlay",
+        "name": "simlay"
+      },
+      {
+        "id": 36629,
+        "kind": "user",
+        "login": "madsmtm",
+        "name": "Mads Marquart"
+      }
+    ],
     "object": [
       {
         "id": 696,
@@ -1994,6 +1998,12 @@
         "kind": "user",
         "login": "alexcrichton",
         "name": "Alex Crichton"
+      },
+      {
+        "id": 4556,
+        "kind": "user",
+        "login": "djc",
+        "name": "Dirkjan Ochtman"
       }
     ],
     "openssl-sys": [
@@ -2302,20 +2312,6 @@
         "kind": "user",
         "login": "dtolnay",
         "name": "David Tolnay"
-      }
-    ],
-    "psm": [
-      {
-        "id": 408,
-        "kind": "team",
-        "login": "github:rust-lang:compiler",
-        "name": "compiler"
-      },
-      {
-        "id": 726,
-        "kind": "user",
-        "login": "nagisa",
-        "name": "Simonas Kazlauskas"
       }
     ],
     "quote": [
@@ -2752,20 +2748,6 @@
         "name": "Frank Denis"
       }
     ],
-    "slab": [
-      {
-        "id": 10,
-        "kind": "user",
-        "login": "carllerche",
-        "name": "Carl Lerche"
-      },
-      {
-        "id": 1461,
-        "kind": "team",
-        "login": "github:tokio-rs:core",
-        "name": "Core"
-      }
-    ],
     "smallvec": [
       {
         "id": 5,
@@ -2866,20 +2848,6 @@
         "kind": "user",
         "login": "Storyyeller",
         "name": "Robert Grosse"
-      }
-    ],
-    "stacker": [
-      {
-        "id": 408,
-        "kind": "team",
-        "login": "github:rust-lang:compiler",
-        "name": "compiler"
-      },
-      {
-        "id": 726,
-        "kind": "user",
-        "login": "nagisa",
-        "name": "Simonas Kazlauskas"
       }
     ],
     "static_assertions": [
@@ -3077,20 +3045,6 @@
       }
     ],
     "swc_ecma_ast": [
-      {
-        "id": 7286,
-        "kind": "user",
-        "login": "kdy1",
-        "name": "Donny/강동윤"
-      },
-      {
-        "id": 179182,
-        "kind": "user",
-        "login": "swc-bot",
-        "name": "SWC Bot"
-      }
-    ],
-    "swc_ecma_lexer": [
       {
         "id": 7286,
         "kind": "user",
@@ -3875,20 +3829,6 @@
       }
     ],
     "wasm-bindgen": [
-      {
-        "id": 34642,
-        "kind": "user",
-        "login": "daxpedda",
-        "name": null
-      },
-      {
-        "id": 145038,
-        "kind": "user",
-        "login": "guybedford",
-        "name": "Guy Bedford"
-      }
-    ],
-    "wasm-bindgen-backend": [
       {
         "id": 34642,
         "kind": "user",
