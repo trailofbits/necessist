@@ -505,12 +505,12 @@ impl LocWithOptionalSemicolon for Statement {
         let loc = self.loc();
         match loc {
             Loc::File(file_no, start, mut end) => {
-                let mut chars = contents.chars().skip(end).peekable();
-                while chars.peek().copied().is_some_and(char::is_whitespace) {
+                let mut bytes = contents.bytes().skip(end).peekable();
+                while bytes.peek().is_some_and(u8::is_ascii_whitespace) {
                     end += 1;
-                    let _: Option<char> = chars.next();
+                    let _: Option<u8> = bytes.next();
                 }
-                if chars.next() == Some(';') {
+                if bytes.next() == Some(b';') {
                     Loc::File(file_no, start, end + 1)
                 } else {
                     loc
