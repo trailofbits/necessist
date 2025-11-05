@@ -32,7 +32,11 @@ pattern = [
 
 [workspace.metadata.unmaintained]
 ignore = [
+    "libredox",
     "paste",
+    "rand_core",
+    "redox_syscall",
+    "redox_users",
     "smartstring",
     "solang-parser",
     "unit-prefix",
