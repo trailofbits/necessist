@@ -1,0 +1,1 @@
+fixtures/multibyte_character/test/MultibyteCharacter.t.sol:7:9-7:69: `s = "This candidate should include the trailing semicolon.";`

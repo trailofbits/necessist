@@ -1,0 +1,15 @@
+args = [
+    "--no-sqlite",
+    "--root=fixtures/multibyte_character",
+    "--dump-candidates",
+]
+stderr = ""
+
+[bin]
+name = "necessist"
+
+[fs]
+cwd = "../../.."
+
+[status]
+code = 0
