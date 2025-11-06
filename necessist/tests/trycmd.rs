@@ -123,7 +123,9 @@ fn check_toml_files() {
             .unwrap();
         assert!(file_stem.starts_with(example));
 
+        let status = document.as_table().and_then(|table| table.get("status"));
         let stderr = document.as_table().and_then(|table| table.get("stderr"));
+        assert!(status.is_some() || stderr.is_some());
         assert!(stderr.is_some() || path.with_extension("stderr").try_exists().unwrap());
 
         let bin_name = document

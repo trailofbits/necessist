@@ -1,4 +1,10 @@
-args = ["--no-sqlite", "--root=fixtures/basic", "--framework=rust", "--timeout=5"]
+args = [
+    "--no-sqlite",
+    "--root=fixtures/basic",
+    "--framework=rust",
+    "--timeout=5",
+]
+
 stderr = ""
 
 [bin]
@@ -6,6 +12,3 @@ name = "necessist"
 
 [fs]
 cwd = "../../.."
-
-[status]
-code = 0
