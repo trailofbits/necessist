@@ -1,10 +1,9 @@
 args = ["--root=fixtures/basic", "--resume", "--deny=database-does-not-exist"]
 
+status = "failed"
+
 [bin]
 name = "necessist"
 
 [fs]
 cwd = "../../.."
-
-[status]
-code = 1

@@ -3,6 +3,7 @@ args = [
     "--root=fixtures/dry_run_failure",
     "fixtures/dry_run_failure/tests/b.rs",
 ]
+
 stderr = ""
 
 [bin]
@@ -10,6 +11,3 @@ name = "necessist"
 
 [fs]
 cwd = "../../.."
-
-[status]
-code = 0

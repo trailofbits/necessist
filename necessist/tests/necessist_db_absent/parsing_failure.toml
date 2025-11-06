@@ -1,4 +1,5 @@
 args = ["--no-sqlite", "--root=fixtures/parsing_failure"]
+
 stderr = ""
 
 [bin]
@@ -6,6 +7,3 @@ name = "necessist"
 
 [fs]
 cwd = "../../.."
-
-[status]
-code = 0

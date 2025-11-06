@@ -1,10 +1,9 @@
 args = ["--no-sqlite", "--root=fixtures/invalid_pattern"]
 
+status = "failed"
+
 [bin]
 name = "necessist"
 
 [fs]
 cwd = "../../.."
-
-[status]
-code = 1
