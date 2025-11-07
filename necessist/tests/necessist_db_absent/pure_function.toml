@@ -1,0 +1,9 @@
+args = ["--no-sqlite", "--root=fixtures/pure_function", "--dump-candidates"]
+
+stderr = ""
+
+[bin]
+name = "necessist"
+
+[fs]
+cwd = "../../.."

@@ -3,7 +3,10 @@
 use super::{Foundry, FunctionCall, GenericVisitor, LocalFunction, Storage, Test, WithContents};
 use anyhow::Result;
 use necessist_core::framework::{SpanTestMaps, TestSet};
-use solang_parser::pt::{Expression, FunctionDefinition, Identifier, Loc, SourceUnit, Statement};
+use solang_parser::pt::{
+    Expression, FunctionAttribute, FunctionDefinition, Identifier, Loc, Mutability, SourceUnit,
+    Statement,
+};
 use std::{cell::RefCell, collections::BTreeMap, convert::Infallible};
 
 mod visit;
@@ -43,7 +46,9 @@ impl<'ast> visit_fns::Visitor<'ast> for FunctionDefinitionCollector<'ast> {
         &mut self,
         function_definition: &'ast FunctionDefinition,
     ) -> Result<(), Self::Error> {
-        if let Some(name) = &function_definition.name {
+        if let Some(name) = &function_definition.name
+            && !is_pure(function_definition)
+        {
             self.function_definitions
                 .entry(name.to_string())
                 .or_default()
@@ -172,6 +177,7 @@ impl<'ast> visit_fns::Visitor<'ast> for Visitor<'_, '_, '_, 'ast, '_> {
 fn is_test_function(function_definition: &FunctionDefinition) -> Option<Test<'_>> {
     if let Some(Identifier { name, .. }) = &function_definition.name
         && name.starts_with("test")
+        && !is_pure(function_definition)
         && let Some(Statement::Block { statements, .. }) = &function_definition.body
     {
         Some(Test {
@@ -181,6 +187,17 @@ fn is_test_function(function_definition: &FunctionDefinition) -> Option<Test<'_>
     } else {
         None
     }
+}
+
+// smoelius: Skip `pure` functions. @smonicas noticed that instrumenting them is a bug because
+// `vm.envBytes` is a `view` function. See: https://github.com/trailofbits/necessist/issues/1728
+fn is_pure(function_definition: &FunctionDefinition) -> bool {
+    function_definition.attributes.iter().any(|attribute| {
+        matches!(
+            attribute,
+            FunctionAttribute::Mutability(Mutability::Pure(_))
+        )
+    })
 }
 
 fn filter_statements<'ast, I: IntoIterator<Item = &'ast Statement>>(
