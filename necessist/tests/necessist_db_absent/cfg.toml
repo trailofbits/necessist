@@ -2,8 +2,5 @@ args = ["--no-sqlite", "--root=fixtures/cfg"]
 
 stderr = ""
 
-[bin]
-name = "necessist"
-
 [fs]
 cwd = "../../.."

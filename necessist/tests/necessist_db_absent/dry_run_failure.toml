@@ -2,8 +2,5 @@ args = ["--no-sqlite", "--root=fixtures/dry_run_failure"]
 
 stderr = ""
 
-[bin]
-name = "necessist"
-
 [fs]
 cwd = "../../.."

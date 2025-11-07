@@ -2,8 +2,5 @@ args = ["--no-sqlite", "--root=fixtures/valid_pattern"]
 
 stderr = ""
 
-[bin]
-name = "necessist"
-
 [fs]
 cwd = "../../.."

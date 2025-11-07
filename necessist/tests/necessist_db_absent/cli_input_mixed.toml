@@ -8,8 +8,5 @@ args = [
 
 stderr = ""
 
-[bin]
-name = "necessist"
-
 [fs]
 cwd = "../../.."

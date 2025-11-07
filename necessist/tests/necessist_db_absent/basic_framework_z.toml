@@ -1,8 +1,5 @@
 args = ["--no-sqlite", "--root=fixtures/basic", "--framework=z"]
 
-[bin]
-name = "necessist"
-
 [fs]
 cwd = "../../.."
 
