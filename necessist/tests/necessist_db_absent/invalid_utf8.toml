@@ -2,8 +2,5 @@ args = ["--no-sqlite", "--root=fixtures/invalid_utf8"]
 
 stderr = ""
 
-[bin]
-name = "necessist"
-
 [fs]
 cwd = "../../.."

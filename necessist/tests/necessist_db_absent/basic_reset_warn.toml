@@ -2,8 +2,5 @@ args = ["--root=fixtures/basic", "--reset", "--deny=database-does-not-exist"]
 
 status = "failed"
 
-[bin]
-name = "necessist"
-
 [fs]
 cwd = "../../.."

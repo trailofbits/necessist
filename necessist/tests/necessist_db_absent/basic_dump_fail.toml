@@ -2,8 +2,5 @@ args = ["--root=fixtures/basic", "--dump"]
 
 status = "failed"
 
-[bin]
-name = "necessist"
-
 [fs]
 cwd = "../../.."

@@ -22,6 +22,7 @@ fn initialize() {
 #[test]
 fn trycmd() {
     TestCases::new()
+        .default_bin_name("necessist")
         .env("TRYCMD", "1")
         .case("tests/necessist_db_absent/*.toml");
 
@@ -33,6 +34,7 @@ fn trycmd() {
     let _remove_file = util::RemoveFile(PathBuf::from(ROOT).join("necessist.db"));
 
     TestCases::new()
+        .default_bin_name("necessist")
         .env("TRYCMD", "1")
         .case("tests/necessist_db_present/*.toml");
 }
@@ -127,15 +129,6 @@ fn check_toml_files() {
         let stderr = document.as_table().and_then(|table| table.get("stderr"));
         assert!(status.is_some() || stderr.is_some());
         assert!(stderr.is_some() || path.with_extension("stderr").try_exists().unwrap());
-
-        let bin_name = document
-            .as_table()
-            .and_then(|table| table.get("bin"))
-            .and_then(toml::Value::as_table)
-            .and_then(|table| table.get("name"))
-            .and_then(toml::Value::as_str)
-            .unwrap();
-        assert_eq!("necessist", bin_name);
 
         let fs_cwd = document
             .as_table()

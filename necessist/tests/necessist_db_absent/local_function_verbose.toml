@@ -2,8 +2,5 @@ args = ["--no-sqlite", "--root=fixtures/local_function", "--verbose"]
 
 stderr = ""
 
-[bin]
-name = "necessist"
-
 [fs]
 cwd = "../../.."

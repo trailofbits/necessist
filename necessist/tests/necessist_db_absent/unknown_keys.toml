@@ -2,8 +2,5 @@ args = ["--no-sqlite", "--root=fixtures/unknown_keys"]
 
 status = "failed"
 
-[bin]
-name = "necessist"
-
 [fs]
 cwd = "../../.."

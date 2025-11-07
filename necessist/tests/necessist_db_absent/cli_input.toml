@@ -2,8 +2,5 @@ args = ["--no-sqlite", "--dump-candidates", "--root=fixtures/cli_input"]
 
 stderr = ""
 
-[bin]
-name = "necessist"
-
 [fs]
 cwd = "../../.."
