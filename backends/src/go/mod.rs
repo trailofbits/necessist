@@ -461,7 +461,8 @@ impl RunLow for Go {
     ) -> Result<()> {
         let mut os_name_map = self.os_name_map.borrow_mut();
 
-        // smoelius: `n_instrumentable_statements == 0` to avoid an "unused imports" error.
+        // smoelius: Without the `n_instrumentable_statements == 0` check, Go would generate an
+        // "unused imports" error for the `import "os"` added to the test file.
         if os_name_map.contains_key(source_file) || n_instrumentable_statements == 0 {
             return Ok(());
         }
