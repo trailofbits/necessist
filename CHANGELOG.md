@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.1.3
+
+- Expand `is_it_call_expr` to work with `function` expressions ([b9771db](https://github.com/trailofbits/necessist/commit/b9771dbf302f3551e0c375a81aab08dcdc048293))
+- Expand `it` messages that Mocha backend can detect ([9c13b2e](https://github.com/trailofbits/necessist/commit/9c13b2eecd682ff6060ba0c2eece0dbb2a3d1a92))
+- Return reasons for build failures ([85fce01](https://github.com/trailofbits/necessist/commit/85fce012cb010e96dac32a52b675c965ce91977d))
+- Upgrade `swc_core` to version 47 ([4ed813f](https://github.com/trailofbits/necessist/commit/4ed813fa06dc17e4657d6ea67c2134cb7c3ddf51))
+- In Foundry backend, track `bytes` rather than `chars` ([bd10591](https://github.com/trailofbits/necessist/commit/bd10591eed4af983d2ac18af03cb6877a7243b61))
+- Skip `pure` functions in Foundry backend ([fc57bf6](https://github.com/trailofbits/necessist/commit/fc57bf60c01902d00f2186f66905f447fb8aacf9))
+
 ## 2.1.2
 
 - Upgrade dependencies, including:
