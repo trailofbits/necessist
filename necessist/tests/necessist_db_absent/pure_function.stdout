@@ -1,0 +1,1 @@
+fixtures/pure_function/test/PureFunction.t.sol:12:9-12:42: `s = "This is a `view` function.";`
