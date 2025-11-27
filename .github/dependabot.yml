@@ -9,6 +9,10 @@ updates:
 
   - package-ecosystem: cargo
     directory: /
+    groups:
+      rust:
+        patterns:
+          - "*"
     schedule:
       interval: weekly
       day: monday
