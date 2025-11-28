@@ -6,7 +6,7 @@ name: Check release necessity
 on: [pull_request]
 
 permissions:
-  issues: write
+  pull-requests: write
 
 jobs:
   check-release-necessity:
@@ -44,8 +44,3 @@ jobs:
           if ! cargo update "$PACKAGE@$OLD_VERSION" --precise "$NEW_VERSION"; then
             gh pr edit '${{ github.event.pull_request.number }}' --add-label 'requires release'
           fi
-        env:
-          # smoelius: The `DEPENDABOT_REPO_TOKEN` requires SSO authorization and the following
-          # scopes: `public_repo`, `read:org`, and `read:discussion`.
-          GH_TOKEN: ${{ secrets.DEPENDABOT_REPO_TOKEN }}
-          GH_REPO: ${{ github.repository }}
