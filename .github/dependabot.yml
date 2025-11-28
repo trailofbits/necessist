@@ -2,6 +2,10 @@ version: 2
 updates:
   - package-ecosystem: github-actions
     directory: /
+    groups:
+      rust:
+        patterns:
+          - "*"
     schedule:
       interval: weekly
       day: monday
@@ -15,12 +19,3 @@ updates:
       time: "03:00"
     allow:
       - dependency-type: direct
-
-  # - package-ecosystem: cargo
-  #   directory: /crates_io
-  #   schedule:
-  #     interval: weekly
-  #     day: monday
-  #     time: "03:00"
-  #   allow:
-  #     - dependency-type: direct
