@@ -2,10 +2,6 @@ version: 2
 updates:
   - package-ecosystem: github-actions
     directory: /
-    groups:
-      rust:
-        patterns:
-          - "*"
     schedule:
       interval: weekly
       day: monday
@@ -13,6 +9,10 @@ updates:
 
   - package-ecosystem: cargo
     directory: /
+    groups:
+      rust:
+        patterns:
+          - "*"
     schedule:
       interval: weekly
       day: monday
