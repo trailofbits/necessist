@@ -44,3 +44,5 @@ jobs:
           if ! cargo update "$PACKAGE@$OLD_VERSION" --precise "$NEW_VERSION"; then
             gh pr edit '${{ github.event.pull_request.number }}' --add-label 'requires release'
           fi
+        env:
+          GH_TOKEN: ${{ github.token }}
