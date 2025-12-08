@@ -396,7 +396,7 @@ impl ParseLow for Rust {
                 .into_iter()
                 .filter_entry(|entry| {
                     let path = entry.path();
-                    path.file_name() != Some(OsStr::new("target"))
+                    entry.file_name() != "target"
                         && (!path.is_file() || path.extension() == Some(OsStr::new("rs")))
                 }),
         )
