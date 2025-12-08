@@ -187,7 +187,7 @@ fn noninvasive_siblings() {
 
     for entry in WalkDir::new(Path::new(env!("CARGO_MANIFEST_DIR")).join(".."))
         .into_iter()
-        .filter_entry(|entry| entry.path().file_name() != Some(OsStr::new("target")))
+        .filter_entry(|entry| entry.file_name() != "target")
     {
         let entry = entry.unwrap();
         let path = entry.path();
