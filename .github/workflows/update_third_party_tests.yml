@@ -11,14 +11,13 @@ concurrency:
 
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
   update:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-        with:
-          ssh-key: ${{ secrets.SSH_KEY }}
 
       - name: Update third-party tests
         run: |
@@ -27,7 +26,7 @@ jobs:
           # "creatordate" doesn't work.
           # scripts/update_go_third_party_tests.sh
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
 
       - name: Install testing tools
         uses: ./.github/actions/install-testing-tools
@@ -50,5 +49,4 @@ jobs:
         with:
           title: "Update third-party tests"
           commit-message: "Update third-party tests"
-          token: ${{ secrets.REPO_TOKEN }}
           branch-suffix: random
