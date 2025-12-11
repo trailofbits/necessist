@@ -17,10 +17,10 @@
 | minio                      | RELEASE.2025-10-15T17-29-55Z             |           |      | X     | X     | X       | 1         |
 | operator-filter-registry   | v1.4.2                                   |           |      | X     | X     | X       | 0         |
 | proptest_https             | b71253807372932f72a71b1af7975371a41e7c88 |           | X    | X     | X     | X       | 0         |
-| pyth                       | hip-3-pusher-v0.2.0                      | anchor    |      | X     | X     |         | 0         |
+| pyth                       | fortuna-v9.3.0                           | anchor    |      | X     | X     |         | 0         |
 | seaport_foundry            | 1.6                                      | foundry   | X    | X     | X     | X       | 1         |
 | seaport_hardhat            | 1.6                                      | hardhat   |      | X     | X     | X       | 1         |
-| storybook                  | v10.0.8                                  |           | X    | X     | X     |         | 0         |
+| storybook                  | v10.1.7                                  |           | X    | X     | X     |         | 0         |
 | uniswap_v3-core            |                                          |           |      | X     | X     | X       | 0         |
 | uniswap_v3-core_factory    |                                          |           | X    | X     | X     | X       | 1         |
 | uniswap_v4-core            |                                          |           | X    | X     | X     |         | 0         |

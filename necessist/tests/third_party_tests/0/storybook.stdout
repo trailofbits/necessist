@@ -1,4 +1,4 @@
-101 candidates in 27 tests in 2 source files
+99 candidates in 32 tests in 2 source files
 $DIR/code/core/src/manager-api/tests/store.test.js: dry running
 $DIR/code/core/src/manager-api/tests/store.test.js: mutilating
 $DIR/code/core/src/manager-api/tests/store.test.js: `store2.session.get.mockReturnValueOnce({ foo: 'bar', combined: { a: 'b' } });` failed
@@ -81,211 +81,41 @@ $DIR/code/core/src/manager-api/tests/versions.test.js: `await init();` passed
 $DIR/code/core/src/manager-api/tests/versions.test.js: `store.setState(initialState);` passed
 $DIR/code/core/src/manager-api/tests/versions.test.js: `await init();` passed
 $DIR/code/core/src/manager-api/tests/versions.test.js: `await init();` passed
-$DIR/code/core/src/manager-api/tests/versions.test.js: `store.setState({
-        ...initialState,
-        versions: {
-          ...initialState.versions,
-          current: { version: '7.6.1' },
-          latest: { version: '7.6.1' },
-        },
-      });` failed
+$DIR/code/core/src/manager-api/tests/versions.test.js: `setVersions(store, initialState, latest);` failed
 $DIR/code/core/src/manager-api/tests/versions.test.js: `await init();` passed
-$DIR/code/core/src/manager-api/tests/versions.test.js: `store.setState({
-        ...initialState,
-        versions: {
-          ...initialState.versions,
-          current: { version: '7.6.1' },
-          latest: { version: '7.6.10' },
-        },
-      });` failed
+$DIR/code/core/src/manager-api/tests/versions.test.js: `setVersions(store, initialState, patchDiff);` failed
 $DIR/code/core/src/manager-api/tests/versions.test.js: `await init();` passed
-$DIR/code/core/src/manager-api/tests/versions.test.js: `store.setState({
-        ...initialState,
-        versions: {
-          ...initialState.versions,
-          current: { version: '7.2.5' },
-          latest: { version: '7.6.10' },
-        },
-      });` failed
+$DIR/code/core/src/manager-api/tests/versions.test.js: `setVersions(store, initialState, minorDiff);` failed
 $DIR/code/core/src/manager-api/tests/versions.test.js: `await init();` passed
-$DIR/code/core/src/manager-api/tests/versions.test.js: `store.setState({
-        ...initialState,
-        versions: {
-          ...initialState.versions,
-          current: { version: '8.0.0-beta' },
-          latest: { version: '7.6.10' },
-        },
-      });` failed
-$DIR/code/core/src/manager-api/tests/versions.test.js: `store.setState({
-        ...initialState,
-        versions: {
-          ...initialState.versions,
-          current: { version: '5.2.1' },
-          latest: { version: '5.2.1' },
-        },
-      });` passed
+$DIR/code/core/src/manager-api/tests/versions.test.js: `setVersions(store, initialState, canary);` failed
+$DIR/code/core/src/manager-api/tests/versions.test.js: `await init();` passed
+$DIR/code/core/src/manager-api/tests/versions.test.js: `setVersions(store, initialState, newerPrerelease);` failed
+$DIR/code/core/src/manager-api/tests/versions.test.js: `setVersions(store, initialState, latest);` passed
 $DIR/code/core/src/manager-api/tests/versions.test.js: `await init();` passed
 $DIR/code/core/src/manager-api/tests/versions.test.js: `global.STORYBOOK_RENDERER = 'vue';` failed
-$DIR/code/core/src/manager-api/tests/versions.test.js: `store.setState({
-        ...initialState,
-        versions: {
-          ...initialState.versions,
-          current: { version: '5.2.1' },
-          latest: { version: '5.2.1' },
-        },
-      });` failed
 $DIR/code/core/src/manager-api/tests/versions.test.js: `await init();` passed
-$DIR/code/core/src/manager-api/tests/versions.test.js: `store.setState({
-        ...initialState,
-        versions: {
-          ...initialState.versions,
-          current: { version: '5.2.1' },
-          latest: { version: '5.2.2' },
-        },
-      });` failed
+$DIR/code/core/src/manager-api/tests/versions.test.js: `setVersions(store, initialState, latest);` passed
+$DIR/code/core/src/manager-api/tests/versions.test.js: `await init();` passed
+$DIR/code/core/src/manager-api/tests/versions.test.js: `setVersions(store, initialState, latest);` passed
+$DIR/code/core/src/manager-api/tests/versions.test.js: `await init();` passed
+$DIR/code/core/src/manager-api/tests/versions.test.js: `setVersions(store, initialState, latest);` failed
+$DIR/code/core/src/manager-api/tests/versions.test.js: `await init();` passed
+$DIR/code/core/src/manager-api/tests/versions.test.js: `setVersions(store, initialState, canary);` failed
+$DIR/code/core/src/manager-api/tests/versions.test.js: `setVersions(store, initialState, latest);` failed
+$DIR/code/core/src/manager-api/tests/versions.test.js: `await init();` passed
+$DIR/code/core/src/manager-api/tests/versions.test.js: `setVersions(store, initialState, patchDiff);` failed
 $DIR/code/core/src/manager-api/tests/versions.test.js: `await init();` passed
 $DIR/code/core/src/manager-api/tests/versions.test.js: `await init();` passed
-$DIR/code/core/src/manager-api/tests/versions.test.js: `store.setState({
-        ...initialState,
-        versions: {
-          ...initialState.versions,
-          current: { version: '5.2.1' },
-          latest: { version: '5.3.1' },
-        },
-      });` passed
+$DIR/code/core/src/manager-api/tests/versions.test.js: `setVersions(store, initialState, minorDiff);` passed
 $DIR/code/core/src/manager-api/tests/versions.test.js: `await init();` passed
-$DIR/code/core/src/manager-api/tests/versions.test.js: `store.setState({
-        ...initialState,
-        versions: {
-          ...initialState.versions,
-          current: { version: '5.2.1' },
-          latest: { version: '6.2.1' },
-        },
-      });` passed
+$DIR/code/core/src/manager-api/tests/versions.test.js: `setVersions(store, initialState, majorDiff);` passed
 $DIR/code/core/src/manager-api/tests/versions.test.js: `await init();` passed
-$DIR/code/core/src/manager-api/tests/versions.test.js: `store.setState({
-        ...initialState,
-        versions: {
-          ...initialState.versions,
-          current: { version: '5.2.1' },
-          latest: { version: '6.2.1-prerelease.0' },
-        },
-      });` failed
+$DIR/code/core/src/manager-api/tests/versions.test.js: `setVersions(store, initialState, prereleaseAvailable);` failed
 $DIR/code/core/src/manager-api/tests/versions.test.js: `await init();` passed
-$DIR/code/core/src/manager-api/tests/versions.test.js: `store.setState({
-        ...initialState,
-        versions: {
-          ...initialState.versions,
-          current: { version: '5.2.1-prerelease.0' },
-          latest: { version: '6.2.1' },
-        },
-      });` passed
+$DIR/code/core/src/manager-api/tests/versions.test.js: `setVersions(store, initialState, olderPrerelease);` passed
 $DIR/code/core/src/manager-api/tests/versions.test.js: `await init();` passed
-$DIR/code/core/src/manager-api/tests/versions.test.js: `store.setState({
-        ...initialState,
-        versions: {
-          ...initialState.versions,
-          current: { version: '5.2.1-prerelease.0' },
-          latest: { version: '3.2.1' },
-        },
-      });` failed
+$DIR/code/core/src/manager-api/tests/versions.test.js: `setVersions(store, initialState, newerPrerelease);` failed
 $DIR/code/core/src/manager-api/tests/versions.test.js: `.setState(initialState)` passed
 $DIR/code/core/src/manager-api/tests/versions.test.js: `.setState.mockReset()` passed
 $DIR/code/core/src/manager-api/tests/versions.test.js: `.setState(initialState)` passed
 $DIR/code/core/src/manager-api/tests/versions.test.js: `.setState(initialState)` passed
-$DIR/code/core/src/manager-api/tests/versions.test.js: `.setState({
-        ...initialState,
-        versions: {
-          ...initialState.versions,
-          current: { version: '7.6.1' },
-          latest: { version: '7.6.1' },
-        },
-      })` failed
-$DIR/code/core/src/manager-api/tests/versions.test.js: `.setState({
-        ...initialState,
-        versions: {
-          ...initialState.versions,
-          current: { version: '7.6.1' },
-          latest: { version: '7.6.10' },
-        },
-      })` failed
-$DIR/code/core/src/manager-api/tests/versions.test.js: `.setState({
-        ...initialState,
-        versions: {
-          ...initialState.versions,
-          current: { version: '7.2.5' },
-          latest: { version: '7.6.10' },
-        },
-      })` failed
-$DIR/code/core/src/manager-api/tests/versions.test.js: `.setState({
-        ...initialState,
-        versions: {
-          ...initialState.versions,
-          current: { version: '8.0.0-beta' },
-          latest: { version: '7.6.10' },
-        },
-      })` failed
-$DIR/code/core/src/manager-api/tests/versions.test.js: `.setState({
-        ...initialState,
-        versions: {
-          ...initialState.versions,
-          current: { version: '5.2.1' },
-          latest: { version: '5.2.1' },
-        },
-      })` passed
-$DIR/code/core/src/manager-api/tests/versions.test.js: `.setState({
-        ...initialState,
-        versions: {
-          ...initialState.versions,
-          current: { version: '5.2.1' },
-          latest: { version: '5.2.1' },
-        },
-      })` failed
-$DIR/code/core/src/manager-api/tests/versions.test.js: `.setState({
-        ...initialState,
-        versions: {
-          ...initialState.versions,
-          current: { version: '5.2.1' },
-          latest: { version: '5.2.2' },
-        },
-      })` failed
-$DIR/code/core/src/manager-api/tests/versions.test.js: `.setState({
-        ...initialState,
-        versions: {
-          ...initialState.versions,
-          current: { version: '5.2.1' },
-          latest: { version: '5.3.1' },
-        },
-      })` passed
-$DIR/code/core/src/manager-api/tests/versions.test.js: `.setState({
-        ...initialState,
-        versions: {
-          ...initialState.versions,
-          current: { version: '5.2.1' },
-          latest: { version: '6.2.1' },
-        },
-      })` passed
-$DIR/code/core/src/manager-api/tests/versions.test.js: `.setState({
-        ...initialState,
-        versions: {
-          ...initialState.versions,
-          current: { version: '5.2.1' },
-          latest: { version: '6.2.1-prerelease.0' },
-        },
-      })` failed
-$DIR/code/core/src/manager-api/tests/versions.test.js: `.setState({
-        ...initialState,
-        versions: {
-          ...initialState.versions,
-          current: { version: '5.2.1-prerelease.0' },
-          latest: { version: '6.2.1' },
-        },
-      })` passed
-$DIR/code/core/src/manager-api/tests/versions.test.js: `.setState({
-        ...initialState,
-        versions: {
-          ...initialState.versions,
-          current: { version: '5.2.1-prerelease.0' },
-          latest: { version: '3.2.1' },
-        },
-      })` failed
