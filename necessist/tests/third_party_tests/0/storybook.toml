@@ -1,6 +1,6 @@
 url = "https://github.com/storybookjs/storybook"
 init = "cd code/core && yarn"
-rev = "v10.0.8"
+rev = "v10.1.7"
 
 # smoelius: On Windows, I get:
 # ```
