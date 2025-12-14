@@ -10,11 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
+      contents: write
     steps:
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
-          ssh-key: ${{ secrets.SSH_KEY }}
 
       - uses: rust-lang/crates-io-auth-action@v1
         id: auth
@@ -35,9 +35,6 @@ jobs:
         env:
           CARGO_REGISTRY_TOKEN: ${{ steps.auth.outputs.token }}
 
-      - name: Update release branch
-        run: git push origin ${{ github.ref }}:release
-
       - name: Get version
         id: get-version
         run: echo "version=${GITHUB_REF/refs\/tags\/v/}" >> "$GITHUB_OUTPUT"
@@ -53,4 +50,3 @@ jobs:
           body_path: body.md
           draft: false
           prerelease: ${{ contains(github.ref, 'pre') || contains(github.ref, 'rc') }}
-          token: ${{ secrets.REPO_TOKEN }}

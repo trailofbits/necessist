@@ -37,12 +37,6 @@ sudo apt install pkg-config libsqlite3-dev
 cargo install necessist
 ```
 
-#### Install Necessist from [github.com]:
-
-```sh
-cargo install --git https://github.com/trailofbits/necessist --branch release
-```
-
 ## Running
 
 `cd` into your project's directory and type `necessist` (with no arguments).
@@ -513,7 +507,6 @@ Necessist is licensed and distributed under the AGPLv3 license. [Contact us](mai
 [added to the test]: https://github.com/sfackler/rust-openssl/pull/1852
 [crates.io]: https://crates.io/crates/necessist
 [frameworks besides Hoare logic entirely]: https://github.com/trailofbits/necessist/pull/474#discussion_r1230859226
-[github.com]: https://github.com/trailofbits/necessist
 [overflow checks]: https://doc.rust-lang.org/rustc/codegen-options/index.html#overflow-checks
 [path]: #paths
 [paths]: #paths
