@@ -88,6 +88,7 @@ pub struct Necessist {
     pub dump: bool,
     pub dump_candidate_counts: bool,
     pub dump_candidates: bool,
+    pub no_lines_or_columns: bool,
     pub no_local_functions: bool,
     pub no_sqlite: bool,
     pub quiet: bool,
@@ -611,13 +612,14 @@ fn dump_candidates(
                 .chain(span_test_maps.method_call.keys())
         })
     {
+        let loc = if context.opts.no_lines_or_columns {
+            span.source_file().to_console_string()
+        } else {
+            span.to_console_string()
+        };
         let text = span.source_text()?;
 
-        (context.println)(&format!(
-            "{}: `{}`",
-            span.to_console_string(),
-            text.replace('\r', "")
-        ));
+        (context.println)(&format!("{loc}: `{}`", text.replace('\r', "")));
     }
 
     Ok(())
@@ -811,9 +813,13 @@ fn emit_to_console(context: &LightContext, removal: &Removal) {
     } = removal;
 
     if !context.opts.quiet && (context.opts.verbose || *outcome == Outcome::Passed) {
+        let loc = if context.opts.no_lines_or_columns {
+            span.source_file().to_console_string()
+        } else {
+            span.to_console_string()
+        };
         let msg = format!(
-            "{}: `{}` {}",
-            span.to_console_string(),
+            "{loc}: `{}` {}",
             text.replace('\r', ""),
             if std::io::stdout().is_terminal() {
                 outcome.style().bold()

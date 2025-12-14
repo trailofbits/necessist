@@ -36,6 +36,8 @@ pub struct Opts<Identifier: Clone + Send + Sync + ValueEnum + 'static> {
     dump_candidates: bool,
     #[clap(long, help = "Assume testing framework is <FRAMEWORK>")]
     framework: Option<framework::Auto<Identifier>>,
+    #[clap(long, help = "Do not output line or column information (experimental)")]
+    no_lines_or_columns: bool,
     #[clap(long, hide = true)]
     no_local_functions: bool,
     #[clap(long, help = "Do not output to an sqlite database")]
@@ -80,6 +82,7 @@ impl<Identifier: Clone + Send + Sync + ValueEnum> From<Opts<Identifier>>
             dump_candidate_counts,
             dump_candidates,
             framework,
+            no_lines_or_columns,
             no_local_functions,
             no_sqlite,
             quiet,
@@ -103,6 +106,7 @@ impl<Identifier: Clone + Send + Sync + ValueEnum> From<Opts<Identifier>>
                 dump,
                 dump_candidate_counts,
                 dump_candidates,
+                no_lines_or_columns,
                 no_local_functions,
                 no_sqlite,
                 quiet,

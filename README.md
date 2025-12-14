@@ -189,6 +189,7 @@ Options:
       --dump-candidate-counts  Dump number of removal candidates in each file and exit
       --dump-candidates        Dump removal candidates and exit (for debugging)
       --framework <FRAMEWORK>  Assume testing framework is <FRAMEWORK> [possible values: anchor, auto, foundry, go, hardhat, rust, vitest]
+      --no-lines-or-columns    Do not output line or column information (experimental)
       --no-sqlite              Do not output to an sqlite database
       --quiet                  Do not output to the console
       --reset                  Discard sqlite database contents
