@@ -89,6 +89,11 @@ impl Span {
     }
 
     #[must_use]
+    pub fn source_file(&self) -> SourceFile {
+        self.source_file.clone()
+    }
+
+    #[must_use]
     pub fn start(&self) -> proc_macro2::LineColumn {
         self.start
     }

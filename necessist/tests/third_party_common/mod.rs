@@ -539,7 +539,12 @@ fn run_test(workdir: &Path, toml_path: &Path, test: &Test) -> (String, Duration)
         }
 
         let mut exec = Exec::cmd("../target/debug/necessist");
-        exec = exec.args(&["--no-sqlite", "--root", &root.to_string_lossy()]);
+        exec = exec.args(&[
+            "--no-lines-or-columns",
+            "--no-sqlite",
+            "--root",
+            &root.to_string_lossy(),
+        ]);
         if let Some(prefix) = &test.path_prefix {
             let prefix_in_workdir = workdir.join(prefix);
             let path = var("PATH").unwrap();
@@ -580,11 +585,7 @@ fn run_test(workdir: &Path, toml_path: &Path, test: &Test) -> (String, Duration)
 
         let stdout_actual = std::str::from_utf8(&buf).unwrap();
 
-        // smoelius: Removing the line-column information makes comparing diffs easier.
-        let stdout_normalized = remove_timings(&remove_line_columns(&normalize_paths(
-            stdout_actual,
-            workdir,
-        )));
+        let stdout_normalized = remove_timings(&normalize_paths(stdout_actual, workdir));
 
         if enabled("BLESS") {
             write(path_stdout, stdout_normalized).unwrap();
@@ -681,13 +682,6 @@ fn normalize_paths(mut s: &str, path: &Path) -> String {
     // smoelius: Push whatever is remaining.
     buf.push_str(s);
     buf
-}
-
-static LINE_COLUMN_RE: LazyLock<Regex> =
-    LazyLock::new(|| Regex::new(r"(?m)^\$DIR/([^:]*):[0-9]+:[0-9]+-[0-9]+:[0-9]+:").unwrap());
-
-fn remove_line_columns(s: &str) -> String {
-    LINE_COLUMN_RE.replace_all(s, r"$$DIR/$1:").to_string()
 }
 
 // smoelius: Don't put a `\b` at the start of this pattern. `assert_cmd::output::OutputError`
