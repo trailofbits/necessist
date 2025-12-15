@@ -20,7 +20,7 @@
 | pyth                       | fortuna-v9.3.0                           | anchor    |      | X     | X     |         | 0         |
 | seaport_foundry            | 1.6                                      | foundry   | X    | X     | X     | X       | 1         |
 | seaport_hardhat            | 1.6                                      | hardhat   |      | X     | X     | X       | 1         |
-| storybook                  | v10.1.7                                  |           | X    | X     | X     |         | 0         |
+| storybook                  | v10.1.8                                  |           | X    | X     | X     |         | 0         |
 | uniswap_v3-core            |                                          |           |      | X     | X     | X       | 0         |
 | uniswap_v3-core_factory    |                                          |           | X    | X     | X     | X       | 1         |
 | uniswap_v4-core            |                                          |           | X    | X     | X     |         | 0         |
