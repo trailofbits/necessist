@@ -33,7 +33,7 @@ subprocess = "0.2"
 walkdir = "2.5"
 
 # Anchor
-toml_edit = "0.23"
+toml_edit = "0.24"
 # Also, swc_core, listed below under Hardhat.
 
 # Foundry
