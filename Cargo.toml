@@ -42,6 +42,6 @@ ignore = [
     "unit-prefix",
     # https://github.com/alacritty/vte/pull/122#issuecomment-2579278540
     "utf8parse",
-    # https://github.com/wasm-bindgen/wasm-bindgen/blob/8f2792238edbe808ba9e1eecc1c44032f28a66b1/CHANGELOG.md?plain=1#L13
-    "wasm-bindgen-backend",
+    # https://github.com/console-rs/indicatif/blob/dbd26eb18157e5fad18c79e1933ad5f249165d6c/Cargo.toml#L34-L35
+    "web-time",
 ]
