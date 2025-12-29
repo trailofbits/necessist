@@ -2548,14 +2548,6 @@
         "name": "David Tolnay"
       }
     ],
-    "ryu": [
-      {
-        "id": 3618,
-        "kind": "user",
-        "login": "dtolnay",
-        "name": "David Tolnay"
-      }
-    ],
     "ryu-js": [
       {
         "id": 1842,
@@ -4188,6 +4180,14 @@
         "kind": "team",
         "login": "github:unicode-org:icu4x-release",
         "name": "icu4x-release"
+      }
+    ],
+    "zmij": [
+      {
+        "id": 3618,
+        "kind": "user",
+        "login": "dtolnay",
+        "name": "David Tolnay"
       }
     ]
   },
