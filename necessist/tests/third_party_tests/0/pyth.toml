@@ -1,5 +1,5 @@
 url = "https://github.com/pyth-network/pyth-crosschain"
-rev = "fortuna-v9.3.0"
+rev = "hip-3-pusher-v0.2.6"
 target_os = ["linux", "macos"]
 subdir = "pythnet/message_buffer"
 framework = "anchor"
