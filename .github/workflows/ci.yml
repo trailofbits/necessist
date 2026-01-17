@@ -64,6 +64,10 @@ jobs:
             target/dylint/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-hack, cargo-udeps
+
       - name: Rustup
         run: rustup update
 
@@ -73,12 +77,10 @@ jobs:
           rustup +nightly component add clippy rustfmt
           cargo install cargo-dylint --git=https://github.com/trailofbits/dylint --no-default-features --features=cargo-cli || true
           cargo install dylint-link              || true
-          cargo install cargo-hack               || true
           cargo install cargo-license            || true
           cargo install cargo-sort               || true
           cargo install cargo-supply-chain       || true
-          cargo install cargo-udeps --locked     || true
-          cargo install cargo-unmaintained       || true
+          cargo install cargo-unmaintained --git https://github.com/trailofbits/cargo-unmaintained --branch bump-version --force
 
       - name: Install testing tools
         if: ${{ matrix.test != 'ci' }}
