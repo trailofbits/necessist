@@ -12,6 +12,13 @@ updates:
     # smoelius: The next `groups` option combines multiple Dependabot updates into one, but it
     # messes up the "release necessity" workflow. I have decided that combining updates is more
     # valuable than the "release necessity" workflow.
+    # smoelius: The reason why grouping breaks the "release necessity" workflow is that the
+    # workflow needs to parse PR names:
+    # ```
+    #     PACKAGE="$(expr '${{ github.event.pull_request.title }}' : '^Bump \([^ ]*\) from [^ ]* to [^ ]*$')"
+    #     OLD_VERSION="$(expr '${{ github.event.pull_request.title }}' : '^Bump [^ ]* from \([^ ]*\) to [^ ]*$')"
+    #     NEW_VERSION="$(expr '${{ github.event.pull_request.title }}' : '^Bump [^ ]* from [^ ]* to \([^ ]*\)$')"
+    # ```
     groups:
       rust:
         patterns:
