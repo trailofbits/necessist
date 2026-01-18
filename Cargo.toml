@@ -32,6 +32,7 @@ pattern = [
 
 [workspace.metadata.unmaintained]
 ignore = [
+    "dirs-sys-next",
     "libredox",
     "paste",
     "rand_core",
