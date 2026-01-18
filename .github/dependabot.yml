@@ -9,12 +9,13 @@ updates:
 
   - package-ecosystem: cargo
     directory: /
-    # smoelius: The next `groups` option works at combining multiple Dependabot updates into one,
-    # but it messes up the "release necessity" workflow.
-    # groups:
-    #   rust:
-    #     patterns:
-    #       - "*"
+    # smoelius: The next `groups` option combines multiple Dependabot updates into one, but it
+    # messes up the "release necessity" workflow. I have decided that combining updates is more
+    # valuable than the "release necessity" workflow.
+    groups:
+      rust:
+        patterns:
+          - "*"
     schedule:
       interval: weekly
       day: monday
