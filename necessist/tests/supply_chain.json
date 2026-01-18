@@ -916,6 +916,14 @@
         "name": "Ashish Myles"
       }
     ],
+    "dragonbox_ecma": [
+      {
+        "id": 26884,
+        "kind": "user",
+        "login": "magic-akari",
+        "name": null
+      }
+    ],
     "dsl_auto_type": [
       {
         "id": 4568,
@@ -2546,26 +2554,6 @@
         "kind": "user",
         "login": "dtolnay",
         "name": "David Tolnay"
-      }
-    ],
-    "ryu-js": [
-      {
-        "id": 1842,
-        "kind": "user",
-        "login": "Razican",
-        "name": "Iban Eguia Moraza"
-      },
-      {
-        "id": 8930,
-        "kind": "team",
-        "login": "github:boa-dev:owners",
-        "name": "owners"
-      },
-      {
-        "id": 82961,
-        "kind": "user",
-        "login": "HalidOdat",
-        "name": "Haled Odat"
       }
     ],
     "same-file": [
