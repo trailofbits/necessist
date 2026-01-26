@@ -27,7 +27,7 @@ use std::{
 use strum::IntoEnumIterator;
 use subprocess::{Exec, ExitStatus};
 
-const DEFAULT_TIMEOUT: Duration = Duration::from_secs(60);
+const DEFAULT_TIMEOUT: Duration = Duration::from_mins(1);
 
 static CTRLC: AtomicBool = AtomicBool::new(false);
 
