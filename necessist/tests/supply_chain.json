@@ -560,84 +560,6 @@
         "name": "utils"
       }
     ],
-    "crossbeam-deque": [
-      {
-        "id": 2347,
-        "kind": "user",
-        "login": "jeehoonkang",
-        "name": "Jeehoon Kang"
-      },
-      {
-        "id": 2356,
-        "kind": "team",
-        "login": "github:crossbeam-rs:admins",
-        "name": "admins"
-      },
-      {
-        "id": 2915,
-        "kind": "user",
-        "login": "Amanieu",
-        "name": "Amanieu d'Antras"
-      },
-      {
-        "id": 33035,
-        "kind": "user",
-        "login": "taiki-e",
-        "name": "Taiki Endo"
-      }
-    ],
-    "crossbeam-epoch": [
-      {
-        "id": 2347,
-        "kind": "user",
-        "login": "jeehoonkang",
-        "name": "Jeehoon Kang"
-      },
-      {
-        "id": 2356,
-        "kind": "team",
-        "login": "github:crossbeam-rs:admins",
-        "name": "admins"
-      },
-      {
-        "id": 2915,
-        "kind": "user",
-        "login": "Amanieu",
-        "name": "Amanieu d'Antras"
-      },
-      {
-        "id": 33035,
-        "kind": "user",
-        "login": "taiki-e",
-        "name": "Taiki Endo"
-      }
-    ],
-    "crossbeam-utils": [
-      {
-        "id": 2347,
-        "kind": "user",
-        "login": "jeehoonkang",
-        "name": "Jeehoon Kang"
-      },
-      {
-        "id": 2356,
-        "kind": "team",
-        "login": "github:crossbeam-rs:admins",
-        "name": "admins"
-      },
-      {
-        "id": 2915,
-        "kind": "user",
-        "login": "Amanieu",
-        "name": "Amanieu d'Antras"
-      },
-      {
-        "id": 33035,
-        "kind": "user",
-        "login": "taiki-e",
-        "name": "Taiki Endo"
-      }
-    ],
     "crunchy": [
       {
         "id": 11478,
@@ -1052,14 +974,6 @@
         "kind": "user",
         "login": "cuviper",
         "name": "Josh Stone"
-      }
-    ],
-    "erased-serde": [
-      {
-        "id": 3618,
-        "kind": "user",
-        "login": "dtolnay",
-        "name": "David Tolnay"
       }
     ],
     "errno": [
@@ -2012,6 +1926,12 @@
         "kind": "user",
         "login": "djc",
         "name": "Dirkjan Ochtman"
+      },
+      {
+        "id": 7807,
+        "kind": "team",
+        "login": "github:rustls:publishers",
+        "name": "publishers"
       }
     ],
     "openssl-sys": [
@@ -2370,34 +2290,6 @@
         "kind": "user",
         "login": "dhardy",
         "name": "Diggory Hardy"
-      }
-    ],
-    "rayon": [
-      {
-        "id": 539,
-        "kind": "user",
-        "login": "cuviper",
-        "name": "Josh Stone"
-      },
-      {
-        "id": 1386,
-        "kind": "user",
-        "login": "nikomatsakis",
-        "name": "Niko Matsakis"
-      }
-    ],
-    "rayon-core": [
-      {
-        "id": 539,
-        "kind": "user",
-        "login": "cuviper",
-        "name": "Josh Stone"
-      },
-      {
-        "id": 1386,
-        "kind": "user",
-        "login": "nikomatsakis",
-        "name": "Niko Matsakis"
       }
     ],
     "redox_syscall": [
@@ -3480,14 +3372,6 @@
         "name": "Manish Goregaokar"
       }
     ],
-    "typeid": [
-      {
-        "id": 3618,
-        "kind": "user",
-        "login": "dtolnay",
-        "name": "David Tolnay"
-      }
-    ],
     "typenum": [
       {
         "id": 243,
@@ -3510,44 +3394,6 @@
         "kind": "user",
         "login": "dtolnay",
         "name": "David Tolnay"
-      }
-    ],
-    "unicode-segmentation": [
-      {
-        "id": 1,
-        "kind": "user",
-        "login": "alexcrichton",
-        "name": "Alex Crichton"
-      },
-      {
-        "id": 3,
-        "kind": "user",
-        "login": "huonw",
-        "name": "Huon Wilson"
-      },
-      {
-        "id": 7,
-        "kind": "user",
-        "login": "SimonSapin",
-        "name": "Simon Sapin"
-      },
-      {
-        "id": 1139,
-        "kind": "user",
-        "login": "Manishearth",
-        "name": "Manish Goregaokar"
-      },
-      {
-        "id": 1458,
-        "kind": "user",
-        "login": "kwantam",
-        "name": "Riad S. Wahby"
-      },
-      {
-        "id": 21056,
-        "kind": "user",
-        "login": "sujayakar",
-        "name": "Sujay Jayakar"
       }
     ],
     "unicode-width": [
