@@ -97,7 +97,10 @@ fn github() {
     metadata_tests.sort();
     metadata_tests.push(String::from("other"));
 
-    let ci_yml = Path::new(env!("CARGO_MANIFEST_DIR")).join("../.github/workflows/ci.yml");
+    let ci_yml = Path::new(concat!(
+        env!("CARGO_MANIFEST_DIR"),
+        "/../.github/workflows/ci.yml"
+    ));
     let contents = read_to_string(ci_yml).unwrap();
     let test_array = contents
         .lines()
@@ -164,9 +167,12 @@ fn markdown_link_check() {
         .success();
 
     // smoelius: https://github.com/rust-lang/crates.io/issues/788
-    let config = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/markdown_link_check.json");
+    let config = Path::new(concat!(
+        env!("CARGO_MANIFEST_DIR"),
+        "/tests/markdown_link_check.json"
+    ));
 
-    let readme_md = Path::new(env!("CARGO_MANIFEST_DIR")).join("../README.md");
+    let readme_md = Path::new(concat!(env!("CARGO_MANIFEST_DIR"), "/../README.md"));
 
     Command::new("npx")
         .args([
@@ -185,7 +191,7 @@ fn markdown_link_check() {
 fn noninvasive_siblings() {
     let re = Regex::new(r"use super::\{([^}]|\}[^;])*::").unwrap();
 
-    for entry in WalkDir::new(Path::new(env!("CARGO_MANIFEST_DIR")).join(".."))
+    for entry in WalkDir::new(concat!(env!("CARGO_MANIFEST_DIR"), "/.."))
         .into_iter()
         .filter_entry(|entry| entry.file_name() != "target")
     {
@@ -326,12 +332,15 @@ fn supply_chain() {
     remove_avatars(&mut value);
     let stdout_normalized = serde_json::to_string_pretty(&value).unwrap();
 
-    let path_buf = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/supply_chain.json");
+    let path = Path::new(concat!(
+        env!("CARGO_MANIFEST_DIR"),
+        "/tests/supply_chain.json"
+    ));
 
     if enabled("BLESS") {
-        write(path_buf, stdout_normalized).unwrap();
+        write(path, stdout_normalized).unwrap();
     } else {
-        let stdout_expected = read_to_string(&path_buf).unwrap();
+        let stdout_expected = read_to_string(path).unwrap();
 
         assert!(
             stdout_expected == stdout_normalized,

@@ -795,9 +795,9 @@ static DASH_RE: LazyLock<Regex> = LazyLock::new(|| Regex::new("-+").unwrap());
 #[cfg_attr(dylint_lib = "general", allow(non_thread_safe_call_in_test))]
 #[test]
 fn readme_is_current() {
-    let path_readme = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/README.md");
+    let path_readme = Path::new(concat!(env!("CARGO_MANIFEST_DIR"), "/tests/README.md"));
 
-    let readme_actual = read_to_string(&path_readme).unwrap();
+    let readme_actual = read_to_string(path_readme).unwrap();
     let readme_space_normalized = &SPACE_RE.replace_all(&readme_actual, " ");
     let readme_normalized = DASH_RE.replace_all(readme_space_normalized, "-");
 
@@ -847,7 +847,7 @@ fn readme_is_current() {
         .collect::<String>();
 
     if enabled("BLESS") {
-        write(&path_readme, readme_expected).unwrap();
+        write(path_readme, readme_expected).unwrap();
         let tempdir = tempdir().unwrap();
         assert!(
             Command::new("npm")
