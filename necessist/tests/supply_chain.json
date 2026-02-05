@@ -2266,12 +2266,6 @@
         "name": "libs"
       },
       {
-        "id": 563,
-        "kind": "team",
-        "login": "github:rust-random:maintainers",
-        "name": "maintainers"
-      },
-      {
         "id": 1234,
         "kind": "user",
         "login": "dhardy",
