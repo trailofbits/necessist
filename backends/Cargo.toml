@@ -29,11 +29,11 @@ serde_json = "1.0"
 strum = "0.27"
 strum_macros = "0.27"
 strip-ansi-escapes = "0.2"
-subprocess = "0.2"
+subprocess = "1.0"
 walkdir = "2.5"
 
 # Anchor
-toml_edit = "0.24"
+toml_edit = "0.25"
 # Also, swc_core, listed below under Hardhat.
 
 # Foundry
@@ -62,7 +62,7 @@ syn = { version = "2.0", features = ["extra-traits", "full", "visit"] }
 
 [dev-dependencies]
 curl = "0.4"
-tempfile = "3.24"
+tempfile = "3.25"
 
 [build-dependencies]
 heck = "0.5"

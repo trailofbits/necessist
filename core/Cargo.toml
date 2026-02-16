@@ -12,7 +12,7 @@ repository = "https://github.com/trailofbits/necessist"
 [dependencies]
 ansi_term = "0.12"
 anyhow = "1.0"
-bitflags = "2.10"
+bitflags = "2.11"
 clap = { version = "4.5", features = ["cargo", "derive"], optional = true }
 ctrlc = "3.5"
 diesel = { version = "2.3", features = ["sqlite"] }
@@ -33,8 +33,8 @@ serde = { version = "1.0", features = ["derive"] }
 sha2 = "0.10"
 strum = "0.27"
 strum_macros = "0.27"
-subprocess = "0.2"
-tempfile = "3.24"
+subprocess = "1.0"
+tempfile = "3.25"
 toml = "0.9"
 
 [target.'cfg(unix)'.dependencies]
