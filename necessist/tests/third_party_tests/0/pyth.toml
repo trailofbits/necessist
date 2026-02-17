@@ -1,5 +1,5 @@
 url = "https://github.com/pyth-network/pyth-crosschain"
-rev = "pyth-js-v148"
+rev = "hip-3-pusher-v0.2.10"
 target_os = ["linux", "macos"]
 subdir = "pythnet/message_buffer"
 framework = "anchor"
