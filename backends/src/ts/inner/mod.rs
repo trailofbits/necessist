@@ -18,7 +18,7 @@ use std::{
     process::Command,
     rc::Rc,
 };
-use subprocess::{Exec, NullFile};
+use subprocess::{Exec, Redirection};
 use swc_core::{
     common::{
         BytePos, Loc, SourceMap, Span as SwcSpan, Spanned as SwcSpanned, source_map::SmallPos,
@@ -162,8 +162,8 @@ impl Inner {
         }
 
         let mut exec = util::exec_from_command(command);
-        exec = exec.stdout(NullFile);
-        exec = exec.stderr(NullFile);
+        exec = exec.stdout(Redirection::Null);
+        exec = exec.stderr(Redirection::Null);
 
         debug!("{exec:?}");
 
