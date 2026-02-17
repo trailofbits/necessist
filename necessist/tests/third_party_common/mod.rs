@@ -539,7 +539,7 @@ fn run_test(workdir: &Path, toml_path: &Path, test: &Test) -> (String, Duration)
         }
 
         let mut exec = Exec::cmd("../target/debug/necessist");
-        exec = exec.args(&[
+        exec = exec.args([
             "--no-lines-or-columns",
             "--no-sqlite",
             "--root",
@@ -553,7 +553,7 @@ fn run_test(workdir: &Path, toml_path: &Path, test: &Test) -> (String, Duration)
             exec = exec.env("PATH", path_prepended);
         }
         if let Some(framework) = &test.framework {
-            exec = exec.args(&["--framework", framework]);
+            exec = exec.args(["--framework", framework]);
         }
         if test.parsing_only {
             exec = exec.arg("--dump-candidates");
