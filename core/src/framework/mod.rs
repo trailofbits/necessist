@@ -5,7 +5,7 @@ use std::{
     collections::{BTreeMap, BTreeSet},
     path::Path,
 };
-use subprocess::{Exec, Popen};
+use subprocess::{Exec, Job};
 
 mod auto;
 pub use auto::Auto;
@@ -72,7 +72,7 @@ pub trait Parse {
     ) -> Result<(usize, SourceFileSpanTestMap)>;
 }
 
-pub type Postprocess = dyn Fn(&LightContext, Popen) -> Result<bool>;
+pub type Postprocess = dyn Fn(&LightContext, Job) -> Result<bool>;
 
 pub trait Run {
     fn dry_run(&self, context: &LightContext, source_file: &Path) -> Result<()>;

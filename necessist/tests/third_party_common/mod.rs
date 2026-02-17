@@ -574,8 +574,8 @@ fn run_test(workdir: &Path, toml_path: &Path, test: &Test) -> (String, Duration)
 
         let start = Instant::now();
 
-        let popen = exec.popen().unwrap();
-        let mut stdout = popen.stdout.as_ref().unwrap();
+        let job = exec.start().unwrap();
+        let mut stdout = job.stdout.as_ref().unwrap();
 
         let mut buf = Vec::new();
 

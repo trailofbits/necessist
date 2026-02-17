@@ -105,9 +105,9 @@ fn resume_following_ctrl_c() {
         let exec = util::exec_from_command(&command())
             .stdout(subprocess::Redirection::Pipe)
             .stderr(subprocess::Redirection::Pipe);
-        let mut popen = exec.popen().unwrap();
+        let job = exec.start().unwrap();
 
-        let stdout = popen.stdout.as_ref().unwrap();
+        let stdout = job.stdout.as_ref().unwrap();
         let reader = BufReader::new(stdout);
         let _: String = reader
             .lines()
@@ -115,16 +115,16 @@ fn resume_following_ctrl_c() {
             .find(|line| line == "fixtures/basic/src/lib.rs:4:5-4:12: `n += 1;` passed")
             .unwrap();
 
-        let pid = popen.pid().unwrap();
+        let pid = job.pid();
         kill().arg(pid.to_string()).assert().success();
 
-        let mut stderr = popen.stderr.as_ref().unwrap();
+        let mut stderr = job.stderr.as_ref().unwrap();
         let mut buf = Vec::new();
         let _: usize = stderr.read_to_end(&mut buf).unwrap();
         let stderr = String::from_utf8(buf).unwrap();
         assert!(stderr.ends_with("Ctrl-C detected\n"), "{stderr:?}");
 
-        let _: subprocess::ExitStatus = popen.wait().unwrap();
+        let _: subprocess::ExitStatus = job.wait().unwrap();
 
         let assert = command().arg("--resume").assert().success();
 

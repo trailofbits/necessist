@@ -753,11 +753,11 @@ fn perform_exec(
         *rlimit::NPROC_INIT + rlimit::NPROC_ALLOWANCE,
     )?;
 
-    let mut popen = exec.popen()?;
+    let job = exec.start()?;
     let status = if let Some(dur) = timeout(&context.opts) {
-        popen.wait_timeout(dur)?
+        job.wait_timeout(dur)?
     } else {
-        popen.wait().map(Option::Some)?
+        job.wait().map(Option::Some)?
     };
 
     #[cfg(all(feature = "limit_threads", unix))]
@@ -765,14 +765,14 @@ fn perform_exec(
 
     if status.is_some() {
         if let Some(postprocess) = postprocess
-            && !postprocess(&context.light(), popen)?
+            && !postprocess(&context.light(), job)?
         {
             return Ok(None);
         }
     } else {
-        let pid = popen.pid().ok_or_else(|| anyhow!("Failed to get pid"))?;
+        let pid = job.pid();
         transitive_kill(pid)?;
-        let _: ExitStatus = popen.wait()?;
+        let _: ExitStatus = job.wait()?;
     }
 
     let Some(status) = status else {

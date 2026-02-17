@@ -16,7 +16,7 @@ use std::{
     process::{Command, ExitStatus as StdExitStatus, Output},
     rc::Rc,
 };
-use subprocess::{Exec, ExitStatus, NullFile, Redirection};
+use subprocess::{Exec, Redirection};
 
 #[cfg(unix)]
 use std::os::unix::process::ExitStatusExt;
@@ -177,8 +177,8 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
             exec = exec.stdout(Redirection::Pipe);
             exec = exec.stderr(Redirection::Pipe);
         } else {
-            exec = exec.stdout(NullFile);
-            exec = exec.stderr(NullFile);
+            exec = exec.stdout(Redirection::Null);
+            exec = exec.stderr(Redirection::Null);
         }
 
         let test_name = test_name.to_owned();
@@ -223,7 +223,7 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
                         .ok_or_else(|| anyhow!("Failed to get stderr"))?;
                     let stderr = read_file_to_end(stderr_file)?;
                     let status = popen.wait()?;
-                    let ExitStatus::Exited(code) = status else {
+                    let Some(code) = status.code() else {
                         return Err(anyhow!("Unexpected exit status: {status:?}"));
                     };
                     // smoelius: `raw` is `i32` on Unix, and `u32` on Windows.
