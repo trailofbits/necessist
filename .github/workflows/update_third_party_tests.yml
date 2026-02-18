@@ -29,21 +29,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install testing tools
-        uses: ./.github/actions/install-testing-tools
-
-      - name: Free up space on Ubuntu
-        run: |
-          # https://github.com/actions/runner-images/issues/2606#issuecomment-772683150
-          sudo rm -rf /usr/local/lib/android
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /usr/share/swift
-          # du -sh /usr/*/* 2>/dev/null | sort -h || true
-
-      - name: Update stdout files
-        run: cargo test --test third_party_0 --test third_party_1 -- --nocapture
+      - uses: ./.github/actions/ci
         env:
-          BLESS: 1
+          TESTS: third_party_0 third_party_1
+          BLESS: "1"
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@v8

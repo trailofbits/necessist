@@ -1,0 +1,100 @@
+name: CI
+description: Set up environment, build, and run tests
+
+runs:
+  using: composite
+  steps:
+    - name: Set up environment
+      run: echo 'CARGO_TERM_COLOR=always' >> "$GITHUB_ENV"
+      shell: bash
+
+    - uses: actions/cache@v5
+      with:
+        path: |
+          ~/.avm
+          ~/.cargo/bin/
+          ~/.cargo/registry/index/
+          ~/.cargo/registry/cache/
+          ~/.cargo/git/db/
+          ~/.dylint_drivers/
+          ~/.rustup/toolchains/
+          target/dylint/
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
+    - uses: taiki-e/install-action@v2
+      with:
+        tool: cargo-hack, cargo-udeps
+
+    - name: Rustup
+      run: rustup update
+      shell: bash
+
+    - name: Install CI tools
+      if: ${{ contains(env.TESTS, 'ci') }}
+      run: |
+        rustup +nightly component add clippy rustfmt
+        cargo install cargo-dylint --git=https://github.com/trailofbits/dylint --no-default-features --features=cargo-cli || true
+        cargo install dylint-link              || true
+        cargo install cargo-license            || true
+        cargo install cargo-sort               || true
+        cargo install cargo-supply-chain       || true
+        cargo install cargo-unmaintained       || true
+      shell: bash
+
+    - name: Install testing tools
+      if: ${{ env.TESTS != 'ci' }}
+      uses: ./.github/actions/install-testing-tools
+
+    - name: Install sqlite3 on Ubuntu
+      if: ${{ runner.os == 'Linux' }}
+      run: |
+        sudo apt update
+        sudo apt install libsqlite3-dev
+      shell: bash
+
+    - name: Free up space on Ubuntu
+      if: ${{ runner.os == 'Linux' }}
+      run: |
+        # https://github.com/actions/runner-images/issues/2606#issuecomment-772683150
+        sudo rm -rf /usr/local/lib/android
+        sudo rm -rf /usr/share/dotnet
+        sudo rm -rf /usr/share/swift
+      shell: bash
+
+    - name: Disable incremental compilation on Windows
+      if: ${{ runner.os == 'Windows' }}
+      run: echo 'CARGO_INCREMENTAL=0' >> "$GITHUB_ENV"
+      shell: bash
+
+    - name: Enable debug logging
+      if: ${{ runner.debug == 1 }}
+      run: echo 'RUST_LOG=debug' >> "$GITHUB_ENV"
+      shell: bash
+
+    - name: Build
+      run: |
+        for TEST in $TESTS; do
+          if [[ "$TEST" != 'other' ]]; then
+            $CARGO_TEST -p necessist --test "$TEST"
+          else
+            $CARGO_TEST -p necessist --test general
+            $CARGO_TEST -p necessist-backends
+            $CARGO_TEST -p necessist-core
+          fi
+        done
+      shell: bash
+      env:
+        CARGO_TEST: cargo test --no-run
+
+    - name: Test
+      run: |
+        for TEST in $TESTS; do
+          if [[ "$TEST" != 'other' ]]; then
+            cargo test -p necessist --test "$TEST" -- --nocapture
+          else
+            cargo test -p necessist --test general
+            cargo test -p necessist-backends
+            cargo test -p necessist-core
+          fi
+        done
+      shell: bash
