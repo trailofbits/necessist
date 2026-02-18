@@ -11,9 +11,6 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  CARGO_TERM_COLOR: always
-
 permissions:
   contents: read
 
@@ -44,92 +41,12 @@ jobs:
 
     runs-on: ${{ matrix.environment }}
 
-    defaults:
-      run:
-        shell: bash
-
     steps:
       - uses: actions/checkout@v6
 
-      - uses: actions/cache@v5
-        with:
-          path: |
-            ~/.avm
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            ~/.dylint_drivers/
-            ~/.rustup/toolchains/
-            target/dylint/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-
-      - uses: taiki-e/install-action@v2
-        with:
-          tool: cargo-hack, cargo-udeps
-
-      - name: Rustup
-        run: rustup update
-
-      - name: Install CI tools
-        if: ${{ matrix.test == 'ci' }}
-        run: |
-          rustup +nightly component add clippy rustfmt
-          cargo install cargo-dylint --git=https://github.com/trailofbits/dylint --no-default-features --features=cargo-cli || true
-          cargo install dylint-link              || true
-          cargo install cargo-license            || true
-          cargo install cargo-sort               || true
-          cargo install cargo-supply-chain       || true
-          cargo install cargo-unmaintained       || true
-
-      - name: Install testing tools
-        if: ${{ matrix.test != 'ci' }}
-        uses: ./.github/actions/install-testing-tools
-
-      - name: Install sqlite3 on Ubuntu
-        if: ${{ matrix.environment == 'ubuntu-latest' }}
-        run: |
-          sudo apt update
-          sudo apt install libsqlite3-dev
-
-      - name: Free up space on Ubuntu
-        if: ${{ matrix.environment == 'ubuntu-latest' }}
-        run: |
-          # https://github.com/actions/runner-images/issues/2606#issuecomment-772683150
-          sudo rm -rf /usr/local/lib/android
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /usr/share/swift
-          # du -sh /usr/*/* 2>/dev/null | sort -h || true
-
-      - name: Disable incremental compilation on Windows
-        if: ${{ matrix.environment == 'windows-latest' }}
-        run: echo 'CARGO_INCREMENTAL=0' >> "$GITHUB_ENV"
-
-      - name: Enable debug logging
-        if: ${{ runner.debug == 1 }}
-        run: echo 'RUST_LOG=debug' >> "$GITHUB_ENV"
-
-      - name: Build
-        run: |
-          if [[ '${{ matrix.test }}' != 'other' ]]; then
-            $CARGO_TEST -p necessist --test ${{ matrix.test }}
-          else
-            $CARGO_TEST -p necessist --test general
-            $CARGO_TEST -p necessist-backends
-            $CARGO_TEST -p necessist-core
-          fi
+      - uses: ./.github/actions/ci
         env:
-          CARGO_TEST: cargo test --no-run
-
-      - name: Test
-        run: |
-          if [[ '${{ matrix.test }}' != 'other' ]]; then
-            cargo test -p necessist --test ${{ matrix.test }} -- --nocapture
-          else
-            cargo test -p necessist --test general
-            cargo test -p necessist-backends
-            cargo test -p necessist-core
-          fi
+          TESTS: ${{ matrix.test }}
 
   all-checks:
     needs: [test]
