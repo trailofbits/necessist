@@ -31,8 +31,8 @@ remain = "0.2"
 rewriter = { version = "0.2", features = ["proc-macro2-impl"] }
 serde = { version = "1.0", features = ["derive"] }
 sha2 = "0.10"
-strum = "0.27"
-strum_macros = "0.27"
+strum = "0.28"
+strum_macros = "0.28"
 subprocess = "1.0"
 tempfile = "3.25"
 toml = "0.9"
