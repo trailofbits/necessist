@@ -1,0 +1,6 @@
+args = ["--no-sqlite", "--root=fixtures/phpunit_basic", "--framework=php-unit", "--dump-candidates"]
+
+stderr = ""
+
+[fs]
+cwd = "../../.."

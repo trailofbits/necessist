@@ -2,7 +2,7 @@
 
 Run tests with statements and method calls removed to help identify broken tests
 
-Necessist currently supports Anchor, Foundry, Go, Hardhat, Rust, and Vitest.
+Necessist currently supports Anchor, Foundry, Go, Hardhat, PHPUnit, Rust, and Vitest.
 
 A paper on Necessist ([Test Harness Mutilation]) appeared in Mutation 2024. ([slides], [preprint])
 
@@ -182,7 +182,7 @@ Options:
       --dump                   Dump sqlite database contents to the console
       --dump-candidate-counts  Dump number of removal candidates in each file and exit
       --dump-candidates        Dump removal candidates and exit (for debugging)
-      --framework <FRAMEWORK>  Assume testing framework is <FRAMEWORK> [possible values: anchor, auto, foundry, go, hardhat, rust, vitest]
+      --framework <FRAMEWORK>  Assume testing framework is <FRAMEWORK> [possible values: anchor, auto, foundry, go, hardhat, php-unit, rust, vitest]
       --no-lines-or-columns    Do not output line or column information (experimental)
       --no-sqlite              Do not output to an sqlite database
       --quiet                  Do not output to the console
@@ -304,6 +304,24 @@ In addition to the below, the Go backend ignores:
 <summary>Hardhat</summary>
 
 The ignored functions and methods are the same as for Anchor above.
+
+</details>
+
+<details>
+<summary>PHPUnit</summary>
+
+#### Ignored functions
+
+- `var_dump`
+- `print_r`
+- `var_export`
+
+#### Ignored methods
+
+- Anything beginning with `assert` (e.g., `assertEquals`)
+- Anything beginning with `expect` (e.g., `expectException`)
+- `markTestIncomplete`
+- `markTestSkipped`
 
 </details>
 

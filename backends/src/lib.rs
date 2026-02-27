@@ -26,6 +26,9 @@ use go::Go;
 mod hardhat;
 use hardhat::Hardhat;
 
+mod phpunit;
+use phpunit::PhpUnit;
+
 mod rust;
 use rust::Rust;
 
@@ -58,6 +61,7 @@ pub enum Identifier {
     Foundry,
     Go,
     Hardhat,
+    PhpUnit,
     Rust,
     Vitest,
 }
@@ -69,6 +73,7 @@ impl Applicable for Identifier {
             Self::Foundry => Foundry::applicable(context),
             Self::Go => Go::applicable(context),
             Self::Hardhat => Hardhat::applicable(context),
+            Self::PhpUnit => PhpUnit::applicable(context),
             Self::Rust => Rust::applicable(context),
             Self::Vitest => Vitest::applicable(context),
         }
@@ -94,6 +99,10 @@ impl ToImplementation for Identifier {
             ))),
 
             Self::Hardhat => Ok(Some(Box::new(Hardhat::new()))),
+
+            Self::PhpUnit => Ok(Some(implementation_as_interface(ParseRunAdapter::new)(
+                PhpUnit::new(),
+            ))),
 
             Self::Rust => Ok(Some(implementation_as_interface(ParseRunAdapter::new)(
                 Rust::new(),
