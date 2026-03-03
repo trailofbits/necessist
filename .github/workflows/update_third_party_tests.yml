@@ -45,3 +45,4 @@ jobs:
           title: "Update third-party tests"
           commit-message: "Update third-party tests"
           branch-suffix: random
+          draft: true
