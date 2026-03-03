@@ -585,6 +585,7 @@ mod test {
 
     #[test]
     fn check_pt_rs() {
+        x // bug
         let tempdir = tempdir().unwrap();
 
         let metadata = MetadataCommand::new().exec().unwrap();
