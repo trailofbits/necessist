@@ -1,6 +1,8 @@
 <?php
 
-class BasicTest
+use PHPUnit\Framework\TestCase;
+
+class BasicTest extends TestCase
 {
     public function testPassed()
     {
@@ -13,7 +15,7 @@ class BasicTest
     {
         $n = 0;
         $n += 1;
-        assert($n >= 1);
+        $this->assertTrue($n >= 1);
     }
 }
 

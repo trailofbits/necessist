@@ -21,10 +21,15 @@ fn initialize() {
 
 #[test]
 fn trycmd() {
-    TestCases::new()
+    let cases = TestCases::new();
+
+    cases
         .default_bin_name("necessist")
         .env("TRYCMD", "1")
         .case("tests/necessist_db_absent/*.toml");
+
+    #[cfg(windows)]
+    cases.skip("tests/necessist_db_absent/php_basic.toml");
 
     cargo_bin_cmd!("necessist")
         .args(["--root", ROOT, "--timeout", TIMEOUT])

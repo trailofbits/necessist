@@ -1,9 +1,10 @@
 use super::tree_sitter_utils::{BoundedCursor, ToInternalSpan};
+use super::utils::{OutputAccessors, OutputStrippedOfAnsiScapes};
 use super::{
     AbstractTypes, GenericVisitor, MaybeNamed, Named, ParseLow, ProcessLines, RunLow, Spanned,
     WalkDirResult,
 };
-use anyhow::{Context, Result, anyhow};
+use anyhow::{Context, Result, anyhow, ensure};
 use necessist_core::{
     LightContext, SourceFile, Span,
     framework::{SpanTestMaps, TestSet},
@@ -106,12 +107,12 @@ pub(super) fn test_method_query() -> &'static Query {
 }
 
 #[derive(Debug)]
-pub struct PhpUnit;
+pub struct Php;
 
-impl PhpUnit {
+impl Php {
     pub fn applicable(context: &LightContext) -> Result<bool> {
-        let xml = context.root.join("phpunit.xml").try_exists()?;
-        let xml_dist = context.root.join("phpunit.xml.dist").try_exists()?;
+        let xml = context.root.join("php.xml").try_exists()?;
+        let xml_dist = context.root.join("php.xml.dist").try_exists()?;
         Ok(xml || xml_dist)
     }
 
@@ -251,7 +252,7 @@ impl MaybeNamed for Call<'_> {
     }
 }
 
-impl ParseLow for PhpUnit {
+impl ParseLow for Php {
     type Types = Types;
 
     const IGNORED_FUNCTIONS: Option<&'static [&'static str]> =
@@ -262,6 +263,7 @@ impl ParseLow for PhpUnit {
     const IGNORED_METHODS: Option<&'static [&'static str]> = Some(&[
         "assert*",
         "expect*",
+        "fail",
         "markTestIncomplete",
         "markTestSkipped",
     ]);
@@ -307,7 +309,7 @@ impl ParseLow for PhpUnit {
         _storage: &std::cell::RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
         _file: &'ast <Self::Types as AbstractTypes>::File,
     ) -> Result<BTreeMap<String, Vec<<Self::Types as AbstractTypes>::LocalFunction<'ast>>>> {
-        // PHPUnit doesn't use the local function walking feature
+        // PHP doesn't use the local function walking feature
         Ok(BTreeMap::new())
     }
 
@@ -519,7 +521,19 @@ impl ParseLow for PhpUnit {
     }
 }
 
-impl RunLow for PhpUnit {
+impl RunLow for Php {
+    fn install_dependencies(&self, context: &LightContext) -> Result<()> {
+        if context.root.join("vendor").try_exists()? {
+            return Ok(());
+        }
+        let mut command = Command::new("composer");
+        command.arg("install");
+        command.current_dir(context.root.as_path());
+        let output = command.output_stripped_of_ansi_escapes()?;
+        ensure!(output.status().success(), "{output:#?}");
+        Ok(())
+    }
+
     fn command_to_run_source_file(&self, context: &LightContext, source_file: &Path) -> Command {
         let mut command = Command::new("vendor/bin/phpunit");
         command.current_dir(context.root.as_path());

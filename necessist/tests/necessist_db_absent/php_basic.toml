@@ -1,0 +1,6 @@
+args = ["--no-sqlite", "--root=fixtures/php_basic", "--timeout=60", "--verbose"]
+
+stderr = ""
+
+[fs]
+cwd = "../../.."
