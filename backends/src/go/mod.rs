@@ -1,6 +1,7 @@
 use super::{
     AbstractTypes, GenericVisitor, MaybeNamed, Named, ParseLow, ProcessLines, RunLow, Spanned,
     WalkDirResult,
+    tree_sitter_utils::{BoundedCursor, ToInternalSpan},
 };
 use anyhow::{Context, Result, anyhow, bail};
 use necessist_core::{
@@ -14,11 +15,7 @@ use std::{
     sync::LazyLock,
 };
 use streaming_iterator::StreamingIterator;
-use tree_sitter::{
-    Language, Node, Parser, Point, Query, QueryCapture, QueryCursor, Range, TextProvider, Tree,
-};
-
-mod bounded_cursor;
+use tree_sitter::{Language, Node, Parser, Query, QueryCapture, QueryCursor, TextProvider, Tree};
 
 mod storage;
 use storage::Storage;
@@ -640,52 +637,6 @@ fn sort_captures<'tree>(captures: &[QueryCapture<'tree>]) -> Vec<QueryCapture<'t
     let mut captures = captures.to_vec();
     captures.sort_by_key(|capture| capture.index);
     captures
-}
-
-trait ToInternalSpan {
-    fn to_internal_span(&self, source_file: &SourceFile) -> Span;
-}
-
-impl ToInternalSpan for Range {
-    fn to_internal_span(&self, source_file: &SourceFile) -> Span {
-        Span {
-            source_file: source_file.clone(),
-            start: self.start_point.to_line_column(source_file),
-            end: self.end_point.to_line_column(source_file),
-        }
-    }
-}
-
-trait ToLineColumn {
-    fn to_line_column(&self, source_file: &SourceFile) -> LineColumn;
-}
-
-// smoelius: `Point`'s `column` field counts bytes, not chars. See:
-// https://github.com/tree-sitter/tree-sitter/issues/397#issuecomment-515115012
-impl ToLineColumn for Point {
-    fn to_line_column(&self, source_file: &SourceFile) -> LineColumn {
-        let line_column = LineColumn {
-            line: self.row + 1,
-            column: 0,
-        };
-        let (line_offset, _) = source_file
-            .offset_calculator()
-            .borrow_mut()
-            .offsets_from_span(&Span {
-                source_file: source_file.clone(),
-                start: line_column,
-                end: line_column,
-            });
-        let suffix = &source_file.contents()[line_offset..];
-        let column = suffix
-            .char_indices()
-            .position(|(offset, _)| self.column == offset)
-            .unwrap();
-        LineColumn {
-            line: self.row + 1,
-            column,
-        }
-    }
 }
 
 #[cfg(test)]
