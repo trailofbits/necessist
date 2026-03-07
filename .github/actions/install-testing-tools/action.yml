@@ -39,6 +39,18 @@ runs:
         go-version: "^1.25.1"
         cache: false
 
+    - name: Install PHP on Ubuntu
+      if: ${{ runner.os == 'Linux' }}
+      run: |
+        sudo apt update
+        sudo apt install php-cli php-xml composer
+      shell: bash
+
+    - name: Install PHP on macOS
+      if: ${{ runner.os == 'macOS' }}
+      run: brew install php composer
+      shell: bash
+
     # smoelius: The Chainlink Foundry test requires `node` and `pnpm`.
     - name: Install Node.js
       uses: actions/setup-node@v6

@@ -1,5 +1,5 @@
 use super::{
-    BoundedCursor, COMPOUND_STATEMENT_KIND, Call, GenericVisitor, NodeWithText, PhpUnit, Statement,
+    BoundedCursor, COMPOUND_STATEMENT_KIND, Call, GenericVisitor, NodeWithText, Php, Statement,
     Storage, Test, is_call_kind, test_method_query,
 };
 use anyhow::Result;
@@ -9,18 +9,18 @@ use streaming_iterator::StreamingIterator;
 use tree_sitter::{QueryCursor, QueryMatch, Tree};
 
 pub(super) fn visit<'ast>(
-    generic_visitor: GenericVisitor<'_, '_, '_, 'ast, PhpUnit>,
+    generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Php>,
     storage: &RefCell<Storage<'ast>>,
     tree: &'ast Tree,
 ) -> Result<(TestSet, SpanTestMaps)> {
     let mut visitor = Visitor::new(generic_visitor, storage);
     visitor.visit_tree(tree)?;
-    // No local function support for PHPUnit
+    // No local function support for PHP
     visitor.generic_visitor.results()
 }
 
 struct Visitor<'context, 'config, 'backend, 'ast, 'storage> {
-    generic_visitor: GenericVisitor<'context, 'config, 'backend, 'ast, PhpUnit>,
+    generic_visitor: GenericVisitor<'context, 'config, 'backend, 'ast, Php>,
     storage: &'storage RefCell<Storage<'ast>>,
 }
 
@@ -28,7 +28,7 @@ impl<'context, 'config, 'backend, 'ast, 'storage>
     Visitor<'context, 'config, 'backend, 'ast, 'storage>
 {
     fn new(
-        generic_visitor: GenericVisitor<'context, 'config, 'backend, 'ast, PhpUnit>,
+        generic_visitor: GenericVisitor<'context, 'config, 'backend, 'ast, Php>,
         storage: &'storage RefCell<Storage<'ast>>,
     ) -> Self {
         Self {
