@@ -320,6 +320,7 @@ The ignored functions and methods are the same as for Anchor above.
 
 - Anything beginning with `assert` (e.g., `assertEquals`)
 - Anything beginning with `expect` (e.g., `expectException`)
+- `fail`
 - `markTestIncomplete`
 - `markTestSkipped`
 

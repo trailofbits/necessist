@@ -262,6 +262,7 @@ impl ParseLow for Php {
     const IGNORED_METHODS: Option<&'static [&'static str]> = Some(&[
         "assert*",
         "expect*",
+        "fail",
         "markTestIncomplete",
         "markTestSkipped",
     ]);
