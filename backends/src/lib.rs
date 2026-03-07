@@ -26,6 +26,9 @@ use go::Go;
 mod hardhat;
 use hardhat::Hardhat;
 
+mod php;
+use php::Php;
+
 mod rust;
 use rust::Rust;
 
@@ -43,6 +46,8 @@ use generic_visitor::GenericVisitor;
 mod running;
 use running::{ProcessLines, RunAdapter, RunLow};
 
+mod tree_sitter_utils;
+
 mod ts;
 
 mod utils;
@@ -56,6 +61,7 @@ pub enum Identifier {
     Foundry,
     Go,
     Hardhat,
+    Php,
     Rust,
     Vitest,
 }
@@ -67,6 +73,7 @@ impl Applicable for Identifier {
             Self::Foundry => Foundry::applicable(context),
             Self::Go => Go::applicable(context),
             Self::Hardhat => Hardhat::applicable(context),
+            Self::Php => Php::applicable(context),
             Self::Rust => Rust::applicable(context),
             Self::Vitest => Vitest::applicable(context),
         }
@@ -92,6 +99,10 @@ impl ToImplementation for Identifier {
             ))),
 
             Self::Hardhat => Ok(Some(Box::new(Hardhat::new()))),
+
+            Self::Php => Ok(Some(implementation_as_interface(ParseRunAdapter::new)(
+                Php::new(),
+            ))),
 
             Self::Rust => Ok(Some(implementation_as_interface(ParseRunAdapter::new)(
                 Rust::new(),
