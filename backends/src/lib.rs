@@ -43,6 +43,8 @@ use generic_visitor::GenericVisitor;
 mod running;
 use running::{ProcessLines, RunAdapter, RunLow};
 
+mod tree_sitter_utils;
+
 mod ts;
 
 mod utils;
