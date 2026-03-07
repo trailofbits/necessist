@@ -106,12 +106,12 @@ pub(super) fn test_method_query() -> &'static Query {
 }
 
 #[derive(Debug)]
-pub struct PhpUnit;
+pub struct Php;
 
-impl PhpUnit {
+impl Php {
     pub fn applicable(context: &LightContext) -> Result<bool> {
-        let xml = context.root.join("phpunit.xml").try_exists()?;
-        let xml_dist = context.root.join("phpunit.xml.dist").try_exists()?;
+        let xml = context.root.join("php.xml").try_exists()?;
+        let xml_dist = context.root.join("php.xml.dist").try_exists()?;
         Ok(xml || xml_dist)
     }
 
@@ -251,7 +251,7 @@ impl MaybeNamed for Call<'_> {
     }
 }
 
-impl ParseLow for PhpUnit {
+impl ParseLow for Php {
     type Types = Types;
 
     const IGNORED_FUNCTIONS: Option<&'static [&'static str]> =
@@ -307,7 +307,7 @@ impl ParseLow for PhpUnit {
         _storage: &std::cell::RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
         _file: &'ast <Self::Types as AbstractTypes>::File,
     ) -> Result<BTreeMap<String, Vec<<Self::Types as AbstractTypes>::LocalFunction<'ast>>>> {
-        // PHPUnit doesn't use the local function walking feature
+        // PHP doesn't use the local function walking feature
         Ok(BTreeMap::new())
     }
 
@@ -519,7 +519,7 @@ impl ParseLow for PhpUnit {
     }
 }
 
-impl RunLow for PhpUnit {
+impl RunLow for Php {
     fn command_to_run_source_file(&self, context: &LightContext, source_file: &Path) -> Command {
         let mut command = Command::new("vendor/bin/phpunit");
         command.current_dir(context.root.as_path());
@@ -551,7 +551,7 @@ impl RunLow for PhpUnit {
     }
 
     fn command_to_build_source_file(&self, _context: &LightContext, source_file: &Path) -> Command {
-        let mut command = Command::new("php");
+        let mut command = Command::new("phpunit");
         command.arg("-l");
         command.arg(source_file);
         command
@@ -563,7 +563,7 @@ impl RunLow for PhpUnit {
         _test_name: &str,
         span: &Span,
     ) -> Command {
-        let mut command = Command::new("php");
+        let mut command = Command::new("phpunit");
         command.arg("-l");
         command.arg(&*span.source_file);
         command

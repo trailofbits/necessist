@@ -46,7 +46,7 @@ streaming-iterator = "0.1"
 tree-sitter = "0.26"
 tree-sitter-go = "0.25"
 
-# PhpUnit
+# Php
 tree-sitter-php = "0.24"
 
 # Hardhat
