@@ -1,8 +1,8 @@
 #![cfg_attr(dylint_lib = "general", allow(non_local_effect_before_error_return))]
 
 use super::{
-    BLOCK_KIND, CALL_EXPRESSION_KIND, Call, GenericVisitor, Go, LocalFunction, Statement, Storage,
-    Test, bounded_cursor, process_self_captures, valid_query,
+    BLOCK_KIND, BoundedCursor, CALL_EXPRESSION_KIND, Call, GenericVisitor, Go, LocalFunction,
+    Statement, Storage, Test, process_self_captures, valid_query,
 };
 use anyhow::Result;
 use necessist_core::framework::{SpanTestMaps, TestSet};
@@ -122,7 +122,7 @@ impl<'context, 'config, 'backend, 'ast, 'storage>
     fn visit_local_function(&mut self, local_function: LocalFunction<'ast>) -> Result<()> {
         assert_eq!(*BLOCK_KIND, local_function.body.kind_id());
 
-        self.walk_nodes(&mut bounded_cursor::BoundedCursor::new(local_function.body))?;
+        self.walk_nodes(&mut BoundedCursor::new(local_function.body))?;
 
         Ok(())
     }
@@ -151,7 +151,7 @@ impl<'context, 'config, 'backend, 'ast, 'storage>
         let walk = self.generic_visitor.visit_test(self.storage, test);
 
         if walk {
-            self.walk_nodes(&mut bounded_cursor::BoundedCursor::new(body))?;
+            self.walk_nodes(&mut BoundedCursor::new(body))?;
         }
 
         self.generic_visitor.visit_test_post(self.storage, test);
@@ -162,7 +162,7 @@ impl<'context, 'config, 'backend, 'ast, 'storage>
     /// Visits `cursor`'s current node, which [`Self::visit_current_node`] has already determined to
     /// be a statement. Calls [`Self::walk_or_skip`] unconditionally, with `walk` set to the value
     /// [`GenericVisitor::visit_statement`] returns.
-    fn visit_statement(&mut self, cursor: &mut bounded_cursor::BoundedCursor<'ast>) -> Result<()> {
+    fn visit_statement(&mut self, cursor: &mut BoundedCursor<'ast>) -> Result<()> {
         let node = cursor.current_node().unwrap();
 
         trace!(node);
@@ -187,7 +187,7 @@ impl<'context, 'config, 'backend, 'ast, 'storage>
     /// Visits `cursor`'s current node, which [`Self::visit_current_node`] has already determined to
     /// be a call. Calls [`Self::walk_or_skip`] unconditionally, with `walk` set to the value
     /// [`GenericVisitor::visit_call`] returns.
-    fn visit_call(&mut self, cursor: &mut bounded_cursor::BoundedCursor<'ast>) -> Result<()> {
+    fn visit_call(&mut self, cursor: &mut BoundedCursor<'ast>) -> Result<()> {
         let node = cursor.current_node().unwrap();
 
         trace!(node);
@@ -208,11 +208,7 @@ impl<'context, 'config, 'backend, 'ast, 'storage>
 
     /// If `walk` is true, calls [`Self::walk_nodes`]; otherwise, skips `cursor`s current node and
     /// returns.
-    fn walk_or_skip(
-        &mut self,
-        cursor: &mut bounded_cursor::BoundedCursor<'ast>,
-        walk: bool,
-    ) -> Result<()> {
+    fn walk_or_skip(&mut self, cursor: &mut BoundedCursor<'ast>, walk: bool) -> Result<()> {
         trace!(walk);
 
         if walk {
@@ -227,7 +223,7 @@ impl<'context, 'config, 'backend, 'ast, 'storage>
     /// Visits each descendant node in the subtree rooted at `cursor`s current node (unless a
     /// descendant node is a subtree that is explicitly skipped by [`GenericVisitor`]). Calls
     /// [`Self::visit_current_node`] on each such node.
-    fn walk_nodes(&mut self, cursor: &mut bounded_cursor::BoundedCursor<'ast>) -> Result<()> {
+    fn walk_nodes(&mut self, cursor: &mut BoundedCursor<'ast>) -> Result<()> {
         trace!();
 
         cursor.push();
@@ -254,7 +250,7 @@ impl<'context, 'config, 'backend, 'ast, 'storage>
     /// [`Self::visit_current_node`]'s caller (which happens to be [`Self::walk_nodes`]).
     fn visit_current_node(
         &mut self,
-        cursor: &mut bounded_cursor::BoundedCursor<'ast>,
+        cursor: &mut BoundedCursor<'ast>,
         recurse: bool,
     ) -> Result<bool> {
         let node = cursor.current_node().unwrap();
