@@ -1,0 +1,4 @@
+fixtures/php_basic/tests/BasicTest.php:7:9-7:16: `$n = 0;`
+fixtures/php_basic/tests/BasicTest.php:8:9-8:17: `$n += 1;`
+fixtures/php_basic/tests/BasicTest.php:14:9-14:16: `$n = 0;`
+fixtures/php_basic/tests/BasicTest.php:15:9-15:17: `$n += 1;`

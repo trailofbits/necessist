@@ -1,0 +1,11 @@
+args = [
+    "--no-sqlite",
+    "--root=fixtures/php_basic",
+    "--framework=php",
+    "--dump-candidates",
+]
+
+stderr = ""
+
+[fs]
+cwd = "../../.."
