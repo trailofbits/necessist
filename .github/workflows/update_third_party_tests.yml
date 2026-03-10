@@ -43,6 +43,7 @@ jobs:
         uses: peter-evans/create-pull-request@v8
         with:
           title: "Update third-party tests"
+          body: "Clicking 'Ready for review' will run CI checks on this PR."
           commit-message: "Update third-party tests"
           branch-suffix: random
           draft: true
