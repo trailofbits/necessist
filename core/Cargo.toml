@@ -13,7 +13,7 @@ repository = "https://github.com/trailofbits/necessist"
 ansi_term = "0.12"
 anyhow = "1.0"
 bitflags = "2.11"
-clap = { version = "4.5", features = ["cargo", "derive"], optional = true }
+clap = { version = "4.6", features = ["cargo", "derive"], optional = true }
 ctrlc = "3.5"
 diesel = { version = "2.3", features = ["sqlite"] }
 dunce = "1.0"
@@ -42,7 +42,7 @@ libc = { version = "0.2", optional = true }
 rlimit = { version = "0.11", optional = true }
 
 [target.'cfg(windows)'.dependencies]
-libsqlite3-sys = { version = "0.35", features = ["bundled"] }
+libsqlite3-sys = { version = "0.36", features = ["bundled"] }
 windows-sys = { version = "0.61", features = [
     "Win32_Storage_FileSystem",
     "Win32_Foundation",
@@ -50,7 +50,7 @@ windows-sys = { version = "0.61", features = [
 ], optional = true }
 
 [dev-dependencies]
-assert_cmd = "2.1"
+assert_cmd = "2.2"
 predicates = "3.1"
 
 [build-dependencies]
