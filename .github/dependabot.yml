@@ -1,7 +1,10 @@
 version: 2
 updates:
   - package-ecosystem: github-actions
-    directory: /
+    directories:
+      - /
+      - /.github/actions/ci
+      - /.github/actions/install-testing-tools
     schedule:
       interval: weekly
       day: monday
