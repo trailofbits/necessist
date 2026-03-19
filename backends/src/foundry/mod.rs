@@ -396,7 +396,12 @@ impl ParseLow for Foundry {
 }
 
 impl RunLow for Foundry {
-    const REQUIRES_NODE_MODULES: bool = true;
+    fn install_dependencies(&self, context: &LightContext) -> Result<()> {
+        if context.root.join("package.json").try_exists()? {
+            crate::ts::utils::install_node_modules(context)?;
+        }
+        Ok(())
+    }
 
     fn command_to_run_source_file(&self, context: &LightContext, source_file: &Path) -> Command {
         Self::test_command(context, source_file)
