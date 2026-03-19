@@ -1,4 +1,4 @@
-use super::{OutputAccessors, OutputStrippedOfAnsiScapes, RunHigh, rust, ts};
+use super::{OutputAccessors, OutputStrippedOfAnsiScapes, RunHigh, rust};
 use anyhow::{Error, Result, anyhow};
 use assert_cmd::output::OutputError;
 use bstr::{BStr, io::BufReadExt};
@@ -27,7 +27,9 @@ use std::os::windows::process::ExitStatusExt;
 pub type ProcessLines = (bool, Box<dyn Fn(&str) -> bool>);
 
 pub trait RunLow {
-    const REQUIRES_NODE_MODULES: bool = false;
+    fn install_dependencies(&self, _context: &LightContext) -> Result<()> {
+        Ok(())
+    }
     fn command_to_run_source_file(&self, context: &LightContext, source_file: &Path) -> Command;
     fn instrument_source_file(
         &self,
@@ -53,7 +55,9 @@ pub trait RunLow {
 }
 
 impl<T: RunLow> RunLow for Rc<RefCell<T>> {
-    const REQUIRES_NODE_MODULES: bool = T::REQUIRES_NODE_MODULES;
+    fn install_dependencies(&self, context: &LightContext) -> Result<()> {
+        self.borrow().install_dependencies(context)
+    }
     fn command_to_run_source_file(&self, context: &LightContext, source_file: &Path) -> Command {
         self.borrow()
             .command_to_run_source_file(context, source_file)
@@ -103,11 +107,7 @@ pub struct RunAdapter<T>(pub T);
 
 impl<T: RunLow> RunHigh for RunAdapter<T> {
     fn dry_run(&self, context: &LightContext, source_file: &Path) -> Result<()> {
-        // smoelius: `REQUIRES_NODE_MODULES` is a hack. But at present, I don't know how it should
-        // be generalized.
-        if T::REQUIRES_NODE_MODULES && context.root.join("package.json").try_exists()? {
-            ts::utils::install_node_modules(context)?;
-        }
+        self.0.install_dependencies(context)?;
 
         let mut command = self.0.command_to_run_source_file(context, source_file);
         command.args(&context.opts.args);
