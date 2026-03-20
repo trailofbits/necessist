@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.2.0
+
+- Add experimental `--no-lines-or-columns` option ([4846795](https://github.com/trailofbits/necessist/commit/48467958bf8395e629c5c3fca65adf527e3916ce))
+- Add support for PHP ([c414a50](https://github.com/trailofbits/necessist/commit/c414a50f732cc70dc3333a856a84ba6ac2927801), [dec887d](https://github.com/trailofbits/necessist/commit/dec887d78182973dc589d31ef58973bbccad7838), and [81eafd5](https://github.com/trailofbits/necessist/commit/81eafd50f09990349600a0bf82ec93cf517da87e))
+- Dependency updates
+  - `strum_macros` upgraded to version 0.28
+  - `strum` upgraded to version 0.28
+  - `subprocess` upgraded to version 1.0
+  - `swc_core` upgraded to version 58.0
+  - `toml_edit` upgraded to version 0.25
+  - `toml` upgraded to version 1.0
+  - `tree-sitter` upgraded to version 0.26
+
 ## 2.1.3
 
 - Expand `is_it_call_expr` to work with `function` expressions ([b9771db](https://github.com/trailofbits/necessist/commit/b9771dbf302f3551e0c375a81aab08dcdc048293))
