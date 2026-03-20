@@ -34,8 +34,8 @@ sha2 = "0.10"
 strum = "0.28"
 strum_macros = "0.28"
 subprocess = "1.0"
-tempfile = "3.25"
-toml = "0.9"
+tempfile = "3.27"
+toml = "1.0"
 
 [target.'cfg(unix)'.dependencies]
 libc = { version = "0.2", optional = true }
