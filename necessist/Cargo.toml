@@ -34,9 +34,9 @@ serde = "1.0"
 serde_json = "1.0"
 serde-untagged = "0.1"
 similar-asserts = "1.7"
-tempfile = "3.25"
-toml = "0.9"
-trycmd = "1.0"
+tempfile = "3.27"
+toml = "1.0"
+trycmd = "1.1"
 walkdir = "2.5"
 
 [features]
