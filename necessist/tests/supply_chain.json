@@ -504,6 +504,20 @@
         "name": "Dirkjan Ochtman"
       }
     ],
+    "const-oid": [
+      {
+        "id": 267,
+        "kind": "user",
+        "login": "tarcieri",
+        "name": "Tony Arcieri"
+      },
+      {
+        "id": 4457,
+        "kind": "team",
+        "login": "github:rustcrypto:formats",
+        "name": "formats"
+      }
+    ],
     "cpufeatures": [
       {
         "id": 267,
@@ -1066,20 +1080,6 @@
         "name": "SWC Bot"
       }
     ],
-    "generic-array": [
-      {
-        "id": 1793,
-        "kind": "user",
-        "login": "fizyk20",
-        "name": "Bartłomiej Kamiński"
-      },
-      {
-        "id": 5704,
-        "kind": "user",
-        "login": "novacrazy",
-        "name": "Nova"
-      }
-    ],
     "getrandom": [
       {
         "id": 563,
@@ -1182,6 +1182,20 @@
         "kind": "user",
         "login": "swc-bot",
         "name": "SWC Bot"
+      }
+    ],
+    "hybrid-array": [
+      {
+        "id": 267,
+        "kind": "user",
+        "login": "tarcieri",
+        "name": "Tony Arcieri"
+      },
+      {
+        "id": 2398,
+        "kind": "team",
+        "login": "github:rustcrypto:utils",
+        "name": "utils"
       }
     ],
     "icu_collections": [
