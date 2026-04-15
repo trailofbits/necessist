@@ -172,9 +172,9 @@ checksum = "349f9b6a179ed607305526ca489b34ad0a41aed5f7980fa90eb03160b69598fb"
 
 [[package]]
 name = "bitflags"
-version = "2.11.0"
+version = "2.11.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "843867be96c8daad0d758b57df9392b6d8d271134fce549de6ce169ff98a92af"
+checksum = "c4512299f36f043ab09a583e57bceb5a5aab7a73db1805848e8fef3c9e8c78b3"
 
 [[package]]
 name = "block-buffer"
@@ -1286,9 +1286,9 @@ checksum = "09edd9e8b54e49e587e4f6295a7d29c3ea94d469cb40ab8ca70b288248a81db2"
 
 [[package]]
 name = "libc"
-version = "0.2.184"
+version = "0.2.185"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "48f5d2a454e16a5ea0f4ced81bd44e4cfc7bd3a507b61887c99fd3538b28e4af"
+checksum = "52ff2c0fe9bc6cb6b14a0592c2ff4fa9ceb83eea9db979b0487cd054946a2b8f"
 
 [[package]]
 name = "libgit2-sys"
@@ -2387,9 +2387,9 @@ dependencies = [
 
 [[package]]
 name = "swc_core"
-version = "63.1.1"
+version = "63.1.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5b68a9d41b64086e1fe8e91af1a1babbfb01ecdb7c6d26f2ec6963545b1cd7af"
+checksum = "bb9470306b0d532da617be037de878f64ec0f04cb364d920e8cee05d658d66de"
 dependencies = [
  "swc_allocator",
  "swc_atoms",
@@ -2422,9 +2422,9 @@ dependencies = [
 
 [[package]]
 name = "swc_ecma_parser"
-version = "38.0.1"
+version = "38.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f0bc3b45f1017b904f1ce9a2ab0001d27975755d1ee9f799d67c354fac43d32c"
+checksum = "a7c251d44e048647b5335861d1585b3e95fa8bc74f6e7a40570b0ea95d27ba66"
 dependencies = [
  "bitflags",
  "either",
