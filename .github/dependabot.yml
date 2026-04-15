@@ -23,7 +23,7 @@ updates:
     #     NEW_VERSION="$(expr '${{ github.event.pull_request.title }}' : '^Bump [^ ]* from [^ ]* to \([^ ]*\)$')"
     # ```
     groups:
-      rust:
+      cargo:
         patterns:
           - "*"
     schedule:
