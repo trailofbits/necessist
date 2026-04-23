@@ -3622,6 +3622,12 @@
     ],
     "wasm-bindgen": [
       {
+        "id": 14929,
+        "kind": "team",
+        "login": "github:wasm-bindgen:wasm-bindgen-publish",
+        "name": "wasm-bindgen-publish"
+      },
+      {
         "id": 34642,
         "kind": "user",
         "login": "daxpedda",
@@ -3635,6 +3641,12 @@
       }
     ],
     "wasm-bindgen-macro": [
+      {
+        "id": 14929,
+        "kind": "team",
+        "login": "github:wasm-bindgen:wasm-bindgen-publish",
+        "name": "wasm-bindgen-publish"
+      },
       {
         "id": 34642,
         "kind": "user",
@@ -3650,6 +3662,12 @@
     ],
     "wasm-bindgen-macro-support": [
       {
+        "id": 14929,
+        "kind": "team",
+        "login": "github:wasm-bindgen:wasm-bindgen-publish",
+        "name": "wasm-bindgen-publish"
+      },
+      {
         "id": 34642,
         "kind": "user",
         "login": "daxpedda",
@@ -3663,6 +3681,12 @@
       }
     ],
     "wasm-bindgen-shared": [
+      {
+        "id": 14929,
+        "kind": "team",
+        "login": "github:wasm-bindgen:wasm-bindgen-publish",
+        "name": "wasm-bindgen-publish"
+      },
       {
         "id": 34642,
         "kind": "user",
