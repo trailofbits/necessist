@@ -24,7 +24,7 @@ jobs:
 
     steps:
       - id: main
-        uses: trailofbits/check-up-to-dateness@v1
+        uses: trailofbits/check-up-to-dateness@v2
 
   test:
     needs: [check-up-to-dateness]
