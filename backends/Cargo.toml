@@ -50,7 +50,7 @@ tree-sitter-go = "0.25"
 tree-sitter-php = "0.24"
 
 # Hardhat
-swc_core = { version = "63.1", features = [
+swc_core = { version = "65.0", features = [
     "common",
     "ecma_ast",
     "ecma_parser",
