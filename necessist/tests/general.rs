@@ -10,7 +10,7 @@ const TIMEOUT: &str = "5";
 
 const BASIC_ROOT: &str = "fixtures/basic";
 
-#[ctor::ctor]
+#[ctor::ctor(unsafe)]
 fn initialize() {
     set_current_dir("..").unwrap();
 }

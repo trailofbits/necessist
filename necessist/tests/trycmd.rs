@@ -12,7 +12,7 @@ use trycmd::TestCases;
 const ROOT: &str = "../fixtures/basic";
 const TIMEOUT: &str = "5";
 
-#[ctor::ctor]
+#[ctor::ctor(unsafe)]
 fn initialize() {
     unsafe {
         remove_var("CARGO_TERM_COLOR");

@@ -15,7 +15,7 @@ use walkdir::WalkDir;
 mod tempfile_util;
 use tempfile_util::tempdir;
 
-#[ctor::ctor]
+#[ctor::ctor(unsafe)]
 fn initialize() {
     // smoelius: Run the CI tests if either the target OS is Linux or we are running locally, i.e.,
     // `CI` is _not_ set.
