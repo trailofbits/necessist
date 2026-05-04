@@ -1474,6 +1474,18 @@
     ],
     "js-sys": [
       {
+        "id": 5799,
+        "kind": "user",
+        "login": "RReverser",
+        "name": "Ingvar Stepanyan"
+      },
+      {
+        "id": 14929,
+        "kind": "team",
+        "login": "github:wasm-bindgen:wasm-bindgen-publish",
+        "name": "wasm-bindgen-publish"
+      },
+      {
         "id": 34642,
         "kind": "user",
         "login": "daxpedda",
@@ -3014,12 +3026,6 @@
         "kind": "user",
         "login": "Stebalien",
         "name": "Steven Allen"
-      },
-      {
-        "id": 3204,
-        "kind": "user",
-        "login": "KodrAus",
-        "name": "Ashley Mannix"
       }
     ],
     "term": [
@@ -3622,6 +3628,12 @@
     ],
     "wasm-bindgen": [
       {
+        "id": 5799,
+        "kind": "user",
+        "login": "RReverser",
+        "name": "Ingvar Stepanyan"
+      },
+      {
         "id": 14929,
         "kind": "team",
         "login": "github:wasm-bindgen:wasm-bindgen-publish",
@@ -3641,6 +3653,12 @@
       }
     ],
     "wasm-bindgen-macro": [
+      {
+        "id": 5799,
+        "kind": "user",
+        "login": "RReverser",
+        "name": "Ingvar Stepanyan"
+      },
       {
         "id": 14929,
         "kind": "team",
@@ -3662,6 +3680,12 @@
     ],
     "wasm-bindgen-macro-support": [
       {
+        "id": 5799,
+        "kind": "user",
+        "login": "RReverser",
+        "name": "Ingvar Stepanyan"
+      },
+      {
         "id": 14929,
         "kind": "team",
         "login": "github:wasm-bindgen:wasm-bindgen-publish",
@@ -3681,6 +3705,12 @@
       }
     ],
     "wasm-bindgen-shared": [
+      {
+        "id": 5799,
+        "kind": "user",
+        "login": "RReverser",
+        "name": "Ingvar Stepanyan"
+      },
       {
         "id": 14929,
         "kind": "team",
