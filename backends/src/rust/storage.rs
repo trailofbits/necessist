@@ -46,7 +46,6 @@ impl<'ast> Storage<'ast> {
     }
 }
 
-#[cfg_attr(dylint_lib = "general", allow(non_local_effect_before_error_return))]
 pub(super) fn cached_source_file_fs_module_path<'a>(
     source_file_fs_module_path_map: &'a mut BTreeMap<PathBuf, Vec<String>>,
     source_file_package_map: &mut BTreeMap<PathBuf, Package>,
@@ -94,7 +93,6 @@ pub(super) fn cached_source_file_fs_module_path<'a>(
         .map(|value| value as &_)
 }
 
-#[cfg_attr(dylint_lib = "general", allow(non_local_effect_before_error_return))]
 pub(super) fn cached_source_file_package<'a>(
     source_file_package_map: &'a mut BTreeMap<PathBuf, Package>,
     directory_metadata_map: &mut BTreeMap<PathBuf, Metadata>,

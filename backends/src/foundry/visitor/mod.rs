@@ -1,5 +1,3 @@
-#![cfg_attr(dylint_lib = "general", allow(non_local_effect_before_error_return))]
-
 use super::{Foundry, FunctionCall, GenericVisitor, LocalFunction, Storage, Test, WithContents};
 use anyhow::Result;
 use necessist_core::framework::{SpanTestMaps, TestSet};

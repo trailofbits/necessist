@@ -44,7 +44,6 @@ impl<'ast> Visit<'ast> for BlockCollector<'ast> {
     }
 }
 
-#[cfg_attr(dylint_lib = "general", allow(non_local_effect_before_error_return))]
 pub(super) fn visit<'ast>(
     generic_visitor: GenericVisitor<'_, '_, '_, 'ast, Rust>,
     storage: &RefCell<Storage<'ast>>,

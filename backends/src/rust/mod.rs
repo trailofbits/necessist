@@ -672,7 +672,6 @@ impl Rust {
         command
     }
 
-    #[cfg_attr(dylint_lib = "general", allow(non_local_effect_before_error_return))]
     fn cached_source_file_flags(&mut self, source_file: &Path) -> Result<&Vec<String>> {
         self.source_file_flags_cache
             .entry(source_file.to_path_buf())
