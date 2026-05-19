@@ -3,7 +3,7 @@
 | Name                       | Version                                  | Framework | Full | Linux | macOS | Windows | Partition |
 | -------------------------- | ---------------------------------------- | --------- | ---- | ----- | ----- | ------- | --------- |
 | chainlink-evm              | cre-v0.5.1                               |           |      | X     | X     | X       | 0         |
-| chainlink-evm_hardhat      | cre-v0.5.1                               | hardhat   |      | X     | X     | X       | 0         |
+| chainlink-evm_hardhat      | cre-v0.5.1                               | hardhat   |      | X     | X     |         | 0         |
 | crates_io                  | 5643e3fb5d53d3b8cc5620d583068ae17e82b5c3 |           |      | X     | X     | X       | 0         |
 | diem                       | diem-core-v1.4.4                         |           |      | X     | X     | X       | 1         |
 | go_src_encoding_base64     | go1.23.0                                 | go        | X    | X     | X     | X       | 0         |

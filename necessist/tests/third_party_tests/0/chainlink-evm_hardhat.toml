@@ -1,5 +1,6 @@
 url = "https://github.com/smartcontractkit/chainlink-evm"
 rev = "cre-v0.5.1"
+target_os = ["linux", "macos"]
 subdir = "contracts"
 framework = "hardhat"
 parsing_only = true
