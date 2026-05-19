@@ -2,8 +2,8 @@
 
 | Name                       | Version                                  | Framework | Full | Linux | macOS | Windows | Partition |
 | -------------------------- | ---------------------------------------- | --------- | ---- | ----- | ----- | ------- | --------- |
-| chainlink-evm              | v0.3.2                                   |           |      | X     | X     | X       | 0         |
-| chainlink-evm_hardhat      | v0.3.2                                   | hardhat   |      | X     | X     | X       | 0         |
+| chainlink-evm              | cre-v0.5.1                               |           |      | X     | X     | X       | 0         |
+| chainlink-evm_hardhat      | cre-v0.5.1                               | hardhat   |      | X     | X     | X       | 0         |
 | crates_io                  | 5643e3fb5d53d3b8cc5620d583068ae17e82b5c3 |           |      | X     | X     | X       | 0         |
 | diem                       | diem-core-v1.4.4                         |           |      | X     | X     | X       | 1         |
 | go_src_encoding_base64     | go1.23.0                                 | go        | X    | X     | X     | X       | 0         |
@@ -17,10 +17,10 @@
 | minio                      | RELEASE.2025-10-15T17-29-55Z             |           |      | X     | X     | X       | 1         |
 | operator-filter-registry   | v1.4.2                                   |           |      | X     | X     | X       | 0         |
 | proptest_https             | b71253807372932f72a71b1af7975371a41e7c88 |           | X    | X     | X     | X       | 0         |
-| pyth                       | hyperliquid-recorder-v0.0.3              | anchor    |      | X     | X     |         | 0         |
+| pyth                       | rust-pyth-hermes-client-v0.1.0           | anchor    |      | X     | X     |         | 0         |
 | seaport_foundry            | 1.6                                      | foundry   | X    | X     | X     | X       | 1         |
 | seaport_hardhat            | 1.6                                      | hardhat   |      | X     | X     | X       | 1         |
-| storybook                  | v10.3.6                                  |           | X    | X     | X     |         | 0         |
+| storybook                  | v10.4.0                                  |           | X    | X     | X     |         | 0         |
 | uniswap_v3-core            |                                          |           |      | X     | X     | X       | 0         |
 | uniswap_v3-core_factory    |                                          |           | X    | X     | X     | X       | 1         |
 | uniswap_v4-core            |                                          |           | X    | X     | X     |         | 0         |

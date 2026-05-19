@@ -1,8 +1,12 @@
-99 candidates in 32 tests in 2 source files
+101 candidates in 32 tests in 2 source files
 $DIR/code/core/src/manager-api/tests/store.test.js: dry running
 $DIR/code/core/src/manager-api/tests/store.test.js: mutilating
-$DIR/code/core/src/manager-api/tests/store.test.js: `store2.session.get.mockReturnValueOnce({ foo: 'bar', combined: { a: 'b' } });` failed
-$DIR/code/core/src/manager-api/tests/store.test.js: `store2.local.get.mockReturnValueOnce({ foo: 'baz', another: 'value', combined: { c: 'd' } });` failed
+$DIR/code/core/src/manager-api/tests/store.test.js: `store2.session.get
+      .mockReturnValueOnce({ foo: 'bar', combined: { a: 'b' } })
+      .mockReturnValueOnce({ foo: 'bar', combined: { a: 'b' } });` failed
+$DIR/code/core/src/manager-api/tests/store.test.js: `store2.local.get
+      .mockReturnValueOnce({ foo: 'baz', another: 'value', combined: { c: 'd' } })
+      .mockReturnValueOnce({ foo: 'baz', another: 'value', combined: { c: 'd' } });` failed
 $DIR/code/core/src/manager-api/tests/store.test.js: `store.getState();` failed
 $DIR/code/core/src/manager-api/tests/store.test.js: `await store.setState({ foo: 'bar' });` failed
 $DIR/code/core/src/manager-api/tests/store.test.js: `await store.setState({ foo: 'bar' }, { persistence: 'session' });` failed
@@ -24,8 +28,12 @@ $DIR/code/core/src/manager-api/tests/store.test.js: `await flushPromises();` fai
 $DIR/code/core/src/manager-api/tests/store.test.js: `x('OLD_STATE');` failed
 $DIR/code/core/src/manager-api/tests/store.test.js: `cb();` failed
 $DIR/code/core/src/manager-api/tests/store.test.js: `await store.setState(patch, { persistence: 'session' });` failed
-$DIR/code/core/src/manager-api/tests/store.test.js: `.session.get.mockReturnValueOnce({ foo: 'bar', combined: { a: 'b' } })` failed
-$DIR/code/core/src/manager-api/tests/store.test.js: `.local.get.mockReturnValueOnce({ foo: 'baz', another: 'value', combined: { c: 'd' } })` failed
+$DIR/code/core/src/manager-api/tests/store.test.js: `.session.get
+      .mockReturnValueOnce({ foo: 'bar', combined: { a: 'b' } })` failed
+$DIR/code/core/src/manager-api/tests/store.test.js: `.mockReturnValueOnce({ foo: 'bar', combined: { a: 'b' } })` failed
+$DIR/code/core/src/manager-api/tests/store.test.js: `.local.get
+      .mockReturnValueOnce({ foo: 'baz', another: 'value', combined: { c: 'd' } })` failed
+$DIR/code/core/src/manager-api/tests/store.test.js: `.mockReturnValueOnce({ foo: 'baz', another: 'value', combined: { c: 'd' } })` failed
 $DIR/code/core/src/manager-api/tests/store.test.js: `.fn()` failed
 $DIR/code/core/src/manager-api/tests/store.test.js: `.getState()` failed
 $DIR/code/core/src/manager-api/tests/store.test.js: `.fn()` failed
