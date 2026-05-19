@@ -1,5 +1,5 @@
 url = "https://github.com/smartcontractkit/chainlink-evm"
-rev = "v0.3.2"
+rev = "cre-v0.5.1"
 subdir = "contracts"
 framework = "hardhat"
 parsing_only = true
