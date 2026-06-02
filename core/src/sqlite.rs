@@ -139,7 +139,7 @@ pub(crate) fn init(
             let url_oid = repository
                 .find_remote("origin")
                 .ok()
-                .and_then(|origin| origin.url().map(str::to_owned))
+                .and_then(|origin| origin.url().ok().map(str::to_owned))
                 .zip(repository.refname_to_id("HEAD").ok());
             url_oid.map(|(url, oid)| Remote {
                 repository,
