@@ -1632,32 +1632,6 @@
         "name": "gwenn"
       }
     ],
-    "libssh2-sys": [
-      {
-        "id": 1,
-        "kind": "user",
-        "login": "alexcrichton",
-        "name": "Alex Crichton"
-      },
-      {
-        "id": 5988,
-        "kind": "user",
-        "login": "yodaldevoid",
-        "name": "Gabriel Smith"
-      },
-      {
-        "id": 11243,
-        "kind": "user",
-        "login": "wez",
-        "name": "Wez Furlong"
-      },
-      {
-        "id": 12280,
-        "kind": "user",
-        "login": "crisidev",
-        "name": "Matteo Bigoi"
-      }
-    ],
     "libz-sys": [
       {
         "id": 1,
