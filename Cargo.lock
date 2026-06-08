@@ -172,9 +172,9 @@ checksum = "349f9b6a179ed607305526ca489b34ad0a41aed5f7980fa90eb03160b69598fb"
 
 [[package]]
 name = "bitflags"
-version = "2.11.1"
+version = "2.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c4512299f36f043ab09a583e57bceb5a5aab7a73db1805848e8fef3c9e8c78b3"
+checksum = "b4388bee8683e3d04af747c73422af53102d2bd24d9eadb6cbc100baef4b43f8"
 
 [[package]]
 name = "block-buffer"
@@ -572,9 +572,9 @@ dependencies = [
 
 [[package]]
 name = "diesel"
-version = "2.3.9"
+version = "2.3.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9940fb8467a0a06312218ed384185cb8536aa10d8ec017d0ce7fad2c1bd882d5"
+checksum = "29fe29a87fb84c631ffb3ba21798c4b1f3a964701ba78f0dce4bf8668562ec88"
 dependencies = [
  "diesel_derives",
  "downcast-rs",
@@ -1347,9 +1347,9 @@ dependencies = [
 
 [[package]]
 name = "log"
-version = "0.4.30"
+version = "0.4.32"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "616ec5685824bcc94416c6d4a7a446eea774a31efd7062c8480ba6fd06d7a6e5"
+checksum = "953f07c43838f8e6f9758cab68bf5bed85465e7587ebe0b823f1bcd81978ad3a"
 
 [[package]]
 name = "memchr"
@@ -2327,9 +2327,9 @@ dependencies = [
 
 [[package]]
 name = "swc_common"
-version = "23.0.0"
+version = "23.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6ebd5f732c45e88fa1c69cf2ac65bf24e2578bfd428b74348d3346ee137b8c50"
+checksum = "353daaf5e6c2ad90efd4ff52270173074ded88fdba5a40f302c7c3a9b1c037fb"
 dependencies = [
  "anyhow",
  "ast_node",
@@ -2352,9 +2352,9 @@ dependencies = [
 
 [[package]]
 name = "swc_core"
-version = "68.0.3"
+version = "68.0.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4e334164098cdc45418500e4cfddfa5a07c8d544cb0288f3354bba749358a0ea"
+checksum = "50f5e74b394d26f24d080752bc439fc571d7c91a4f1ad57c7a3900970e7254fc"
 dependencies = [
  "swc_allocator",
  "swc_atoms",
