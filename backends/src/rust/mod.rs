@@ -69,7 +69,7 @@ impl<'ast> Test<'ast> {
         storage: &RefCell<Storage>,
         source_file_fs_module_path_cache: &mut BTreeMap<PathBuf, Vec<String>>,
         source_file_package_cache: &mut BTreeMap<PathBuf, Package>,
-        directory_metadata_map: &mut BTreeMap<PathBuf, Metadata>,
+        directory_metadata_cache: &mut BTreeMap<PathBuf, Metadata>,
         source_file: &SourceFile,
         item_fn: &'ast syn::ItemFn,
     ) -> Option<Self> {
@@ -79,7 +79,7 @@ impl<'ast> Test<'ast> {
         let result = storage.borrow_mut().test_path(
             source_file_fs_module_path_cache,
             source_file_package_cache,
-            directory_metadata_map,
+            directory_metadata_cache,
             source_file,
             &test_name,
         );
