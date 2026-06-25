@@ -50,6 +50,10 @@ pub(super) fn visit<'ast>(
     file: &'ast File,
 ) -> Result<(TestSet, SpanTestMaps)> {
     let mut visitor = Visitor::new(generic_visitor, storage);
+    let _: &Vec<String> = visitor
+        .generic_visitor
+        .backend
+        .cached_source_file_flags(&visitor.generic_visitor.source_file)?;
     visitor.visit_file(file);
     while let Some(local_function) = visitor.generic_visitor.next_local_function() {
         visitor.visit_local_function(local_function);
@@ -66,10 +70,6 @@ pub(super) fn visit<'ast>(
     if let Some(error) = storage.borrow_mut().error.take() {
         return Err(error);
     }
-    let _: &Vec<String> = visitor
-        .generic_visitor
-        .backend
-        .cached_source_file_flags(&visitor.generic_visitor.source_file)?;
     visitor.generic_visitor.results()
 }
 
@@ -129,12 +129,13 @@ impl<'ast> Visit<'ast> for Visitor<'_, '_, '_, 'ast, '_> {
         }
     }
 
+    #[cfg_attr(dylint_lib = "general", allow(non_local_effect_before_unhandled_error))]
     fn visit_item_fn(&mut self, item: &'ast ItemFn) {
         if let Some(ident) = is_test(item) {
             assert!(self.test_ident.is_none());
             self.test_ident = Some(ident);
 
-            if let Some(test) = Test::new(
+            let test = match Test::new(
                 self.storage,
                 &mut self
                     .generic_visitor
@@ -142,9 +143,21 @@ impl<'ast> Visit<'ast> for Visitor<'_, '_, '_, 'ast, '_> {
                     .source_file_fs_module_path_cache,
                 &mut self.generic_visitor.backend.source_file_package_cache,
                 &mut self.generic_visitor.backend.directory_metadata_cache,
+                &mut self.generic_visitor.backend.flags_test_names_cache,
+                &mut self.generic_visitor.backend.source_file_flags_cache,
+                &self.generic_visitor.context.opts.args,
                 &self.generic_visitor.source_file,
                 item,
             ) {
+                Ok(test) => test,
+                Err(error) => {
+                    assert_eq!(self.test_ident, Some(ident));
+                    self.test_ident = None;
+                    self.storage.borrow_mut().error = Some(error);
+                    return;
+                }
+            };
+            if let Some(test) = test {
                 let walk = self.generic_visitor.visit_test(self.storage, test);
 
                 if walk {

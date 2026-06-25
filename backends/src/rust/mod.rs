@@ -1,10 +1,10 @@
 #![allow(unstable_name_collisions)] // for `or_try_insert_with`
 
 use super::{
-    AbstractTypes, GenericVisitor, MaybeNamed, Named, ParseLow, ProcessLines, RunLow, Spanned,
-    WalkDirResult,
+    AbstractTypes, GenericVisitor, MaybeNamed, Named, OutputAccessors, OutputStrippedOfAnsiScapes,
+    ParseLow, ProcessLines, RunLow, Spanned, WalkDirResult,
 };
-use anyhow::Result;
+use anyhow::{Context as _, Result};
 use cargo_metadata::{Metadata, Package, TargetKind};
 use necessist_core::{
     __Rewriter as Rewriter, LightContext, SourceFile, Span, ToInternalSpan,
@@ -14,7 +14,7 @@ use once_cell::sync::OnceCell;
 use quote::ToTokens;
 use std::{
     cell::RefCell,
-    collections::{BTreeMap, HashMap},
+    collections::{BTreeMap, BTreeSet, HashMap},
     ffi::OsStr,
     fs::read_to_string,
     path::{Path, PathBuf},
@@ -37,6 +37,7 @@ pub struct Rust {
     source_file_package_cache: BTreeMap<PathBuf, Package>,
     directory_metadata_cache: BTreeMap<PathBuf, Metadata>,
     source_file_flags_cache: BTreeMap<PathBuf, Vec<String>>,
+    flags_test_names_cache: BTreeMap<Vec<String>, BTreeSet<String>>,
 }
 
 impl Rust {
@@ -54,6 +55,7 @@ impl Rust {
             source_file_package_cache: BTreeMap::new(),
             directory_metadata_cache: BTreeMap::new(),
             source_file_flags_cache: BTreeMap::new(),
+            flags_test_names_cache: BTreeMap::new(),
         }
     }
 }
@@ -65,14 +67,18 @@ pub struct Test<'ast> {
 }
 
 impl<'ast> Test<'ast> {
+    #[allow(clippy::too_many_arguments)]
     fn new(
         storage: &RefCell<Storage>,
         source_file_fs_module_path_cache: &mut BTreeMap<PathBuf, Vec<String>>,
         source_file_package_cache: &mut BTreeMap<PathBuf, Package>,
         directory_metadata_cache: &mut BTreeMap<PathBuf, Metadata>,
+        flags_test_names_cache: &mut BTreeMap<Vec<String>, BTreeSet<String>>,
+        source_file_flags_cache: &mut BTreeMap<PathBuf, Vec<String>>,
+        args: &[String],
         source_file: &SourceFile,
         item_fn: &'ast syn::ItemFn,
-    ) -> Option<Self> {
+    ) -> Result<Option<Self>> {
         // smoelius: If the module path cannot be determined, return `None` to prevent the
         // `GenericVisitor` from walking the test.
         let test_name = item_fn.sig.ident.to_string();
@@ -92,14 +98,24 @@ impl<'ast> Test<'ast> {
                     .entry(test_name)
                     .or_default()
                     .push(error);
-                return None;
+                return Ok(None);
             }
         };
+        let test_path_string = test_path.join("::");
+        let test_names = cached_source_file_test_names(
+            flags_test_names_cache,
+            source_file_flags_cache,
+            args,
+            source_file,
+        )?;
+        if !test_names.contains(&test_path_string) {
+            return Ok(None);
+        }
         let test_path_id = reserve_test_path_id(test_path);
-        Some(Self {
+        Ok(Some(Self {
             test_path_id,
             item_fn,
-        })
+        }))
     }
 }
 
@@ -675,46 +691,94 @@ impl Rust {
     }
 
     fn cached_source_file_flags(&mut self, source_file: &Path) -> Result<&Vec<String>> {
-        self.source_file_flags_cache
-            .entry(source_file.to_path_buf())
-            .or_try_insert_with(|| {
-                let package = cached_source_file_package(
-                    &mut self.source_file_package_cache,
-                    &mut self.directory_metadata_cache,
-                    source_file,
-                )?;
+        cached_source_file_flags(
+            &mut self.source_file_flags_cache,
+            &mut self.source_file_package_cache,
+            &mut self.directory_metadata_cache,
+            source_file,
+        )
+    }
+}
 
-                let mut flags = vec![
-                    "--manifest-path".to_owned(),
-                    package.manifest_path.as_str().to_owned(),
-                ];
+fn cached_source_file_flags<'a>(
+    source_file_flags_map: &'a mut BTreeMap<PathBuf, Vec<String>>,
+    source_file_package_map: &mut BTreeMap<PathBuf, Package>,
+    directory_metadata_map: &mut BTreeMap<PathBuf, Metadata>,
+    source_file: &Path,
+) -> Result<&'a Vec<String>> {
+    TryInsert::or_try_insert_with(
+        source_file_flags_map.entry(source_file.to_path_buf()),
+        || {
+            let package = cached_source_file_package(
+                source_file_package_map,
+                directory_metadata_map,
+                source_file,
+            )?;
 
-                if let Some(name) = source_file_test(package, source_file) {
-                    flags.extend(["--test".to_owned(), name.clone()]);
-                } else {
-                    // smoelius: Failed to find a test target with this file name. Assume it is a
-                    // unit test.
-                    let mut bin = false;
-                    let mut lib = false;
-                    for kind in package.targets.iter().flat_map(|target| &target.kind) {
-                        match kind {
-                            TargetKind::Bin if !bin => {
-                                flags.push("--bins".to_owned());
-                                bin = true;
-                            }
-                            TargetKind::Lib if !lib => {
-                                flags.push("--lib".to_owned());
-                                lib = true;
-                            }
-                            _ => {}
+            let mut flags = vec![
+                "--manifest-path".to_owned(),
+                package.manifest_path.as_str().to_owned(),
+            ];
+
+            if let Some(name) = source_file_test(package, source_file) {
+                flags.extend(["--test".to_owned(), name.clone()]);
+            } else {
+                // smoelius: Failed to find a test target with this file name. Assume it is a
+                // unit test.
+                let mut bin = false;
+                let mut lib = false;
+                for kind in package.targets.iter().flat_map(|target| &target.kind) {
+                    match kind {
+                        TargetKind::Bin if !bin => {
+                            flags.push("--bins".to_owned());
+                            bin = true;
                         }
+                        TargetKind::Lib if !lib => {
+                            flags.push("--lib".to_owned());
+                            lib = true;
+                        }
+                        _ => {}
                     }
                 }
+            }
 
-                Ok(flags)
-            })
-            .map(|value| value as &_)
-    }
+            Ok(flags)
+        },
+    )
+    .map(|value| value as &_)
+}
+
+fn cached_source_file_test_names<'a>(
+    flags_test_names_map: &'a mut BTreeMap<Vec<String>, BTreeSet<String>>,
+    source_file_flags_map: &mut BTreeMap<PathBuf, Vec<String>>,
+    args: &[String],
+    source_file: &Path,
+) -> Result<&'a BTreeSet<String>> {
+    let flags = source_file_flags_map
+        .get(source_file)
+        .with_context(|| format!("Flags are not cached for `{}`", source_file.display()))?;
+    let mut cache_key = flags.clone();
+    cache_key.extend_from_slice(args);
+    TryInsert::or_try_insert_with(flags_test_names_map.entry(cache_key), || {
+        let mut command = Command::new("cargo");
+        command.arg("test");
+        command.args(flags);
+        command.args(args);
+        command.args(["--", "--list", "--format=terse"]);
+
+        let output = command.output_stripped_of_ansi_escapes()?;
+        if !output.status().success() {
+            return Err(output.into());
+        }
+
+        let stdout = std::str::from_utf8(output.stdout())?;
+        Ok(stdout
+            .lines()
+            .filter_map(|line| line.strip_suffix(": test"))
+            .map(ToOwned::to_owned)
+            .collect())
+    })
+    .map(|value| value as &_)
 }
 
 fn source_file_test<'a>(package: &'a Package, source_file: &Path) -> Option<&'a String> {
