@@ -1,3 +1,5 @@
+#![allow(unstable_name_collisions)] // for `or_try_insert_with`
+
 use super::{
     AbstractTypes, GenericVisitor, MaybeNamed, Named, ParseLow, ProcessLines, RunLow, Spanned,
     WalkDirResult,
