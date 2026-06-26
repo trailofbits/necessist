@@ -1,6 +1,0 @@
-args = ["--no-sqlite", "--root=fixtures/cfg", "--deny=run-test-failed"]
-
-status = "failed"
-
-[fs]
-cwd = "../../.."

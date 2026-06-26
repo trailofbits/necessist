@@ -1,6 +1,0 @@
-args = ["--no-sqlite", "--root=fixtures/cfg"]
-
-stderr = ""
-
-[fs]
-cwd = "../../.."
