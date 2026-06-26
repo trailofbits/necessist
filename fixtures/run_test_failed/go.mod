@@ -1,13 +1,3 @@
-[package]
-name = "cfg"
-version = "0.1.0"
-edition = "2024"
-publish = false
+module example.com/run-test-failed
 
-[features]
-passed = []
-timed-out = []
-failed = []
-nonbuildable = []
-
-[workspace]
+go 1.25

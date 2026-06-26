@@ -1,4 +1,8 @@
-args = ["--no-sqlite", "--root=fixtures/cfg", "--deny=run-test-failed"]
+args = [
+    "--no-sqlite",
+    "--root=fixtures/run_test_failed",
+    "--deny=run-test-failed",
+]
 
 status = "failed"
 
