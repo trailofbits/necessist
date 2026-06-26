@@ -2,6 +2,7 @@
 # smoelius: The crates.io source has lots of interesting cases, including: multiple binaries, crates
 # without `src` directories, and `src` directories with `tests` subdirectories.
 url = "https://github.com/rust-lang/crates.io"
-rev = "5643e3fb5d53d3b8cc5620d583068ae17e82b5c3"
+rev = "a89c096889b171193bc3864e71c70ba2c3dacefa"
+target_os = ["linux", "macos"]
 parsing_only = true
 args = ["--allow=module-path-unknown"]
