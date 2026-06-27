@@ -61,6 +61,20 @@ runs:
         sudo rm -rf /usr/share/swift
       shell: bash
 
+    - name: Install PostgreSQL client libraries on macOS
+      if: ${{ runner.os == 'macOS' }}
+      run: |
+        brew install libpq
+        echo "LIBRARY_PATH=$(brew --prefix libpq)/lib:$LIBRARY_PATH" >> "$GITHUB_ENV"
+      shell: bash
+
+    - name: Install PostgreSQL client libraries on Windows
+      if: ${{ runner.os == 'Windows' }}
+      run: |
+        choco install postgresql --version=16.10 -y --params '/Password:postgres'
+        echo 'LIB=C:\Program Files\PostgreSQL\16\lib;'$LIB >> "$GITHUB_ENV"
+      shell: bash
+
     - name: Disable incremental compilation on Windows
       if: ${{ runner.os == 'Windows' }}
       run: echo 'CARGO_INCREMENTAL=0' >> "$GITHUB_ENV"
