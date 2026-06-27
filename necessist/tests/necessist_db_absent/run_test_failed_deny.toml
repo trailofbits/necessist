@@ -1,0 +1,11 @@
+args = [
+    "--no-sqlite",
+    "--root=fixtures/run_test_failed",
+    "--framework=go",
+    "--deny=run-test-failed",
+]
+
+status = "failed"
+
+[fs]
+cwd = "../../.."

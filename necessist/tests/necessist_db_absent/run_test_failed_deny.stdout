@@ -1,0 +1,3 @@
+2 candidates in 1 test in 1 source file
+fixtures/run_test_failed/run_test_failed_test.go: dry running
+fixtures/run_test_failed/run_test_failed_test.go: mutilating
