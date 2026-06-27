@@ -22,7 +22,5 @@ warning: `cfg` (lib test) generated 1 warning
      Running unittests [..] ([..])
 ```
 
-
-
 This may indicate a bug in Necessist. Consider opening an issue at: https://github.com/trailofbits/necessist/issues
 
