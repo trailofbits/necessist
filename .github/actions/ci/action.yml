@@ -75,6 +75,12 @@ runs:
         echo 'LIB=C:\Program Files\PostgreSQL\16\lib;'$LIB >> "$GITHUB_ENV"
       shell: bash
 
+    - name: Initialize MSVC environment on Windows
+      if: ${{ runner.os == 'Windows' }}
+      uses: ilammy/msvc-dev-cmd@v1
+      with:
+        arch: x64
+
     - name: Disable incremental compilation on Windows
       if: ${{ runner.os == 'Windows' }}
       run: echo 'CARGO_INCREMENTAL=0' >> "$GITHUB_ENV"
