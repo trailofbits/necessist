@@ -25,10 +25,7 @@ warning: `cfg` (lib test) generated 1 warning
      Running unittests [..] ([..])
 ```
 
-
-
 This may indicate a bug in Necessist. Consider opening an issue at: https://github.com/trailofbits/necessist/issues
-
 Silence this warning with: --allow run-test-failed
 fixtures/cfg/src/lib.rs:16:9-16:16: Warning: Failed to run test `timed_out`: code=0
 stdout=```
@@ -53,8 +50,6 @@ warning: `cfg` (lib test) generated 1 warning
     Finished `test` profile [unoptimized + debuginfo] target(s) in [..]s
      Running unittests [..] ([..])
 ```
-
-
 fixtures/cfg/src/lib.rs:24:5-24:12: Warning: Failed to run test `failed`: code=0
 stdout=```
 
@@ -78,8 +73,6 @@ warning: `cfg` (lib test) generated 1 warning
     Finished `test` profile [unoptimized + debuginfo] target(s) in [..]s
      Running unittests [..] ([..])
 ```
-
-
 fixtures/cfg/src/lib.rs:32:18-32:27: Warning: Failed to run test `nonbuildable`: code=0
 stdout=```
 
@@ -103,5 +96,3 @@ warning: `cfg` (lib test) generated 1 warning
     Finished `test` profile [unoptimized + debuginfo] target(s) in [..]s
      Running unittests [..] ([..])
 ```
-
-

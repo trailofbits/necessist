@@ -26,8 +26,6 @@ stderr=```
 ...
 error: test failed, to rerun pass `--test a`
 ```
-
-
 Silence this warning with: --allow dry-run-failed
 fixtures/dry_run_failure/tests/b.rs: dry running
 fixtures/dry_run_failure/tests/b.rs: mutilating
