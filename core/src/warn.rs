@@ -73,11 +73,9 @@ pub fn warn(context: &LightContext, warning: Warning, msg: &str, flags: Flags) -
     warn_internal(context, warning, None, msg, flags)
 }
 
-const BUG_MSG: &str = "
-
+const BUG_MSG: &str = "\
 This may indicate a bug in Necessist. Consider opening an issue at: \
-https://github.com/trailofbits/necessist/issues
-";
+https://github.com/trailofbits/necessist/issues";
 
 bitflags! {
     struct State: u8 {
@@ -106,13 +104,12 @@ fn warn_internal(
         .or_insert_with(State::empty);
 
     // smoelius: Append `BUG_MSG` to `msg` in case we have to `bail!`.
-    let msg = msg.to_owned()
-        + if may_be_bug(warning) && !state.contains(State::BUG_MSG_EMITTED) {
-            state.insert(State::BUG_MSG_EMITTED);
-            BUG_MSG
-        } else {
-            ""
-        };
+    let mut msg = msg.trim_end().to_owned();
+    if may_be_bug(warning) && !state.contains(State::BUG_MSG_EMITTED) {
+        state.insert(State::BUG_MSG_EMITTED);
+        msg.push_str("\n\n");
+        msg.push_str(BUG_MSG);
+    }
 
     if context.opts.deny.contains(&Warning::All) || context.opts.deny.contains(&warning) {
         bail!(msg);
@@ -126,18 +123,14 @@ fn warn_internal(
         return Ok(());
     }
 
-    let allow_msg = if state.contains(State::ALLOW_MSG_EMITTED) {
-        String::new()
-    } else {
+    if !state.contains(State::ALLOW_MSG_EMITTED) {
         state.insert(State::ALLOW_MSG_EMITTED);
-        format!(
-            "
-Silence this warning with: --allow {warning}"
-        )
-    };
+        msg.push('\n');
+        msg.push_str(&format!("Silence this warning with: --allow {warning}"));
+    }
 
     (context.println)(&format!(
-        "{}{}: {}{}",
+        "{}{}: {}",
         source.map_or(String::new(), |source| format!(
             "{}: ",
             source.to_console_string()
@@ -148,8 +141,7 @@ Silence this warning with: --allow {warning}"
             Style::default()
         }
         .paint("Warning"),
-        msg,
-        allow_msg
+        msg
     ));
 
     state.insert(State::WARNING_EMITTED);
