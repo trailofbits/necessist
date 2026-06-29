@@ -172,7 +172,7 @@ To be clear, Necessist does not apply (`*`) formally, e.g., Necessist does not a
 Usage: necessist [OPTIONS] [TEST_FILES_OR_DIRS]... [-- <ARGS>...]
 
 Arguments:
-  [TEST_FILES_OR_DIRS]...  Test files or directories to mutilate (optional)
+  [TEST_FILES_OR_DIRS]...  Test files or directories to mutilate; if `--root <ROOT>` is passed, relative paths are interpreted relative to <ROOT>
   [ARGS]...                Additional arguments to pass to each test command
 
 Options:
