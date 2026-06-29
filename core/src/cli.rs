@@ -59,7 +59,8 @@ pub struct Opts<Identifier: Clone + Send + Sync + ValueEnum + 'static> {
     verbose: bool,
     #[clap(
         value_name = "TEST_FILES_OR_DIRS",
-        help = "Test files or directories to mutilate (optional)"
+        help = "Test files or directories to mutilate; if `--root <ROOT>` is passed, relative \
+                paths are interpreted relative to <ROOT>"
     )]
     zsource_files: Vec<String>,
     #[clap(

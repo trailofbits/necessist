@@ -2,8 +2,8 @@ args = [
     "--no-sqlite",
     "--dump-candidates",
     "--root=fixtures/cli_input",
-    "fixtures/cli_input/src/some_dir",
-    "fixtures/cli_input/src/other_dir/some_file.rs",
+    "src/some_dir",
+    "src/other_dir/some_file.rs",
 ]
 
 stderr = ""

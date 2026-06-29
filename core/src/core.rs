@@ -491,7 +491,12 @@ fn canonicalize_source_files(context: &LightContext) -> Result<Vec<PathBuf>> {
         .source_files
         .iter()
         .map(|path| {
-            let path_buf = dunce::canonicalize(path)
+            let path_to_canonicalize = if path.is_absolute() {
+                path.clone()
+            } else {
+                context.root.join(path)
+            };
+            let path_buf = dunce::canonicalize(&path_to_canonicalize)
                 .with_context(|| format!("Failed to canonicalize `{}`", path.display()))?;
             ensure!(
                 path_buf.starts_with(context.root.as_path()),
