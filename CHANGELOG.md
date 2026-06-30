@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.0.0
+
+- Reduce unnecessary blank lines ([91c3a72](https://github.com/trailofbits/necessist/commit/91c3a721eba4413f3d26bacad2a83ab219d69517))
+- BREAKING: Improve Rust test detection ([ed3fd0c](https://github.com/trailofbits/necessist/commit/ed3fd0ce8f0d8307948624be616453ece346ddcc))
+- BREAKING: When `--root <ROOT>` is passed, interpret relative paths relative to `<ROOT>` ([3045243](https://github.com/trailofbits/necessist/commit/30452431df93d6c13c1ac8039fdaf9aba8981dcd))
+- Dependency updates
+  - `git2` upgraded to version 0.21
+  - `itertools` upgraded to version 0.15
+  - `sha2` upgraded to version 0.11
+  - `swc_core` upgraded to version 71.0
+
 ## 2.2.0
 
 - Add experimental `--no-lines-or-columns` option ([4846795](https://github.com/trailofbits/necessist/commit/48467958bf8395e629c5c3fca65adf527e3916ce))
