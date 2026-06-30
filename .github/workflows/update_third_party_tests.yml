@@ -39,7 +39,21 @@ jobs:
         env:
           TESTS: third_party_0 third_party_1 trycmd other ci
 
+      - name: Require that a snapshot changed
+        id: snapshot
+        run: |
+          set +e
+          git diff --quiet -- '*.stdout'
+          status=$?
+          set -e
+          if [ "$status" -eq 1 ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          elif [ "$status" -ne 0 ]; then
+            exit "$status"
+          fi
+
       - name: Create pull request
+        if: steps.snapshot.outputs.changed == 'true'
         uses: peter-evans/create-pull-request@v8
         with:
           title: "Update third-party tests"
