@@ -33,18 +33,11 @@ pattern = [
 [workspace.metadata.unmaintained]
 ignore = [
     "automod",
-    "dirs-sys-next",
-    "libredox",
     "paste",
-    "rand_core",
-    "redox_syscall",
-    "redox_users",
+    "proc-macro-error-attr2",
+    "proc-macro-error2",
     "smartstring",
-    "solang-parser",
     "strip-ansi-escapes",
-    "unit-prefix",
     # https://github.com/alacritty/vte/pull/122#issuecomment-2579278540
     "utf8parse",
-    # https://github.com/console-rs/indicatif/blob/dbd26eb18157e5fad18c79e1933ad5f249165d6c/Cargo.toml#L34-L35
-    "web-time",
 ]
