@@ -626,6 +626,84 @@
         "name": "Ted Driggs"
       }
     ],
+    "defmt": [
+      {
+        "id": 246,
+        "kind": "user",
+        "login": "japaric",
+        "name": "Jorge Aparicio"
+      },
+      {
+        "id": 2769,
+        "kind": "team",
+        "login": "github:knurling-rs:crate-owners",
+        "name": "crate-owners"
+      },
+      {
+        "id": 84779,
+        "kind": "user",
+        "login": "jonathanpallant",
+        "name": "Jonathan Pallant"
+      },
+      {
+        "id": 336166,
+        "kind": "user",
+        "login": "knurling-infra",
+        "name": null
+      }
+    ],
+    "defmt-macros": [
+      {
+        "id": 246,
+        "kind": "user",
+        "login": "japaric",
+        "name": "Jorge Aparicio"
+      },
+      {
+        "id": 2769,
+        "kind": "team",
+        "login": "github:knurling-rs:crate-owners",
+        "name": "crate-owners"
+      },
+      {
+        "id": 84779,
+        "kind": "user",
+        "login": "jonathanpallant",
+        "name": "Jonathan Pallant"
+      },
+      {
+        "id": 336166,
+        "kind": "user",
+        "login": "knurling-infra",
+        "name": null
+      }
+    ],
+    "defmt-parser": [
+      {
+        "id": 246,
+        "kind": "user",
+        "login": "japaric",
+        "name": "Jorge Aparicio"
+      },
+      {
+        "id": 2769,
+        "kind": "team",
+        "login": "github:knurling-rs:crate-owners",
+        "name": "crate-owners"
+      },
+      {
+        "id": 84779,
+        "kind": "user",
+        "login": "jonathanpallant",
+        "name": "Jonathan Pallant"
+      },
+      {
+        "id": 336166,
+        "kind": "user",
+        "login": "knurling-infra",
+        "name": null
+      }
+    ],
     "deranged": [
       {
         "id": 15682,
@@ -1080,6 +1158,48 @@
         "name": "SWC Bot"
       }
     ],
+    "futures-core": [
+      {
+        "id": 5149,
+        "kind": "user",
+        "login": "cramertj",
+        "name": "Taylor Cramer"
+      },
+      {
+        "id": 33035,
+        "kind": "user",
+        "login": "taiki-e",
+        "name": "Taiki Endo"
+      }
+    ],
+    "futures-task": [
+      {
+        "id": 5149,
+        "kind": "user",
+        "login": "cramertj",
+        "name": "Taylor Cramer"
+      },
+      {
+        "id": 33035,
+        "kind": "user",
+        "login": "taiki-e",
+        "name": "Taiki Endo"
+      }
+    ],
+    "futures-util": [
+      {
+        "id": 5149,
+        "kind": "user",
+        "login": "cramertj",
+        "name": "Taylor Cramer"
+      },
+      {
+        "id": 33035,
+        "kind": "user",
+        "login": "taiki-e",
+        "name": "Taiki Endo"
+      }
+    ],
     "getrandom": [
       {
         "id": 563,
@@ -1308,26 +1428,6 @@
         "name": "Zibi Braniecki"
       }
     ],
-    "id-arena": [
-      {
-        "id": 1,
-        "kind": "user",
-        "login": "alexcrichton",
-        "name": "Alex Crichton"
-      },
-      {
-        "id": 696,
-        "kind": "user",
-        "login": "fitzgen",
-        "name": "Nick Fitzgerald"
-      },
-      {
-        "id": 2699,
-        "kind": "user",
-        "login": "matklad",
-        "name": "Alex Kladov"
-      }
-    ],
     "ident_case": [
       {
         "id": 6324,
@@ -1524,14 +1624,6 @@
         "kind": "user",
         "login": "nikomatsakis",
         "name": "Niko Matsakis"
-      }
-    ],
-    "leb128fmt": [
-      {
-        "id": 35113,
-        "kind": "user",
-        "login": "bluk",
-        "name": "Bryant Luk"
       }
     ],
     "libc": [
@@ -2104,14 +2196,6 @@
         "name": null
       }
     ],
-    "plain": [
-      {
-        "id": 6236,
-        "kind": "user",
-        "login": "le-jzr",
-        "name": "Jiří Zárevúcky"
-      }
-    ],
     "portable-atomic": [
       {
         "id": 33035,
@@ -2194,12 +2278,20 @@
         "name": "Ed Page"
       }
     ],
-    "prettyplease": [
+    "proc-macro-error-attr2": [
       {
-        "id": 3618,
+        "id": 149993,
         "kind": "user",
-        "login": "dtolnay",
-        "name": "David Tolnay"
+        "login": "GnomedDev",
+        "name": "Gnome!"
+      }
+    ],
+    "proc-macro-error2": [
+      {
+        "id": 149993,
+        "kind": "user",
+        "login": "GnomedDev",
+        "name": "Gnome!"
       }
     ],
     "proc-macro2": [
@@ -2568,6 +2660,20 @@
         "kind": "user",
         "login": "jedisct1",
         "name": "Frank Denis"
+      }
+    ],
+    "slab": [
+      {
+        "id": 10,
+        "kind": "user",
+        "login": "carllerche",
+        "name": "Carl Lerche"
+      },
+      {
+        "id": 1461,
+        "kind": "team",
+        "login": "github:tokio-rs:core",
+        "name": "Core"
       }
     ],
     "smallvec": [
@@ -3586,20 +3692,6 @@
         "name": null
       }
     ],
-    "wasip3": [
-      {
-        "id": 1,
-        "kind": "user",
-        "login": "alexcrichton",
-        "name": "Alex Crichton"
-      },
-      {
-        "id": 73222,
-        "kind": "user",
-        "login": "wasmtime-publish",
-        "name": null
-      }
-    ],
     "wasm-bindgen": [
       {
         "id": 5799,
@@ -3704,30 +3796,6 @@
         "name": "Guy Bedford"
       }
     ],
-    "wasm-encoder": [
-      {
-        "id": 73222,
-        "kind": "user",
-        "login": "wasmtime-publish",
-        "name": null
-      }
-    ],
-    "wasm-metadata": [
-      {
-        "id": 73222,
-        "kind": "user",
-        "login": "wasmtime-publish",
-        "name": null
-      }
-    ],
-    "wasmparser": [
-      {
-        "id": 73222,
-        "kind": "user",
-        "login": "wasmtime-publish",
-        "name": null
-      }
-    ],
     "web-time": [
       {
         "id": 34642,
@@ -3793,46 +3861,6 @@
       }
     ],
     "wit-bindgen": [
-      {
-        "id": 73222,
-        "kind": "user",
-        "login": "wasmtime-publish",
-        "name": null
-      }
-    ],
-    "wit-bindgen-core": [
-      {
-        "id": 73222,
-        "kind": "user",
-        "login": "wasmtime-publish",
-        "name": null
-      }
-    ],
-    "wit-bindgen-rust": [
-      {
-        "id": 73222,
-        "kind": "user",
-        "login": "wasmtime-publish",
-        "name": null
-      }
-    ],
-    "wit-bindgen-rust-macro": [
-      {
-        "id": 73222,
-        "kind": "user",
-        "login": "wasmtime-publish",
-        "name": null
-      }
-    ],
-    "wit-component": [
-      {
-        "id": 73222,
-        "kind": "user",
-        "login": "wasmtime-publish",
-        "name": null
-      }
-    ],
-    "wit-parser": [
       {
         "id": 73222,
         "kind": "user",
