@@ -33,6 +33,7 @@ pattern = [
 [workspace.metadata.unmaintained]
 ignore = [
     "automod",
+    "bit-set",
     "paste",
     "proc-macro-error-attr2",
     "proc-macro-error2",
