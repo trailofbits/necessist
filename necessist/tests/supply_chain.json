@@ -712,42 +712,6 @@
         "name": "Jacob Pratt"
       }
     ],
-    "derive_builder": [
-      {
-        "id": 4650,
-        "kind": "user",
-        "login": "colin-kiegel",
-        "name": "Colin Kiegel"
-      },
-      {
-        "id": 6324,
-        "kind": "user",
-        "login": "TedDriggs",
-        "name": "Ted Driggs"
-      }
-    ],
-    "derive_builder_core": [
-      {
-        "id": 4650,
-        "kind": "user",
-        "login": "colin-kiegel",
-        "name": "Colin Kiegel"
-      },
-      {
-        "id": 6324,
-        "kind": "user",
-        "login": "TedDriggs",
-        "name": "Ted Driggs"
-      }
-    ],
-    "derive_builder_macro": [
-      {
-        "id": 6324,
-        "kind": "user",
-        "login": "TedDriggs",
-        "name": "Ted Driggs"
-      }
-    ],
     "diesel": [
       {
         "id": 58,
@@ -2456,12 +2420,6 @@
     ],
     "rustc-hash": [
       {
-        "id": 70,
-        "kind": "team",
-        "login": "github:rust-lang:core",
-        "name": "core"
-      },
-      {
         "id": 408,
         "kind": "team",
         "login": "github:rust-lang:compiler",
@@ -2472,6 +2430,12 @@
         "kind": "user",
         "login": "nikomatsakis",
         "name": "Niko Matsakis"
+      },
+      {
+        "id": 55123,
+        "kind": "user",
+        "login": "rust-lang-owner",
+        "name": null
       }
     ],
     "rustix": [
@@ -3602,22 +3566,6 @@
         "kind": "user",
         "login": "waych",
         "name": "Mike Waychison"
-      }
-    ],
-    "vergen": [
-      {
-        "id": 724,
-        "kind": "user",
-        "login": "CraZySacX",
-        "name": "Jason Ozias"
-      }
-    ],
-    "vergen-lib": [
-      {
-        "id": 724,
-        "kind": "user",
-        "login": "CraZySacX",
-        "name": "Jason Ozias"
       }
     ],
     "version_check": [
