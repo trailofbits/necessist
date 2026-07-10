@@ -40,6 +40,10 @@ fn foo() -> S {
     S { field: T }
 }
 
+fn ignored_function<T>(_: T) {}
+
+fn noop() {}
+
 #[test]
 fn test() {
     say_hello!();
@@ -60,4 +64,8 @@ fn test() {
     bar.field.method().baz();
     bar.field.ignored_method();
     bar.field.ignored_method().baz();
+
+    ignored_function(foo().method());
+
+    noop();
 }

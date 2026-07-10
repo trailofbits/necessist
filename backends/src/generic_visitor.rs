@@ -120,8 +120,9 @@ macro_rules! visit_maybe_macro_call {
                 }
 
                 // smoelius: Return false (i.e., don't descend into the call arguments) only if
-                // the call or method call is ignored.
-                !$args.is_ignored_as_call && !$args.is_ignored_as_method_call
+                // the call or method call is ignored and `visit_ignored_arguments` is false.
+                (!$args.is_ignored_as_call && !$args.is_ignored_as_method_call)
+                    || $this.config.visit_ignored_arguments()
             } else {
                 true
             }

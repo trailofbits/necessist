@@ -430,6 +430,8 @@ A configuration file allows one to tailor Necessist's behavior with respect to a
 
 - `ignored_tests`: A list of strings. A test whose name exactly matches a string in the list is ignored. For Mocha-based frameworks (e.g., Anchor and Hardhat), a test name is considered to be a message passed to `it`.
 
+- `visit_ignored_arguments`: A boolean indicating whether Necessist should visit the arguments of ignored functions, methods, and macros. The default is `false`.
+
 - `walkable_functions`: A list of strings interpreted as [patterns]. If a test calls a function that matches the pattern, and the function is declared in the same file as the test, then statements and method calls are removed from the function as though it were a test.
 
 ### Patterns

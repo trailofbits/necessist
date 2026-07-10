@@ -1,6 +1,10 @@
 ignored_macros = [
     "say_hello"
 ]
+ignored_functions = [
+    "ignored_function"
+]
 ignored_methods = [
     "ignored_method"
 ]
+visit_ignored_arguments = true
