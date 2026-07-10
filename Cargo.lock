@@ -1307,7 +1307,7 @@ checksum = "cf8baf1c55e62ffcace7a9f06f4bd9cd3f0c4beb022d3b367256b91b87513d98"
 
 [[package]]
 name = "necessist"
-version = "3.0.0"
+version = "3.1.0"
 dependencies = [
  "anyhow",
  "assert_cmd",
@@ -1338,7 +1338,7 @@ dependencies = [
 
 [[package]]
 name = "necessist-backends"
-version = "3.0.0"
+version = "3.1.0"
 dependencies = [
  "anyhow",
  "assert_cmd",
@@ -1375,7 +1375,7 @@ dependencies = [
 
 [[package]]
 name = "necessist-core"
-version = "3.0.0"
+version = "3.1.0"
 dependencies = [
  "ansi_term",
  "anyhow",

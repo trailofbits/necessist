@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.1.0
+
+- FEATURE: Add `visit_ignored_arguments` configuration. By default, Necessist does not descend into (e.g., remove statements and methods from) the arguments of ignored functions. Setting this configuration to true causes it to do so. ([ae51dc3](https://github.com/trailofbits/necessist/commit/ae51dc309829319aa671cb3ad0f2c261b0a954d3))
+- Dependency updates
+  - `swc_core` upgraded to version 73.0
+
 ## 3.0.0
 
 - Reduce unnecessary blank lines ([91c3a72](https://github.com/trailofbits/necessist/commit/91c3a721eba4413f3d26bacad2a83ab219d69517))
