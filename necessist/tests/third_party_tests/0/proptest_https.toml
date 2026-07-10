@@ -1,5 +1,5 @@
 url = "https://github.com/proptest-rs/proptest"
-# https://github.com/proptest-rs/proptest/commit/b71253807372932f72a71b1af7975371a41e7c88
-rev = "b71253807372932f72a71b1af7975371a41e7c88"
+# https://github.com/proptest-rs/proptest/commit/c620fd254cefc81113aac69dd3336b13067d97e1
+rev = "c620fd254cefc81113aac69dd3336b13067d97e1"
 subdir = "proptest"
 source_files = ["src/sample.rs"]

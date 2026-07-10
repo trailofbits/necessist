@@ -15,7 +15,7 @@
 | go_src_text_template_parse | go1.23.0                                 | go        | X    | X     | X     | X       | 1         |
 | minio                      | RELEASE.2025-10-15T17-29-55Z             |           |      | X     | X     | X       | 1         |
 | operator-filter-registry   | v1.4.2                                   |           |      | X     | X     | X       | 0         |
-| proptest_https             | b71253807372932f72a71b1af7975371a41e7c88 |           | X    | X     | X     | X       | 0         |
+| proptest_https             | c620fd254cefc81113aac69dd3336b13067d97e1 |           | X    | X     | X     | X       | 0         |
 | pyth                       | hip-3-pusher-v0.3.1                      | anchor    |      | X     | X     |         | 0         |
 | seaport_foundry            | 1.6                                      | foundry   | X    | X     | X     | X       | 1         |
 | seaport_hardhat            | 1.6                                      | hardhat   |      | X     | X     | X       | 1         |
