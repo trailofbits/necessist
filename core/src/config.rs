@@ -17,6 +17,7 @@ pub struct Compiled {
     ignored_methods: Vec<Regex>,
     ignored_path_disambiguation: IgnoredPathDisambiguation,
     ignored_tests: Vec<String>,
+    visit_ignored_arguments: bool,
     walkable_functions: Vec<Regex>,
 }
 
@@ -42,6 +43,10 @@ impl Compiled {
         self.ignored_tests.iter().any(|s| name == s)
     }
     #[must_use]
+    pub fn visit_ignored_arguments(&self) -> bool {
+        self.visit_ignored_arguments
+    }
+    #[must_use]
     pub fn is_walkable_function(&self, name: &str) -> bool {
         self.walkable_functions.iter().any(|re| re.is_match(name))
     }
@@ -59,6 +64,8 @@ pub struct Toml {
     pub ignored_path_disambiguation: Option<IgnoredPathDisambiguation>,
     #[serde(default)]
     pub ignored_tests: Vec<String>,
+    #[serde(default)]
+    pub visit_ignored_arguments: Option<bool>,
     #[serde(default)]
     pub walkable_functions: Vec<String>,
     #[serde(flatten)]
@@ -94,6 +101,7 @@ impl Toml {
             ignored_methods,
             ignored_path_disambiguation,
             ignored_tests,
+            visit_ignored_arguments,
             walkable_functions,
             other: _,
         } = other;
@@ -101,6 +109,13 @@ impl Toml {
         if self.ignored_path_disambiguation.is_some()
             && other.ignored_path_disambiguation.is_some()
             && self.ignored_path_disambiguation != *ignored_path_disambiguation
+        {
+            return None;
+        }
+
+        if self.visit_ignored_arguments.is_some()
+            && other.visit_ignored_arguments.is_some()
+            && self.visit_ignored_arguments != *visit_ignored_arguments
         {
             return None;
         }
@@ -113,6 +128,7 @@ impl Toml {
         self.ignored_path_disambiguation = *ignored_path_disambiguation;
 
         self.ignored_tests.extend_from_slice(ignored_tests);
+        self.visit_ignored_arguments = *visit_ignored_arguments;
         self.walkable_functions
             .extend_from_slice(walkable_functions);
 
@@ -126,6 +142,7 @@ impl Toml {
             ignored_methods,
             ignored_path_disambiguation,
             ignored_tests,
+            visit_ignored_arguments,
             walkable_functions,
             other: _,
         } = self;
@@ -141,6 +158,7 @@ impl Toml {
             ignored_methods,
             ignored_path_disambiguation: ignored_path_disambiguation.unwrap_or_default(),
             ignored_tests,
+            visit_ignored_arguments: visit_ignored_arguments.unwrap_or(false),
             walkable_functions,
         })
     }
