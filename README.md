@@ -423,14 +423,73 @@ A configuration file allows one to tailor Necessist's behavior with respect to a
 
 - `ignored_functions`, `ignored_methods`, `ignored_macros`: A list of strings interpreted as [patterns]. A function, method, or macro (respectively) whose [path] matches a pattern in the list is ignored. Note that `ignored_macros` is used only by the Rust backend currently.
 
+  <details>
+
+  <summary><code>ignored_functions</code> Rust example</summary>
+
+  In the [`valid_pattern` fixture]'s [`necessist.toml` file], disabling the use of `ignored_functions` would make the following a candidate for removal:
+
+  ```
+  fixtures/valid_pattern/src/lib.rs:68:5-68:38: `ignored_function(foo().method());`
+  ```
+
+  </details>
+
+  <details>
+
+  <summary><code>ignored_methods</code> Rust example</summary>
+
+  In the [`valid_pattern` fixture]'s [`necessist.toml` file], disabling the use of `ignored_methods` would make the following candidates for removal:
+
+  ```
+  fixtures/valid_pattern/srclib.rs:60:5-60:26: `bar.ignored_method();`
+  fixtures/valid_pattern/srclib.rs:65:5-65:32: `bar.field.ignored_method();`
+  fixtures/valid_pattern/srclib.rs:55:10-55:27: `.ignored_method()`
+  fixtures/valid_pattern/srclib.rs:56:10-56:27: `.ignored_method()`
+  fixtures/valid_pattern/srclib.rs:60:8-60:25: `.ignored_method()`
+  fixtures/valid_pattern/srclib.rs:61:8-61:25: `.ignored_method()`
+  fixtures/valid_pattern/srclib.rs:65:8-65:31: `.field.ignored_method()`
+  fixtures/valid_pattern/srclib.rs:66:8-66:31: `.field.ignored_method()`
+  ```
+
+  </details>
+
+  <details>
+
+  <summary><code>ignored_macros</code> Rust example</summary>
+
+  In the [`valid_pattern` fixture]'s [`necessist.toml` file], disabling the use of `ignored_macros` would make the following a candidate for removal:
+
+  ```
+  fixtures/valid_pattern/src/lib.rs:49:5-49:18: `say_hello!();`
+  ```
+
+  </details>
+
+  <p></p>
+
 - `ignored_path_disambiguation`: One of the strings `Either`, `Function`, or `Method`. For a [path] that could refer to a function or method ([see below](#paths)), this option influences whether the function or method is ignored.
-  - `Either` (default): Ignore if the path matches either an `ignored_functions` or `ignored_methods` pattern.
-  - `Function`: Ignore only if the path matches an `ignored_functions` pattern.
-  - `Method`: Ignore only if the path matches an `ignored_methods` pattern.
+  - `ignored_path_disambiguation = "None"` (default): Ignore if the path matches either an `ignored_functions` or `ignored_methods` pattern.
+  - `ignored_path_disambiguation = "Function"`: Ignore only if the path matches an `ignored_functions` pattern.
+  - `ignored_path_disambiguation = "Method"`: Ignore only if the path matches an `ignored_methods` pattern.
 
 - `ignored_tests`: A list of strings. A test whose name exactly matches a string in the list is ignored. For Mocha-based frameworks (e.g., Anchor and Hardhat), a test name is considered to be a message passed to `it`.
 
 - `visit_ignored_arguments`: A boolean indicating whether Necessist should visit the arguments of ignored functions, methods, and macros. The default is `false`.
+
+  <details>
+
+  <summary>Rust example</summary>
+
+  In the [`valid_pattern` fixture]'s [`necessist.toml` file], disabling the use of `visit_ignored_arguments` would make the following no longer a candidate for removal:
+
+  ```
+  fixtures/valid_pattern/src/lib.rs:68:27-68:36: `.method()` passed
+  ```
+
+  </details>
+
+  <p></p>
 
 - `walkable_functions`: A list of strings interpreted as [patterns]. If a test calls a function that matches the pattern, and the function is declared in the same file as the test, then statements and method calls are removed from the function as though it were a test.
 
@@ -514,6 +573,7 @@ Necessist is licensed and distributed under the AGPLv3 license. [Contact us](mai
 [`assert_cmd::assert::Assert::success`]: https://docs.rs/assert_cmd/latest/assert_cmd/assert/struct.Assert.html#method.success
 [`fixtures/basic`]: https://github.com/trailofbits/necessist/tree/master/fixtures/basic
 [`glob`]: https://man7.org/linux/man-pages/man7/glob.7.html
+[`necessist.toml` file]: https://github.com/trailofbits/necessist/tree/master/fixtures/valid_pattern/necessist.toml
 [`rust-openssl`]: https://github.com/sfackler/rust-openssl
 [`std::borrow::Cow::into_owned`]: https://doc.rust-lang.org/std/borrow/enum.Cow.html#method.into_owned
 [`std::clone::Clone::clone`]: https://doc.rust-lang.org/std/clone/trait.Clone.html#tymethod.clone
@@ -526,6 +586,7 @@ Necessist is licensed and distributed under the AGPLv3 license. [Contact us](mai
 [`testing.T`]: https://pkg.go.dev/testing#T
 [`universalmutator`]: https://github.com/agroce/universalmutator
 [`unnecessary_conversion_for_trait`]: https://github.com/trailofbits/dylint/tree/master/examples/supplementary/unnecessary_conversion_for_trait
+[`valid_pattern` fixture]: https://github.com/trailofbits/necessist/tree/master/fixtures/valid_pattern/src/lib.rs
 [added to the test]: https://github.com/sfackler/rust-openssl/pull/1852
 [crates.io]: https://crates.io/crates/necessist
 [frameworks besides Hoare logic entirely]: https://github.com/trailofbits/necessist/pull/474#discussion_r1230859226
