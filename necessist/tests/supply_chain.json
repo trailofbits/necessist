@@ -2242,22 +2242,6 @@
         "name": "Ed Page"
       }
     ],
-    "proc-macro-error-attr2": [
-      {
-        "id": 149993,
-        "kind": "user",
-        "login": "GnomedDev",
-        "name": "Gnome!"
-      }
-    ],
-    "proc-macro-error2": [
-      {
-        "id": 149993,
-        "kind": "user",
-        "login": "GnomedDev",
-        "name": "Gnome!"
-      }
-    ],
     "proc-macro2": [
       {
         "id": 3618,
@@ -3626,20 +3610,6 @@
         "name": "Dan Gohman"
       }
     ],
-    "wasip2": [
-      {
-        "id": 1,
-        "kind": "user",
-        "login": "alexcrichton",
-        "name": "Alex Crichton"
-      },
-      {
-        "id": 73222,
-        "kind": "user",
-        "login": "wasmtime-publish",
-        "name": null
-      }
-    ],
     "wasm-bindgen": [
       {
         "id": 5799,
@@ -3806,14 +3776,6 @@
         "kind": "user",
         "login": "epage",
         "name": "Ed Page"
-      }
-    ],
-    "wit-bindgen": [
-      {
-        "id": 73222,
-        "kind": "user",
-        "login": "wasmtime-publish",
-        "name": null
       }
     ],
     "writeable": [
