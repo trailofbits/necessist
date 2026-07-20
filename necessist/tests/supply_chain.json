@@ -1134,6 +1134,12 @@
         "kind": "user",
         "login": "taiki-e",
         "name": "Taiki Endo"
+      },
+      {
+        "id": 55123,
+        "kind": "user",
+        "login": "rust-lang-owner",
+        "name": null
       }
     ],
     "futures-task": [
@@ -1148,6 +1154,12 @@
         "kind": "user",
         "login": "taiki-e",
         "name": "Taiki Endo"
+      },
+      {
+        "id": 55123,
+        "kind": "user",
+        "login": "rust-lang-owner",
+        "name": null
       }
     ],
     "futures-util": [
@@ -1162,6 +1174,12 @@
         "kind": "user",
         "login": "taiki-e",
         "name": "Taiki Endo"
+      },
+      {
+        "id": 55123,
+        "kind": "user",
+        "login": "rust-lang-owner",
+        "name": null
       }
     ],
     "getrandom": [
