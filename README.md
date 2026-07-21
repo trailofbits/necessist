@@ -419,7 +419,7 @@ The ignored functions and methods are the same as for Anchor above.
 
 ## Configuration files
 
-A configuration file allows one to tailor Necessist's behavior with respect to a project. The file must be named `necessist.toml`, appear in the project's root directory, and be [toml] encoded. The file may contain one more of the options listed below.
+A configuration file allows one to tailor Necessist's behavior with respect to a project. The file must be named `necessist.toml`, appear in the project's root directory, and be [toml] encoded. The file may contain one or more of the options listed below.
 
 - `ignored_functions`, `ignored_methods`, `ignored_macros`: A list of strings interpreted as [patterns]. A function, method, or macro (respectively) whose [path] matches a pattern in the list is ignored. Note that `ignored_macros` is used only by the Rust backend currently.
 
@@ -442,14 +442,14 @@ A configuration file allows one to tailor Necessist's behavior with respect to a
   In the [`valid_pattern` fixture]'s [`necessist.toml` file], disabling the use of `ignored_methods` would make the following candidates for removal:
 
   ```
-  fixtures/valid_pattern/srclib.rs:60:5-60:26: `bar.ignored_method();`
-  fixtures/valid_pattern/srclib.rs:65:5-65:32: `bar.field.ignored_method();`
-  fixtures/valid_pattern/srclib.rs:55:10-55:27: `.ignored_method()`
-  fixtures/valid_pattern/srclib.rs:56:10-56:27: `.ignored_method()`
-  fixtures/valid_pattern/srclib.rs:60:8-60:25: `.ignored_method()`
-  fixtures/valid_pattern/srclib.rs:61:8-61:25: `.ignored_method()`
-  fixtures/valid_pattern/srclib.rs:65:8-65:31: `.field.ignored_method()`
-  fixtures/valid_pattern/srclib.rs:66:8-66:31: `.field.ignored_method()`
+  fixtures/valid_pattern/src/lib.rs:60:5-60:26: `bar.ignored_method();`
+  fixtures/valid_pattern/src/lib.rs:65:5-65:32: `bar.field.ignored_method();`
+  fixtures/valid_pattern/src/lib.rs:55:10-55:27: `.ignored_method()`
+  fixtures/valid_pattern/src/lib.rs:56:10-56:27: `.ignored_method()`
+  fixtures/valid_pattern/src/lib.rs:60:8-60:25: `.ignored_method()`
+  fixtures/valid_pattern/src/lib.rs:61:8-61:25: `.ignored_method()`
+  fixtures/valid_pattern/src/lib.rs:65:8-65:31: `.field.ignored_method()`
+  fixtures/valid_pattern/src/lib.rs:66:8-66:31: `.field.ignored_method()`
   ```
 
   </details>
@@ -468,7 +468,7 @@ A configuration file allows one to tailor Necessist's behavior with respect to a
 
   <p></p>
 
-- `ignored_path_disambiguation`: One of the strings `Either`, `Function`, or `Method`. For a [path] that could refer to a function or method ([see below](#paths)), this option influences whether the function or method is ignored.
+- `ignored_path_disambiguation`: One of the strings `None`, `Function`, or `Method`. For a [path] that could refer to a function or method ([see below](#paths)), this option influences whether the function or method is ignored.
   - `ignored_path_disambiguation = "None"` (default): Ignore if the path matches either an `ignored_functions` or `ignored_methods` pattern.
   - `ignored_path_disambiguation = "Function"`: Ignore only if the path matches an `ignored_functions` pattern.
   - `ignored_path_disambiguation = "Method"`: Ignore only if the path matches an `ignored_methods` pattern.
