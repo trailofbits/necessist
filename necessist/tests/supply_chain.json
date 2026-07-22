@@ -1542,10 +1542,22 @@
     ],
     "jobserver": [
       {
+        "id": 408,
+        "kind": "team",
+        "login": "github:rust-lang:compiler",
+        "name": "compiler"
+      },
+      {
         "id": 1094,
         "kind": "user",
         "login": "petrochenkov",
         "name": "Vadim Petrochenkov"
+      },
+      {
+        "id": 16264,
+        "kind": "team",
+        "login": "github:rust-lang:cargo",
+        "name": "cargo"
       },
       {
         "id": 55123,
