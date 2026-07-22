@@ -11,7 +11,7 @@ use std::{
     cell::RefCell,
     env::var,
     fs::File,
-    io::Read,
+    io::{Read, Seek},
     path::Path,
     process::{Command, ExitStatus as StdExitStatus, Output},
     rc::Rc,
@@ -172,26 +172,23 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
         command.args(&context.opts.args);
         command.args(final_args);
 
-        let mut exec = util::exec_from_command(&command);
-        if init_f_test.is_some() {
-            exec = exec.stdout(Redirection::Pipe);
-            exec = exec.stderr(Redirection::Pipe);
-        } else {
-            exec = exec.stdout(Redirection::Null);
-            exec = exec.stderr(Redirection::Null);
-        }
-
         let test_name = test_name.to_owned();
         let span = span.clone();
 
-        Ok(Ok((
-            exec,
-            init_f_test.map(|(init, f)| -> Box<Postprocess> {
-                Box::new(move |context: &LightContext, mut popen| {
-                    let stdout_file = popen
-                        .stdout
-                        .take()
-                        .ok_or_else(|| anyhow!("Failed to get stdout"))?;
+        let mut exec = util::exec_from_command(&command);
+        let postprocess = if let Some((init, f)) = init_f_test {
+            // `perform_exec` waits for the child before postprocessing its output. Spool to files
+            // so a child producing more than a pipe buffer can still exit.
+            let stdout_file = tempfile::tempfile()?;
+            let stderr_file = tempfile::tempfile()?;
+            let stdout_redirection = stdout_file.try_clone()?;
+            let stderr_redirection = stderr_file.try_clone()?;
+            exec = exec.stdout(Redirection::File(stdout_redirection));
+            exec = exec.stderr(Redirection::File(stderr_redirection));
+            Some({
+                let postprocess: Box<Postprocess> = Box::new(move |context, popen| {
+                    let mut stdout_file = stdout_file;
+                    stdout_file.rewind()?;
                     let stdout = read_file_to_end(stdout_file)?;
                     let run = stdout.byte_lines().try_fold(init, |prev, result| {
                         let buf = result?;
@@ -217,10 +214,8 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
                     if run {
                         return Ok(true);
                     }
-                    let stderr_file = popen
-                        .stderr
-                        .take()
-                        .ok_or_else(|| anyhow!("Failed to get stderr"))?;
+                    let mut stderr_file = stderr_file;
+                    stderr_file.rewind()?;
                     let stderr = read_file_to_end(stderr_file)?;
                     let status = popen.wait()?;
                     let Some(code) = status.code() else {
@@ -241,9 +236,16 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
                         WarnFlags::empty(),
                     )?;
                     Ok(false)
-                })
-            }),
-        )))
+                });
+                postprocess
+            })
+        } else {
+            exec = exec.stdout(Redirection::Null);
+            exec = exec.stderr(Redirection::Null);
+            None
+        };
+
+        Ok(Ok((exec, postprocess)))
     }
 }
 
