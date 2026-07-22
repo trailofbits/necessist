@@ -38,7 +38,13 @@ fn emit_expression_with_block(file: &mut File, syn_file: &SynFile) -> Result<(),
             continue;
         };
         if !item_struct.fields.iter().any(|field| {
-            if let Type::Path(TypePath { qself: None, path }) = &field.ty {
+            if let Type::Path(TypePath {
+                attrs,
+                qself: None,
+                path,
+            }) = &field.ty
+                && attrs.is_empty()
+            {
                 path.is_ident("Block")
             } else {
                 false
