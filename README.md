@@ -12,6 +12,7 @@ A paper on Necessist ([Test Harness Mutilation]) appeared in Mutation 2024. ([sl
 - [Running](#running)
 - [Overview](#overview)
 - [Usage](#usage)
+- [LLM-assisted auditing](#llm-assisted-auditing)
 - [Details](#details)
 - [Configuration files](#configuration-files)
 - [Limitations](#limitations)
@@ -207,6 +208,34 @@ By default, Necessist outputs to the console only when tests pass. Passing `--ve
 | <span style="color:blue">nonbuildable</span> | The test(s) did not build.                          |
 
 By default, Necessist outputs to both the console and to an sqlite database. For the latter, a tool like [sqlitebrowser] can be used to filter/sort the results.
+
+## LLM-assisted auditing
+
+Necessist provides a [`necessist-audit` skill] for using an LLM to investigate whether passing removals expose bugs in the code being tested. If a `necessist.db` file exists in the current directory, the skill will use that; otherwise, the skill will run `necessist` to generate the file. Instructions for installing and using the skill with Claude Code and Codex follow.
+
+### Claude Code
+
+To install the skill, ask Claude Code:
+
+> Download the skill from `https://github.com/trailofbits/necessist/tree/main/skills/necessist-audit` and install it as my personal skill at `~/.claude/skills/necessist-audit`.
+
+Then, from a directory you would like to review, invoke the skill:
+
+```text
+/necessist-audit
+```
+
+### Codex
+
+To install the skill, ask Codex:
+
+> Install the skill from `https://github.com/trailofbits/necessist/tree/main/skills/necessist-audit`.
+
+Then, from a directory you would like to review, invoke the skill:
+
+```text
+$necessist-audit
+```
 
 ## Details
 
@@ -573,6 +602,7 @@ Necessist is licensed and distributed under the AGPLv3 license. [Contact us](mai
 [`assert_cmd::assert::Assert::success`]: https://docs.rs/assert_cmd/latest/assert_cmd/assert/struct.Assert.html#method.success
 [`fixtures/basic`]: https://github.com/trailofbits/necessist/tree/master/fixtures/basic
 [`glob`]: https://man7.org/linux/man-pages/man7/glob.7.html
+[`necessist-audit` skill]: skills/necessist-audit/SKILL.md
 [`necessist.toml` file]: https://github.com/trailofbits/necessist/tree/master/fixtures/valid_pattern/necessist.toml
 [`rust-openssl`]: https://github.com/sfackler/rust-openssl
 [`std::borrow::Cow::into_owned`]: https://doc.rust-lang.org/std/borrow/enum.Cow.html#method.into_owned
