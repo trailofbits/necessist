@@ -16,6 +16,22 @@ fn initialize() {
 }
 
 #[test]
+fn large_output_does_not_block() {
+    cargo_bin_cmd!("necessist")
+        .args([
+            "--no-sqlite",
+            "--root=fixtures/large_output",
+            "--timeout=5",
+            "--verbose",
+        ])
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("`n += 1;` failed"))
+        .stdout(predicate::str::contains("`n += 2;` failed"))
+        .stdout(predicate::str::contains("timed-out").not());
+}
+
+#[test]
 fn necessist_db_can_be_moved() {
     run_basic_test(|| {
         cargo_bin_cmd!("necessist")
