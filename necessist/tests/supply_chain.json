@@ -360,6 +360,14 @@
         "name": "Oli Scherer"
       }
     ],
+    "castaway": [
+      {
+        "id": 5613,
+        "kind": "user",
+        "login": "sagebind",
+        "name": "Stephen M. Coakley"
+      }
+    ],
     "cc": [
       {
         "id": 11,
@@ -488,6 +496,14 @@
         "kind": "user",
         "login": "epage",
         "name": "Ed Page"
+      }
+    ],
+    "compact_str": [
+      {
+        "id": 75844,
+        "kind": "user",
+        "login": "ParkMyCar",
+        "name": "Parker Timmerman"
       }
     ],
     "console": [
@@ -1198,12 +1214,6 @@
     ],
     "git2": [
       {
-        "id": 1,
-        "kind": "user",
-        "login": "alexcrichton",
-        "name": "Alex Crichton"
-      },
-      {
         "id": 4333,
         "kind": "user",
         "login": "joshtriplett",
@@ -1665,12 +1675,6 @@
       }
     ],
     "libgit2-sys": [
-      {
-        "id": 1,
-        "kind": "user",
-        "login": "alexcrichton",
-        "name": "Alex Crichton"
-      },
       {
         "id": 4333,
         "kind": "user",
@@ -2468,6 +2472,14 @@
         "name": "David Tolnay"
       }
     ],
+    "ryu": [
+      {
+        "id": 3618,
+        "kind": "user",
+        "login": "dtolnay",
+        "name": "David Tolnay"
+      }
+    ],
     "same-file": [
       {
         "id": 189,
@@ -2672,14 +2684,6 @@
         "kind": "user",
         "login": "Ms2ger",
         "name": null
-      }
-    ],
-    "smartstring": [
-      {
-        "id": 6446,
-        "kind": "user",
-        "login": "bodil",
-        "name": "Bodil Stokke"
       }
     ],
     "socket2": [
