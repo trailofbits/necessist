@@ -1,7 +1,7 @@
 329 candidates in 56 tests in 12 source files
 $DIR/src/mime/encodedword_test.go: dry running
 $DIR/src/mime/encodedword_test.go: mutilating
-$DIR/src/mime/encodedword_test.go: `wordLen = 0` timed-out
+$DIR/src/mime/encodedword_test.go: `wordLen = 0` failed
 $DIR/src/mime/encodedword_test.go: `wordLen++` passed
 $DIR/src/mime/encodedword_test.go: `i++` failed
 $DIR/src/mime/encodedword_test.go: `.Repeat("é", 10)` nonbuildable
@@ -278,8 +278,8 @@ $DIR/src/mime/multipart/multipart_test.go: `_, err = mr.NextPart()` failed
 $DIR/src/mime/multipart/multipart_test.go: `got = append(got, headerBody{p.Header, string(pbody)})` failed
 $DIR/src/mime/multipart/multipart_test.go: `maxSize = 512` passed
 $DIR/src/mime/multipart/multipart_test.go: `buf.Reset()` passed
-$DIR/src/mime/multipart/multipart_test.go: `part.Write(bodyb[:size])` timed-out
-$DIR/src/mime/multipart/multipart_test.go: `part, _ = w.CreateFormField("key")` timed-out
+$DIR/src/mime/multipart/multipart_test.go: `part.Write(bodyb[:size])` failed
+$DIR/src/mime/multipart/multipart_test.go: `part, _ = w.CreateFormField("key")` failed
 $DIR/src/mime/multipart/multipart_test.go: `part.Write([]byte("val"))` passed
 $DIR/src/mime/multipart/multipart_test.go: `.NewReader("")` nonbuildable
 $DIR/src/mime/multipart/multipart_test.go: `.isBoundaryDelimiterLine([]byte("--myBoundary\r\n"))` nonbuildable
@@ -482,7 +482,7 @@ $DIR/src/mime/quotedprintable/reader_test.go: `everySequence("", "0A \r\n=", n, 
 		res["OK"]++
 	})` failed
 $DIR/src/mime/quotedprintable/reader_test.go: `buf.Reset()` passed
-$DIR/src/mime/quotedprintable/reader_test.go: `errStr = "invalid bytes after ="` timed-out
+$DIR/src/mime/quotedprintable/reader_test.go: `errStr = "invalid bytes after ="` failed
 $DIR/src/mime/quotedprintable/reader_test.go: `res[errStr]++` failed
 $DIR/src/mime/quotedprintable/reader_test.go: `cmd.Stdin = strings.NewReader(s)` passed
 $DIR/src/mime/quotedprintable/reader_test.go: `qpres <- errors.New(s)` passed

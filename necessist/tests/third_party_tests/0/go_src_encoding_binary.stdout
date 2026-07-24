@@ -341,8 +341,8 @@ $DIR/src/encoding/binary/binary_test.go: `.Len()` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.fn(BigEndian, dstSlice.Interface(), buf)` nonbuildable
 $DIR/src/encoding/binary/binary_test.go: `.Interface()` failed
 $DIR/src/encoding/binary/binary_test.go: `.DeepEqual(src.Interface(), dst.Interface())` nonbuildable
-$DIR/src/encoding/binary/binary_test.go: `.Interface()` timed-out
-$DIR/src/encoding/binary/binary_test.go: `.Interface()` timed-out
+$DIR/src/encoding/binary/binary_test.go: `.Interface()` failed
+$DIR/src/encoding/binary/binary_test.go: `.Interface()` failed
 $DIR/src/encoding/binary/binary_test.go: `.Run(enc.name, func(t *testing.T) {
 			ts := T{}
 			if _, err := enc.fn(BigEndian, ts); err == nil {
