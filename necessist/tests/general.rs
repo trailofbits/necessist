@@ -168,6 +168,22 @@ fn tests_are_not_rebuilt() {
     });
 }
 
+#[test]
+fn large_test_output_does_not_block() {
+    cargo_bin_cmd!("necessist")
+        .args([
+            "--no-sqlite",
+            "--root=fixtures/large_output",
+            "--timeout=5",
+            "--verbose",
+        ])
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("`n += 1;` failed"))
+        .stdout(predicate::str::contains("`n += 2;` failed"))
+        .stdout(predicate::str::contains("timed-out").not());
+}
+
 fn run_basic_test(f: impl FnOnce()) {
     // smoelius: Three tests use the `basic` fixture, but only one can run at a time.
     static BASIC_MUTEX: Mutex<()> = Mutex::new(());
