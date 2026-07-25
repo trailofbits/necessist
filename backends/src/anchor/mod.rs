@@ -149,13 +149,13 @@ impl RunHigh for Anchor {
 
         Ok(exec_and_postprocess.map(|(exec, postprocess)| {
             let postprocess: Box<Postprocess> = Box::new(move |context, popen| {
-                // smoelius: Ensure `backup` hasn't been dropped yet;
-                let _: &Backup = &backup;
-                if let Some(postprocess) = &postprocess {
+                let result = if let Some(postprocess) = postprocess {
                     postprocess(context, popen)
                 } else {
                     Ok(true)
-                }
+                };
+                drop(backup);
+                result
             });
             (exec, Some(postprocess))
         }))
