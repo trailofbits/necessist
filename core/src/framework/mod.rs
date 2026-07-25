@@ -72,7 +72,7 @@ pub trait Parse {
     ) -> Result<(usize, SourceFileSpanTestMap)>;
 }
 
-pub type Postprocess = dyn Fn(&LightContext, Job) -> Result<bool>;
+pub type Postprocess = dyn FnOnce(&LightContext, Job) -> Result<bool>;
 
 pub trait Run {
     fn dry_run(&self, context: &LightContext, source_file: &Path) -> Result<()>;
