@@ -427,10 +427,12 @@ A configuration file allows one to tailor Necessist's behavior with respect to a
 
   <summary><code>ignored_functions</code> Rust example</summary>
 
-  In the [`valid_pattern` fixture]'s [`necessist.toml` file], disabling the use of `ignored_functions` would make the following a candidate for removal:
+  In the [`valid_pattern` fixture]'s [`necessist.toml` file], disabling the use of `ignored_functions` would add the following removal candidate:
 
-  ```
-  fixtures/valid_pattern/src/lib.rs:68:5-68:38: `ignored_function(foo().method());`
+  ```diff
+    fixtures/valid_pattern/src/lib.rs:66:5-66:38: `bar.field.ignored_method().baz();`
+  + fixtures/valid_pattern/src/lib.rs:68:5-68:38: `ignored_function(foo().method());`
+    fixtures/valid_pattern/src/lib.rs:53:10-53:19: `.method()`
   ```
 
   </details>
@@ -439,17 +441,27 @@ A configuration file allows one to tailor Necessist's behavior with respect to a
 
   <summary><code>ignored_methods</code> Rust example</summary>
 
-  In the [`valid_pattern` fixture]'s [`necessist.toml` file], disabling the use of `ignored_methods` would make the following candidates for removal:
+  In the [`valid_pattern` fixture]'s [`necessist.toml` file], disabling the use of `ignored_methods` would add the following removal candidates:
 
-  ```
-  fixtures/valid_pattern/src/lib.rs:60:5-60:26: `bar.ignored_method();`
-  fixtures/valid_pattern/src/lib.rs:65:5-65:32: `bar.field.ignored_method();`
-  fixtures/valid_pattern/src/lib.rs:55:10-55:27: `.ignored_method()`
-  fixtures/valid_pattern/src/lib.rs:56:10-56:27: `.ignored_method()`
-  fixtures/valid_pattern/src/lib.rs:60:8-60:25: `.ignored_method()`
-  fixtures/valid_pattern/src/lib.rs:61:8-61:25: `.ignored_method()`
-  fixtures/valid_pattern/src/lib.rs:65:8-65:31: `.field.ignored_method()`
-  fixtures/valid_pattern/src/lib.rs:66:8-66:31: `.field.ignored_method()`
+  ```diff
+    fixtures/valid_pattern/src/lib.rs:59:5-59:24: `bar.method().baz();`
+  + fixtures/valid_pattern/src/lib.rs:60:5-60:26: `bar.ignored_method();`
+    fixtures/valid_pattern/src/lib.rs:61:5-61:32: `bar.ignored_method().baz();`
+    fixtures/valid_pattern/src/lib.rs:64:5-64:30: `bar.field.method().baz();`
+  + fixtures/valid_pattern/src/lib.rs:65:5-65:32: `bar.field.ignored_method();`
+    fixtures/valid_pattern/src/lib.rs:66:5-66:38: `bar.field.ignored_method().baz();`
+    fixtures/valid_pattern/src/lib.rs:54:19-54:25: `.baz()`
+  + fixtures/valid_pattern/src/lib.rs:55:10-55:27: `.ignored_method()`
+  + fixtures/valid_pattern/src/lib.rs:56:10-56:27: `.ignored_method()`
+    fixtures/valid_pattern/src/lib.rs:56:27-56:33: `.baz()`
+    fixtures/valid_pattern/src/lib.rs:59:17-59:23: `.baz()`
+  + fixtures/valid_pattern/src/lib.rs:60:8-60:25: `.ignored_method()`
+  + fixtures/valid_pattern/src/lib.rs:61:8-61:25: `.ignored_method()`
+    fixtures/valid_pattern/src/lib.rs:61:25-61:31: `.baz()`
+    fixtures/valid_pattern/src/lib.rs:64:23-64:29: `.baz()`
+  + fixtures/valid_pattern/src/lib.rs:65:8-65:31: `.field.ignored_method()`
+  + fixtures/valid_pattern/src/lib.rs:66:8-66:31: `.field.ignored_method()`
+    fixtures/valid_pattern/src/lib.rs:66:31-66:37: `.baz()`
   ```
 
   </details>
@@ -458,10 +470,11 @@ A configuration file allows one to tailor Necessist's behavior with respect to a
 
   <summary><code>ignored_macros</code> Rust example</summary>
 
-  In the [`valid_pattern` fixture]'s [`necessist.toml` file], disabling the use of `ignored_macros` would make the following a candidate for removal:
+  In the [`valid_pattern` fixture]'s [`necessist.toml` file], disabling the use of `ignored_macros` would add the following removal candidate. (The candidate happens to be first in the list, so only following context is shown.)
 
-  ```
-  fixtures/valid_pattern/src/lib.rs:49:5-49:18: `say_hello!();`
+  ```diff
+  + fixtures/valid_pattern/src/lib.rs:49:5-49:18: `say_hello!();`
+    fixtures/valid_pattern/src/lib.rs:53:5-53:20: `foo().method();`
   ```
 
   </details>
@@ -481,10 +494,11 @@ A configuration file allows one to tailor Necessist's behavior with respect to a
 
   <summary>Rust example</summary>
 
-  In the [`valid_pattern` fixture]'s [`necessist.toml` file], disabling the use of `visit_ignored_arguments` would make the following no longer a candidate for removal:
+  In the [`valid_pattern` fixture]'s [`necessist.toml` file], disabling the use of `visit_ignored_arguments` would remove the following removal candidate. (The candidate happens to be last in the list, so only preceding context is shown.)
 
-  ```
-  fixtures/valid_pattern/src/lib.rs:68:27-68:36: `.method()` passed
+  ```diff
+    fixtures/valid_pattern/src/lib.rs:66:31-66:37: `.baz()`
+  - fixtures/valid_pattern/src/lib.rs:68:27-68:36: `.method()` passed
   ```
 
   </details>
