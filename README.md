@@ -571,9 +571,9 @@ Necessist is licensed and distributed under the AGPLv3 license. [Contact us](mai
 [Test Harness Mutilation]: https://www.computer.org/csdl/proceedings-article/icstw/2024/447900a247/20jqkUDi8Ny
 [Usage]: #usage
 [`assert_cmd::assert::Assert::success`]: https://docs.rs/assert_cmd/latest/assert_cmd/assert/struct.Assert.html#method.success
-[`fixtures/basic`]: https://github.com/trailofbits/necessist/tree/master/fixtures/basic
+[`fixtures/basic`]: https://github.com/trailofbits/necessist/tree/main/fixtures/basic
 [`glob`]: https://man7.org/linux/man-pages/man7/glob.7.html
-[`necessist.toml` file]: https://github.com/trailofbits/necessist/tree/master/fixtures/valid_pattern/necessist.toml
+[`necessist.toml` file]: https://github.com/trailofbits/necessist/tree/main/fixtures/valid_pattern/necessist.toml
 [`rust-openssl`]: https://github.com/sfackler/rust-openssl
 [`std::borrow::Cow::into_owned`]: https://doc.rust-lang.org/std/borrow/enum.Cow.html#method.into_owned
 [`std::clone::Clone::clone`]: https://doc.rust-lang.org/std/clone/trait.Clone.html#tymethod.clone
@@ -586,7 +586,7 @@ Necessist is licensed and distributed under the AGPLv3 license. [Contact us](mai
 [`testing.T`]: https://pkg.go.dev/testing#T
 [`universalmutator`]: https://github.com/agroce/universalmutator
 [`unnecessary_conversion_for_trait`]: https://github.com/trailofbits/dylint/tree/master/examples/supplementary/unnecessary_conversion_for_trait
-[`valid_pattern` fixture]: https://github.com/trailofbits/necessist/tree/master/fixtures/valid_pattern/src/lib.rs
+[`valid_pattern` fixture]: https://github.com/trailofbits/necessist/tree/main/fixtures/valid_pattern/src/lib.rs
 [added to the test]: https://github.com/sfackler/rust-openssl/pull/1852
 [crates.io]: https://crates.io/crates/necessist
 [frameworks besides Hoare logic entirely]: https://github.com/trailofbits/necessist/pull/474#discussion_r1230859226
