@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.2.0
+
+- Documentation improvements ([1c2f3f9](https://github.com/trailofbits/necessist/commit/1c2f3f966a7e38d68cebc49b1bcd6c48aa97b007), [3e4ab71](https://github.com/trailofbits/necessist/commit/3e4ab71d7c100b7927f2460c47fd3c1a28e88684), [7e8ff95](https://github.com/trailofbits/necessist/commit/7e8ff9574beac33a4e8a9429a17f604aada49d42), [aa1dfd8](https://github.com/trailofbits/necessist/commit/aa1dfd8efe0149a59761ec83197a6fee52d61733))
+- Fix deadlock that occurs when pipe gets full ([f29e8c8](https://github.com/trailofbits/necessist/commit/f29e8c877de069f3bb809b920cdf18612158ca44))
+- FEATURE: Add experimental `necessist-audit` skill ([#1880](https://github.com/trailofbits/necessist/pull/1880))
+- Dependency updates
+  - `swc_core` upgraded to version 74.0
+  - `syn` upgraded to version 3.0
+
 ## 3.1.0
 
 - FEATURE: Add `visit_ignored_arguments` configuration. By default, Necessist does not descend into (e.g., remove statements and methods from) the arguments of ignored functions. Setting this configuration to true causes it to do so. ([ae51dc3](https://github.com/trailofbits/necessist/commit/ae51dc309829319aa671cb3ad0f2c261b0a954d3))
