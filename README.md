@@ -12,7 +12,7 @@ A paper on Necessist ([Test Harness Mutilation]) appeared in Mutation 2024. ([sl
 - [Running](#running)
 - [Overview](#overview)
 - [Usage](#usage)
-- [LLM-assisted auditing](#llm-assisted-auditing)
+- [LLM-assisted auditing (experimental)](#llm-assisted-auditing-experimental)
 - [Details](#details)
 - [Configuration files](#configuration-files)
 - [Limitations](#limitations)
@@ -209,7 +209,7 @@ By default, Necessist outputs to the console only when tests pass. Passing `--ve
 
 By default, Necessist outputs to both the console and to an sqlite database. For the latter, a tool like [sqlitebrowser] can be used to filter/sort the results.
 
-## LLM-assisted auditing
+## LLM-assisted auditing (experimental)
 
 Necessist provides a [`necessist-audit` skill] for using an LLM to investigate whether passing removals are evidence of bugs in tests or in the code being tested. The skill requires shell access and the `necessist` command to be available on `PATH`; it reads results with `necessist --dump`. If a `necessist.db` file exists in the current directory, the skill will use that; otherwise, the skill will run `necessist` to generate the file.
 

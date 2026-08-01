@@ -298,8 +298,15 @@ fn readme_reference_links_are_used() {
 fn readme_toc_is_accurate() {
     let readme = read_to_string("README.md").unwrap();
     let expected_toc = readme.lines().filter_map(|line| {
-        line.strip_prefix("## ")
-            .map(|suffix| format!("- [{suffix}](#{})", suffix.to_lowercase().replace(' ', "-")))
+        line.strip_prefix("## ").map(|suffix| {
+            format!(
+                "- [{suffix}](#{})",
+                suffix
+                    .to_lowercase()
+                    .replace(' ', "-")
+                    .replace(['(', ')'], "")
+            )
+        })
     });
     assert!(
         readme.contains(
