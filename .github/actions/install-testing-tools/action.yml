@@ -1,4 +1,6 @@
 name: Install testing tools
+description: Install tools needed for Necessist tests
+
 runs:
   using: composite
   steps:
