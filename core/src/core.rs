@@ -1,7 +1,7 @@
 use crate::{
     __ToConsoleString, Backup, Outcome, Rewriter, SourceFile, Span, WarnFlags, Warning, config,
     framework::{self, Applicable, Postprocess, SourceFileSpanTestMap, SpanKind, ToImplementation},
-    note, source_warn, sqlite, util, warn,
+    note, skill, source_warn, sqlite, util, warn,
 };
 use ansi_term::Style;
 use anyhow::{Context as _, Result, anyhow, bail, ensure};
@@ -25,7 +25,7 @@ use std::{
     io::IsTerminal,
     iter::Peekable,
     path::{Path, PathBuf},
-    process::{Command, ExitStatus as StdExitStatus, Stdio},
+    process::{Command, ExitCode, ExitStatus as StdExitStatus, Stdio},
     rc::Rc,
     sync::atomic::{AtomicBool, Ordering},
     time::Duration,
@@ -89,11 +89,13 @@ pub struct LightContext<'a> {
 #[derive(Clone, Default)]
 pub struct Necessist {
     pub allow: Vec<Warning>,
+    pub check_skill: Option<PathBuf>,
     pub default_config: bool,
     pub deny: Vec<Warning>,
     pub dump: bool,
     pub dump_candidate_counts: bool,
     pub dump_candidates: bool,
+    pub find_skill: bool,
     pub no_lines_or_columns: bool,
     pub no_local_functions: bool,
     pub no_sqlite: bool,
@@ -103,20 +105,33 @@ pub struct Necessist {
     pub root: Option<PathBuf>,
     pub timeout: Option<u64>,
     pub verbose: bool,
+    pub write: bool,
     pub source_files: Vec<PathBuf>,
     pub args: Vec<String>,
 }
 
 /// Necessist's main entrypoint.
+///
+/// Returns [`ExitCode::FAILURE`] if `--check-skill <PATH>` or `--find-skill` was passed and the
+/// skill needs to be updated, and [`ExitCode::SUCCESS`] otherwise. Errors are the caller's to map
+/// to an exit code.
 // smoelius: The reason `framework` is not included as a field in `Necessist` is to avoid having
 // to parameterize every function that takes a `Necessist` as an argument.
 pub fn necessist<Identifier: Applicable + Display + IntoEnumIterator + ToImplementation>(
     opts: &Necessist,
     framework: framework::Auto<Identifier>,
-) -> Result<()> {
+) -> Result<ExitCode> {
     let opts = opts.clone();
 
     process_options(&opts)?;
+
+    if let Some(check_skill_path) = &opts.check_skill {
+        return skill::check(check_skill_path, opts.write).map(skill::Status::exit_code);
+    }
+
+    if opts.find_skill {
+        return skill::find(opts.write).map(skill::Status::exit_code);
+    }
 
     let root = opts
         .root
@@ -154,7 +169,7 @@ pub fn necessist<Identifier: Applicable + Display + IntoEnumIterator + ToImpleme
     }
 
     let Some((backend, n_spans, source_file_span_test_map)) = prepare(&context, framework)? else {
-        return Ok(());
+        return Ok(ExitCode::SUCCESS);
     };
 
     let mut context = Context {
@@ -189,7 +204,7 @@ pub fn necessist<Identifier: Applicable + Display + IntoEnumIterator + ToImpleme
         context.progress = progress.as_ref();
     }
 
-    run(context, source_file_span_test_map)
+    run(context, source_file_span_test_map).map(|()| ExitCode::SUCCESS)
 }
 
 #[allow(clippy::type_complexity)]
@@ -417,12 +432,28 @@ fn run(mut context: Context, source_file_span_test_map: SourceFileSpanTestMap) -
     Ok(())
 }
 
+trait IsSet {
+    fn is_set(&self) -> bool;
+}
+
+impl IsSet for bool {
+    fn is_set(&self) -> bool {
+        *self
+    }
+}
+
+impl<T> IsSet for Option<T> {
+    fn is_set(&self) -> bool {
+        self.is_some()
+    }
+}
+
 macro_rules! incompatible {
     ($opts:ident, $x:ident, $($y:ident),+ $(,)?) => {
         // Compare the first option with every option that follows it.
         $(
             ensure!(
-                !($opts.$x && $opts.$y),
+                !($opts.$x.is_set() && $opts.$y.is_set()),
                 "--{} and --{} are incompatible",
                 stringify!($x).to_kebab_case(),
                 stringify!($y).to_kebab_case()
@@ -439,20 +470,35 @@ fn process_options(opts: &Necessist) -> Result<()> {
     // smoelius: These lists of incompatibilities are not exhaustive.
     incompatible!(
         opts,
+        check_skill,
         default_config,
         dump,
         dump_candidates,
         dump_candidate_counts,
+        find_skill,
         reset,
         resume
     );
     // smoelius: `--dump`, etc. cannot be passed with `--no-sqlite`, because they operate on the
     // SQLite database.
     incompatible!(opts, dump, no_sqlite, reset, resume);
-    // smoelius: `--dump`, etc. cannot be passed with `--quiet`, because they output to the console.
-    incompatible!(opts, dump, dump_candidates, dump_candidate_counts, quiet);
+    // smoelius: `--check-skill`, etc. cannot be passed with `--quiet`, because they output to the
+    // console.
+    incompatible!(
+        opts,
+        check_skill,
+        dump,
+        dump_candidates,
+        dump_candidate_counts,
+        find_skill,
+        quiet
+    );
     // smoelius: `--quiet` and `--verbose` are contradictory.
     incompatible!(opts, quiet, verbose);
+
+    if opts.write && opts.check_skill.is_none() && !opts.find_skill {
+        bail!("--write can be used only with --check-skill <PATH> or --find-skill");
+    }
 
     Ok(())
 }

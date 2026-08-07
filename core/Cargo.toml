@@ -30,12 +30,14 @@ proc-macro2 = { version = "1.0", features = ["span-locations"] }
 regex = "1.13"
 remain = "0.2"
 rewriter = { version = "0.2", features = ["proc-macro2-impl"] }
+semver = "1.0"
 serde = { version = "1.0", features = ["derive"] }
 sha2 = "0.11"
 strum = "0.28"
 strum_macros = "0.28"
 subprocess = "1.2"
 toml = "1.1"
+yaml_serde = "0.10"
 
 [target.'cfg(unix)'.dependencies]
 libc = { version = "0.2", optional = true }
@@ -48,6 +50,9 @@ windows-sys = { version = "0.61", features = [
     "Win32_Foundation",
     "Win32_System_IO",
 ], optional = true }
+
+[dev-dependencies]
+testing = { path = "../testing" }
 
 [build-dependencies]
 cargo_metadata = "0.23"

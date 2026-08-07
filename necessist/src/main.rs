@@ -17,12 +17,12 @@ fn main() -> ExitCode {
     env_logger::init();
 
     // `args_os` rather than `args` because the latter panics on an argument that is not valid
-    // Unicode. Note that `--root <ROOT>` and `<TEST_FILES_OR_DIRS>` are both paths, which need not
-    // be valid Unicode.
+    // Unicode. Note that `--check-skill <PATH>`, `--root <ROOT>`, and `<TEST_FILES_OR_DIRS>` are
+    // all paths, which need not be valid Unicode.
     let (opts, framework): (Necessist, Auto<Identifier>) = cli::Opts::parse_from(args_os()).into();
 
     match necessist(&opts, framework) {
-        Ok(()) => ExitCode::SUCCESS,
+        Ok(exit_code) => exit_code,
         // `{:?}` is what `Termination` uses, and is what produces `anyhow`'s `Caused by` sections.
         Err(error) => {
             eprintln!("Error: {error:?}");

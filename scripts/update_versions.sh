@@ -27,4 +27,12 @@ find . -name Cargo.toml -exec sed -i "/^necessist/{
 s/^\(.*\)\<version = \"[^\"]*\"\(.*\)$/\1$REQ\2/
 }" {} \;
 
+# smoelius: The `necessist-audit` skill version must match the package version. See the
+# `skill_version_is_necessist_version` test in core/src/skill.rs.
+SKILL_VERSION="  version: \"$1\""
+
+sed -i "{
+s/^  version: \"[^\"]*\"$/$SKILL_VERSION/
+}" core/skills/necessist-audit/SKILL.md
+
 scripts/update_lockfiles.sh
