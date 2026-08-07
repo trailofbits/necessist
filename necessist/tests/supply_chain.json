@@ -1724,6 +1724,14 @@
         "name": "gwenn"
       }
     ],
+    "libyaml-rs": [
+      {
+        "id": 165876,
+        "kind": "user",
+        "login": "ingydotnet",
+        "name": "Ingy döt Net"
+      }
+    ],
     "libz-sys": [
       {
         "id": 1,
@@ -3828,6 +3836,14 @@
         "name": "Zibi Braniecki"
       }
     ],
+    "yaml_serde": [
+      {
+        "id": 165876,
+        "kind": "user",
+        "login": "ingydotnet",
+        "name": "Ingy döt Net"
+      }
+    ],
     "yoke": [
       {
         "id": 1139,
@@ -3962,7 +3978,8 @@
     "local_crates": [
       "necessist",
       "necessist-backends",
-      "necessist-core"
+      "necessist-core",
+      "testing"
     ]
   }
 }

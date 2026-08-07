@@ -20,13 +20,10 @@ use std::{
     time::{Duration, Instant},
 };
 use subprocess::{Exec, Redirection};
+use testing::tempfile_util::{TempDir, tempdir};
 
 mod string_or_vec;
 use string_or_vec::StringOrVec;
-
-#[path = "../tempfile_util.rs"]
-mod tempfile_util;
-use tempfile_util::{TempDir, tempdir};
 
 const N_PARTITIONS: usize = 2;
 

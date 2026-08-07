@@ -2,17 +2,90 @@ use assert_cmd::{assert::OutputAssertExt, cargo::cargo_bin_cmd};
 use necessist_core::util;
 use predicates::prelude::*;
 use std::{env::set_current_dir, path::PathBuf, process::Command, sync::Mutex};
-
-mod tempfile_util;
-use tempfile_util::tempdir;
+use testing::tempfile_util::tempdir;
 
 const TIMEOUT: &str = "5";
 
 const BASIC_ROOT: &str = "fixtures/basic";
 
+fn skill_with(version: &str) -> String {
+    format!(
+        "---\nname: necessist-audit\nmetadata:\n  version: \"{version}\"\n---\n\n# Test skill\n"
+    )
+}
+
 #[ctor::ctor(unsafe)]
 fn initialize() {
     set_current_dir("..").unwrap();
+}
+
+#[cfg_attr(dylint_lib = "general", allow(non_thread_safe_call_in_test))]
+#[test]
+fn check_skill_reports_missing_skill() {
+    let tempdir = tempdir().unwrap();
+    let path_buf = tempdir.path().join("SKILL.md");
+    cargo_bin_cmd!("necessist")
+        .arg("--check-skill")
+        .arg(&path_buf)
+        .assert()
+        .success()
+        .stdout(predicate::eq(format!(
+            "skill at `{}` does not exist; pass `--write` to write the current version\n",
+            path_buf.display()
+        )));
+}
+
+#[cfg_attr(dylint_lib = "general", allow(non_thread_safe_call_in_test))]
+#[test]
+fn check_skill_reports_old_skill() {
+    let tempdir = tempdir().unwrap();
+    let path_buf = tempdir.path().join("SKILL.md");
+    std::fs::write(&path_buf, skill_with("0.0.0")).unwrap();
+    cargo_bin_cmd!("necessist")
+        .arg("--check-skill")
+        .arg(&path_buf)
+        .assert()
+        .success()
+        .stdout(predicate::eq(format!(
+            "skill at `{}` is an old version (0.0.0); pass `--write` to update to the current \
+             version\n",
+            path_buf.display()
+        )));
+}
+
+#[cfg_attr(dylint_lib = "general", allow(non_thread_safe_call_in_test))]
+#[test]
+fn check_skill_reports_current_skill() {
+    let tempdir = tempdir().unwrap();
+    let path_buf = tempdir.path().join("SKILL.md");
+    std::fs::write(&path_buf, skill_with(env!("CARGO_PKG_VERSION"))).unwrap();
+    cargo_bin_cmd!("necessist")
+        .arg("--check-skill")
+        .arg(&path_buf)
+        .assert()
+        .success()
+        .stdout(predicate::eq(format!(
+            "skill at `{}` is the current version\n",
+            path_buf.display()
+        )));
+}
+
+#[cfg_attr(dylint_lib = "general", allow(non_thread_safe_call_in_test))]
+#[test]
+fn check_skill_reports_newer_skill() {
+    let tempdir = tempdir().unwrap();
+    let path_buf = tempdir.path().join("SKILL.md");
+    std::fs::write(&path_buf, skill_with("999999.0.0")).unwrap();
+    cargo_bin_cmd!("necessist")
+        .arg("--check-skill")
+        .arg(&path_buf)
+        .assert()
+        .success()
+        .stdout(predicate::eq(format!(
+            "skill at `{}` is a newer version (999999.0.0); consider updating the `necessist` \
+             binary\n",
+            path_buf.display()
+        )));
 }
 
 #[test]

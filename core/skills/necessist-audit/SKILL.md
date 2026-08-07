@@ -2,7 +2,7 @@
 name: necessist-audit
 description: Use to audit Necessist results, running Necessist first if needed, and investigate whether passing removals reveal bugs in code or tests, including test-harness bugs that let tests pass without checking intended behavior.
 metadata:
-  version: "0.1.0"
+  version: "3.2.0"
   license: AGPL-3.0-only
   compatibility:
     requires:
