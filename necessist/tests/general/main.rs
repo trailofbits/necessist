@@ -9,6 +9,8 @@ const TIMEOUT: &str = "5";
 
 const BASIC_ROOT: &str = "fixtures/basic";
 
+mod skill;
+
 #[ctor::ctor(unsafe)]
 fn initialize() {
     set_current_dir_wc("..").unwrap();

@@ -1738,6 +1738,14 @@
         "name": "gwenn"
       }
     ],
+    "libyaml-rs": [
+      {
+        "id": 165876,
+        "kind": "user",
+        "login": "ingydotnet",
+        "name": "Ingy döt Net"
+      }
+    ],
     "libz-sys": [
       {
         "id": 1,
@@ -3840,6 +3848,14 @@
         "kind": "user",
         "login": "zbraniecki",
         "name": "Zibi Braniecki"
+      }
+    ],
+    "yaml_serde": [
+      {
+        "id": 165876,
+        "kind": "user",
+        "login": "ingydotnet",
+        "name": "Ingy döt Net"
       }
     ],
     "yoke": [

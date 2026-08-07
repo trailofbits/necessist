@@ -17,6 +17,14 @@ pub struct Opts<Identifier: Clone + Send + Sync + ValueEnum + 'static> {
     allow: Vec<Warning>,
     #[clap(
         long,
+        value_name = "PATH",
+        help = "Check whether the `necessist-audit` skill at <PATH> is the current version or \
+                later, exiting with code 1 if it is not; add --write to update a nonexistent or \
+                outdated skill"
+    )]
+    check_skill: Option<PathBuf>,
+    #[clap(
+        long,
         help = "Create a default necessist.toml file in the project's root directory"
     )]
     default_config: bool,
@@ -34,6 +42,13 @@ pub struct Opts<Identifier: Clone + Send + Sync + ValueEnum + 'static> {
     dump_candidate_counts: bool,
     #[clap(long, help = "Dump removal candidates and exit (for debugging)")]
     dump_candidates: bool,
+    #[clap(
+        long,
+        help = "Check whether the `necessist-audit` skill is installed in a well-known directory, \
+                and whether it is the current version or later, exiting with code 1 if it is not; \
+                add --write to update an outdated skill"
+    )]
+    find_skill: bool,
     #[clap(long, help = "Assume testing framework is <FRAMEWORK>")]
     framework: Option<framework::Auto<Identifier>>,
     #[clap(long, help = "Do not output line or column information (experimental)")]
@@ -57,6 +72,8 @@ pub struct Opts<Identifier: Clone + Send + Sync + ValueEnum + 'static> {
     timeout: Option<u64>,
     #[clap(long, help = "Show test outcomes besides `passed`")]
     verbose: bool,
+    #[clap(long, hide = true)]
+    write: bool,
     #[clap(
         value_name = "TEST_FILES_OR_DIRS",
         help = "Test files or directories to mutilate; if `--root <ROOT>` is passed, relative \
@@ -77,11 +94,13 @@ impl<Identifier: Clone + Send + Sync + ValueEnum> From<Opts<Identifier>>
     fn from(opts: Opts<Identifier>) -> Self {
         let Opts {
             allow,
+            check_skill,
             default_config,
             deny,
             dump,
             dump_candidate_counts,
             dump_candidates,
+            find_skill,
             framework,
             no_lines_or_columns,
             no_local_functions,
@@ -92,6 +111,7 @@ impl<Identifier: Clone + Send + Sync + ValueEnum> From<Opts<Identifier>>
             root,
             timeout,
             verbose,
+            write,
             zsource_files,
             zzargs,
         } = opts;
@@ -101,11 +121,13 @@ impl<Identifier: Clone + Send + Sync + ValueEnum> From<Opts<Identifier>>
         (
             Necessist {
                 allow,
+                check_skill,
                 default_config,
                 deny,
                 dump,
                 dump_candidate_counts,
                 dump_candidates,
+                find_skill,
                 no_lines_or_columns,
                 no_local_functions,
                 no_sqlite,
@@ -115,6 +137,7 @@ impl<Identifier: Clone + Send + Sync + ValueEnum> From<Opts<Identifier>>
                 root,
                 timeout,
                 verbose,
+                write,
                 source_files,
                 args,
             },

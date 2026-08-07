@@ -40,6 +40,8 @@ use rewriter::Rewriter;
 #[doc(hidden)]
 pub use rewriter::Rewriter as __Rewriter;
 
+mod skill;
+
 mod source_file;
 pub use source_file::SourceFile;
 

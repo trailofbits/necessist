@@ -179,11 +179,13 @@ Arguments:
 
 Options:
       --allow <WARNING>        Silence <WARNING>; `--allow all` silences all warnings
+      --check-skill <PATH>     Check whether the `necessist-audit` skill at <PATH> is the current version or later, exiting with code 1 if it is not; add --write to update a nonexistent or outdated skill
       --default-config         Create a default necessist.toml file in the project's root directory
       --deny <WARNING>         Treat <WARNING> as an error; `--deny all` treats all warnings as errors
       --dump                   Dump sqlite database contents to the console
       --dump-candidate-counts  Dump number of removal candidates in each file and exit
       --dump-candidates        Dump removal candidates and exit (for debugging)
+      --find-skill             Check whether the `necessist-audit` skill is installed in a well-known directory, and whether it is the current version or later, exiting with code 1 if it is not; add --write to update an outdated skill
       --framework <FRAMEWORK>  Assume testing framework is <FRAMEWORK> [possible values: anchor, auto, foundry, go, hardhat, php, rust, vitest]
       --no-lines-or-columns    Do not output line or column information (experimental)
       --no-sqlite              Do not output to an sqlite database
@@ -214,19 +216,21 @@ By default, Necessist outputs to both the console and to an sqlite database. For
 
 Necessist provides a [`necessist-audit` skill] for using an LLM to investigate whether passing removals are evidence of bugs in tests or in the code being tested. The skill requires shell access and the `necessist` command to be available on `PATH`; it reads results with `necessist --dump`. If a `necessist.db` file exists in the current directory, the skill will use that; otherwise, the skill will run `necessist` to generate the file.
 
+The `necessist` binary contains the skill. Passing `--check-skill <PATH>` compares the skill at `<PATH>` to the contained one and reports which is newer; adding `--write` installs a missing skill or updates an outdated one.
+
+To check the standard Claude Code and Codex skill directories, use `--find-skill`; adding `--write` updates any outdated skills it finds. Unlike `--check-skill`, `--find-skill` reports but does not install missing skills. None of these operations requires network access.
+
+Both options exit with code 1 if a skill is missing or outdated and `--write` was not passed. An exit code of 2 indicates an error, e.g., an unparsable skill or an invalid command line. These exit codes follow the convention used by `grep` and `diff`.
+
 Instructions for installing and using the skill with Claude Code and Codex follow.
 
 ### Claude Code
 
-To install the skill:
+To install or update the skill:
 
 ```sh
-mkdir -p ~/.claude/skills/necessist-audit
-curl -L https://raw.githubusercontent.com/trailofbits/necessist/main/skills/necessist-audit/SKILL.md \
-  -o ~/.claude/skills/necessist-audit/SKILL.md
+necessist --check-skill ~/.claude/skills/necessist-audit/SKILL.md --write
 ```
-
-To update the skill, rerun the install command.
 
 Then, from a directory you would like to review, invoke the skill:
 
@@ -236,15 +240,11 @@ Then, from a directory you would like to review, invoke the skill:
 
 ### Codex
 
-To install the skill:
+To install or update the skill:
 
 ```sh
-mkdir -p ~/.codex/skills/necessist-audit
-curl -L https://raw.githubusercontent.com/trailofbits/necessist/main/skills/necessist-audit/SKILL.md \
-  -o ~/.codex/skills/necessist-audit/SKILL.md
+necessist --check-skill ~/.codex/skills/necessist-audit/SKILL.md --write
 ```
-
-To update the skill, rerun the install command.
 
 Then, from a directory you would like to review, invoke the skill:
 
@@ -654,7 +654,7 @@ Necessist is licensed and distributed under the AGPLv3 license. [Contact us](mai
 [`assert_cmd::assert::Assert::success`]: https://docs.rs/assert_cmd/latest/assert_cmd/assert/struct.Assert.html#method.success
 [`fixtures/basic`]: https://github.com/trailofbits/necessist/tree/main/fixtures/basic
 [`glob`]: https://man7.org/linux/man-pages/man7/glob.7.html
-[`necessist-audit` skill]: skills/necessist-audit/SKILL.md
+[`necessist-audit` skill]: core/skills/necessist-audit/SKILL.md
 [`necessist.toml` file]: https://github.com/trailofbits/necessist/tree/main/fixtures/valid_pattern/necessist.toml
 [`rust-openssl`]: https://github.com/sfackler/rust-openssl
 [`std::borrow::Cow::into_owned`]: https://doc.rust-lang.org/std/borrow/enum.Cow.html#method.into_owned
