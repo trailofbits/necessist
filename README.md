@@ -214,19 +214,17 @@ By default, Necessist outputs to both the console and to an sqlite database. For
 
 Necessist provides a [`necessist-audit` skill] for using an LLM to investigate whether passing removals are evidence of bugs in tests or in the code being tested. The skill requires shell access and the `necessist` command to be available on `PATH`; it reads results with `necessist --dump`. If a `necessist.db` file exists in the current directory, the skill will use that; otherwise, the skill will run `necessist` to generate the file.
 
+The `necessist` binary contains the skill. Passing `--check-skill <PATH>` compares the skill at `<PATH>` to the contained one and reports which is newer; adding `--write` installs or updates the skill at `<PATH>`. Neither requires network access.
+
 Instructions for installing and using the skill with Claude Code and Codex follow.
 
 ### Claude Code
 
-To install the skill:
+To install or update the skill:
 
 ```sh
-mkdir -p ~/.claude/skills/necessist-audit
-curl -L https://raw.githubusercontent.com/trailofbits/necessist/main/skills/necessist-audit/SKILL.md \
-  -o ~/.claude/skills/necessist-audit/SKILL.md
+necessist --check-skill ~/.claude/skills/necessist-audit/SKILL.md --write
 ```
-
-To update the skill, rerun the install command.
 
 Then, from a directory you would like to review, invoke the skill:
 
@@ -236,15 +234,11 @@ Then, from a directory you would like to review, invoke the skill:
 
 ### Codex
 
-To install the skill:
+To install or update the skill:
 
 ```sh
-mkdir -p ~/.codex/skills/necessist-audit
-curl -L https://raw.githubusercontent.com/trailofbits/necessist/main/skills/necessist-audit/SKILL.md \
-  -o ~/.codex/skills/necessist-audit/SKILL.md
+necessist --check-skill ~/.codex/skills/necessist-audit/SKILL.md --write
 ```
-
-To update the skill, rerun the install command.
 
 Then, from a directory you would like to review, invoke the skill:
 
