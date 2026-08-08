@@ -3,7 +3,7 @@ disallowed-methods = [
     { path = "std::path::Path::canonicalize" },
     { path = "std::path::Path::exists", reason = "use `try_exists`" },
     { path = "std::path::Path::strip_prefix" },
-    { path = "tempfile::tempdir" },
+    { path = "tempfile::tempdir", reason = "use `testing::tempfile_util::tempdir`" },
     { path = "tree_sitter::Node::child_by_field_name", reason = "use `child_by_field_id`" },
     { path = "tree_sitter::Node::kind", reason = "use `kind_id`" },
 ]
