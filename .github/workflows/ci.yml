@@ -35,7 +35,7 @@ jobs:
       fail-fast: ${{ github.event_name == 'merge_group' }}
       matrix:
         environment: [ubuntu-latest, macos-latest, windows-latest]
-        test: [third_party_0, third_party_1, trycmd, other]
+        test: [necessist_audit, third_party_0, third_party_1, trycmd, other]
         include:
           - environment: ubuntu-latest
             test: ci
@@ -48,6 +48,8 @@ jobs:
       - uses: ./.github/actions/ci
         env:
           TESTS: ${{ matrix.test }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
   all-checks:
     needs: [test]
