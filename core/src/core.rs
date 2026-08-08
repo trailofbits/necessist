@@ -1,7 +1,7 @@
 use crate::{
     __ToConsoleString, Backup, Outcome, Rewriter, SourceFile, Span, WarnFlags, Warning, config,
     framework::{self, Applicable, Postprocess, SourceFileSpanTestMap, SpanKind, ToImplementation},
-    note, source_warn, sqlite, util, warn,
+    note, skill, source_warn, sqlite, util, warn,
 };
 use ansi_term::Style;
 use anyhow::{Context as _, Result, anyhow, bail, ensure};
@@ -83,6 +83,7 @@ pub struct LightContext<'a> {
 #[derive(Clone, Default)]
 pub struct Necessist {
     pub allow: Vec<Warning>,
+    pub check_skill: Option<String>,
     pub default_config: bool,
     pub deny: Vec<Warning>,
     pub dump: bool,
@@ -97,6 +98,7 @@ pub struct Necessist {
     pub root: Option<PathBuf>,
     pub timeout: Option<u64>,
     pub verbose: bool,
+    pub write: bool,
     pub source_files: Vec<PathBuf>,
     pub args: Vec<String>,
 }
@@ -111,6 +113,10 @@ pub fn necessist<Identifier: Applicable + Display + IntoEnumIterator + ToImpleme
     let opts = opts.clone();
 
     process_options(&opts)?;
+
+    if let Some(check_skill_path) = &opts.check_skill {
+        return skill::check(check_skill_path, opts.write);
+    }
 
     let root = opts
         .root
@@ -408,10 +414,26 @@ fn run(mut context: Context, source_file_span_test_map: SourceFileSpanTestMap) -
     Ok(())
 }
 
+trait IsTrueOrSome {
+    fn is_true_or_some(&self) -> bool;
+}
+
+impl IsTrueOrSome for bool {
+    fn is_true_or_some(&self) -> bool {
+        *self
+    }
+}
+
+impl<T> IsTrueOrSome for Option<T> {
+    fn is_true_or_some(&self) -> bool {
+        self.is_some()
+    }
+}
+
 macro_rules! incompatible {
     ($opts:ident, $x:ident, $y:ident) => {
         ensure!(
-            !($opts.$x && $opts.$y),
+            !($opts.$x.is_true_or_some() && $opts.$y.is_true_or_some()),
             "--{} and --{} are incompatible",
             stringify!($x).to_kebab_case(),
             stringify!($y).to_kebab_case()
@@ -421,13 +443,18 @@ macro_rules! incompatible {
 
 fn process_options(opts: &Necessist) -> Result<()> {
     // smoelius: This list of incompatibilities is not exhaustive.
+    incompatible!(opts, check_skill, dump);
+    incompatible!(opts, check_skill, no_sqlite);
+    incompatible!(opts, check_skill, quiet);
+    incompatible!(opts, check_skill, reset);
+    incompatible!(opts, check_skill, resume);
+    incompatible!(opts, dump, no_sqlite);
     incompatible!(opts, dump, quiet);
     incompatible!(opts, dump, reset);
     incompatible!(opts, dump, resume);
-    incompatible!(opts, dump, no_sqlite);
+    incompatible!(opts, no_sqlite, reset);
+    incompatible!(opts, no_sqlite, resume);
     incompatible!(opts, quiet, verbose);
-    incompatible!(opts, reset, no_sqlite);
-    incompatible!(opts, resume, no_sqlite);
 
     Ok(())
 }

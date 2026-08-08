@@ -1,5 +1,5 @@
 [workspace]
-members = ["backends", "core", "necessist"]
+members = ["backends", "core", "necessist", "testing"]
 resolver = "2"
 
 [workspace.lints.rust.unexpected_cfgs]

@@ -17,6 +17,13 @@ pub struct Opts<Identifier: Clone + Send + Sync + ValueEnum + 'static> {
     allow: Vec<Warning>,
     #[clap(
         long,
+        value_name = "PATH",
+        help = "Check whether the skill at <PATH> is the current version or later; add --write to \
+                update a non-existent or out-of-date skill"
+    )]
+    check_skill: Option<String>,
+    #[clap(
+        long,
         help = "Create a default necessist.toml file in the project's root directory"
     )]
     default_config: bool,
@@ -57,6 +64,8 @@ pub struct Opts<Identifier: Clone + Send + Sync + ValueEnum + 'static> {
     timeout: Option<u64>,
     #[clap(long, help = "Show test outcomes besides `passed`")]
     verbose: bool,
+    #[clap(long, hide = true, requires = "check_skill")]
+    write: bool,
     #[clap(
         value_name = "TEST_FILES_OR_DIRS",
         help = "Test files or directories to mutilate; if `--root <ROOT>` is passed, relative \
@@ -77,6 +86,7 @@ impl<Identifier: Clone + Send + Sync + ValueEnum> From<Opts<Identifier>>
     fn from(opts: Opts<Identifier>) -> Self {
         let Opts {
             allow,
+            check_skill,
             default_config,
             deny,
             dump,
@@ -92,6 +102,7 @@ impl<Identifier: Clone + Send + Sync + ValueEnum> From<Opts<Identifier>>
             root,
             timeout,
             verbose,
+            write,
             zsource_files,
             zzargs,
         } = opts;
@@ -102,6 +113,7 @@ impl<Identifier: Clone + Send + Sync + ValueEnum> From<Opts<Identifier>>
         (
             Necessist {
                 allow,
+                check_skill,
                 default_config,
                 deny,
                 dump,
@@ -116,6 +128,7 @@ impl<Identifier: Clone + Send + Sync + ValueEnum> From<Opts<Identifier>>
                 root,
                 timeout,
                 verbose,
+                write,
                 source_files,
                 args,
             },

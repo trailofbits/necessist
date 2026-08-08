@@ -19,6 +19,7 @@ runs:
           ~/.dylint_drivers/
           ~/.rustup/toolchains/
           target/dylint/
+          target/necessist-audit-cache/
         key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
     - uses: taiki-e/install-action@v2.85.5
@@ -44,6 +45,24 @@ runs:
     - name: Install testing tools
       if: ${{ env.TESTS != 'ci' }}
       uses: ./.github/actions/install-testing-tools
+
+    - name: Install LLM tools
+      if: ${{ (runner.os == 'Linux' || runner.os == 'macOS') && contains(env.TESTS, 'necessist_audit') }}
+      run: |
+        curl -fsSL https://claude.ai/install.sh | bash
+        curl -fsSL https://chatgpt.com/codex/install.sh | sh
+        printenv OPENAI_API_KEY | codex login --with-api-key
+      shell: bash
+
+    # smoelius: Codex requires Bubblewrap.
+    - name: Install Bubblewrap on Ubuntu
+      if: ${{ runner.os == 'Linux' && contains(env.TESTS, 'necessist_audit') }}
+      run: |
+        sudo apt install bubblewrap
+        sudo apt install apparmor-profiles
+        sudo cp /usr/share/apparmor/extra-profiles/bwrap-userns-restrict /etc/apparmor.d || true
+        sudo systemctl reload apparmor
+      shell: bash
 
     - name: Install sqlite3 on Ubuntu
       if: ${{ runner.os == 'Linux' }}
@@ -82,6 +101,11 @@ runs:
       run: |
         for TEST in $TESTS; do
           if [[ "$TEST" != 'other' ]]; then
+            if [[ "$TEST" = 'necessist_audit' && '${{ github.event_name }}' != 'schedule' && '${{ github.event_name }}' != 'workflow_dispatch' ]] &&
+              ! git diff --name-only ${{ github.event.pull_request.base.sha }} | grep 'necessist_audit' >/dev/null
+            then
+              exit 0
+            fi
             $CARGO_TEST -p necessist --test "$TEST"
           else
             $CARGO_TEST -p necessist --test general
