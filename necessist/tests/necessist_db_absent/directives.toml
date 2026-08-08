@@ -1,0 +1,10 @@
+args = [
+    "--no-sqlite",
+    "--root=fixtures/directives",
+    "--dump-candidates",
+]
+
+stderr = ""
+
+[fs]
+cwd = "../../.."

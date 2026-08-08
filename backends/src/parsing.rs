@@ -27,7 +27,7 @@ use indexmap::IndexMap;
 use necessist_core::{
     LightContext, SourceFile, Span, WarnFlags, Warning, config,
     framework::{SourceFileSpanTestMap, SpanTestMaps, TestSet},
-    util, warn,
+    source_warn, util, warn,
 };
 use paste::paste;
 use std::{
@@ -35,10 +35,95 @@ use std::{
     cell::RefCell,
     collections::{BTreeMap, BTreeSet, HashSet},
     convert::Infallible,
+    fs::read_to_string,
     hash::Hash,
     path::Path,
     rc::Rc,
 };
+
+#[derive(Default)]
+struct Directives {
+    skip_file: bool,
+    skip_lines: BTreeSet<usize>,
+}
+
+fn collect_directives(context: &LightContext, path: &Path) -> Result<Directives> {
+    let contents = read_to_string(path)?;
+
+    let mut directives = Directives::default();
+    let mut in_file_header = true;
+
+    for (index, line) in contents.lines().enumerate() {
+        let line_number = index + 1;
+
+        if is_skip_file_directive(line) {
+            if in_file_header {
+                directives.skip_file = true;
+            } else {
+                let source_file = SourceFile::new(context.root.clone(), path.to_path_buf())?;
+                source_warn(
+                    context,
+                    Warning::SkipFileMispositioned,
+                    &source_file,
+                    "`necessist: skip-file` is preceded by lines that are not line comments or \
+                     whitespace",
+                    WarnFlags::empty(),
+                )?;
+            }
+        } else if is_skip_directive(line) {
+            directives.skip_lines.insert(line_number + 1);
+        } else if let Some(directive) = directive_text(line) {
+            let source_file = SourceFile::new(context.root.clone(), path.to_path_buf())?;
+            source_warn(
+                context,
+                Warning::DirectiveUnrecognized,
+                &source_file,
+                &format!("`necessist: {directive}` is not a recognized directive"),
+                WarnFlags::empty(),
+            )?;
+        }
+
+        if !is_file_header_line(line) {
+            in_file_header = false;
+        }
+    }
+
+    Ok(directives)
+}
+
+fn is_skip_file_directive(line: &str) -> bool {
+    directive_text(line)
+        .and_then(|rest| rest.strip_prefix("skip-file"))
+        .is_some_and(has_word_boundary)
+}
+
+fn is_skip_directive(line: &str) -> bool {
+    let Some(rest) = directive_text(line) else {
+        return false;
+    };
+    // Check `skip-file` first so malformed extensions such as `skip-filex` do not fall back to
+    // being interpreted as `skip` followed by trailing text.
+    if rest.starts_with("skip-file") {
+        return false;
+    }
+    rest.strip_prefix("skip").is_some_and(has_word_boundary)
+}
+
+fn directive_text(line: &str) -> Option<&str> {
+    let rest = line.trim_start().strip_prefix("//")?;
+    let rest = rest.trim_start().strip_prefix("necessist:")?;
+    Some(rest.trim_start())
+}
+
+fn has_word_boundary(rest: &str) -> bool {
+    rest.chars()
+        .next()
+        .is_none_or(|ch| !ch.is_alphanumeric() && ch != '_')
+}
+
+fn is_file_header_line(line: &str) -> bool {
+    line.trim().is_empty() || line.trim_start().starts_with("//")
+}
 
 pub trait Named {
     fn name(&self) -> String;
@@ -235,6 +320,7 @@ impl<T: ParseLow> ParseLow for Rc<RefCell<T>> {
             context,
             config,
             backend,
+            skip_lines,
             walkable_functions,
             source_file,
             test_names,
@@ -253,6 +339,7 @@ impl<T: ParseLow> ParseLow for Rc<RefCell<T>> {
             context,
             config,
             backend: &mut backend,
+            skip_lines,
             walkable_functions,
             source_file,
             test_names,
@@ -380,6 +467,12 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
             assert!(source_file.is_absolute());
             assert!(source_file.starts_with(context.root.as_path()));
 
+            let directives = collect_directives(context, source_file)?;
+
+            if directives.skip_file {
+                return Ok(());
+            }
+
             #[allow(clippy::unwrap_used)]
             let file = match backend.parse_source_file(source_file) {
                 Ok(file) => file,
@@ -416,6 +509,7 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
                 context,
                 config: &config,
                 backend,
+                skip_lines: directives.skip_lines,
                 walkable_functions,
                 source_file: source_file.clone(),
                 test_names: BTreeSet::default(),
@@ -540,5 +634,79 @@ impl<T: ParseLow> ParseAdapter<T> {
         builtins.merge(config).unwrap();
 
         builtins.compile()
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use super::{is_file_header_line, is_skip_directive, is_skip_file_directive};
+
+    #[test]
+    fn skip_directive_syntax() {
+        // Keep these cases in sync with `fixtures/directives`.
+        const CASES: &[&str] = &[
+            "    // necessist: skip",
+            "    //necessist:skip",
+            "    // necessist: skip, reason for skipping",
+        ];
+        for &line in CASES {
+            assert!(is_skip_directive(line), "{line:?}");
+            assert!(!is_skip_file_directive(line), "{line:?}");
+        }
+    }
+
+    #[test]
+    fn skip_file_directive_syntax() {
+        // Keep these cases in sync with `fixtures/directives`.
+        const CASES: &[&str] = &[
+            "    // necessist: skip-file, too late",
+            "    //necessist:skip-file, still too late",
+            "// necessist: skip-file, deliberately invalid Rust follows",
+        ];
+        for &line in CASES {
+            assert!(!is_skip_directive(line), "{line:?}");
+            assert!(is_skip_file_directive(line), "{line:?}");
+        }
+    }
+
+    #[test]
+    fn unrecognized_directive_syntax() {
+        // Keep these cases in sync with `fixtures/directives`.
+        const CASES: &[&str] = &[
+            "    // necessist: invalid",
+            "    n += 6; // necessist: skip",
+        ];
+        for &line in CASES {
+            assert!(!is_skip_directive(line), "{line:?}");
+            assert!(!is_skip_file_directive(line), "{line:?}");
+        }
+    }
+
+    #[test]
+    fn file_header_lines_allowed() {
+        const CASES: &[&str] = &[
+            "",
+            "\t",
+            " ",
+            "// comment",
+            "/// doc comment",
+            "//! inner doc comment",
+        ];
+        for &line in CASES {
+            assert!(is_file_header_line(line), "{line:?}");
+        }
+    }
+
+    #[test]
+    fn file_header_lines_rejected() {
+        const CASES: &[&str] = &[
+            "# comment",
+            "#! /usr/bin/env bash",
+            "/* comment */",
+            "other",
+        ];
+        for &line in CASES {
+            assert!(!is_file_header_line(line), "{line:?}");
+        }
     }
 }
