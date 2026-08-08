@@ -37,6 +37,7 @@ pub struct GenericVisitor<'context, 'config, 'backend, 'ast, T: ParseLow + ?Size
     pub context: &'context LightContext<'context>,
     pub config: &'config config::Compiled,
     pub backend: &'backend mut T,
+    pub skip_lines: BTreeSet<usize>,
     pub walkable_functions: BTreeMap<String, Vec<<T::Types as AbstractTypes>::LocalFunction<'ast>>>,
     pub source_file: SourceFile,
     pub test_names: BTreeSet<String>,
@@ -412,12 +413,15 @@ impl<'ast, T: ParseLow> GenericVisitor<'_, '_, '_, 'ast, T> {
     // smoelius: `register_span` no longer takes a `test_name` argument. It now registers a span
     // using `self.test_names` (which must be non-empty).
     fn register_span(&mut self, span: Span, kind: SpanKind) {
+        assert!(!self.test_names.is_empty());
+        if self.skip_lines.contains(&span.start.line) {
+            return;
+        }
         let span_test_map = match kind {
             SpanKind::Statement => &mut self.span_test_maps.statement,
             SpanKind::MethodCall => &mut self.span_test_maps.method_call,
         };
         let span_test_names = span_test_map.entry(span).or_default();
-        assert!(!self.test_names.is_empty());
         for test_name in &self.test_names {
             span_test_names.insert(test_name.to_owned());
         }

@@ -1,0 +1,12 @@
+fixtures/directives/src/lib.rs: Warning: `necessist: invalid` is not a recognized directive
+Silence this warning with: --allow directive-unrecognized
+fixtures/directives/src/lib.rs: Warning: `necessist: skip-file` is preceded by lines that are not line comments or whitespace
+Silence this warning with: --allow skip-file-mispositioned
+fixtures/directives/src/lib.rs: Warning: `necessist: skip-file` is preceded by lines that are not line comments or whitespace
+fixtures/directives/src/lib.rs:10:5-10:12: `n += 4;`
+fixtures/directives/src/lib.rs:13:5-13:12: `n += 5;`
+fixtures/directives/src/lib.rs:15:5-15:12: `n += 6;`
+fixtures/directives/src/lib.rs:16:5-16:12: `n += 7;`
+fixtures/directives/src/lib.rs:17:5-17:12: `n += 8;`
+fixtures/directives/src/lib.rs:19:5-19:12: `n += 9;`
+fixtures/directives/src/lib.rs:21:5-21:13: `n += 10;`
