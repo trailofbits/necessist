@@ -37,6 +37,8 @@ use vitest::Vitest;
 
 // Other modules
 
+mod directives;
+
 mod parsing;
 use parsing::{AbstractTypes, MaybeNamed, Named, ParseAdapter, ParseLow, Spanned, WalkDirResult};
 

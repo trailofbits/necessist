@@ -1,0 +1,12 @@
+args = [
+    "--no-sqlite",
+    "--root=fixtures/php_skip_file",
+    "--framework=php",
+    "--dump-candidates",
+]
+
+stdout = ""
+stderr = ""
+
+[fs]
+cwd = "../../.."

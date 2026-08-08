@@ -17,6 +17,7 @@ use std::{collections::BTreeMap, io::IsTerminal, sync::Mutex};
 pub enum Warning {
     All,
     DatabaseDoesNotExist,
+    DirectiveUnrecognized,
     DryRunFailed,
     FilesChanged,
     IgnoredFunctionsUnsupported,
@@ -30,6 +31,7 @@ pub enum Warning {
     OutputInvalid,
     ParsingFailed,
     RunTestFailed,
+    SkipFileMispositioned,
 }
 
 impl std::fmt::Display for Warning {
@@ -181,6 +183,7 @@ fn may_be_bug(warning: Warning) -> bool {
     match warning {
         Warning::All => unreachable!(),
         Warning::DatabaseDoesNotExist
+        | Warning::DirectiveUnrecognized
         | Warning::DryRunFailed
         | Warning::FilesChanged
         | Warning::IgnoredFunctionsUnsupported
@@ -190,7 +193,8 @@ fn may_be_bug(warning: Warning) -> bool {
         | Warning::LocalFunctionAmbiguous
         | Warning::OptionDeprecated
         | Warning::OutputInvalid
-        | Warning::ParsingFailed => false,
+        | Warning::ParsingFailed
+        | Warning::SkipFileMispositioned => false,
         Warning::InstrumentationNonbuildable
         | Warning::ModulePathUnknown
         | Warning::RunTestFailed => true,

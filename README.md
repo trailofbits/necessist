@@ -15,6 +15,7 @@ A paper on Necessist ([Test Harness Mutilation]) appeared in Mutation 2024. ([sl
 - [LLM-assisted auditing (experimental)](#llm-assisted-auditing-experimental)
 - [Details](#details)
 - [Configuration files](#configuration-files)
+- [Source directives (experimental)](#source-directives-experimental)
 - [Limitations](#limitations)
 - [Semantic versioning policy](#semantic-versioning-policy)
 - [Goals](#goals)
@@ -588,6 +589,28 @@ Note, however, that paths like `operator.connect` are ambiguous:
 - If `operator` refers to an object, then `operator.connect` refers to a method.
 
 By default, Necessist ignores such a path if it matches either an `ignored_functions` or `ignored_methods` pattern. Setting the `ignored_path_disambiguation` option above to `Function` or `Method` causes Necessist ignore the path only if it matches an `ignored_functions` or `ignored_methods` pattern (respectively).
+
+## Source directives (experimental)
+
+Place the following comment in a source file to prevent Necessist from removing any candidate that begins on the immediately next line:
+
+```text
+// necessist: skip
+```
+
+The comment must occupy its own line. Whitespace before or after `//` and after the colon is optional. Trailing text is allowed following a word boundary, as in `// necessist: skip, reason for skipping`.
+
+To prevent all removals in a file, use:
+
+```text
+// necessist: skip-file
+```
+
+This directive is honored only when every preceding line is whitespace-only, begins with optional whitespace followed by `//`, or is `<?php` surrounded by optional whitespace. The last case is needed to make the directive usable in a PHP test file.
+
+A file containing an honored `skip-file` directive is not parsed, and thus can contain invalid syntax. This behavior may change in the future.
+
+Necessist warns about mispositioned `skip-file` directives and unrecognized comment-only `necessist:` directives.
 
 ## Limitations
 

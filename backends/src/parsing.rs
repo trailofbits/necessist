@@ -20,7 +20,7 @@
 //!   `File`. Holds a reference to the `Storage`, which it passes to the [`GenericVisitor`], who
 //!   then forwards it on to the framework.
 
-use super::{GenericVisitor, ParseHigh};
+use super::{GenericVisitor, ParseHigh, directives::Directives};
 use anyhow::{Context, Result};
 use heck::ToKebabCase;
 use indexmap::IndexMap;
@@ -235,6 +235,7 @@ impl<T: ParseLow> ParseLow for Rc<RefCell<T>> {
             context,
             config,
             backend,
+            directives,
             walkable_functions,
             source_file,
             test_names,
@@ -253,6 +254,7 @@ impl<T: ParseLow> ParseLow for Rc<RefCell<T>> {
             context,
             config,
             backend: &mut backend,
+            directives,
             walkable_functions,
             source_file,
             test_names,
@@ -376,12 +378,21 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
         let mut source_file_span_test_map = SourceFileSpanTestMap::new();
 
         // Define a closure that takes backend as a parameter to avoid borrowing conflicts
-        let mut visit_source_file = |backend: &mut T, source_file: &Path| -> Result<()> {
-            assert!(source_file.is_absolute());
-            assert!(source_file.starts_with(context.root.as_path()));
+        let mut visit_source_file = |backend: &mut T, source_file_path: &Path| -> Result<()> {
+            assert!(source_file_path.is_absolute());
+            assert!(source_file_path.starts_with(context.root.as_path()));
+
+            let source_file =
+                SourceFile::new(context.root.clone(), source_file_path.to_path_buf())?;
+
+            let directives = Directives::collect(context, &source_file)?;
+
+            if directives.skip_file {
+                return Ok(());
+            }
 
             #[allow(clippy::unwrap_used)]
-            let file = match backend.parse_source_file(source_file) {
+            let file = match backend.parse_source_file(source_file_path) {
                 Ok(file) => file,
                 Err(error) => {
                     warn(
@@ -391,7 +402,7 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
                         // unnecessary.
                         &format!(
                             r#"failed to parse "{}": {error}"#,
-                            util::strip_prefix(source_file, context.root)
+                            util::strip_prefix(source_file_path, context.root)
                                 .unwrap()
                                 .display(),
                         ),
@@ -410,12 +421,11 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
                 local_functions
             };
 
-            let source_file = SourceFile::new(context.root.clone(), source_file.to_path_buf())?;
-
             let generic_visitor = GenericVisitor {
                 context,
                 config: &config,
                 backend,
+                directives,
                 walkable_functions,
                 source_file: source_file.clone(),
                 test_names: BTreeSet::default(),

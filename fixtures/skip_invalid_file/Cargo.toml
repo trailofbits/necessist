@@ -1,0 +1,7 @@
+[package]
+name = "skip_invalid_file"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[workspace]
