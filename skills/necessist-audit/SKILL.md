@@ -65,7 +65,7 @@ Order findings by likely impact. For each finding, report:
 - why the test still passes;
 - potential impact;
 - supporting evidence;
-- next action for reproducing, confirming, or remediating the defect.
+- suggested fix.
 
 List leads separately. End with counts of passing removals examined, findings, results for which no bug was established, and stale results.
 
