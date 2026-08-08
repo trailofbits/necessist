@@ -65,8 +65,53 @@ Order findings by likely impact. For each finding, report:
 - why the test still passes;
 - potential impact;
 - supporting evidence;
-- next action for reproducing, confirming, or remediating the defect.
+- suggested fix.
 
-List leads separately. End with counts of passing removals examined, findings, results for which no bug was established, and stale results.
+List leads separately. End with explicit counts of passing removals examined, findings, leads, results for which no bug was established, and stale results. Those counts should match the number of passing removals examined; if they do not because some removals were skipped or could not be read, explain why.
+
+Write the machine-readable JSON report in the audited directory; this write is permitted even though source modifications are not. Always write the file, using empty arrays when no findings or leads are established. Include only findings and leads; put each result’s explanation, evidence, impact, and suggested fix in `details`. The JSON report must satisfy this JSON Schema:
+
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "findings", "leads"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "const": "0.1.0"
+    },
+    "findings": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/result" }
+    },
+    "leads": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/result" }
+    }
+  },
+  "$defs": {
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "removed_code",
+        "removed_location",
+        "affected_location",
+        "details"
+      ],
+      "properties": {
+        "id": { "type": "string" },
+        "removed_code": { "type": "string" },
+        "removed_location": { "type": "string" },
+        "affected_location": { "type": "string" },
+        "details": { "type": "string" }
+      }
+    }
+  }
+}
+```
 
 Use concise Markdown. Do not implement recommendations unless the user asks.
