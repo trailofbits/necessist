@@ -1,0 +1,12 @@
+fixtures/directives/src/lib.rs:17:5-17:29: Warning: `necessist: skip-filex` is not a recognized directive
+Silence this warning with: --allow directive-unrecognized
+fixtures/directives/src/lib.rs:19:5-19:40: Warning: `necessist: skip-file` is preceded by a line that is not a line comment, whitespace, or `<?php`
+Silence this warning with: --allow skip-file-mispositioned
+fixtures/directives/src/lib.rs:14:5-14:12: `n += 4;`
+fixtures/directives/src/lib.rs:15:5-15:12: `n += 5;`
+fixtures/directives/src/lib.rs:16:5-16:12: `n += 6;`
+fixtures/directives/src/lib.rs:18:5-18:12: `n += 7;`
+fixtures/directives/src/lib.rs:20:5-20:12: `n += 8;`
+fixtures/directives/src/lib.rs:27:5-29:18: `xs
+        // necessist: skip
+        .push(0);`
