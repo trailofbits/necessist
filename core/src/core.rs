@@ -421,13 +421,13 @@ macro_rules! incompatible {
 
 fn process_options(opts: &Necessist) -> Result<()> {
     // smoelius: This list of incompatibilities is not exhaustive.
+    incompatible!(opts, dump, no_sqlite);
     incompatible!(opts, dump, quiet);
     incompatible!(opts, dump, reset);
     incompatible!(opts, dump, resume);
-    incompatible!(opts, dump, no_sqlite);
+    incompatible!(opts, no_sqlite, reset);
+    incompatible!(opts, no_sqlite, resume);
     incompatible!(opts, quiet, verbose);
-    incompatible!(opts, reset, no_sqlite);
-    incompatible!(opts, resume, no_sqlite);
 
     Ok(())
 }
