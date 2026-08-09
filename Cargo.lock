@@ -1352,6 +1352,7 @@ dependencies = [
  "strum",
  "strum_macros",
  "subprocess",
+ "supply_chain",
  "tempfile",
  "testing",
  "toml",
@@ -2242,6 +2243,17 @@ checksum = "feb179a3921e9debb9b1479c5a0abf0df75d05a412d8af9c81409c088d449413"
 dependencies = [
  "libc",
  "winapi",
+]
+
+[[package]]
+name = "supply_chain"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1e18c7619d13ca46c62abd2cc31786f4b86d264bfbf2c96ec8d043e5c0af469b"
+dependencies = [
+ "anyhow",
+ "serde_json",
+ "similar-asserts",
 ]
 
 [[package]]
