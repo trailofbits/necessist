@@ -2,5 +2,7 @@ args = ["--no-sqlite", "--root=fixtures/invalid_pattern"]
 
 status = "failed"
 
+stdout = ""
+
 [fs]
 cwd = "../../.."
