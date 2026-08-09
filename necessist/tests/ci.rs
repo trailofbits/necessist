@@ -10,10 +10,8 @@ use std::{
     process::{Command, ExitStatus, exit},
     str::FromStr,
 };
+use testing::tempfile_util::tempdir;
 use walkdir::WalkDir;
-
-mod tempfile_util;
-use tempfile_util::tempdir;
 
 #[ctor::ctor(unsafe)]
 fn initialize() {
@@ -73,7 +71,6 @@ fn github() {
         "ci_is_disabled",
         "dogfood",
         "general",
-        "tempfile_util",
         "third_party_common",
     ];
 
@@ -150,7 +147,7 @@ fn license() {
     .unwrap()
     .lines()
     {
-        if line == "AGPL-3.0 (3): necessist, necessist-backends, necessist-core" {
+        if line == "AGPL-3.0 (4): necessist, necessist-backends, necessist-core, testing" {
             continue;
         }
         assert!(re.is_match(line), "{line:?} does not match");

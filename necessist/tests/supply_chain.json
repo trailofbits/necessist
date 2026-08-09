@@ -3962,7 +3962,8 @@
     "local_crates": [
       "necessist",
       "necessist-backends",
-      "necessist-core"
+      "necessist-core",
+      "testing"
     ]
   }
 }
