@@ -8,12 +8,12 @@ check-cfg = ["cfg(dylint_lib, values(any()))"]
 
 [workspace.lints.clippy]
 pedantic = { level = "warn", priority = -1 }
-let-underscore-untyped = "warn"
-format-collect = "allow"
-missing-errors-doc = "allow"
-missing-panics-doc = "allow"
-mutable-key-type = "allow"
-struct-field-names = "allow"
+let_underscore_untyped = "warn"
+format_collect = "allow"
+missing_errors_doc = "allow"
+missing_panics_doc = "allow"
+mutable_key_type = "allow"
+struct_field_names = "allow"
 
 [[workspace.metadata.dylint.libraries]]
 git = "https://github.com/trailofbits/dylint"
