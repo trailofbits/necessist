@@ -1,14 +1,12 @@
 use assert_cmd::{assert::OutputAssertExt, cargo::cargo_bin_cmd};
 use cargo_metadata::MetadataCommand;
 use regex::Regex;
-use similar_asserts::SimpleDiff;
 use std::{
     env::{remove_var, set_current_dir, var},
     ffi::OsStr,
-    fs::{read_to_string, write},
+    fs::read_to_string,
     path::Path,
-    process::{Command, ExitStatus, exit},
-    str::FromStr,
+    process::{Command, exit},
 };
 use testing::tempfile_util::tempdir;
 use walkdir::WalkDir;
@@ -324,61 +322,12 @@ fn sort() {
         .success();
 }
 
-#[cfg_attr(dylint_lib = "general", allow(non_thread_safe_call_in_test))]
 #[test]
 fn supply_chain() {
-    let mut command = Command::new("cargo");
-    command.args(["supply-chain", "update", "--cache-max-age=0s"]);
-    let _: ExitStatus = command.status().unwrap();
-
-    let mut command = Command::new("cargo");
-    command.args(["supply-chain", "json", "--no-dev"]);
-    let assert = command.assert().success();
-
-    let stdout_actual = std::str::from_utf8(&assert.get_output().stdout).unwrap();
-    let mut value = serde_json::Value::from_str(stdout_actual).unwrap();
-    remove_avatars(&mut value);
-    let stdout_normalized = serde_json::to_string_pretty(&value).unwrap();
-
-    let path = Path::new(concat!(
+    supply_chain::check(concat!(
         env!("CARGO_MANIFEST_DIR"),
         "/tests/supply_chain.json"
     ));
-
-    if enabled("BLESS") {
-        write(path, stdout_normalized).unwrap();
-    } else {
-        let stdout_expected = read_to_string(path).unwrap();
-
-        assert!(
-            stdout_expected == stdout_normalized,
-            "{}",
-            SimpleDiff::from_str(&stdout_expected, &stdout_normalized, "left", "right")
-        );
-    }
-}
-
-fn remove_avatars(value: &mut serde_json::Value) {
-    match value {
-        serde_json::Value::Null
-        | serde_json::Value::Bool(_)
-        | serde_json::Value::Number(_)
-        | serde_json::Value::String(_) => {}
-        serde_json::Value::Array(array) => {
-            for value in array {
-                remove_avatars(value);
-            }
-        }
-        serde_json::Value::Object(object) => {
-            object.retain(|key, value| {
-                if key == "avatar" {
-                    return false;
-                }
-                remove_avatars(value);
-                true
-            });
-        }
-    }
 }
 
 #[test]
@@ -387,8 +336,4 @@ fn unmaintained() {
         .args(["unmaintained", "--color=never", "--fail-fast"])
         .assert()
         .success();
-}
-
-fn enabled(key: &str) -> bool {
-    var(key).is_ok_and(|value| value != "0")
 }
