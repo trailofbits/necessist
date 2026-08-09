@@ -1,5 +1,6 @@
 args = ["--no-sqlite", "--root=fixtures/basic", "--timeout=5", "--quiet"]
 
+stdout = ""
 stderr = ""
 
 [fs]

@@ -133,7 +133,29 @@ fn check_toml_files() {
         let status = document.as_table().and_then(|table| table.get("status"));
         let stderr = document.as_table().and_then(|table| table.get("stderr"));
         assert!(status.is_some() || stderr.is_some());
-        assert!(stderr.is_some() || path.with_extension("stderr").try_exists().unwrap());
+
+        for stream in ["stdout", "stderr"] {
+            let inline_empty = document
+                .as_table()
+                .and_then(|table| table.get(stream))
+                .and_then(toml::Value::as_str)
+                == Some("");
+            let snapshot_exists = path.with_extension(stream).try_exists().unwrap();
+            assert!(
+                !inline_empty || !snapshot_exists,
+                r#"`{}` has both `{stream} = ""` and a `.{stream}` file"#,
+                path.display()
+            );
+            let snapshot_nonempty = path
+                .with_extension(stream)
+                .metadata()
+                .is_ok_and(|metadata| metadata.len() > 0);
+            assert!(
+                inline_empty || snapshot_nonempty,
+                r#"`{}` has neither `{stream} = ""` nor a non-empty `.{stream}` file"#,
+                path.display()
+            );
+        }
 
         let fs_cwd = document
             .as_table()

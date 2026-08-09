@@ -1,5 +1,7 @@
 args = ["--no-sqlite", "--root=fixtures/basic", "--framework=z"]
 
+stdout = ""
+
 [fs]
 cwd = "../../.."
 

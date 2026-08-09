@@ -2,5 +2,7 @@ args = ["--root=fixtures/basic", "--dump"]
 
 status = "failed"
 
+stdout = ""
+
 [fs]
 cwd = "../../.."
