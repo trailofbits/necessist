@@ -2,9 +2,7 @@ use assert_cmd::{assert::OutputAssertExt, cargo::cargo_bin_cmd};
 use necessist_core::util;
 use predicates::prelude::*;
 use std::{env::set_current_dir, path::PathBuf, process::Command, sync::Mutex};
-
-mod tempfile_util;
-use tempfile_util::tempdir;
+use testing::tempfile_util::tempdir;
 
 const TIMEOUT: &str = "5";
 

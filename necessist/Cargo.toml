@@ -39,6 +39,8 @@ toml = "1.1"
 trycmd = "1.2"
 walkdir = "2.5"
 
+testing = { path = "../testing" }
+
 [features]
 default = []
 dogfood = []
