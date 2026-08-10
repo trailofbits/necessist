@@ -55,6 +55,14 @@ fn dylint() {
 }
 
 #[test]
+fn elaborate_disallowed_methods() {
+    elaborate::disallowed_methods()
+        .args(["--all-features", "--all-targets"])
+        .assert()
+        .success();
+}
+
+#[test]
 fn fmt() {
     Command::new("cargo")
         .args(["+nightly", "fmt", "--check"])
