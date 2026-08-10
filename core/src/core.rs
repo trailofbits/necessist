@@ -418,24 +418,27 @@ fn run(mut context: Context, source_file_span_test_map: SourceFileSpanTestMap) -
 }
 
 macro_rules! incompatible {
-    ($opts:ident, $x:ident, $y:ident) => {
-        ensure!(
-            !($opts.$x && $opts.$y),
-            "--{} and --{} are incompatible",
-            stringify!($x).to_kebab_case(),
-            stringify!($y).to_kebab_case()
-        );
+    ($opts:ident, $x:ident, $($y:ident),+ $(,)?) => {
+        // Compare the first option with every option that follows it.
+        $(
+            ensure!(
+                !($opts.$x && $opts.$y),
+                "--{} and --{} are incompatible",
+                stringify!($x).to_kebab_case(),
+                stringify!($y).to_kebab_case()
+            );
+        )+
+        // Recurse on the remaining options.
+        incompatible!($opts, $($y),+);
     };
+    // Once only one option remains, there are no more pairs to check.
+    ($opts:ident, $x:ident $(,)?) => {};
 }
 
 fn process_options(opts: &Necessist) -> Result<()> {
     // smoelius: This list of incompatibilities is not exhaustive.
-    incompatible!(opts, dump, no_sqlite);
+    incompatible!(opts, dump, no_sqlite, reset, resume);
     incompatible!(opts, dump, quiet);
-    incompatible!(opts, dump, reset);
-    incompatible!(opts, dump, resume);
-    incompatible!(opts, no_sqlite, reset);
-    incompatible!(opts, no_sqlite, resume);
     incompatible!(opts, quiet, verbose);
 
     Ok(())
