@@ -134,6 +134,7 @@ fn hack_feature_powerset_udeps() {
             "hack",
             "--feature-powerset",
             "udeps",
+            "--all-targets",
         ])
         .assert()
         .success();
