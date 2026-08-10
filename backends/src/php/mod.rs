@@ -5,14 +5,14 @@ use super::{
     utils::{OutputAccessors, OutputStrippedOfAnsiScapes},
 };
 use anyhow::{Context, Result, anyhow, ensure};
+use elaborate::std::{fs::read_to_string_wc, path::PathContext};
 use necessist_core::{
     LightContext, SourceFile, Span,
     framework::{SpanTestMaps, TestSet},
     util,
 };
 use std::{
-    collections::BTreeMap, convert::Infallible, fs::read_to_string, path::Path, process::Command,
-    sync::LazyLock,
+    collections::BTreeMap, convert::Infallible, path::Path, process::Command, sync::LazyLock,
 };
 use tree_sitter::{Language, Node, Parser, Query, Tree};
 
@@ -111,8 +111,8 @@ pub struct Php;
 
 impl Php {
     pub fn applicable(context: &LightContext) -> Result<bool> {
-        let xml = context.root.join("php.xml").try_exists()?;
-        let xml_dist = context.root.join("php.xml.dist").try_exists()?;
+        let xml = context.root.join("php.xml").try_exists_wc()?;
+        let xml_dist = context.root.join("php.xml.dist").try_exists_wc()?;
         Ok(xml || xml_dist)
     }
 
@@ -286,7 +286,7 @@ impl ParseLow for Php {
         &self,
         source_file: &Path,
     ) -> Result<<Self::Types as AbstractTypes>::File> {
-        let text = read_to_string(source_file)?;
+        let text = read_to_string_wc(source_file)?;
         let mut parser = Parser::new();
         parser
             .set_language(&LANGUAGE)
@@ -523,7 +523,7 @@ impl ParseLow for Php {
 
 impl RunLow for Php {
     fn install_dependencies(&self, context: &LightContext) -> Result<()> {
-        if context.root.join("vendor").try_exists()? {
+        if context.root.join("vendor").try_exists_wc()? {
             return Ok(());
         }
         let mut command = Command::new("composer");

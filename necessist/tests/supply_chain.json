@@ -912,6 +912,20 @@
         "name": "Jack Wrenn"
       }
     ],
+    "elaborate": [
+      {
+        "id": 13063,
+        "kind": "team",
+        "login": "github:trailofbits:rust-crates",
+        "name": "rust-crates"
+      },
+      {
+        "id": 64944,
+        "kind": "user",
+        "login": "smoelius",
+        "name": "Samuel Moelius"
+      }
+    ],
     "ena": [
       {
         "id": 408,

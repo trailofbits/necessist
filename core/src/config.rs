@@ -1,7 +1,8 @@
 use crate::LightContext;
 use anyhow::{Result, bail};
+use elaborate::std::{fs::read_to_string_wc, path::PathContext};
 use regex::Regex;
-use std::{collections::BTreeMap, fs::read_to_string, path::Path};
+use std::{collections::BTreeMap, path::Path};
 
 #[derive(Clone, Copy, Default, Eq, PartialEq, serde::Deserialize, serde::Serialize)]
 pub enum IgnoredPathDisambiguation {
@@ -76,11 +77,11 @@ impl Toml {
     pub fn read(_context: &LightContext, root: &Path) -> Result<Self> {
         let path_buf = root.join("necessist.toml");
 
-        if !path_buf.try_exists()? {
+        if !path_buf.try_exists_wc()? {
             return Ok(Self::default());
         }
 
-        let contents = read_to_string(path_buf)?;
+        let contents = read_to_string_wc(path_buf)?;
 
         let toml: Self = toml::from_str(&contents)?;
 

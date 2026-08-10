@@ -1,6 +1,7 @@
 use super::TryInsert;
 use anyhow::{Error, Result, anyhow};
 use cargo_metadata::{Metadata, MetadataCommand, Package};
+use elaborate::std::path::PathContext;
 use necessist_core::{SourceFile, util};
 use std::{
     collections::BTreeMap,
@@ -101,9 +102,7 @@ pub(super) fn cached_source_file_package<'a>(
     source_file_package_cache
         .entry(source_file.to_path_buf())
         .or_try_insert_with(|| {
-            let parent = source_file
-                .parent()
-                .ok_or_else(|| anyhow!("Failed to get parent directory"))?;
+            let parent = source_file.parent_wc()?;
 
             let metadata = cached_directory_metadata(directory_metadata_cache, parent)?;
 
@@ -150,13 +149,11 @@ fn cached_directory_metadata<'a>(
 }
 
 fn fs_module_path(path: &Path) -> Result<Vec<String>> {
-    let Some(path_parent) = path.parent() else {
+    let Ok(path_parent) = path.parent_wc() else {
         return Ok(Vec::new());
     };
 
-    let path_stem = path
-        .file_stem()
-        .ok_or_else(|| anyhow!("Failed to get file stem"))?;
+    let path_stem = path.file_stem_wc()?;
 
     let mut fs_module_path = path_parent
         .components()

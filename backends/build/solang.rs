@@ -1,15 +1,18 @@
+use elaborate::std::{
+    env::var_wc,
+    fs::{OpenOptionsContext, read_to_string_wc},
+};
 use std::{
-    env::var,
-    fs::{File, OpenOptions, read_to_string},
+    fs::{File, OpenOptions},
     io::{Error, Write},
     path::Path,
 };
 use syn::{Fields, File as SynFile, Ident, Item, ItemEnum, ItemStruct, Variant, parse_file};
 
 pub fn emit() {
-    let out_dir = var("OUT_DIR").unwrap();
+    let out_dir = var_wc("OUT_DIR").unwrap();
 
-    let contents = read_to_string("assets/solang_parser_pt.rs").unwrap();
+    let contents = read_to_string_wc("assets/solang_parser_pt.rs").unwrap();
     let syn_file =
         parse_file(&contents).unwrap_or_else(|_| panic!("Failed to parse: {contents:?}"));
 
@@ -17,7 +20,7 @@ pub fn emit() {
         .create(true)
         .write(true)
         .truncate(true)
-        .open(Path::new(&out_dir).join("visit.rs"))
+        .open_wc(Path::new(&out_dir).join("visit.rs"))
         .unwrap();
 
     emit_visitable_impls(&mut file, &syn_file).unwrap();

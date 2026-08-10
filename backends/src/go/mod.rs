@@ -4,6 +4,7 @@ use super::{
     tree_sitter_utils::{BoundedCursor, ToInternalSpan},
 };
 use anyhow::{Context, Result, anyhow, bail};
+use elaborate::std::{fs::read_to_string_wc, path::PathContext};
 use necessist_core::{
     __Rewriter as Rewriter, LightContext, LineColumn, SourceFile, Span,
     framework::{SpanTestMaps, TestSet},
@@ -11,8 +12,7 @@ use necessist_core::{
 };
 use regex::Regex;
 use std::{
-    collections::BTreeMap, convert::Infallible, fs::read_to_string, path::Path, process::Command,
-    sync::LazyLock,
+    collections::BTreeMap, convert::Infallible, path::Path, process::Command, sync::LazyLock,
 };
 use streaming_iterator::StreamingIterator;
 use tree_sitter::{Language, Node, Parser, Query, QueryCapture, QueryCursor, TextProvider, Tree};
@@ -93,7 +93,7 @@ pub struct Go {
 
 impl Go {
     pub fn applicable(context: &LightContext) -> Result<bool> {
-        context.root.join("go.mod").try_exists().map_err(Into::into)
+        context.root.join("go.mod").try_exists_wc()
     }
 
     pub fn new() -> Self {
@@ -251,7 +251,7 @@ impl ParseLow for Go {
         &self,
         source_file: &Path,
     ) -> Result<<Self::Types as AbstractTypes>::File> {
-        let text = read_to_string(source_file)?;
+        let text = read_to_string_wc(source_file)?;
         let mut parser = Parser::new();
         parser
             .set_language(&LANGUAGE)
@@ -591,9 +591,7 @@ impl Go {
 }
 
 fn source_file_package_path(context: &LightContext, source_file: &Path) -> Result<String> {
-    let dir = source_file
-        .parent()
-        .ok_or_else(|| anyhow!("Failed to get parent"))?;
+    let dir = source_file.parent_wc()?;
 
     let stripped = util::strip_prefix(dir, context.root)?;
 

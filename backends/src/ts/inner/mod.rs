@@ -3,6 +3,7 @@ use crate::{
     ParseLow, Spanned, WalkDirResult,
 };
 use anyhow::{Result, anyhow};
+use elaborate::std::path::PathContext;
 use log::debug;
 use necessist_core::{
     LightContext, LineColumn, SourceFile, Span, WarnFlags, Warning,
@@ -280,8 +281,8 @@ impl ParseLow for Inner {
                     if !path.is_file() {
                         return true;
                     }
-                    (path.extension() == Some(OsStr::new("js"))
-                        || path.extension() == Some(OsStr::new("ts")))
+                    (path.extension_wc().ok() == Some(OsStr::new("js"))
+                        || path.extension_wc().ok() == Some(OsStr::new("ts")))
                         && (path_predicate)(path)
                 }),
         )

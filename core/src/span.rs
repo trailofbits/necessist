@@ -1,8 +1,9 @@
 use crate::{__ToConsoleString as ToConsoleString, Backup, Rewriter, SourceFile};
 use anyhow::{Result, anyhow};
+use elaborate::std::{fs::OpenOptionsContext, io::WriteContext};
 use regex::Regex;
 use sha2::{Digest, Sha256};
-use std::{fs::OpenOptions, io::Write, path::PathBuf, rc::Rc, sync::LazyLock};
+use std::{fs::OpenOptions, path::PathBuf, rc::Rc, sync::LazyLock};
 
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct Span {
@@ -180,8 +181,8 @@ impl Span {
         let mut file = OpenOptions::new()
             .truncate(true)
             .write(true)
-            .open(&*self.source_file)?;
-        file.write_all(rewriter.contents().as_bytes())?;
+            .open_wc(&*self.source_file)?;
+        file.write_all_wc(rewriter.contents().as_bytes())?;
 
         Ok((text, backup))
     }

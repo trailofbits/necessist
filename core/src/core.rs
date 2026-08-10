@@ -5,6 +5,13 @@ use crate::{
 };
 use ansi_term::Style;
 use anyhow::{Context as _, Result, anyhow, bail, ensure};
+use elaborate::std::{
+    env::{current_dir_wc, var_wc},
+    fs::{OpenOptionsContext, write_wc},
+    io::WriteContext,
+    path::PathContext,
+    process::CommandContext,
+};
 use heck::ToKebabCase;
 use indexmap::IndexSet;
 use indicatif::ProgressBar;
@@ -14,9 +21,8 @@ use once_cell::sync::OnceCell;
 use std::{
     cell::RefCell,
     collections::BTreeMap,
-    env::{current_dir, var},
     fmt::Display,
-    io::{IsTerminal, Write},
+    io::IsTerminal,
     iter::Peekable,
     path::{Path, PathBuf},
     process::{Command, ExitStatus as StdExitStatus, Stdio},
@@ -115,7 +121,10 @@ pub fn necessist<Identifier: Applicable + Display + IntoEnumIterator + ToImpleme
     let root = opts
         .root
         .as_ref()
-        .map_or_else(current_dir, dunce::canonicalize)
+        .map_or_else(current_dir_wc, |path| {
+            dunce::canonicalize(path)
+                .with_context(|| format!("failed to canonicalize `{}`", path.display()))
+        })
         .map(Rc::new)?;
 
     #[cfg(feature = "lock_root")]
@@ -161,7 +170,7 @@ pub fn necessist<Identifier: Applicable + Display + IntoEnumIterator + ToImpleme
     }
 
     let progress =
-        if var("RUST_LOG").is_err() && !context.opts.quiet && std::io::stdout().is_terminal() {
+        if var_wc("RUST_LOG").is_err() && !context.opts.quiet && std::io::stdout().is_terminal() {
             Some(ProgressBar::new(n_spans as u64))
         } else {
             None
@@ -444,13 +453,13 @@ fn lock_root(root: &Path) -> Result<std::fs::File> {
 
 #[cfg(feature = "lock_root")]
 fn enabled(key: &str) -> bool {
-    var(key).is_ok_and(|value| value != "0")
+    var_wc(key).is_ok_and(|value| value != "0")
 }
 
 fn default_config(_context: &LightContext, root: &Path) -> Result<()> {
     let path_buf = root.join("necessist.toml");
 
-    if path_buf.try_exists()? {
+    if path_buf.try_exists_wc()? {
         bail!(
             "A configuration file already exists at `{}`",
             path_buf.display()
@@ -459,7 +468,7 @@ fn default_config(_context: &LightContext, root: &Path) -> Result<()> {
 
     let toml = toml::to_string(&config::Toml::default())?;
 
-    std::fs::write(path_buf, toml).map_err(Into::into)
+    write_wc(path_buf, toml)
 }
 
 fn dump(context: &LightContext, removals: &[Removal]) {
@@ -708,8 +717,8 @@ where
     let mut file = std::fs::OpenOptions::new()
         .truncate(true)
         .write(true)
-        .open(source_file)?;
-    file.write_all(rewriter.contents().as_bytes())?;
+        .open_wc(source_file)?;
+    file.write_all_wc(rewriter.contents().as_bytes())?;
     drop(file);
 
     let result = context
@@ -892,13 +901,14 @@ fn sqlite_and_past_removals_init_lazy(
 #[cfg(all(feature = "limit_threads", unix))]
 mod rlimit {
     use anyhow::Result;
+    use elaborate::std::process::CommandContext;
     pub use rlimit::Resource;
     use rlimit::{getrlimit, setrlimit};
     use std::{process::Command, sync::LazyLock};
 
     #[allow(clippy::unwrap_used)]
     pub static NPROC_INIT: LazyLock<u64> = LazyLock::new(|| {
-        let output = Command::new("ps").arg("-eL").output().unwrap();
+        let output = Command::new("ps").arg("-eL").output_wc().unwrap();
         let stdout = std::str::from_utf8(&output.stdout).unwrap();
         stdout.lines().count().try_into().unwrap()
     });
@@ -938,7 +948,7 @@ fn transitive_kill(pid: u32) -> Result<()> {
                 .arg(pid.to_string())
                 .stdout(Stdio::null())
                 .stderr(Stdio::null())
-                .status()?;
+                .status_wc()?;
             // smoelius: The process may have already exited.
             // ensure!(status.success());
         } else {
@@ -972,7 +982,7 @@ fn kill() -> Command {
 fn child_processes(pid: u32) -> Result<Vec<String>> {
     let output = Command::new("pgrep")
         .args(["-P", &pid.to_string()])
-        .output()?;
+        .output_wc()?;
     let stdout = String::from_utf8(output.stdout)?;
     Ok(stdout.lines().map(ToOwned::to_owned).collect())
 }

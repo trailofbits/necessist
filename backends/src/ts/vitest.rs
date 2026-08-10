@@ -1,5 +1,6 @@
 use super::{Inner, MochaLike};
 use anyhow::{Result, bail};
+use elaborate::std::{ffi::OsStrContext, path::PathContext};
 use necessist_core::{LightContext, Span, framework::Postprocess};
 use serde_json::Value;
 use std::{ffi::OsStr, path::Path, process::Command};
@@ -37,8 +38,9 @@ impl Vitest {
 }
 
 fn path_predicate(path: &Path) -> bool {
-    path.file_name()
-        .and_then(OsStr::to_str)
+    path.file_name_wc()
+        .and_then(OsStr::to_str_wc)
+        .ok()
         .is_none_or(|filename| !filename.ends_with(".test-d.ts"))
 }
 

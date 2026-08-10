@@ -1,21 +1,22 @@
 use crate::utils::{OutputAccessors, OutputStrippedOfAnsiScapes};
 use anyhow::{Result, ensure};
+use elaborate::std::path::PathContext;
 use log::debug;
 use necessist_core::LightContext;
 use std::process::Command;
 
 pub fn install_node_modules(context: &LightContext) -> Result<()> {
-    if context.root.join("node_modules").try_exists()? {
+    if context.root.join("node_modules").try_exists_wc()? {
         return Ok(());
     }
 
     // smoelius: If a `pnpm-lock.yaml` file exists, use `pnpm install`. If a `yarn.lock` file
     // exists, use `yarn`. If neither exist, default to `npm install`.
-    let mut command = if context.root.join("pnpm-lock.yaml").try_exists()? {
+    let mut command = if context.root.join("pnpm-lock.yaml").try_exists_wc()? {
         let mut command = script("pnpm");
         command.arg("install");
         command
-    } else if context.root.join("yarn.lock").try_exists()? {
+    } else if context.root.join("yarn.lock").try_exists_wc()? {
         script("yarn")
     } else {
         let mut command = Command::new("npm");

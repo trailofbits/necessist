@@ -1,10 +1,14 @@
 use assert_cmd::{assert::OutputAssertExt, cargo::cargo_bin_cmd};
 use cargo_metadata::MetadataCommand;
+use elaborate::std::{
+    env::{set_current_dir_wc, var_wc},
+    fs::read_to_string_wc,
+    path::PathContext,
+};
 use regex::Regex;
 use std::{
-    env::{remove_var, set_current_dir, var},
+    env::remove_var,
     ffi::OsStr,
-    fs::read_to_string,
     path::Path,
     process::{Command, exit},
 };
@@ -15,13 +19,13 @@ use walkdir::WalkDir;
 fn initialize() {
     // smoelius: Run the CI tests if either the target OS is Linux or we are running locally, i.e.,
     // `CI` is _not_ set.
-    if cfg!(not(target_os = "linux")) && var("CI").is_ok() {
+    if cfg!(not(target_os = "linux")) && var_wc("CI").is_ok() {
         exit(0);
     }
     unsafe {
         remove_var("CARGO_TERM_COLOR");
     }
-    set_current_dir("..").unwrap();
+    set_current_dir_wc("..").unwrap();
 }
 
 #[test]
@@ -104,7 +108,7 @@ fn github() {
         env!("CARGO_MANIFEST_DIR"),
         "/../.github/workflows/ci.yml"
     ));
-    let contents = read_to_string(ci_yml).unwrap();
+    let contents = read_to_string_wc(ci_yml).unwrap();
     let test_array = contents
         .lines()
         .find_map(|line| line.trim_start().strip_prefix("test: "))
@@ -205,7 +209,7 @@ fn noninvasive_siblings() {
         let entry = entry.unwrap();
         let path = entry.path();
 
-        if path.extension() != Some(OsStr::new("rs")) {
+        if path.extension_wc().ok() != Some(OsStr::new("rs")) {
             continue;
         }
 
@@ -214,7 +218,7 @@ fn noninvasive_siblings() {
             continue;
         }
 
-        let contents = read_to_string(path).unwrap();
+        let contents = read_to_string_wc(path).unwrap();
 
         if contents.contains("use super::{") {
             assert!(!re.is_match(&contents), "failed for `{}`", path.display());
@@ -236,7 +240,7 @@ fn prettier() {
 
     // smoelius: Prettier's handling of `..` seems to have changed between versions 3.4 and 3.5.
     // Manually collapsing the `..` avoids the problem.
-    let parent = Path::new(env!("CARGO_MANIFEST_DIR")).parent().unwrap();
+    let parent = Path::new(env!("CARGO_MANIFEST_DIR")).parent_wc().unwrap();
 
     let tempdir = tempdir().unwrap();
 
@@ -259,7 +263,7 @@ fn prettier() {
 
 #[test]
 fn readme_contains_usage() {
-    let readme = read_to_string("README.md").unwrap();
+    let readme = read_to_string_wc("README.md").unwrap();
 
     let assert = cargo_bin_cmd!("necessist").arg("--help").assert();
     let stdout = &assert.get_output().stdout;
@@ -272,7 +276,7 @@ fn readme_contains_usage() {
 #[test]
 fn readme_reference_links_are_sorted() {
     let re = Regex::new(r"^\[[^\]]*\]:").unwrap();
-    let readme = read_to_string("README.md").unwrap();
+    let readme = read_to_string_wc("README.md").unwrap();
     let links = readme
         .lines()
         .filter(|line| re.is_match(line))
@@ -285,7 +289,7 @@ fn readme_reference_links_are_sorted() {
 #[test]
 fn readme_reference_links_are_used() {
     let re = Regex::new(r"(?m)^(\[[^\]]*\]):").unwrap();
-    let readme = read_to_string("README.md").unwrap();
+    let readme = read_to_string_wc("README.md").unwrap();
     for captures in re.captures_iter(&readme) {
         assert_eq!(2, captures.len());
         let m = captures.get(1).unwrap();
@@ -299,7 +303,7 @@ fn readme_reference_links_are_used() {
 
 #[test]
 fn readme_toc_is_accurate() {
-    let readme = read_to_string("README.md").unwrap();
+    let readme = read_to_string_wc("README.md").unwrap();
     let expected_toc = readme.lines().filter_map(|line| {
         line.strip_prefix("## ").map(|suffix| {
             format!(

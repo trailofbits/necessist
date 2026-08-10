@@ -6,6 +6,10 @@ use super::{
 };
 use anyhow::{Context as _, Result};
 use cargo_metadata::{Metadata, Package, TargetKind};
+use elaborate::std::{
+    fs::{MetadataContext, read_to_string_wc},
+    path::PathContext,
+};
 use necessist_core::{
     __Rewriter as Rewriter, LightContext, SourceFile, Span, ToInternalSpan,
     framework::{SpanTestMaps, TestSet},
@@ -16,7 +20,6 @@ use std::{
     cell::RefCell,
     collections::{BTreeMap, BTreeSet, HashMap},
     ffi::OsStr,
-    fs::read_to_string,
     path::{Path, PathBuf},
     process::Command,
     sync::{LazyLock, RwLock},
@@ -42,11 +45,7 @@ pub struct Rust {
 
 impl Rust {
     pub fn applicable(context: &LightContext) -> Result<bool> {
-        context
-            .root
-            .join("Cargo.toml")
-            .try_exists()
-            .map_err(Into::into)
+        context.root.join("Cargo.toml").try_exists_wc()
     }
 
     pub fn new() -> Self {
@@ -415,7 +414,7 @@ impl ParseLow for Rust {
                 .filter_entry(|entry| {
                     let path = entry.path();
                     entry.file_name() != "target"
-                        && (!path.is_file() || path.extension() == Some(OsStr::new("rs")))
+                        && (!path.is_file() || path.extension_wc().ok() == Some(OsStr::new("rs")))
                 }),
         )
     }
@@ -424,7 +423,7 @@ impl ParseLow for Rust {
         &self,
         source_file: &Path,
     ) -> Result<<Self::Types as AbstractTypes>::File> {
-        let content = read_to_string(source_file)?;
+        let content = read_to_string_wc(source_file)?;
         syn::parse_file(&content).map_err(Into::into)
     }
 
@@ -840,8 +839,8 @@ fn mtime_map(target_directory: &Path) -> Result<MtimeMap> {
     for result in walkdir::WalkDir::new(target_directory) {
         let entry = result?;
         let path = entry.path();
-        let metadata = path.metadata()?;
-        let mtime = metadata.modified()?;
+        let metadata = path.metadata_wc()?;
+        let mtime = metadata.modified_wc()?;
         mtime_map.insert(path.to_path_buf(), mtime);
     }
     Ok(mtime_map)

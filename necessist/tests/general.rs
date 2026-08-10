@@ -1,7 +1,8 @@
 use assert_cmd::{assert::OutputAssertExt, cargo::cargo_bin_cmd};
+use elaborate::std::env::set_current_dir_wc;
 use necessist_core::util;
 use predicates::prelude::*;
-use std::{env::set_current_dir, path::PathBuf, process::Command, sync::Mutex};
+use std::{path::PathBuf, process::Command, sync::Mutex};
 use testing::tempfile_util::tempdir;
 
 const TIMEOUT: &str = "5";
@@ -10,7 +11,7 @@ const BASIC_ROOT: &str = "fixtures/basic";
 
 #[ctor::ctor(unsafe)]
 fn initialize() {
-    set_current_dir("..").unwrap();
+    set_current_dir_wc("..").unwrap();
 }
 
 #[test]
@@ -96,8 +97,9 @@ fixtures/dry_run_failure/tests/a.rs: Warning: dry run failed: code=101
 #[cfg(not(windows))]
 #[test]
 fn resume_following_ctrl_c() {
+    use elaborate::std::io::ReadContext;
     use similar_asserts::SimpleDiff;
-    use std::io::{BufRead, BufReader, Read};
+    use std::io::{BufRead, BufReader};
 
     fn command() -> Command {
         let mut command = Command::new("cargo");
@@ -134,7 +136,7 @@ fn resume_following_ctrl_c() {
 
         let mut stderr = job.stderr.as_ref().unwrap();
         let mut buf = Vec::new();
-        let _: usize = stderr.read_to_end(&mut buf).unwrap();
+        let _: usize = stderr.read_to_end_wc(&mut buf).unwrap();
         let stderr = String::from_utf8(buf).unwrap();
         assert!(stderr.ends_with("Ctrl-C detected\n"), "{stderr:?}");
 

@@ -1,12 +1,11 @@
 use assert_cmd::cargo::cargo_bin_cmd;
+use elaborate::std::{
+    fs::{read_dir_wc, read_to_string_wc},
+    path::PathContext,
+};
 use necessist_core::util;
 use regex::Regex;
-use std::{
-    env::remove_var,
-    ffi::OsStr,
-    fs::{read_dir, read_to_string},
-    path::PathBuf,
-};
+use std::{env::remove_var, ffi::OsStr, path::PathBuf};
 use trycmd::TestCases;
 
 const ROOT: &str = "../fixtures/basic";
@@ -48,17 +47,17 @@ fn trycmd() {
 fn check_stdout_files() {
     let re = Regex::new(r"\b[0-9]+\.[0-9]+s\b").unwrap();
 
-    let necessist_db_absent = read_dir("tests/necessist_db_absent").unwrap();
-    let necessist_db_present = read_dir("tests/necessist_db_present").unwrap();
+    let necessist_db_absent = read_dir_wc("tests/necessist_db_absent").unwrap();
+    let necessist_db_present = read_dir_wc("tests/necessist_db_present").unwrap();
     for entry in necessist_db_absent.chain(necessist_db_present) {
         let entry = entry.unwrap();
         let path = entry.path();
 
-        if path.extension() != Some(OsStr::new("stdout")) {
+        if path.extension_wc().ok() != Some(OsStr::new("stdout")) {
             continue;
         }
 
-        let contents = read_to_string(&path).unwrap();
+        let contents = read_to_string_wc(&path).unwrap();
 
         assert!(!re.is_match(&contents), "`{}` matches", path.display());
     }
@@ -66,20 +65,20 @@ fn check_stdout_files() {
 
 #[test]
 fn check_stderr_annotations() {
-    let necessist_db_absent = read_dir("tests/necessist_db_absent").unwrap();
-    let necessist_db_present = read_dir("tests/necessist_db_present").unwrap();
+    let necessist_db_absent = read_dir_wc("tests/necessist_db_absent").unwrap();
+    let necessist_db_present = read_dir_wc("tests/necessist_db_present").unwrap();
     for entry in necessist_db_absent.chain(necessist_db_present) {
         let entry = entry.unwrap();
         let path = entry.path();
 
         if !["stdout", "stderr"]
             .into_iter()
-            .any(|s| path.extension() == Some(OsStr::new(s)))
+            .any(|s| path.extension_wc().ok() == Some(OsStr::new(s)))
         {
             continue;
         }
 
-        let contents = read_to_string(&path).unwrap();
+        let contents = read_to_string_wc(&path).unwrap();
 
         let lines = contents.lines().collect::<Vec<_>>();
         assert!(
@@ -94,17 +93,17 @@ fn check_stderr_annotations() {
 
 #[test]
 fn check_toml_files() {
-    let necessist_db_absent = read_dir("tests/necessist_db_absent").unwrap();
-    let necessist_db_present = read_dir("tests/necessist_db_present").unwrap();
+    let necessist_db_absent = read_dir_wc("tests/necessist_db_absent").unwrap();
+    let necessist_db_present = read_dir_wc("tests/necessist_db_present").unwrap();
     for entry in necessist_db_absent.chain(necessist_db_present) {
         let entry = entry.unwrap();
         let path = entry.path();
 
-        if path.extension() != Some(OsStr::new("toml")) {
+        if path.extension_wc().ok() != Some(OsStr::new("toml")) {
             continue;
         }
 
-        let contents = read_to_string(&path).unwrap();
+        let contents = read_to_string_wc(&path).unwrap();
         let document = toml::from_str::<toml::Value>(&contents).unwrap();
 
         let args = document
@@ -119,11 +118,11 @@ fn check_toml_files() {
             })
             .unwrap();
 
-        if path.parent().unwrap().file_name() == Some(OsStr::new("no_necessist_db")) {
+        if path.parent_wc().unwrap().file_name_wc().ok() == Some(OsStr::new("no_necessist_db")) {
             assert_eq!(Some(&"--no-sqlite"), args.first());
         }
 
-        let file_stem = &*path.file_stem().unwrap().to_string_lossy();
+        let file_stem = &*path.file_stem_wc().unwrap().to_string_lossy();
         let example = args
             .iter()
             .find_map(|arg| arg.strip_prefix("--root=fixtures/"))
@@ -140,7 +139,7 @@ fn check_toml_files() {
                 .and_then(|table| table.get(stream))
                 .and_then(toml::Value::as_str)
                 == Some("");
-            let snapshot_exists = path.with_extension(stream).try_exists().unwrap();
+            let snapshot_exists = path.with_extension(stream).try_exists_wc().unwrap();
             assert!(
                 !inline_empty || !snapshot_exists,
                 r#"`{}` has both `{stream} = ""` and a `.{stream}` file"#,
@@ -148,7 +147,7 @@ fn check_toml_files() {
             );
             let snapshot_nonempty = path
                 .with_extension(stream)
-                .metadata()
+                .metadata_wc()
                 .is_ok_and(|metadata| metadata.len() > 0);
             assert!(
                 inline_empty || snapshot_nonempty,
