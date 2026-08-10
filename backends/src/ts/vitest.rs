@@ -51,7 +51,7 @@ pub fn extract_it_messages(json: &str) -> Result<Vec<String>> {
         .and_then(|object| object.get("testResults"))
         .and_then(Value::as_array)
     else {
-        bail!("Failed to find `testResults` in Vitest JSON output");
+        bail!("failed to find `testResults` in Vitest JSON output");
     };
     let assertion_results = test_results
         .iter()

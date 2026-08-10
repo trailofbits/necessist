@@ -92,7 +92,7 @@ pub trait Run {
     /// `span` is used for error reporting.
     ///
     /// `Result<Result<..>>` is a questionable return type. The inner `Result` represents the result
-    /// of trying to build the project under test. Having it is useful for when the "Instrumentation
+    /// of trying to build the project under test. Having it is useful for when the "instrumentation
     /// failed to build after it was verified to" assertion fails.
     fn exec(
         &self,

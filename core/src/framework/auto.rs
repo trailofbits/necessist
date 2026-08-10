@@ -46,7 +46,7 @@ where
 
                 ensure!(
                     applicable_frameworks.len() <= 1,
-                    "Found multiple applicable frameworks: {}; please select one with --framework \
+                    "found multiple applicable frameworks: {}; please select one with --framework \
                      <FRAMEWORK>",
                     applicable_frameworks
                         .iter()

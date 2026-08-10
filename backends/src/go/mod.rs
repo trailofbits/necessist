@@ -255,12 +255,12 @@ impl ParseLow for Go {
         let mut parser = Parser::new();
         parser
             .set_language(&LANGUAGE)
-            .with_context(|| "Failed to load Go grammar")?;
+            .with_context(|| "failed to load Go grammar")?;
         // smoelius: https://github.com/tree-sitter/tree-sitter/issues/255
         parser
             .parse(&text, None)
             .map(|tree| (text, tree))
-            .ok_or_else(|| anyhow!("Unspecified error"))
+            .ok_or_else(|| anyhow!("unspecified error"))
     }
 
     fn storage_from_file<'ast>(
@@ -470,7 +470,7 @@ impl RunLow for Go {
         }
 
         let Some(package_line) = package_line(source_file.contents()) else {
-            bail!("Failed to find line starting with `package`");
+            bail!("failed to find line starting with `package`");
         };
         let line_column = LineColumn {
             line: package_line + 1,
@@ -581,7 +581,7 @@ impl Go {
     fn test_command(context: &LightContext, source_file: &Path) -> Command {
         #[allow(clippy::expect_used)]
         let package_path = source_file_package_path(context, source_file)
-            .expect("Failed to get source file package path");
+            .expect("failed to get source file package path");
         let mut command = Command::new("go");
         command.current_dir(context.root.as_path());
         command.arg("test");

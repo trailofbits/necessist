@@ -1,4 +1,4 @@
-Error: Failed to walk "$DIR/contracts"
+Error: failed to walk "$DIR/contracts"
 
 Caused by:
     0: IO error for operation on $DIR/contracts/test: No such file or directory (os error 2)

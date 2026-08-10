@@ -682,7 +682,7 @@ impl Rust {
         let flags = self
             .source_file_flags_cache
             .get(source_file)
-            .expect("Flags are not cached");
+            .expect("flags are not cached");
         let mut command = Command::new("cargo");
         command.arg("test");
         command.args(flags);
@@ -755,7 +755,7 @@ fn cached_source_file_test_names<'a>(
 ) -> Result<&'a BTreeSet<String>> {
     let flags = source_file_flags_map
         .get(source_file)
-        .with_context(|| format!("Flags are not cached for `{}`", source_file.display()))?;
+        .with_context(|| format!("flags are not cached for `{}`", source_file.display()))?;
     let mut cache_key = flags.clone();
     cache_key.extend_from_slice(args);
     TryInsert::or_try_insert_with(flags_test_names_map.entry(cache_key), || {

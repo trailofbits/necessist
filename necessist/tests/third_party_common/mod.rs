@@ -204,7 +204,7 @@ fn read_tests_in(dir: impl AsRef<Path>, filter: bool) -> BTreeMap<Key, Vec<(Path
             #[allow(clippy::explicit_write)]
             writeln!(
                 stderr(),
-                "Skipping `{}` as ssh-agent is not running or has no identities",
+                "skipping `{}` as ssh-agent is not running or has no identities",
                 toml_path.display()
             )
             .unwrap();
@@ -358,7 +358,7 @@ If you do not see a panic message above, check that you passed --nocapture to th
             if repo.n_outstanding_tests == 0 {
                 let workdir = repo.workdir.path().to_path_buf();
                 #[allow(clippy::explicit_write)]
-                writeln!(stderr(), "--> Removing workdir for {key:?}").unwrap();
+                writeln!(stderr(), "--> removing workdir for {key:?}").unwrap();
                 repos.remove(&key);
                 assert!(!workdir.try_exists_wc().unwrap());
             }

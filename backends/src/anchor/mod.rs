@@ -73,7 +73,7 @@ fn json_extractor(stdout: &str) -> Result<&str> {
     for i in 0..N_LINES_TO_SKIP {
         let Some(newline_index) = stdout[index..].find('\n') else {
             return Err(anyhow!(
-                "Failed to find {}th newline in vitest output: {stdout:?}",
+                "failed to find {}th newline in vitest output: {stdout:?}",
                 i + 1
             ));
         };
@@ -197,7 +197,7 @@ impl Anchor {
             ));
             Ok(())
         })
-        .expect("Document is not parsable");
+        .expect("document is not parsable");
 
         write_wc(&self.anchor_toml, document.to_string())?;
 
@@ -212,13 +212,13 @@ fn edit_test_script<T>(
     let table = document.as_table_mut();
     let script = table
         .get_mut("scripts")
-        .ok_or_else(|| anyhow!("Failed to find `scripts` key"))?;
+        .ok_or_else(|| anyhow!("failed to find `scripts` key"))?;
     let scripts_table = script
         .as_table_mut()
         .ok_or_else(|| anyhow!("`scripts` is not a table"))?;
     let test = scripts_table
         .get_mut("test")
-        .ok_or_else(|| anyhow!("Failed to find `test` key"))?;
+        .ok_or_else(|| anyhow!("failed to find `test` key"))?;
     let test_value = test
         .as_value_mut()
         .ok_or_else(|| anyhow!("`test` is not a value"))?;
@@ -241,7 +241,7 @@ fn parse_test_value(test_value: &mut Value) -> Result<(TestRunner, String, Strin
         .ok_or_else(|| anyhow!("`test` is not a string"))?;
     let captures = TEST_RE
         .captures(test_str)
-        .ok_or_else(|| anyhow!("Failed to parse `test` string: {test_str:?}"))?;
+        .ok_or_else(|| anyhow!("failed to parse `test` string: {test_str:?}"))?;
     assert_eq!(3, captures.len());
     let prefix = captures[1].to_string();
     let suffix = captures[2].to_string();
@@ -251,7 +251,7 @@ fn parse_test_value(test_value: &mut Value) -> Result<(TestRunner, String, Strin
         TestRunner::Vitest
     } else {
         return Err(anyhow!(
-            "Failed to determine test runner from `test` string: {test_str:?}"
+            "failed to determine test runner from `test` string: {test_str:?}"
         ));
     };
     Ok((test_runner, prefix, suffix))

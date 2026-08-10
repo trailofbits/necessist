@@ -1,4 +1,4 @@
-Error: Failed to run test `TestPassed`: code=0
+Error: failed to run test `TestPassed`: code=0
 stdout="ok  \texample.com/run-test-failed\t[..]s\n"
 stderr=""
 

@@ -391,7 +391,7 @@ fn run(mut context: Context, source_file_span_test_map: SourceFileSpanTestMap) -
                             Err(error) => {
                                 assert!(
                                     explicit_removal,
-                                    "Instrumentation failed to build after it was verified to: \
+                                    "instrumentation failed to build after it was verified to: \
                                      {error}"
                                 );
 
@@ -448,7 +448,7 @@ fn lock_root(root: &Path) -> Result<std::fs::File> {
     } else {
         crate::flock::try_lock_path(root)
     }
-    .with_context(|| format!("Failed to lock `{}`", root.display()))
+    .with_context(|| format!("failed to lock `{}`", root.display()))
 }
 
 #[cfg(feature = "lock_root")]
@@ -461,7 +461,7 @@ fn default_config(_context: &LightContext, root: &Path) -> Result<()> {
 
     if path_buf.try_exists_wc()? {
         bail!(
-            "A configuration file already exists at `{}`",
+            "a configuration file already exists at `{}`",
             path_buf.display()
         );
     }
@@ -479,7 +479,7 @@ fn dump(context: &LightContext, removals: &[Removal]) {
     }
 
     if !context.opts.verbose && other_than_passed {
-        note(context, "More output would be produced with --verbose");
+        note(context, "more output would be produced with --verbose");
     }
 }
 
@@ -491,7 +491,7 @@ fn backend_for_framework<Identifier: Applicable + Display + IntoEnumIterator + T
 
     drop(identifier);
 
-    implementation.ok_or_else(|| anyhow!("Found no applicable frameworks"))
+    implementation.ok_or_else(|| anyhow!("found no applicable frameworks"))
 }
 
 fn canonicalize_source_files(context: &LightContext) -> Result<Vec<PathBuf>> {
@@ -506,7 +506,7 @@ fn canonicalize_source_files(context: &LightContext) -> Result<Vec<PathBuf>> {
                 context.root.join(path)
             };
             let path_buf = dunce::canonicalize(&path_to_canonicalize)
-                .with_context(|| format!("Failed to canonicalize `{}`", path.display()))?;
+                .with_context(|| format!("failed to canonicalize `{}`", path.display()))?;
             ensure!(
                 path_buf.starts_with(context.root.as_path()),
                 "`{}` is not in `{}`",
@@ -596,7 +596,7 @@ fn update_progress(context: &Context, mismatch: Option<Mismatch>, n: usize) -> R
             Warning::FilesChanged,
             &format!(
                 "\
-Configuration or source files have changed since necessist.db was created; the following entry is \
+configuration or source files have changed since necessist.db was created; the following entry is \
                  {kind}:
     {}: `{}`",
                 span.to_console_string(),
@@ -730,7 +730,7 @@ where
             &context.light(),
             Warning::InstrumentationNonbuildable,
             &format!(
-                "Instrumentation caused `{}` to be nonbuildable: {error:?}",
+                "instrumentation caused `{}` to be nonbuildable: {error:?}",
                 source_file.to_console_string(),
             ),
             WarnFlags::empty(),

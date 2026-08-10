@@ -17,7 +17,7 @@ while read X; do
     elif [[ -n "$CALL" ]]; then
         echo "    $SRC -> $CALL"
     else
-        echo "Failed to parse: $X" >&2
+        echo "failed to parse: $X" >&2
         exit 1
     fi
 done |

@@ -81,14 +81,14 @@ pub(crate) fn init(
 
     let no_db_msg = |flag: &str| {
         format!(
-            r#"No sqlite database to {flag} at "{}"; creating new database"#,
+            r#"no sqlite database to {flag} at "{}"; creating new database"#,
             path_buf.display()
         )
     };
 
     match (exists, dump, reset, resume) {
         (true, false, false, false) => bail!(
-            r#"Found an sqlite database at "{}"; please pass either --reset or --resume"#,
+            r#"found an sqlite database at "{}"; please pass either --reset or --resume"#,
             path_buf.display()
         ),
         (false, true, _, _) => bail!(
@@ -117,14 +117,14 @@ pub(crate) fn init(
         let sql = include_str!("drop_table_removal.sql");
         sql_query(sql)
             .execute(&mut connection)
-            .with_context(|| "Failed to drop sqlite database")?;
+            .with_context(|| "failed to drop sqlite database")?;
     }
 
     let removals = if reset || !exists {
         let sql = include_str!("create_table_removal.sql");
         sql_query(sql)
             .execute(&mut connection)
-            .with_context(|| "Failed to create sqlite database")?;
+            .with_context(|| "failed to create sqlite database")?;
         Vec::new()
     } else {
         let removals = removal::table.load::<Removal>(&mut connection)?;
@@ -173,7 +173,7 @@ pub(crate) fn insert(sqlite: &mut Sqlite, removal: &crate::Removal) -> Result<()
     insert_into(removal::table)
         .values(&removal)
         .execute(&mut sqlite.connection)
-        .with_context(|| format!("Failed to insert {removal:?}"))?;
+        .with_context(|| format!("failed to insert {removal:?}"))?;
 
     Ok(())
 }

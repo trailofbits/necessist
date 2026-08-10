@@ -65,7 +65,7 @@ pub(super) fn cached_source_file_fs_module_path<'a>(
             let manifest_dir = package
                 .manifest_path
                 .parent()
-                .ok_or_else(|| anyhow!("Failed to get parent directory"))?;
+                .ok_or_else(|| anyhow!("failed to get parent directory"))?;
 
             let source_file_relative_path = (|| {
                 const PREFIXES: [(&str, bool); 3] =
@@ -85,7 +85,7 @@ pub(super) fn cached_source_file_fs_module_path<'a>(
                 None
             })()
             .ok_or(anyhow!(
-                r#"Failed to determine relative path of source file "{}""#,
+                r#"failed to determine relative path of source file "{}""#,
                 source_file.display()
             ))?;
 
@@ -112,7 +112,7 @@ pub(super) fn cached_source_file_package<'a>(
                 let manifest_dir = package_curr
                     .manifest_path
                     .parent()
-                    .ok_or_else(|| anyhow!("Failed to get parent directory"))?;
+                    .ok_or_else(|| anyhow!("failed to get parent directory"))?;
                 if !source_file.starts_with(manifest_dir) {
                     continue;
                 }
@@ -127,7 +127,7 @@ pub(super) fn cached_source_file_package<'a>(
                 }
             }
 
-            package_near.ok_or_else(|| anyhow!("Failed to determine package"))
+            package_near.ok_or_else(|| anyhow!("failed to determine package"))
         })
         .map(|value| value as &_)
 }

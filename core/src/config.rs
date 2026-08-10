@@ -87,7 +87,7 @@ impl Toml {
 
         if !toml.other.is_empty() {
             bail!(
-                "Configuration file contains unknown keys: {:#?}",
+                "configuration file contains unknown keys: {:#?}",
                 toml.other.keys().collect::<Vec<_>>()
             );
         }
@@ -194,7 +194,7 @@ fn escape(pattern: &str) -> Result<String> {
             s.push_str(".*");
         } else {
             bail!(
-                "Patterns can contain only letters, numbers, '.', '_', or `*`, which does not \
+                "patterns can contain only letters, numbers, '.', '_', or `*`, which does not \
                  include '{ch}'",
             );
         }
