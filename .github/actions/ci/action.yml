@@ -21,7 +21,7 @@ runs:
           target/dylint/
         key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
-    - uses: taiki-e/install-action@v2.85.5
+    - uses: taiki-e/install-action@v2.85.10
       with:
         tool: cargo-hack, cargo-udeps
 
