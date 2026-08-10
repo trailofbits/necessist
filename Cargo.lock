@@ -1345,7 +1345,6 @@ dependencies = [
  "cargo_metadata",
  "clap",
  "ctor",
- "curl",
  "dunce",
  "elaborate",
  "env_logger",
@@ -1414,7 +1413,6 @@ version = "3.2.0"
 dependencies = [
  "ansi_term",
  "anyhow",
- "assert_cmd",
  "bitflags 2.13.1",
  "cargo_metadata",
  "clap",
@@ -1433,7 +1431,6 @@ dependencies = [
  "libsqlite3-sys",
  "log",
  "once_cell",
- "predicates",
  "proc-macro2",
  "regex",
  "remain",
