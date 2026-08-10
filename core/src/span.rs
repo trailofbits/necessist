@@ -1,5 +1,5 @@
 use crate::{__ToConsoleString as ToConsoleString, Backup, Rewriter, SourceFile};
-use anyhow::{Result, anyhow};
+use anyhow::{Context, Result, anyhow};
 use elaborate::std::{fs::OpenOptionsContext, io::WriteContext};
 use regex::Regex;
 use sha2::{Digest, Sha256};
@@ -169,7 +169,8 @@ impl Span {
     }
 
     pub fn remove(&self) -> Result<(String, Backup)> {
-        let backup = Backup::new(&*self.source_file)?;
+        let backup = Backup::new(&*self.source_file)
+            .with_context(|| format!("failed to backup `{}`", self.source_file.display()))?;
 
         let mut rewriter = Rewriter::with_offset_calculator(
             self.source_file.contents(),
