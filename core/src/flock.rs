@@ -1,4 +1,4 @@
-use anyhow::Result;
+use anyhow::{Context, Result};
 use elaborate::std::fs::{FileContext, OpenOptionsContext};
 use std::{
     fs::{File, OpenOptions},
@@ -7,13 +7,15 @@ use std::{
 
 pub fn lock_path(path: &Path) -> Result<File> {
     let file = open_lockable_file(path)?;
-    sys::lock_exclusive(&file)?;
+    sys::lock_exclusive(&file)
+        .with_context(|| format!("`lock_exclusive` failed for file: {file:?}"))?;
     Ok(file)
 }
 
 pub fn try_lock_path(path: &Path) -> Result<File> {
     let file = open_lockable_file(path)?;
-    sys::try_lock_exclusive(&file)?;
+    sys::try_lock_exclusive(&file)
+        .with_context(|| format!("`try_lock_exclusive` failed for file: {file:?}"))?;
     Ok(file)
 }
 

@@ -176,7 +176,8 @@ impl Anchor {
     }
 
     fn patch_anchor_toml(&self, source_file: &Path, check: bool) -> Result<Backup> {
-        let backup = Backup::new(&self.anchor_toml)?;
+        let backup = Backup::new(&self.anchor_toml)
+            .with_context(|| format!("failed to backup `{}`", self.anchor_toml.display()))?;
 
         let mut document = self.document.clone();
 

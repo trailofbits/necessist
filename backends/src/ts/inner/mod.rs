@@ -2,7 +2,7 @@ use crate::{
     AbstractTypes, GenericVisitor, MaybeNamed, Named, OutputAccessors, OutputStrippedOfAnsiScapes,
     ParseLow, Spanned, WalkDirResult,
 };
-use anyhow::{Result, anyhow};
+use anyhow::{Context, Result, anyhow};
 use elaborate::std::path::PathContext;
 use log::debug;
 use necessist_core::{
@@ -292,7 +292,10 @@ impl ParseLow for Inner {
         &self,
         source_file: &Path,
     ) -> Result<<Self::Types as AbstractTypes>::File> {
-        let source_file = self.source_map.load_file(source_file)?;
+        let source_file = self
+            .source_map
+            .load_file(source_file)
+            .with_context(|| format!("failed to load `{}`", source_file.display()))?;
         let lexer = Lexer::new(
             Syntax::Typescript(TsSyntax::default()),
             EsVersion::default(),

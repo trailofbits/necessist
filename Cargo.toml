@@ -28,6 +28,7 @@ pattern = [
     "examples/restriction/question_mark_in_expression",
     "examples/restriction/ref_aware_redundant_closure_for_method_calls",
     "examples/restriction/suboptimal_pattern",
+    "examples/restriction/try_io_result",
 ]
 
 [workspace.metadata.unmaintained]

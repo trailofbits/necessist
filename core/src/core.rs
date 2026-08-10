@@ -679,7 +679,8 @@ fn instrument_statements<'a, I>(
 where
     I: Iterator<Item = (&'a Span, SpanKind, &'a IndexSet<String>)>,
 {
-    let backup = Backup::new(source_file)?;
+    let backup = Backup::new(source_file)
+        .with_context(|| format!("failed to backup `{}`", source_file.display()))?;
 
     let mut rewriter =
         Rewriter::with_offset_calculator(source_file.contents(), source_file.offset_calculator());
@@ -767,11 +768,14 @@ fn perform_exec(
         *rlimit::NPROC_INIT + rlimit::NPROC_ALLOWANCE,
     )?;
 
-    let job = exec.start()?;
+    let job = exec.start().with_context(|| "failed to start exec")?;
     let status = if let Some(dur) = timeout(&context.opts) {
-        job.wait_timeout(dur)?
+        job.wait_timeout(dur)
+            .with_context(|| format!("`wait_timeout` failed for job: {job:?}"))?
     } else {
-        job.wait().map(Option::Some)?
+        job.wait()
+            .map(Option::Some)
+            .with_context(|| format!("`wait` failed for job: {job:?}"))?
     };
 
     #[cfg(all(feature = "limit_threads", unix))]
@@ -786,7 +790,9 @@ fn perform_exec(
     } else {
         let pid = job.pid();
         transitive_kill(pid)?;
-        let _: ExitStatus = job.wait()?;
+        let _: ExitStatus = job
+            .wait()
+            .with_context(|| format!("`wait` failed for job: {job:?}"))?;
     }
 
     let Some(status) = status else {
@@ -900,7 +906,7 @@ fn sqlite_and_past_removals_init_lazy(
 #[allow(clippy::module_name_repetitions)]
 #[cfg(all(feature = "limit_threads", unix))]
 mod rlimit {
-    use anyhow::Result;
+    use anyhow::{Context, Result};
     use elaborate::std::process::CommandContext;
     pub use rlimit::Resource;
     use rlimit::{getrlimit, setrlimit};
@@ -924,8 +930,10 @@ mod rlimit {
     pub const NPROC_ALLOWANCE: u64 = 1024;
 
     pub fn set_soft_rlimit(resource: Resource, limit: u64) -> Result<u64> {
-        let (soft, hard) = getrlimit(resource)?;
-        setrlimit(Resource::NPROC, std::cmp::min(hard, limit), hard)?;
+        let (soft, hard) = getrlimit(resource)
+            .with_context(|| format!("`getrlimit` failed for resource: {resource:?}"))?;
+        setrlimit(Resource::NPROC, std::cmp::min(hard, limit), hard)
+            .with_context(|| format!("`setrlimit` failed for resource: {resource:?}"))?;
         Ok(soft)
     }
 }

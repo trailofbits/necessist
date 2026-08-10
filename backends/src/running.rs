@@ -1,5 +1,5 @@
 use super::{OutputAccessors, OutputStrippedOfAnsiScapes, RunHigh, rust};
-use anyhow::{Error, Result, anyhow};
+use anyhow::{Context, Error, Result, anyhow};
 use assert_cmd::output::OutputError;
 use bstr::{BStr, io::BufReadExt};
 use elaborate::std::{
@@ -182,8 +182,10 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
         let postprocess = if let Some((init, f)) = init_f_test {
             // `perform_exec` waits for the child before postprocessing its output. Spool to files
             // so a child producing more than a pipe buffer can still exit.
-            let stdout_file = tempfile::tempfile()?;
-            let stderr_file = tempfile::tempfile()?;
+            let stdout_file = tempfile::tempfile()
+                .with_context(|| "failed to create temporary file for stdout")?;
+            let stderr_file = tempfile::tempfile()
+                .with_context(|| "failed to create temporary file for stderr")?;
             let stdout_redirection = stdout_file.try_clone_wc()?;
             let stderr_redirection = stderr_file.try_clone_wc()?;
             exec = exec.stdout(Redirection::File(stdout_redirection));
@@ -194,7 +196,7 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
                     stdout_file.rewind_wc()?;
                     let stdout = read_file_to_end(stdout_file)?;
                     let run = stdout.byte_lines().try_fold(init, |prev, result| {
-                        let buf = result?;
+                        let buf = result.with_context(|| "failed to read stdout")?;
                         let line = match std::str::from_utf8(&buf) {
                             Ok(line) => line,
                             Err(error) => {
@@ -220,7 +222,9 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
                     let mut stderr_file = stderr_file;
                     stderr_file.rewind_wc()?;
                     let stderr = read_file_to_end(stderr_file)?;
-                    let status = job.wait()?;
+                    let status = job
+                        .wait()
+                        .with_context(|| format!("`wait` failed for job: {job:?}"))?;
                     let Some(code) = status.code() else {
                         return Err(anyhow!("Unexpected exit status: {status:?}"));
                     };
