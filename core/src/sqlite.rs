@@ -7,6 +7,7 @@
 use crate::{LightContext, Outcome, Span, WarnFlags, Warning, util, warn};
 use anyhow::{Context, Result, bail};
 use diesel::{insert_into, prelude::*, sql_query};
+use elaborate::std::path::PathContext;
 use git2::{Oid, Repository, RepositoryOpenFlags};
 use regex::Regex;
 use std::{
@@ -76,7 +77,7 @@ pub(crate) fn init(
     let root = Rc::new(root.to_path_buf());
     let path_buf = root.join("necessist.db");
 
-    let exists = path_buf.try_exists()?;
+    let exists = path_buf.try_exists_wc()?;
 
     let no_db_msg = |flag: &str| {
         format!(

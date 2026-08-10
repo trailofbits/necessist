@@ -274,7 +274,7 @@ fn is_test(item: &ItemFn) -> Option<&Ident> {
 mod test {
     use super::Rust;
     use crate::ParseLow;
-    use std::fs::read_to_string;
+    use elaborate::std::fs::read_to_string_wc;
     use syn::{Expr, ExprArray, ExprLit, ExprReference, Item, ItemConst, Lit, parse_file};
 
     const UNNECESSARY_CONVERSION_FOR_TRAIT_URL: &str = "https://raw.githubusercontent.com/trailofbits/dylint/master/examples/supplementary/unnecessary_conversion_for_trait/src/lib.rs";
@@ -392,7 +392,7 @@ mod test {
     fn readme_contains_code_bulleted_list(items: &[&str]) -> bool {
         let n = items.len();
         #[allow(clippy::unwrap_used)]
-        let readme = read_to_string("../README.md").unwrap();
+        let readme = read_to_string_wc("../README.md").unwrap();
         readme.lines().collect::<Vec<_>>().windows(n).any(|window| {
             window
                 .iter()

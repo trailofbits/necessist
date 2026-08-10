@@ -2,6 +2,11 @@ use super::{OutputAccessors, OutputStrippedOfAnsiScapes, RunHigh, rust};
 use anyhow::{Error, Result, anyhow};
 use assert_cmd::output::OutputError;
 use bstr::{BStr, io::BufReadExt};
+use elaborate::std::{
+    env::var_wc,
+    fs::FileContext,
+    io::{ReadContext, SeekContext},
+};
 use log::debug;
 use necessist_core::{
     __Rewriter as Rewriter, LightContext, SourceFile, Span, WarnFlags, Warning,
@@ -9,9 +14,7 @@ use necessist_core::{
 };
 use std::{
     cell::RefCell,
-    env::var,
     fs::File,
-    io::{Read, Seek},
     path::Path,
     process::{Command, ExitStatus as StdExitStatus, Output},
     rc::Rc,
@@ -181,14 +184,14 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
             // so a child producing more than a pipe buffer can still exit.
             let stdout_file = tempfile::tempfile()?;
             let stderr_file = tempfile::tempfile()?;
-            let stdout_redirection = stdout_file.try_clone()?;
-            let stderr_redirection = stderr_file.try_clone()?;
+            let stdout_redirection = stdout_file.try_clone_wc()?;
+            let stderr_redirection = stderr_file.try_clone_wc()?;
             exec = exec.stdout(Redirection::File(stdout_redirection));
             exec = exec.stderr(Redirection::File(stderr_redirection));
             Some({
                 let postprocess: Box<Postprocess> = Box::new(move |context, job| {
                     let mut stdout_file = stdout_file;
-                    stdout_file.rewind()?;
+                    stdout_file.rewind_wc()?;
                     let stdout = read_file_to_end(stdout_file)?;
                     let run = stdout.byte_lines().try_fold(init, |prev, result| {
                         let buf = result?;
@@ -215,7 +218,7 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
                         return Ok(true);
                     }
                     let mut stderr_file = stderr_file;
-                    stderr_file.rewind()?;
+                    stderr_file.rewind_wc()?;
                     let stderr = read_file_to_end(stderr_file)?;
                     let status = job.wait()?;
                     let Some(code) = status.code() else {
@@ -251,10 +254,10 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
 
 fn read_file_to_end(mut file: File) -> Result<Vec<u8>> {
     let mut buf = Vec::new();
-    let _: usize = file.read_to_end(&mut buf)?;
+    let _: usize = file.read_to_end_wc(&mut buf)?;
     Ok(buf)
 }
 
 fn enabled(key: &str) -> bool {
-    var(key).is_ok_and(|value| value != "0")
+    var_wc(key).is_ok_and(|value| value != "0")
 }

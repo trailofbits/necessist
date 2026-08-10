@@ -3,10 +3,10 @@ use crate::{
     to_console_string::ToConsoleString, util,
 };
 use anyhow::Result;
+use elaborate::std::fs::read_to_string_wc;
 use std::{
     cell::RefCell,
     collections::HashMap,
-    fs::read_to_string,
     ops::Deref,
     path::{Path, PathBuf},
     rc::Rc,
@@ -58,7 +58,7 @@ impl SourceFile {
             if let Some(source_file) = source_files.get(&path) {
                 Ok(source_file.clone())
             } else {
-                let contents = read_to_string(&path)?;
+                let contents = read_to_string_wc(&path)?;
                 let leaked = Box::leak(contents.into_boxed_str());
                 let source_file = Self {
                     inner: Rc::new(Inner {

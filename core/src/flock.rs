@@ -1,6 +1,7 @@
+use anyhow::Result;
+use elaborate::std::fs::{FileContext, OpenOptionsContext};
 use std::{
     fs::{File, OpenOptions},
-    io::Result,
     path::Path,
 };
 
@@ -22,9 +23,9 @@ fn open_lockable_file(path: &Path) -> Result<File> {
             .create(true)
             .truncate(false)
             .write(true)
-            .open(path.join("NECESSIST_LOCK"))
+            .open_wc(path.join("NECESSIST_LOCK"))
     } else {
-        File::open(path)
+        File::open_wc(path)
     }
 }
 

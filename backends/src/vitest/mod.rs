@@ -1,5 +1,6 @@
 use super::{OutputAccessors, OutputStrippedOfAnsiScapes, ParseAdapter, ParseHigh, RunHigh, ts};
 use anyhow::Result;
+use elaborate::std::path::PathContext;
 use log::debug;
 use necessist_core::{
     __Rewriter as Rewriter, LightContext, SourceFile, Span,
@@ -14,11 +15,7 @@ pub struct Vitest {
 
 impl Vitest {
     pub fn applicable(context: &LightContext) -> Result<bool> {
-        context
-            .root
-            .join("vitest.config.ts")
-            .try_exists()
-            .map_err(Into::into)
+        context.root.join("vitest.config.ts").try_exists_wc()
     }
 
     pub fn new() -> Self {

@@ -3,6 +3,7 @@ use super::{
     WalkDirResult,
 };
 use anyhow::{Result, anyhow};
+use elaborate::std::{fs::read_to_string_wc, path::PathContext};
 use necessist_core::{
     __Rewriter as Rewriter, LightContext, LineColumn, SourceFile, Span,
     framework::{SpanTestMaps, TestSet},
@@ -12,8 +13,8 @@ use solang_parser::pt::{
     CodeLocation, Expression, FunctionDefinition, Identifier, Loc, SourceUnit, Statement,
 };
 use std::{
-    cell::RefCell, collections::BTreeMap, convert::Infallible, fs::read_to_string, hash::Hash,
-    path::Path, process::Command,
+    cell::RefCell, collections::BTreeMap, convert::Infallible, hash::Hash, path::Path,
+    process::Command,
 };
 
 mod storage;
@@ -27,11 +28,7 @@ pub struct Foundry;
 
 impl Foundry {
     pub fn applicable(context: &LightContext) -> Result<bool> {
-        context
-            .root
-            .join("foundry.toml")
-            .try_exists()
-            .map_err(Into::into)
+        context.root.join("foundry.toml").try_exists_wc()
     }
 
     pub fn new() -> Self {
@@ -188,7 +185,7 @@ impl ParseLow for Foundry {
         &self,
         source_file: &Path,
     ) -> Result<<Self::Types as AbstractTypes>::File> {
-        let contents = read_to_string(source_file)?;
+        let contents = read_to_string_wc(source_file)?;
         solang_parser::parse(&contents, 0)
             .map(|(source_unit, _)| (contents, source_unit))
             .map_err(|error| anyhow!(format!("{error:?}")))
@@ -397,7 +394,7 @@ impl ParseLow for Foundry {
 
 impl RunLow for Foundry {
     fn install_dependencies(&self, context: &LightContext) -> Result<()> {
-        if context.root.join("package.json").try_exists()? {
+        if context.root.join("package.json").try_exists_wc()? {
             crate::ts::utils::install_node_modules(context)?;
         }
         Ok(())
@@ -577,10 +574,14 @@ pub fn offset_to_line_column(contents: &str, loc: usize) -> (usize, usize) {
 
 #[cfg(test)]
 mod test {
+    use anyhow::Result;
     use cargo_metadata::{MetadataCommand, Package};
+    use elaborate::std::{
+        fs::read_to_string_wc,
+        io::WriteContext,
+        process::{ChildContext, CommandContext},
+    };
     use std::{
-        fs::read_to_string,
-        io::{Error, Write},
         path::{Path, PathBuf},
         process::{Command, Stdio},
     };
@@ -600,12 +601,12 @@ mod test {
             .unwrap();
         let solang_dir = download_package(tempdir.path(), package).unwrap();
         let pt_rs = solang_dir.join(PT_RS);
-        let expected = read_to_string(pt_rs).unwrap();
-        let actual = read_to_string("assets/solang_parser_pt.rs").unwrap();
+        let expected = read_to_string_wc(pt_rs).unwrap();
+        let actual = read_to_string_wc("assets/solang_parser_pt.rs").unwrap();
         assert_eq!(expected, actual);
     }
 
-    fn download_package(out_dir: &Path, package: &Package) -> Result<PathBuf, Error> {
+    fn download_package(out_dir: &Path, package: &Package) -> Result<PathBuf> {
         let download = get(&format!(
             "https://crates.io/api/v1/crates/{}/{}/download",
             package.name, package.version
@@ -615,12 +616,12 @@ mod test {
             .current_dir(out_dir)
             .args(["xzf", "-"])
             .stdin(Stdio::piped())
-            .spawn()?;
+            .spawn_wc()?;
         {
             let child_stdin = child.stdin.as_mut().unwrap();
-            child_stdin.write_all(&download)?;
+            child_stdin.write_all_wc(&download)?;
         }
-        let output = child.wait_with_output()?;
+        let output = child.wait_with_output_wc()?;
         assert!(output.status.success(), "{output:#?}");
 
         Ok(out_dir.join(format!("{}-{}", package.name, package.version)))

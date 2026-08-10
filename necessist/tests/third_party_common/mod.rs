@@ -1,22 +1,29 @@
 use assert_cmd::output::OutputError;
+use elaborate::std::{
+    env::{join_paths_wc, var_wc},
+    fs::{read_dir_wc, read_to_string_wc, remove_file_wc, write_wc},
+    io::ReadContext,
+    path::PathContext,
+    process::CommandContext,
+    thread::available_parallelism_wc,
+};
 use necessist_core::{Span, util};
 use regex::Regex;
 use serde::Deserialize;
 use similar_asserts::SimpleDiff;
 use std::{
     collections::{BTreeMap, HashSet},
-    env::{consts, join_paths, set_var, split_paths, var},
+    env::{consts, set_var, split_paths},
     ffi::OsStr,
     fmt::Write as _,
-    fs::{read_dir, read_to_string, remove_file, write},
-    io::{Read, Write, stderr},
+    io::{Write, stderr},
     ops::Not,
     panic::{set_hook, take_hook},
     path::{Path, PathBuf},
     process::{Command, exit},
     rc::Rc,
     sync::{LazyLock, mpsc::channel},
-    thread::{available_parallelism, spawn},
+    thread::spawn,
     time::{Duration, Instant},
 };
 use subprocess::{Exec, Redirection};
@@ -171,11 +178,11 @@ pub fn all_tests_in(dir: impl AsRef<Path>) {
 fn read_tests_in(dir: impl AsRef<Path>, filter: bool) -> BTreeMap<Key, Vec<(PathBuf, Test)>> {
     let mut tests = BTreeMap::<_, Vec<_>>::new();
 
-    for entry in read_dir(dir).unwrap() {
+    for entry in read_dir_wc(dir).unwrap() {
         let entry = entry.unwrap();
         let path = entry.path();
 
-        if path.extension() != Some(OsStr::new("toml")) {
+        if path.extension_wc().ok() != Some(OsStr::new("toml")) {
             continue;
         }
 
@@ -184,13 +191,13 @@ fn read_tests_in(dir: impl AsRef<Path>, filter: bool) -> BTreeMap<Key, Vec<(Path
         // smoelius: `TESTNAME` is what Clippy uses:
         // https://github.com/rust-lang/rust-clippy/blame/f8f9d01c2ad0dff565bdd60feeb4cbd09dada8cd/book/src/development/adding_lints.md#L99
         if filter
-            && var("TESTNAME")
-                .is_ok_and(|testname| toml_path.file_stem() != Some(OsStr::new(&testname)))
+            && var_wc("TESTNAME")
+                .is_ok_and(|testname| toml_path.file_stem_wc().ok() != Some(OsStr::new(&testname)))
         {
             continue;
         }
 
-        let contents = read_to_string(&toml_path).unwrap();
+        let contents = read_to_string_wc(&toml_path).unwrap();
         let test: Test = toml::from_str(&contents).unwrap();
 
         if test.url.starts_with(PREFIX_SSH) && !ssh_agent_is_running() {
@@ -219,7 +226,7 @@ fn read_tests_in(dir: impl AsRef<Path>, filter: bool) -> BTreeMap<Key, Vec<(Path
 fn ssh_agent_is_running() -> bool {
     Command::new("ssh-add")
         .arg("-l")
-        .status()
+        .status_wc()
         .unwrap()
         .success()
 }
@@ -262,7 +269,7 @@ If you do not see a panic message above, check that you passed --nocapture to th
 
     let (tx_output, rx_output) = channel::<(Key, usize, String, PathBuf, Duration)>();
 
-    let n_children = available_parallelism().unwrap().get();
+    let n_children = available_parallelism_wc().unwrap().get();
     let mut children = Vec::new();
 
     for i in 0..n_children {
@@ -353,7 +360,7 @@ If you do not see a panic message above, check that you passed --nocapture to th
                 #[allow(clippy::explicit_write)]
                 writeln!(stderr(), "--> Removing workdir for {key:?}").unwrap();
                 repos.remove(&key);
-                assert!(!workdir.try_exists().unwrap());
+                assert!(!workdir.try_exists_wc().unwrap());
             }
 
             let value = summary.entry(key).or_default();
@@ -431,7 +438,7 @@ fn init_workdir(workdir: &Path, key: &Key) -> String {
     if key.rev.is_none() {
         command.arg("--depth=1");
     }
-    let output = command.output().unwrap();
+    let output = command.output_wc().unwrap();
     assert!(output.status.success(), "{}", OutputError::new(output));
 
     let mut output_combined = std::str::from_utf8(&output.stderr).unwrap().to_owned();
@@ -440,7 +447,7 @@ fn init_workdir(workdir: &Path, key: &Key) -> String {
         let output = Command::new("git")
             .args(["checkout", "--quiet", rev])
             .current_dir(workdir)
-            .output()
+            .output_wc()
             .unwrap();
         assert!(output.status.success(), "{}", OutputError::new(output));
 
@@ -451,7 +458,7 @@ fn init_workdir(workdir: &Path, key: &Key) -> String {
         let output = Command::new("bash")
             .args(["-c", init])
             .current_dir(workdir)
-            .output()
+            .output_wc()
             .unwrap();
         assert!(output.status.success(), "{}", OutputError::new(output));
 
@@ -519,9 +526,7 @@ fn run_test(workdir: &Path, toml_path: &Path, test: &Test) -> (String, Duration)
             toml_path.with_extension("with_config.stdout")
         };
 
-        let stdout_expected = read_to_string(&path_stdout)
-            .map_err(|error| format!("Failed to read `{}`: {error:?}", path_stdout.display()))
-            .unwrap();
+        let stdout_expected = read_to_string_wc(&path_stdout).unwrap();
 
         let root = test
             .subdir
@@ -530,9 +535,9 @@ fn run_test(workdir: &Path, toml_path: &Path, test: &Test) -> (String, Duration)
 
         let necessist_toml = root.join("necessist.toml");
         if let Some(config) = config {
-            write(necessist_toml, config.to_string()).unwrap();
+            write_wc(necessist_toml, config.to_string()).unwrap();
         } else {
-            remove_file(necessist_toml).unwrap_or_default();
+            remove_file_wc(necessist_toml).unwrap_or_default();
         }
 
         let mut exec = Exec::cmd("../target/debug/necessist");
@@ -544,9 +549,10 @@ fn run_test(workdir: &Path, toml_path: &Path, test: &Test) -> (String, Duration)
         ]);
         if let Some(prefix) = &test.path_prefix {
             let prefix_in_workdir = workdir.join(prefix);
-            let path = var("PATH").unwrap();
+            let path = var_wc("PATH").unwrap();
             let path_prepended =
-                join_paths(std::iter::once(prefix_in_workdir).chain(split_paths(&path))).unwrap();
+                join_paths_wc(std::iter::once(prefix_in_workdir).chain(split_paths(&path)))
+                    .unwrap();
             exec = exec.env("PATH", path_prepended);
         }
         if let Some(framework) = &test.framework {
@@ -576,7 +582,7 @@ fn run_test(workdir: &Path, toml_path: &Path, test: &Test) -> (String, Duration)
 
         let mut buf = Vec::new();
 
-        let _: usize = stdout.read_to_end(&mut buf).unwrap();
+        let _: usize = stdout.read_to_end_wc(&mut buf).unwrap();
 
         elapsed += start.elapsed();
 
@@ -585,7 +591,7 @@ fn run_test(workdir: &Path, toml_path: &Path, test: &Test) -> (String, Duration)
         let stdout_normalized = remove_timings(&normalize_paths(stdout_actual, workdir));
 
         if enabled("BLESS") {
-            write(path_stdout, stdout_normalized).unwrap();
+            write_wc(path_stdout, stdout_normalized).unwrap();
         } else {
             // smoelius: Because source files could be traversed in different orders on different
             // machines, the warnings could appear out of order. So simply verify that
@@ -640,7 +646,7 @@ fn check_sqlite_urls(workdir: &Path, root: &Path, test: &Test) {
             &necessist_db.to_string_lossy(),
             "select span, url from removal",
         ])
-        .output()
+        .output_wc()
         .unwrap();
     assert!(output.status.success());
     let stdout = String::from_utf8(output.stdout).unwrap();
@@ -708,7 +714,7 @@ fn permutation_ignoring_timeouts(expected: &str, actual: &str) -> bool {
 }
 
 pub fn stdout_subsequence_in(dir: impl AsRef<Path>) {
-    for entry in read_dir(dir).unwrap() {
+    for entry in read_dir_wc(dir).unwrap() {
         let entry = entry.unwrap();
         let path = entry.path();
 
@@ -721,12 +727,12 @@ pub fn stdout_subsequence_in(dir: impl AsRef<Path>) {
         };
 
         let path_with_config = Path::new(&base).with_extension("with_config.stdout");
-        if !path_with_config.try_exists().unwrap_or_default() {
+        if !path_with_config.try_exists_wc().unwrap_or_default() {
             continue;
         }
 
-        let contents_with_config = read_to_string(path_with_config).unwrap();
-        let contents_without_config = read_to_string(path).unwrap();
+        let contents_with_config = read_to_string_wc(path_with_config).unwrap();
+        let contents_without_config = read_to_string_wc(path).unwrap();
 
         let lines_with_config = contents_with_config.lines();
         let lines_without_config = contents_without_config.lines();
@@ -763,15 +769,15 @@ fn subsequence<'a, 'b>(
 static BIN_RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"/[^/]*-[0-9a-f]{16}\b").unwrap());
 
 pub fn stdout_files_are_sanitary_in(dir: impl AsRef<Path>) {
-    for entry in read_dir(dir).unwrap() {
+    for entry in read_dir_wc(dir).unwrap() {
         let entry = entry.unwrap();
         let path = entry.path();
 
-        if path.extension() != Some(OsStr::new("stdout")) {
+        if path.extension_wc().ok() != Some(OsStr::new("stdout")) {
             continue;
         }
 
-        let contents = read_to_string(&path).unwrap();
+        let contents = read_to_string_wc(&path).unwrap();
 
         assert!(
             !TIMING_RE.is_match(&contents),
@@ -794,7 +800,7 @@ static DASH_RE: LazyLock<Regex> = LazyLock::new(|| Regex::new("-+").unwrap());
 fn readme_is_current() {
     let path_readme = Path::new(concat!(env!("CARGO_MANIFEST_DIR"), "/tests/README.md"));
 
-    let readme_actual = read_to_string(path_readme).unwrap();
+    let readme_actual = read_to_string_wc(path_readme).unwrap();
     let readme_space_normalized = &SPACE_RE.replace_all(&readme_actual, " ");
     let readme_normalized = DASH_RE.replace_all(readme_space_normalized, "-");
 
@@ -810,7 +816,7 @@ fn readme_is_current() {
 
     let mut test_lines = Vec::new();
     for (toml_path, test, partition) in tests {
-        let name = toml_path.file_stem().unwrap();
+        let name = toml_path.file_stem_wc().unwrap();
         test_lines.push(format!(
             "| {} | {}| {}| {}| {}| {}| {}| {partition} |",
             name.to_string_lossy(),
@@ -844,13 +850,13 @@ fn readme_is_current() {
         .collect::<String>();
 
     if enabled("BLESS") {
-        write(path_readme, readme_expected).unwrap();
+        write_wc(path_readme, readme_expected).unwrap();
         let tempdir = tempdir().unwrap();
         assert!(
             Command::new("npm")
                 .args(["install", "prettier"])
                 .current_dir(&tempdir)
-                .status()
+                .status_wc()
                 .unwrap()
                 .success()
         );
@@ -858,7 +864,7 @@ fn readme_is_current() {
             Command::new("npx")
                 .args(["prettier", "--write", &path_readme.to_string_lossy()])
                 .current_dir(&tempdir)
-                .status()
+                .status_wc()
                 .unwrap()
                 .success()
         );
@@ -885,5 +891,5 @@ fn target_os_includes(target_os: Option<&StringOrVec>, os: &str) -> bool {
 }
 
 fn enabled(key: &str) -> bool {
-    var(key).is_ok_and(|value| value != "0")
+    var_wc(key).is_ok_and(|value| value != "0")
 }

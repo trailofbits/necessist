@@ -1,16 +1,19 @@
+use elaborate::std::{
+    env::var_wc,
+    fs::{OpenOptionsContext, read_to_string_wc},
+};
 use proc_macro2::{TokenStream, TokenTree};
 use std::{
-    env::var,
-    fs::{File, OpenOptions, read_to_string},
+    fs::{File, OpenOptions},
     io::{Error, Write},
     path::Path,
 };
 use syn::{File as SynFile, Item, ItemMacro, ItemStruct, Type, TypePath, parse_file, parse2};
 
 pub fn emit() {
-    let out_dir = var("OUT_DIR").unwrap();
+    let out_dir = var_wc("OUT_DIR").unwrap();
 
-    let contents = read_to_string("assets/syn_expr.rs").unwrap();
+    let contents = read_to_string_wc("assets/syn_expr.rs").unwrap();
     let syn_file =
         parse_file(&contents).unwrap_or_else(|_| panic!("Failed to parse: {contents:?}"));
 
@@ -18,7 +21,7 @@ pub fn emit() {
         .create(true)
         .write(true)
         .truncate(true)
-        .open(Path::new(&out_dir).join("expression_with_block.rs"))
+        .open_wc(Path::new(&out_dir).join("expression_with_block.rs"))
         .unwrap();
 
     emit_expression_with_block(&mut file, &syn_file).unwrap();

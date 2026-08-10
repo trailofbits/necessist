@@ -1,5 +1,9 @@
 use super::{OutputAccessors, OutputStrippedOfAnsiScapes, ParseAdapter, ParseHigh, RunHigh, ts};
 use anyhow::{Context, Result, anyhow};
+use elaborate::std::{
+    fs::{read_to_string_wc, write_wc},
+    path::PathContext,
+};
 use log::debug;
 use necessist_core::{
     __Backup as Backup, __Rewriter as Rewriter, LightContext, SourceFile, Span,
@@ -7,7 +11,6 @@ use necessist_core::{
 };
 use regex::Regex;
 use std::{
-    fs::{read_to_string, write},
     path::{Path, PathBuf},
     process::Command,
     sync::LazyLock,
@@ -31,17 +34,12 @@ pub struct Anchor {
 
 impl Anchor {
     pub fn applicable(context: &LightContext) -> Result<bool> {
-        context
-            .root
-            .join("Anchor.toml")
-            .try_exists()
-            .map_err(Into::into)
+        context.root.join("Anchor.toml").try_exists_wc()
     }
 
     pub fn new(context: &LightContext) -> Result<Self> {
         let anchor_toml = context.root.join("Anchor.toml");
-        let contents = read_to_string(&anchor_toml)
-            .with_context(|| format!(r#"Failed to read "{}""#, anchor_toml.display()))?;
+        let contents = read_to_string_wc(&anchor_toml)?;
         let mut document = contents.parse::<DocumentMut>()?;
         let (test_runner, prefix, suffix) = edit_test_script(&mut document, parse_test_value)?;
         let parser_adapter_inner: Box<dyn ts::MochaLike> = match test_runner {
@@ -200,7 +198,7 @@ impl Anchor {
         })
         .expect("Document is not parsable");
 
-        write(&self.anchor_toml, document.to_string())?;
+        write_wc(&self.anchor_toml, document.to_string())?;
 
         Ok(backup)
     }
