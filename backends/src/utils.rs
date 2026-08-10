@@ -15,7 +15,7 @@ impl OutputStrippedOfAnsiScapes for Command {
             stderr,
         } = self
             .output()
-            .with_context(|| format!("Failed to run command: {self:?}"))?;
+            .with_context(|| format!("failed to run command: {self:?}"))?;
         Ok(OutputError::new(Output {
             status,
             stdout: strip_ansi_escapes::strip(stdout),

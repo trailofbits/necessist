@@ -14,7 +14,7 @@ fn dogfood() {
         .is_err()
     {
         #[allow(clippy::explicit_write)]
-        writeln!(stderr(), "Skipping as repository is dirty").unwrap();
+        writeln!(stderr(), "skipping as repository is dirty").unwrap();
         return;
     }
 

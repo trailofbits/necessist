@@ -138,7 +138,7 @@ impl Inner {
         #[allow(clippy::expect_used)]
         let it_message_state_map = source_file_it_message_state_map
             .get_mut(span.source_file.as_ref())
-            .expect("Source file is not in map");
+            .expect("source file is not in map");
 
         // smoelius: For Mocha-based frameworks, `test_name` is the `it` message.
         let state = it_message_state_map

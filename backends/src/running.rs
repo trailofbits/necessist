@@ -226,7 +226,7 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
                         .wait()
                         .with_context(|| format!("`wait` failed for job: {job:?}"))?;
                     let Some(code) = status.code() else {
-                        return Err(anyhow!("Unexpected exit status: {status:?}"));
+                        return Err(anyhow!("unexpected exit status: {status:?}"));
                     };
                     // smoelius: `raw` is `i32` on Unix, and `u32` on Windows.
                     let raw = code.try_into()?;
@@ -239,7 +239,7 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
                         context,
                         Warning::RunTestFailed,
                         &span,
-                        &format!("Failed to run test `{test_name}`: {error}"),
+                        &format!("failed to run test `{test_name}`: {error}"),
                         WarnFlags::empty(),
                     )?;
                     Ok(false)

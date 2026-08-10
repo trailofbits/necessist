@@ -290,11 +290,11 @@ impl ParseLow for Php {
         let mut parser = Parser::new();
         parser
             .set_language(&LANGUAGE)
-            .with_context(|| "Failed to load PHP grammar")?;
+            .with_context(|| "failed to load PHP grammar")?;
         parser
             .parse(&text, None)
             .map(|tree| (text, tree))
-            .ok_or_else(|| anyhow!("Unspecified error"))
+            .ok_or_else(|| anyhow!("unspecified error"))
     }
 
     fn storage_from_file<'ast>(

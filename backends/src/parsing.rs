@@ -390,7 +390,7 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
                         // smoelius: Use `{error}` rather than `{error:?}`. A backtrace seems
                         // unnecessary.
                         &format!(
-                            r#"Failed to parse "{}": {error}"#,
+                            r#"failed to parse "{}": {error}"#,
                             util::strip_prefix(source_file, context.root)
                                 .unwrap()
                                 .display(),
@@ -453,7 +453,7 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
                 let dir_walk = self.0.walk_dir(path);
                 for entry in dir_walk {
                     let entry =
-                        entry.with_context(|| format!(r#"Failed to walk "{}""#, path.display()))?;
+                        entry.with_context(|| format!(r#"failed to walk "{}""#, path.display()))?;
                     let entry_path = entry.path();
                     if entry_path.is_file() {
                         visit_source_file(&mut self.0, entry_path)?;
@@ -495,7 +495,7 @@ macro_rules! check_config {
                     $storage,
                     Warning::[< Ignored $x:camel s Unsupported >],
                     &format!(
-                        "The {} framework does not support the `{}` configuration",
+                        "the {} framework does not support the `{}` configuration",
                         $name,
                         stringify!([< ignored_ $x:snake s >]),
                     ),

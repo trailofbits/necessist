@@ -14,7 +14,7 @@ pub fn emit() {
 
     let contents = read_to_string_wc("assets/solang_parser_pt.rs").unwrap();
     let syn_file =
-        parse_file(&contents).unwrap_or_else(|_| panic!("Failed to parse: {contents:?}"));
+        parse_file(&contents).unwrap_or_else(|_| panic!("failed to parse: {contents:?}"));
 
     let mut file = OpenOptions::new()
         .create(true)

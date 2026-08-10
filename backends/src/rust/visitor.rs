@@ -77,7 +77,7 @@ fn module_path_unknown_msg(test_name: &str, errors: &[Error]) -> Result<String> 
     let mut msg = String::new();
     writeln!(
         &mut msg,
-        "Failed to determine module path for test `{test_name}`: ["
+        "failed to determine module path for test `{test_name}`: ["
     )?;
     for error in errors {
         // smoelius: Debug formatting is intentionally _not_ used to facilitate path normalization
@@ -354,7 +354,7 @@ mod test {
         let data = get(UNNECESSARY_CONVERSION_FOR_TRAIT_URL).unwrap();
         let contents = std::str::from_utf8(&data).unwrap();
         #[allow(clippy::panic)]
-        let file = parse_file(contents).unwrap_or_else(|_| panic!("Failed to parse: {contents:?}"));
+        let file = parse_file(contents).unwrap_or_else(|_| panic!("failed to parse: {contents:?}"));
         let mut watched_methods = file
             .items
             .into_iter()

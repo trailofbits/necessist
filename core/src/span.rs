@@ -70,7 +70,7 @@ impl Span {
                     captures[5].to_owned(),
                 )
             })
-            .ok_or_else(|| anyhow!("Span has unexpected format"))?;
+            .ok_or_else(|| anyhow!("span has unexpected format"))?;
         let start_line = start_line.parse::<usize>()?;
         let start_column = start_column.parse::<usize>()?;
         let end_line = end_line.parse::<usize>()?;

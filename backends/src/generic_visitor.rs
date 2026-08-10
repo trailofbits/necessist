@@ -158,7 +158,7 @@ impl<'ast, T: ParseLow> GenericVisitor<'_, '_, '_, 'ast, T> {
                 self.context,
                 Warning::LocalFunctionAmbiguous,
                 &format!(
-                    "Found multiple functions with the following names in `{}`: {:#?}",
+                    "found multiple functions with the following names in `{}`: {:#?}",
                     self.source_file.to_console_string(),
                     self.local_functions_needing_warnings
                 ),

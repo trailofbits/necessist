@@ -1,7 +1,7 @@
 2 candidates in 1 test in 1 source file
 fixtures/run_test_failed/run_test_failed_test.go: dry running
 fixtures/run_test_failed/run_test_failed_test.go: mutilating
-fixtures/run_test_failed/run_test_failed_test.go:10:2-10:18: Warning: Failed to run test `TestPassed`: code=0
+fixtures/run_test_failed/run_test_failed_test.go:10:2-10:18: Warning: failed to run test `TestPassed`: code=0
 stdout="ok  \texample.com/run-test-failed\t[..]s\n"
 stderr=""
 
