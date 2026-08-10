@@ -1,8 +1,8 @@
-use super::tree_sitter_utils::{BoundedCursor, ToInternalSpan};
-use super::utils::{OutputAccessors, OutputStrippedOfAnsiScapes};
 use super::{
     AbstractTypes, GenericVisitor, MaybeNamed, Named, ParseLow, ProcessLines, RunLow, Spanned,
     WalkDirResult,
+    tree_sitter_utils::{BoundedCursor, ToInternalSpan},
+    utils::{OutputAccessors, OutputStrippedOfAnsiScapes},
 };
 use anyhow::{Context, Result, anyhow, ensure};
 use necessist_core::{
