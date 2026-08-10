@@ -148,9 +148,9 @@ impl RunHigh for Anchor {
             .exec(context, test_name, span, &command)?;
 
         Ok(exec_and_postprocess.map(|(exec, postprocess)| {
-            let postprocess: Box<Postprocess> = Box::new(move |context, popen| {
+            let postprocess: Box<Postprocess> = Box::new(move |context, job| {
                 let result = if let Some(postprocess) = postprocess {
-                    postprocess(context, popen)
+                    postprocess(context, job)
                 } else {
                     Ok(true)
                 };

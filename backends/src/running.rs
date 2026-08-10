@@ -186,7 +186,7 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
             exec = exec.stdout(Redirection::File(stdout_redirection));
             exec = exec.stderr(Redirection::File(stderr_redirection));
             Some({
-                let postprocess: Box<Postprocess> = Box::new(move |context, popen| {
+                let postprocess: Box<Postprocess> = Box::new(move |context, job| {
                     let mut stdout_file = stdout_file;
                     stdout_file.rewind()?;
                     let stdout = read_file_to_end(stdout_file)?;
@@ -217,7 +217,7 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
                     let mut stderr_file = stderr_file;
                     stderr_file.rewind()?;
                     let stderr = read_file_to_end(stderr_file)?;
-                    let status = popen.wait()?;
+                    let status = job.wait()?;
                     let Some(code) = status.code() else {
                         return Err(anyhow!("Unexpected exit status: {status:?}"));
                     };
