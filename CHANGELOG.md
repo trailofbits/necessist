@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.3.0
+
+- Indicate that `necessist-audit` skill is experimental in README.md ([0c692f1](https://github.com/trailofbits/necessist/commit/0c692f17264dbf4bfab17d020b92bd4be917b862))
+- Use `elaborate` for better error reporting ([d70f8ac](https://github.com/trailofbits/necessist/commit/d70f8acafc5f5213af7eb5e2363402e334ca2c6c))
+- Use lowercase error, warning, and progress messages consistently ([e1de66f](https://github.com/trailofbits/necessist/commit/e1de66fffea252b4d5b99ffce44176bbd4d60570))
+- FEATURE: Add experimental `skip` and `skip-file` directives ([af3f2b9](https://github.com/trailofbits/necessist/commit/af3f2b9920693868ce98c0259733a8eb27c6a97c))
+- Dependency updates
+  - `swc_core` upgraded to version 76.0
+
 ## 3.2.0
 
 - Documentation improvements ([1c2f3f9](https://github.com/trailofbits/necessist/commit/1c2f3f966a7e38d68cebc49b1bcd6c48aa97b007), [3e4ab71](https://github.com/trailofbits/necessist/commit/3e4ab71d7c100b7927f2460c47fd3c1a28e88684), [7e8ff95](https://github.com/trailofbits/necessist/commit/7e8ff9574beac33a4e8a9429a17f604aada49d42), [aa1dfd8](https://github.com/trailofbits/necessist/commit/aa1dfd8efe0149a59761ec83197a6fee52d61733))
