@@ -379,6 +379,7 @@ The ignored functions and methods are the same as for Anchor above.
 - `assert_eq`
 - `assert_matches`
 - `assert_ne`
+- `dbg`
 - `debug`
 - `eprint`
 - `eprintln`

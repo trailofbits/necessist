@@ -347,6 +347,7 @@ impl ParseLow for Rust {
         "assert_eq",
         "assert_matches",
         "assert_ne",
+        "dbg",
         "debug",
         "eprint",
         "eprintln",
