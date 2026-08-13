@@ -685,9 +685,9 @@ checksum = "9e5e8f6c15a24b9a3ee5efec809ccd006d3b30e8b3bb63c39af737c7f87daa1d"
 
 [[package]]
 name = "elaborate"
-version = "2.0.0"
+version = "2.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ebccd51c5c9671251371078938192e3b0a51d5a2f22c754a372fc0477fcd4fa6"
+checksum = "9b2d4bb47301a282d44806532e32ba9cc771a5891a938237a0f7a14b855b3f1b"
 dependencies = [
  "anyhow",
 ]
@@ -2310,9 +2310,9 @@ dependencies = [
 
 [[package]]
 name = "swc_core"
-version = "76.0.1"
+version = "76.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a339a450492b9c34560e063936f667707b906a4719a793932721330b68820c0b"
+checksum = "a7e986137a8ee9e95eba2381c0084f05167d5ee974a2a208100df8876c168759"
 dependencies = [
  "swc_allocator",
  "swc_atoms",
