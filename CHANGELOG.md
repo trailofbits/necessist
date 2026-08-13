@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.3.1
+
+- Add `dbg!` to list of ignored Rust macros ([6f5c22e](https://github.com/trailofbits/necessist/commit/6f5c22e6fa98b458ae3f98e5f41bcd1902fa3e71))
+
 ## 3.3.0
 
 - Indicate that `necessist-audit` skill is experimental in README.md ([0c692f1](https://github.com/trailofbits/necessist/commit/0c692f17264dbf4bfab17d020b92bd4be917b862))
