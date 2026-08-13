@@ -49,7 +49,7 @@ pub struct Opts<Identifier: Clone + Send + Sync + ValueEnum + 'static> {
     #[clap(long, help = "Resume from the sqlite database")]
     resume: bool,
     #[clap(long, help = "Root directory of the project under test")]
-    root: Option<String>,
+    root: Option<PathBuf>,
     #[clap(
         long,
         help = "Maximum number of seconds to run any test; 60 is the default, 0 means no timeout"
@@ -62,7 +62,7 @@ pub struct Opts<Identifier: Clone + Send + Sync + ValueEnum + 'static> {
         help = "Test files or directories to mutilate; if `--root <ROOT>` is passed, relative \
                 paths are interpreted relative to <ROOT>"
     )]
-    zsource_files: Vec<String>,
+    zsource_files: Vec<PathBuf>,
     #[clap(
         last = true,
         name = "ARGS",
@@ -96,8 +96,7 @@ impl<Identifier: Clone + Send + Sync + ValueEnum> From<Opts<Identifier>>
             zzargs,
         } = opts;
         let framework = framework.unwrap_or_default();
-        let root = root.map(PathBuf::from);
-        let source_files = zsource_files.iter().map(PathBuf::from).collect::<Vec<_>>();
+        let source_files = zsource_files;
         let args = zzargs;
         (
             Necessist {
