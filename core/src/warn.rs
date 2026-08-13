@@ -96,7 +96,7 @@ fn warn_internal(
     msg: &str,
     flags: Flags,
 ) -> Result<()> {
-    assert_ne!(warning, Warning::All);
+    assert_ne!(Warning::All, warning);
 
     #[allow(clippy::unwrap_used)]
     let mut warning_state_map = WARNING_STATE_MAP.lock().unwrap();
