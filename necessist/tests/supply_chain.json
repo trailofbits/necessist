@@ -548,6 +548,84 @@
         "name": "utils"
       }
     ],
+    "crossbeam-deque": [
+      {
+        "id": 2347,
+        "kind": "user",
+        "login": "jeehoonkang",
+        "name": "Jeehoon Kang"
+      },
+      {
+        "id": 2356,
+        "kind": "team",
+        "login": "github:crossbeam-rs:admins",
+        "name": "admins"
+      },
+      {
+        "id": 2915,
+        "kind": "user",
+        "login": "Amanieu",
+        "name": "Amanieu d'Antras"
+      },
+      {
+        "id": 33035,
+        "kind": "user",
+        "login": "taiki-e",
+        "name": "Taiki Endo"
+      }
+    ],
+    "crossbeam-epoch": [
+      {
+        "id": 2347,
+        "kind": "user",
+        "login": "jeehoonkang",
+        "name": "Jeehoon Kang"
+      },
+      {
+        "id": 2356,
+        "kind": "team",
+        "login": "github:crossbeam-rs:admins",
+        "name": "admins"
+      },
+      {
+        "id": 2915,
+        "kind": "user",
+        "login": "Amanieu",
+        "name": "Amanieu d'Antras"
+      },
+      {
+        "id": 33035,
+        "kind": "user",
+        "login": "taiki-e",
+        "name": "Taiki Endo"
+      }
+    ],
+    "crossbeam-utils": [
+      {
+        "id": 2347,
+        "kind": "user",
+        "login": "jeehoonkang",
+        "name": "Jeehoon Kang"
+      },
+      {
+        "id": 2356,
+        "kind": "team",
+        "login": "github:crossbeam-rs:admins",
+        "name": "admins"
+      },
+      {
+        "id": 2915,
+        "kind": "user",
+        "login": "Amanieu",
+        "name": "Amanieu d'Antras"
+      },
+      {
+        "id": 33035,
+        "kind": "user",
+        "login": "taiki-e",
+        "name": "Taiki Endo"
+      }
+    ],
     "crunchy": [
       {
         "id": 11478,
@@ -1246,6 +1324,14 @@
         "name": null
       }
     ],
+    "globset": [
+      {
+        "id": 189,
+        "kind": "user",
+        "login": "BurntSushi",
+        "name": "Andrew Gallant"
+      }
+    ],
     "hashbrown": [
       {
         "id": 2915,
@@ -1480,6 +1566,14 @@
         "kind": "user",
         "login": "valenting",
         "name": "Valentin Gosu"
+      }
+    ],
+    "ignore": [
+      {
+        "id": 189,
+        "kind": "user",
+        "login": "BurntSushi",
+        "name": "Andrew Gallant"
       }
     ],
     "indexmap": [

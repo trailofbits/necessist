@@ -86,7 +86,9 @@ pub trait AbstractTypes {
     type MacroCall<'ast>: Copy + Named + Spanned + 'ast;
 }
 
-pub type WalkDirResult = walkdir::Result<walkdir::DirEntry>;
+// The `ignore` crate is used rather than `walkdir` so that hidden files, and files matched by
+// `.gitignore`/`.ignore`, are not walked.
+pub type WalkDirResult = std::result::Result<ignore::DirEntry, ignore::Error>;
 
 pub trait ParseLow {
     type Types: AbstractTypes;

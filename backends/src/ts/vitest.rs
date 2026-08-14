@@ -31,7 +31,7 @@ impl Vitest {
 
         Self(Inner::new(
             subdir,
-            Some(&path_predicate),
+            Some(path_predicate),
             Box::new(it_message_extractor),
         ))
     }

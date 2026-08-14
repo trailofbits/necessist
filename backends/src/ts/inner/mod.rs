@@ -58,7 +58,7 @@ enum ItMessageState {
 #[allow(clippy::type_complexity)]
 pub struct Inner {
     subdir: PathBuf,
-    path_predicate: &'static dyn Fn(&Path) -> bool,
+    path_predicate: fn(&Path) -> bool,
     it_message_extractor: Box<dyn Fn(&[u8]) -> Result<Vec<String>>>,
     source_map: Rc<SourceMap>,
     source_file_it_message_state_map: RefCell<BTreeMap<PathBuf, BTreeMap<String, ItMessageState>>>,
@@ -73,7 +73,7 @@ impl Inner {
     #[allow(clippy::type_complexity)]
     pub fn new(
         subdir: impl AsRef<Path>,
-        path_predicate: Option<&'static dyn Fn(&Path) -> bool>,
+        path_predicate: Option<fn(&Path) -> bool>,
         it_message_extractor: Box<dyn Fn(&[u8]) -> Result<Vec<String>>>,
     ) -> Self {
         fn default_path_predicate(_: &Path) -> bool {
@@ -82,7 +82,7 @@ impl Inner {
 
         Self {
             subdir: subdir.as_ref().to_path_buf(),
-            path_predicate: path_predicate.unwrap_or(&default_path_predicate),
+            path_predicate: path_predicate.unwrap_or(default_path_predicate),
             it_message_extractor,
             source_map: Rc::default(),
             source_file_it_message_state_map: RefCell::new(BTreeMap::new()),
@@ -274,8 +274,7 @@ impl ParseLow for Inner {
     fn walk_dir(&self, root: &Path) -> Box<dyn Iterator<Item = WalkDirResult>> {
         let path_predicate = self.path_predicate;
         Box::new(
-            walkdir::WalkDir::new(root.join(&self.subdir))
-                .into_iter()
+            ignore::WalkBuilder::new(root.join(&self.subdir))
                 .filter_entry(move |entry| {
                     let path = entry.path();
                     if !path.is_file() {
@@ -284,7 +283,8 @@ impl ParseLow for Inner {
                     (path.extension_wc().ok() == Some(OsStr::new("js"))
                         || path.extension_wc().ok() == Some(OsStr::new("ts")))
                         && (path_predicate)(path)
-                }),
+                })
+                .build(),
         )
     }
 
