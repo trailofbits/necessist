@@ -1,0 +1,44 @@
+url = "https://github.com/psf/black"
+rev = "26.5.1"
+init = "python -m pip install -e . pytest"
+config_mandatory = true
+
+[config]
+ignored_methods = [
+    "decode",
+    "*.stderr_bytes.decode",
+    "hash_digest",
+    "*.hash_digest",
+    "mkdir",
+    "*.mkdir",
+    "resolve",
+    "*.resolve",
+    "touch",
+    "*.touch",
+]
+ignored_tests = [
+    "TestASTSafety::test_target_version_at_runtime_no_warning",
+    "TestASTSafety::test_target_version_exceeds_runtime_clear_error_message",
+    "TestASTSafety::test_target_version_exceeds_runtime_no_warning_with_fast",
+    "TestASTSafety::test_target_version_exceeds_runtime_warning",
+    "TestCaching::test_cache_broken_file",
+    "TestCaching::test_cache_file_length",
+    "TestCaching::test_cache_file_path_ignores_python_cell_magic_separators",
+    "TestCaching::test_cache_key",
+    "TestCaching::test_cache_multiple_files",
+    "TestCaching::test_cache_single_file_already_cached",
+    "TestCaching::test_failed_formatting_does_not_get_cached",
+    "TestCaching::test_filter_cached",
+    "TestCaching::test_filter_cached_hash",
+    "TestCaching::test_get_cache_dir",
+    "TestCaching::test_no_cache_flag_prevents_writes",
+    "TestCaching::test_no_cache_when_stdin",
+    "TestCaching::test_no_cache_when_writeback_diff",
+    "TestCaching::test_no_cache_with_multiple_files",
+    "TestCaching::test_output_locking_when_writeback_diff",
+    "TestCaching::test_read_cache_line_lengths",
+    "TestCaching::test_read_cache_no_cachefile",
+    "TestCaching::test_write_cache_creates_directory_if_needed",
+    "TestCaching::test_write_cache_read_cache",
+    "TestCaching::test_write_cache_write_fail",
+]

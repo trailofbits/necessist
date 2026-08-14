@@ -455,7 +455,7 @@ fn init_workdir(workdir: &Path, key: &Key) -> String {
     }
 
     if let Some(init) = &key.init {
-        let output = Command::new("bash")
+        let output = Command::new("sh")
             .args(["-c", init])
             .current_dir(workdir)
             .output_wc()

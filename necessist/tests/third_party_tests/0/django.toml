@@ -1,0 +1,3 @@
+url = "https://github.com/django/django"
+rev = "6.1"
+parsing_only = true
