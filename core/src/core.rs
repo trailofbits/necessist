@@ -436,9 +436,22 @@ macro_rules! incompatible {
 }
 
 fn process_options(opts: &Necessist) -> Result<()> {
-    // smoelius: This list of incompatibilities is not exhaustive.
+    // smoelius: These lists of incompatibilities are not exhaustive.
+    incompatible!(
+        opts,
+        default_config,
+        dump,
+        dump_candidates,
+        dump_candidate_counts,
+        reset,
+        resume
+    );
+    // smoelius: `--dump`, etc. cannot be passed with `--no-sqlite`, because they operate on the
+    // SQLite database.
     incompatible!(opts, dump, no_sqlite, reset, resume);
-    incompatible!(opts, dump, quiet);
+    // smoelius: `--dump`, etc. cannot be passed with `--quiet`, because they output to the console.
+    incompatible!(opts, dump, dump_candidates, dump_candidate_counts, quiet);
+    // smoelius: `--quiet` and `--verbose` are contradictory.
     incompatible!(opts, quiet, verbose);
 
     Ok(())
