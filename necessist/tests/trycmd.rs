@@ -133,6 +133,15 @@ fn check_toml_files() {
         let stderr = document.as_table().and_then(|table| table.get("stderr"));
         assert!(status.is_some() || stderr.is_some());
 
+        if let Some(status) = status {
+            let code = status
+                .as_table()
+                .and_then(|table| table.get("code"))
+                .and_then(toml::Value::as_integer)
+                .unwrap();
+            assert_eq!(2, code);
+        }
+
         for stream in ["stdout", "stderr"] {
             let inline_empty = document
                 .as_table()

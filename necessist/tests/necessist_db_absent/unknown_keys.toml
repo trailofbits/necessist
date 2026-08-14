@@ -1,8 +1,9 @@
 args = ["--no-sqlite", "--root=fixtures/unknown_keys"]
 
-status = "failed"
-
 stdout = ""
 
 [fs]
 cwd = "../../.."
+
+[status]
+code = 2
