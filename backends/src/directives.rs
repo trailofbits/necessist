@@ -1,8 +1,8 @@
 //! Source directive support
 //!
-//! A directive is a line comment of the form `// necessist: ...`. Directives are gathered by
-//! [`Directives::collect`] before a source file is parsed, since an honored `skip-file` directive
-//! causes the file not to be parsed at all.
+//! A directive is a line comment of the form `// necessist: ...` or `# necessist: ...`. Directives
+//! are gathered by [`Directives::collect`] before a source file is parsed, since an honored
+//! `skip-file` directive causes the file not to be parsed at all.
 
 use anyhow::Result;
 use necessist_core::{LightContext, LineColumn, SourceFile, Span, WarnFlags, Warning, source_warn};
@@ -108,7 +108,8 @@ fn is_skip_directive(line: &str) -> bool {
 }
 
 fn directive_text(line: &str) -> Option<&str> {
-    let rest = line.trim_start().strip_prefix("//")?;
+    let line = line.trim_start();
+    let rest = line.strip_prefix("//").or_else(|| line.strip_prefix('#'))?;
     let rest = rest.trim_start().strip_prefix("necessist:")?;
     Some(rest.trim_start())
 }
@@ -127,7 +128,7 @@ fn is_file_header_line(line: &str) -> bool {
 
 fn is_line_comment_or_whitespace(line: &str) -> bool {
     let rest = line.trim_start();
-    rest.is_empty() || rest.starts_with("//")
+    rest.is_empty() || rest.starts_with("//") || rest.starts_with('#')
 }
 
 #[cfg(test)]
@@ -153,12 +154,13 @@ mod test {
 
     #[test]
     fn skip_file_directive_syntax() {
-        // Keep these cases in sync with `fixtures/directives`, `fixtures/php_skip_file`, and
-        // `fixtures/skip_invalid_file`.
+        // Keep these cases in sync with `fixtures/directives`, `fixtures/php_skip_file`,
+        // `fixtures/skip_invalid_file`, and `fixtures/python_skip_file`.
         const CASES: &[&str] = &[
             "    // necessist: skip-file, too late 😞",
             "// necessist: skip-file",
             "// necessist: skip-file, deliberately invalid Rust follows",
+            "# necessist: skip-file",
         ];
         for &line in CASES {
             assert!(!is_skip_directive(line), "{line:?}");
@@ -189,6 +191,9 @@ mod test {
             "// comment",
             "/// doc comment",
             "//! inner doc comment",
+            "# Python comment",
+            "#! /usr/bin/env python",
+            "#!/usr/bin/env python3",
             "<?php",
         ];
         for &line in CASES {
@@ -198,9 +203,8 @@ mod test {
 
     #[test]
     fn file_header_lines_rejected() {
+        #[rustfmt::skip]
         const CASES: &[&str] = &[
-            "# comment",
-            "#! /usr/bin/env bash",
             "/* comment */",
             "<?php declare(strict_types=1);",
             "other",
