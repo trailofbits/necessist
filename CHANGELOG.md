@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.0.0
+
+- Accept command line paths that are not valid Unicode ([04a87fa](https://github.com/trailofbits/necessist/commit/04a87fa3c05d1383b4d6a0f12f72f8d20b968672))
+- BREAKING: Exit with 2 rather than 1 on error ([3edd6c6](https://github.com/trailofbits/necessist/commit/3edd6c60a2194d01be0a7ac4c992f2be2488e318))
+- Reject more incompatible option pairs. Previously, Necessist would accept `--default-config` and `--reset`, for example, even though only the first would be honored. ([2b716b9](https://github.com/trailofbits/necessist/commit/2b716b901571db6bef9203c3b2aa70f9ac2b77d9))
+- BREAKING: Add `--check-skill <PATH>` and `--find-skill` options. Breaking because the addition changes `necessist_core::necessist`'s return type. ([7e79f84](https://github.com/trailofbits/necessist/commit/7e79f84395ffc31129e47732d1ee9d572f5f1bc9))
+- BREAKING: Use `ignore::WalkBuilder` so that hidden and ignored files are not walked. I expect this to be the desired behavior in most situations. If you have a need to walk hidden or ignored files, please open a [GitHub issue](https://github.com/trailofbits/necessist/issues). ([bc0e832](https://github.com/trailofbits/necessist/commit/bc0e8320335bae95d62250da0a0f0cff12ed785b))
+
 ## 3.3.1
 
 - Add `dbg!` to list of ignored Rust macros ([6f5c22e](https://github.com/trailofbits/necessist/commit/6f5c22e6fa98b458ae3f98e5f41bcd1902fa3e71))
