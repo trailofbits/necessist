@@ -1,0 +1,8 @@
+5 candidates in 2 tests in 1 source file
+fixtures/python_basic_framework/tests/test_basic.py: dry running
+fixtures/python_basic_framework/tests/test_basic.py: mutilating
+fixtures/python_basic_framework/tests/test_basic.py:2:5-2:15: `value += 1` passed
+fixtures/python_basic_framework/tests/test_basic.py:8:5-8:15: `value += 1` passed
+fixtures/python_basic_framework/tests/test_basic.py:10:5-10:23: `str(value).strip()` passed
+fixtures/python_basic_framework/tests/test_basic.py:17:9-17:19: `value += 1` failed
+fixtures/python_basic_framework/tests/test_basic.py:10:15-10:23: `.strip()` passed

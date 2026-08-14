@@ -29,6 +29,9 @@ use hardhat::Hardhat;
 mod php;
 use php::Php;
 
+mod python;
+use python::Python;
+
 mod rust;
 use rust::Rust;
 
@@ -64,6 +67,7 @@ pub enum Identifier {
     Go,
     Hardhat,
     Php,
+    Python,
     Rust,
     Vitest,
 }
@@ -76,6 +80,7 @@ impl Applicable for Identifier {
             Self::Go => Go::applicable(context),
             Self::Hardhat => Hardhat::applicable(context),
             Self::Php => Php::applicable(context),
+            Self::Python => Python::applicable(context),
             Self::Rust => Rust::applicable(context),
             Self::Vitest => Vitest::applicable(context),
         }
@@ -105,6 +110,13 @@ impl ToImplementation for Identifier {
             Self::Php => Ok(Some(implementation_as_interface(ParseRunAdapter::new)(
                 Php::new(),
             ))),
+
+            Self::Python => {
+                let python = Python::new()?;
+                Ok(Some(implementation_as_interface(ParseRunAdapter::new)(
+                    python,
+                )))
+            }
 
             Self::Rust => Ok(Some(implementation_as_interface(ParseRunAdapter::new)(
                 Rust::new(),
