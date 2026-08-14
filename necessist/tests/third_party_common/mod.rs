@@ -455,7 +455,9 @@ fn init_workdir(workdir: &Path, key: &Key) -> String {
     }
 
     if let Some(init) = &key.init {
-        let output = Command::new("bash")
+        // On Windows, `bash` can resolve to the WSL launcher and fail when no distribution is
+        // installed, whereas `sh` resolves to the Git for Windows shell used by CI.
+        let output = Command::new("sh")
             .args(["-c", init])
             .current_dir(workdir)
             .output_wc()
