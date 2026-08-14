@@ -1,8 +1,9 @@
 args = ["--root=fixtures/basic", "--dump"]
 
-status = "failed"
-
 stdout = ""
 
 [fs]
 cwd = "../../.."
+
+[status]
+code = 2

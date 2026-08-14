@@ -1,9 +1,10 @@
 args = ["--root=fixtures/basic"]
 
-status = "failed"
-
 [bin]
 name = "necessist"
 
 [fs]
 cwd = "../../.."
+
+[status]
+code = 2
