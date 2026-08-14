@@ -270,15 +270,15 @@ impl ParseLow for Php {
 
     fn walk_dir(&self, root: &Path) -> Box<dyn Iterator<Item = WalkDirResult>> {
         Box::new(
-            walkdir::WalkDir::new(root)
-                .into_iter()
+            ignore::WalkBuilder::new(root)
                 .filter_entry(|entry| {
                     // Skip vendor/ directories
                     if entry.path().is_dir() {
                         return entry.file_name() != "vendor";
                     }
                     entry.path().to_string_lossy().ends_with("Test.php")
-                }),
+                })
+                .build(),
         )
     }
 

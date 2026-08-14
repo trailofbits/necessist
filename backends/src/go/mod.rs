@@ -238,12 +238,12 @@ impl ParseLow for Go {
 
     fn walk_dir(&self, root: &Path) -> Box<dyn Iterator<Item = WalkDirResult>> {
         Box::new(
-            walkdir::WalkDir::new(root)
-                .into_iter()
+            ignore::WalkBuilder::new(root)
                 .filter_entry(|entry| {
                     let path = entry.path();
                     !path.is_file() || path.to_string_lossy().ends_with("_test.go")
-                }),
+                })
+                .build(),
         )
     }
 

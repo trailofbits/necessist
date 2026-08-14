@@ -1,0 +1,9 @@
+# Verifies that hidden files, and files matched by `.ignore`, are not walked.
+# `fixtures/basic/.hidden/hidden.rs` and `fixtures/basic/ignored/ignored.rs` are deliberately
+# invalid, so walking either would produce a "failed to parse" warning below.
+args = ["--no-sqlite", "--root=fixtures/basic", "--dump-candidates"]
+
+stderr = ""
+
+[fs]
+cwd = "../../.."

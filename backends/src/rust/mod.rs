@@ -410,13 +410,13 @@ impl ParseLow for Rust {
 
     fn walk_dir(&self, root: &Path) -> Box<dyn Iterator<Item = WalkDirResult>> {
         Box::new(
-            walkdir::WalkDir::new(root)
-                .into_iter()
+            ignore::WalkBuilder::new(root)
                 .filter_entry(|entry| {
                     let path = entry.path();
                     entry.file_name() != "target"
                         && (!path.is_file() || path.extension_wc().ok() == Some(OsStr::new("rs")))
-                }),
+                })
+                .build(),
         )
     }
 

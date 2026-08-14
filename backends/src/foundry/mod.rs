@@ -172,12 +172,12 @@ impl ParseLow for Foundry {
 
     fn walk_dir(&self, root: &Path) -> Box<dyn Iterator<Item = WalkDirResult>> {
         Box::new(
-            walkdir::WalkDir::new(root.join("test"))
-                .into_iter()
+            ignore::WalkBuilder::new(root.join("test"))
                 .filter_entry(|entry| {
                     let path = entry.path();
                     !path.is_file() || path.to_string_lossy().ends_with(".t.sol")
-                }),
+                })
+                .build(),
         )
     }
 
