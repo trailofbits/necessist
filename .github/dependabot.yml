@@ -30,5 +30,3 @@ updates:
       interval: weekly
       day: monday
       time: "03:00"
-    allow:
-      - dependency-type: direct
