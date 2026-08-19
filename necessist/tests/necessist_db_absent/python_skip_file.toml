@@ -1,0 +1,12 @@
+args = [
+    "--no-sqlite",
+    "--root=fixtures/python_skip_file",
+    "--framework=python",
+    "--dump-candidates",
+]
+
+stdout = ""
+stderr = ""
+
+[fs]
+cwd = "../../.."

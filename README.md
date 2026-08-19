@@ -186,7 +186,7 @@ Options:
       --dump-candidate-counts  Dump number of removal candidates in each file and exit
       --dump-candidates        Dump removal candidates and exit (for debugging)
       --find-skill             Check whether the `necessist-audit` skill is installed in a well-known directory, and whether it is the current version or later, exiting with code 1 if it is not; add --write to update an outdated skill
-      --framework <FRAMEWORK>  Assume testing framework is <FRAMEWORK> [possible values: anchor, auto, foundry, go, hardhat, php, rust, vitest]
+      --framework <FRAMEWORK>  Assume testing framework is <FRAMEWORK> [possible values: anchor, auto, foundry, go, hardhat, php, python, rust, vitest]
       --no-lines-or-columns    Do not output line or column information (experimental)
       --no-sqlite              Do not output to an sqlite database
       --quiet                  Do not output to the console
@@ -367,6 +367,23 @@ The ignored functions and methods are the same as for Anchor above.
 - `fail`
 - `markTestIncomplete`
 - `markTestSkipped`
+
+</details>
+
+<details>
+<summary>Python</summary>
+
+The Python backend runs tests with [pytest](https://docs.pytest.org/) and discovers files named
+`test_*.py` or `*_test.py`.
+
+#### Ignored functions
+
+- `print`
+
+#### Ignored methods
+
+- Anything beginning with `assert` (e.g., `assertEqual`)
+- `fail`
 
 </details>
 
@@ -593,21 +610,23 @@ By default, Necessist ignores such a path if it matches either an `ignored_funct
 
 ## Source directives (experimental)
 
-Place the following comment in a source file to prevent Necessist from removing any candidate that begins on the immediately next line:
+Place one of the following comments in a source file to prevent Necessist from removing any candidate that begins on the immediately next line:
 
 ```text
 // necessist: skip
+# necessist: skip
 ```
 
-The comment must occupy its own line. Whitespace before or after `//` and after the colon is optional. Trailing text is allowed following a word boundary, as in `// necessist: skip, reason for skipping`.
+The comment must occupy its own line. Use `//` for Go, JavaScript/TypeScript, PHP, and Rust, or `#` for Python. Whitespace before or after the comment marker and after the colon is optional. Trailing text is allowed following a word boundary, as in `// necessist: skip, reason for skipping`.
 
 To prevent all removals in a file, use:
 
 ```text
 // necessist: skip-file
+# necessist: skip-file
 ```
 
-This directive is honored only when every preceding line is whitespace-only, begins with optional whitespace followed by `//`, or is `<?php` surrounded by optional whitespace. The last case is needed to make the directive usable in a PHP test file.
+This directive is honored only when every preceding line is whitespace-only, begins with optional whitespace followed by `//` or `#`, or is `<?php` surrounded by optional whitespace. The last case is needed to make the directive usable in a PHP test file.
 
 A file containing an honored `skip-file` directive is not parsed, and thus can contain invalid syntax. This behavior may change in the future.
 
