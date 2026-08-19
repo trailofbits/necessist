@@ -228,16 +228,16 @@
     ],
     "bitflags": [
       {
-        "id": 51,
-        "kind": "team",
-        "login": "github:rust-lang-nursery:libs",
-        "name": "libs"
-      },
-      {
         "id": 3204,
         "kind": "user",
         "login": "KodrAus",
         "name": "Ashley Mannix"
+      },
+      {
+        "id": 55123,
+        "kind": "user",
+        "login": "rust-lang-owner",
+        "name": null
       }
     ],
     "block-buffer": [
