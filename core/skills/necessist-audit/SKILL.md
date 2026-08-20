@@ -16,6 +16,16 @@ Use passing removals as leads for finding bugs in the code or tests being audite
 
 Do not modify project source unless the user explicitly requests changes. Running Necessist and allowing it to create `necessist.db` is permitted.
 
+## Preflight
+
+Run `necessist --check-skill <path>`, where `<path>` is the file containing these instructions. If the path is unknown, try `~/.claude/skills/necessist-audit/SKILL.md` and `~/.codex/skills/necessist-audit/SKILL.md`.
+
+Never pass `--write`. Replacing this skill is the user's decision, not yours.
+
+If the user asks only to check whether the skill is up to date, relay the `necessist --check-skill` output verbatim and stop without locating or auditing Necessist results.
+
+During an audit, relay the output verbatim only when it reports that the skill is an old version or a newer version. Stay silent when the skill is current, when the path does not exist, or when the command fails. Proceed with the audit in every case.
+
 ## Scope
 
 Analyze only removals whose outcome is `passed`.
