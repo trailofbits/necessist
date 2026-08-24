@@ -36,6 +36,7 @@ supply_chain = "0.1"
 toml = "1.1"
 trycmd = "1.2"
 walkdir = "2.5"
+yaml_serde = "0.10"
 
 testing = { path = "../testing" }
 
