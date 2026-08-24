@@ -26,7 +26,7 @@ use swc_core::{
     },
     ecma::{
         ast::{
-            ArrowExpr, AwaitExpr, BlockStmtOrExpr, CallExpr, Callee, EsVersion, Expr, ExprStmt,
+            ArrowExpr, ArrowFunctionBody, AwaitExpr, CallExpr, Callee, EsVersion, Expr, ExprStmt,
             FnDecl, FnExpr, Invalid, Lit, MemberExpr, MemberProp, Module, Stmt, Str,
         },
         atoms::Atom,
@@ -507,11 +507,11 @@ fn is_it_call_expr(expr: &Expr) -> Option<Test<'_>> {
         && let Some(atom) = value.as_atom()
     {
         if let Expr::Arrow(ArrowExpr { body, .. }) = &*arg1.expr
-            && let BlockStmtOrExpr::BlockStmt(block) = &**body
+            && let ArrowFunctionBody::FunctionBody(function_body) = &**body
         {
             Some(Test {
                 it_message: atom,
-                stmts: &block.stmts,
+                stmts: &function_body.stmts,
             })
         } else if let Expr::Fn(FnExpr { function, .. }) = &*arg1.expr
             && let Some(block) = &function.body
