@@ -109,16 +109,20 @@ fn github() {
         "/../.github/workflows/ci.yml"
     ));
     let contents = read_to_string_wc(ci_yml).unwrap();
-    let test_array = contents
-        .lines()
-        .find_map(|line| line.trim_start().strip_prefix("test: "))
+    let document = yaml_serde::from_str::<yaml_serde::Value>(&contents).unwrap();
+    let test_sequence = document
+        .get("jobs")
+        .and_then(|value| value.get("test"))
+        .and_then(|value| value.get("strategy"))
+        .and_then(|value| value.get("matrix"))
+        .and_then(|value| value.get("test"))
+        .and_then(yaml_serde::Value::as_sequence)
         .unwrap();
-    let ci_tests = test_array
-        .strip_prefix('[')
-        .and_then(|s| s.strip_suffix(']'))
-        .unwrap()
-        .split(", ")
-        .collect::<Vec<_>>();
+    let ci_tests = test_sequence
+        .iter()
+        .map(|value| value.as_str())
+        .collect::<Option<Vec<_>>>()
+        .unwrap();
 
     assert_eq!(metadata_tests, ci_tests);
 }

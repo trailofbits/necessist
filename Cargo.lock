@@ -1400,6 +1400,7 @@ dependencies = [
  "toml",
  "trycmd",
  "walkdir",
+ "yaml_serde",
 ]
 
 [[package]]
