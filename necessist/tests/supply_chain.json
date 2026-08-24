@@ -656,12 +656,6 @@
         "kind": "user",
         "login": "sagebind",
         "name": "Stephen M. Coakley"
-      },
-      {
-        "id": 6202,
-        "kind": "user",
-        "login": "ehuss",
-        "name": "Eric Huss"
       }
     ],
     "curl-sys": [
@@ -676,12 +670,6 @@
         "kind": "user",
         "login": "sagebind",
         "name": "Stephen M. Coakley"
-      },
-      {
-        "id": 6202,
-        "kind": "user",
-        "login": "ehuss",
-        "name": "Eric Huss"
       }
     ],
     "darling": [
@@ -1294,12 +1282,6 @@
         "name": "Josh Triplett"
       },
       {
-        "id": 6202,
-        "kind": "user",
-        "login": "ehuss",
-        "name": "Eric Huss"
-      },
-      {
         "id": 55123,
         "kind": "user",
         "login": "rust-lang-owner",
@@ -1742,12 +1724,6 @@
         "kind": "user",
         "login": "joshtriplett",
         "name": "Josh Triplett"
-      },
-      {
-        "id": 6202,
-        "kind": "user",
-        "login": "ehuss",
-        "name": "Eric Huss"
       },
       {
         "id": 55123,
@@ -2366,10 +2342,10 @@
     ],
     "rand": [
       {
-        "id": 51,
+        "id": 563,
         "kind": "team",
-        "login": "github:rust-lang-nursery:libs",
-        "name": "libs"
+        "login": "github:rust-random:maintainers",
+        "name": "maintainers"
       },
       {
         "id": 1234,
@@ -3263,12 +3239,6 @@
       }
     ],
     "toml": [
-      {
-        "id": 6202,
-        "kind": "user",
-        "login": "ehuss",
-        "name": "Eric Huss"
-      },
       {
         "id": 6743,
         "kind": "user",
