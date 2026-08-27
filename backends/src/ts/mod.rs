@@ -196,9 +196,11 @@ impl ParseLow for Box<dyn MochaLike> {
     }
     fn macro_call_callee<'ast>(
         &self,
-        storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
+        _storage: &RefCell<<Self::Types as AbstractTypes>::Storage<'ast>>,
         macro_call: <Self::Types as AbstractTypes>::MacroCall<'ast>,
     ) -> <Self::Types as AbstractTypes>::Expression<'ast> {
-        self.as_inner().macro_call_callee(storage, macro_call)
+        // TypeScript has no macro calls, so `MacroCall` is `Infallible` and cannot be forwarded to
+        // `Inner`.
+        match macro_call {}
     }
 }
