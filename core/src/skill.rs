@@ -14,6 +14,7 @@ use std::{
 };
 
 const SKILL: &str = include_str!("../skills/necessist-audit/SKILL.md");
+const SKILL_SUBPATH: &str = "necessist-audit/SKILL.md";
 
 #[allow(clippy::unwrap_used)]
 static SKILL_VERSION: LazyLock<Version> = LazyLock::new(|| {
@@ -99,9 +100,20 @@ pub fn find(write: bool) -> Result<Status> {
 
 fn find_impl(home: impl AsRef<Path>, write: bool) -> Result<Status> {
     let home = home.as_ref();
+    let mut skill_dirs = Vec::new();
+    for skill_dir in well_known_skill_dirs(home) {
+        if skill_dir.try_exists_wc()? {
+            skill_dirs.push(skill_dir);
+        }
+    }
+    // If no well-known skills directories exist, check them all so that the absence of any
+    // installed skill is reported as a failure rather than as a success.
+    if skill_dirs.is_empty() {
+        skill_dirs.extend(well_known_skill_dirs(home));
+    }
     let mut status = Status::Current;
-    for well_known_path in well_known_paths(home) {
-        let well_known_path_status = check_impl(Mode::Find, well_known_path, write)?;
+    for skill_dir in skill_dirs {
+        let well_known_path_status = check_impl(Mode::Find, skill_dir.join(SKILL_SUBPATH), write)?;
         // Retain the first status whose exit code is not `ExitCode::SUCCESS`.
         if status.exit_code() == ExitCode::SUCCESS {
             status = well_known_path_status;
@@ -112,11 +124,15 @@ fn find_impl(home: impl AsRef<Path>, write: bool) -> Result<Status> {
 
 /// The paths that `--find-skill` checks.
 fn well_known_paths(home: impl AsRef<Path>) -> impl Iterator<Item = PathBuf> {
+    well_known_skill_dirs(home).map(|skill_dir| skill_dir.join(SKILL_SUBPATH))
+}
+
+/// The well-known directories in which Necessist looks for skills.
+fn well_known_skill_dirs(home: impl AsRef<Path>) -> impl Iterator<Item = PathBuf> {
     const WELL_KNOWN_SUBDIRS: &[&str] = &[".claude/skills", ".codex/skills"];
-    const SKILL_SUBPATH: &str = "necessist-audit/SKILL.md";
     WELL_KNOWN_SUBDIRS
         .iter()
-        .map(move |subdir| home.as_ref().join(subdir).join(SKILL_SUBPATH))
+        .map(move |subdir| home.as_ref().join(subdir))
 }
 
 fn check_impl(mode: Mode, path: impl AsRef<Path>, write: bool) -> Result<Status> {
@@ -466,6 +482,7 @@ name: necessist-audit
             skill_with_name_and_version("necessist-audit", "0.0.0"),
         )
         .unwrap();
+        create_dir_all_wc(home.path().join(".codex/skills")).unwrap();
 
         assert_eq!(Status::Nonexistent, find_impl(&home, true).unwrap());
 
