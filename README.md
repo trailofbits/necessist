@@ -218,9 +218,9 @@ Necessist provides a [`necessist-audit` skill] for using an LLM to investigate w
 
 The `necessist` binary contains the skill. Passing `--check-skill <PATH>` compares the skill at `<PATH>` to the contained one and reports which is newer; adding `--write` installs a missing skill or updates an outdated one.
 
-To check the standard Claude Code and Codex skill directories, use `--find-skill`; adding `--write` updates any outdated skills it finds. Unlike `--check-skill`, `--find-skill` reports but does not install missing skills. None of these operations requires network access.
+To check the standard Claude Code and Codex skill directories, use `--find-skill`; adding `--write` updates any outdated skills it finds. Unlike `--check-skill`, `--find-skill` reports but does not install missing skills. If at least one well-known skills directory exists, nonexistent skills directories are ignored. None of these operations requires network access.
 
-Both options exit with code 1 if a skill is missing or outdated and `--write` was not passed. An exit code of 2 indicates an error, e.g., an unparsable skill or an invalid command line. These exit codes follow the convention used by `grep` and `diff`.
+Both options exit with code 1 if a skill they check is missing or outdated and `--write` was not passed. An exit code of 2 indicates an error, e.g., an unparsable skill or an invalid command line. These exit codes follow the convention used by `grep` and `diff`.
 
 Instructions for installing and using the skill with Claude Code and Codex follow.
 

@@ -218,6 +218,50 @@ skill at `{}` does not exist
 }
 
 #[test]
+fn find_skill_ignores_nonexistent_skill_directory() {
+    let home = tempdir().unwrap();
+    let claude_skill_path = skill_path(&home, ".claude/skills");
+    create_dir_all_wc(claude_skill_path.parent_wc().unwrap()).unwrap();
+    write_wc(
+        &claude_skill_path,
+        skill_with_version(env!("CARGO_PKG_VERSION")),
+    )
+    .unwrap();
+    necessist_with_home(&home)
+        .arg("--find-skill")
+        .assert()
+        .success()
+        .stdout(predicate::eq(format!(
+            "skill at `{}` is the current version\n",
+            claude_skill_path.display()
+        )))
+        .stderr(predicate::str::is_empty());
+}
+
+#[test]
+fn find_skill_reports_nonexistent_skill_in_existing_skill_directory() {
+    let home = tempdir().unwrap();
+    let claude_skill_path = skill_path(&home, ".claude/skills");
+    let codex_skill_path = skill_path(&home, ".codex/skills");
+    create_dir_all_wc(claude_skill_path.parent_wc().unwrap()).unwrap();
+    write_wc(
+        &claude_skill_path,
+        skill_with_version(env!("CARGO_PKG_VERSION")),
+    )
+    .unwrap();
+    create_dir_all_wc(home.path().join(".codex/skills")).unwrap();
+    necessist_with_home(&home)
+        .arg("--find-skill")
+        .assert()
+        .code(1)
+        .stdout(predicate::str::contains(format!(
+            "skill at `{}` does not exist\n",
+            codex_skill_path.display()
+        )))
+        .stderr(predicate::str::is_empty());
+}
+
+#[test]
 fn find_skill_with_write_updates_old_skills() {
     let home = tempdir().unwrap();
     let claude_skill_path = skill_path(&home, ".claude/skills");
