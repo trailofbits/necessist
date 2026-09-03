@@ -1,6 +1,6 @@
 use super::{
-    AbstractTypes, GenericVisitor, MaybeNamed, Named, ParseLow, ProcessLines, RunLow, Spanned,
-    WalkDirResult,
+    AbstractTypes, DirectiveSyntax, GenericVisitor, MaybeNamed, Named, ParseLow, ProcessLines,
+    RunLow, Spanned, WalkDirResult,
     tree_sitter_utils::{BoundedCursor, ToInternalSpan},
 };
 use anyhow::{Context, Result, anyhow, bail};
@@ -225,6 +225,8 @@ impl MaybeNamed for <Types as AbstractTypes>::Call<'_> {
 
 impl ParseLow for Go {
     type Types = Types;
+
+    const DIRECTIVE_SYNTAX: DirectiveSyntax = DirectiveSyntax::Slash;
 
     const IGNORED_FUNCTIONS: Option<&'static [&'static str]> =
         Some(&["assert.*", "panic", "require.*"]);

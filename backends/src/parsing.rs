@@ -20,7 +20,10 @@
 //!   `File`. Holds a reference to the `Storage`, which it passes to the [`GenericVisitor`], who
 //!   then forwards it on to the framework.
 
-use super::{GenericVisitor, ParseHigh, directives::Directives};
+use super::{
+    GenericVisitor, ParseHigh,
+    directives::{DirectiveSyntax, Directives},
+};
 use anyhow::Result;
 use heck::ToKebabCase;
 use indexmap::IndexMap;
@@ -93,6 +96,7 @@ pub type WalkDirResult = std::result::Result<ignore::DirEntry, ignore::Error>;
 pub trait ParseLow {
     type Types: AbstractTypes;
 
+    const DIRECTIVE_SYNTAX: DirectiveSyntax;
     const IGNORED_FUNCTIONS: Option<&'static [&'static str]>;
     const IGNORED_MACROS: Option<&'static [&'static str]>;
     const IGNORED_METHODS: Option<&'static [&'static str]>;
@@ -203,6 +207,7 @@ pub trait ParseLow {
 
 impl<T: ParseLow> ParseLow for Rc<RefCell<T>> {
     type Types = T::Types;
+    const DIRECTIVE_SYNTAX: DirectiveSyntax = T::DIRECTIVE_SYNTAX;
     const IGNORED_FUNCTIONS: Option<&'static [&'static str]> = T::IGNORED_FUNCTIONS;
     const IGNORED_MACROS: Option<&'static [&'static str]> = T::IGNORED_MACROS;
     const IGNORED_METHODS: Option<&'static [&'static str]> = T::IGNORED_METHODS;
@@ -387,9 +392,9 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
             let source_file =
                 SourceFile::new(context.root.clone(), source_file_path.to_path_buf())?;
 
-            let directives = Directives::collect(context, &source_file)?;
+            let directives = Directives::collect(context, T::DIRECTIVE_SYNTAX, &source_file)?;
 
-            if directives.skip_file {
+            if directives.skip_file() {
                 return Ok(());
             }
 

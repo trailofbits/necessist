@@ -1,6 +1,6 @@
 use super::{
-    AbstractTypes, GenericVisitor, MaybeNamed, Named, ParseLow, ProcessLines, RunLow, Spanned,
-    WalkDirResult,
+    AbstractTypes, DirectiveSyntax, GenericVisitor, MaybeNamed, Named, ParseLow, ProcessLines,
+    RunLow, Spanned, WalkDirResult,
     tree_sitter_utils::{BoundedCursor, ToInternalSpan},
     utils::{OutputAccessors, OutputStrippedOfAnsiScapes},
 };
@@ -254,6 +254,8 @@ impl MaybeNamed for Call<'_> {
 
 impl ParseLow for Php {
     type Types = Types;
+
+    const DIRECTIVE_SYNTAX: DirectiveSyntax = DirectiveSyntax::Php;
 
     const IGNORED_FUNCTIONS: Option<&'static [&'static str]> =
         Some(&["var_dump", "print_r", "var_export"]);
