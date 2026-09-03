@@ -617,7 +617,7 @@ Place one of the following comments in a source file to prevent Necessist from r
 # necessist: skip
 ```
 
-The comment must occupy its own line. Use `//` for Go, JavaScript/TypeScript, PHP, and Rust, or `#` for Python. Whitespace before or after the comment marker and after the colon is optional. Trailing text is allowed following a word boundary, as in `// necessist: skip, reason for skipping`.
+The comment must occupy its own line. Use `//` for Go, JavaScript/TypeScript, PHP, and Rust, or `#` for PHP and Python. Whitespace before or after the comment marker and after the colon is optional. Trailing text is allowed following a word boundary, as in `// necessist: skip, reason for skipping`.
 
 To prevent all removals in a file, use:
 
@@ -626,7 +626,7 @@ To prevent all removals in a file, use:
 # necessist: skip-file
 ```
 
-This directive is honored only when every preceding line is whitespace-only, begins with optional whitespace followed by `//` or `#`, or is `<?php` surrounded by optional whitespace. The last case is needed to make the directive usable in a PHP test file.
+This directive is honored only when every preceding line is whitespace-only or is a line comment using a prefix supported by the file's framework. In PHP files, a line consisting of just `<?php` surrounded by optional whitespace is also allowed.
 
 A file containing an honored `skip-file` directive is not parsed, and thus can contain invalid syntax. This behavior may change in the future.
 

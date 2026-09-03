@@ -1,6 +1,6 @@
 use super::{
-    AbstractTypes, GenericVisitor, MaybeNamed, Named, ParseLow, ProcessLines, RunLow, Spanned,
-    WalkDirResult,
+    AbstractTypes, DirectiveSyntax, GenericVisitor, MaybeNamed, Named, ParseLow, ProcessLines,
+    RunLow, Spanned, WalkDirResult,
 };
 use anyhow::{Context, Result, anyhow};
 use elaborate::std::{
@@ -265,6 +265,7 @@ impl MaybeNamed for Call<'_> {
 impl ParseLow for Python {
     type Types = Types;
 
+    const DIRECTIVE_SYNTAX: DirectiveSyntax = DirectiveSyntax::Python;
     const IGNORED_FUNCTIONS: Option<&'static [&'static str]> = Some(&["print"]);
     const IGNORED_MACROS: Option<&'static [&'static str]> = None;
     const IGNORED_METHODS: Option<&'static [&'static str]> = Some(&["assert*", "fail"]);
