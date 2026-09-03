@@ -352,6 +352,20 @@
         "name": null
       }
     ],
+    "cargo-util": [
+      {
+        "id": 4282,
+        "kind": "team",
+        "login": "github:rust-lang:release-publishers",
+        "name": "release-publishers"
+      },
+      {
+        "id": 55123,
+        "kind": "user",
+        "login": "rust-lang-owner",
+        "name": null
+      }
+    ],
     "cargo_metadata": [
       {
         "id": 1471,
@@ -520,6 +534,52 @@
         "kind": "team",
         "login": "github:rustcrypto:formats",
         "name": "formats"
+      }
+    ],
+    "core-foundation": [
+      {
+        "id": 5,
+        "kind": "team",
+        "login": "github:servo:cargo-publish",
+        "name": "cargo publish"
+      },
+      {
+        "id": 576,
+        "kind": "user",
+        "login": "larsbergstrom",
+        "name": "Lars Bergstrom"
+      },
+      {
+        "id": 1966,
+        "kind": "user",
+        "login": "metajack",
+        "name": "Jack Moffitt"
+      },
+      {
+        "id": 2017,
+        "kind": "user",
+        "login": "mbrubeck",
+        "name": "Matt Brubeck"
+      },
+      {
+        "id": 2258,
+        "kind": "user",
+        "login": "pcwalton",
+        "name": "Patrick Walton"
+      }
+    ],
+    "core-foundation-sys": [
+      {
+        "id": 5,
+        "kind": "team",
+        "login": "github:servo:cargo-publish",
+        "name": "cargo publish"
+      },
+      {
+        "id": 576,
+        "kind": "user",
+        "login": "larsbergstrom",
+        "name": "Lars Bergstrom"
       }
     ],
     "cpufeatures": [
@@ -1100,6 +1160,14 @@
         "kind": "user",
         "login": "taiki-e",
         "name": "Taiki Endo"
+      }
+    ],
+    "filetime": [
+      {
+        "id": 1,
+        "kind": "user",
+        "login": "alexcrichton",
+        "name": "Alex Crichton"
       }
     ],
     "find-msvc-tools": [
@@ -1868,6 +1936,26 @@
         "kind": "user",
         "login": "BurntSushi",
         "name": "Andrew Gallant"
+      }
+    ],
+    "miow": [
+      {
+        "id": 1459,
+        "kind": "user",
+        "login": "faern",
+        "name": "Linus Färnstrand"
+      },
+      {
+        "id": 3824,
+        "kind": "user",
+        "login": "yoshuawuyts",
+        "name": "Yosh"
+      },
+      {
+        "id": 201572,
+        "kind": "user",
+        "login": "dpaoliello",
+        "name": "Daniel Paoliello"
       }
     ],
     "new_debug_unreachable": [
@@ -2674,6 +2762,14 @@
         "kind": "user",
         "login": "newpavlov",
         "name": "Artyom Pavlov"
+      }
+    ],
+    "shell-escape": [
+      {
+        "id": 5,
+        "kind": "user",
+        "login": "sfackler",
+        "name": "Steven Fackler"
       }
     ],
     "shlex": [
