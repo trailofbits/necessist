@@ -1,4 +1,4 @@
-// Keep these cases in sync with the directive unit tests in `backends/src/parsing.rs`.
+// Keep these cases in sync with the directive unit tests in `backends/src/directives.rs`.
 
 #[test]
 fn directives() {
