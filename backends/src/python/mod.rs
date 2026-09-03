@@ -541,7 +541,7 @@ impl RunLow for Python {
     }
 
     fn command_to_build_source_file(&self, context: &LightContext, source_file: &Path) -> Command {
-        self.py_compile(context, source_file)
+        self.check_syntax(context, source_file)
     }
 
     fn command_to_build_test(
@@ -550,7 +550,7 @@ impl RunLow for Python {
         _test_name: &str,
         span: &Span,
     ) -> Command {
-        self.py_compile(context, &span.source_file)
+        self.check_syntax(context, &span.source_file)
     }
 
     fn command_to_run_test(
@@ -579,19 +579,24 @@ fn statement_occupies_own_line(contents: &str, start: usize, end: usize) -> bool
 }
 
 impl Python {
-    fn pytest(&self, context: &LightContext, target: &Path) -> Command {
+    fn check_syntax(&self, context: &LightContext, source_file: &Path) -> Command {
         let mut command = Command::new(self.executable);
         command.current_dir(context.root.as_path());
-        command.args(["-m", "pytest"]);
-        command.arg(target);
+        command.args([
+            "-c",
+            "import pathlib, sys; path = sys.argv[1]; compile(pathlib.Path(path).read_bytes(), \
+             path, 'exec')",
+        ]);
+        command.arg(source_file);
         command
     }
 
-    fn py_compile(&self, context: &LightContext, source_file: &Path) -> Command {
+    fn pytest(&self, context: &LightContext, target: &Path) -> Command {
         let mut command = Command::new(self.executable);
         command.current_dir(context.root.as_path());
-        command.args(["-m", "py_compile"]);
-        command.arg(source_file);
+        command.env("PYTHONDONTWRITEBYTECODE", "1");
+        command.args(["-m", "pytest"]);
+        command.arg(target);
         command
     }
 }
