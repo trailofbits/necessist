@@ -126,7 +126,7 @@ pub fn necessist<Identifier: Applicable + Display + IntoEnumIterator + ToImpleme
     process_options(&opts)?;
 
     if let Some(check_skill_path) = &opts.check_skill {
-        return skill::check(check_skill_path, opts.write).map(skill::Status::exit_code);
+        return skill::check(&opts, check_skill_path, opts.write).map(skill::Status::exit_code);
     }
 
     if opts.find_skill {

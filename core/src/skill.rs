@@ -1,8 +1,10 @@
+use crate::{Necessist, Warning, warn::early_warn};
 use anyhow::{Context, Result, bail};
+use cargo_util::paths::normalize_path;
 use elaborate::std::{
     env::home_dir_wc,
     fs::{create_dir_all_wc, read_to_string_wc, write_wc},
-    path::PathContext,
+    path::{PathContext, absolute_wc},
 };
 use semver::Version;
 use std::{
@@ -72,25 +74,41 @@ impl Status {
     }
 }
 
-pub fn check(path: impl AsRef<Path>, write: bool) -> Result<Status> {
-    warn_if_not_well_known(&path);
-    check_find_impl(Mode::Check, path, write)
+pub fn check(opts: &Necessist, path: impl AsRef<Path>, write: bool) -> Result<Status> {
+    warn_if_not_well_known(opts, &path)?;
+    check_impl(path, write)
 }
 
 /// Warns if `path` is not a path that `--find-skill` checks. If the home directory cannot be
 /// determined, no warning is emitted, as there is nothing to compare `path` to.
-fn warn_if_not_well_known(path: impl AsRef<Path>) {
+fn warn_if_not_well_known(opts: &Necessist, path: impl AsRef<Path>) -> Result<()> {
     let path = path.as_ref();
     let Ok(home) = home_dir_wc() else {
-        return;
+        return Ok(());
     };
-    if well_known_paths(&home).any(|well_known_path| well_known_path == path) {
-        return;
+    let home_normalized = absolute_normalize_path(&home)?;
+    let path_normalized = absolute_normalize_path(path)?;
+    if well_known_paths(&home_normalized).any(|well_known_path| well_known_path == path_normalized)
+    {
+        return Ok(());
     }
-    eprintln!(
-        "Warning: `{}` is not a path that `--find-skill` checks",
-        path.display()
-    );
+    early_warn(
+        opts,
+        Warning::SkillPathNotWellKnown,
+        &format!(
+            "`{}` is not a path that `--find-skill` checks",
+            path.display()
+        ),
+    )
+}
+
+fn absolute_normalize_path(path: &Path) -> Result<PathBuf> {
+    let path_buf = absolute_wc(path)?;
+    Ok(normalize_path(&path_buf))
+}
+
+fn check_impl(path: impl AsRef<Path>, write: bool) -> Result<Status> {
+    check_find_impl(Mode::Check, path, write)
 }
 
 pub fn find(write: bool) -> Result<Status> {
@@ -336,7 +354,7 @@ name: [
     fn check_does_not_create_nonexistent_skill() {
         let skill_dir = tempdir().unwrap();
         let skill_path = skill_dir.path().join("nested/SKILL.md");
-        assert_eq!(Status::Nonexistent, check(&skill_path, false).unwrap());
+        assert_eq!(Status::Nonexistent, check_impl(&skill_path, false).unwrap());
         assert!(!skill_path.try_exists_wc().unwrap());
     }
 
@@ -344,7 +362,7 @@ name: [
     fn check_with_write_creates_nonexistent_skill() {
         let skill_dir = tempdir().unwrap();
         let skill_path = skill_dir.path().join("nested/SKILL.md");
-        assert_eq!(Status::Current, check(&skill_path, true).unwrap());
+        assert_eq!(Status::Current, check_impl(&skill_path, true).unwrap());
         assert_eq!(SKILL, read_to_string_wc(skill_path).unwrap());
     }
 
@@ -354,7 +372,7 @@ name: [
         let skill_path = skill_dir.path().join("SKILL.md");
         let contents = skill_with_name_and_version("necessist-audit", "0.0.0");
         write_wc(&skill_path, &contents).unwrap();
-        assert_eq!(Status::Old, check(&skill_path, false).unwrap());
+        assert_eq!(Status::Old, check_impl(&skill_path, false).unwrap());
         assert_eq!(contents, read_to_string_wc(skill_path).unwrap());
     }
 
@@ -367,7 +385,7 @@ name: [
             skill_with_name_and_version("necessist-audit", "0.0.0"),
         )
         .unwrap();
-        assert_eq!(Status::Current, check(&skill_path, true).unwrap());
+        assert_eq!(Status::Current, check_impl(&skill_path, true).unwrap());
         assert_eq!(SKILL, read_to_string_wc(skill_path).unwrap());
     }
 
@@ -377,7 +395,7 @@ name: [
         let skill_path = skill_dir.path().join("SKILL.md");
         let contents = skill_with_name_and_version("necessist-audit", &SKILL_VERSION.to_string());
         write_wc(&skill_path, &contents).unwrap();
-        assert_eq!(Status::Current, check(&skill_path, true).unwrap());
+        assert_eq!(Status::Current, check_impl(&skill_path, true).unwrap());
         assert_eq!(contents, read_to_string_wc(skill_path).unwrap());
     }
 
@@ -387,7 +405,7 @@ name: [
         let skill_path = skill_dir.path().join("SKILL.md");
         let contents = skill_with_name_and_version("necessist-audit", "999999.0.0");
         write_wc(&skill_path, &contents).unwrap();
-        assert_eq!(Status::Newer, check(&skill_path, true).unwrap());
+        assert_eq!(Status::Newer, check_impl(&skill_path, true).unwrap());
         assert_eq!(contents, read_to_string_wc(skill_path).unwrap());
     }
 
@@ -396,7 +414,7 @@ name: [
         let skill_dir = tempdir().unwrap();
         let skill_path = skill_dir.path().join("SKILL.md");
         write_wc(&skill_path, "no frontmatter here\n").unwrap();
-        let error = format!("{:#}", check(&skill_path, false).unwrap_err());
+        let error = format!("{:#}", check_impl(&skill_path, false).unwrap_err());
         assert_eq!(
             format!(
                 "failed to extract header from `{}`: failed to find leading `---`",
@@ -419,7 +437,7 @@ metadata:
 "#,
         )
         .unwrap();
-        let error = check(&skill_path, false).unwrap_err().to_string();
+        let error = check_impl(&skill_path, false).unwrap_err().to_string();
         assert_eq!(
             format!(
                 "failed to extract skill name from `{}`",
@@ -438,7 +456,7 @@ metadata:
             skill_with_name_and_version("another-skill", "1.0.0"),
         )
         .unwrap();
-        let error = check(&skill_path, false).unwrap_err().to_string();
+        let error = check_impl(&skill_path, false).unwrap_err().to_string();
         assert_eq!(
             format!(
                 "skill at `{}` is not named `necessist-audit`",
@@ -460,7 +478,7 @@ name: necessist-audit
 ",
         )
         .unwrap();
-        let error = format!("{:#}", check(&skill_path, false).unwrap_err());
+        let error = format!("{:#}", check_impl(&skill_path, false).unwrap_err());
         assert_eq!(
             format!(
                 "failed to extract version from `{}`: failed to find `metadata.version`",
