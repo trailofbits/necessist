@@ -18,10 +18,14 @@ fn check_skill_warns_about_path_that_is_not_well_known() {
         .arg(&skill_path)
         .assert()
         .code(1)
-        .stderr(predicate::eq(format!(
-            "Warning: `{}` is not a path that `--find-skill` checks\n",
+        .stdout(predicate::eq(format!(
+            r"Warning: `{}` is not a path that `--find-skill` checks
+Silence this warning with: --allow skill-path-not-well-known
+skill at `{0}` does not exist; pass `--write` to write the current version
+",
             skill_path.display()
-        )));
+        )))
+        .stderr(predicate::str::is_empty());
 }
 
 #[test]
@@ -48,10 +52,63 @@ fn check_skill_warns_about_well_known_path_not_under_home() {
         .arg(&skill_path)
         .assert()
         .code(1)
-        .stderr(predicate::eq(format!(
-            "Warning: `{}` is not a path that `--find-skill` checks\n",
+        .stdout(predicate::eq(format!(
+            r"Warning: `{}` is not a path that `--find-skill` checks
+Silence this warning with: --allow skill-path-not-well-known
+skill at `{0}` does not exist; pass `--write` to write the current version
+",
             skill_path.display()
-        )));
+        )))
+        .stderr(predicate::str::is_empty());
+}
+
+#[test]
+fn check_skill_warning_obeys_allow() {
+    let home = tempdir().unwrap();
+    let skill_path = home.path().join("elsewhere/SKILL.md");
+    necessist_with_home(&home)
+        .args(["--allow", "skill-path-not-well-known", "--check-skill"])
+        .arg(&skill_path)
+        .assert()
+        .code(1)
+        .stdout(predicate::eq(format!(
+            "skill at `{}` does not exist; pass `--write` to write the current version\n",
+            skill_path.display()
+        )))
+        .stderr(predicate::str::is_empty());
+}
+
+#[test]
+fn check_skill_warning_obeys_deny() {
+    let home = tempdir().unwrap();
+    let skill_path = home.path().join("elsewhere/SKILL.md");
+    for warning in ["skill-path-not-well-known", "all"] {
+        necessist_with_home(&home)
+            .args(["--deny", warning, "--check-skill"])
+            .arg(&skill_path)
+            .assert()
+            .code(2)
+            .stdout(predicate::str::is_empty())
+            .stderr(predicate::eq(format!(
+                "Error: `{}` is not a path that `--find-skill` checks\n",
+                skill_path.display()
+            )));
+    }
+}
+
+#[test]
+fn check_skill_normalizes_well_known_path() {
+    let home = tempdir().unwrap();
+    necessist_with_home(&home)
+        .current_dir(&home)
+        .args(["--check-skill", ".claude/./skills/necessist-audit/SKILL.md"])
+        .assert()
+        .code(1)
+        .stdout(predicate::eq(
+            "skill at `.claude/./skills/necessist-audit/SKILL.md` does not exist; pass `--write` \
+             to write the current version\n",
+        ))
+        .stderr(predicate::str::is_empty());
 }
 
 #[test]

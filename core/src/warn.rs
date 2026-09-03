@@ -1,4 +1,4 @@
-use crate::{__ToConsoleString as ToConsoleString, LightContext};
+use crate::{__ToConsoleString as ToConsoleString, LightContext, Necessist};
 use ansi_term::{
     Color::{Green, Yellow},
     Style,
@@ -31,6 +31,7 @@ pub enum Warning {
     OutputInvalid,
     ParsingFailed,
     RunTestFailed,
+    SkillPathNotWellKnown,
     SkipFileMispositioned,
 }
 
@@ -47,6 +48,14 @@ bitflags! {
     }
 }
 
+/// Emits a warning before a [`LightContext`] has been constructed.
+pub(crate) fn early_warn(opts: &Necessist, warning: Warning, msg: &str) -> Result<()> {
+    let println = |msg: &dyn AsRef<str>| {
+        println!("{}", msg.as_ref());
+    };
+    warn_internal(opts, &println, warning, None, msg, Flags::empty())
+}
+
 /// Like [`warn`], but prints the warning prefixed with its source.
 #[allow(clippy::module_name_repetitions)]
 pub fn source_warn(
@@ -56,7 +65,14 @@ pub fn source_warn(
     msg: &str,
     flags: Flags,
 ) -> Result<()> {
-    warn_internal(context, warning, Some(source), msg, flags)
+    warn_internal(
+        context.opts,
+        context.println,
+        warning,
+        Some(source),
+        msg,
+        flags,
+    )
 }
 
 /// Prints a warning message to the console.
@@ -72,7 +88,7 @@ pub fn source_warn(
 ///
 /// Returns an error if the message could not be printed.
 pub fn warn(context: &LightContext, warning: Warning, msg: &str, flags: Flags) -> Result<()> {
-    warn_internal(context, warning, None, msg, flags)
+    warn_internal(context.opts, context.println, warning, None, msg, flags)
 }
 
 const BUG_MSG: &str = "\
@@ -90,7 +106,8 @@ bitflags! {
 static WARNING_STATE_MAP: Mutex<BTreeMap<Warning, State>> = Mutex::new(BTreeMap::new());
 
 fn warn_internal(
-    context: &LightContext,
+    opts: &Necessist,
+    println: &dyn Fn(&dyn AsRef<str>),
     warning: Warning,
     source: Option<&dyn ToConsoleString>,
     msg: &str,
@@ -112,13 +129,13 @@ fn warn_internal(
         append_paragraph(&mut msg, BUG_MSG);
     }
 
-    if context.opts.deny.contains(&Warning::All) || context.opts.deny.contains(&warning) {
+    if opts.deny.contains(&Warning::All) || opts.deny.contains(&warning) {
         bail!(msg);
     }
 
-    if context.opts.quiet
-        || context.opts.allow.contains(&Warning::All)
-        || context.opts.allow.contains(&warning)
+    if opts.quiet
+        || opts.allow.contains(&Warning::All)
+        || opts.allow.contains(&warning)
         || (flags.contains(Flags::ONCE) && state.contains(State::WARNING_EMITTED))
     {
         return Ok(());
@@ -134,7 +151,7 @@ Silence this warning with: --allow {warning}"
         )
     };
 
-    (context.println)(&format!(
+    println(&format!(
         "{}{}: {}{}",
         source.map_or(String::new(), |source| format!(
             "{}: ",
@@ -194,6 +211,7 @@ fn may_be_bug(warning: Warning) -> bool {
         | Warning::OptionDeprecated
         | Warning::OutputInvalid
         | Warning::ParsingFailed
+        | Warning::SkillPathNotWellKnown
         | Warning::SkipFileMispositioned => false,
         Warning::InstrumentationNonbuildable
         | Warning::ModulePathUnknown
