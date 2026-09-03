@@ -155,6 +155,9 @@ impl<T: RunHigh> RunHigh for ParseAdapter<T> {
         self.0
             .instrument_source_file(context, rewriter, source_file, n_instrumentable_statements)
     }
+    fn statement_is_instrumentable(&self, span: &Span) -> bool {
+        self.0.statement_is_instrumentable(span)
+    }
     fn statement_prefix_and_suffix(&self, span: &Span) -> Result<(String, String)> {
         self.0.statement_prefix_and_suffix(span)
     }

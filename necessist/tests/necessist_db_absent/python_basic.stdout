@@ -1,9 +1,11 @@
-6 candidates in 3 tests in 1 source file
+8 candidates in 4 tests in 1 source file
 fixtures/python_basic/tests/test_basic.py: dry running
 fixtures/python_basic/tests/test_basic.py: mutilating
 fixtures/python_basic/tests/test_basic.py:2:5-2:15: `value += 1` passed
 fixtures/python_basic/tests/test_basic.py:8:5-8:15: `value += 1` passed
 fixtures/python_basic/tests/test_basic.py:10:5-10:23: `str(value).strip()` passed
-fixtures/python_basic/tests/test_basic.py:17:9-17:19: `value += 1` failed
-fixtures/python_basic/tests/test_basic.py:25:13-25:23: `value += 1` passed
+fixtures/python_basic/tests/test_basic.py:16:5-16:17: `value += 1; ` passed
+fixtures/python_basic/tests/test_basic.py:16:17-16:27: `value += 1` passed
+fixtures/python_basic/tests/test_basic.py:23:9-23:19: `value += 1` failed
+fixtures/python_basic/tests/test_basic.py:31:13-31:23: `value += 1` passed
 fixtures/python_basic/tests/test_basic.py:10:15-10:23: `.strip()` passed

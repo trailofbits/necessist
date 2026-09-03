@@ -14,7 +14,7 @@ use necessist_core::{
 use ruff_python_ast::{
     AnyNodeRef, Expr, ExprAttribute, ExprAwait, ExprCall, ExprRef, ModModule, Stmt,
     StmtFunctionDef,
-    token::{Tokens, parenthesized_range},
+    token::{TokenKind, Tokens, parenthesized_range},
 };
 use ruff_python_parser::{Parsed, parse_module};
 use ruff_source_file::LineIndex;
@@ -190,26 +190,13 @@ impl AbstractTypes for Types {
     type MacroCall<'ast> = Infallible;
 }
 
-fn span(range: TextRange, source_file: &SourceFile, line_index: &LineIndex) -> Span {
-    let contents = source_file.contents();
-    let start = line_index.line_column(range.start(), contents);
-    let end = line_index.line_column(range.end(), contents);
-    Span {
-        source_file: source_file.clone(),
-        start: LineColumn {
-            line: start.line.get(),
-            column: start.column.get() - 1,
-        },
-        end: LineColumn {
-            line: end.line.get(),
-            column: end.column.get() - 1,
-        },
-    }
-}
-
 impl Spanned for Statement<'_> {
     fn span(&self, source_file: &SourceFile) -> Span {
-        span(self.statement.range(), source_file, self.line_index)
+        span(
+            statement_range(self.statement, self.tokens),
+            source_file,
+            self.line_index,
+        )
     }
 }
 
@@ -247,6 +234,38 @@ impl MaybeNamed for Field<'_> {
 impl Spanned for Call<'_> {
     fn span(&self, source_file: &SourceFile) -> Span {
         span(self.call.range, source_file, self.line_index)
+    }
+}
+
+fn statement_range(statement: &Stmt, tokens: &Tokens) -> TextRange {
+    let range = statement.range();
+    let tokens_after_statement = tokens.after(range.end());
+    let Some((semicolon, following_tokens)) = tokens_after_statement.split_first() else {
+        return range;
+    };
+    if semicolon.kind() != TokenKind::Semi {
+        return range;
+    }
+    let end = following_tokens
+        .first()
+        .map_or_else(|| semicolon.end(), Ranged::start);
+    range.with_end(end)
+}
+
+fn span(range: TextRange, source_file: &SourceFile, line_index: &LineIndex) -> Span {
+    let contents = source_file.contents();
+    let start = line_index.line_column(range.start(), contents);
+    let end = line_index.line_column(range.end(), contents);
+    Span {
+        source_file: source_file.clone(),
+        start: LineColumn {
+            line: start.line.get(),
+            column: start.column.get() - 1,
+        },
+        end: LineColumn {
+            line: end.line.get(),
+            column: end.column.get() - 1,
+        },
     }
 }
 
@@ -501,6 +520,16 @@ impl RunLow for Python {
         Ok(())
     }
 
+    fn statement_is_instrumentable(&self, span: &Span) -> bool {
+        let contents = span.source_file.contents();
+        let (start, end) = span
+            .source_file
+            .offset_calculator()
+            .borrow_mut()
+            .offsets_from_span(span);
+        statement_occupies_own_line(contents, start, end)
+    }
+
     fn statement_prefix_and_suffix(&self, span: &Span) -> Result<(String, String)> {
         Ok((
             format!(
@@ -534,6 +563,19 @@ impl RunLow for Python {
         let node_id = format!("{}::{test_name}", path.to_string_lossy());
         (self.pytest(context, Path::new(&node_id)), Vec::new(), None)
     }
+}
+
+fn statement_occupies_own_line(contents: &str, start: usize, end: usize) -> bool {
+    let line_start = contents[..start]
+        .rfind(['\n', '\r'])
+        .map_or(0, |offset| offset + 1);
+    let line_end = contents[end..]
+        .find(['\n', '\r'])
+        .map_or(contents.len(), |offset| end + offset);
+    let prefix_is_whitespace = contents[line_start..start].trim().is_empty();
+    let suffix = contents[end..line_end].trim_start();
+    let suffix_is_whitespace_or_comment = suffix.is_empty() || suffix.starts_with('#');
+    prefix_is_whitespace && suffix_is_whitespace_or_comment
 }
 
 impl Python {
@@ -581,20 +623,6 @@ mod tests {
     use ruff_python_ast::{Expr, Stmt};
     use ruff_python_parser::parse_module;
 
-    fn parenthesized_receiver(source: &str) -> &str {
-        let parsed = parse_module(source).unwrap();
-        let Stmt::Expr(statement) = &parsed.syntax().body[0] else {
-            panic!("expected expression statement");
-        };
-        let Expr::Call(call) = statement.value.as_ref() else {
-            panic!("expected call");
-        };
-        let Expr::Attribute(field) = call.func.as_ref() else {
-            panic!("expected attribute");
-        };
-        &source[field_base_range(field, parsed.tokens()).unwrap()]
-    }
-
     #[test]
     fn parenthesized_method_receiver_range() {
         assert_eq!("(value)", parenthesized_receiver("(value).strip()"));
@@ -619,6 +647,57 @@ mod tests {
             "(factory())",
             parenthesized_receiver("(factory()).method()")
         );
+    }
+
+    #[test]
+    fn statement_range_includes_following_semicolon() {
+        assert_eq!("prepare() ; ", statement("prepare() ; execute()", 0));
+    }
+
+    #[test]
+    fn statement_range_does_not_include_preceding_semicolon() {
+        assert_eq!("execute()", statement("prepare(); execute()", 1));
+    }
+
+    #[test]
+    fn statement_at_start_of_line_is_instrumentable() {
+        assert!(statement_occupies_own_line(
+            "def test():\n    execute()\n",
+            16,
+            25
+        ));
+    }
+
+    #[test]
+    fn statement_after_semicolon_is_not_instrumentable() {
+        assert!(!statement_occupies_own_line(
+            "prepare(); execute()\n",
+            11,
+            20
+        ));
+    }
+
+    #[test]
+    fn one_line_if_body_statement_is_not_instrumentable() {
+        assert!(!statement_occupies_own_line(
+            "if ready: execute()\n",
+            10,
+            19
+        ));
+    }
+
+    #[test]
+    fn statement_before_semicolon_is_not_instrumentable() {
+        assert!(!statement_occupies_own_line("prepare(); execute()\n", 0, 9));
+    }
+
+    #[test]
+    fn statement_with_trailing_comment_is_instrumentable() {
+        assert!(statement_occupies_own_line(
+            "    execute() # comment\n",
+            4,
+            13
+        ));
     }
 
     #[test]
@@ -649,5 +728,24 @@ mod tests {
     #[test]
     fn unrelated_output_is_rejected() {
         assert!(!is_python_3_version(b"command not found\n"));
+    }
+
+    fn parenthesized_receiver(source: &str) -> &str {
+        let parsed = parse_module(source).unwrap();
+        let Stmt::Expr(statement) = &parsed.syntax().body[0] else {
+            panic!("expected expression statement");
+        };
+        let Expr::Call(call) = statement.value.as_ref() else {
+            panic!("expected call");
+        };
+        let Expr::Attribute(field) = call.func.as_ref() else {
+            panic!("expected attribute");
+        };
+        &source[field_base_range(field, parsed.tokens()).unwrap()]
+    }
+
+    fn statement(source: &str, index: usize) -> &str {
+        let parsed = parse_module(source).unwrap();
+        &source[statement_range(&parsed.syntax().body[index], parsed.tokens())]
     }
 }

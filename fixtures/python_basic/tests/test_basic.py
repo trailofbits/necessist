@@ -11,6 +11,12 @@ def test_passed():
     assert value >= 0
 
 
+def test_same_line_statements():
+    value = 0
+    value += 1; value += 1
+    assert value >= 0
+
+
 class TestBasic:
     def test_failed(self):
         value = 0
