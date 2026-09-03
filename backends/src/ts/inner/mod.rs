@@ -1,6 +1,6 @@
 use crate::{
-    AbstractTypes, GenericVisitor, MaybeNamed, Named, OutputAccessors, OutputStrippedOfAnsiScapes,
-    ParseLow, Spanned, WalkDirResult,
+    AbstractTypes, DirectiveSyntax, GenericVisitor, MaybeNamed, Named, OutputAccessors,
+    OutputStrippedOfAnsiScapes, ParseLow, Spanned, WalkDirResult,
 };
 use anyhow::{Context, Result, anyhow};
 use elaborate::std::path::PathContext;
@@ -263,6 +263,8 @@ impl MaybeNamed for <Types as AbstractTypes>::Call<'_> {
 
 impl ParseLow for Inner {
     type Types = Types;
+
+    const DIRECTIVE_SYNTAX: DirectiveSyntax = DirectiveSyntax::Slash;
 
     const IGNORED_FUNCTIONS: Option<&'static [&'static str]> =
         Some(&["assert", "assert.*", "console.*", "expect"]);

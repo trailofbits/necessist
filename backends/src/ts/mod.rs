@@ -1,4 +1,5 @@
 use crate::{
+    DirectiveSyntax,
     generic_visitor::GenericVisitor,
     parsing::{AbstractTypes, ParseLow, WalkDirResult},
 };
@@ -41,6 +42,7 @@ pub trait MochaLike {
 
 impl ParseLow for Box<dyn MochaLike> {
     type Types = <Inner as ParseLow>::Types;
+    const DIRECTIVE_SYNTAX: DirectiveSyntax = Inner::DIRECTIVE_SYNTAX;
     const IGNORED_FUNCTIONS: Option<&'static [&'static str]> = Inner::IGNORED_FUNCTIONS;
     const IGNORED_MACROS: Option<&'static [&'static str]> = Inner::IGNORED_MACROS;
     const IGNORED_METHODS: Option<&'static [&'static str]> = Inner::IGNORED_METHODS;
