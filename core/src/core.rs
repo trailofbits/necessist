@@ -479,9 +479,6 @@ fn process_options(opts: &Necessist) -> Result<()> {
         reset,
         resume
     );
-    // smoelius: `--dump`, etc. cannot be passed with `--no-sqlite`, because they operate on the
-    // SQLite database.
-    incompatible!(opts, dump, no_sqlite, reset, resume);
     // smoelius: `--check-skill`, etc. cannot be passed with `--quiet`, because they output to the
     // console.
     incompatible!(
@@ -493,6 +490,12 @@ fn process_options(opts: &Necessist) -> Result<()> {
         find_skill,
         quiet
     );
+    // smoelius: `--check-skill` and `--find-skill` cannot be passed with `--root`, because neither
+    // requires source code.
+    incompatible!(opts, check_skill, find_skill, root);
+    // smoelius: `--dump`, etc. cannot be passed with `--no-sqlite`, because they operate on the
+    // SQLite database.
+    incompatible!(opts, dump, no_sqlite, reset, resume);
     // smoelius: `--quiet` and `--verbose` are contradictory.
     incompatible!(opts, quiet, verbose);
 

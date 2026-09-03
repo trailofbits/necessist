@@ -265,6 +265,27 @@ fn check_skill_and_find_skill_are_incompatible() {
 }
 
 #[test]
+fn skill_options_and_root_are_incompatible() {
+    for (args, stderr) in [
+        (
+            &["--check-skill", "SKILL.md", "--root", "."] as &[&str],
+            "Error: --check-skill and --root are incompatible\n",
+        ),
+        (
+            &["--find-skill", "--root", "."] as &[&str],
+            "Error: --find-skill and --root are incompatible\n",
+        ),
+    ] {
+        cargo_bin_cmd!("necessist")
+            .args(args)
+            .assert()
+            .code(2)
+            .stdout(predicate::str::is_empty())
+            .stderr(predicate::eq(stderr));
+    }
+}
+
+#[test]
 fn write_requires_a_skill_option() {
     cargo_bin_cmd!("necessist")
         .arg("--write")
