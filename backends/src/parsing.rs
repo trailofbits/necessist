@@ -498,13 +498,13 @@ fn extend(
 }
 
 macro_rules! check_config {
-    ($T:ty, $storage:expr, $config:expr, $name:expr, $x:ident) => {
+    ($T:ty, $context:expr, $config:expr, $name:expr, $x:ident) => {
         paste! {
             let unsupported = $T::[< IGNORED_ $x:snake:upper S>].is_none();
             let used = !$config.[< ignored_ $x:snake s >].is_empty();
             if unsupported && used {
                 warn(
-                    $storage,
+                    $context,
                     Warning::[< Ignored $x:camel s Unsupported >],
                     &format!(
                         "the {} framework does not support the `{}` configuration",
