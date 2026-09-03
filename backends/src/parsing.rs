@@ -21,7 +21,7 @@
 //!   then forwards it on to the framework.
 
 use super::{GenericVisitor, ParseHigh, directives::Directives};
-use anyhow::{Context, Result};
+use anyhow::Result;
 use heck::ToKebabCase;
 use indexmap::IndexMap;
 use necessist_core::{
@@ -464,8 +464,7 @@ impl<T: ParseLow> ParseHigh for ParseAdapter<T> {
                 // If it's a directory, get all files in it via walk_dir
                 let dir_walk = self.0.walk_dir(path);
                 for entry in dir_walk {
-                    let entry =
-                        entry.with_context(|| format!(r#"failed to walk "{}""#, path.display()))?;
+                    let entry = entry?;
                     let entry_path = entry.path();
                     if entry_path.is_file() {
                         visit_source_file(&mut self.0, entry_path)?;
@@ -552,5 +551,45 @@ impl<T: ParseLow> ParseAdapter<T> {
         builtins.merge(config).unwrap();
 
         builtins.compile()
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[cfg(unix)]
+    #[cfg_attr(dylint_lib = "general", allow(non_thread_safe_call_in_test))]
+    #[test]
+    fn walk_dir_error_contains_path() {
+        use anyhow::Error;
+        use elaborate::std::fs::{create_dir_wc, remove_dir_wc, set_permissions_wc};
+        use std::{fs::Permissions, os::unix::fs::PermissionsExt};
+
+        struct RemoveDir<'a>(&'a Path);
+
+        impl Drop for RemoveDir<'_> {
+            fn drop(&mut self) {
+                remove_dir_wc(self.0).unwrap();
+            }
+        }
+
+        let tempdir = tempfile::tempdir().unwrap();
+        let unreadable = tempdir.path().join("unreadable");
+        create_dir_wc(&unreadable).unwrap();
+        let _remove_dir = RemoveDir(&unreadable);
+        set_permissions_wc(&unreadable, Permissions::from_mode(0o000)).unwrap();
+
+        let error = ignore::WalkBuilder::new(&tempdir)
+            .build()
+            .find_map(Result::err)
+            .unwrap();
+
+        let msg_expected = format!(
+            "{}: IO error for operation on {0}: Permission denied (os error 13)",
+            unreadable.display()
+        );
+        let msg_actual = format!("{:#}", Error::from(error));
+        assert_eq!(msg_expected, msg_actual);
     }
 }
