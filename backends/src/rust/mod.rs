@@ -18,11 +18,11 @@ use once_cell::sync::OnceCell;
 use quote::ToTokens;
 use std::{
     cell::RefCell,
-    collections::{BTreeMap, BTreeSet, HashMap},
+    collections::{BTreeMap, BTreeSet},
     ffi::OsStr,
     path::{Path, PathBuf},
     process::Command,
-    sync::{LazyLock, RwLock},
+    sync::RwLock,
 };
 
 mod storage;
@@ -118,23 +118,14 @@ impl<'ast> Test<'ast> {
     }
 }
 
-// smoelius: `TEST_PATH_ID_MAP` and `TEST_PATHS` cannot go in `Storage` because they are used by
-// `Test`'s implementation of `Named`.
-static TEST_PATH_ID_MAP: RwLock<LazyLock<HashMap<Vec<String>, usize>>> =
-    RwLock::new(LazyLock::new(HashMap::new));
+// smoelius: `TEST_PATHS` cannot go in `Storage` because it is used by `Test`'s implementation of
+// `Named`.
 static TEST_PATHS: RwLock<Vec<Vec<String>>> = RwLock::new(Vec::new());
 
 fn reserve_test_path_id(test_path: Vec<String>) -> usize {
-    let test_path_id_map = TEST_PATH_ID_MAP.read().unwrap();
-    let test_path_id = test_path_id_map.get(&test_path).copied();
-    drop(test_path_id_map);
-    if let Some(test_path_id) = test_path_id {
-        test_path_id
-    } else {
-        let mut test_paths = TEST_PATHS.write().unwrap();
-        test_paths.push(test_path);
-        test_paths.len() - 1
-    }
+    let mut test_paths = TEST_PATHS.write().unwrap();
+    test_paths.push(test_path);
+    test_paths.len() - 1
 }
 
 #[derive(Clone, Copy)]
@@ -209,7 +200,7 @@ impl AbstractTypes for Types {
     type MacroCall<'ast> = MacroCall<'ast>;
 }
 
-// smoelius: See note above re `TEST_PATH_ID_MAP` and `TEST_PATHS`.
+// smoelius: See note above re `TEST_PATHS`.
 impl Named for Test<'_> {
     fn name(&self) -> String {
         let test_paths = TEST_PATHS.read().unwrap();
