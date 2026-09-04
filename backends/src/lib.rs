@@ -29,6 +29,9 @@ use hardhat::Hardhat;
 mod php;
 use php::Php;
 
+mod python;
+use python::Python;
+
 mod rust;
 use rust::Rust;
 
@@ -38,6 +41,7 @@ use vitest::Vitest;
 // Other modules
 
 mod directives;
+use directives::DirectiveSyntax;
 
 mod parsing;
 use parsing::{AbstractTypes, MaybeNamed, Named, ParseAdapter, ParseLow, Spanned, WalkDirResult};
@@ -64,6 +68,7 @@ pub enum Identifier {
     Go,
     Hardhat,
     Php,
+    Python,
     Rust,
     Vitest,
 }
@@ -76,6 +81,7 @@ impl Applicable for Identifier {
             Self::Go => Go::applicable(context),
             Self::Hardhat => Hardhat::applicable(context),
             Self::Php => Php::applicable(context),
+            Self::Python => Python::applicable(context),
             Self::Rust => Rust::applicable(context),
             Self::Vitest => Vitest::applicable(context),
         }
@@ -105,6 +111,13 @@ impl ToImplementation for Identifier {
             Self::Php => Ok(Some(implementation_as_interface(ParseRunAdapter::new)(
                 Php::new(),
             ))),
+
+            Self::Python => {
+                let python = Python::new()?;
+                Ok(Some(implementation_as_interface(ParseRunAdapter::new)(
+                    python,
+                )))
+            }
 
             Self::Rust => Ok(Some(implementation_as_interface(ParseRunAdapter::new)(
                 Rust::new(),
@@ -141,6 +154,9 @@ impl<T: RunHigh> RunHigh for ParseAdapter<T> {
     ) -> Result<()> {
         self.0
             .instrument_source_file(context, rewriter, source_file, n_instrumentable_statements)
+    }
+    fn statement_is_instrumentable(&self, span: &Span) -> bool {
+        self.0.statement_is_instrumentable(span)
     }
     fn statement_prefix_and_suffix(&self, span: &Span) -> Result<(String, String)> {
         self.0.statement_prefix_and_suffix(span)

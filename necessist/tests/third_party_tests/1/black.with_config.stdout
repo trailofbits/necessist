@@ -1,0 +1,422 @@
+114 candidates in 33 tests in 1 source file
+$DIR/tests/test_black.py: dry running
+$DIR/tests/test_black.py: mutilating
+$DIR/tests/test_black.py: `sources.extend(
+            black.gen_python_files(
+                path.iterdir(),
+                this_abs,
+                include,
+                exclude,
+                None,
+                None,
+                report,
+                {path: gitignore},
+                verbose=False,
+                quiet=False,
+            )
+        )` failed
+$DIR/tests/test_black.py: `sources.extend(
+            black.gen_python_files(
+                path.iterdir(),
+                this_abs,
+                include,
+                exclude,
+                None,
+                None,
+                report,
+                {path: gitignore},
+                verbose=False,
+                quiet=False,
+            )
+        )` failed
+$DIR/tests/test_black.py: `sources.extend(
+            black.gen_python_files(
+                path.iterdir(),
+                this_abs,
+                include,
+                exclude,
+                None,
+                None,
+                report,
+                {path: gitignore},
+                verbose=False,
+                quiet=False,
+            )
+        )` failed
+$DIR/tests/test_black.py: `assert_collected_sources([root], expected, root=root)` passed
+$DIR/tests/test_black.py: `assert_collected_sources([root], expected, root=root)` passed
+$DIR/tests/test_black.py: `symlink.symlink_to(actual)` failed
+$DIR/tests/test_black.py: `(actual_proj / "module.py").write_text("print('hello')", encoding="utf-8")` failed
+$DIR/tests/test_black.py: `assert_collected_sources(
+                    src=["module.py"],
+                    root=symlink_proj.resolve(),
+                    expected=["module.py"],
+                )` passed
+$DIR/tests/test_black.py: `assert_collected_sources(
+                    src=[absolute_module],
+                    root=symlink_proj.resolve(),
+                    expected=[absolute_module],
+                )` passed
+$DIR/tests/test_black.py: `flat_symlink.symlink_to(actual_proj / "module.py")` passed
+$DIR/tests/test_black.py: `assert_collected_sources(
+                    src=[flat_symlink],
+                    root=symlink_proj.resolve(),
+                    force_exclude=r"/symlink_module.py",
+                    expected=[],
+                )` passed
+$DIR/tests/test_black.py: `(target / "another.py").write_text("print('hello')", encoding="utf-8")` failed
+$DIR/tests/test_black.py: `(symlink_proj / "nested").symlink_to(target)` failed
+$DIR/tests/test_black.py: `assert_collected_sources(
+                    src=[symlink_proj / "nested" / "another.py"],
+                    root=symlink_proj.resolve(),
+                    force_exclude=r"nested",
+                    expected=[],
+                )` passed
+$DIR/tests/test_black.py: `assert_collected_sources(
+                    src=[symlink_proj / "nested" / "another.py"],
+                    root=symlink_proj.resolve(),
+                    force_exclude=r"target",
+                    expected=[symlink_proj / "nested" / "another.py"],
+                )` passed
+$DIR/tests/test_black.py: `(root / "pyproject.toml").write_text("[tool.black]", encoding="utf-8")` passed
+$DIR/tests/test_black.py: `target.write_text("print('hello')", encoding="utf-8")` passed
+$DIR/tests/test_black.py: `(root / "a.py").symlink_to(target)` failed
+$DIR/tests/test_black.py: `assert_collected_sources(
+                root=root,
+                src=["-"],
+                expected=[],
+                stdin_filename=stdin_filename,
+            )` passed
+$DIR/tests/test_black.py: `(tmp / "exclude" / "a.py").write_text("print('hello')", encoding="utf-8")` passed
+$DIR/tests/test_black.py: `(tmp / "symlink.py").symlink_to(tmp / "exclude" / "a.py")` passed
+$DIR/tests/test_black.py: `assert_collected_sources(
+                    src=["-"],
+                    root=tmp,
+                    expected=expected,
+                    force_exclude=r"exclude/a\.py",
+                    stdin_filename=stdin_filename,
+                )` passed
+$DIR/tests/test_black.py: `black.format_str("syntax error", mode=black.Mode())` failed
+$DIR/tests/test_black.py: `black.format_file_contents("x = 1\n", fast=True, mode=black.Mode())` failed
+$DIR/tests/test_black.py: `self.check_ast_equivalence("{}", "None", should_fail=True)` passed
+$DIR/tests/test_black.py: `self.check_ast_equivalence("1+2", "1    +   2")` passed
+$DIR/tests/test_black.py: `self.check_ast_equivalence('x = "x"', 'x = " x "', should_fail=True)` passed
+$DIR/tests/test_black.py: `self.check_ast_equivalence(
+            '''
+            """docstring  """
+            ''',
+            '''
+            """docstring"""
+            ''',
+        )` passed
+$DIR/tests/test_black.py: `self.check_ast_equivalence(
+            '''
+            """docstring  """
+            ''',
+            '''
+            """ddocstring"""
+            ''',
+            should_fail=True,
+        )` passed
+$DIR/tests/test_black.py: `self.check_ast_equivalence(
+            '''
+            class A:
+                """
+
+                docstring
+
+
+                """
+            ''',
+            '''
+            class A:
+                """docstring"""
+            ''',
+        )` passed
+$DIR/tests/test_black.py: `self.check_ast_equivalence(
+            """
+            def f():
+                " docstring  "
+            """,
+            '''
+            def f():
+                """docstring"""
+            ''',
+        )` passed
+$DIR/tests/test_black.py: `self.check_ast_equivalence(
+            """
+            async def f():
+                "   docstring  "
+            """,
+            '''
+            async def f():
+                """docstring"""
+            ''',
+        )` passed
+$DIR/tests/test_black.py: `self.check_ast_equivalence(
+            """
+            if __name__ == "__main__":
+                "  docstring-like  "
+            """,
+            '''
+            if __name__ == "__main__":
+                """docstring-like"""
+            ''',
+        )` passed
+$DIR/tests/test_black.py: `self.check_ast_equivalence(r'def f(): r" \n "', r'def f(): "\\n"')` passed
+$DIR/tests/test_black.py: `self.check_ast_equivalence('try: pass\nexcept: " x "', 'try: pass\nexcept: "x"')` passed
+$DIR/tests/test_black.py: `pytest.skip("relies on 3.12+ syntax")` passed
+$DIR/tests/test_black.py: `self.check_ast_equivalence(
+            """print(f"{"|".join([a,b,c])}")""",
+            """print(f"{" | ".join([a,b,c])}")""",
+            should_fail=True,
+        )` passed
+$DIR/tests/test_black.py: `err.match("--safe")` passed
+$DIR/tests/test_black.py: `err.match("invalid character")` passed
+$DIR/tests/test_black.py: `.compile(r"\.pyi?$")` failed
+$DIR/tests/test_black.py: `.compile(r"")` failed
+$DIR/tests/test_black.py: `.Report()` failed
+$DIR/tests/test_black.py: `.from_lines(
+            ["exclude/", ".definitely_exclude", "!exclude/still_exclude/"]
+        )` failed
+$DIR/tests/test_black.py: `.extend(
+            black.gen_python_files(
+                path.iterdir(),
+                this_abs,
+                include,
+                exclude,
+                None,
+                None,
+                report,
+                {path: gitignore},
+                verbose=False,
+                quiet=False,
+            )
+        )` failed
+$DIR/tests/test_black.py: `.gen_python_files(
+                path.iterdir(),
+                this_abs,
+                include,
+                exclude,
+                None,
+                None,
+                report,
+                {path: gitignore},
+                verbose=False,
+                quiet=False,
+            )` failed
+$DIR/tests/test_black.py: `.iterdir()` failed
+$DIR/tests/test_black.py: `.compile(r"\.pyi?$")` failed
+$DIR/tests/test_black.py: `.compile(r"")` failed
+$DIR/tests/test_black.py: `.Report()` failed
+$DIR/tests/test_black.py: `.from_lines(
+            ["*/exclude/*", ".definitely_exclude", "!*/exclude/still_exclude/"]
+        )` failed
+$DIR/tests/test_black.py: `.extend(
+            black.gen_python_files(
+                path.iterdir(),
+                this_abs,
+                include,
+                exclude,
+                None,
+                None,
+                report,
+                {path: gitignore},
+                verbose=False,
+                quiet=False,
+            )
+        )` failed
+$DIR/tests/test_black.py: `.gen_python_files(
+                path.iterdir(),
+                this_abs,
+                include,
+                exclude,
+                None,
+                None,
+                report,
+                {path: gitignore},
+                verbose=False,
+                quiet=False,
+            )` failed
+$DIR/tests/test_black.py: `.iterdir()` failed
+$DIR/tests/test_black.py: `.compile(r"\.pyi?$")` failed
+$DIR/tests/test_black.py: `.compile(r"")` failed
+$DIR/tests/test_black.py: `.Report()` failed
+$DIR/tests/test_black.py: `.from_lines(
+            ["exclude/*", ".definitely_exclude", "!exclude/still_exclude/"]
+        )` failed
+$DIR/tests/test_black.py: `.extend(
+            black.gen_python_files(
+                path.iterdir(),
+                this_abs,
+                include,
+                exclude,
+                None,
+                None,
+                report,
+                {path: gitignore},
+                verbose=False,
+                quiet=False,
+            )
+        )` failed
+$DIR/tests/test_black.py: `.gen_python_files(
+                path.iterdir(),
+                this_abs,
+                include,
+                exclude,
+                None,
+                None,
+                report,
+                {path: gitignore},
+                verbose=False,
+                quiet=False,
+            )` failed
+$DIR/tests/test_black.py: `.iterdir()` failed
+$DIR/tests/test_black.py: `.compile(r"\.pyi?$")` failed
+$DIR/tests/test_black.py: `.compile(r"")` failed
+$DIR/tests/test_black.py: `.files.get_gitignore(path)` failed
+$DIR/tests/test_black.py: `.Report()` failed
+$DIR/tests/test_black.py: `.gen_python_files(
+                path.iterdir(),
+                this_abs,
+                include,
+                exclude,
+                None,
+                None,
+                report,
+                {path: root_gitignore},
+                verbose=False,
+                quiet=False,
+            )` failed
+$DIR/tests/test_black.py: `.iterdir()` failed
+$DIR/tests/test_black.py: `.invoke(
+            black.main, ["--verbose", "--config", str(empty_config), str(path)]
+        )` failed
+$DIR/tests/test_black.py: `.search(
+            f"Could not parse {gitignore}".replace("\\", "\\\\"),
+            result.stderr_bytes.decode(),
+            re.IGNORECASE if isinstance(gitignore, WindowsPath) else 0,
+        )` passed
+$DIR/tests/test_black.py: `.invoke(
+            black.main, ["--verbose", "--config", str(empty_config), str(path)]
+        )` failed
+$DIR/tests/test_black.py: `.search(
+            f"Could not parse {gitignore}".replace("\\", "\\\\"),
+            result.stderr_bytes.decode(),
+            re.IGNORECASE if isinstance(gitignore, WindowsPath) else 0,
+        )` passed
+$DIR/tests/test_black.py: `.compile(black.DEFAULT_INCLUDES)` failed
+$DIR/tests/test_black.py: `.compile(black.DEFAULT_EXCLUDES)` failed
+$DIR/tests/test_black.py: `.Report()` failed
+$DIR/tests/test_black.py: `.from_lines([])` passed
+$DIR/tests/test_black.py: `.gen_python_files(
+                path.iterdir(),
+                root,
+                include,
+                exclude,
+                None,
+                None,
+                report,
+                {path: gitignore},
+                verbose=False,
+                quiet=False,
+            )` failed
+$DIR/tests/test_black.py: `.iterdir()` failed
+$DIR/tests/test_black.py: `.symlink_to(actual)` failed
+$DIR/tests/test_black.py: `.write_text("print('hello')", encoding="utf-8")` failed
+$DIR/tests/test_black.py: `.symlink_to(actual_proj / "module.py")` passed
+$DIR/tests/test_black.py: `.write_text("print('hello')", encoding="utf-8")` failed
+$DIR/tests/test_black.py: `.symlink_to(target)` failed
+$DIR/tests/test_black.py: `.write_text("[tool.black]", encoding="utf-8")` passed
+$DIR/tests/test_black.py: `.write_text("print('hello')", encoding="utf-8")` passed
+$DIR/tests/test_black.py: `.symlink_to(target)` failed
+$DIR/tests/test_black.py: `.write_text("print('hello')", encoding="utf-8")` passed
+$DIR/tests/test_black.py: `.symlink_to(tmp / "exclude" / "a.py")` passed
+$DIR/tests/test_black.py: `.format_str("print('hello')", mode=black.Mode())` failed
+$DIR/tests/test_black.py: `.Mode()` failed
+$DIR/tests/test_black.py: `.format_str("print('hello')", mode=black.Mode(line_length=42))` failed
+$DIR/tests/test_black.py: `.Mode(line_length=42)` failed
+$DIR/tests/test_black.py: `.raises(black.InvalidInput)` failed
+$DIR/tests/test_black.py: `.format_str("syntax error", mode=black.Mode())` failed
+$DIR/tests/test_black.py: `.Mode()` failed
+$DIR/tests/test_black.py: `.format_file_contents("x=1", fast=True, mode=black.Mode())` failed
+$DIR/tests/test_black.py: `.Mode()` failed
+$DIR/tests/test_black.py: `.raises(black.NothingChanged)` failed
+$DIR/tests/test_black.py: `.format_file_contents("x = 1\n", fast=True, mode=black.Mode())` failed
+$DIR/tests/test_black.py: `.Mode()` failed
+$DIR/tests/test_black.py: `.check_ast_equivalence("{}", "None", should_fail=True)` passed
+$DIR/tests/test_black.py: `.check_ast_equivalence("1+2", "1    +   2")` passed
+$DIR/tests/test_black.py: `.check_ast_equivalence('x = "x"', 'x = " x "', should_fail=True)` passed
+$DIR/tests/test_black.py: `.check_ast_equivalence(
+            '''
+            """docstring  """
+            ''',
+            '''
+            """docstring"""
+            ''',
+        )` passed
+$DIR/tests/test_black.py: `.check_ast_equivalence(
+            '''
+            """docstring  """
+            ''',
+            '''
+            """ddocstring"""
+            ''',
+            should_fail=True,
+        )` passed
+$DIR/tests/test_black.py: `.check_ast_equivalence(
+            '''
+            class A:
+                """
+
+                docstring
+
+
+                """
+            ''',
+            '''
+            class A:
+                """docstring"""
+            ''',
+        )` passed
+$DIR/tests/test_black.py: `.check_ast_equivalence(
+            """
+            def f():
+                " docstring  "
+            """,
+            '''
+            def f():
+                """docstring"""
+            ''',
+        )` passed
+$DIR/tests/test_black.py: `.check_ast_equivalence(
+            """
+            async def f():
+                "   docstring  "
+            """,
+            '''
+            async def f():
+                """docstring"""
+            ''',
+        )` passed
+$DIR/tests/test_black.py: `.check_ast_equivalence(
+            """
+            if __name__ == "__main__":
+                "  docstring-like  "
+            """,
+            '''
+            if __name__ == "__main__":
+                """docstring-like"""
+            ''',
+        )` passed
+$DIR/tests/test_black.py: `.check_ast_equivalence(r'def f(): r" \n "', r'def f(): "\\n"')` passed
+$DIR/tests/test_black.py: `.check_ast_equivalence('try: pass\nexcept: " x "', 'try: pass\nexcept: "x"')` passed
+$DIR/tests/test_black.py: `.skip("relies on 3.12+ syntax")` passed
+$DIR/tests/test_black.py: `.check_ast_equivalence(
+            """print(f"{"|".join([a,b,c])}")""",
+            """print(f"{" | ".join([a,b,c])}")""",
+            should_fail=True,
+        )` passed
+$DIR/tests/test_black.py: `.raises(SourceASTParseError)` failed
+$DIR/tests/test_black.py: `.match("--safe")` passed
+$DIR/tests/test_black.py: `.match("invalid character")` passed

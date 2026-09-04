@@ -83,6 +83,9 @@ pub trait Run {
         source_file: &SourceFile,
         n_instrumentable_statements: usize,
     ) -> Result<()>;
+    fn statement_is_instrumentable(&self, _span: &Span) -> bool {
+        true
+    }
     fn statement_prefix_and_suffix(&self, span: &Span) -> Result<(String, String)>;
     fn build_source_file(&self, context: &LightContext, source_file: &Path) -> Result<()>;
     /// Execute test `test_name` with `span` removed. Returns `Ok(None)` if the test could not be
@@ -139,6 +142,9 @@ impl<T: AsRun> Run for T {
             source_file,
             n_instrumentable_statements,
         )
+    }
+    fn statement_is_instrumentable(&self, span: &Span) -> bool {
+        self.as_run().statement_is_instrumentable(span)
     }
     fn statement_prefix_and_suffix(&self, span: &Span) -> Result<(String, String)> {
         self.as_run().statement_prefix_and_suffix(span)
