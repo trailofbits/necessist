@@ -74,7 +74,7 @@ impl Status {
 
 pub fn check(path: impl AsRef<Path>, write: bool) -> Result<Status> {
     warn_if_not_well_known(&path);
-    check_impl(Mode::Check, path, write)
+    check_find_impl(Mode::Check, path, write)
 }
 
 /// Warns if `path` is not a path that `--find-skill` checks. If the home directory cannot be
@@ -113,7 +113,8 @@ fn find_impl(home: impl AsRef<Path>, write: bool) -> Result<Status> {
     }
     let mut status = Status::Current;
     for skill_dir in skill_dirs {
-        let well_known_path_status = check_impl(Mode::Find, skill_dir.join(SKILL_SUBPATH), write)?;
+        let well_known_path_status =
+            check_find_impl(Mode::Find, skill_dir.join(SKILL_SUBPATH), write)?;
         // Retain the first status whose exit code is not `ExitCode::SUCCESS`.
         if status.exit_code() == ExitCode::SUCCESS {
             status = well_known_path_status;
@@ -135,7 +136,7 @@ fn well_known_skill_dirs(home: impl AsRef<Path>) -> impl Iterator<Item = PathBuf
         .map(move |subdir| home.as_ref().join(subdir))
 }
 
-fn check_impl(mode: Mode, path: impl AsRef<Path>, write: bool) -> Result<Status> {
+fn check_find_impl(mode: Mode, path: impl AsRef<Path>, write: bool) -> Result<Status> {
     let path = path.as_ref();
     let path_display = path.display();
     if !path.try_exists_wc()? {
