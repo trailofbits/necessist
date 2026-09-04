@@ -2750,6 +2750,12 @@
         "kind": "user",
         "login": "Thomasdezeeuw",
         "name": "Thomas de Zeeuw"
+      },
+      {
+        "id": 55123,
+        "kind": "user",
+        "login": "rust-lang-owner",
+        "name": null
       }
     ],
     "solang-parser": [
