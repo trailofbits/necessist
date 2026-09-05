@@ -1,0 +1,54 @@
+name: Update testing tool versions
+
+on:
+  schedule:
+    - cron: "0 3 * * wed"
+  workflow_dispatch:
+
+concurrency:
+  group: update-testing-tool-versions-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Update testing tool versions
+        run: scripts/update_testing_tool_versions.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Require that a version changed
+        id: snapshot
+        run: |
+          set +e
+          git diff --exit-code -- .github/actions/install-testing-tools/versions.json
+          status=$?
+          set -e
+          if [ "$status" -eq 1 ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          elif [ "$status" -ne 0 ]; then
+            exit "$status"
+          fi
+
+      # smoelius: Verify that all tests pass. Note that this runs only on `ubuntu-latest`, so it is
+      # not as thorough as running the CI workflow.
+      - uses: ./.github/actions/ci
+        env:
+          TESTS: third_party_0 third_party_1 trycmd other ci
+
+      - name: Create pull request
+        if: steps.snapshot.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v8
+        with:
+          title: "Update third-party tests"
+          body: "Clicking 'Ready for review' will run CI checks on this PR."
+          commit-message: "Update third-party tests"
+          branch-suffix: random
+          draft: true
