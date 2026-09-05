@@ -1,0 +1,22 @@
+[
+  {
+    "name": "AGAVE",
+    "url": "https://github.com/anza-xyz/agave",
+    "version": "3.0.0"
+  },
+  {
+    "name": "ANCHOR",
+    "url": "https://github.com/otter-sec/anchor",
+    "version": "0.31.1"
+  },
+  {
+    "name": "FOUNDRY",
+    "url": "https://github.com/foundry-rs/foundry",
+    "version": "1.0.0"
+  },
+  {
+    "name": "GO",
+    "url": "https://github.com/golang/go",
+    "version": "1.25.1"
+  }
+]

@@ -4,11 +4,22 @@ description: Install tools needed for Necessist tests
 runs:
   using: composite
   steps:
+    - name: Read versions.json
+      run: |
+        cat .github/actions/install-testing-tools/versions.json |
+        jq -c '.[]' |
+        while read X; do
+          NAME="$(echo "$X" | jq -r '.name')"
+          VERSION="$(echo "$X" | jq -r '.version')"
+          echo "$NAME"_VERSION="$VERSION" >> "$GITHUB_ENV"
+        done
+      shell: bash
+
     # smoelius: https://docs.solana.com/cli/install-solana-cli-tools
     - name: Install Agave
       if: ${{ runner.os != 'Windows' }}
       run: |
-        sh -c "$(curl -sSfL https://release.anza.xyz/v3.0.0/install)"
+        sh -c "$(curl -sSfL https://release.anza.xyz/v$AGAVE_VERSION/install)"
         echo "$HOME/.local/share/solana/install/active_release/bin" >> "$GITHUB_PATH"
       shell: bash
 
@@ -25,20 +36,20 @@ runs:
       run: |
         mkdir -p ~/.config/solana
         cp backends/src/anchor/rfc8032_test_vector.json ~/.config/solana/id.json
-        if [[ "$(anchor --version)" != 'anchor-cli 0.31.1' ]]; then
-          cargo install --git https://github.com/coral-xyz/anchor --tag v0.31.1 anchor-cli --force
+        if [[ "$(anchor --version)" != "anchor-cli $ANCHOR_VERSION" ]]; then
+          cargo install --git https://github.com/coral-xyz/anchor --tag v"$ANCHOR_VERSION" anchor-cli --force
         fi
       shell: bash
 
     - name: Install Foundry
       uses: foundry-rs/foundry-toolchain@v1
       with:
-        version: v1.0.0
+        version: ${{ env.FOUNDRY_VERSION }}
 
     - name: Install Go
       uses: actions/setup-go@v7
       with:
-        go-version: "^1.25.1"
+        go-version: "^${{ env.GO_VERSION }}"
         cache: false
 
     - name: Install PHP on Ubuntu
