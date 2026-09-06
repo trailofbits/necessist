@@ -33,12 +33,6 @@ jobs:
           TESTS: third_party_0 third_party_1
           BLESS: "1"
 
-      # smoelius: After blessing the new output, verify that all tests pass. Note that this only
-      # runs on `ubuntu-latest`, so it is not as thorough as running the CI workflow.
-      - uses: ./.github/actions/ci
-        env:
-          TESTS: third_party_0 third_party_1 trycmd other ci
-
       - name: Require that a snapshot changed
         id: snapshot
         run: |
@@ -51,6 +45,13 @@ jobs:
           elif [ "$status" -ne 0 ]; then
             exit "$status"
           fi
+
+      # smoelius: After blessing the new output, verify that all tests pass. Note that this only
+      # runs on `ubuntu-latest`, so it is not as thorough as running the CI workflow.
+      - uses: ./.github/actions/ci
+        if: steps.snapshot.outputs.changed == 'true'
+        env:
+          TESTS: third_party_0 third_party_1 trycmd other ci
 
       - name: Create pull request
         if: steps.snapshot.outputs.changed == 'true'
