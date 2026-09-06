@@ -11,15 +11,30 @@ fi
 SCRIPTS="$(dirname "$(realpath "$0")")"
 WORKSPACE="$(realpath "$SCRIPTS"/..)"
 
+cd "$WORKSPACE"/.github/actions/install-testing-tools
+
+VERSION_GO="$(
+    cat versions.json |
+    jq -r '.[] | select(.name == "GO") | .version'
+)"
+
 cd "$WORKSPACE"/necessist/tests/third_party_tests
 
-pushd /tmp
-git clone https://github.com/golang/go
-cd go
-TAG="$(git tag --list --sort=creatordate | tail -n 1)"
-popd
+URL='https://github.com/golang/go'
 
-rm -rf /tmp/go
+# smoelius: Use the approach of update_testing_tool_versions.sh in this directory.
+VERSION_TAG="$(
+    git ls-remote --tags --refs "$URL" |
+    cut -f2 |
+    sed 's,^refs/tags/go,,' |
+    grep '^[0-9]\+\.[0-9]\+\.[0-9]\+$' |
+    sort -V |
+    tail -n 1
+)"
+
+# smoelius: Require that the Go version used for the third party tests is not newer than the Go
+# version installed in CI.
+VERSION_NEW="$(echo -e "$VERSION_GO\n$VERSION_TAG" | sort -V | head -n 1)"
 
 find . -name '*.toml' |
 while read X; do
@@ -27,5 +42,5 @@ while read X; do
     if [[ ! "$REV" =~ ^go.* ]]; then
         continue;
     fi
-    sed -i "s/^rev = \"[^\"]*\"$/rev = \"$TAG\"/" "$X"
+    sed -i "s/^rev = \"[^\"]*\"$/rev = \"go$VERSION_NEW\"/" "$X"
 done
