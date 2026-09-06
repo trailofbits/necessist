@@ -2,7 +2,7 @@ name: Update third-party tests
 
 on:
   schedule:
-    - cron: "0 3 * * 2" # 2 = Tuesday
+    - cron: "0 3 * * thu"
   workflow_dispatch:
 
 concurrency:
