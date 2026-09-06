@@ -20,7 +20,7 @@ while read X; do
     URL="$(echo "$X" | jq -r '.url')"
     VERSION_OLD="$(echo "$X" | jq -r '.version')"
 
-    TAG="$(
+    VERSION_TAG="$(
         git ls-remote --tags --refs "$URL" |
         cut -f2 |
         sed 's,^refs/tags/\(v\|go\),,' |
@@ -29,7 +29,7 @@ while read X; do
         tail -n 1
     )"
 
-    VERSION_NEW="$(echo -e "$VERSION_OLD\n$TAG" | sort -V | tail -n 1)"
+    VERSION_NEW="$(echo -e "$VERSION_OLD\n$VERSION_TAG" | sort -V | tail -n 1)"
 
     TMP="$(mktemp)"
     cat versions.json | jq "map(if .name == \"$NAME\" then .version = \"$VERSION_NEW\" end)" > "$TMP"
