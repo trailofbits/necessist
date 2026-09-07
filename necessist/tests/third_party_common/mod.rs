@@ -779,11 +779,20 @@ pub fn stdout_files_are_sanitary_in(dir: impl AsRef<Path>) {
 
         let contents = read_to_string_wc(&path).unwrap();
 
+        for warning in ["Warning: dry run failed", "Warning: failed to run test"] {
+            assert!(
+                !contents.contains(warning),
+                "`{}` contains `{warning}`",
+                path.display()
+            );
+        }
+
         assert!(
             !TIMING_RE.is_match(&contents),
             "`{}` matches `TIMING_RE`",
             path.display()
         );
+
         assert!(
             !BIN_RE.is_match(&contents),
             "`{}` matches `BIN_RE`",
