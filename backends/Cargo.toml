@@ -46,7 +46,7 @@ solang-parser = { version = "=0.3.5", features = ["pt-serde"] }
 
 # Go
 streaming-iterator = "0.1"
-tree-sitter = "0.26"
+tree-sitter = "0.27"
 tree-sitter-go = "0.25"
 
 # Php
