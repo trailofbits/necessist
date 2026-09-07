@@ -24,6 +24,10 @@ while read X; do
     if [[ "$REV" =~ [0-9A-Fa-f]{7,40} ]]; then
         continue;
     fi
+    # smoelius: Skip go tags, as they are handled by a separate script.
+    if [[ "$REV" =~ ^go.* ]]; then
+        continue;
+    fi
     ORG="$(echo "$URL"  | sed -n 's,^https://github.com/\([^/]*\)/[^/]*.*$,\1,;T;p')"
     REPO="$(echo "$URL" | sed -n 's,^https://github.com/[^/]*/\([^/]*\).*$,\1,;T;p')"
     LATEST_RELEASE_URL="https://api.github.com/repos/$ORG/$REPO/releases/latest"
