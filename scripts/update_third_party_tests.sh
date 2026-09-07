@@ -21,7 +21,7 @@ while read X; do
         continue;
     fi
     # smoelius: Skip revisions that are hashes.
-    if [[ "$REV" =~ [0-9A-Fa-f]{7,40} ]]; then
+    if [[ "$REV" =~ ^[0-9A-Fa-f]{7,40}$ ]]; then
         continue;
     fi
     # smoelius: Skip go tags, as they are handled by a separate script.
