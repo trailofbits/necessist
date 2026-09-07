@@ -1,4 +1,4 @@
-36 candidates in 16 tests in 2 source files
+39 candidates in 17 tests in 2 source files
 $DIR/src/text/template/parse/parse_test.go: dry running
 $DIR/src/text/template/parse/parse_test.go: mutilating
 $DIR/src/text/template/parse/parse_test.go: `typ = itemCharConstant` failed
@@ -17,6 +17,7 @@ $DIR/src/text/template/parse/parse_test.go: `t.Run(test.name, func(t *testing.T)
 				t.Errorf("%s=(%q): got\n\t%v\nexpected\n\t%v", test.name, test.input, result, test.result)
 			}
 		})` passed
+$DIR/src/text/template/parse/parse_test.go: `tr.Mode = ParseComments` failed
 $DIR/src/text/template/parse/parse_test.go: `tr.Mode = ParseComments` failed
 $DIR/src/text/template/parse/parse_test.go: `textFormat = "%q"` passed
 $DIR/src/text/template/parse/parse_test.go: `textFormat = "%s"` passed
@@ -47,6 +48,8 @@ $DIR/src/text/template/parse/parse_test.go: `.Run(test.name, func(t *testing.T) 
 			}
 		})` nonbuildable
 $DIR/src/text/template/parse/parse_test.go: `.Parse(test.input, "", "", make(map[string]*Tree))` nonbuildable
+$DIR/src/text/template/parse/parse_test.go: `.Root.String()` nonbuildable
+$DIR/src/text/template/parse/parse_test.go: `.Parse(input, left, right, make(map[string]*Tree))` nonbuildable
 $DIR/src/text/template/parse/parse_test.go: `.Root.String()` nonbuildable
 $DIR/src/text/template/parse/parse_test.go: `.Parse(inp, "", "", make(map[string]*Tree), funcsWithKeywordFunc)` nonbuildable
 $DIR/src/text/template/parse/parse_test.go: `.Parse(inp, "", "", make(map[string]*Tree), make(map[string]any))` nonbuildable

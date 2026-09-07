@@ -1,4 +1,4 @@
-329 candidates in 56 tests in 12 source files
+331 candidates in 58 tests in 12 source files
 $DIR/src/mime/encodedword_test.go: dry running
 $DIR/src/mime/encodedword_test.go: mutilating
 $DIR/src/mime/encodedword_test.go: `wordLen = 0` failed
@@ -32,9 +32,8 @@ $DIR/src/mime/encodedword_test.go: `.New("Test error")` nonbuildable
 $DIR/src/mime/encodedword_test.go: `.DecodeHeader("=?charset?Q?foo?=")` nonbuildable
 $DIR/src/mime/mediatype_test.go: dry running
 $DIR/src/mime/mediatype_test.go: mutilating
-$DIR/src/mime/mediatype_test.go: `sm[s[i]] = s[i+1]` failed
 $DIR/src/mime/mediatype_test.go: `k = strings.ToLower(k)` failed
-$DIR/src/mime/mediatype_test.go: `.DeepEqual(params, test.p)` nonbuildable
+$DIR/src/mime/mediatype_test.go: `.Equal(params, test.p)` nonbuildable
 $DIR/src/mime/mediatype_test.go: `.ToLower(tt.typ)` nonbuildable
 $DIR/src/mime/mediatype_test.go: `.ToLower(k)` nonbuildable
 $DIR/src/mime/multipart/formdata_test.go: dry running
@@ -490,8 +489,8 @@ $DIR/src/mime/quotedprintable/reader_test.go: `cmd.Process.Kill()` passed
 $DIR/src/mime/quotedprintable/reader_test.go: `qpres <- want` passed
 $DIR/src/mime/quotedprintable/reader_test.go: `res["OK"]++` failed
 $DIR/src/mime/quotedprintable/reader_test.go: `outcomes = append(outcomes, fmt.Sprintf("%v: %d", k, v))` failed
-$DIR/src/mime/quotedprintable/reader_test.go: `want = `OK: 896
-invalid bytes after =: 100
+$DIR/src/mime/quotedprintable/reader_test.go: `want = `OK: 935
+invalid bytes after =: 61
 quotedprintable: invalid hex byte 0x0d: 26
 unexpected EOF: 3`` passed
 $DIR/src/mime/quotedprintable/reader_test.go: `.Copy(&buf, NewReader(strings.NewReader(tt.in)))` nonbuildable
@@ -546,6 +545,7 @@ $DIR/src/mime/type_test.go: `clearMimeTypes()` passed
 $DIR/src/mime/type_test.go: `setType(".TEST", caps)` failed
 $DIR/src/mime/type_test.go: `setType(".tesT", custom)` failed
 $DIR/src/mime/type_test.go: `clearMimeTypes()` passed
+$DIR/src/mime/type_test.go: `clearMimeTypes()` passed
 $DIR/src/mime/type_test.go: `setType(".gif", "image/gif")` failed
 $DIR/src/mime/type_test.go: `setType(".a", "foo/letter")` failed
 $DIR/src/mime/type_test.go: `setType(".b", "foo/letter")` passed
@@ -555,13 +555,15 @@ $DIR/src/mime/type_test.go: `TypeByExtension(".html")` passed
 $DIR/src/mime/type_test.go: `TypeByExtension(".HtML")` passed
 $DIR/src/mime/type_test.go: `clearMimeTypes()` passed
 $DIR/src/mime/type_test.go: `setMimeTypes(builtinTypesLower, builtinTypesLower)` failed
+$DIR/src/mime/type_test.go: `.Contains(got, wantSubstr)` nonbuildable
+$DIR/src/mime/type_test.go: `.HasPrefix(got, "text/x-reg")` nonbuildable
 $DIR/src/mime/type_test.go: `.Contains(err.Error(), tt.wantErr)` nonbuildable
-$DIR/src/mime/type_test.go: `.DeepEqual(got, tt.want)` nonbuildable
+$DIR/src/mime/type_test.go: `.Equal(got, tt.want)` nonbuildable
 $DIR/src/mime/type_test.go: `.AllocsPerRun(10000, func() {
 		TypeByExtension(".html")
 		TypeByExtension(".HtML")
 	})` nonbuildable
-$DIR/src/mime/type_test.go: `.DeepEqual(got, tt.want)` nonbuildable
+$DIR/src/mime/type_test.go: `.Equal(got, tt.want)` nonbuildable
 $DIR/src/mime/type_unix_test.go: dry running
 $DIR/src/mime/type_unix_test.go: mutilating
 $DIR/src/mime/type_unix_test.go: `initMimeUnixTest(t)` failed
