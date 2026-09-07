@@ -47,4 +47,7 @@ ignored_tests = [
     "TestReaddirStatFailures",
     "TestReaddirnamesOneAtATime",
     "TestStartProcess",
+    # These tests execute on Linux but skip on macOS, producing different removal outcomes.
+    "TestUserCacheDirXDGConfigDirEnvVar",
+    "TestUserConfigDirXDGConfigDirEnvVar",
 ]

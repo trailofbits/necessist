@@ -5,10 +5,10 @@
 | chainlink-evm              | cre-v0.5.1                               |           |      | X     | X     | X       | 0         |
 | chainlink-evm_hardhat      | cre-v0.5.1                               | hardhat   |      | X     | X     |         | 0         |
 | crates_io                  | a89c096889b171193bc3864e71c70ba2c3dacefa |           |      | X     | X     |         | 0         |
-| go_src_encoding_base64     | go1.27.1                                 | go        | X    | X     | X     | X       | 0         |
+| go_src_encoding_base64     | go1.27.1                                 | go        | X    | X     | X     |         | 0         |
 | go_src_encoding_binary     | go1.27.1                                 | go        | X    | X     | X     |         | 0         |
 | go_src_mime                | go1.27.1                                 | go        | X    | X     | X     |         | 0         |
-| go_src_net_url             | go1.27.1                                 | go        | X    | X     | X     | X       | 0         |
+| go_src_net_url             | go1.27.1                                 | go        | X    | X     | X     |         | 0         |
 | go_src_os                  | go1.27.1                                 | go        | X    | X     | X     |         | 0         |
 | go_src_os_user             | go1.27.1                                 | go        | X    | X     |       |         | 1         |
 | go_src_testing_iotest      | go1.27.1                                 | go        | X    | X     | X     | X       | 1         |
