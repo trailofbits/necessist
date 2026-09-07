@@ -5,21 +5,21 @@
 | chainlink-evm              | cre-v0.5.1                               |           |      | X     | X     | X       | 0         |
 | chainlink-evm_hardhat      | cre-v0.5.1                               | hardhat   |      | X     | X     |         | 0         |
 | crates_io                  | a89c096889b171193bc3864e71c70ba2c3dacefa |           |      | X     | X     |         | 0         |
-| go_src_encoding_base64     | go1.23.0                                 | go        | X    | X     | X     | X       | 0         |
-| go_src_encoding_binary     | go1.23.0                                 | go        | X    | X     | X     |         | 0         |
-| go_src_mime                | go1.23.0                                 | go        | X    | X     | X     |         | 0         |
-| go_src_net_url             | go1.23.0                                 | go        | X    | X     | X     | X       | 0         |
-| go_src_os                  | go1.23.0                                 | go        | X    | X     | X     |         | 0         |
-| go_src_os_user             | go1.23.0                                 | go        | X    | X     |       |         | 1         |
-| go_src_testing_iotest      | go1.23.0                                 | go        | X    | X     | X     | X       | 1         |
-| go_src_text_template_parse | go1.23.0                                 | go        | X    | X     | X     | X       | 1         |
+| go_src_encoding_base64     | go1.27.1                                 | go        | X    | X     | X     | X       | 0         |
+| go_src_encoding_binary     | go1.27.1                                 | go        | X    | X     | X     |         | 0         |
+| go_src_mime                | go1.27.1                                 | go        | X    | X     | X     |         | 0         |
+| go_src_net_url             | go1.27.1                                 | go        | X    | X     | X     | X       | 0         |
+| go_src_os                  | go1.27.1                                 | go        | X    | X     | X     |         | 0         |
+| go_src_os_user             | go1.27.1                                 | go        | X    | X     |       |         | 1         |
+| go_src_testing_iotest      | go1.27.1                                 | go        | X    | X     | X     | X       | 1         |
+| go_src_text_template_parse | go1.27.1                                 | go        | X    | X     | X     | X       | 1         |
 | minio                      | RELEASE.2025-10-15T17-29-55Z             |           |      | X     | X     | X       | 1         |
 | operator-filter-registry   | v1.4.2                                   |           |      | X     | X     | X       | 0         |
 | proptest_https             | c620fd254cefc81113aac69dd3336b13067d97e1 |           | X    | X     | X     | X       | 0         |
-| pyth                       | hip-3-pusher-v0.3.1                      | anchor    |      | X     | X     |         | 0         |
+| pyth                       | pyth-evm-contract-v1.4.6                 | anchor    |      | X     | X     |         | 0         |
 | seaport_foundry            | 1.6                                      | foundry   | X    | X     | X     | X       | 1         |
 | seaport_hardhat            | 1.6                                      | hardhat   |      | X     | X     | X       | 1         |
-| storybook                  | v10.4.2                                  |           | X    | X     | X     |         | 0         |
+| storybook                  | v10.6.0                                  |           | X    | X     | X     |         | 0         |
 | uniswap_v3-core            |                                          |           |      | X     | X     | X       | 0         |
 | uniswap_v3-core_factory    |                                          |           | X    | X     | X     | X       | 1         |
 | uniswap_v4-core            |                                          |           | X    | X     | X     |         | 0         |

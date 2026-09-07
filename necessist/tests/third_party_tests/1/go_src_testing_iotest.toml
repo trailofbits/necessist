@@ -1,5 +1,5 @@
 url = "https://github.com/golang/go"
-rev = "go1.23.0"
+rev = "go1.27.1"
 framework = "go"
 
 subdir = "src/testing/iotest"
