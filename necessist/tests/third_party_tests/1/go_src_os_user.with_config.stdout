@@ -1,80 +1,17 @@
-16 candidates in 12 tests in 5 source files
+57 candidates in 20 tests in 6 source files
 $DIR/src/os/user/lookup_unix_test.go: dry running
-$DIR/src/os/user/lookup_unix_test.go: mutilating
-$DIR/src/os/user/lookup_unix_test.go:39:45-39:62: Warning: failed to run test `TestFindGroupName`: code=0
-stdout=```
-testing: warning: no tests to run
-PASS
-ok  \tstd/os/user\t[..]s [no tests to run]
-```
+$DIR/src/os/user/lookup_unix_test.go: Warning: dry run failed: code=1
+stdout=""
+stderr="go: ../../go.mod requires go >= 1.27 (running go 1.26.7; GOTOOLCHAIN=local)\n"
 
-stderr=""
-
-This may indicate a bug in Necessist. Consider opening an issue at: https://github.com/trailofbits/necessist/issues
-
-Silence this warning with: --allow run-test-failed
-$DIR/src/os/user/lookup_unix_test.go:85:42-85:59: Warning: failed to run test `TestFindGroupId`: code=0
-stdout=```
-testing: warning: no tests to run
-PASS
-ok  \tstd/os/user\t[..]s [no tests to run]
-```
-
-stderr=""
-
-$DIR/src/os/user/lookup_unix_test.go:154:44-154:58: Warning: failed to run test `TestInvalidUserId`: code=0
-stdout=```
-testing: warning: no tests to run
-PASS
-ok  \tstd/os/user\t[..]s [no tests to run]
-```
-
-stderr=""
-
-$DIR/src/os/user/lookup_unix_test.go:165:41-165:58: Warning: failed to run test `TestLookupUserId`: code=0
-stdout=```
-testing: warning: no tests to run
-PASS
-ok  \tstd/os/user\t[..]s [no tests to run]
-```
-
-stderr=""
-
-$DIR/src/os/user/lookup_unix_test.go:194:45-194:69: Warning: failed to run test `TestLookupUserPopulatesAllFields`: code=0
-stdout=```
-testing: warning: no tests to run
-PASS
-ok  \tstd/os/user\t[..]s [no tests to run]
-```
-
-stderr=""
-
-$DIR/src/os/user/lookup_unix_test.go:205:13-205:32: Warning: failed to run test `TestLookupUserPopulatesAllFields`: code=0
-stdout=```
-testing: warning: no tests to run
-PASS
-ok  \tstd/os/user\t(cached) [no tests to run]
-```
-
-stderr=""
-
-$DIR/src/os/user/lookup_unix_test.go:233:44-233:61: Warning: failed to run test `TestLookupUser`: code=0
-stdout=```
-testing: warning: no tests to run
-PASS
-ok  \tstd/os/user\t[..]s [no tests to run]
-```
-
-stderr=""
-
+Silence this warning with: --allow dry-run-failed
 $DIR/src/os/user/user_test.go: dry running
-$DIR/src/os/user/user_test.go: mutilating
-$DIR/src/os/user/user_test.go: `userBuffer = old` passed
-$DIR/src/os/user/user_test.go: `userBuffer = 1` passed
-$DIR/src/os/user/user_test.go: `checkUser(t)` passed
-$DIR/src/os/user/user_test.go: `checkUser(t)` passed
-$DIR/src/os/user/user_test.go: `groupBuffer = old` passed
-$DIR/src/os/user/user_test.go: `groupBuffer = 1` passed
-$DIR/src/os/user/user_test.go: `checkGroup(t)` passed
-$DIR/src/os/user/user_test.go: `checkGroupList(t)` passed
-$DIR/src/os/user/user_test.go: `.GroupIds()` nonbuildable
+$DIR/src/os/user/user_test.go: Warning: dry run failed: code=1
+stdout=""
+stderr="go: ../../go.mod requires go >= 1.27 (running go 1.26.7; GOTOOLCHAIN=local)\n"
+
+$DIR/src/os/user/user_windows_test.go: dry running
+$DIR/src/os/user/user_windows_test.go: Warning: dry run failed: code=1
+stdout=""
+stderr="go: ../../go.mod requires go >= 1.27 (running go 1.26.7; GOTOOLCHAIN=local)\n"
+
