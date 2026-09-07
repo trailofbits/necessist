@@ -624,7 +624,7 @@ where
     let query_matches = cursor.matches(query, query_node, text_provider);
 
     let mut iter = query_matches
-        .map(|query_match| query_match.captures)
+        .map(|query_match| query_match.captures().to_vec())
         .filter(|captures| captures.iter().any(|capture| capture.node == node))
         .map(|captures| sort_captures(captures));
 
