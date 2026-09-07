@@ -7,4 +7,24 @@ subdir = "src/os/user"
 target_os = "linux"
 
 [config]
-ignored_tests = ["TestListGroups"]
+# smoelius: The following tests are ignored because they can cause "Failed to run test" warnings.
+ignored_tests = [
+    # listgroups_unix_test.go
+    "TestListGroups",
+    # lookup_unit_test.go (all tests therein)
+    "TestFindGroupName",
+    "TestFindGroupId",
+    "TestInvalidUserId",
+    "TestLookupUserId",
+    "TestLookupUserPopulatesAllFields",
+    "TestLookupUser",
+    # user_windows_test.go (all tests therein)
+    "TestImpersonatedSelf",
+    "TestImpersonated",
+    "TestCurrentNetapi32",
+    "TestGroupIdsTestUser",
+    "TestLookupServiceAccount",
+    "TestLookupIdServiceAccount",
+    "TestLookupGroupServiceAccount",
+    "TestLookupGroupIdServiceAccount",
+]

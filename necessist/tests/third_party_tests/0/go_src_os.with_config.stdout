@@ -1,4 +1,4 @@
-449 candidates in 84 tests in 1 source file
+439 candidates in 82 tests in 1 source file
 $DIR/src/os/os_test.go: dry running
 $DIR/src/os/os_test.go: mutilating
 $DIR/src/os/os_test.go: `t.Chdir(t.TempDir())` passed
@@ -452,12 +452,6 @@ $DIR/src/os/os_test.go: `names = append(names, "link.txt")` passed
 $DIR/src/os/os_test.go: `err = Chmod(path, dir.Mode())` passed
 $DIR/src/os/os_test.go: `err = p2.Kill()` timed-out
 $DIR/src/os/os_test.go: `t.Run("file", testDoubleCloseError(filepath.Join(sfdir, sfname)))` passed
-$DIR/src/os/os_test.go: `t.Setenv("XDG_CACHE_HOME", wd)` failed
-$DIR/src/os/os_test.go: `t.Setenv("XDG_CACHE_HOME", "some-dir")` failed
-$DIR/src/os/os_test.go: `_, err = UserCacheDir()` failed
-$DIR/src/os/os_test.go: `t.Setenv("XDG_CONFIG_HOME", wd)` failed
-$DIR/src/os/os_test.go: `t.Setenv("XDG_CONFIG_HOME", "some-dir")` failed
-$DIR/src/os/os_test.go: `_, err = UserConfigDir()` failed
 $DIR/src/os/os_test.go: `t.Run("OpenFile", func(t *testing.T) {
 		testOpenFileKeepsPermissions(t, OpenFile)
 	})` passed
@@ -927,11 +921,7 @@ $DIR/src/os/os_test.go: `.f(file)` nonbuildable
 $DIR/src/os/os_test.go: `.Run("file", testDoubleCloseError(filepath.Join(sfdir, sfname)))` nonbuildable
 $DIR/src/os/os_test.go: `.Join(sfdir, sfname)` nonbuildable
 $DIR/src/os/os_test.go: `.IsDir()` nonbuildable
-$DIR/src/os/os_test.go: `.Setenv("XDG_CACHE_HOME", wd)` nonbuildable
-$DIR/src/os/os_test.go: `.Setenv("XDG_CACHE_HOME", "some-dir")` nonbuildable
 $DIR/src/os/os_test.go: `.IsDir()` nonbuildable
-$DIR/src/os/os_test.go: `.Setenv("XDG_CONFIG_HOME", wd)` nonbuildable
-$DIR/src/os/os_test.go: `.Setenv("XDG_CONFIG_HOME", "some-dir")` nonbuildable
 $DIR/src/os/os_test.go: `.IsDir()` nonbuildable
 $DIR/src/os/os_test.go: `.Readdirnames(0)` nonbuildable
 $DIR/src/os/os_test.go: `.Seek(0, 0)` nonbuildable

@@ -1,5 +1,7 @@
 url = "https://github.com/golang/go"
 rev = "go1.27.1"
+init = "cd src && ./make.bash"
+path_prefix = "bin"
 
 # smoelius: Following the upgrade to go1.23.0, this test started acting funny on Windows. So just
 # ignore Windows for now.

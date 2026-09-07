@@ -1,16 +1,412 @@
 123 candidates in 29 tests in 2 source files
 $DIR/src/net/url/url_test.go: dry running
-$DIR/src/net/url/url_test.go: Warning: dry run failed: code=1
-stdout=```
-FAILstd/net/url [setup failed]
-FAIL
-```
+$DIR/src/net/url/url_test.go: mutilating
+$DIR/src/net/url/url_test.go: `u, err = Parse(tt.in)` passed
+$DIR/src/net/url/url_test.go: `expected = tt.roundtrip` failed
+$DIR/src/net/url/url_test.go: `t.Run(tt.name, func(t *testing.T) {
+			if g, w := tt.url.Redacted(), tt.want; g != w {
+				t.Fatalf("got: %q\nwant: %q", g, w)
+			}
+		})` passed
+$DIR/src/net/url/url_test.go: `in = strings.ReplaceAll(tt.in, "+", "%20")` failed
+$DIR/src/net/url/url_test.go: `in = tt.in` failed
+$DIR/src/net/url/url_test.go: `out = strings.ReplaceAll(s, "XXX", "+")` failed
+$DIR/src/net/url/url_test.go: `actual, err = PathUnescape(in)` failed
+$DIR/src/net/url/url_test.go: `url = base.ResolveReference(opaque)` failed
+$DIR/src/net/url/url_test.go: `url, err = base.Parse("scheme:opaque")` passed
+$DIR/src/net/url/url_test.go: `v.Del("bar")` failed
+$DIR/src/net/url/url_test.go: `t.Run(test.query, func(t *testing.T) {
+			form, err := ParseQuery(test.query)
+			if test.ok != (err == nil) {
+				want := "<error>"
+				if test.ok {
+					want = "<nil>"
+				}
+				t.Errorf("Unexpected error: %v, want %v", err, want)
+			}
+			if len(form) != len(test.out) {
+				t.Errorf("len(form) = %d, want %d", len(form), len(test.out))
+			}
+			for k, evs := range test.out {
+				vs, ok := form[k]
+				if !ok {
+					t.Errorf("Missing key %q", k)
+					continue
+				}
+				if len(vs) != len(evs) {
+					t.Errorf("len(form[%q]) = %d, want %d", k, len(vs), len(evs))
+					continue
+				}
+				for j, ev := range evs {
+					if v := vs[j]; v != ev {
+						t.Errorf("form[%q][%d] = %q, want %q", k, j, v, ev)
+					}
+				}
+			}
+		})` passed
+$DIR/src/net/url/url_test.go: `want = "<nil>"` passed
+$DIR/src/net/url/url_test.go: `t.Setenv("GODEBUG", test.godebug)` failed
+$DIR/src/net/url/url_test.go: `b.WriteString("&")` failed
+$DIR/src/net/url/url_test.go: `b.WriteString(p)` failed
+$DIR/src/net/url/url_test.go: `want[p] = []string{""}` passed
+$DIR/src/net/url/url_test.go: `err = json.Unmarshal(js, u1)` failed
+$DIR/src/net/url/url_test.go: `err = gob.NewEncoder(&w).Encode(u)` failed
+$DIR/src/net/url/url_test.go: `err = gob.NewDecoder(&w).Decode(u1)` failed
+$DIR/src/net/url/url_test.go: `wantErr = "non-nil error"` passed
+$DIR/src/net/url/url_test.go: `tt.out = tt.base` failed
+$DIR/src/net/url/url_test.go: `out = u.JoinPath(tt.elem...).String()` failed
+$DIR/src/net/url/url_test.go: `t.Setenv("GODEBUG", "urlstrictcolons=0")` failed
+$DIR/src/net/url/url_test.go: `t.Run(strconv.Itoa(i), func(t *testing.T) {
+			_, err := Parse(tc.url)
+			if err != nil {
+				t.Errorf("Parse(%q) error = %v, want nil", tc.url, err)
+			}
+		})` passed
+$DIR/src/net/url/url_test.go: `t.Run(tt.name, func(t *testing.T) {
+			// 1. The cloned URL must always deep equal the input, but never the same pointer.
+			cloned := tt.in.Clone()
+			if !reflect.DeepEqual(tt.in, cloned) {
+				t.Fatalf("Differing values\n%s",
+					diff.Diff("original", []byte(tt.in.String()), "cloned", []byte(cloned.String())))
+			}
+			if tt.in == nil {
+				return
+			}
 
-stderr=```
-# std/net/url
-package std/net/url
-url.go:21:2: use of internal package internal/godebug not allowed
-```
+			// Ensure that their pointer values are not the same.
+			if tt.in == cloned {
+				t.Fatalf("URL: same pointer returned: %p", cloned)
+			}
 
+			// 2. Test out malleability of URL fields.
+			cloned.Scheme = "https"
+			if cloned.Scheme == tt.in.Scheme {
+				t.Error("Inconsistent state: cloned.scheme changed and reflected in the input's scheme")
+			}
+			if reflect.DeepEqual(tt.in, cloned) {
+				t.Fatal("Inconsistent state: cloned and input are somehow the same")
+			}
 
-Silence this warning with: --allow dry-run-failed
+			// 3. Ensure that the .User object deep equals but not the same pointer.
+			if !reflect.DeepEqual(tt.in.User, cloned.User) {
+				t.Fatalf("Differing .User\n%s",
+					diff.Diff("original", []byte(tt.in.String()), "cloned", []byte(cloned.String())))
+			}
+			bothNil := tt.in.User == nil && cloned.User == nil
+			if !bothNil && tt.in.User == cloned.User {
+				t.Fatalf(".User: same pointer returned: %p", cloned.User)
+			}
+		})` passed
+$DIR/src/net/url/url_test.go: `cloned.Scheme = "https"` failed
+$DIR/src/net/url/url_test.go: `t.Run(tt.name, func(t *testing.T) {
+			// The cloned map must always deep equal the input.
+			cloned1 := tt.in.Clone()
+			if !reflect.DeepEqual(tt.in, cloned1) {
+				t.Fatal("reflect.DeepEqual failed")
+			}
+
+			if cloned1 == nil && tt.in == nil {
+				return
+			}
+			if len(cloned1) == 0 && len(tt.in) == 0 && (cloned1 == nil || tt.in == nil) {
+				t.Fatalf("Inconsistency: both have len=0, yet not both nil\nCloned: %#v\nOriginal: %#v\n", cloned1, tt.in)
+			}
+			// Test out malleability of values.
+			cloned1["XXXXXXXXXXX"] = []string{"a", "b"}
+			if reflect.DeepEqual(tt.in, cloned1) {
+				t.Fatal("Inconsistent state: cloned and input are somehow the same")
+			}
+
+			// Ensure that we can correctly invoke some methods like .Add
+			cloned2 := tt.in.Clone()
+			if !reflect.DeepEqual(tt.in, cloned2) {
+				t.Fatal("reflect.DeepEqual failed")
+			}
+			cloned2.Add("a", "A")
+			if !cloned2.Has("a") {
+				t.Error("Cloned doesn't have the desired key: a")
+			}
+			if !cloned2.Has("a") {
+				t.Error("Cloned doesn't have the desired key: a")
+			}
+			// Assert that any changes to the clone did not change the original.
+			if reflect.DeepEqual(tt.in, cloned2) {
+				t.Fatal("reflect.DeepEqual unexpectedly passed after modify cloned")
+			}
+			cloned2.Del("a")
+			// Assert that reverting the clone's changes bring it back to original state.
+			if !reflect.DeepEqual(tt.in, cloned2) {
+				t.Fatal("reflect.DeepEqual failed")
+			}
+
+			cloned3 := tt.in.Clone()
+			clonedKeys := slices.Collect(maps.Keys(cloned3))
+			if len(clonedKeys) == 0 {
+				return
+			}
+			key0 := clonedKeys[0]
+			// Test modifying the actual slice.
+			if len(cloned3[key0]) == 0 {
+				cloned3[key0] = append(cloned3[key0], "golang")
+			} else {
+				cloned3[key0][0] = "directly modified"
+				if got, want := cloned3.Get(key0), "directly modified"; got != want {
+					t.Errorf("Get failed:\n\tGot:  %q\n\tWant: %q", got, want)
+				}
+			}
+			if reflect.DeepEqual(tt.in, cloned3) {
+				t.Fatal("reflect.DeepEqual unexpectedly passed after modify cloned")
+			}
+
+			// Try out also with .Set.
+			cloned4 := tt.in.Clone()
+			if !reflect.DeepEqual(tt.in, cloned4) {
+				t.Fatal("reflect.DeepEqual failed")
+			}
+			cloned4.Set(key0, "good night")
+			if reflect.DeepEqual(tt.in, cloned4) {
+				t.Fatal("reflect.DeepEqual unexpectedly passed after modify cloned")
+			}
+			if got, want := cloned4.Get(key0), "good night"; got != want {
+				t.Errorf("Get failed:\n\tGot:  %q\n\tWant: %q", got, want)
+			}
+		})` passed
+$DIR/src/net/url/url_test.go: `cloned1["XXXXXXXXXXX"] = []string{"a", "b"}` failed
+$DIR/src/net/url/url_test.go: `cloned2.Add("a", "A")` failed
+$DIR/src/net/url/url_test.go: `cloned2.Del("a")` failed
+$DIR/src/net/url/url_test.go: `cloned3[key0] = append(cloned3[key0], "golang")` failed
+$DIR/src/net/url/url_test.go: `cloned3[key0][0] = "directly modified"` failed
+$DIR/src/net/url/url_test.go: `cloned4.Set(key0, "good night")` failed
+$DIR/src/net/url/url_test.go: `.DeepEqual(u, tt.out)` nonbuildable
+$DIR/src/net/url/url_test.go: `.String()` nonbuildable
+$DIR/src/net/url/url_test.go: `.url.String()` nonbuildable
+$DIR/src/net/url/url_test.go: `.Run(tt.name, func(t *testing.T) {
+			if g, w := tt.url.Redacted(), tt.want; g != w {
+				t.Fatalf("got: %q\nwant: %q", g, w)
+			}
+		})` nonbuildable
+$DIR/src/net/url/url_test.go: `.url.Redacted()` nonbuildable
+$DIR/src/net/url/url_test.go: `.Contains(tt.in, "+")` nonbuildable
+$DIR/src/net/url/url_test.go: `.ReplaceAll(tt.in, "+", "%20")` nonbuildable
+$DIR/src/net/url/url_test.go: `.ReplaceAll(tt.in, "+", "XXX")` nonbuildable
+$DIR/src/net/url/url_test.go: `.ReplaceAll(s, "XXX", "+")` nonbuildable
+$DIR/src/net/url/url_test.go: `.m.Encode()` nonbuildable
+$DIR/src/net/url/url_test.go: `.ResolveReference(rel)` nonbuildable
+$DIR/src/net/url/url_test.go: `.String()` nonbuildable
+$DIR/src/net/url/url_test.go: `.Parse(test.rel)` nonbuildable
+$DIR/src/net/url/url_test.go: `.String()` nonbuildable
+$DIR/src/net/url/url_test.go: `.ResolveReference(opaque)` failed
+$DIR/src/net/url/url_test.go: `.Parse("scheme:opaque")` nonbuildable
+$DIR/src/net/url/url_test.go: `.Query()` nonbuildable
+$DIR/src/net/url/url_test.go: `.Get("foo")` nonbuildable
+$DIR/src/net/url/url_test.go: `.Get("Foo")` nonbuildable
+$DIR/src/net/url/url_test.go: `.Get("bar")` nonbuildable
+$DIR/src/net/url/url_test.go: `.Get("baz")` nonbuildable
+$DIR/src/net/url/url_test.go: `.Has("foo")` nonbuildable
+$DIR/src/net/url/url_test.go: `.Has("bar")` nonbuildable
+$DIR/src/net/url/url_test.go: `.Has("baz")` nonbuildable
+$DIR/src/net/url/url_test.go: `.Has("noexist")` nonbuildable
+$DIR/src/net/url/url_test.go: `.Del("bar")` nonbuildable
+$DIR/src/net/url/url_test.go: `.Get("bar")` nonbuildable
+$DIR/src/net/url/url_test.go: `.Run(test.query, func(t *testing.T) {
+			form, err := ParseQuery(test.query)
+			if test.ok != (err == nil) {
+				want := "<error>"
+				if test.ok {
+					want = "<nil>"
+				}
+				t.Errorf("Unexpected error: %v, want %v", err, want)
+			}
+			if len(form) != len(test.out) {
+				t.Errorf("len(form) = %d, want %d", len(form), len(test.out))
+			}
+			for k, evs := range test.out {
+				vs, ok := form[k]
+				if !ok {
+					t.Errorf("Missing key %q", k)
+					continue
+				}
+				if len(vs) != len(evs) {
+					t.Errorf("len(form[%q]) = %d, want %d", k, len(vs), len(evs))
+					continue
+				}
+				for j, ev := range evs {
+					if v := vs[j]; v != ev {
+						t.Errorf("form[%q][%d] = %q, want %q", k, j, v, ev)
+					}
+				}
+			}
+		})` nonbuildable
+$DIR/src/net/url/url_test.go: `.Setenv("GODEBUG", test.godebug)` nonbuildable
+$DIR/src/net/url/url_test.go: `.WriteString("&")` nonbuildable
+$DIR/src/net/url/url_test.go: `.Sprintf("p%v", i)` nonbuildable
+$DIR/src/net/url/url_test.go: `.WriteString(p)` nonbuildable
+$DIR/src/net/url/url_test.go: `.String()` nonbuildable
+$DIR/src/net/url/url_test.go: `.url.RequestURI()` nonbuildable
+$DIR/src/net/url/url_test.go: `.Sprint(err)` nonbuildable
+$DIR/src/net/url/url_test.go: `.Contains(errStr, "%gh")` nonbuildable
+$DIR/src/net/url/url_test.go: `.RequestURI()` nonbuildable
+$DIR/src/net/url/url_test.go: `.Timeout()` nonbuildable
+$DIR/src/net/url/url_test.go: `.Temporary()` nonbuildable
+$DIR/src/net/url/url_test.go: `.Hostname()` nonbuildable
+$DIR/src/net/url/url_test.go: `.Port()` nonbuildable
+$DIR/src/net/url/url_test.go: `.Marshal(u)` nonbuildable
+$DIR/src/net/url/url_test.go: `.Unmarshal(js, u1)` nonbuildable
+$DIR/src/net/url/url_test.go: `.String()` nonbuildable
+$DIR/src/net/url/url_test.go: `.String()` nonbuildable
+$DIR/src/net/url/url_test.go: `.NewEncoder(&w)` nonbuildable
+$DIR/src/net/url/url_test.go: `.Encode(u)` nonbuildable
+$DIR/src/net/url/url_test.go: `.NewDecoder(&w)` nonbuildable
+$DIR/src/net/url/url_test.go: `.Decode(u1)` nonbuildable
+$DIR/src/net/url/url_test.go: `.String()` nonbuildable
+$DIR/src/net/url/url_test.go: `.String()` nonbuildable
+$DIR/src/net/url/url_test.go: `.User.Username()` nonbuildable
+$DIR/src/net/url/url_test.go: `.User.Password()` nonbuildable
+$DIR/src/net/url/url_test.go: `.User.String()` nonbuildable
+$DIR/src/net/url/url_test.go: `.Sprint(err)` nonbuildable
+$DIR/src/net/url/url_test.go: `.Contains(got, wantsub)` nonbuildable
+$DIR/src/net/url/url_test.go: `.Sprint(err)` nonbuildable
+$DIR/src/net/url/url_test.go: `.Contains(got, wantSub)` nonbuildable
+$DIR/src/net/url/url_test.go: `.JoinPath(tt.elem...)` failed
+$DIR/src/net/url/url_test.go: `.String()` nonbuildable
+$DIR/src/net/url/url_test.go: `.Setenv("GODEBUG", "urlstrictcolons=0")` nonbuildable
+$DIR/src/net/url/url_test.go: `.Run(strconv.Itoa(i), func(t *testing.T) {
+			_, err := Parse(tc.url)
+			if err != nil {
+				t.Errorf("Parse(%q) error = %v, want nil", tc.url, err)
+			}
+		})` nonbuildable
+$DIR/src/net/url/url_test.go: `.Itoa(i)` nonbuildable
+$DIR/src/net/url/url_test.go: `.Run(tt.name, func(t *testing.T) {
+			// 1. The cloned URL must always deep equal the input, but never the same pointer.
+			cloned := tt.in.Clone()
+			if !reflect.DeepEqual(tt.in, cloned) {
+				t.Fatalf("Differing values\n%s",
+					diff.Diff("original", []byte(tt.in.String()), "cloned", []byte(cloned.String())))
+			}
+			if tt.in == nil {
+				return
+			}
+
+			// Ensure that their pointer values are not the same.
+			if tt.in == cloned {
+				t.Fatalf("URL: same pointer returned: %p", cloned)
+			}
+
+			// 2. Test out malleability of URL fields.
+			cloned.Scheme = "https"
+			if cloned.Scheme == tt.in.Scheme {
+				t.Error("Inconsistent state: cloned.scheme changed and reflected in the input's scheme")
+			}
+			if reflect.DeepEqual(tt.in, cloned) {
+				t.Fatal("Inconsistent state: cloned and input are somehow the same")
+			}
+
+			// 3. Ensure that the .User object deep equals but not the same pointer.
+			if !reflect.DeepEqual(tt.in.User, cloned.User) {
+				t.Fatalf("Differing .User\n%s",
+					diff.Diff("original", []byte(tt.in.String()), "cloned", []byte(cloned.String())))
+			}
+			bothNil := tt.in.User == nil && cloned.User == nil
+			if !bothNil && tt.in.User == cloned.User {
+				t.Fatalf(".User: same pointer returned: %p", cloned.User)
+			}
+		})` nonbuildable
+$DIR/src/net/url/url_test.go: `.in.Clone()` nonbuildable
+$DIR/src/net/url/url_test.go: `.DeepEqual(tt.in, cloned)` nonbuildable
+$DIR/src/net/url/url_test.go: `.DeepEqual(tt.in, cloned)` nonbuildable
+$DIR/src/net/url/url_test.go: `.DeepEqual(tt.in.User, cloned.User)` nonbuildable
+$DIR/src/net/url/url_test.go: `.Run(tt.name, func(t *testing.T) {
+			// The cloned map must always deep equal the input.
+			cloned1 := tt.in.Clone()
+			if !reflect.DeepEqual(tt.in, cloned1) {
+				t.Fatal("reflect.DeepEqual failed")
+			}
+
+			if cloned1 == nil && tt.in == nil {
+				return
+			}
+			if len(cloned1) == 0 && len(tt.in) == 0 && (cloned1 == nil || tt.in == nil) {
+				t.Fatalf("Inconsistency: both have len=0, yet not both nil\nCloned: %#v\nOriginal: %#v\n", cloned1, tt.in)
+			}
+			// Test out malleability of values.
+			cloned1["XXXXXXXXXXX"] = []string{"a", "b"}
+			if reflect.DeepEqual(tt.in, cloned1) {
+				t.Fatal("Inconsistent state: cloned and input are somehow the same")
+			}
+
+			// Ensure that we can correctly invoke some methods like .Add
+			cloned2 := tt.in.Clone()
+			if !reflect.DeepEqual(tt.in, cloned2) {
+				t.Fatal("reflect.DeepEqual failed")
+			}
+			cloned2.Add("a", "A")
+			if !cloned2.Has("a") {
+				t.Error("Cloned doesn't have the desired key: a")
+			}
+			if !cloned2.Has("a") {
+				t.Error("Cloned doesn't have the desired key: a")
+			}
+			// Assert that any changes to the clone did not change the original.
+			if reflect.DeepEqual(tt.in, cloned2) {
+				t.Fatal("reflect.DeepEqual unexpectedly passed after modify cloned")
+			}
+			cloned2.Del("a")
+			// Assert that reverting the clone's changes bring it back to original state.
+			if !reflect.DeepEqual(tt.in, cloned2) {
+				t.Fatal("reflect.DeepEqual failed")
+			}
+
+			cloned3 := tt.in.Clone()
+			clonedKeys := slices.Collect(maps.Keys(cloned3))
+			if len(clonedKeys) == 0 {
+				return
+			}
+			key0 := clonedKeys[0]
+			// Test modifying the actual slice.
+			if len(cloned3[key0]) == 0 {
+				cloned3[key0] = append(cloned3[key0], "golang")
+			} else {
+				cloned3[key0][0] = "directly modified"
+				if got, want := cloned3.Get(key0), "directly modified"; got != want {
+					t.Errorf("Get failed:\n\tGot:  %q\n\tWant: %q", got, want)
+				}
+			}
+			if reflect.DeepEqual(tt.in, cloned3) {
+				t.Fatal("reflect.DeepEqual unexpectedly passed after modify cloned")
+			}
+
+			// Try out also with .Set.
+			cloned4 := tt.in.Clone()
+			if !reflect.DeepEqual(tt.in, cloned4) {
+				t.Fatal("reflect.DeepEqual failed")
+			}
+			cloned4.Set(key0, "good night")
+			if reflect.DeepEqual(tt.in, cloned4) {
+				t.Fatal("reflect.DeepEqual unexpectedly passed after modify cloned")
+			}
+			if got, want := cloned4.Get(key0), "good night"; got != want {
+				t.Errorf("Get failed:\n\tGot:  %q\n\tWant: %q", got, want)
+			}
+		})` nonbuildable
+$DIR/src/net/url/url_test.go: `.in.Clone()` nonbuildable
+$DIR/src/net/url/url_test.go: `.DeepEqual(tt.in, cloned1)` nonbuildable
+$DIR/src/net/url/url_test.go: `.DeepEqual(tt.in, cloned1)` nonbuildable
+$DIR/src/net/url/url_test.go: `.in.Clone()` nonbuildable
+$DIR/src/net/url/url_test.go: `.DeepEqual(tt.in, cloned2)` nonbuildable
+$DIR/src/net/url/url_test.go: `.Add("a", "A")` nonbuildable
+$DIR/src/net/url/url_test.go: `.Has("a")` nonbuildable
+$DIR/src/net/url/url_test.go: `.Has("a")` nonbuildable
+$DIR/src/net/url/url_test.go: `.DeepEqual(tt.in, cloned2)` nonbuildable
+$DIR/src/net/url/url_test.go: `.Del("a")` nonbuildable
+$DIR/src/net/url/url_test.go: `.DeepEqual(tt.in, cloned2)` nonbuildable
+$DIR/src/net/url/url_test.go: `.in.Clone()` nonbuildable
+$DIR/src/net/url/url_test.go: `.Collect(maps.Keys(cloned3))` nonbuildable
+$DIR/src/net/url/url_test.go: `.Keys(cloned3)` nonbuildable
+$DIR/src/net/url/url_test.go: `.Get(key0)` nonbuildable
+$DIR/src/net/url/url_test.go: `.DeepEqual(tt.in, cloned3)` nonbuildable
+$DIR/src/net/url/url_test.go: `.in.Clone()` nonbuildable
+$DIR/src/net/url/url_test.go: `.DeepEqual(tt.in, cloned4)` nonbuildable
+$DIR/src/net/url/url_test.go: `.Set(key0, "good night")` nonbuildable
+$DIR/src/net/url/url_test.go: `.DeepEqual(tt.in, cloned4)` nonbuildable
+$DIR/src/net/url/url_test.go: `.Get(key0)` nonbuildable
