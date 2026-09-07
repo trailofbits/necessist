@@ -52,7 +52,7 @@ impl<'context, 'config, 'backend, 'ast, 'storage>
     }
 
     fn visit_test_method_declaration(&mut self, query_match: &QueryMatch<'_, 'ast>) -> Result<()> {
-        assert_eq!(2, query_match.captures.len());
+        assert_eq!(2, query_match.captures().len());
 
         let name = query_match
             .nodes_for_capture_index(0)
