@@ -424,11 +424,8 @@ impl RunLow for Foundry {
         ))
     }
 
-    fn command_to_build_source_file(&self, context: &LightContext, _source_file: &Path) -> Command {
-        let mut command = Command::new("forge");
-        command.current_dir(context.root.as_path());
-        command.arg("build");
-        command
+    fn command_to_build_source_file(&self, context: &LightContext, source_file: &Path) -> Command {
+        Self::build_command(context, source_file)
     }
 
     // smoelius: If the user specifies additional arguments to pass to the test command, Necessist
@@ -441,12 +438,9 @@ impl RunLow for Foundry {
         &self,
         context: &LightContext,
         _test_name: &str,
-        _span: &Span,
+        span: &Span,
     ) -> Command {
-        let mut command = Command::new("forge");
-        command.current_dir(context.root.as_path());
-        command.arg("build");
-        command
+        Self::build_command(context, &span.source_file)
     }
 
     fn command_to_run_test(
@@ -469,6 +463,14 @@ impl RunLow for Foundry {
 }
 
 impl Foundry {
+    fn build_command(context: &LightContext, source_file: &Path) -> Command {
+        let mut command = Command::new("forge");
+        command.current_dir(context.root.as_path());
+        command.arg("build");
+        command.arg(source_file);
+        command
+    }
+
     fn test_command(context: &LightContext, source_file: &Path) -> Command {
         let mut command = Command::new("forge");
         command.current_dir(context.root.as_path());
