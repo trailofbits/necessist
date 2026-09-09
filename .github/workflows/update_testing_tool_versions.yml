@@ -47,6 +47,6 @@ jobs:
         if: steps.snapshot.outputs.changed == 'true'
         uses: peter-evans/create-pull-request@v8
         with:
-          title: "Update third-party tests"
-          commit-message: "Update third-party tests"
+          title: "Update testing tool versions"
+          commit-message: "Update testing tool versions"
           branch-suffix: random
