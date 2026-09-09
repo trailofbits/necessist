@@ -116,6 +116,20 @@
         "name": "David Tolnay"
       }
     ],
+    "arrayvec": [
+      {
+        "id": 356,
+        "kind": "user",
+        "login": "bluss",
+        "name": "bluss"
+      },
+      {
+        "id": 362,
+        "kind": "team",
+        "login": "github:rust-bus:maintainers",
+        "name": "maintainers"
+      }
+    ],
     "ascii-canvas": [
       {
         "id": 356,
@@ -156,6 +170,22 @@
         "kind": "user",
         "login": "swc-bot",
         "name": "SWC Bot"
+      }
+    ],
+    "attribute-derive": [
+      {
+        "id": 118394,
+        "kind": "user",
+        "login": "ModProg",
+        "name": "Roland Fredenhagen"
+      }
+    ],
+    "attribute-derive-macro": [
+      {
+        "id": 118394,
+        "kind": "user",
+        "login": "ModProg",
+        "name": "Roland Fredenhagen"
       }
     ],
     "autocfg": [
@@ -412,6 +442,20 @@
         "name": "Zicklag"
       }
     ],
+    "char_str": [
+      {
+        "id": 174312,
+        "kind": "user",
+        "login": "charliermarsh",
+        "name": "Charlie Marsh"
+      },
+      {
+        "id": 433794,
+        "kind": "user",
+        "login": "astral-crates-bot",
+        "name": null
+      }
+    ],
     "clap": [
       {
         "id": 460,
@@ -484,6 +528,14 @@
         "kind": "user",
         "login": "epage",
         "name": "Ed Page"
+      }
+    ],
+    "collection_literals": [
+      {
+        "id": 153279,
+        "kind": "user",
+        "login": "staedoix",
+        "name": "Edward"
       }
     ],
     "colorchoice": [
@@ -842,6 +894,20 @@
         "name": "Jacob Pratt"
       }
     ],
+    "derive-where": [
+      {
+        "id": 34642,
+        "kind": "user",
+        "login": "daxpedda",
+        "name": null
+      },
+      {
+        "id": 118394,
+        "kind": "user",
+        "login": "ModProg",
+        "name": "Roland Fredenhagen"
+      }
+    ],
     "diesel": [
       {
         "id": 58,
@@ -988,6 +1054,14 @@
         "kind": "user",
         "login": "magic-akari",
         "name": null
+      }
+    ],
+    "drop_bomb": [
+      {
+        "id": 2699,
+        "kind": "user",
+        "login": "matklad",
+        "name": "Alex Kladov"
       }
     ],
     "dsl_auto_type": [
@@ -1328,6 +1402,30 @@
         "name": null
       }
     ],
+    "get-size-derive2": [
+      {
+        "id": 279191,
+        "kind": "user",
+        "login": "bircni",
+        "name": null
+      }
+    ],
+    "get-size2": [
+      {
+        "id": 279191,
+        "kind": "user",
+        "login": "bircni",
+        "name": null
+      }
+    ],
+    "getopts": [
+      {
+        "id": 55123,
+        "kind": "user",
+        "login": "rust-lang-owner",
+        "name": null
+      }
+    ],
     "getrandom": [
       {
         "id": 563,
@@ -1636,6 +1734,14 @@
         "name": "Dirkjan Ochtman"
       }
     ],
+    "interpolator": [
+      {
+        "id": 118394,
+        "kind": "user",
+        "login": "ModProg",
+        "name": "Roland Fredenhagen"
+      }
+    ],
     "is-macro": [
       {
         "id": 7286,
@@ -1930,6 +2036,22 @@
         "name": null
       }
     ],
+    "manyhow": [
+      {
+        "id": 118394,
+        "kind": "user",
+        "login": "ModProg",
+        "name": "Roland Fredenhagen"
+      }
+    ],
+    "manyhow-macros": [
+      {
+        "id": 118394,
+        "kind": "user",
+        "login": "ModProg",
+        "name": "Roland Fredenhagen"
+      }
+    ],
     "memchr": [
       {
         "id": 189,
@@ -2124,6 +2246,20 @@
         "name": "Alex Gaynor"
       }
     ],
+    "ordermap": [
+      {
+        "id": 356,
+        "kind": "user",
+        "login": "bluss",
+        "name": "bluss"
+      },
+      {
+        "id": 539,
+        "kind": "user",
+        "login": "cuviper",
+        "name": "Josh Stone"
+      }
+    ],
     "par-core": [
       {
         "id": 7286,
@@ -2215,6 +2351,26 @@
       }
     ],
     "phf": [
+      {
+        "id": 5,
+        "kind": "user",
+        "login": "sfackler",
+        "name": "Steven Fackler"
+      },
+      {
+        "id": 127,
+        "kind": "user",
+        "login": "abonander",
+        "name": "Austin Bonander"
+      },
+      {
+        "id": 51017,
+        "kind": "user",
+        "login": "JohnTitor",
+        "name": "Yuki Okushi"
+      }
+    ],
+    "phf_codegen": [
       {
         "id": 5,
         "kind": "user",
@@ -2366,6 +2522,14 @@
         "name": "Jacob Pratt"
       }
     ],
+    "ppv-lite86": [
+      {
+        "id": 12840,
+        "kind": "user",
+        "login": "kazcw",
+        "name": "Keziah Wesley"
+      }
+    ],
     "precomputed-hash": [
       {
         "id": 3788,
@@ -2404,6 +2568,14 @@
         "name": "Ed Page"
       }
     ],
+    "proc-macro-utils": [
+      {
+        "id": 118394,
+        "kind": "user",
+        "login": "ModProg",
+        "name": "Roland Fredenhagen"
+      }
+    ],
     "proc-macro2": [
       {
         "id": 3618,
@@ -2420,6 +2592,22 @@
         "name": "David Tolnay"
       }
     ],
+    "quote-use": [
+      {
+        "id": 118394,
+        "kind": "user",
+        "login": "ModProg",
+        "name": "Roland Fredenhagen"
+      }
+    ],
+    "quote-use-macros": [
+      {
+        "id": 118394,
+        "kind": "user",
+        "login": "ModProg",
+        "name": "Roland Fredenhagen"
+      }
+    ],
     "r-efi": [
       {
         "id": 12177,
@@ -2429,6 +2617,20 @@
       }
     ],
     "rand": [
+      {
+        "id": 563,
+        "kind": "team",
+        "login": "github:rust-random:maintainers",
+        "name": "maintainers"
+      },
+      {
+        "id": 1234,
+        "kind": "user",
+        "login": "dhardy",
+        "name": "Diggory Hardy"
+      }
+    ],
+    "rand_chacha": [
       {
         "id": 563,
         "kind": "team",
@@ -2567,6 +2769,76 @@
         "id": 89675,
         "kind": "user",
         "login": "Spxg",
+        "name": null
+      }
+    ],
+    "ruff_python_ast": [
+      {
+        "id": 174312,
+        "kind": "user",
+        "login": "charliermarsh",
+        "name": "Charlie Marsh"
+      },
+      {
+        "id": 433794,
+        "kind": "user",
+        "login": "astral-crates-bot",
+        "name": null
+      }
+    ],
+    "ruff_python_parser": [
+      {
+        "id": 174312,
+        "kind": "user",
+        "login": "charliermarsh",
+        "name": "Charlie Marsh"
+      },
+      {
+        "id": 433794,
+        "kind": "user",
+        "login": "astral-crates-bot",
+        "name": null
+      }
+    ],
+    "ruff_python_trivia": [
+      {
+        "id": 174312,
+        "kind": "user",
+        "login": "charliermarsh",
+        "name": "Charlie Marsh"
+      },
+      {
+        "id": 433794,
+        "kind": "user",
+        "login": "astral-crates-bot",
+        "name": null
+      }
+    ],
+    "ruff_source_file": [
+      {
+        "id": 174312,
+        "kind": "user",
+        "login": "charliermarsh",
+        "name": "Charlie Marsh"
+      },
+      {
+        "id": 433794,
+        "kind": "user",
+        "login": "astral-crates-bot",
+        "name": null
+      }
+    ],
+    "ruff_text_size": [
+      {
+        "id": 174312,
+        "kind": "user",
+        "login": "charliermarsh",
+        "name": "Charlie Marsh"
+      },
+      {
+        "id": 433794,
+        "kind": "user",
+        "login": "astral-crates-bot",
         "name": null
       }
     ],
@@ -3266,6 +3538,26 @@
         "name": "Ed Page"
       }
     ],
+    "thin-vec": [
+      {
+        "id": 38,
+        "kind": "user",
+        "login": "Gankra",
+        "name": "Aria Desires"
+      },
+      {
+        "id": 3788,
+        "kind": "user",
+        "login": "emilio",
+        "name": "Emilio Cobos Álvarez"
+      },
+      {
+        "id": 168409,
+        "kind": "user",
+        "login": "nicoburns",
+        "name": "Nico Burns"
+      }
+    ],
     "thiserror": [
       {
         "id": 3618,
@@ -3338,6 +3630,28 @@
         "kind": "user",
         "login": "zbraniecki",
         "name": "Zibi Braniecki"
+      }
+    ],
+    "tinyvec": [
+      {
+        "id": 362,
+        "kind": "team",
+        "login": "github:rust-bus:maintainers",
+        "name": "maintainers"
+      },
+      {
+        "id": 7211,
+        "kind": "user",
+        "login": "Lokathor",
+        "name": "Lokathor"
+      }
+    ],
+    "tinyvec_macros": [
+      {
+        "id": 94492,
+        "kind": "user",
+        "login": "Soveu",
+        "name": null
       }
     ],
     "toml": [
@@ -3558,6 +3872,38 @@
         "name": "David Tolnay"
       }
     ],
+    "unicode-normalization": [
+      {
+        "id": 3,
+        "kind": "user",
+        "login": "huonw",
+        "name": "Huon Wilson"
+      },
+      {
+        "id": 7,
+        "kind": "user",
+        "login": "SimonSapin",
+        "name": "Simon Sapin"
+      },
+      {
+        "id": 1139,
+        "kind": "user",
+        "login": "Manishearth",
+        "name": "Manish Goregaokar"
+      },
+      {
+        "id": 1458,
+        "kind": "user",
+        "login": "kwantam",
+        "name": "Riad S. Wahby"
+      },
+      {
+        "id": 21056,
+        "kind": "user",
+        "login": "sujayakar",
+        "name": "Sujay Jayakar"
+      }
+    ],
     "unicode-width": [
       {
         "id": 3,
@@ -3626,6 +3972,22 @@
         "kind": "user",
         "login": "sujayakar",
         "name": "Sujay Jayakar"
+      }
+    ],
+    "unicode_names2": [
+      {
+        "id": 5065,
+        "kind": "user",
+        "login": "progval",
+        "name": "Val Lorentz"
+      }
+    ],
+    "unicode_names2_generator": [
+      {
+        "id": 5065,
+        "kind": "user",
+        "login": "progval",
+        "name": "Val Lorentz"
       }
     ],
     "unit-prefix": [

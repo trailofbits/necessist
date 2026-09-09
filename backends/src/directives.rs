@@ -11,6 +11,7 @@ use std::collections::BTreeSet;
 #[derive(Clone, Copy)]
 pub enum DirectiveSyntax {
     Php,
+    Python,
     Slash,
 }
 
@@ -18,6 +19,7 @@ impl DirectiveSyntax {
     fn line_comment_prefixes(self) -> &'static [&'static str] {
         match self {
             Self::Php => &["#", "//"],
+            Self::Python => &["#"],
             Self::Slash => &["//"],
         }
     }
@@ -185,9 +187,12 @@ mod test {
     #[test]
     fn skip_directives_are_backend_specific() {
         let php = Directives::new(DirectiveSyntax::Php);
+        let python = Directives::new(DirectiveSyntax::Python);
         let slash = Directives::new(DirectiveSyntax::Slash);
         assert!(php.is_skip_directive("# necessist: skip"));
         assert!(php.is_skip_directive("// necessist: skip"));
+        assert!(python.is_skip_directive("# necessist: skip"));
+        assert!(!python.is_skip_directive("// necessist: skip"));
         assert!(!slash.is_skip_directive("# necessist: skip"));
         assert!(slash.is_skip_directive("// necessist: skip"));
     }
@@ -210,7 +215,7 @@ mod test {
     #[test]
     fn skip_file_directive_syntax() {
         // Keep these cases in sync with `fixtures/directives`, `fixtures/php_skip_file`,
-        // and `fixtures/skip_invalid_file`.
+        // `fixtures/skip_invalid_file`, and `fixtures/python_skip_file`.
         const CASES: &[(DirectiveSyntax, &str)] = &[
             (
                 DirectiveSyntax::Slash,
@@ -221,6 +226,7 @@ mod test {
                 DirectiveSyntax::Slash,
                 "// necessist: skip-file, deliberately invalid Rust follows",
             ),
+            (DirectiveSyntax::Python, "# necessist: skip-file"),
         ];
         for &(syntax, line) in CASES {
             let directives = Directives::new(syntax);
@@ -253,6 +259,9 @@ mod test {
             (DirectiveSyntax::Slash, "// comment"),
             (DirectiveSyntax::Slash, "/// doc comment"),
             (DirectiveSyntax::Slash, "//! inner doc comment"),
+            (DirectiveSyntax::Python, "# Python comment"),
+            (DirectiveSyntax::Python, "#! /usr/bin/env python"),
+            (DirectiveSyntax::Python, "#!/usr/bin/env python3"),
             (DirectiveSyntax::Php, "<?php"),
         ];
         for &(syntax, line) in CASES {

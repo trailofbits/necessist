@@ -375,11 +375,17 @@ fn run(mut context: Context, source_file_span_test_map: SourceFileSpanTestMap) -
 
             let text = span.source_text()?;
 
-            let explicit_removal =
-                instrumentation_backup.is_none() || span_kind != SpanKind::Statement;
+            let explicit_removal = instrumentation_backup.is_none()
+                || span_kind != SpanKind::Statement
+                || !context.backend.statement_is_instrumentable(span);
 
             let _explicit_backup = if explicit_removal {
-                let (_, explicit_backup) = span.remove()?;
+                let replacement = if span_kind == SpanKind::Statement {
+                    context.backend.statement_replacement(span)
+                } else {
+                    ""
+                };
+                let (_, explicit_backup) = span.replace(replacement)?;
                 Some(explicit_backup)
             } else {
                 None
@@ -750,7 +756,7 @@ where
     let mut rewriter =
         Rewriter::with_offset_calculator(source_file.contents(), source_file.offset_calculator());
 
-    let n_instrumentable_statements = count_instrumentable_statements(span_test_iter);
+    let n_instrumentable_statements = count_instrumentable_statements(context, span_test_iter);
 
     context.backend.instrument_source_file(
         &context.light(),
@@ -760,19 +766,23 @@ where
     )?;
 
     let mut i_span = 0;
+    let mut n_instrumented_statements = 0;
     let mut insertion_map = BTreeMap::<_, Vec<_>>::new();
     // smoelius: Do not advance the underlying iterator while instrumenting. This way, if a
     // statement cannot be removed with instrumentation, it will be removed explicitly.
     while let Some((span, SpanKind::Statement, _)) = span_test_iter.peek_nth(i_span) {
-        let (prefix, suffix) = context.backend.statement_prefix_and_suffix(span)?;
-        let insertions = insertion_map.entry(span.start()).or_default();
-        insertions.push(prefix);
-        let insertions = insertion_map.entry(span.end()).or_default();
-        insertions.push(suffix);
+        if context.backend.statement_is_instrumentable(span) {
+            let (prefix, suffix) = context.backend.statement_prefix_and_suffix(span)?;
+            let insertions = insertion_map.entry(span.start()).or_default();
+            insertions.push(prefix);
+            let insertions = insertion_map.entry(span.end()).or_default();
+            insertions.push(suffix);
+            n_instrumented_statements += 1;
+        }
         i_span += 1;
     }
 
-    assert_eq!(n_instrumentable_statements, i_span);
+    assert_eq!(n_instrumentable_statements, n_instrumented_statements);
 
     for (line_column, insertions) in insertion_map {
         for insertion in insertions {
@@ -806,16 +816,19 @@ where
     Ok(Some(backup))
 }
 
-fn count_instrumentable_statements<'a, I>(span_test_iter: &mut PeekNth<I>) -> usize
+fn count_instrumentable_statements<'a, I>(
+    context: &Context,
+    span_test_iter: &mut PeekNth<I>,
+) -> usize
 where
     I: Iterator<Item = (&'a Span, SpanKind, &'a IndexSet<String>)>,
 {
+    let mut i_span = 0;
     let mut n_instrumentable_statements = 0;
-    while matches!(
-        span_test_iter.peek_nth(n_instrumentable_statements),
-        Some((_, SpanKind::Statement, _))
-    ) {
-        n_instrumentable_statements += 1;
+    while let Some((span, SpanKind::Statement, _)) = span_test_iter.peek_nth(i_span) {
+        n_instrumentable_statements +=
+            usize::from(context.backend.statement_is_instrumentable(span));
+        i_span += 1;
     }
     n_instrumentable_statements
 }

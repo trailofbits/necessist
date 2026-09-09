@@ -1,0 +1,6 @@
+args = ["--no-sqlite", "--root=fixtures/python_basic_framework", "--framework=python", "--timeout=60", "--verbose"]
+
+stderr = ""
+
+[fs]
+cwd = "../../.."
