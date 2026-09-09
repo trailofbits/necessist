@@ -181,6 +181,10 @@ impl Span {
     }
 
     pub fn remove(&self) -> Result<(String, Backup)> {
+        self.replace("")
+    }
+
+    pub fn replace(&self, replacement: &str) -> Result<(String, Backup)> {
         let backup = Backup::new(&*self.source_file)
             .with_context(|| format!("failed to backup `{}`", self.source_file.display()))?;
 
@@ -189,7 +193,7 @@ impl Span {
             self.source_file.offset_calculator(),
         );
 
-        let text = rewriter.rewrite(self, "");
+        let text = rewriter.rewrite(self, replacement);
 
         let mut file = OpenOptions::new()
             .truncate(true)
