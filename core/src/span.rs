@@ -148,7 +148,12 @@ impl Span {
         }
     }
 
-    /// Returns the spanned text.
+    /// Returns the spanned text, or an error if the span's offsets are not a valid range within
+    /// the contents
+    ///
+    /// The contents are cached per path while each backend rereads the file, so even a span just
+    /// produced by parsing can fall outside them. An `Ok` is not proof that the span is current
+    /// either: an overlong column is clamped rather than rejected.
     pub fn source_text(&self) -> Result<String> {
         let contents = self.source_file.contents();
 
@@ -162,8 +167,15 @@ impl Span {
             .borrow_mut()
             .offsets_from_span(self);
 
-        let bytes = &contents.as_bytes()[start..end];
-        let text = std::str::from_utf8(bytes)?;
+        let text = contents.get(start..end).ok_or_else(|| {
+            anyhow!(
+                "`{}..{}` is not a valid range within the contents of `{}`; the file may have \
+                 changed since it was read",
+                start,
+                end,
+                self.source_file.display()
+            )
+        })?;
 
         Ok(text.to_owned())
     }
@@ -201,5 +213,61 @@ impl ToInternalSpan for proc_macro2::Span {
             start: self.start(),
             end: self.end(),
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use elaborate::std::fs::write_wc;
+    use testing::tempfile_util::tempdir;
+
+    #[test]
+    fn source_text_returns_the_text_of_a_span_within_the_contents() {
+        let tempdir = tempdir().unwrap();
+        let root = Rc::new(tempdir.path().to_path_buf());
+        write_wc(root.join("f.rs"), "aaaa\nbb\n").unwrap();
+
+        let span = Span::parse(&root, "f.rs:1:1-1:3").unwrap();
+
+        assert_eq!("aa", span.source_text().unwrap());
+    }
+
+    #[test]
+    fn source_text_returns_an_error_for_an_inverted_span() {
+        let tempdir = tempdir().unwrap();
+        let root = Rc::new(tempdir.path().to_path_buf());
+        write_wc(root.join("f.rs"), "aaaa\nbb\n").unwrap();
+
+        // Ends before it starts. The offsets are both within the contents, so a check that looked
+        // only at the file's length would let this through and then index with `start > end`.
+        let span = Span::parse(&root, "f.rs:2:2-1:2").unwrap();
+
+        let error = span.source_text().unwrap_err();
+        assert!(
+            error
+                .to_string()
+                .contains("is not a valid range within the contents of"),
+            "{error}"
+        );
+    }
+
+    #[test]
+    fn source_text_returns_an_error_for_a_span_exceeding_the_contents() {
+        let tempdir = tempdir().unwrap();
+        let root = Rc::new(tempdir.path().to_path_buf());
+        // No trailing newline: it is what makes the computed offset exceed the file's length.
+        write_wc(root.join("f.rs"), "aaaa\nbb").unwrap();
+
+        let span = Span::parse(&root, "f.rs:3:1-3:5").unwrap();
+
+        // Before this change, indexing the contents at this offset panicked.
+        let error = span.source_text().unwrap_err();
+        assert!(
+            error
+                .to_string()
+                .contains("is not a valid range within the contents of"),
+            "{error}"
+        );
     }
 }
