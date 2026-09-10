@@ -1,0 +1,6 @@
+args = ["--dump", "--filtered", "--verbose"]
+
+stderr = ""
+
+[fs]
+cwd = "../../../target/necessist_db_filtered/php_basic_rewritten"

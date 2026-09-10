@@ -1,0 +1,6 @@
+args = ["--dump", "--filtered", "--verbose"]
+
+stderr = ""
+
+[fs]
+cwd = "../../../target/necessist_db_filtered/whitespace_crlf_filtered"

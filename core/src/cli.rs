@@ -44,6 +44,15 @@ pub struct Opts<Identifier: Clone + Send + Sync + ValueEnum + 'static> {
     dump_candidates: bool,
     #[clap(
         long,
+        help = "Restrict --dump to entries that are still removal candidates and whose recorded \
+                text still matches what Necessist read at their span; the candidates are the ones \
+                the framework finds in the paths given on the command line, or under the project \
+                root when none is given, by the same file selection and ignore rules a normal run \
+                uses, so naming fewer paths can hide more entries"
+    )]
+    filtered: bool,
+    #[clap(
+        long,
         help = "Check whether the `necessist-audit` skill is installed in a well-known directory, \
                 and whether it is the current version or later, exiting with code 1 if it is not; \
                 add --write to update an outdated skill"
@@ -100,6 +109,7 @@ impl<Identifier: Clone + Send + Sync + ValueEnum> From<Opts<Identifier>>
             dump,
             dump_candidate_counts,
             dump_candidates,
+            filtered,
             find_skill,
             framework,
             no_lines_or_columns,
@@ -127,6 +137,7 @@ impl<Identifier: Clone + Send + Sync + ValueEnum> From<Opts<Identifier>>
                 dump,
                 dump_candidate_counts,
                 dump_candidates,
+                filtered,
                 find_skill,
                 no_lines_or_columns,
                 no_local_functions,
