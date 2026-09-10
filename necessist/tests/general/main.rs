@@ -175,6 +175,78 @@ fn kill() -> Command {
     command
 }
 
+// `Span::source_text` must report a span it cannot read rather than index past the contents. Two
+// calls of `necessist` arrange one: `SOURCE_FILES` is never invalidated, so the second call slices
+// the first call's contents while the backend reparses the file as it now stands, and the span's
+// coordinates and text then come from different reads. The two reads within a single parse leave
+// the same window open, and are not covered here; opening it on demand would need a hook in
+// `SourceFile`.
+#[test]
+fn source_text_reports_a_span_exceeding_the_cached_contents() {
+    use elaborate::std::fs::{create_dir_all_wc, write_wc};
+    use necessist_backends::Identifier;
+    use necessist_core::{Necessist, framework::Auto, necessist};
+
+    const MANIFEST: &str = r#"[package]
+name = "repro"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[workspace]
+"#;
+    const SHORT: &str = r"#[test]
+fn t() {
+    let mut n = 0;
+    n += 1;
+    assert!(n > 0);
+}
+";
+    const LONG: &str = r"#[test]
+fn t() {
+    let mut n = 0;
+    n += 1;
+    assert!(n > 0);
+}
+
+#[test]
+fn u() {
+    let mut n = 0;
+    n += 1;
+    assert!(n > 0);
+}";
+
+    let tempdir = tempdir().unwrap();
+    let root = tempdir.path().join("repro");
+    create_dir_all_wc(root.join("src")).unwrap();
+    write_wc(root.join("Cargo.toml"), MANIFEST).unwrap();
+
+    let opts = Necessist {
+        root: Some(root.clone()),
+        dump_candidates: true,
+        no_sqlite: true,
+        ..Default::default()
+    };
+
+    // First call reads and caches the short file.
+    write_wc(root.join("src/lib.rs"), SHORT).unwrap();
+    necessist(&opts, Auto::<Identifier>::default()).unwrap();
+
+    // The file grows. The cache still holds the short contents, but the backend parses the long
+    // ones, so `dump_candidates` reaches for a span that is not within what it holds.
+    //
+    // Before this change: `panicked at core/src/span.rs:165:41: range start index .. out of range`.
+    // After it: an ordinary error.
+    write_wc(root.join("src/lib.rs"), LONG).unwrap();
+    let error = necessist(&opts, Auto::<Identifier>::default()).unwrap_err();
+    assert!(
+        error
+            .to_string()
+            .contains("is not a valid range within the contents of"),
+        "{error}"
+    );
+}
+
 #[test]
 fn tests_are_not_rebuilt() {
     run_basic_test(|| {
