@@ -1,0 +1,9 @@
+args = ["--root=fixtures/basic", "--dump", "--filtered"]
+
+stdout = ""
+
+[fs]
+cwd = "../../.."
+
+[status]
+code = 2
