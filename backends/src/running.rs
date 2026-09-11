@@ -23,9 +23,13 @@ use subprocess::{Exec, Redirection};
 
 #[cfg(unix)]
 use std::os::unix::process::ExitStatusExt;
+#[cfg(unix)]
+use subprocess::unix::ExitStatusExt as _;
 
 #[cfg(windows)]
 use std::os::windows::process::ExitStatusExt;
+#[cfg(windows)]
+use subprocess::windows::ExitStatusExt as _;
 
 pub type ProcessLines = (bool, Box<dyn Fn(&str) -> bool>);
 
@@ -225,16 +229,18 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
                     let status = job
                         .wait()
                         .with_context(|| format!("`wait` failed for job: {job:?}"))?;
-                    let Some(code) = status.code() else {
-                        return Err(anyhow!("unexpected exit status: {status:?}"));
-                    };
-                    // smoelius: `raw` is `i32` on Unix, and `u32` on Windows.
-                    let raw = code.try_into()?;
+                    let raw = status
+                        .into_raw()
+                        .ok_or_else(|| anyhow!("unexpected exit status: {status:?}"))?;
                     let error = OutputError::new(Output {
                         status: StdExitStatus::from_raw(raw),
                         stdout,
                         stderr,
                     });
+                    if status.code().is_none() {
+                        return Err(Error::new(error)
+                            .context(format!("unexpected exit status: {status:?}")));
+                    }
                     source_warn(
                         context,
                         Warning::RunTestFailed,
