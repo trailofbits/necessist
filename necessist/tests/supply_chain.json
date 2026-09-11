@@ -1700,24 +1700,6 @@
     ],
     "jobserver": [
       {
-        "id": 408,
-        "kind": "team",
-        "login": "github:rust-lang:compiler",
-        "name": "compiler"
-      },
-      {
-        "id": 1094,
-        "kind": "user",
-        "login": "petrochenkov",
-        "name": "Vadim Petrochenkov"
-      },
-      {
-        "id": 16264,
-        "kind": "team",
-        "login": "github:rust-lang:cargo",
-        "name": "cargo"
-      },
-      {
         "id": 55123,
         "kind": "user",
         "login": "rust-lang-owner",
@@ -2571,18 +2553,6 @@
       }
     ],
     "rustc-hash": [
-      {
-        "id": 408,
-        "kind": "team",
-        "login": "github:rust-lang:compiler",
-        "name": "compiler"
-      },
-      {
-        "id": 1386,
-        "kind": "user",
-        "login": "nikomatsakis",
-        "name": "Niko Matsakis"
-      },
       {
         "id": 55123,
         "kind": "user",
