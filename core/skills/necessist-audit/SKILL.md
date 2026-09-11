@@ -2,7 +2,7 @@
 name: necessist-audit
 description: Use to audit Necessist results, running Necessist first if needed, and investigate whether passing removals reveal bugs in code or tests, including test-harness bugs that let tests pass without checking intended behavior.
 metadata:
-  version: "4.0.0"
+  version: "4.0.1"
   license: AGPL-3.0-only
   compatibility:
     requires:
@@ -28,7 +28,9 @@ Analyze only removals whose outcome is `passed`.
 
 ## Locate results
 
-Look for `necessist.db` in the current directory. If it does not exist, run `necessist` there and use the resulting database. If Necessist is unavailable or the run fails, report the error and ask the user how to proceed.
+Use the directory specified by the user; otherwise use the current working directory. The active editor file does not limit scope. Audit every passing removal in that directory’s database unless the user explicitly limits the scope.
+
+Look for `necessist.db` in that directory. If it does not exist, run `necessist` there and use the resulting database. If Necessist is unavailable or the run fails, report the error and ask the user how to proceed.
 
 Read passing removals with `necessist --dump`. Use read-only SQLite queries only if needed.
 
