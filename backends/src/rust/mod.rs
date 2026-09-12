@@ -1,8 +1,8 @@
 #![allow(unstable_name_collisions)] // for `or_try_insert_with`
 
 use super::{
-    AbstractTypes, GenericVisitor, MaybeNamed, Named, OutputAccessors, OutputStrippedOfAnsiScapes,
-    ParseLow, ProcessLines, RunLow, Spanned, WalkDirResult,
+    AbstractTypes, DirectiveSyntax, GenericVisitor, MaybeNamed, Named, OutputAccessors,
+    OutputStrippedOfAnsiScapes, ParseLow, ProcessLines, RunLow, Spanned, WalkDirResult,
 };
 use anyhow::{Context as _, Result};
 use cargo_metadata::{Metadata, Package, TargetKind};
@@ -330,6 +330,8 @@ impl Spanned for <Types as AbstractTypes>::MacroCall<'_> {
 
 impl ParseLow for Rust {
     type Types = Types;
+
+    const DIRECTIVE_SYNTAX: DirectiveSyntax = DirectiveSyntax::Slash;
 
     const IGNORED_FUNCTIONS: Option<&'static [&'static str]> = Some(&[]);
 

@@ -35,6 +35,7 @@ pattern = [
 ignore = [
     "bit-set",
     "paste",
+    "rand_chacha",
     "strip-ansi-escapes",
     # https://github.com/alacritty/vte/pull/122#issuecomment-2579278540
     "utf8parse",

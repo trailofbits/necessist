@@ -1,6 +1,6 @@
 use super::{
-    AbstractTypes, GenericVisitor, MaybeNamed, Named, ParseLow, ProcessLines, RunLow, Spanned,
-    WalkDirResult,
+    AbstractTypes, DirectiveSyntax, GenericVisitor, MaybeNamed, Named, ParseLow, ProcessLines,
+    RunLow, Spanned, WalkDirResult,
 };
 use anyhow::{Result, anyhow};
 use elaborate::std::{fs::read_to_string_wc, path::PathContext};
@@ -146,6 +146,8 @@ impl MaybeNamed for <Types as AbstractTypes>::Call<'_> {
 
 impl ParseLow for Foundry {
     type Types = Types;
+
+    const DIRECTIVE_SYNTAX: DirectiveSyntax = DirectiveSyntax::Slash;
 
     const IGNORED_FUNCTIONS: Option<&'static [&'static str]> = Some(&[
         "assert*",
