@@ -45,7 +45,13 @@ pub trait RunLow {
         source_file: &SourceFile,
         n_instrumentable_statements: usize,
     ) -> Result<()>;
+    fn statement_is_instrumentable(&self, _span: &Span) -> bool {
+        true
+    }
     fn statement_prefix_and_suffix(&self, span: &Span) -> Result<(String, String)>;
+    fn statement_replacement(&self, _span: &Span) -> &'static str {
+        ""
+    }
     fn command_to_build_source_file(&self, context: &LightContext, source_file: &Path) -> Command;
     fn command_to_build_test(
         &self,
@@ -83,8 +89,14 @@ impl<T: RunLow> RunLow for Rc<RefCell<T>> {
             n_instrumentable_statements,
         )
     }
+    fn statement_is_instrumentable(&self, span: &Span) -> bool {
+        self.borrow().statement_is_instrumentable(span)
+    }
     fn statement_prefix_and_suffix(&self, span: &Span) -> Result<(String, String)> {
         self.borrow().statement_prefix_and_suffix(span)
+    }
+    fn statement_replacement(&self, span: &Span) -> &'static str {
+        self.borrow().statement_replacement(span)
     }
     fn command_to_build_source_file(&self, context: &LightContext, source_file: &Path) -> Command {
         self.borrow()
@@ -139,8 +151,16 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
             .instrument_source_file(context, rewriter, source_file, n_instrumentable_statements)
     }
 
+    fn statement_is_instrumentable(&self, span: &Span) -> bool {
+        self.0.statement_is_instrumentable(span)
+    }
+
     fn statement_prefix_and_suffix(&self, span: &Span) -> Result<(String, String)> {
         self.0.statement_prefix_and_suffix(span)
+    }
+
+    fn statement_replacement(&self, span: &Span) -> &'static str {
+        self.0.statement_replacement(span)
     }
 
     fn build_source_file(&self, context: &LightContext, source_file: &Path) -> Result<()> {

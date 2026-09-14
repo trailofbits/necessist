@@ -1,3 +1,4 @@
+use super::DirectiveSyntax;
 use crate::{
     AbstractTypes, GenericVisitor, MaybeNamed, Named, OutputAccessors, OutputStrippedOfAnsiScapes,
     ParseLow, Spanned, WalkDirResult,
@@ -263,6 +264,8 @@ impl MaybeNamed for <Types as AbstractTypes>::Call<'_> {
 
 impl ParseLow for Inner {
     type Types = Types;
+
+    const DIRECTIVE_SYNTAX: DirectiveSyntax = DirectiveSyntax::Slash;
 
     const IGNORED_FUNCTIONS: Option<&'static [&'static str]> =
         Some(&["assert", "assert.*", "console.*", "expect"]);
