@@ -2,7 +2,7 @@
 fixtures/run_test_failed/run_test_failed_test.go: dry running
 fixtures/run_test_failed/run_test_failed_test.go: mutilating
 fixtures/run_test_failed/run_test_failed_test.go:10:2-10:18: Warning: failed to run test `TestPassed`: code=0
-stdout="ok  \texample.com/run-test-failed\t[..]s\n"
+stdout="ok  example.com/run-test-failed[..]s\n"
 stderr=""
 
 This may indicate a bug in Necessist. Consider opening an issue at: https://github.com/trailofbits/necessist/issues
