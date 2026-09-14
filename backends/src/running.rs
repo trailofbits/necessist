@@ -1,6 +1,5 @@
 use super::{OutputAccessors, OutputStrippedOfAnsiScapes, RunHigh, rust};
 use anyhow::{Context, Error, Result, anyhow};
-use assert_cmd::output::OutputError;
 use bstr::{BStr, io::BufReadExt};
 use elaborate::std::{
     env::var_wc,
@@ -232,11 +231,12 @@ impl<T: RunLow> RunHigh for RunAdapter<T> {
                     let raw = status
                         .into_raw()
                         .ok_or_else(|| anyhow!("unexpected exit status: {status:?}"))?;
-                    let error = OutputError::new(Output {
+                    let error = Output {
                         status: StdExitStatus::from_raw(raw),
                         stdout,
                         stderr,
-                    });
+                    }
+                    .output_stripped_of_ansi_escapes()?;
                     if status.code().is_none() {
                         return Err(Error::new(error)
                             .context(format!("unexpected exit status: {status:?}")));

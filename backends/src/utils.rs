@@ -9,13 +9,18 @@ pub trait OutputStrippedOfAnsiScapes {
 impl OutputStrippedOfAnsiScapes for Command {
     fn output_stripped_of_ansi_escapes(&mut self) -> Result<OutputError> {
         #[allow(clippy::disallowed_methods)]
-        let Output {
-            status,
-            stdout,
-            stderr,
-        } = self
+        let mut output = self
             .output()
             .with_context(|| format!("failed to run command: {self:?}"))?;
+        output.output_stripped_of_ansi_escapes()
+    }
+}
+
+impl OutputStrippedOfAnsiScapes for Output {
+    fn output_stripped_of_ansi_escapes(&mut self) -> Result<OutputError> {
+        let status = self.status;
+        let stdout = self.stdout.split_off(0);
+        let stderr = self.stderr.split_off(0);
         Ok(OutputError::new(Output {
             status,
             stdout: strip_ansi_escapes::strip(stdout),

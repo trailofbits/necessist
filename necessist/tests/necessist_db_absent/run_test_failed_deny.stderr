@@ -1,5 +1,5 @@
 Error: failed to run test `TestPassed`: code=0
-stdout="ok  \texample.com/run-test-failed\t[..]s\n"
+stdout="ok  example.com/run-test-failed[..]s\n"
 stderr=""
 
 This may indicate a bug in Necessist. Consider opening an issue at: https://github.com/trailofbits/necessist/issues
