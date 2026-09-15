@@ -1,5 +1,20 @@
 # Changelog
 
+## 4.0.1
+
+- Reject `--check-skill` and `--find-skill` when passed with `--root` ([62f2cf2](https://github.com/trailofbits/necessist/commit/62f2cf27c00786eed673029e437bc9e3c58cd2f6))
+- Have `--find-skill` ignore nonexistent well-known skills directories when at least one exists ([1c28aa7](https://github.com/trailofbits/necessist/commit/1c28aa7ca3bf1bea1bc48ee6cae89d24f4e3c22a))
+- Respect `--allow` and `--deny` when warning about paths that are not well-known, and normalize paths to avoid spurious warnings ([f18d135](https://github.com/trailofbits/necessist/commit/f18d135e52e3f8e02db572e9e2bb3ce8aae9d3e1))
+- Avoid duplicate paths in errors produced while walking source files ([d9b277a](https://github.com/trailofbits/necessist/commit/d9b277a401927b1b71d943fd855df9545b6cefbe))
+- Reduce Foundry build times by building only relevant test files ([cc6d484](https://github.com/trailofbits/necessist/commit/cc6d484a3e91ccbbfd938ec1f7a2669af734fa0e))
+- Improve test-execution diagnostics: correct exit status reporting, include stdout and stderr when a command is terminated by a signal, and strip ANSI escapes ([106a474](https://github.com/trailofbits/necessist/commit/106a474b3944d4329890060cc64cd719c1d3cf43) and [4fc4eff](https://github.com/trailofbits/necessist/commit/4fc4effe9b22eb77068630de1e19a6741d5918d7))
+- Clarify that the active editor file does not limit scope in the `necessist-audit` skill ([dedd17d](https://github.com/trailofbits/necessist/commit/dedd17d8d093f582f7f3d31d541346c0965726f7) and [751c1a7](https://github.com/trailofbits/necessist/commit/751c1a7ad4d5709dd8b1b8c7d61f4aa220397918))
+- When a span is invalid for a file's contents, return an error rather than panic ([6fae088](https://github.com/trailofbits/necessist/commit/6fae08820331afc068501cf925be917adb48ccce))&mdash;thanks [@dzatona](https://github.com/dzatona)
+- Dependency updates
+  - `swc_core` upgraded to version 79
+  - `tree-sitter` upgraded to version 0.27
+  - `rewriter` upgraded to version 2
+
 ## 4.0.0
 
 - Accept command line paths that are not valid Unicode ([04a87fa](https://github.com/trailofbits/necessist/commit/04a87fa3c05d1383b4d6a0f12f72f8d20b968672))
