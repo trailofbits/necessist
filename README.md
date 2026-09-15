@@ -340,7 +340,7 @@ In addition to the below, the Go backend ignores:
 - `Skipf`
 - `SkipNow`
 
-\* This list is based primarily on [`testing.T`]'s methods. However, some methods with commonplace names are omitted to avoid colliding with other types' methods.
+\* This list is based primarily on [`testing.T`]'s methods. However, some methods with commonplace names are omitted to avoid colliding with other types' methods. [`Run`] is a prime example.
 
 </details>
 
@@ -651,6 +651,7 @@ Necessist is licensed and distributed under the AGPLv3 license. [Contact us](mai
 [Configuration files]: #configuration-files
 [Test Harness Mutilation]: https://www.computer.org/csdl/proceedings-article/icstw/2024/447900a247/20jqkUDi8Ny
 [Usage]: #usage
+[`Run`]: https://pkg.go.dev/testing#T.Run
 [`assert_cmd::assert::Assert::success`]: https://docs.rs/assert_cmd/latest/assert_cmd/assert/struct.Assert.html#method.success
 [`fixtures/basic`]: https://github.com/trailofbits/necessist/tree/main/fixtures/basic
 [`glob`]: https://man7.org/linux/man-pages/man7/glob.7.html
