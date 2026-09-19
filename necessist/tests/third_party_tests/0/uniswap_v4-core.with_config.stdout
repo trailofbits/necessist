@@ -1,11 +1,11 @@
 141 candidates in 12 tests in 1 source file
 $DIR/test/Sync.t.sol: dry running
 $DIR/test/Sync.t.sol: mutilating
-$DIR/test/Sync.t.sol: `manager.sync(currency1);` failed
-$DIR/test/Sync.t.sol: `manager.sync(currency0);` failed
-$DIR/test/Sync.t.sol: `actions[0] = Actions.SYNC;` passed
-$DIR/test/Sync.t.sol: `params[0] = abi.encode(currency2);` failed
-$DIR/test/Sync.t.sol: `actions[1] = Actions.ASSERT_RESERVES_EQUALS;` passed
+$DIR/test/Sync.t.sol: `manager.sync(currency1);` timed-out
+$DIR/test/Sync.t.sol: `manager.sync(currency0);` timed-out
+$DIR/test/Sync.t.sol: `actions[0] = Actions.SYNC;` timed-out
+$DIR/test/Sync.t.sol: `params[0] = abi.encode(currency2);` timed-out
+$DIR/test/Sync.t.sol: `actions[1] = Actions.ASSERT_RESERVES_EQUALS;` timed-out
 $DIR/test/Sync.t.sol: `params[1] = abi.encode(0);` failed
 $DIR/test/Sync.t.sol: `actionsRouter.executeActions(actions, params);` passed
 $DIR/test/Sync.t.sol: `actions[0] = Actions.ASSERT_RESERVES_EQUALS;` passed
