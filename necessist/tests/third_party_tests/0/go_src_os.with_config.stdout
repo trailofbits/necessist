@@ -1,4 +1,4 @@
-439 candidates in 82 tests in 1 source file
+427 candidates in 81 tests in 1 source file
 $DIR/src/os/os_test.go: dry running
 $DIR/src/os/os_test.go: mutilating
 $DIR/src/os/os_test.go: `t.Chdir(t.TempDir())` passed
@@ -140,10 +140,6 @@ $DIR/src/os/os_test.go: `io.WriteString(f, data)` passed
 $DIR/src/os/os_test.go: `f.Seek(0, 0)` passed
 $DIR/src/os/os_test.go: `io.WriteString(f, data)` failed
 $DIR/src/os/os_test.go: `n, err = io.WriteString(f, "!")` failed
-$DIR/src/os/os_test.go: `io.WriteString(f, "0000000000")` failed
-$DIR/src/os/os_test.go: `wg.Add(1)` failed
-$DIR/src/os/os_test.go: `n, err = io.WriteString(f, "!")` failed
-$DIR/src/os/os_test.go: `wg.Wait()` failed
 $DIR/src/os/os_test.go: `t.Chdir(t.TempDir())` passed
 $DIR/src/os/os_test.go: `_, err = f.WriteAt([]byte(""), 1)` failed
 $DIR/src/os/os_test.go: `s = writeFile(t, r, f, O_APPEND|O_RDWR, "|append")` failed
@@ -697,14 +693,6 @@ $DIR/src/os/os_test.go: `.Sprint(err)` nonbuildable
 $DIR/src/os/os_test.go: `.WriteString(f, data)` nonbuildable
 $DIR/src/os/os_test.go: `.WriteAt([]byte("WOR"), 7)` nonbuildable
 $DIR/src/os/os_test.go: `.WriteString(f, "!")` nonbuildable
-$DIR/src/os/os_test.go: `.Name()` nonbuildable
-$DIR/src/os/os_test.go: `.WriteString(f, "0000000000")` nonbuildable
-$DIR/src/os/os_test.go: `.Add(1)` nonbuildable
-$DIR/src/os/os_test.go: `.Done()` nonbuildable
-$DIR/src/os/os_test.go: `.WriteAt([]byte(strconv.Itoa(i)), int64(i))` nonbuildable
-$DIR/src/os/os_test.go: `.Itoa(i)` nonbuildable
-$DIR/src/os/os_test.go: `.WriteString(f, "!")` nonbuildable
-$DIR/src/os/os_test.go: `.Wait()` nonbuildable
 $DIR/src/os/os_test.go: `.Name()` nonbuildable
 $DIR/src/os/os_test.go: `.WriteAt([]byte("WORLD"), -10)` nonbuildable
 $DIR/src/os/os_test.go: `.Contains(fmt.Sprint(err), wantsub)` nonbuildable
