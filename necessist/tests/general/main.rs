@@ -186,6 +186,7 @@ fn source_text_reports_a_span_exceeding_the_cached_contents() {
     use elaborate::std::fs::{create_dir_all_wc, write_wc};
     use necessist_backends::Identifier;
     use necessist_core::{Necessist, framework::Auto, necessist};
+    use std::process::ExitCode;
 
     const MANIFEST: &str = r#"[package]
 name = "repro"
@@ -230,7 +231,7 @@ fn u() {
 
     // First call reads and caches the short file.
     write_wc(root.join("src/lib.rs"), SHORT).unwrap();
-    necessist(&opts, Auto::<Identifier>::default()).unwrap();
+    let _: ExitCode = necessist(&opts, Auto::<Identifier>::default()).unwrap();
 
     // The file grows. The cache still holds the short contents, but the backend parses the long
     // ones, so `dump_candidates` reaches for a span that is not within what it holds.

@@ -829,8 +829,8 @@ fn readme_is_current() {
         test_lines.push(format!(
             "| {} | {}| {}| {}| {}| {}| {}| {partition} |",
             name.to_string_lossy(),
-            test.rev.map(|s| s + " ").unwrap_or_default(),
-            test.framework.map(|s| s + " ").unwrap_or_default(),
+            test.rev.map_or_default(|s| s + " "),
+            test.framework.map_or_default(|s| s + " "),
             test.parsing_only.not().to_x_space(),
             target_os_includes(test.target_os.as_ref(), "linux").to_x_space(),
             target_os_includes(test.target_os.as_ref(), "macos").to_x_space(),

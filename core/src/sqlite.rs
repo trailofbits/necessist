@@ -166,8 +166,7 @@ pub(crate) fn insert(sqlite: &mut Sqlite, removal: &crate::Removal) -> Result<()
         url: sqlite
             .remote
             .as_ref()
-            .map(|remote| url_from_span(remote, span))
-            .unwrap_or_default(),
+            .map_or_default(|remote| url_from_span(remote, span)),
     };
 
     insert_into(removal::table)
