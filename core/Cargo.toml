@@ -55,12 +55,6 @@ windows-sys = { version = "0.61", features = [
 [dev-dependencies]
 testing = { path = "../testing" }
 
-[build-dependencies]
-cargo_metadata = "0.23"
-curl = "0.4"
-heck = "0.5"
-syn = "3.0"
-
 [features]
 default = ["limit_threads", "lock_root"]
 limit_threads = ["rlimit"]
