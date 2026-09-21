@@ -346,7 +346,7 @@ dependencies = [
  "heck",
  "proc-macro2",
  "quote",
- "syn 3.0.5",
+ "syn 3.0.6",
 ]
 
 [[package]]
@@ -682,7 +682,7 @@ checksum = "c6232dd377dcc64799954cbd3a9bb882e9cdc1308ccd87b1c098f1fb2eaf82a8"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 3.0.5",
+ "syn 3.0.6",
 ]
 
 [[package]]
@@ -1483,7 +1483,7 @@ dependencies = [
  "strum_macros",
  "subprocess",
  "swc_core",
- "syn 3.0.5",
+ "syn 3.0.6",
  "tempfile",
  "toml_edit",
  "tree-sitter",
@@ -1528,7 +1528,7 @@ dependencies = [
  "strum",
  "strum_macros",
  "subprocess",
- "syn 3.0.5",
+ "syn 3.0.6",
  "testing",
  "toml",
  "windows-sys",
@@ -1949,7 +1949,7 @@ checksum = "2b297d1baead74bf76361e49ed016060bd829633361b68500d2e7ea3e66ab6a4"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 3.0.5",
+ "syn 3.0.6",
 ]
 
 [[package]]
@@ -2097,7 +2097,7 @@ checksum = "e7a5d71263a5a7d47b41f6b3f06ba276f10cc18b0931f1799f710578e2309348"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 3.0.5",
+ "syn 3.0.6",
 ]
 
 [[package]]
@@ -2408,9 +2408,9 @@ dependencies = [
 
 [[package]]
 name = "swc_core"
-version = "79.0.0"
+version = "80.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f8a092a36affb31a770b9adc3e7d0dfab9f36b8397d9d93de22333cfa9ab1615"
+checksum = "70b5a734517d41c333bd9747f4fffa3547f431c0287b8ddc800e9fbb827ecaa1"
 dependencies = [
  "swc_allocator",
  "swc_atoms",
@@ -2423,9 +2423,9 @@ dependencies = [
 
 [[package]]
 name = "swc_ecma_ast"
-version = "29.0.1"
+version = "29.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8acac181240497d98fddb7e6930f20cacbd12ed05288b5f9028e9cba23c7e09b"
+checksum = "2839d2cf4e611b944438c304ec59396221b3db4580acd172fcd70522bb450ee9"
 dependencies = [
  "bitflags 2.13.2",
  "is-macro",
@@ -2442,9 +2442,9 @@ dependencies = [
 
 [[package]]
 name = "swc_ecma_parser"
-version = "45.1.3"
+version = "45.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a1bda91692d89246d0ced5dd42fbb3c99c79caaddb64627a6ea1601361a13f9b"
+checksum = "77d78327c5435b241272b5899b7a0013cc095334302d556b7ef6a55f5e44fc23"
 dependencies = [
  "bitflags 2.13.2",
  "compact_str",
@@ -2560,9 +2560,9 @@ dependencies = [
 
 [[package]]
 name = "syn"
-version = "3.0.5"
+version = "3.0.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "12df2e0110f65b775f769bb17ef989067a1d931b2eb822bd4346631eeada89f9"
+checksum = "8593e8e72159ed2257d083c7a454a85cbf854f37a0966d8d483aff8c8a3ebcee"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -2655,7 +2655,7 @@ checksum = "bc04cd3e1236dd4a98afca4569f2deb3f120e5422a4023be2cb683f8486292af"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 3.0.5",
+ "syn 3.0.6",
 ]
 
 [[package]]
@@ -3008,7 +3008,7 @@ dependencies = [
  "bumpalo",
  "proc-macro2",
  "quote",
- "syn 3.0.5",
+ "syn 3.0.6",
  "wasm-bindgen-shared",
 ]
 
@@ -3199,7 +3199,7 @@ checksum = "34df6fc39dbd26ddc9c10e6a2984476e13acce22e64e4487636ef494369225da"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 3.0.5",
+ "syn 3.0.6",
 ]
 
 [[package]]
