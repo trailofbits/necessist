@@ -116,6 +116,14 @@
         "name": "David Tolnay"
       }
     ],
+    "ar_archive_writer": [
+      {
+        "id": 55123,
+        "kind": "user",
+        "login": "rust-lang-owner",
+        "name": null
+      }
+    ],
     "arrayvec": [
       {
         "id": 356,
@@ -2138,6 +2146,20 @@
         "name": "Mads Marquart"
       }
     ],
+    "object": [
+      {
+        "id": 696,
+        "kind": "user",
+        "login": "fitzgen",
+        "name": "Nick Fitzgerald"
+      },
+      {
+        "id": 4415,
+        "kind": "user",
+        "login": "philipc",
+        "name": "Philip Craig"
+      }
+    ],
     "once_cell": [
       {
         "id": 2699,
@@ -2496,6 +2518,26 @@
         "kind": "user",
         "login": "dtolnay",
         "name": "David Tolnay"
+      }
+    ],
+    "psm": [
+      {
+        "id": 408,
+        "kind": "team",
+        "login": "github:rust-lang:compiler",
+        "name": "compiler"
+      },
+      {
+        "id": 726,
+        "kind": "user",
+        "login": "nagisa",
+        "name": "Simonas Kazlauskas"
+      },
+      {
+        "id": 55123,
+        "kind": "user",
+        "login": "rust-lang-owner",
+        "name": null
       }
     ],
     "quote": [
@@ -3042,6 +3084,26 @@
         "name": "Robert Grosse"
       }
     ],
+    "stacker": [
+      {
+        "id": 408,
+        "kind": "team",
+        "login": "github:rust-lang:compiler",
+        "name": "compiler"
+      },
+      {
+        "id": 726,
+        "kind": "user",
+        "login": "nagisa",
+        "name": "Simonas Kazlauskas"
+      },
+      {
+        "id": 55123,
+        "kind": "user",
+        "login": "rust-lang-owner",
+        "name": null
+      }
+    ],
     "static_assertions": [
       {
         "id": 3832,
@@ -3506,14 +3568,6 @@
         "kind": "user",
         "login": "Lokathor",
         "name": "Lokathor"
-      }
-    ],
-    "tinyvec_macros": [
-      {
-        "id": 94492,
-        "kind": "user",
-        "login": "Soveu",
-        "name": null
       }
     ],
     "toml": [
