@@ -2612,6 +2612,7 @@ name = "testing"
 version = "4.0.1"
 dependencies = [
  "dunce",
+ "regex",
  "tempfile",
 ]
 
