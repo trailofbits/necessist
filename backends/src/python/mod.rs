@@ -249,7 +249,7 @@ impl MaybeNamed for Field<'_> {
 
 impl Spanned for Call<'_> {
     fn span(&self, source_file: &SourceFile) -> Span {
-        span(self.call.range, source_file, self.line_index)
+        span(self.call.range(), source_file, self.line_index)
     }
 }
 
