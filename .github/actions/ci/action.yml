@@ -87,6 +87,7 @@ runs:
             $CARGO_TEST -p necessist --test general
             $CARGO_TEST -p necessist-backends
             $CARGO_TEST -p necessist-core
+            $CARGO_TEST -p testing
           fi
         done
       shell: bash
@@ -102,6 +103,7 @@ runs:
             cargo test -p necessist --test general
             cargo test -p necessist-backends
             cargo test -p necessist-core
+            cargo test -p testing
           fi
         done
       shell: bash
