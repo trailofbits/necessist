@@ -697,20 +697,65 @@ fn remove_timings(s: &str) -> String {
 }
 
 fn permutation_ignoring_timeouts(expected: &str, actual: &str) -> bool {
-    let mut expected_lines = expected.lines().collect::<Vec<_>>();
-    let mut actual_lines = actual.lines().collect::<Vec<_>>();
-    expected_lines.sort_unstable();
-    actual_lines.sort_unstable();
-    expected_lines.len() == actual_lines.len()
-        && expected_lines
-            .into_iter()
-            .zip(actual_lines)
-            .all(|(expected_line, actual_line)| {
-                expected_line == actual_line
-                    || actual_line
-                        .strip_suffix("timed-out")
-                        .is_some_and(|prefix| expected_line.starts_with(prefix))
-            })
+    let expected_lines = expected.lines().collect::<Vec<_>>();
+    let actual_lines = actual.lines().collect::<Vec<_>>();
+    if expected_lines.len() != actual_lines.len() {
+        return false;
+    }
+    let expected_map = summarize_lines(&expected_lines);
+    let actual_map = summarize_lines(&actual_lines);
+    if expected_map.len() != actual_map.len() {
+        return false;
+    }
+    expected_map.into_iter().zip(actual_map).all(
+        |((expected_prefix, expected_summary), (actual_prefix, actual_summary))| {
+            if expected_prefix != actual_prefix {
+                return false;
+            }
+            compare_summaries(&expected_summary, &actual_summary)
+        },
+    )
+}
+
+#[derive(Default)]
+struct Summary<'a> {
+    non_timeouts: BTreeMap<&'a str, usize>,
+    n_timeouts: usize,
+}
+
+fn summarize_lines<'a>(lines: &[&'a str]) -> BTreeMap<&'a str, Summary<'a>> {
+    let mut map = BTreeMap::<_, Summary>::new();
+    for line in lines {
+        let (prefix, suffix) = line.rsplit_once(' ').unwrap_or((line, ""));
+        let summary = map.entry(prefix).or_default();
+        if suffix == "timed-out" {
+            summary.n_timeouts += 1;
+        } else {
+            *summary.non_timeouts.entry(suffix).or_default() += 1;
+        }
+    }
+    map
+}
+
+fn compare_summaries(expected: &Summary<'_>, actual: &Summary<'_>) -> bool {
+    for (actual_suffix, actual_n) in &actual.non_timeouts {
+        let Some(expected_n) = expected.non_timeouts.get(actual_suffix) else {
+            return false;
+        };
+        if actual_n > expected_n {
+            return false;
+        }
+    }
+    let mut deficit = 0;
+    for (expected_suffix, expected_n) in &expected.non_timeouts {
+        let actual_n = actual
+            .non_timeouts
+            .get(expected_suffix)
+            .copied()
+            .unwrap_or_default();
+        deficit += expected_n - actual_n;
+    }
+    expected.n_timeouts + deficit == actual.n_timeouts
 }
 
 pub fn stdout_subsequence_in(dir: impl AsRef<Path>) {
