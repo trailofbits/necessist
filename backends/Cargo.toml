@@ -53,10 +53,10 @@ tree-sitter-go = "0.25"
 tree-sitter-php = "0.24"
 
 # Python
-ruff_python_ast = "0.0.8"
-ruff_python_parser = "0.0.8"
-ruff_source_file = "0.0.8"
-ruff_text_size = "0.0.8"
+ruff_python_ast = "0.0.14"
+ruff_python_parser = "0.0.14"
+ruff_source_file = "0.0.14"
+ruff_text_size = "0.0.14"
 
 # Hardhat
 swc_core = { version = "80.0", features = [
