@@ -598,7 +598,12 @@ fn run_test(workdir: &Path, toml_path: &Path, test: &Test) -> (String, Duration)
         let stdout_normalized = remove_timings(&normalize_paths(stdout_actual, workdir));
 
         if enabled("BLESS") {
-            write_wc(path_stdout, stdout_normalized).unwrap();
+            // smoelius: If `BLESS` was set but `permutation_ignoring_timeouts` returns true, do not
+            // overwrite the stdout files. Doing so could cause `passed`/`failed` outcomes to be
+            // replaced with `timed-out`s that are observable only in CI.
+            if !permutation_ignoring_timeouts(&stdout_expected, &stdout_normalized) {
+                write_wc(path_stdout, stdout_normalized).unwrap();
+            }
         } else {
             // smoelius: Because source files could be traversed in different orders on different
             // machines, the warnings could appear out of order. So simply verify that
