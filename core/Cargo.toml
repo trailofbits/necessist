@@ -1,6 +1,6 @@
 [package]
 name = "necessist-core"
-version = "4.0.1"
+version = "4.1.0"
 edition = "2024"
 
 description = "necessist-core"

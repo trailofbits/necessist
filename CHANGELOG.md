@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.1.0
+
+- Clarify why Go's `testing.T.Run` method is not ignored by default ([e89a052](https://github.com/trailofbits/necessist/commit/e89a052421d7996684e3c342062b2ace4c85fa74))
+- Make source directives backend-specific: support `# necessist:` comments in PHP files, and allow `<?php` before `skip-file` directives in PHP files only ([6669ca1](https://github.com/trailofbits/necessist/commit/6669ca1ce1f16c08eee1f164fecaa5f053f0dafd))
+- Add support for Python tests run with `pytest` (`--framework python`) ([98b7419](https://github.com/trailofbits/necessist/commit/98b741929acb472814c40c489cdfab70d9ab599e))
+- Dependency updates
+  - `swc_core` upgraded to version 80
+
 ## 4.0.1
 
 - Reject `--check-skill` and `--find-skill` when passed with `--root` ([62f2cf2](https://github.com/trailofbits/necessist/commit/62f2cf27c00786eed673029e437bc9e3c58cd2f6))
