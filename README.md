@@ -185,6 +185,7 @@ Options:
       --dump                   Dump sqlite database contents to the console
       --dump-candidate-counts  Dump number of removal candidates in each file and exit
       --dump-candidates        Dump removal candidates and exit (for debugging)
+      --filtered               Restrict --dump to entries that are still removal candidates and whose recorded text still matches what Necessist read at their span; the candidates are the ones the framework finds in the paths given on the command line, or under the project root when none is given, by the same file selection and ignore rules a normal run uses, so naming fewer paths can hide more entries
       --find-skill             Check whether the `necessist-audit` skill is installed in a well-known directory, and whether it is the current version or later, exiting with code 1 if it is not; add --write to update an outdated skill
       --framework <FRAMEWORK>  Assume testing framework is <FRAMEWORK> [possible values: anchor, auto, foundry, go, hardhat, php, python, rust, vitest]
       --no-lines-or-columns    Do not output line or column information (experimental)

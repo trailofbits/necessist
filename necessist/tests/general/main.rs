@@ -9,6 +9,7 @@ const TIMEOUT: &str = "5";
 
 const BASIC_ROOT: &str = "fixtures/basic";
 
+mod dump_filtered;
 mod skill;
 
 #[ctor::ctor(unsafe)]
