@@ -1,0 +1,9 @@
+args = ["--dump", "--filtered"]
+
+stdout = ""
+
+[fs]
+cwd = "../../../target/necessist_db_filtered/basic_deleted_source_file"
+
+[status]
+code = 2

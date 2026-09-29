@@ -1,0 +1,4 @@
+src/lib.rs:5:5-5:22: `s.push_str("cd");` passed
+src/lib.rs:5:6-5:21: `.push_str("cd")` nonbuildable
+Note: an entry is shown when its span is still a removal candidate[..]
+Note: 2 entries were hidden by filtering
