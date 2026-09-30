@@ -32,9 +32,11 @@ ignored_tests = [
     # - TestProgWideChdir: https://github.com/golang/go/blob/2c1e5b05fe39fc5e6c730dd60e82946b8e67c6ba/src/os/os_test.go#L1725
     # - TestRemoveAllRace: https://github.com/golang/go/blob/2c1e5b05fe39fc5e6c730dd60e82946b8e67c6ba/src/os/os_test.go#L2710
     # - TestPipeIOCloseRace: https://github.com/golang/go/blob/2c1e5b05fe39fc5e6c730dd60e82946b8e67c6ba/src/os/os_test.go#L3174
+    # - TestWriteAtConcurrent: https://github.com/golang/go/blob/862c888e612ac346c7c4d99c9392bdfd265f33b0/src/os/os_test.go#L2173
     "TestProgWideChdir",
     "TestRemoveAllRace",
     "TestPipeIOCloseRace",
+    "TestWriteAtConcurrent",
     # smoelius: `go_src_os` is the slowest third-party test. Ignoring some Go tests speeds it up,
     # and has the additional benefit of making it runnable on Linux.
     "TestGetppid",
