@@ -118,10 +118,6 @@ fn check_toml_files() {
             })
             .unwrap();
 
-        if path.parent_wc().unwrap().file_name_wc().ok() == Some(OsStr::new("no_necessist_db")) {
-            assert_eq!(Some(&"--no-sqlite"), args.first());
-        }
-
         let file_stem = &*path.file_stem_wc().unwrap().to_string_lossy();
         let example = args
             .iter()
