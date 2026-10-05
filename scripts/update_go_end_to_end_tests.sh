@@ -18,7 +18,7 @@ VERSION_GO="$(
     jq -r '.[] | select(.name == "GO") | .version'
 )"
 
-cd "$WORKSPACE"/necessist/tests/third_party_tests
+cd "$WORKSPACE"/necessist/tests/end_to_end_tests
 
 URL='https://github.com/golang/go'
 
@@ -32,7 +32,7 @@ VERSION_TAG="$(
     tail -n 1
 )"
 
-# smoelius: Require that the Go version used for the third party tests is not newer than the Go
+# smoelius: Require that the Go version used for the end-to-end tests is not newer than the Go
 # version installed in CI.
 VERSION_NEW="$(echo -e "$VERSION_GO\n$VERSION_TAG" | sort -V | head -n 1)"
 

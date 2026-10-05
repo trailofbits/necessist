@@ -81,7 +81,7 @@ fn module_path_unknown_msg(test_name: &str, errors: &[Error]) -> Result<String> 
     )?;
     for error in errors {
         // smoelius: Debug formatting is intentionally _not_ used to facilitate path normalization
-        // in third_party_common/mod.rs.
+        // in end_to_end_common/mod.rs.
         writeln!(&mut msg, "    {error},")?;
     }
     write!(&mut msg, "]")?;

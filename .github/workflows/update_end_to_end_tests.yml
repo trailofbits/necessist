@@ -1,4 +1,4 @@
-name: Update third-party tests
+name: Update end-to-end tests
 
 on:
   schedule:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: update-third-party-tests-${{ github.ref }}
+  group: update-end-to-end-tests-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:
@@ -19,16 +19,16 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - name: Update third-party tests
+      - name: Update end-to-end tests
         run: |
-          scripts/update_third_party_tests.sh
-          scripts/update_go_third_party_tests.sh
+          scripts/update_end_to_end_tests.sh
+          scripts/update_go_end_to_end_tests.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: ./.github/actions/ci
         env:
-          TESTS: third_party_0 third_party_1
+          TESTS: end_to_end_0 end_to_end_1
           BLESS: "1"
 
       - name: Require that a snapshot changed
@@ -49,12 +49,12 @@ jobs:
       - uses: ./.github/actions/ci
         if: steps.snapshot.outputs.changed == 'true'
         env:
-          TESTS: third_party_0 third_party_1 trycmd other ci
+          TESTS: end_to_end_0 end_to_end_1 trycmd other ci
 
       - name: Create pull request
         if: steps.snapshot.outputs.changed == 'true'
         uses: peter-evans/create-pull-request@v8
         with:
-          title: "Update third-party tests"
-          commit-message: "Update third-party tests"
+          title: "Update end-to-end tests"
+          commit-message: "Update end-to-end tests"
           branch-suffix: random

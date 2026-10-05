@@ -18,7 +18,7 @@ path_prefix = "bin"
 #   Error: Process completed with exit code 143.
 #
 # I haven't figured out why. Restrict to macOS until we can come up with a better test.
-# smoelius: Ignoring some additional Go tests below make this third-party test runnable on Linux.
+# smoelius: Ignoring some additional Go tests below make this end-to-end test runnable on Linux.
 target_os = ["linux", "macos"]
 
 subdir = "src/os"
@@ -35,7 +35,7 @@ ignored_tests = [
     "TestProgWideChdir",
     "TestRemoveAllRace",
     "TestPipeIOCloseRace",
-    # smoelius: `go_src_os` is the slowest third-party test. Ignoring some Go tests speeds it up,
+    # smoelius: `go_src_os` is the slowest end-to-end test. Ignoring some Go tests speeds it up,
     # and has the additional benefit of making it runnable on Linux.
     "TestGetppid",
     "TestStatStdin",

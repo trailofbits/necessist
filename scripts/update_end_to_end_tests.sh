@@ -11,7 +11,7 @@ fi
 SCRIPTS="$(dirname "$(realpath "$0")")"
 WORKSPACE="$(realpath "$SCRIPTS"/..)"
 
-cd "$WORKSPACE"/necessist/tests/third_party_tests
+cd "$WORKSPACE"/necessist/tests/end_to_end_tests
 
 find . -name '*.toml' |
 while read X; do
