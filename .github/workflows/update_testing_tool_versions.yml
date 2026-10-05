@@ -41,7 +41,7 @@ jobs:
       # not as thorough as running the CI workflow.
       - uses: ./.github/actions/ci
         env:
-          TESTS: third_party_0 third_party_1 trycmd other ci
+          TESTS: end_to_end_0 end_to_end_1 trycmd other ci
 
       - name: Create pull request
         if: steps.snapshot.outputs.changed == 'true'

@@ -1,4 +1,4 @@
-# Third-party tests
+# End-to-end tests
 
 | Name                       | Version                                  | Framework | Full | Linux | macOS | Windows | Partition |
 | -------------------------- | ---------------------------------------- | --------- | ---- | ----- | ----- | ------- | --------- |

@@ -28,10 +28,10 @@ use std::{
 };
 use subprocess::{Exec, Redirection};
 use testing::{
-    tempfile_util::{TempDir, tempdir},
-    third_party_util::{
+    end_to_end_util::{
         TIMING_RE, normalize_paths, permutation_ignoring_timeouts, remove_timings, subsequence,
     },
+    tempfile_util::{TempDir, tempdir},
 };
 
 mod string_or_vec;
@@ -763,7 +763,7 @@ fn readme_is_current() {
     let mut tests = Vec::new();
     for i in 0..N_PARTITIONS {
         tests.extend(
-            read_tests_in(format!("tests/third_party_tests/{i}"), false)
+            read_tests_in(format!("tests/end_to_end_tests/{i}"), false)
                 .into_values()
                 .flatten()
                 .map(|(toml_path, test)| (toml_path, test, i)),
@@ -787,7 +787,7 @@ fn readme_is_current() {
     test_lines.sort();
 
     let mut readme_lines_expected = [
-        "# Third-party tests",
+        "# End-to-end tests",
         "",
         "| Name | Version | Framework | Full | Linux | macOS | Windows | Partition |",
         "| - | - | - | - | - | - | - | - |",

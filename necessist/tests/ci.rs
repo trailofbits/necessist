@@ -81,7 +81,7 @@ fn github() {
         "ci_is_disabled",
         "dogfood",
         "general",
-        "third_party_common",
+        "end_to_end_common",
     ];
 
     let metadata = MetadataCommand::new().no_deps().exec().unwrap();
