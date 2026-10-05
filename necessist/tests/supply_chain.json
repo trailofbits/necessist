@@ -1118,6 +1118,12 @@
         "kind": "user",
         "login": "nikomatsakis",
         "name": "Niko Matsakis"
+      },
+      {
+        "id": 55123,
+        "kind": "user",
+        "login": "rust-lang-owner",
+        "name": null
       }
     ],
     "encode_unicode": [
@@ -2725,7 +2731,7 @@
         "id": 89675,
         "kind": "user",
         "login": "Spxg",
-        "name": null
+        "name": "Noz Wu"
       }
     ],
     "ruff_python_ast": [
@@ -3061,7 +3067,7 @@
         "id": 89675,
         "kind": "user",
         "login": "Spxg",
-        "name": null
+        "name": "Noz Wu"
       }
     ],
     "stable_deref_trait": [
