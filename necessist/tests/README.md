@@ -16,6 +16,7 @@
 | go_src_testing_iotest      | go1.27.1                                 | go        | X    | X     | X     | X       | 1         |
 | go_src_text_template_parse | go1.27.1                                 | go        | X    | X     | X     | X       | 1         |
 | minio                      | RELEASE.2025-10-15T17-29-55Z             |           |      | X     | X     | X       | 1         |
+| necessist                  |                                          |           | X    | X     | X     | X       | 1         |
 | operator-filter-registry   | v1.4.2                                   |           |      | X     | X     | X       | 0         |
 | proptest_https             | c620fd254cefc81113aac69dd3336b13067d97e1 |           | X    | X     | X     | X       | 0         |
 | pyth                       | pyth-evm-contract-v1.4.6                 | anchor    |      | X     | X     |         | 0         |

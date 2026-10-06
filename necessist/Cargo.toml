@@ -42,7 +42,6 @@ testing = { path = "../testing" }
 
 [features]
 default = []
-dogfood = []
 
 [lints]
 workspace = true

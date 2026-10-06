@@ -76,13 +76,7 @@ fn fmt() {
 
 #[test]
 fn github() {
-    const EXCEPTIONS: &[&str] = &[
-        "ci",
-        "ci_is_disabled",
-        "dogfood",
-        "general",
-        "end_to_end_common",
-    ];
+    const EXCEPTIONS: &[&str] = &["ci", "ci_is_disabled", "general", "end_to_end_common"];
 
     let metadata = MetadataCommand::new().no_deps().exec().unwrap();
     let package = metadata
