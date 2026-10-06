@@ -1,0 +1,64 @@
+56 candidates in 3 tests in 1 source file
+$DIR/necessist/tests/trycmd.rs: dry running
+$DIR/necessist/tests/trycmd.rs: mutilating
+$DIR/necessist/tests/trycmd.rs: `.chain(necessist_db_present)` passed
+$DIR/necessist/tests/trycmd.rs: `.path()` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.extension_wc()` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.ok()` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.chain(necessist_db_present)` passed
+$DIR/necessist/tests/trycmd.rs: `.path()` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.into_iter()` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.any(|s| path.extension_wc().ok() == Some(OsStr::new(s)))` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.extension_wc()` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.ok()` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.lines()` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.collect::<Vec<_>>()` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.chain(necessist_db_present)` passed
+$DIR/necessist/tests/trycmd.rs: `.path()` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.extension_wc()` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.ok()` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.as_table()` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.and_then(|table| table.get("args"))` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.get("args")` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.and_then(toml::Value::as_array)` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.and_then(|array| {
+                array
+                    .iter()
+                    .map(toml::Value::as_str)
+                    .collect::<Option<Vec<_>>>()
+            })` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.map(toml::Value::as_str)` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.parent_wc()` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.file_name_wc()` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.ok()` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.file_stem_wc()` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.to_string_lossy()` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.find_map(|arg| arg.strip_prefix("--root=fixtures/"))` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.strip_prefix("--root=fixtures/")` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.as_table()` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.and_then(|table| table.get("status"))` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.get("status")` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.as_table()` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.and_then(|table| table.get("stderr"))` passed
+$DIR/necessist/tests/trycmd.rs: `.get("stderr")` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.as_table()` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.and_then(|table| table.get("code"))` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.get("code")` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.and_then(toml::Value::as_integer)` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.as_table()` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.and_then(|table| table.get(stream))` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.get(stream)` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.and_then(toml::Value::as_str)` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.with_extension(stream)` failed
+$DIR/necessist/tests/trycmd.rs: `.try_exists_wc()` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.with_extension(stream)` passed
+$DIR/necessist/tests/trycmd.rs: `.metadata_wc()` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.is_ok_and(|metadata| metadata.len() > 0)` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.len()` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.as_table()` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.and_then(|table| table.get("fs"))` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.get("fs")` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.and_then(toml::Value::as_table)` passed
+$DIR/necessist/tests/trycmd.rs: `.and_then(|table| table.get("cwd"))` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.get("cwd")` nonbuildable
+$DIR/necessist/tests/trycmd.rs: `.and_then(toml::Value::as_str)` nonbuildable

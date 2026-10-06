@@ -1,0 +1,7 @@
+path = ".."
+source_files = ["necessist/tests/trycmd.rs"]
+args = ["--framework=rust"]
+config_mandatory = true
+
+[config]
+ignored_tests = ["trycmd"]
