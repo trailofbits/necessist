@@ -18,6 +18,8 @@ pub mod cli;
 pub mod config;
 
 mod core;
+#[doc(hidden)]
+pub use crate::core::IsSet as __IsSet;
 use crate::core::Removal;
 pub use crate::core::{LightContext, Necessist, necessist};
 

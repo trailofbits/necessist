@@ -438,7 +438,7 @@ fn run(mut context: Context, source_file_span_test_map: SourceFileSpanTestMap) -
     Ok(())
 }
 
-trait IsSet {
+pub trait IsSet {
     fn is_set(&self) -> bool;
 }
 

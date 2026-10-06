@@ -1,13 +1,14 @@
+use anyhow::{Context, Result, ensure};
 use assert_cmd::output::OutputError;
 use elaborate::std::{
     env::{join_paths_wc, var_wc},
     fs::{read_dir_wc, read_to_string_wc, remove_file_wc, write_wc},
     io::ReadContext,
-    path::PathContext,
+    path::{PathContext, absolute_wc},
     process::CommandContext,
     thread::available_parallelism_wc,
 };
-use necessist_core::{Span, util};
+use necessist_core::{__IsSet as IsSet, Span, util};
 use regex::Regex;
 use serde::Deserialize;
 use similar_asserts::SimpleDiff;
@@ -53,8 +54,11 @@ const PREFIX_SSH: &str = "git@github.com:";
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
 struct Test {
+    /// Repo path
+    path: Option<String>,
+
     /// Repo url
-    url: String,
+    url: Option<String>,
 
     /// Repo revision; `None` (the default) means the head of the default branch
     #[serde(default)]
@@ -115,9 +119,45 @@ struct Test {
     config: toml::Table,
 }
 
+macro_rules! check_path_incompatibilities {
+    ($test:ident, $x:ident $(, $($y:ident),*)?) => {
+        ensure!(
+            !$test.$x.is_set(),
+            "`path` and `{}` cannot both be set",
+            stringify!($x),
+        );
+        $(check_path_incompatibilities!($test, $($y),*);)?
+    };
+    ($test:ident $(,)?) => {};
+}
+
+impl Test {
+    fn check(&self) -> Result<()> {
+        ensure!(
+            self.path.is_some() || self.url.is_some(),
+            "at least one of `url` or `path` must be set"
+        );
+
+        if self.path.is_some() {
+            check_path_incompatibilities!(self, url, rev, subdir, check_sqlite_urls);
+        }
+
+        Ok(())
+    }
+
+    fn absolute_path_or_url(&self) -> String {
+        if let Some(path) = self.path.as_ref() {
+            let path_buf = absolute_wc(path).unwrap();
+            path_buf.into_string().unwrap()
+        } else {
+            self.url.as_ref().unwrap().clone()
+        }
+    }
+}
+
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 struct Key {
-    url: String,
+    path_or_url: String,
     rev: Option<String>,
     init: Option<String>,
 }
@@ -125,7 +165,7 @@ struct Key {
 impl Key {
     fn from_test(test: &Test) -> Self {
         Self {
-            url: test.url.clone(),
+            path_or_url: test.absolute_path_or_url(),
             rev: test.rev.clone(),
             init: test.init.clone(),
         }
@@ -140,7 +180,7 @@ struct Repo {
 }
 
 struct Task {
-    /// Repo url and revision
+    /// Repo path or url, revision, and `init` command
     key: Key,
 
     /// Path to temporary directory to hold the repo
@@ -205,7 +245,16 @@ fn read_tests_in(dir: impl AsRef<Path>, filter: bool) -> BTreeMap<Key, Vec<(Path
         let contents = read_to_string_wc(&toml_path).unwrap();
         let test: Test = toml::from_str(&contents).unwrap();
 
-        if test.url.starts_with(PREFIX_SSH) && !ssh_agent_is_running() {
+        test.check()
+            .with_context(|| format!("test is invalid: {}", toml_path.display()))
+            .unwrap();
+
+        if test
+            .url
+            .as_ref()
+            .is_some_and(|url| url.starts_with(PREFIX_SSH))
+            && !ssh_agent_is_running()
+        {
             #[allow(clippy::explicit_write)]
             writeln!(
                 stderr(),
@@ -437,7 +486,7 @@ fn init_workdir(workdir: &Path, key: &Key) -> String {
         "clone",
         "--recursive",
         "--quiet",
-        &key.url,
+        &key.path_or_url,
         &workdir.to_string_lossy(),
     ]);
     if key.rev.is_none() {
@@ -506,7 +555,7 @@ fn run_test(workdir: &Path, toml_path: &Path, test: &Test) -> (String, Duration)
         writeln!(
             output,
             "{}{}{}{}",
-            test.url,
+            test.absolute_path_or_url(),
             if let Some(subdir) = &test.subdir {
                 format!(" (in `{subdir}`)")
             } else {
@@ -633,6 +682,7 @@ fn run_test(workdir: &Path, toml_path: &Path, test: &Test) -> (String, Duration)
         }
 
         if test.check_sqlite_urls {
+            assert!(test.url.is_some());
             assert!(test.rev.is_some());
             assert!(!test.parsing_only);
             check_sqlite_urls(workdir, &root, test);
@@ -647,10 +697,11 @@ fn check_sqlite_urls(workdir: &Path, root: &Path, test: &Test) {
 
     let necessist_db = root.join("necessist.db");
 
-    let url_https = if let Some(suffix) = test.url.strip_prefix(PREFIX_SSH) {
+    let url = test.url.as_ref().unwrap();
+    let url_https = if let Some(suffix) = url.strip_prefix(PREFIX_SSH) {
         String::from(PREFIX_HTTPS) + suffix
     } else {
-        test.url.clone()
+        url.clone()
     };
 
     let output = Command::new("sqlite3")
