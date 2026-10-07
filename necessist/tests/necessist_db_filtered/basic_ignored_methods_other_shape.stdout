@@ -1,0 +1,6 @@
+src/lib.rs:4:5-4:12: `n += 1;` passed
+src/lib.rs:14:9-14:16: `n += 1;` timed-out
+src/lib.rs:21:5-21:12: `n += 1;` failed
+src/lib.rs:28:18-28:27: `.join("")` nonbuildable
+Note: an entry is shown when its span is still a removal candidate[..]
+Note: 2 entries were hidden by filtering

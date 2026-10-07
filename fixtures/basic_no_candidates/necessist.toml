@@ -1,0 +1,1 @@
+ignored_tests = ["passed", "timed_out", "failed", "nonbuildable"]
