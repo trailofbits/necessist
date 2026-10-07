@@ -1,0 +1,2 @@
+src/lib.rs:4:5-4:12: `n += 1;` passed
+Note: an entry is shown when its span is still a removal candidate[..]
