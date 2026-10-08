@@ -1,0 +1,5 @@
+tests/BasicTest.php:9:9-9:16: `$n = 0;` passed
+tests/BasicTest.php:16:9-16:16: `$n = 0;` passed
+tests/BasicTest.php:17:9-17:17: `$n += 1;` failed
+Note: an entry is shown when its span is still a removal candidate[..]
+Note: 1 entry was hidden by filtering

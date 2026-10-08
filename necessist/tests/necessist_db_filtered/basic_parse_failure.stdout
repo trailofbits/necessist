@@ -1,0 +1,4 @@
+Warning: failed to parse "src/lib.rs": [..]
+Silence this warning with: --allow parsing-failed
+Note: an entry is shown when its span is still a removal candidate[..]
+Note: 4 entries were hidden by filtering
