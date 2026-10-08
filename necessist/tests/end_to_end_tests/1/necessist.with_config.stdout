@@ -1,4 +1,4 @@
-56 candidates in 3 tests in 1 source file
+53 candidates in 3 tests in 1 source file
 $DIR/necessist/tests/trycmd.rs: dry running
 $DIR/necessist/tests/trycmd.rs: mutilating
 $DIR/necessist/tests/trycmd.rs: `.chain(necessist_db_present)` passed
@@ -28,9 +28,6 @@ $DIR/necessist/tests/trycmd.rs: `.and_then(|array| {
                     .collect::<Option<Vec<_>>>()
             })` nonbuildable
 $DIR/necessist/tests/trycmd.rs: `.map(toml::Value::as_str)` nonbuildable
-$DIR/necessist/tests/trycmd.rs: `.parent_wc()` nonbuildable
-$DIR/necessist/tests/trycmd.rs: `.file_name_wc()` nonbuildable
-$DIR/necessist/tests/trycmd.rs: `.ok()` nonbuildable
 $DIR/necessist/tests/trycmd.rs: `.file_stem_wc()` nonbuildable
 $DIR/necessist/tests/trycmd.rs: `.to_string_lossy()` nonbuildable
 $DIR/necessist/tests/trycmd.rs: `.find_map(|arg| arg.strip_prefix("--root=fixtures/"))` nonbuildable
