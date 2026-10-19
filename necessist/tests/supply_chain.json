@@ -1166,12 +1166,6 @@
         "kind": "user",
         "login": "sebasmagri",
         "name": "Sebastián Magrí"
-      },
-      {
-        "id": 55123,
-        "kind": "user",
-        "login": "rust-lang-owner",
-        "name": null
       }
     ],
     "equivalent": [
@@ -1431,12 +1425,6 @@
       }
     ],
     "hashbrown": [
-      {
-        "id": 2915,
-        "kind": "user",
-        "login": "Amanieu",
-        "name": "Amanieu d'Antras"
-      },
       {
         "id": 55123,
         "kind": "user",
@@ -3913,7 +3901,7 @@
         "id": 350,
         "kind": "user",
         "login": "Hoverbear",
-        "name": "Ana Hobden"
+        "name": "Ana"
       },
       {
         "id": 359,
