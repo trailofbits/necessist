@@ -1,0 +1,4 @@
+src/lib.rs:4:5-4:12: `n += 1;` passed
+src/lib.rs:28:18-28:27: `.join("")` nonbuildable
+Note: an entry is shown when its span is still a removal candidate[..]
+Note: 2 entries were hidden by filtering

@@ -1,0 +1,6 @@
+args = ["--dump", "--filtered"]
+
+stderr = ""
+
+[fs]
+cwd = "../../../target/necessist_db_filtered/basic_hidden_passed_no_verbose"

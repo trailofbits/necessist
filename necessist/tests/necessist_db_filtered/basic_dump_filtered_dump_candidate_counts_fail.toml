@@ -1,0 +1,9 @@
+args = ["--root=fixtures/basic", "--dump", "--filtered", "--dump-candidate-counts"]
+
+stdout = ""
+
+[fs]
+cwd = "../../.."
+
+[status]
+code = 2

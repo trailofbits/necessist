@@ -95,6 +95,7 @@ pub struct Necessist {
     pub dump: bool,
     pub dump_candidate_counts: bool,
     pub dump_candidates: bool,
+    pub filtered: bool,
     pub find_skill: bool,
     pub no_lines_or_columns: bool,
     pub no_local_functions: bool,
@@ -220,7 +221,11 @@ fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementatio
 
     let config = config::Toml::read(context, context.root)?;
 
-    if context.opts.dump {
+    // An unfiltered `--dump` returns here, before a backend is resolved and before any source is
+    // parsed, so it still works on a project whose framework cannot be determined or whose sources
+    // no longer parse. `--dump --filtered` needs the candidates those steps produce, so it falls
+    // through to the branch below.
+    if context.opts.dump && !context.opts.filtered {
         let past_removals = past_removals_init_lazy(context)?;
         dump(context, &past_removals);
         return Ok(None);
@@ -259,6 +264,12 @@ fn prepare<Identifier: Applicable + Display + IntoEnumIterator + ToImplementatio
 
     if context.opts.dump_candidate_counts {
         dump_candidate_counts(context, &source_file_span_test_map);
+        return Ok(None);
+    }
+
+    if context.opts.dump && context.opts.filtered {
+        let past_removals = past_removals_init_lazy(context)?;
+        dump_filtered(context, &past_removals, &source_file_span_test_map);
         return Ok(None);
     }
 
@@ -505,6 +516,13 @@ fn process_options(opts: &Necessist) -> Result<()> {
     // smoelius: `--quiet` and `--verbose` are contradictory.
     incompatible!(opts, quiet, verbose);
 
+    // `--filtered` modifies `--dump`; on its own it has nothing to act on. Stating this as a
+    // requirement rather than as pairwise incompatibilities also gives `--filtered` every
+    // restriction `--dump` has, without repeating any of them.
+    if opts.filtered && !opts.dump {
+        bail!("--filtered can be used only with --dump");
+    }
+
     if opts.write && opts.check_skill.is_none() && !opts.find_skill {
         bail!("--write can be used only with --check-skill <PATH> or --find-skill");
     }
@@ -552,6 +570,77 @@ fn dump(context: &LightContext, removals: &[Removal]) {
     if !context.opts.verbose && other_than_passed {
         note(context, "more output would be produced with --verbose");
     }
+}
+
+fn dump_filtered(
+    context: &LightContext,
+    removals: &[Removal],
+    source_file_span_test_map: &SourceFileSpanTestMap,
+) {
+    let mut other_than_passed = false;
+    let mut n_hidden = 0;
+    for removal in removals {
+        let would_print = context.opts.verbose || removal.outcome == Outcome::Passed;
+        if is_current_candidate(source_file_span_test_map, removal) {
+            emit_to_console(context, removal);
+            other_than_passed |= removal.outcome != Outcome::Passed;
+        } else if would_print {
+            n_hidden += 1;
+        }
+    }
+
+    note(
+        context,
+        "an entry is shown when its span is still a removal candidate and the text Necessist read \
+         at that span matches the text recorded with the entry; the outcome shown is the recorded \
+         one, not one re-established against the current source",
+    );
+
+    if n_hidden > 0 {
+        note(
+            context,
+            &format!(
+                "{n_hidden} entr{} hidden by filtering",
+                if n_hidden == 1 { "y was" } else { "ies were" }
+            ),
+        );
+    }
+
+    if !context.opts.verbose && other_than_passed {
+        note(context, "more output would be produced with --verbose");
+    }
+}
+
+/// Returns true if `removal`'s span is a removal candidate in `source_file_span_test_map` and the
+/// source text at that span still matches `removal`'s stored text
+///
+/// Being a candidate does not put a span within the contents `SourceFile` cached: those are read
+/// once per path, while a backend rereads the file when it parses it. `Span::source_text` reports
+/// some such spans as an error and others as an `Ok` holding the wrong text, an overlong column
+/// being clamped rather than rejected; an `Ok` is no evidence that the span is current, and the
+/// comparison below decides either way.
+///
+/// The candidate check stays first for two reasons besides cost. It keeps `source_text` from being
+/// called on a span this parse did not produce. And computing a span's offsets asserts that if the
+/// text up to its end is all ASCII, so is the text up to its start -- automatic when the end
+/// follows the start, but an entry read back from the database can hold a span where it is not.
+fn is_current_candidate(
+    source_file_span_test_map: &SourceFileSpanTestMap,
+    removal: &Removal,
+) -> bool {
+    let Removal { span, text, .. } = removal;
+
+    let Some(span_test_maps) = source_file_span_test_map.get(&span.source_file) else {
+        return false;
+    };
+
+    if !span_test_maps.statement.contains_key(span)
+        && !span_test_maps.method_call.contains_key(span)
+    {
+        return false;
+    }
+
+    span.source_text().is_ok_and(|current| current == *text)
 }
 
 fn backend_for_framework<Identifier: Applicable + Display + IntoEnumIterator + ToImplementation>(
