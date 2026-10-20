@@ -438,6 +438,20 @@
         "name": "Zicklag"
       }
     ],
+    "chacha20": [
+      {
+        "id": 1266,
+        "kind": "team",
+        "login": "github:rustcrypto:stream-ciphers",
+        "name": "stream-ciphers"
+      },
+      {
+        "id": 5059,
+        "kind": "user",
+        "login": "newpavlov",
+        "name": "Artyom Pavlov"
+      }
+    ],
     "char_str": [
       {
         "id": 174312,
@@ -1383,14 +1397,6 @@
         "id": 279191,
         "kind": "user",
         "login": "bircni",
-        "name": null
-      }
-    ],
-    "getopts": [
-      {
-        "id": 55123,
-        "kind": "user",
-        "login": "rust-lang-owner",
         "name": null
       }
     ],
@@ -2428,14 +2434,6 @@
         "name": "Jacob Pratt"
       }
     ],
-    "ppv-lite86": [
-      {
-        "id": 12840,
-        "kind": "user",
-        "login": "kazcw",
-        "name": "Keziah Wesley"
-      }
-    ],
     "precomputed-hash": [
       {
         "id": 3788,
@@ -2543,20 +2541,6 @@
       }
     ],
     "rand": [
-      {
-        "id": 563,
-        "kind": "team",
-        "login": "github:rust-random:maintainers",
-        "name": "maintainers"
-      },
-      {
-        "id": 1234,
-        "kind": "user",
-        "login": "dhardy",
-        "name": "Diggory Hardy"
-      }
-    ],
-    "rand_chacha": [
       {
         "id": 563,
         "kind": "team",
@@ -2761,6 +2745,22 @@
         "login": "charliermarsh",
         "name": "Charlie Marsh"
       },
+      {
+        "id": 433794,
+        "kind": "user",
+        "login": "astral-crates-bot",
+        "name": null
+      }
+    ],
+    "ruff_unicode_names2": [
+      {
+        "id": 433794,
+        "kind": "user",
+        "login": "astral-crates-bot",
+        "name": null
+      }
+    ],
+    "ruff_unicode_names2_generator": [
       {
         "id": 433794,
         "kind": "user",
@@ -2998,6 +2998,12 @@
         "kind": "user",
         "login": "Ms2ger",
         "name": null
+      },
+      {
+        "id": 373789,
+        "kind": "user",
+        "login": "alejandro-vaz",
+        "name": "Alejandro Vaz"
       }
     ],
     "solang-parser": [
@@ -3858,22 +3864,6 @@
         "kind": "user",
         "login": "sujayakar",
         "name": "Sujay Jayakar"
-      }
-    ],
-    "unicode_names2": [
-      {
-        "id": 5065,
-        "kind": "user",
-        "login": "progval",
-        "name": "Val Lorentz"
-      }
-    ],
-    "unicode_names2_generator": [
-      {
-        "id": 5065,
-        "kind": "user",
-        "login": "progval",
-        "name": "Val Lorentz"
       }
     ],
     "unit-prefix": [
