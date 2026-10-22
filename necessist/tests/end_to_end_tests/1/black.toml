@@ -1,5 +1,5 @@
 url = "https://github.com/psf/black"
-rev = "26.5.1"
+rev = "26.10.1"
 # Black's test runner relies on Click 8.2's stdout/stderr handling.
 init = "PYTHON=$(command -v python || command -v python3); \"$PYTHON\" -m pip install -e . pytest 'click>=8.2.0'"
 source_files = ["tests/test_black.py"]

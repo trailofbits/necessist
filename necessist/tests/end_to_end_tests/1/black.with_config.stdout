@@ -1,6 +1,108 @@
-253 candidates in 33 tests in 1 source file
+395 candidates in 47 tests in 1 source file
 $DIR/tests/test_black.py: dry running
 $DIR/tests/test_black.py: mutilating
+$DIR/tests/test_black.py: `source = tmp_path / "reindent.py"` failed
+$DIR/tests/test_black.py: `source.write_text(
+        'if __name__ == "__main__":\n'
+        "  foo = 3\n"
+        "  # fmt: off\n"
+        "  bar = 1\n"
+        "  baz  =  2\n"
+        "  # fmt: on\n"
+        "  qux = 4\n",
+        encoding="utf8",
+    )` failed
+$DIR/tests/test_black.py: `ast.parse(source.read_text(encoding="utf8"))` passed
+$DIR/tests/test_black.py: `result = BlackRunner().invoke(
+        black.main, ["--config", str(THIS_DIR / "empty.toml"), str(source)]
+    )` failed
+$DIR/tests/test_black.py: `source = tmp_path / "invalid.py"` failed
+$DIR/tests/test_black.py: `source.write_text("return if you can\n", encoding="utf8")` failed
+$DIR/tests/test_black.py: `result = BlackRunner().invoke(
+        black.main, ["--config", str(THIS_DIR / "empty.toml"), str(source)]
+    )` failed
+$DIR/tests/test_black.py: `second_source = tmp_path / "also_invalid.py"` failed
+$DIR/tests/test_black.py: `second_source.write_text("print(\n", encoding="utf8")` failed
+$DIR/tests/test_black.py: `result = BlackRunner().invoke(
+        black.main,
+        [
+            "--config",
+            str(THIS_DIR / "empty.toml"),
+            str(source),
+            str(second_source),
+        ],
+    )` failed
+$DIR/tests/test_black.py: `env_cache_dir = tmp_path / "env-cache"` failed
+$DIR/tests/test_black.py: `cli_cache_dir = tmp_path / "cli-cache"` failed
+$DIR/tests/test_black.py: `source_dir = tmp_path / "src"` failed
+$DIR/tests/test_black.py: `sources = [source_dir / "one.py"]` failed
+$DIR/tests/test_black.py: `sources.append(source_dir / "two.py")` passed
+$DIR/tests/test_black.py: `source.write_text("print('hello')", encoding="utf-8")` failed
+$DIR/tests/test_black.py: `monkeypatch.setenv("BLACK_CACHE_DIR", str(env_cache_dir))` failed
+$DIR/tests/test_black.py: `target = source_dir if multiple_files else sources[0]` failed
+$DIR/tests/test_black.py: `invokeBlack([str(target), "--cache-dir", str(cli_cache_dir)])` failed
+$DIR/tests/test_black.py: `cli_cache_file = get_cache_file(DEFAULT_MODE, get_cache_dir(cli_cache_dir))` failed
+$DIR/tests/test_black.py: `env_cache_file = get_cache_file(DEFAULT_MODE, get_cache_dir())` failed
+$DIR/tests/test_black.py: `env_cache_dir = tmp_path / "env-cache"` failed
+$DIR/tests/test_black.py: `cli_cache_dir = tmp_path / "cli-cache"` failed
+$DIR/tests/test_black.py: `env_version_dir = get_cache_dir(env_cache_dir)` failed
+$DIR/tests/test_black.py: `source = tmp_path / "source.py"` failed
+$DIR/tests/test_black.py: `source.write_text("print('hello')", encoding="utf-8")` failed
+$DIR/tests/test_black.py: `env = os.environ.copy()` failed
+$DIR/tests/test_black.py: `env["BLACK_CACHE_DIR"] = str(env_cache_dir)` passed
+$DIR/tests/test_black.py: `subprocess.run(
+            [
+                sys.executable,
+                "-m",
+                "black",
+                str(source),
+                "--cache-dir",
+                str(cli_cache_dir),
+            ],
+            env=env,
+            check=True,
+            capture_output=True,
+        )` failed
+$DIR/tests/test_black.py: `cli_version_dir = get_cache_dir(cli_cache_dir)` failed
+$DIR/tests/test_black.py: `cli_cache_dir = tmp_path / "cli-cache"` failed
+$DIR/tests/test_black.py: `source = tmp_path / "source.py"` failed
+$DIR/tests/test_black.py: `source.write_text("print('hello')", encoding="utf-8")` failed
+$DIR/tests/test_black.py: `invokeBlack([str(source), "--cache-dir", str(cli_cache_dir), "--no-cache"])` passed
+$DIR/tests/test_black.py: `project = tmp_path / "project"` failed
+$DIR/tests/test_black.py: `source = project / "source.py"` failed
+$DIR/tests/test_black.py: `source.write_text("print('hello')", encoding="utf-8")` failed
+$DIR/tests/test_black.py: `config = project / "pyproject.toml"` failed
+$DIR/tests/test_black.py: `config.write_text(
+            '[tool.black]\ncache-dir = ".black-cache"\n', encoding="utf-8"
+        )` failed
+$DIR/tests/test_black.py: `result = BlackRunner().invoke(black.main, [str(source)])` failed
+$DIR/tests/test_black.py: `project_cache_dir = get_cache_dir(project / ".black-cache")` failed
+$DIR/tests/test_black.py: `blocked_parent = tmp_path / "blocked-parent"` failed
+$DIR/tests/test_black.py: `blocked_parent.write_text("not a directory", encoding="utf-8")` failed
+$DIR/tests/test_black.py: `blocked_cache_dir = blocked_parent / "cache"` failed
+$DIR/tests/test_black.py: `source = tmp_path / "source.py"` failed
+$DIR/tests/test_black.py: `source.write_text("print('hello')", encoding="utf-8")` failed
+$DIR/tests/test_black.py: `result = BlackRunner().invoke(
+                black.main,
+                [
+                    "--verbose",
+                    "--config",
+                    str(THIS_DIR / "empty.toml"),
+                    str(source),
+                    "--cache-dir",
+                    str(blocked_cache_dir),
+                ],
+                catch_exceptions=False,
+            )` failed
+$DIR/tests/test_black.py: `mode = DEFAULT_MODE` failed
+$DIR/tests/test_black.py: `cache_file = get_cache_file(mode, workspace)` failed
+$DIR/tests/test_black.py: `mode = DEFAULT_MODE` failed
+$DIR/tests/test_black.py: `src = (workspace / "test.py").resolve()` failed
+$DIR/tests/test_black.py: `src.write_text("x = 1\ny  =  2\n", encoding="utf-8")` failed
+$DIR/tests/test_black.py: `args = [str(src), "--line-ranges=1-1"]` failed
+$DIR/tests/test_black.py: `args.append("--check")` passed
+$DIR/tests/test_black.py: `invokeBlack(args)` passed
+$DIR/tests/test_black.py: `invokeBlack([str(src), "--check"], exit_code=1)` passed
 $DIR/tests/test_black.py: `path = THIS_DIR / "data" / "include_exclude_tests"` failed
 $DIR/tests/test_black.py: `src = [path]` failed
 $DIR/tests/test_black.py: `expected = [
@@ -162,6 +264,16 @@ $DIR/tests/test_black.py: `target = root / "subdir"` failed
 $DIR/tests/test_black.py: `expected = [target / "b.py"]` failed
 $DIR/tests/test_black.py: `root = Path(DATA_DIR, "ignore_directory_gitignore_tests")` failed
 $DIR/tests/test_black.py: `expected = [root / "z.py"]` failed
+$DIR/tests/test_black.py: `root = Path(tempdir).resolve()` failed
+$DIR/tests/test_black.py: `(root / ".gitignore").write_bytes("ignored/\n".encode("utf-8-sig"))` failed
+$DIR/tests/test_black.py: `(root / "ignored" / "a.py").write_text("a = 1\n", encoding="utf-8")` passed
+$DIR/tests/test_black.py: `(root / "kept.py").write_text("b = 2\n", encoding="utf-8")` failed
+$DIR/tests/test_black.py: `nested = root / "nested"` failed
+$DIR/tests/test_black.py: `(nested / ".gitignore").write_bytes("skip.py\n".encode("utf-8-sig"))` failed
+$DIR/tests/test_black.py: `(nested / "skip.py").write_text("c = 3\n", encoding="utf-8")` passed
+$DIR/tests/test_black.py: `(nested / "kept.py").write_text("d = 4\n", encoding="utf-8")` failed
+$DIR/tests/test_black.py: `expected = [root / "kept.py", nested / "kept.py"]` failed
+$DIR/tests/test_black.py: `assert_collected_sources([root], expected, root=root)` passed
 $DIR/tests/test_black.py: `path = DATA_DIR / "include_exclude_tests"` failed
 $DIR/tests/test_black.py: `src = [path]` failed
 $DIR/tests/test_black.py: `expected = [
@@ -253,7 +365,7 @@ $DIR/tests/test_black.py: `files = list(
 $DIR/tests/test_black.py: `tmp = Path(tempdir).resolve()` failed
 $DIR/tests/test_black.py: `actual = tmp / "actual"` failed
 $DIR/tests/test_black.py: `symlink = tmp / "symlink"` failed
-$DIR/tests/test_black.py: `symlink.symlink_to(actual)` failed
+$DIR/tests/test_black.py: `symlink_or_skip(symlink, actual)` failed
 $DIR/tests/test_black.py: `actual_proj = actual / "project"` failed
 $DIR/tests/test_black.py: `(actual_proj / "module.py").write_text("print('hello')", encoding="utf-8")` failed
 $DIR/tests/test_black.py: `symlink_proj = symlink / "project"` failed
@@ -269,7 +381,7 @@ $DIR/tests/test_black.py: `assert_collected_sources(
                     expected=[absolute_module],
                 )` passed
 $DIR/tests/test_black.py: `flat_symlink = symlink_proj / "symlink_module.py"` failed
-$DIR/tests/test_black.py: `flat_symlink.symlink_to(actual_proj / "module.py")` passed
+$DIR/tests/test_black.py: `symlink_or_skip(flat_symlink, actual_proj / "module.py")` passed
 $DIR/tests/test_black.py: `assert_collected_sources(
                     src=[flat_symlink],
                     root=symlink_proj.resolve(),
@@ -278,7 +390,7 @@ $DIR/tests/test_black.py: `assert_collected_sources(
                 )` passed
 $DIR/tests/test_black.py: `target = actual_proj / "target"` failed
 $DIR/tests/test_black.py: `(target / "another.py").write_text("print('hello')", encoding="utf-8")` failed
-$DIR/tests/test_black.py: `(symlink_proj / "nested").symlink_to(target)` failed
+$DIR/tests/test_black.py: `symlink_or_skip(symlink_proj / "nested", target)` failed
 $DIR/tests/test_black.py: `assert_collected_sources(
                     src=[symlink_proj / "nested" / "another.py"],
                     root=symlink_proj.resolve(),
@@ -291,12 +403,51 @@ $DIR/tests/test_black.py: `assert_collected_sources(
                     force_exclude=r"target",
                     expected=[symlink_proj / "nested" / "another.py"],
                 )` passed
+$DIR/tests/test_black.py: `root = Path(tempdir).resolve()` failed
+$DIR/tests/test_black.py: `(root / "pyproject.toml").write_text("[tool.black]", encoding="utf-8")` passed
+$DIR/tests/test_black.py: `(root / "generated" / "gen.py").write_text("x = 1", encoding="utf-8")` passed
+$DIR/tests/test_black.py: `(root / "other" / "ok.py").write_text("x = 1", encoding="utf-8")` failed
+$DIR/tests/test_black.py: `srcs: list[str | Path] = [
+                "../generated/gen.py",
+                root / "src" / ".." / "generated" / "gen.py",
+            ]` failed
+$DIR/tests/test_black.py: `assert_collected_sources(
+                        src=[src],
+                        root=root,
+                        force_exclude=r"^/generated/",
+                        expected=[],
+                    )` passed
+$DIR/tests/test_black.py: `assert_collected_sources(
+                    src=["-"],
+                    root=root,
+                    force_exclude=r"^/generated/",
+                    stdin_filename="../generated/gen.py",
+                    expected=[],
+                )` passed
+$DIR/tests/test_black.py: `assert_collected_sources(
+                    src=["../other/ok.py"],
+                    root=root,
+                    force_exclude=r"^/generated/",
+                    expected=["../other/ok.py"],
+                )` passed
+$DIR/tests/test_black.py: `root = Path(tempdir).resolve() / "root"` failed
+$DIR/tests/test_black.py: `(root / "a" / "x" / "mod.py").write_text("x = 1", encoding="utf-8")` failed
+$DIR/tests/test_black.py: `(root / "pyproject.toml").write_text("[tool.black]", encoding="utf-8")` passed
+$DIR/tests/test_black.py: `symlink_or_skip(root / "link", root / "a" / "b")` failed
+$DIR/tests/test_black.py: `src = "link/../../a/x/mod.py"` failed
+$DIR/tests/test_black.py: `expected = [] if sys.platform == "win32" else [src]` failed
+$DIR/tests/test_black.py: `assert_collected_sources(
+                    src=[src],
+                    root=root,
+                    force_exclude=r"^/generated/",
+                    expected=expected,
+                )` passed
 $DIR/tests/test_black.py: `tmp = Path(tempdir).resolve()` failed
 $DIR/tests/test_black.py: `root = tmp / "root"` failed
 $DIR/tests/test_black.py: `(root / "pyproject.toml").write_text("[tool.black]", encoding="utf-8")` passed
 $DIR/tests/test_black.py: `target = tmp / "outside_root" / "a.py"` failed
 $DIR/tests/test_black.py: `target.write_text("print('hello')", encoding="utf-8")` passed
-$DIR/tests/test_black.py: `(root / "a.py").symlink_to(target)` failed
+$DIR/tests/test_black.py: `symlink_or_skip(root / "a.py", target)` failed
 $DIR/tests/test_black.py: `stdin_filename = str(root / "a.py")` failed
 $DIR/tests/test_black.py: `assert_collected_sources(
                 root=root,
@@ -321,7 +472,7 @@ $DIR/tests/test_black.py: `path = THIS_DIR / "data" / "include_exclude_tests"` f
 $DIR/tests/test_black.py: `stdin_filename = str(path / "b/exclude/a.py")` failed
 $DIR/tests/test_black.py: `tmp = Path(tempdir).resolve()` failed
 $DIR/tests/test_black.py: `(tmp / "exclude" / "a.py").write_text("print('hello')", encoding="utf-8")` passed
-$DIR/tests/test_black.py: `(tmp / "symlink.py").symlink_to(tmp / "exclude" / "a.py")` passed
+$DIR/tests/test_black.py: `symlink_or_skip(tmp / "symlink.py", tmp / "exclude" / "a.py")` passed
 $DIR/tests/test_black.py: `stdin_filename = str(tmp / "symlink.py")` failed
 $DIR/tests/test_black.py: `expected = [f"__BLACK_STDIN_FILENAME__{stdin_filename}"]` failed
 $DIR/tests/test_black.py: `assert_collected_sources(
@@ -333,6 +484,9 @@ $DIR/tests/test_black.py: `assert_collected_sources(
                 )` passed
 $DIR/tests/test_black.py: `black.format_str("syntax error", mode=black.Mode())` failed
 $DIR/tests/test_black.py: `black.format_file_contents("x = 1\n", fast=True, mode=black.Mode())` failed
+$DIR/tests/test_black.py: `n = 100` failed
+$DIR/tests/test_black.py: `code = "x = a" + "".join(f"[{i}]" for i in range(n))` failed
+$DIR/tests/test_black.py: `black.format_str(code, mode=black.Mode())` passed
 $DIR/tests/test_black.py: `self.check_ast_equivalence("{}", "None", should_fail=True)` passed
 $DIR/tests/test_black.py: `self.check_ast_equivalence("1+2", "1    +   2")` passed
 $DIR/tests/test_black.py: `self.check_ast_equivalence('x = "x"', 'x = " x "', should_fail=True)` passed
@@ -409,6 +563,105 @@ $DIR/tests/test_black.py: `self.check_ast_equivalence(
         )` passed
 $DIR/tests/test_black.py: `err.match("--safe")` passed
 $DIR/tests/test_black.py: `err.match("invalid character")` passed
+$DIR/tests/test_black.py: `current_minor = sys.version_info[1]` failed
+$DIR/tests/test_black.py: `higher_target = f"py3{current_minor + 1}"` failed
+$DIR/tests/test_black.py: `runtime_target = f"py3{current_minor}"` failed
+$DIR/tests/test_black.py: `code = "x = 1\n"` failed
+$DIR/tests/test_black.py: `args = [
+            "--target-version",
+            runtime_target,
+            "--target-version",
+            higher_target,
+            "--code",
+            code,
+        ]` failed
+$DIR/tests/test_black.py: `result = BlackRunner().invoke(black.main, args)` failed
+$DIR/tests/test_black.py: `stderr = result.stderr_bytes.decode() if result.stderr_bytes else ""` failed
+$DIR/tests/test_black.py: `.write_text(
+        'if __name__ == "__main__":\n'
+        "  foo = 3\n"
+        "  # fmt: off\n"
+        "  bar = 1\n"
+        "  baz  =  2\n"
+        "  # fmt: on\n"
+        "  qux = 4\n",
+        encoding="utf8",
+    )` failed
+$DIR/tests/test_black.py: `.parse(source.read_text(encoding="utf8"))` passed
+$DIR/tests/test_black.py: `.read_text(encoding="utf8")` failed
+$DIR/tests/test_black.py: `.invoke(
+        black.main, ["--config", str(THIS_DIR / "empty.toml"), str(source)]
+    )` failed
+$DIR/tests/test_black.py: `.stderr.startswith("error: INTERNAL ERROR:")` passed
+$DIR/tests/test_black.py: `.write_text("return if you can\n", encoding="utf8")` failed
+$DIR/tests/test_black.py: `.invoke(
+        black.main, ["--config", str(THIS_DIR / "empty.toml"), str(source)]
+    )` failed
+$DIR/tests/test_black.py: `.write_text("print(\n", encoding="utf8")` failed
+$DIR/tests/test_black.py: `.invoke(
+        black.main,
+        [
+            "--config",
+            str(THIS_DIR / "empty.toml"),
+            str(source),
+            str(second_source),
+        ],
+    )` failed
+$DIR/tests/test_black.py: `.append(source_dir / "two.py")` passed
+$DIR/tests/test_black.py: `.write_text("print('hello')", encoding="utf-8")` failed
+$DIR/tests/test_black.py: `.setenv("BLACK_CACHE_DIR", str(env_cache_dir))` failed
+$DIR/tests/test_black.py: `.exists()` passed
+$DIR/tests/test_black.py: `.parent.glob("Grammar*.pickle")` failed
+$DIR/tests/test_black.py: `.parent.glob("PatternGrammar*.pickle")` failed
+$DIR/tests/test_black.py: `.exists()` failed
+$DIR/tests/test_black.py: `.write_text("print('hello')", encoding="utf-8")` failed
+$DIR/tests/test_black.py: `.environ.copy()` failed
+$DIR/tests/test_black.py: `.run(
+            [
+                sys.executable,
+                "-m",
+                "black",
+                str(source),
+                "--cache-dir",
+                str(cli_cache_dir),
+            ],
+            env=env,
+            check=True,
+            capture_output=True,
+        )` failed
+$DIR/tests/test_black.py: `.glob("*Grammar*.pickle")` failed
+$DIR/tests/test_black.py: `.glob("Grammar*.pickle")` failed
+$DIR/tests/test_black.py: `.glob("PatternGrammar*.pickle")` failed
+$DIR/tests/test_black.py: `.write_text("print('hello')", encoding="utf-8")` failed
+$DIR/tests/test_black.py: `.exists()` failed
+$DIR/tests/test_black.py: `.write_text("print('hello')", encoding="utf-8")` failed
+$DIR/tests/test_black.py: `.write_text(
+            '[tool.black]\ncache-dir = ".black-cache"\n', encoding="utf-8"
+        )` failed
+$DIR/tests/test_black.py: `.invoke(black.main, [str(source)])` failed
+$DIR/tests/test_black.py: `.exists()` passed
+$DIR/tests/test_black.py: `.exists()` failed
+$DIR/tests/test_black.py: `.write_text("not a directory", encoding="utf-8")` failed
+$DIR/tests/test_black.py: `.write_text("print('hello')", encoding="utf-8")` failed
+$DIR/tests/test_black.py: `.object(black.Cache, "read")` failed
+$DIR/tests/test_black.py: `.object(black.pygram, "initialize")` failed
+$DIR/tests/test_black.py: `.invoke(
+                black.main,
+                [
+                    "--verbose",
+                    "--config",
+                    str(THIS_DIR / "empty.toml"),
+                    str(source),
+                    "--cache-dir",
+                    str(blocked_cache_dir),
+                ],
+                catch_exceptions=False,
+            )` failed
+$DIR/tests/test_black.py: `.Cache.read(mode, workspace)` failed
+$DIR/tests/test_black.py: `.write_text("x = 1\ny  =  2\n", encoding="utf-8")` failed
+$DIR/tests/test_black.py: `.append("--check")` passed
+$DIR/tests/test_black.py: `.Cache.read(mode)` failed
+$DIR/tests/test_black.py: `.is_changed(src)` passed
 $DIR/tests/test_black.py: `.compile(r"\.pyi?$")` failed
 $DIR/tests/test_black.py: `.compile(r"")` failed
 $DIR/tests/test_black.py: `.Report()` failed
@@ -541,6 +794,14 @@ $DIR/tests/test_black.py: `.search(
             result.stderr_bytes.decode(),
             re.IGNORECASE if isinstance(gitignore, WindowsPath) else 0,
         )` passed
+$DIR/tests/test_black.py: `.write_bytes("ignored/\n".encode("utf-8-sig"))` failed
+$DIR/tests/test_black.py: `.encode("utf-8-sig")` failed
+$DIR/tests/test_black.py: `.write_text("a = 1\n", encoding="utf-8")` passed
+$DIR/tests/test_black.py: `.write_text("b = 2\n", encoding="utf-8")` failed
+$DIR/tests/test_black.py: `.write_bytes("skip.py\n".encode("utf-8-sig"))` failed
+$DIR/tests/test_black.py: `.encode("utf-8-sig")` failed
+$DIR/tests/test_black.py: `.write_text("c = 3\n", encoding="utf-8")` passed
+$DIR/tests/test_black.py: `.write_text("d = 4\n", encoding="utf-8")` failed
 $DIR/tests/test_black.py: `.compile(black.DEFAULT_INCLUDES)` failed
 $DIR/tests/test_black.py: `.compile(black.DEFAULT_EXCLUDES)` failed
 $DIR/tests/test_black.py: `.Report()` failed
@@ -558,16 +819,16 @@ $DIR/tests/test_black.py: `.gen_python_files(
                 quiet=False,
             )` failed
 $DIR/tests/test_black.py: `.iterdir()` failed
-$DIR/tests/test_black.py: `.symlink_to(actual)` failed
 $DIR/tests/test_black.py: `.write_text("print('hello')", encoding="utf-8")` failed
-$DIR/tests/test_black.py: `.symlink_to(actual_proj / "module.py")` passed
 $DIR/tests/test_black.py: `.write_text("print('hello')", encoding="utf-8")` failed
-$DIR/tests/test_black.py: `.symlink_to(target)` failed
+$DIR/tests/test_black.py: `.write_text("[tool.black]", encoding="utf-8")` passed
+$DIR/tests/test_black.py: `.write_text("x = 1", encoding="utf-8")` passed
+$DIR/tests/test_black.py: `.write_text("x = 1", encoding="utf-8")` failed
+$DIR/tests/test_black.py: `.write_text("x = 1", encoding="utf-8")` failed
+$DIR/tests/test_black.py: `.write_text("[tool.black]", encoding="utf-8")` passed
 $DIR/tests/test_black.py: `.write_text("[tool.black]", encoding="utf-8")` passed
 $DIR/tests/test_black.py: `.write_text("print('hello')", encoding="utf-8")` passed
-$DIR/tests/test_black.py: `.symlink_to(target)` failed
 $DIR/tests/test_black.py: `.write_text("print('hello')", encoding="utf-8")` passed
-$DIR/tests/test_black.py: `.symlink_to(tmp / "exclude" / "a.py")` passed
 $DIR/tests/test_black.py: `.format_str("print('hello')", mode=black.Mode())` failed
 $DIR/tests/test_black.py: `.Mode()` failed
 $DIR/tests/test_black.py: `.format_str("print('hello')", mode=black.Mode(line_length=42))` failed
@@ -579,6 +840,9 @@ $DIR/tests/test_black.py: `.format_file_contents("x=1", fast=True, mode=black.Mo
 $DIR/tests/test_black.py: `.Mode()` failed
 $DIR/tests/test_black.py: `.raises(black.NothingChanged)` failed
 $DIR/tests/test_black.py: `.format_file_contents("x = 1\n", fast=True, mode=black.Mode())` failed
+$DIR/tests/test_black.py: `.Mode()` failed
+$DIR/tests/test_black.py: `.join(f"[{i}]" for i in range(n))` passed
+$DIR/tests/test_black.py: `.format_str(code, mode=black.Mode())` passed
 $DIR/tests/test_black.py: `.Mode()` failed
 $DIR/tests/test_black.py: `.check_ast_equivalence("{}", "None", should_fail=True)` passed
 $DIR/tests/test_black.py: `.check_ast_equivalence("1+2", "1    +   2")` passed
@@ -656,3 +920,4 @@ $DIR/tests/test_black.py: `.check_ast_equivalence(
 $DIR/tests/test_black.py: `.raises(SourceASTParseError)` failed
 $DIR/tests/test_black.py: `.match("--safe")` passed
 $DIR/tests/test_black.py: `.match("invalid character")` passed
+$DIR/tests/test_black.py: `.invoke(black.main, args)` failed
