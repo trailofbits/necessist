@@ -2,7 +2,7 @@
 
 | Name                       | Version                                  | Framework | Full | Linux | macOS | Windows | Partition |
 | -------------------------- | ---------------------------------------- | --------- | ---- | ----- | ----- | ------- | --------- |
-| black                      | 26.5.1                                   |           | X    | X     | X     | X       | 1         |
+| black                      | 26.10.1                                  |           | X    | X     | X     | X       | 1         |
 | chainlink-evm              | cre-v0.5.1                               |           |      | X     | X     | X       | 0         |
 | chainlink-evm_hardhat      | cre-v0.5.1                               | hardhat   |      | X     | X     |         | 0         |
 | crates_io                  | a89c096889b171193bc3864e71c70ba2c3dacefa |           |      | X     | X     |         | 0         |
@@ -22,7 +22,7 @@
 | pyth                       | pyth-evm-contract-v1.4.6                 | anchor    |      | X     | X     |         | 0         |
 | seaport_foundry            | 1.6                                      | foundry   | X    | X     | X     | X       | 1         |
 | seaport_hardhat            | 1.6                                      | hardhat   |      | X     | X     | X       | 1         |
-| storybook                  | v10.6.0                                  |           | X    | X     | X     |         | 0         |
+| storybook                  | v10.6.3                                  |           | X    | X     | X     |         | 0         |
 | uniswap_v3-core            |                                          |           |      | X     | X     | X       | 0         |
 | uniswap_v3-core_factory    |                                          |           | X    | X     | X     | X       | 1         |
 | uniswap_v4-core            |                                          |           | X    | X     | X     |         | 0         |
