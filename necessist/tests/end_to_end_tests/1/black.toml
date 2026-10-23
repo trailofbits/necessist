@@ -21,7 +21,8 @@ ignored_methods = [
     "touch",
     "*.touch",
 ]
-# The following tests depend on cache state or the Python runtime version.
+# The following tests depend on cache state, the Python runtime version, or
+# platform-dependent filesystem behavior.
 ignored_tests = [
     "TestASTSafety::test_target_version_at_runtime_no_warning",
     "TestASTSafety::test_target_version_exceeds_runtime_clear_error_message",
@@ -47,4 +48,5 @@ ignored_tests = [
     "TestCaching::test_write_cache_creates_directory_if_needed",
     "TestCaching::test_write_cache_read_cache",
     "TestCaching::test_write_cache_write_fail",
+    "TestFileCollection::test_get_sources_parent_dir_path_through_symlink",
 ]

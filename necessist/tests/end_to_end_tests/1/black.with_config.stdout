@@ -1,4 +1,4 @@
-395 candidates in 47 tests in 1 source file
+386 candidates in 46 tests in 1 source file
 $DIR/tests/test_black.py: dry running
 $DIR/tests/test_black.py: mutilating
 $DIR/tests/test_black.py: `source = tmp_path / "reindent.py"` failed
@@ -430,18 +430,6 @@ $DIR/tests/test_black.py: `assert_collected_sources(
                     force_exclude=r"^/generated/",
                     expected=["../other/ok.py"],
                 )` passed
-$DIR/tests/test_black.py: `root = Path(tempdir).resolve() / "root"` failed
-$DIR/tests/test_black.py: `(root / "a" / "x" / "mod.py").write_text("x = 1", encoding="utf-8")` failed
-$DIR/tests/test_black.py: `(root / "pyproject.toml").write_text("[tool.black]", encoding="utf-8")` passed
-$DIR/tests/test_black.py: `symlink_or_skip(root / "link", root / "a" / "b")` failed
-$DIR/tests/test_black.py: `src = "link/../../a/x/mod.py"` failed
-$DIR/tests/test_black.py: `expected = [] if sys.platform == "win32" else [src]` failed
-$DIR/tests/test_black.py: `assert_collected_sources(
-                    src=[src],
-                    root=root,
-                    force_exclude=r"^/generated/",
-                    expected=expected,
-                )` passed
 $DIR/tests/test_black.py: `tmp = Path(tempdir).resolve()` failed
 $DIR/tests/test_black.py: `root = tmp / "root"` failed
 $DIR/tests/test_black.py: `(root / "pyproject.toml").write_text("[tool.black]", encoding="utf-8")` passed
@@ -824,8 +812,6 @@ $DIR/tests/test_black.py: `.write_text("print('hello')", encoding="utf-8")` fail
 $DIR/tests/test_black.py: `.write_text("[tool.black]", encoding="utf-8")` passed
 $DIR/tests/test_black.py: `.write_text("x = 1", encoding="utf-8")` passed
 $DIR/tests/test_black.py: `.write_text("x = 1", encoding="utf-8")` failed
-$DIR/tests/test_black.py: `.write_text("x = 1", encoding="utf-8")` failed
-$DIR/tests/test_black.py: `.write_text("[tool.black]", encoding="utf-8")` passed
 $DIR/tests/test_black.py: `.write_text("[tool.black]", encoding="utf-8")` passed
 $DIR/tests/test_black.py: `.write_text("print('hello')", encoding="utf-8")` passed
 $DIR/tests/test_black.py: `.write_text("print('hello')", encoding="utf-8")` passed
