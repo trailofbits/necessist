@@ -1,0 +1,9 @@
+args = ["--root=fixtures/basic", "--dump", "--filtered"]
+
+stderr = ""
+
+[bin]
+name = "necessist"
+
+[fs]
+cwd = "../../.."

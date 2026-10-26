@@ -1,0 +1,6 @@
+args = ["--dump", "--filtered", "--check-skill", "/nonexistent"]
+
+stdout = ""
+
+[status]
+code = 2

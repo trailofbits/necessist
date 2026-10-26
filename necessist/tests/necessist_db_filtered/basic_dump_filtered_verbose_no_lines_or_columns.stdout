@@ -1,0 +1,5 @@
+fixtures/basic/src/lib.rs: `n += 1;` passed
+fixtures/basic/src/lib.rs: `n += 1;` timed-out
+fixtures/basic/src/lib.rs: `n += 1;` failed
+fixtures/basic/src/lib.rs: `.join("")` nonbuildable
+Note: an entry is shown when its span is still a removal candidate[..]
