@@ -1,7 +1,14 @@
 url = "https://github.com/psf/black"
 rev = "26.10.1"
 # Black's test runner relies on Click 8.2's stdout/stderr handling.
-init = "PYTHON=$(command -v python || command -v python3); \"$PYTHON\" -m pip install -e . pytest 'click>=8.2.0'"
+init = '''
+set -e
+# smoelius: Manually apply: https://github.com/psf/black/pull/5632
+sed -i.bak 's/config[.]inicfg[.]get(/config.getini(/' tests/optional.py
+rm tests/optional.py.bak
+PYTHON=$(command -v python || command -v python3)
+"$PYTHON" -m pip install -e . pytest 'click>=8.2.0'
+'''
 source_files = ["tests/test_black.py"]
 config_mandatory = true
 
