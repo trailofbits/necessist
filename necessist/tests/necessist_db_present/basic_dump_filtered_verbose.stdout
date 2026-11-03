@@ -1,0 +1,5 @@
+fixtures/basic/src/lib.rs:4:5-4:12: `n += 1;` passed
+fixtures/basic/src/lib.rs:14:9-14:16: `n += 1;` timed-out
+fixtures/basic/src/lib.rs:21:5-21:12: `n += 1;` failed
+fixtures/basic/src/lib.rs:28:18-28:27: `.join("")` nonbuildable
+Note: an entry is shown when its span is still a removal candidate and the text Necessist read at that span matches the text recorded with the entry; the outcome shown is the recorded one, not one re-established against the current source
