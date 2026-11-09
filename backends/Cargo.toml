@@ -53,13 +53,13 @@ tree-sitter-go = "0.25"
 tree-sitter-php = "0.25"
 
 # Python
-ruff_python_ast = "0.0.20"
-ruff_python_parser = "0.0.20"
-ruff_source_file = "0.0.20"
-ruff_text_size = "0.0.20"
+ruff_python_ast = "0.0.21"
+ruff_python_parser = "0.0.21"
+ruff_source_file = "0.0.21"
+ruff_text_size = "0.0.21"
 
 # Hardhat
-swc_core = { version = "82.1", features = [
+swc_core = { version = "84.0", features = [
     "common",
     "ecma_ast",
     "ecma_parser",
