@@ -1,0 +1,6 @@
+args = ["--root=fixtures/basic", "--dump", "--filtered", "--verbose", "--no-lines-or-columns"]
+
+stderr = ""
+
+[fs]
+cwd = "../../.."

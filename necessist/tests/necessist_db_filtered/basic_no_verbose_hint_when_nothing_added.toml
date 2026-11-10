@@ -1,0 +1,6 @@
+args = ["--dump", "--filtered"]
+
+stderr = ""
+
+[fs]
+cwd = "../../../target/necessist_db_filtered/basic_no_verbose_hint_when_nothing_added"
