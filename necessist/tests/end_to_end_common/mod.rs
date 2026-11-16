@@ -484,7 +484,6 @@ fn init_workdir(workdir: &Path, key: &Key) -> String {
     let mut command = Command::new("git");
     command.args([
         "clone",
-        "--recursive",
         "--quiet",
         &key.path_or_url,
         &workdir.to_string_lossy(),
@@ -507,6 +506,16 @@ fn init_workdir(workdir: &Path, key: &Key) -> String {
 
         output_combined += std::str::from_utf8(&output.stderr).unwrap();
     }
+
+    // Initialize submodules at the selected revision, which may differ from the default branch.
+    let output = Command::new("git")
+        .args(["submodule", "update", "--init", "--recursive", "--quiet"])
+        .current_dir(workdir)
+        .output_wc()
+        .unwrap();
+    assert!(output.status.success(), "{}", OutputError::new(output));
+
+    output_combined += std::str::from_utf8(&output.stderr).unwrap();
 
     if let Some(init) = &key.init {
         // On Windows, `bash` can resolve to the WSL launcher and fail when no distribution is
