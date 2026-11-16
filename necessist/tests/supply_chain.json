@@ -1090,30 +1090,6 @@
     ],
     "ena": [
       {
-        "id": 408,
-        "kind": "team",
-        "login": "github:rust-lang:compiler",
-        "name": "compiler"
-      },
-      {
-        "id": 508,
-        "kind": "team",
-        "login": "github:rust-lang-nursery:compiler",
-        "name": "compiler"
-      },
-      {
-        "id": 543,
-        "kind": "team",
-        "login": "github:rust-lang-nursery:core",
-        "name": "core"
-      },
-      {
-        "id": 1386,
-        "kind": "user",
-        "login": "nikomatsakis",
-        "name": "Niko Matsakis"
-      },
-      {
         "id": 55123,
         "kind": "user",
         "login": "rust-lang-owner",
@@ -1688,6 +1664,12 @@
         "kind": "user",
         "login": "jswrenn",
         "name": "Jack Wrenn"
+      },
+      {
+        "id": 5742,
+        "kind": "user",
+        "login": "phimuemue",
+        "name": "phimuemue"
       }
     ],
     "itoa": [
@@ -1837,24 +1819,6 @@
       }
     ],
     "libz-sys": [
-      {
-        "id": 1,
-        "kind": "user",
-        "login": "alexcrichton",
-        "name": "Alex Crichton"
-      },
-      {
-        "id": 980,
-        "kind": "user",
-        "login": "Byron",
-        "name": "Sebastian Thiel"
-      },
-      {
-        "id": 4333,
-        "kind": "user",
-        "login": "joshtriplett",
-        "name": "Josh Triplett"
-      },
       {
         "id": 55123,
         "kind": "user",
@@ -2289,18 +2253,6 @@
       }
     ],
     "pkg-config": [
-      {
-        "id": 3623,
-        "kind": "user",
-        "login": "sdroege",
-        "name": "Sebastian Dröge"
-      },
-      {
-        "id": 4333,
-        "kind": "user",
-        "login": "joshtriplett",
-        "name": "Josh Triplett"
-      },
       {
         "id": 55123,
         "kind": "user",
