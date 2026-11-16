@@ -6,7 +6,7 @@ use elaborate::std::{
 };
 use log::debug;
 use necessist_core::{
-    __Backup as Backup, __Rewriter as Rewriter, LightContext, SourceFile, Span,
+    __Backup as Backup, __Rewriter as Rewriter, LightContext, SourceFile, Span, config,
     framework::{Interface, Postprocess, SourceFileSpanTestMap},
 };
 use regex::Regex;
@@ -88,7 +88,7 @@ impl ParseHigh for Anchor {
     fn parse(
         &mut self,
         context: &LightContext,
-        config: &necessist_core::config::Toml,
+        config: &config::Toml,
         source_files: &[&Path],
     ) -> Result<(usize, SourceFileSpanTestMap)> {
         self.mocha_adapter.parse(context, config, source_files)
