@@ -3,7 +3,7 @@ use anyhow::Result;
 use elaborate::std::path::PathContext;
 use log::debug;
 use necessist_core::{
-    __Rewriter as Rewriter, LightContext, SourceFile, Span,
+    __Rewriter as Rewriter, LightContext, SourceFile, Span, config,
     framework::{Interface, Postprocess, SourceFileSpanTestMap},
 };
 use std::path::Path;
@@ -31,7 +31,7 @@ impl ParseHigh for Hardhat {
     fn parse(
         &mut self,
         context: &LightContext,
-        config: &necessist_core::config::Toml,
+        config: &config::Toml,
         source_files: &[&Path],
     ) -> Result<(usize, SourceFileSpanTestMap)> {
         self.mocha_adapter.parse(context, config, source_files)
