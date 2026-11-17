@@ -17,15 +17,15 @@ cd "$WORKSPACE"
 
 scripts/lint_changelog_commits.sh
 
-find . -name Cargo.toml ! -path './fixtures/*' -exec sed -i "{
+sed -i "{
 s/^version = \"[^\"]*\"$/$VERSION/
-}" {} \;
+}" Cargo.toml
 
 REQ="${VERSION/\"/\"=}"
 
-find . -name Cargo.toml -exec sed -i "/^necessist/{
+sed -i "/^necessist/{
 s/^\(.*\)\<version = \"[^\"]*\"\(.*\)$/\1$REQ\2/
-}" {} \;
+}" Cargo.toml
 
 # smoelius: The `necessist-audit` skill version must match the package version. See the
 # `skill_version_is_necessist_version` test in core/src/skill.rs.

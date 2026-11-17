@@ -1,17 +1,15 @@
 [package]
 name = "necessist"
-version = "4.1.0"
-edition = "2024"
-
 description = "necessist"
 
-authors = ["Samuel Moelius <sam@moeli.us>"]
-license = "AGPL-3.0"
-repository = "https://github.com/trailofbits/necessist"
+edition = { workspace = true }
+license = { workspace = true }
+repository = { workspace = true }
+version = { workspace = true }
 
 [dependencies]
-necessist-backends = { version = "=4.1.0", path = "../backends" }
-necessist-core = { version = "=4.1.0", path = "../core", features = ["clap"] }
+necessist-backends = { workspace = true }
+necessist-core = { workspace = true, features = ["clap"] }
 
 anyhow = { version = "1.0", features = ["backtrace"] }
 clap = "4.6"
