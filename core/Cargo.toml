@@ -1,13 +1,11 @@
 [package]
 name = "necessist-core"
-version = "4.1.0"
-edition = "2024"
-
 description = "necessist-core"
 
-authors = ["Samuel Moelius <sam@moeli.us>"]
-license = "AGPL-3.0"
-repository = "https://github.com/trailofbits/necessist"
+edition = { workspace = true }
+license = { workspace = true }
+repository = { workspace = true }
+version = { workspace = true }
 
 [dependencies]
 ansi_term = "0.12"

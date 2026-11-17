@@ -1,6 +1,16 @@
 [workspace]
 members = ["backends", "core", "necessist", "testing"]
-resolver = "2"
+resolver = "3"
+
+[workspace.package]
+edition = "2024"
+license = "AGPL-3.0"
+repository = "https://github.com/trailofbits/necessist"
+version = "4.1.0"
+
+[workspace.dependencies]
+necessist-backends = { version = "=4.1.0", path = "backends" }
+necessist-core = { version = "=4.1.0", path = "core" }
 
 [workspace.lints.rust.unexpected_cfgs]
 level = "deny"
