@@ -1,0 +1,8 @@
+src/lib.rs:7:5-9:7: `v.push(
+        3,
+    );` failed
+src/lib.rs:7:6-9:6: `.push(
+        3,
+    )` nonbuildable
+Note: an entry is shown when its span is still a removal candidate[..]
+Note: 2 entries were hidden by filtering

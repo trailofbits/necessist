@@ -1,0 +1,3 @@
+fixtures/basic/src/lib.rs:4:5-4:12: `n += 1;` passed
+Note: an entry is shown when its span is still a removal candidate and the text Necessist read at that span matches the text recorded with the entry; the outcome shown is the recorded one, not one re-established against the current source
+Note: more output would be produced with --verbose

@@ -1,0 +1,7 @@
+Error: call failed:
+    std::fs::read_to_string(
+        "[..]lib.rs",
+    )
+
+Caused by:
+    [..]

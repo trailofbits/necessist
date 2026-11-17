@@ -1,0 +1,9 @@
+args = ["--root=fixtures/basic", "--dump", "--filtered", "--find-skill"]
+
+stdout = ""
+
+[fs]
+cwd = "../../.."
+
+[status]
+code = 2

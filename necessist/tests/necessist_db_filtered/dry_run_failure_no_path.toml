@@ -1,0 +1,6 @@
+args = ["--dump", "--filtered", "--verbose"]
+
+stderr = ""
+
+[fs]
+cwd = "../../../target/necessist_db_filtered/dry_run_failure_no_path"
