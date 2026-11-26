@@ -478,7 +478,7 @@ impl RunLow for Go {
             line: package_line + 1,
             column: 0,
         };
-        source_file.insert(rewriter, line_column, "import \"os\"\n");
+        source_file.insert(rewriter, line_column, "import \"os\"\n")?;
         os_name_map.insert(source_file.clone(), "os".to_owned());
         Ok(())
     }

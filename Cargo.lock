@@ -2195,12 +2195,13 @@ dependencies = [
 
 [[package]]
 name = "rewriter"
-version = "2.1.1"
+version = "3.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "128062bc1737f9900419b9165fbe42c4ec0c84320bba9361c94226a9909c5969"
+checksum = "be5be97168d90d1909506b71b2079b6501445703c2b0bdb5ae43ab16ad04b54a"
 dependencies = [
  "proc-macro2",
  "tempfile",
+ "thiserror 2.0.21",
 ]
 
 [[package]]

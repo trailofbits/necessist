@@ -90,14 +90,21 @@ impl SourceFile {
         self.inner.offset_calculator.clone()
     }
 
-    pub fn insert(&self, rewriter: &mut Rewriter, line_column: LineColumn, insertion: &str) {
+    pub fn insert(
+        &self,
+        rewriter: &mut Rewriter,
+        line_column: LineColumn,
+        insertion: &str,
+    ) -> Result<()> {
         let span = Span {
             source_file: self.clone(),
             start: line_column,
             end: line_column,
         };
 
-        let _: String = rewriter.rewrite(&span, insertion);
+        let _: String = rewriter.rewrite(&span, insertion)?;
+
+        Ok(())
     }
 }
 
