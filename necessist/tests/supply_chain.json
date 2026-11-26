@@ -896,6 +896,14 @@
         "name": "Sage Griffin"
       }
     ],
+    "diesel_attribute_parser": [
+      {
+        "id": 4568,
+        "kind": "user",
+        "login": "weiznich",
+        "name": "Georg Semmler"
+      }
+    ],
     "diesel_derives": [
       {
         "id": 89,
@@ -1228,20 +1236,6 @@
         "kind": "user",
         "login": "mikedilger",
         "name": "Michael Dilger"
-      }
-    ],
-    "fnv": [
-      {
-        "id": 5,
-        "kind": "team",
-        "login": "github:servo:cargo-publish",
-        "name": "cargo publish"
-      },
-      {
-        "id": 7,
-        "kind": "user",
-        "login": "SimonSapin",
-        "name": "Simon Sapin"
       }
     ],
     "foldhash": [
@@ -2852,6 +2846,14 @@
         "kind": "user",
         "login": "Spxg",
         "name": "Nico Goh"
+      }
+    ],
+    "sqlstate": [
+      {
+        "id": 4568,
+        "kind": "user",
+        "login": "weiznich",
+        "name": "Georg Semmler"
       }
     ],
     "stable_deref_trait": [
