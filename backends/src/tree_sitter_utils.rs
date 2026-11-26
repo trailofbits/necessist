@@ -34,7 +34,8 @@ impl ToLineColumn for Point {
                 source_file: source_file.clone(),
                 start: line_column,
                 end: line_column,
-            });
+            })
+            .expect("tree-sitter point is outside cached source contents");
         let suffix = &source_file.contents()[line_offset..];
         let column = suffix
             .char_indices()

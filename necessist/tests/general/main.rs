@@ -243,7 +243,7 @@ fn u() {
     assert!(
         error
             .to_string()
-            .contains("is not a valid range within the contents of"),
+            .contains("line or column is out of bounds"),
         "{error}"
     );
 }

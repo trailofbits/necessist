@@ -152,8 +152,7 @@ impl Span {
     /// the contents
     ///
     /// The contents are cached per path while each backend rereads the file, so even a span just
-    /// produced by parsing can fall outside them. An `Ok` is not proof that the span is current
-    /// either: an overlong column is clamped rather than rejected.
+    /// produced by parsing can fall outside them.
     pub fn source_text(&self) -> Result<String> {
         let contents = self.source_file.contents();
 
@@ -165,7 +164,7 @@ impl Span {
             .source_file
             .offset_calculator()
             .borrow_mut()
-            .offsets_from_span(self);
+            .offsets_from_span(self)?;
 
         let text = contents.get(start..end).ok_or_else(|| {
             anyhow!(
@@ -193,7 +192,7 @@ impl Span {
             self.source_file.offset_calculator(),
         );
 
-        let text = rewriter.rewrite(self, replacement);
+        let text = rewriter.rewrite(self, replacement)?;
 
         let mut file = OpenOptions::new()
             .truncate(true)
@@ -249,9 +248,7 @@ mod tests {
 
         let error = span.source_text().unwrap_err();
         assert!(
-            error
-                .to_string()
-                .contains("is not a valid range within the contents of"),
+            error.to_string().contains("span end is before span start"),
             "{error}"
         );
     }
@@ -270,7 +267,7 @@ mod tests {
         assert!(
             error
                 .to_string()
-                .contains("is not a valid range within the contents of"),
+                .contains("line or column is out of bounds"),
             "{error}"
         );
     }
